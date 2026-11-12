@@ -29,6 +29,8 @@ this repository's `hugo.toml`.
 | `region.iatas` | observer IATA codes (MQTT topic) whose traffic the map shows, e.g. `["JKG"]` |
 | `region.scope` | the region's MeshCore scope, e.g. `se-jkp` |
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
+| `map.style_light`, `map.style_dark` | basemap style URLs; default OpenFreeMap `liberty` and `dark` (no key, attribution shown by the map) |
+| `map.maplibre` | the vendored MapLibre version under `static/vendor/maplibre-gl/` |
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |

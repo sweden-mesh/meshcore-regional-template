@@ -18,3 +18,7 @@ other = "Kanaler"
 other = "Guider"
 [footer_template]
 other = "Byggd med meshcore-regional-template"
+[map_failed]
+other = "Kartan kunde inte laddas."
+[map_noscript]
+other = "Kartan behöver JavaScript."

@@ -16,6 +16,11 @@
   center = [62.0, 16.0]      # map start, [lat, lng]
   zoom = 5                   # map start zoom
 
+[params.map]
+  maplibre = "6.16.0"        # vendored under static/vendor/maplibre-gl/<version>/
+  style_light = "https://tiles.openfreemap.org/styles/liberty"
+  style_dark = "https://tiles.openfreemap.org/styles/dark"
+
 [params.beacon]
   url = ""                   # Beacon base URL, e.g. https://beacon.example.se; empty = no live data
 

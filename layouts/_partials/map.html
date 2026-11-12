@@ -1,15 +1,23 @@
-{{- /* The map island. Settings travel as data attributes; map.js does the rest. */ -}}
+{{- /* The map island. Settings travel as data attributes; assets/js/map/ does the rest. */ -}}
 {{- $r := site.Params.region -}}
+{{- $m := site.Params.map -}}
+{{- $ml := printf "vendor/maplibre-gl/%s/" $m.maplibre -}}
+<link rel="stylesheet" href="{{ printf "%smaplibre-gl.css" $ml | relURL }}">
 <section class="map-section">
   <h2>{{ T "map_heading" }}</h2>
-  <div id="map" class="map"
+  <div id="map" class="map" role="region" aria-label="{{ T "map_heading" }}"
+       data-maplibre="{{ printf "%smaplibre-gl.mjs" $ml | relURL }}"
+       data-style-light="{{ $m.style_light }}"
+       data-style-dark="{{ $m.style_dark }}"
        data-beacon="{{ site.Params.beacon.url }}"
        data-iatas="{{ $r.iatas | jsonify }}"
        data-center="{{ $r.center | jsonify }}"
-       data-zoom="{{ $r.zoom }}">
-    {{ if not site.Params.beacon.url }}<p>{{ T "map_no_beacon" }}</p>{{ end }}
+       data-zoom="{{ $r.zoom }}"
+       data-fail-text="{{ T "map_failed" }}">
+    <noscript>{{ T "map_noscript" }}</noscript>
   </div>
+  {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
 </section>
-{{ with resources.Get "js/map.js" | js.Build (dict "minify" true "format" "esm") | fingerprint }}
+{{ with resources.Get "js/map/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{ end }}

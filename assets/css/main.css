@@ -12,7 +12,9 @@ a { color: var(--accent); }
 .site-header { display: flex; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--line); }
 .site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
 .brand { font-weight: 700; text-decoration: none; color: var(--fg); }
-.map { height: min(60vh, 36rem); min-height: 18rem; border: 1px solid var(--line); border-radius: 8px; display: grid; place-items: center; color: var(--muted); }
+.map { height: min(60vh, 36rem); min-height: 18rem; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.map-failed, .map noscript { display: grid; place-items: center; height: 100%; color: var(--muted); }
+.map-note { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }
 .site-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .9rem; }
 
 .hero h1 { margin: .5rem 0 0; font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.2; }
