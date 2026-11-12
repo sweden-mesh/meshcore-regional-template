@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ site.Language.Locale | default "sv" }}">
 <head>{{ partial "head.html" . }}</head>
-<body>
+<body class="style-{{ site.Params.style | default "product" }}">
   <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <a class="skip-link" href="#main">{{ T "skip_to_content" }}</a>
   {{ partial "header.html" . }}

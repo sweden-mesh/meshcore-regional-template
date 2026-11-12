@@ -7,6 +7,7 @@
   min = "0.146.0"
 
 [params]
+  style = "product"          # "product" (light, design D; follows the OS dark mode) or "console" (dark, technical)
   noindex = false            # true on staging: robots noindex + a disallow-all robots.txt
 
 [params.region]

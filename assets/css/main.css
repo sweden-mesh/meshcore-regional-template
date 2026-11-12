@@ -249,3 +249,17 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .wz-inline { display: inline-block; background: var(--surface); padding: .3rem .6rem; border-radius: 6px; }
 .wizard-links { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--line); }
 .search-box { margin-top: 1rem; --pagefind-ui-font: var(--font-body); --pagefind-ui-primary: var(--accent); --pagefind-ui-text: var(--fg); --pagefind-ui-background: var(--bg); --pagefind-ui-border: var(--line); --pagefind-ui-border-radius: 10px; }
+
+/* Style "console" (params.style = "console"): the dark, technical direction A of the
+   design mockups, regardless of the OS colour scheme. Tokens only; the layout is the same. */
+body.style-console {
+  --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
+  --bg: #081219; --surface: #0d1f2b; --fg: #d8e6ee; --muted: #8aa4b3; --line: #17384b;
+  --bg-a: #081219; --bg-b: #0a1821; --bg-c: #08161a; --bg-d: #0b1a24; --blob: rgba(61, 220, 132, .06);
+  --font-head: "Space Grotesk", ui-monospace, monospace;
+  --shadow-map: 0 0 0 1px #17384b;
+  color-scheme: dark;
+}
+body.style-console .eyebrow, body.style-console .stat-grid dd, body.style-console .badge, body.style-console .footer-title { font-family: ui-monospace, "JetBrains Mono", monospace; letter-spacing: .04em; }
+body.style-console .button { background: #21664a; color: #f2fff8; }
+body.style-console .button-secondary { background: transparent; color: var(--fg); }
