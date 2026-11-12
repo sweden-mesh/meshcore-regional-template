@@ -11,6 +11,7 @@ import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesLis
 import { allLinks, selectedLinks, addLinkLayer } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible } from "./region.js";
 import { MapPanel } from "./panel.js";
+import { parseState, writeState } from "./urlstate.js";
 
 const el = document.getElementById("map");
 
@@ -22,7 +23,14 @@ async function start() {
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
-  const state = { nodes: [], borders: [], showForeign: true, showLinks: true, selected: null, onLive: null };
+  const url = parseState(location.search);
+  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, selected: null, onLive: null };
+  const saveUrl = (extra = {}) => {
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, ...extra });
+    history.replaceState(null, "", location.pathname + q + location.hash);
+  };
+  if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
+  map.on("moveend", (e) => { if (e.originalEvent) saveUrl({ view: { zoom: map.getZoom(), center: map.getCenter().toArray() } }); });
   const popup = attachPopups(map, maplibregl, client);
   const empty = { type: "FeatureCollection", features: [] };
   // All known links in grey (toggle), plus the clicked node's links coloured by
@@ -39,9 +47,9 @@ async function start() {
   popup.on("close", () => { state.selected = null; drawSelected(); });
   map.addControl(new MapPanel({
     toggles: [
-      { key: "live", label: ds.liveLabel || "Live-trafik", on: true },
-      { key: "links", label: ds.linksLabel || "Grannlänkar", on: true },
-      { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: true },
+      { key: "live", label: ds.liveLabel || "Live-trafik", on: state.live },
+      { key: "links", label: ds.linksLabel || "Grannlänkar", on: state.showLinks },
+      { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: state.showForeign },
     ],
     legend: [
       { swatch: "pill-active", label: "repeater, hörd nyligen" },
@@ -54,7 +62,8 @@ async function start() {
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); }
       if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
-      if (key === "live") state.onLive?.(on);
+      if (key === "live") { state.live = on; state.onLive?.(on); }
+      saveUrl();
     },
   }), "top-left");
   const draw = () => {
@@ -189,7 +198,7 @@ function startLive(map, ds, client, iatas, state, draw) {
     flows.setEnabled(on);
     if (on) feed.start(); else feed.stop();
   };
-  feed.start();
+  if (state.live) feed.start(); else flows.setEnabled(false);
   return feed;
 }
 
