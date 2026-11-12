@@ -117,3 +117,4 @@ under its own licence.
 Code (layouts, assets, configuration): BSD 2-Clause, see `LICENSE`.
 Content (`content/`): CC BY 4.0, see `LICENSE-CONTENT`. Parts are adapted from
 [meshat.se](https://meshat.se), with permission and attribution.
+Third-party code, fonts, map data and services: `THIRD-PARTY.md`.
