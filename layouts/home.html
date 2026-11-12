@@ -1,20 +1,30 @@
 {{ define "main" }}
   {{- $r := site.Params.region -}}
+  {{- $first := "" -}}{{- with site.GetPage "/guider" }}{{ with index .Pages.ByWeight 0 }}{{ $first = .RelPermalink }}{{ end }}{{ end -}}
   <section class="hero">
+    {{ with site.Params.beacon.url }}<p class="badge" id="online-badge" hidden><span class="dot" aria-hidden="true"></span> <span data-stat="repeaters">–</span> {{ T "badge_online" (dict "Region" $r.name) }}</p>{{ end }}
     <h1>{{ T "hero_title" (dict "Region" $r.name) }}</h1>
+    <p class="tagline">{{ T "hero_tagline" }}</p>
     {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+    <p class="hero-actions">
+      {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
+      <a class="button button-secondary" href="#karta">{{ T "cta_map" }}</a>
+    </p>
   </section>
 
 
   <div class="sections">
     <section class="card" id="kom-igang">
+      <p class="eyebrow">01</p>
       <h2>{{ T "section_start" }}</h2>
       {{ with site.GetPage "/guider" }}
-        <ul>{{ range .Pages.ByWeight }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+        <ul class="link-list">{{ range first 4 .Pages.ByWeight }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+        <a class="more" href="{{ .RelPermalink }}">{{ T "all_guides" }} →</a>
       {{ end }}
     </section>
 
-    <section class="card" id="natet">
+    <section class="card card-surface" id="natet">
+      <p class="eyebrow">02</p>
       <h2>{{ T "section_network" }}</h2>
       <div id="stats" class="stats" data-beacon="{{ site.Params.beacon.url }}" data-iatas="{{ $r.iatas | jsonify }}">
         {{ with site.Params.beacon.url }}
@@ -34,8 +44,9 @@
     </section>
 
     <section class="card" id="gemenskap">
+      <p class="eyebrow">03</p>
       <h2>{{ T "section_community" }}</h2>
-      <ul>
+      <ul class="link-list">
         {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
         {{ with site.Params.chat.discord }}<li><a href="{{ . }}">Discord</a></li>{{ end }}
         {{ with site.Params.chat.matrix }}<li><a href="{{ . }}">Matrix</a></li>{{ end }}

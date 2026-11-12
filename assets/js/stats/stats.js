@@ -25,9 +25,10 @@ export async function fillStats(el, client, iatas) {
   ]);
   const s = summarize(types, observers, breakdown);
   for (const [key, value] of Object.entries(s)) {
-    const target = el.querySelector(`[data-stat="${key}"]`);
-    if (target) target.textContent = formatCount(value);
+    for (const target of document.querySelectorAll(`[data-stat="${key}"]`)) target.textContent = formatCount(value);
   }
+  const badge = document.getElementById("online-badge");
+  if (badge && s.repeaters > 0) badge.hidden = false;
   el.classList.add("stats-live");
   return s;
 }

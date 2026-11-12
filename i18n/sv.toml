@@ -1,5 +1,15 @@
 [hero_title]
 other = "MeshCore i {{ .Region }}"
+[hero_tagline]
+other = "Meddelanden som tar sig fram utan internet."
+[badge_online]
+other = "repeatrar hörs i {{ .Region }}"
+[cta_start]
+other = "Kom igång"
+[cta_map]
+other = "Se kartan"
+[all_guides]
+other = "Alla guider"
 [map_heading]
 other = "Nätet just nu"
 [map_no_beacon]
