@@ -38,7 +38,7 @@ enableRobotsTXT = true
 [[params.channels]]
   name = "#test-xxx"
   scope = "se-xxx"
-  purpose = "Testmeddelanden till repeatrar med auto-svar"
+  purpose = "Skriv `test` så svarar repeatrar med auto-svar"
   note = "Testa här, inte i chattkanalerna"
 
 [[menus.main]]

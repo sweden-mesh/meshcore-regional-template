@@ -7,7 +7,7 @@
     <tr>
       <td><code>{{ .name }}</code></td>
       <td>{{ with .scope }}<code>{{ . }}</code>{{ else }}{{ T "ch_no_scope" }}{{ end }}</td>
-      <td>{{ .purpose }}{{ with .note }}<br><small class="muted">{{ . }}</small>{{ end }}</td>
+      <td>{{ .purpose | markdownify }}{{ with .note }}<br><small class="muted">{{ . | markdownify }}</small>{{ end }}</td>
     </tr>
     {{- end }}
   </tbody>

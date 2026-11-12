@@ -196,3 +196,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .node-list ul { columns: 16rem; margin: .5rem 0; padding-left: 1.1rem; }
 .node-short { font: 600 .8rem ui-monospace, monospace; color: var(--muted); }
 a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font-size: .85em; text-decoration: none; }
+/* Typed words, like `test` in a channel's purpose: an unmistakable chip. */
+.channels dd code, .channels-table td code:not(:first-child), .prose p code, .prose li code { font-weight: 700; }
+.channels dd code, .channels-table td:last-child code { background: color-mix(in srgb, var(--online) 18%, var(--bg)); color: var(--accent-2); padding: .05em .45em; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--online) 45%, transparent); }

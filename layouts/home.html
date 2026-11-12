@@ -55,7 +55,7 @@
       {{ with site.Params.channels }}
         <h3>{{ T "channels" }}</h3>
         <dl class="channels">
-          {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose }}</dd>{{ end }}
+          {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose | markdownify }}{{ with .note }}<br><small>{{ . | markdownify }}</small>{{ end }}</dd>{{ end }}
         </dl>
       {{ end }}
     </section>
