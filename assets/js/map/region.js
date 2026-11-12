@@ -35,24 +35,6 @@ export function frameBorders(map, features) {
   frameRegion(map, unionBbox(features));
 }
 
-// Hidden by default would hide real neighbours across the border; dimmed by
-// default (in the node layer), hidden on request.
-export class ForeignToggle {
-  constructor(label, onChange) { this.label = label; this.onChange = onChange; }
-  onAdd() {
-    const box = document.createElement("label");
-    box.className = "maplibregl-ctrl maplibregl-ctrl-group map-toggle";
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.checked = true;
-    input.addEventListener("change", () => this.onChange(input.checked));
-    box.append(input, " ", this.label);
-    this.el = box;
-    return box;
-  }
-  onRemove() { this.el.remove(); }
-}
-
 export function setForeignVisible(map, visible) {
   for (const id of ["node-points", "node-labels"]) {
     if (!map.getLayer(id)) continue;

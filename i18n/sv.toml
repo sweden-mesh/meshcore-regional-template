@@ -33,15 +33,9 @@ other = "Kartan kunde inte laddas."
 [map_noscript]
 other = "Kartan behöver JavaScript."
 [map_foreign_toggle]
-other = "Visa noder som troligen står utanför regionen"
+other = "Utanför regionen"
 [map_links]
 other = "Grannlänkar"
-[map_links_all]
-other = "alla"
-[map_links_selected]
-other = "vald nod"
-[map_links_off]
-other = "av"
 [map_live]
 other = "Live-trafik"
 [packets_recent]

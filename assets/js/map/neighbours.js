@@ -56,30 +56,12 @@ export function selectedLinks(node, rows, now = Date.now()) {
 const colour = ["case", ["==", ["get", "count"], 0], "#64748b",
   ["interpolate", ["linear"], ["log10", ["max", ["get", "count"], 1]], 0, "#dc2626", 1.3, "#eab308", 2.2, "#16a34a"]];
 
-export function addLinkLayer(map, data) {
-  if (map.getSource("links")) { map.getSource("links").setData(data); return; }
-  map.addSource("links", { type: "geojson", data });
-  map.addLayer({ id: "links", type: "line", source: "links",
+export function addLinkLayer(map, data, id = "links") {
+  if (map.getSource(id)) { map.getSource(id).setData(data); return; }
+  map.addSource(id, { type: "geojson", data });
+  map.addLayer({ id, type: "line", source: id,
     layout: { "line-cap": "round" },
     paint: { "line-color": colour, "line-width": ["case", ["==", ["get", "count"], 0], 1.2, 2.5],
       "line-opacity": ["-", 0.85, ["*", 0.6, ["get", "age"]]] } },
     map.getLayer("node-points") ? "node-points" : undefined);
-}
-
-export class LinkModeControl {
-  constructor(labels, mode, onChange) { this.labels = labels; this.mode = mode; this.onChange = onChange; }
-  onAdd() {
-    const box = document.createElement("label");
-    box.className = "maplibregl-ctrl maplibregl-ctrl-group map-toggle";
-    const sel = document.createElement("select");
-    for (const [value, text] of Object.entries(this.labels.options)) {
-      const o = document.createElement("option"); o.value = value; o.textContent = text; sel.append(o);
-    }
-    sel.value = this.mode;
-    sel.addEventListener("change", () => this.onChange(sel.value));
-    box.append(this.labels.title, " ", sel);
-    this.el = box;
-    return box;
-  }
-  onRemove() { this.el.remove(); }
 }

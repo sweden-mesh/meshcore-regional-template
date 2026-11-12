@@ -8,9 +8,9 @@ import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation } from "./flow.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
-import { ForeignToggle as Toggle } from "./region.js";
-import { allLinks, selectedLinks, addLinkLayer, LinkModeControl } from "./neighbours.js";
-import { loadBorders, addBorderLayers, frameBorders, ForeignToggle, setForeignVisible } from "./region.js";
+import { allLinks, selectedLinks, addLinkLayer } from "./neighbours.js";
+import { loadBorders, addBorderLayers, frameBorders, setForeignVisible } from "./region.js";
+import { MapPanel } from "./panel.js";
 
 const el = document.getElementById("map");
 
@@ -22,32 +22,50 @@ async function start() {
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
-  const state = { nodes: [], borders: [], showForeign: true, linkMode: "all", selected: null };
+  const state = { nodes: [], borders: [], showForeign: true, showLinks: true, selected: null, onLive: null };
   const popup = attachPopups(map, maplibregl, client);
-  const drawLinks = async () => {
-    if (state.linkMode === "off") return addLinkLayer(map, { type: "FeatureCollection", features: [] });
-    if (state.linkMode === "all" || !state.selected) return addLinkLayer(map, allLinks(state.nodes));
+  const empty = { type: "FeatureCollection", features: [] };
+  // All known links in grey (toggle), plus the clicked node's links coloured by
+  // how often they are heard (always, while its popup is open).
+  const drawLinks = () => addLinkLayer(map, state.showLinks ? allLinks(state.nodes) : empty);
+  const drawSelected = async () => {
+    if (!state.selected) return addLinkLayer(map, empty, "links-selected");
     const node = state.nodes.find((n) => n.id === state.selected);
     try {
-      addLinkLayer(map, selectedLinks(node, await client.get(`/nodes/${encodeURIComponent(state.selected)}/neighbors`)));
-    } catch { addLinkLayer(map, { type: "FeatureCollection", features: [] }); }
+      addLinkLayer(map, selectedLinks(node, await client.get(`/nodes/${encodeURIComponent(state.selected)}/neighbors`)), "links-selected");
+    } catch { addLinkLayer(map, empty, "links-selected"); }
   };
-  map.on("click", "node-points", (e) => { state.selected = e.features[0].properties.id; if (state.linkMode === "selected") drawLinks(); });
-  popup.on("close", () => { if (state.linkMode === "selected") { state.selected = null; drawLinks(); } });
-  map.addControl(new LinkModeControl({ title: ds.linksLabel || "Grannlänkar",
-    options: { all: ds.linksAll || "alla", selected: ds.linksSelected || "vald nod", off: ds.linksOff || "av" } },
-    state.linkMode, (m) => { state.linkMode = m; drawLinks(); }), "top-left");
+  map.on("click", "node-points", (e) => { state.selected = e.features[0].properties.id; drawSelected(); });
+  popup.on("close", () => { state.selected = null; drawSelected(); });
+  map.addControl(new MapPanel({
+    toggles: [
+      { key: "live", label: ds.liveLabel || "Live-trafik", on: true },
+      { key: "links", label: ds.linksLabel || "Grannlänkar", on: true },
+      { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: true },
+    ],
+    legend: [
+      { swatch: "pill-active", label: "repeater, hörd nyligen" },
+      { swatch: "pill-stale", label: "repeater, inte hörd på länge" },
+      { swatch: "pill-observer", label: "◉ observatör (rapporterar till kartan)" },
+      { swatch: "link", label: "grannlänk" },
+      { swatch: "link-strong", label: "vald nods länkar: röd sällan, grön ofta" },
+      { swatch: "flow", label: "paket i rörelse" },
+    ],
+    onToggle: (key, on) => {
+      if (key === "links") { state.showLinks = on; drawLinks(); }
+      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
+      if (key === "live") state.onLive?.(on);
+    },
+  }), "top-left");
   const draw = () => {
     addNodeLayers(map, nodesToGeoJSON(state.nodes));
     addBorderLayers(map, state.borders);
     setForeignVisible(map, state.showForeign);
     drawLinks();
+    drawSelected();
   };
   // A style switch (dark mode) drops every layer; put them back.
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
-  map.addControl(new ForeignToggle(ds.foreignLabel || "Noder utanför regionen", (v) => {
-    state.showForeign = v; setForeignVisible(map, v);
-  }), "top-left");
   let live = true;
   try {
     const [nodes, borders] = await Promise.all([
@@ -161,10 +179,10 @@ function startLive(map, ds, client, iatas, state, draw) {
       try { state.nodes = publicNodes(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
     },
   });
-  map.addControl(new Toggle(ds.liveLabel || "Live-trafik", (on) => {
+  state.onLive = (on) => {
     flows.setEnabled(on);
     if (on) feed.start(); else feed.stop();
-  }), "top-left");
+  };
   feed.start();
   return feed;
 }
