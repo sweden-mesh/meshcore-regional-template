@@ -15,7 +15,9 @@ the region site wins.** That works for every kind of file:
 | the home page text | `content/_index.md` |
 | a layout or part of one | `layouts/…`, e.g. `layouts/_partials/footer.html` |
 | a UI string | `i18n/sv.toml` (only the keys you change) |
-| styles or scripts | `assets/css/main.css`, `assets/js/map.js` |
+| styles or scripts | `assets/css/main.css`, `assets/js/…` |
+| the logo (header) | `assets/images/logo.svg` (square, shown at 32 px) |
+| the favicon | `static/favicon.svg` |
 
 ## Settings
 

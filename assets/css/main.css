@@ -36,7 +36,8 @@ a { color: var(--accent); }
 .site-header, .site-footer, .content, .map-section, .hero, .sections { max-width: 72rem; margin: 0 auto; padding: 1rem; }
 .site-header { display: flex; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--line); }
 .site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
-.brand { font-weight: 700; text-decoration: none; color: var(--fg); }
+.brand { font-weight: 700; text-decoration: none; color: var(--fg); display: inline-flex; align-items: center; gap: .6rem; }
+.brand-logo { width: 32px; height: 32px; display: block; }
 .map { height: min(60vh, 36rem); min-height: 18rem; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-map); }
 .map-failed, .map noscript { display: grid; place-items: center; height: 100%; color: var(--muted); }
 .map-note { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }

@@ -5,3 +5,4 @@ EnforceHTML5: true
 CheckFavicon: false
 CheckMetaRefresh: true
 OutputDir: exampleSite/resources/htmltest
+IgnoreAltEmpty: true   # decorative images (the logo beside the site name) use alt="" on purpose; a missing alt still fails
