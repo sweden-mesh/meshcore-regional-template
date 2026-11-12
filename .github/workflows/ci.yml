@@ -1,21 +1,23 @@
-name: build
+name: check
 on:
   push:
   pull_request:
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.169.0
+      HTMLTEST_VERSION: 0.17.0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: Install Hugo
+      - name: Install Hugo and htmltest
         run: |
           curl -sSLo hugo.tar.gz "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
           tar -xzf hugo.tar.gz hugo && sudo install hugo /usr/local/bin/hugo
-      - name: Build the example site
-        working-directory: exampleSite
-        run: hugo --gc --minify
+          curl -sSLo htmltest.tar.gz "https://github.com/wjdp/htmltest/releases/download/v${HTMLTEST_VERSION}/htmltest_${HTMLTEST_VERSION}_linux_amd64.tar.gz"
+          tar -xzf htmltest.tar.gz htmltest && sudo install htmltest /usr/local/bin/htmltest
+      - name: Build and check the example site
+        run: scripts/check.sh

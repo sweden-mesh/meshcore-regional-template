@@ -36,6 +36,9 @@ Update the template later with `hugo mod get -u`.
 Hugo ≥ 0.146 and Go. `cd exampleSite && hugo server` builds the example site against the
 template in the parent directory.
 
+`scripts/check.sh` is what CI runs: the example site built with warnings as errors, then
+[htmltest](https://github.com/wjdp/htmltest) over the output (internal links, HTML5).
+
 ## Live data
 
 The map talks to a [Beacon](https://github.com/MeshCore-Beacon) backend over its public REST

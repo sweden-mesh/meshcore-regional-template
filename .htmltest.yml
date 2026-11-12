@@ -1,0 +1,7 @@
+DirectoryPath: exampleSite/public
+CheckExternal: false
+IgnoreDirectoryMissingTrailingSlash: true
+EnforceHTML5: true
+CheckFavicon: false
+CheckMetaRefresh: true
+OutputDir: exampleSite/resources/htmltest
