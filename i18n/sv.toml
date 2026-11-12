@@ -110,3 +110,5 @@ other = "Region"
 other = "Används till"
 [ch_no_scope]
 other = "ingen"
+[firmware_link]
+other = "Firmware: välj bild för din radio ↗"

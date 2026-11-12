@@ -16,6 +16,10 @@
   center = [62.0, 16.0]      # map start, [lat, lng]
   zoom = 5                   # map start zoom
 
+[params.firmware]
+  picker = "https://sweden-mesh.github.io/firmware/"   # firmware images by board and release
+  flasher = "https://meshcore.io/flasher"              # the official web flasher (Web Serial)
+
 [params.radio]
   preset = "EU/UK (Narrow)"  # the preset's name in the MeshCore app
   freq = 869.618             # MHz
