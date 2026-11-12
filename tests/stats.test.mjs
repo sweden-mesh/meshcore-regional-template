@@ -2,12 +2,14 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { summarize, formatCount } from "../assets/js/stats/stats.js";
 
-test("summarize counts repeaters, online observers and packets", () => {
-  const s = summarize(
-    [{ nodeType: 2, count: 17 }, { nodeType: 1, count: 2 }],
-    [{ status: "online" }, { status: "offline" }, { status: "online" }],
-    [{ count: 474 }, { count: 117 }]);
-  assert.deepEqual(s, { repeaters: 17, online: 2, packets: 591 });
+test("observers are counted among the region's repeaters, from one list", () => {
+  const nodes = [
+    { nodeType: 2, isObserver: true }, { nodeType: 2, isObserver: false }, { nodeType: 2, isObserver: true },
+    { nodeType: 2, isObserver: true, possiblyForeign: true }, { nodeType: 1, isObserver: false }, { nodeType: 4 },
+  ];
+  const s = summarize(nodes, [{ count: 474 }, { count: 117 }]);
+  assert.deepEqual(s, { repeaters: 3, online: 2, packets: 591 });
+  assert.ok(s.online <= s.repeaters);
 });
 test("formatCount uses Swedish decimals and k", () => {
   assert.equal(formatCount(591), "591");

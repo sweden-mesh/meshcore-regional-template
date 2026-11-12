@@ -1,11 +1,15 @@
-// The "Nätet" card: live counts from Beacon. Repeaters from /stats/node-types,
-// observers online from /observers, packets in the last 24 h from
-// /stats/payload-breakdown (its default window). Counts only: no positions,
-// names or message content.
+// The "Nätet" card: live counts from Beacon. Both node counts come from one
+// list, /nodes for the region, so they are consistent: repeaters heard in the
+// region and not placed elsewhere, and how many of those are observers (a
+// subset). (The earlier /stats/node-types + /observers pair counted different
+// populations: observers that had not yet advertised as nodes, and all node
+// types; two equal numbers looked wrong. Operator's review, 2026-11-12.)
+// Packets in the last 24 h come from /stats/payload-breakdown.
 
-export function summarize(nodeTypes, observers, breakdown) {
-  const repeaters = (nodeTypes || []).filter((t) => t.nodeType === 2).reduce((n, t) => n + (t.count || 0), 0);
-  const online = (observers || []).filter((o) => o.status === "online").length;
+export function summarize(nodes, breakdown) {
+  const reps = (nodes || []).filter((n) => n.nodeType === 2 && !n.possiblyForeign);
+  const repeaters = reps.length;
+  const online = reps.filter((n) => n.isObserver).length;
   const packets = (breakdown || []).reduce((n, b) => n + (b.count || 0), 0);
   return { repeaters, online, packets };
 }
@@ -18,12 +22,11 @@ export function formatCount(n) {
 }
 
 export async function fillStats(el, client, iatas) {
-  const [types, observers, breakdown] = await Promise.all([
-    client.get("/stats/node-types", { iatas }),
-    client.getAll("/observers", { iatas, limit: 200 }),
+  const [nodes, breakdown] = await Promise.all([
+    client.getAll("/nodes", { iatas, limit: 2000 }),
     client.get("/stats/payload-breakdown", { iatas }),
   ]);
-  const s = summarize(types, observers, breakdown);
+  const s = summarize(nodes, breakdown);
   for (const [key, value] of Object.entries(s)) {
     for (const target of document.querySelectorAll(`[data-stat="${key}"]`)) target.textContent = formatCount(value);
   }

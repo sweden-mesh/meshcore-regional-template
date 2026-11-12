@@ -63,9 +63,9 @@ other = "Bygger på"
 [source_changes]
 other = "Ändrat:"
 [stat_repeaters]
-other = "repeatrar"
+other = "repeatrar hörda"
 [stat_observers]
-other = "observatörer online"
+other = "av dem observatörer"
 [stat_packets]
 other = "paket senaste dygnet"
 [breadcrumb]
