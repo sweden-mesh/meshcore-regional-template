@@ -16,6 +16,13 @@
   center = [62.0, 16.0]      # map start, [lat, lng]
   zoom = 5                   # map start zoom
 
+[params.radio]
+  preset = "EU/UK (Narrow)"  # the preset's name in the MeshCore app
+  freq = 869.618             # MHz
+  bw = 62.5                  # kHz
+  sf = 8
+  cr = 8
+
 [params.map]
   maplibre = "6.16.0"        # vendored under static/lib/maplibre-gl/<version>/ (not vendor/: Go module downloads drop vendor directories)
   style_light = "https://tiles.openfreemap.org/styles/liberty"

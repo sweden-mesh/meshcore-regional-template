@@ -32,6 +32,8 @@ Sverige använder två nivåer:
 | `{{< region "scope" >}}` | Trafik inom {{< region "name" >}} |
 | (ingen) | Trafik utan regionetikett; i listan heter den `*` |
 
+{{< settings >}}
+
 Länets namn bestäms av länet självt; finns inget beslut används ett uppmätt eller föreslaget
 namn. Det finns inga kommunregioner.
 

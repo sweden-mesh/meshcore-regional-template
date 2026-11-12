@@ -32,6 +32,7 @@ this repository's `hugo.toml`.
 | `region.iatas` | observer IATA codes (MQTT topic) whose traffic the map shows, e.g. `["JKG"]` |
 | `region.scope` | the region's MeshCore scope, e.g. `se-jkp` |
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
+| `radio.preset`, `radio.freq`, `radio.bw`, `radio.sf`, `radio.cr` | the region's radio preset (default EU/UK Narrow, 869.618 MHz, BW 62.5, SF8, CR8), shown by `{{</* settings */>}}` and on the landing page |
 | `map.style_light`, `map.style_dark` | basemap style URLs; default OpenFreeMap `liberty` and `dark` (no key, attribution shown by the map) |
 | `map.companions` | `false` (default): companion nodes (people's handsets) are left off the map, the snapshot and the packet routes, because their position can be a home |
 | `map.maplibre` | the vendored MapLibre version under `static/lib/maplibre-gl/` |
@@ -85,6 +86,7 @@ Plain Markdown plus:
   title after the marker, folded with `[!NOTE]-` (closed) or `[!NOTE]+` (open).
 - Code-block titles: ```` ```sh {title="Konsol"} ````.
 - Tabs: `{{</* tabs */>}}{{</* tab "Rubrik" */>}}…{{</* /tab */>}}{{</* /tabs */>}}`, no JavaScript.
+- `{{</* settings */>}}`: a box with the radio preset, region and IATA codes.
 - Region values: `{{</* region "scope" */>}}`, `{{</* region "name" */>}}`; never write a region's
   name or scope into a shared guide.
 - A page adapted from elsewhere names its source in front matter
