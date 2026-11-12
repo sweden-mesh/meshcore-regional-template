@@ -20,6 +20,9 @@
   picker = "https://sweden-mesh.github.io/firmware/"   # firmware images by board and release
   flasher = "https://meshcore.io/flasher"              # the official web flasher (Web Serial)
 
+[params.observer]
+  preset = "meshat.se"       # the Observer firmware's MQTT preset this region's map is fed from
+
 [params.radio]
   preset = "EU/UK (Narrow)"  # the preset's name in the MeshCore app
   freq = 869.618             # MHz
