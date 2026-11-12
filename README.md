@@ -41,13 +41,21 @@ this repository's `hugo.toml`.
 ## Start a region site
 
 1. Copy `exampleSite/` into a new repository.
-2. Delete the `replacements` line in `hugo.toml`, set your `module` path in `go.mod`, then run
+2. Delete the `replacements` line and `go.mod` from the copy, then run
+   `hugo mod init <your module path>` and
    `hugo mod get github.com/sweden-mesh/meshcore-regional-template@latest`.
 3. Fill in `[params.region]` and `[params.beacon]`, and write `content/_index.md`.
 4. Build with `hugo --gc --minify`. The output in `public/` is static and can be hosted
    anywhere; CI needs Hugo (extended not required) and Go.
 
-Update the template later with `hugo mod get -u`.
+Update the template later with `hugo mod get -u` (newest tag) or
+`hugo mod get github.com/sweden-mesh/meshcore-regional-template@v0.2.0` (a given one). Dependabot
+can do it for you: add `.github/dependabot.yml` with the `gomod` ecosystem to the region repo.
+
+## Releases
+
+Tags `vX.Y.Z` on `main`, described in `CHANGELOG.md`; the version rules are at the top of that
+file. To release: update `CHANGELOG.md`, commit, `git tag -a vX.Y.Z -m "…"`, push the tag.
 
 ## Develop the template
 
