@@ -199,3 +199,25 @@ a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font
 /* Typed words, like `test` in a channel's purpose: an unmistakable chip. */
 .channels dd code, .channels-table td code:not(:first-child), .prose p code, .prose li code { font-weight: 700; }
 .channels dd code, .channels-table td:last-child code { background: color-mix(in srgb, var(--online) 18%, var(--bg)); color: var(--accent-2); padding: .05em .45em; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--online) 45%, transparent); }
+
+/* Background (operator's review): a slow four-colour gradient (the effect of
+   codepen P1N2O/pyBNzX at 1/10 speed: 150 s a cycle) with soft blurred blobs
+   lighter than it drifting on top (after shrinathprabhu/dyvOWma). Kept pale so
+   text contrast holds; off for prefers-reduced-motion. */
+:root { --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9); }
+@media (prefers-color-scheme: dark) {
+  :root { --bg-a: #0b1a24; --bg-b: #0b141b; --bg-c: #0c1f19; --bg-d: #101a26; --blob: rgba(120, 175, 205, .14); }
+}
+body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; animation: bg-shift 150s ease infinite; }
+@keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.bg-blobs span { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: var(--blob); filter: blur(70px); opacity: .9; animation: blob-drift 90s ease-in-out infinite alternate; }
+.bg-blobs span:nth-child(1) { top: -12vmax; left: -8vmax; }
+.bg-blobs span:nth-child(2) { top: 30vh; right: -14vmax; width: 36vmax; height: 36vmax; animation-duration: 110s; animation-delay: -30s; }
+.bg-blobs span:nth-child(3) { bottom: -16vmax; left: 20vw; width: 48vmax; height: 48vmax; animation-duration: 130s; animation-delay: -60s; }
+.bg-blobs span:nth-child(4) { top: 55vh; left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 100s; animation-delay: -15s; }
+@keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(12vw, 8vh) scale(1.12); } 66% { transform: translate(-6vw, 14vh) scale(.92); } 100% { transform: translate(8vw, -6vh) scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { body, .bg-blobs span { animation: none; } }
+/* Surfaces stay readable over the moving background. */
+.card, .pager a, .guide-grid a, .settings-box, .namecheck, .codeblock { background-color: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(6px); }
+.card-surface { background-color: color-mix(in srgb, var(--surface) 88%, transparent); }
