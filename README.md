@@ -66,6 +66,21 @@ HUGO_PARAMS_REGION_IATAS='["JKG"]' HUGO_PARAMS_BEACON_URL=https://beacon.meshcor
 dependencies), the example site built with warnings as errors, then
 [htmltest](https://github.com/wjdp/htmltest) over the output (internal links, HTML5).
 
+## Writing content
+
+Plain Markdown plus:
+
+- Alerts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`, an optional
+  title after the marker, folded with `[!NOTE]-` (closed) or `[!NOTE]+` (open).
+- Code-block titles: ```` ```sh {title="Konsol"} ````.
+- Tabs: `{{</* tabs */>}}{{</* tab "Rubrik" */>}}…{{</* /tab */>}}{{</* /tabs */>}}`, no JavaScript.
+- Region values: `{{</* region "scope" */>}}`, `{{</* region "name" */>}}`; never write a region's
+  name or scope into a shared guide.
+- A page adapted from elsewhere names its source in front matter
+  (`source: {title, url, license, changes}`); the page prints the credit that CC BY requires.
+
+`exampleSite/content/om-regionen.md` shows every component.
+
 ## Live data
 
 At build time the template also fetches a **snapshot** of the region's nodes and borders from

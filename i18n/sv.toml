@@ -44,3 +44,17 @@ other = "Stäng"
 other = "Beacon kan inte nås just nu; kartan visar läget från {at}."
 [map_offline_note]
 other = "Beacon kan inte nås just nu."
+[alert_note]
+other = "Obs"
+[alert_tip]
+other = "Tips"
+[alert_important]
+other = "Viktigt"
+[alert_warning]
+other = "Varning"
+[alert_caution]
+other = "Se upp"
+[source_based_on]
+other = "Bygger på"
+[source_changes]
+other = "Ändrat:"

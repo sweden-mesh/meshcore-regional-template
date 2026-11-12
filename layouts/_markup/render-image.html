@@ -1,0 +1,5 @@
+{{- $src := .Destination -}}
+{{- $img := .Page.Resources.Get .Destination -}}
+{{- with $img }}{{ $src = .RelPermalink }}{{ end -}}
+<img src="{{ $src }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ with $img }}{{ if in (slice "image/png" "image/jpeg" "image/webp" "image/gif") .MediaType.Type }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}{{ end }} loading="lazy">
+{{- /* chomp trailing newline */ -}}

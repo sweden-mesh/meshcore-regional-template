@@ -1,0 +1,6 @@
+{{- /* Code blocks; ```sh {title="Konsol"} adds a title bar. */ -}}
+{{- $title := .Attributes.title -}}
+<div class="codeblock">
+  {{- with $title }}<div class="codeblock-title">{{ . }}</div>{{ end -}}
+  {{- transform.Highlight .Inner .Type (dict "noClasses" false) -}}
+</div>

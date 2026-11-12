@@ -1,0 +1,10 @@
+{{- /* Content tabs without JavaScript: radio inputs + labels; the first tab is open. */ -}}
+{{- $inner := .Inner -}}
+{{- $name := printf "tabs-%d-%d" .Page.File.UniqueID .Ordinal | default (printf "tabs-%d" .Ordinal) -}}
+<div class="tabs">
+  {{- range $i, $t := .Store.Get "tabs" -}}
+    <input type="radio" name="{{ $name }}" id="{{ $name }}-{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
+    <label for="{{ $name }}-{{ $i }}">{{ $t.title }}</label>
+    <div class="tab-panel">{{ $t.body }}</div>
+  {{- end -}}
+</div>
