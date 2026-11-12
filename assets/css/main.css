@@ -221,3 +221,4 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 /* Surfaces stay readable over the moving background. */
 .card, .pager a, .guide-grid a, .settings-box, .namecheck, .codeblock { background-color: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(6px); }
 .card-surface { background-color: color-mix(in srgb, var(--surface) 88%, transparent); }
+.map-pick { height: 22rem; }

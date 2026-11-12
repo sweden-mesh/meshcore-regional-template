@@ -1,0 +1,9 @@
+{{- /* A map for picking a position (the wizards). Same settings as the main map. */ -}}
+{{- $r := site.Params.region -}}{{- $m := site.Params.map -}}
+{{- $ml := printf "lib/maplibre-gl/%s/" $m.maplibre -}}
+<link rel="stylesheet" href="{{ printf "%smaplibre-gl.css" $ml | relURL }}">
+<div class="map map-pick" role="application" aria-label="{{ T "pick_label" }}"
+     data-maplibre="{{ printf "%smaplibre-gl.mjs" $ml | relURL }}"
+     data-style-light="{{ $m.style_light }}" data-style-dark="{{ $m.style_dark }}"
+     data-beacon="{{ site.Params.beacon.url }}" data-iatas="{{ $r.iatas | jsonify }}"
+     data-center="{{ $r.center | jsonify }}" data-zoom="{{ $r.zoom }}"></div>

@@ -136,3 +136,5 @@ other = "observatör"
 other = "Trafikfokus"
 [seo_home_title]
 other = "MeshCore i {{ .Short }} – karta, guider och kanaler"
+[pick_label]
+other = "Karta: klicka där repeatern ska stå"
