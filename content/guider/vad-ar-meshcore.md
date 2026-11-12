@@ -59,7 +59,7 @@ floodas över hela nätet igen. Det sparar sändningstid, och sändningstid är 
 LoRa-nät: bara en nod i taget kan sända på samma frekvens.
 
 Nätet i {{< region "name" >}} använder regionen (scope) `{{< region "scope" >}}`, som håller
-lokal trafik lokal. Mer om det i guiden om regioner.
+lokal trafik lokal. Mer om det i [Regioner](../regioner/).
 
 ## Vanliga ord
 
@@ -86,4 +86,5 @@ repeatrar värda mer än många lågt placerade.
 
 ## Nästa steg
 
+- [Regioner](../regioner/): vilken region du ska använda här
 - Kartan på [startsidan](/): se vilka repeatrar som finns nära dig
