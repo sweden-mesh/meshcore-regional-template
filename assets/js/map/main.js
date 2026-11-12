@@ -4,6 +4,9 @@ import { createMap } from "./basemap.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers } from "./nodes.js";
 import { attachPopups } from "./popup.js";
+import { LiveFeed } from "../beacon/live.js";
+import { FlowLayer, chainFromObservation } from "./flow.js";
+import { ForeignToggle as Toggle } from "./region.js";
 import { allLinks, selectedLinks, addLinkLayer, LinkModeControl } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, ForeignToggle, setForeignVisible } from "./region.js";
 
@@ -49,7 +52,43 @@ async function start() {
   state.nodes = nodes; state.borders = borders;
   const ready = () => { draw(); frameBorders(map, borders); };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
+  startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };
+}
+
+// The observer's own node (and position), matched by public key: observer
+// display names often differ from the node's advertised name.
+function observerPoint(state, key) {
+  if (!key) return null;
+  const k = key.toLowerCase();
+  const n = state.nodes.find((x) => (x.publicKey || "").toLowerCase() === k);
+  return n && Number.isFinite(n.lat) && !(n.lat === 0 && n.lng === 0) ? { id: n.id, lat: n.lat, lng: n.lng } : null;
+}
+
+function startLive(map, ds, client, iatas, state, draw) {
+  if (!iatas.length || !("WebSocket" in window)) return;
+  const flows = new FlowLayer(map);
+  map.on("style.load", () => flows.install());
+  const feed = new LiveFeed(ds.beacon, {
+    iatas, events: ["packetObservation"], resolvePath: true, includeObserverKey: true,
+    onEvent: (name, data) => {
+      if (name !== "packetObservation") return;
+      const o = data.observation;
+      const obsPt = observerPoint(state, o.observerPublicKey);
+      flows.glow(obsPt);
+      flows.add(chainFromObservation(o, obsPt), { type: data.packet.payloadTypeName });
+    },
+    // Missed events are only in REST: refresh the nodes.
+    onGap: async () => {
+      try { state.nodes = await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }); draw(); } catch { /* next gap */ }
+    },
+  });
+  map.addControl(new Toggle(ds.liveLabel || "Live-trafik", (on) => {
+    flows.setEnabled(on);
+    if (on) feed.start(); else feed.stop();
+  }), "top-left");
+  feed.start();
+  return feed;
 }
 
 if (el) {

@@ -20,14 +20,14 @@ export function backoffMs(attempt, closeCode, rand = Math.random) {
 }
 
 export class LiveFeed {
-  constructor(base, { iatas, events, payloadTypes, resolvePath = false, onEvent = () => {}, onGap = () => {},
+  constructor(base, { iatas, events, payloadTypes, resolvePath = false, includeObserverKey = false, onEvent = () => {}, onGap = () => {},
     onStatus = () => {}, WebSocketImpl = globalThis.WebSocket, timers = globalThis, doc = globalThis.document,
     rand = Math.random } = {}) {
     if (!Array.isArray(iatas) || iatas.length === 0) {
       // An empty list means "every IATA" to Beacon: never send one.
       throw new Error("LiveFeed needs at least one IATA");
     }
-    Object.assign(this, { url: wsUrl(base), iatas, events, payloadTypes, resolvePath, onEvent, onGap, onStatus,
+    Object.assign(this, { url: wsUrl(base), iatas, events, payloadTypes, resolvePath, includeObserverKey, onEvent, onGap, onStatus,
       WebSocketImpl, timers, doc, rand });
     this.attempt = 0;
     this.seq = 0;
@@ -54,7 +54,7 @@ export class LiveFeed {
 
   configure(resolvePath) {
     this.resolvePath = resolvePath;
-    this.send({ type: "configure", resolvePath, includeObserverKey: false, includeRepeats: false });
+    this.send({ type: "configure", resolvePath, includeObserverKey: this.includeObserverKey, includeRepeats: false });
   }
 
   send(msg) {

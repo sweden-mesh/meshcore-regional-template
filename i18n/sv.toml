@@ -32,3 +32,5 @@ other = "alla"
 other = "vald nod"
 [map_links_off]
 other = "av"
+[map_live]
+other = "Live-trafik"

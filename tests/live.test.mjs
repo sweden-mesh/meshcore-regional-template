@@ -33,7 +33,7 @@ test("an empty IATA list is refused: Beacon would send every region", () => {
 });
 
 test("after hello: subscribe with the region's IATAs, configure, ping every 30 s", () => {
-  const h = harness({ resolvePath: true });
+  const h = harness({ resolvePath: true, includeObserverKey: true });
   h.feed.start();
   h.sockets[0].serverSays({ v: 1, type: "hello" });
   const [sub, cfg] = h.sockets[0].sent;
@@ -41,6 +41,7 @@ test("after hello: subscribe with the region's IATAs, configure, ping every 30 s
   assert.deepEqual(sub.scope, { iatas: ["JKG"] });
   assert.equal(cfg.type, "configure");
   assert.equal(cfg.resolvePath, true);
+  assert.equal(cfg.includeObserverKey, true);
   assert.equal(h.intervals[0].ms, 30000);
   assert.deepEqual(h.got.status, ["connecting", "live"]);
 });
