@@ -1,0 +1,114 @@
+{
+ "items": [
+  {
+   "id": "52e4a5fb-620c-42e8-a849-7e285e394d9b",
+   "publicKey": "d3d5cb22269f2592ab41a734d15d1622389ed921440edbeab85c5bf4a294405b",
+   "nodeType": 2,
+   "nodeTypeName": "repeater",
+   "name": "SKYNET 5330 MUNKEBO",
+   "isObserver": false,
+   "lat": 55.456135,
+   "lng": 10.546938,
+   "iatas": [
+    {
+     "iata": "MMX",
+     "lastHeard": 1794495446060
+    },
+    {
+     "iata": "HAD",
+     "lastHeard": 1794484641288
+    },
+    {
+     "iata": "GOT",
+     "lastHeard": 1793966222439
+    },
+    {
+     "iata": "RNB",
+     "lastHeard": 1793933803811
+    },
+    {
+     "iata": "JKG",
+     "lastHeard": 1793875936236
+    },
+    {
+     "iata": "KLR",
+     "lastHeard": 1793843531415
+    }
+   ],
+   "knownNeighborCount": 3,
+   "neighborIds": [
+    "42c03d7d-1496-42b8-94f2-36338e4b1435",
+    "a956fc51-5be4-41c5-a208-2d47fe96a744",
+    "fb20e827-0de2-46da-80da-9bad0cadbed0"
+   ],
+   "lastSeen": 1794495446058,
+   "stale": false,
+   "possiblyForeign": true
+  },
+  {
+   "id": "67eb2b89-f69d-42ed-bd41-05aed62c988a",
+   "publicKey": "38fea5b0c9ba00f58a0ff58a364ca4962cd8e99b1739a9d4e8356089cceb7c3e",
+   "nodeType": 2,
+   "nodeTypeName": "repeater",
+   "name": "SE1290-VAE01-OffGrid-JH",
+   "isObserver": false,
+   "lat": 55.999803,
+   "lng": 14.088757,
+   "radio": "869.618,62.5,8",
+   "iatas": [
+    {
+     "iata": "MMX",
+     "lastHeard": 1794494961939
+    },
+    {
+     "iata": "RNB",
+     "lastHeard": 1794469766871
+    },
+    {
+     "iata": "KLR",
+     "lastHeard": 1794037795823
+    },
+    {
+     "iata": "HAD",
+     "lastHeard": 1793922605679
+    },
+    {
+     "iata": "GOT",
+     "lastHeard": 1793893790600
+    },
+    {
+     "iata": "JKG",
+     "lastHeard": 1793836199764
+    },
+    {
+     "iata": "VXO",
+     "lastHeard": 1793432985752
+    }
+   ],
+   "defaultScope": "#se",
+   "knownNeighborCount": 12,
+   "neighborIds": [
+    "266abe7c-fa9e-4baf-a6d3-4ba337fb0050",
+    "27fffceb-c177-4982-944b-1b499193ae9a",
+    "2d60eef3-1152-462e-9c1f-a8baf0681bc6",
+    "3fd53bd7-bb9b-44bd-b263-8de3a95a4a7e",
+    "42d10cae-b52d-4743-a72d-ca7df42ff3df",
+    "744b5abf-f938-4ae0-bf07-e0d34f6cc841",
+    "8d17cd5c-b0f2-40b6-84a8-9c5e159368a1",
+    "97c07b6c-6e65-437a-9b0f-cdffd64560d0",
+    "b13772af-f7a6-4e9a-b7ef-ede77e083a2e",
+    "b1809f5b-be73-497c-942d-34a08a0366d3",
+    "bb9502ac-1d14-4224-9182-ca7388dcc205",
+    "f9a447b4-7812-4904-bf66-12ce60296803"
+   ],
+   "lastSeen": 1794494961937,
+   "stale": false,
+   "possiblyForeign": false
+  }
+ ],
+ "nextCursor": 1794494961937,
+ "hasMore": true,
+ "nextPageCursor": "v1:1794494961937956:67eb2b89-f69d-42ed-bd41-05aed62c988a",
+ "sort": "lastSeen",
+ "order": "desc"
+}

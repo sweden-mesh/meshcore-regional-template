@@ -1,0 +1,23 @@
+{
+ "items": [
+  {
+   "id": "dac2d9f3-49c1-4f4f-b3a6-376cdf745ffd",
+   "displayName": "SE-JKP-Gräshagen-S",
+   "observerType": "meshcore/v1.18.0.6-observer-860011d",
+   "iata": "JKG",
+   "status": "online",
+   "radio": "869.618,62.5,8",
+   "scopes": [
+    "#se",
+    "#se-jkg",
+    "#se-jkp",
+    "#se03",
+    "#se20",
+    "#se22"
+   ]
+  }
+ ],
+ "nextCursor": 1794495639243,
+ "hasMore": true,
+ "nextPageCursor": "v1:1794495639243143:dac2d9f3-49c1-4f4f-b3a6-376cdf745ffd"
+}
