@@ -35,7 +35,7 @@
           <div><dt>{{ T "stat_packets" }}</dt><dd data-stat="packets">–</dd></div>
         </dl>
         {{ end }}
-        <details class="settings-box"><summary>{{ T "set_title" }}</summary>{{ partial "settings.html" . }}</details>
+        {{ partial "settings.html" . }}
       </div>
       {{ with site.Params.beacon.url }}
       {{ with resources.Get "js/stats/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
