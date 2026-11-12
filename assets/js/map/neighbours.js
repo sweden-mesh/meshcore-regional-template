@@ -63,7 +63,7 @@ export function addLinkLayer(map, data) {
     layout: { "line-cap": "round" },
     paint: { "line-color": colour, "line-width": ["case", ["==", ["get", "count"], 0], 1.2, 2.5],
       "line-opacity": ["-", 0.85, ["*", 0.6, ["get", "age"]]] } },
-    map.getLayer("node-clusters") ? "node-clusters" : undefined);
+    map.getLayer("node-points") ? "node-points" : undefined);
 }
 
 export class LinkModeControl {

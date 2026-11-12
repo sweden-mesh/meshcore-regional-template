@@ -65,5 +65,5 @@ export function addPathLayer(map, data) {
   map.addSource("packet-path", { type: "geojson", data });
   map.addLayer({ id: "packet-path", type: "line", source: "packet-path", layout: { "line-cap": "round", "line-join": "round" },
     paint: { "line-color": ["get", "colour"], "line-width": ["case", ["==", ["get", "rank"], 0], 5, 3], "line-opacity": 0.85 } },
-    map.getLayer("node-clusters") ? "node-clusters" : undefined);
+    map.getLayer("node-points") ? "node-points" : undefined);
 }

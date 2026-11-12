@@ -3,7 +3,6 @@
 // labelled from zoom 12. Pure parts are exported for tests.
 
 export const NODE_TYPES = { 1: "companion", 2: "repeater", 3: "room", 4: "sensor" };
-export const TYPE_COLOURS = { 1: "#7b61ff", 2: "#0b6bcb", 3: "#c2410c", 4: "#15803d" };
 
 // Beacon uses 0/0 for "no position"; anything non-finite or out of range is junk too.
 export function validPosition(n) {
@@ -19,6 +18,11 @@ export function publicNodes(nodes, { companions = false } = {}) {
   return (nodes || []).filter((n) => companions || n.nodeType !== 1);
 }
 
+// The label every map in the MeshCore world uses: the key's first 3 bytes.
+export function shortId(publicKey) {
+  return String(publicKey || "").slice(0, 6).toUpperCase();
+}
+
 export function nodesToGeoJSON(nodes) {
   const features = [];
   for (const n of nodes || []) {
@@ -30,6 +34,7 @@ export function nodesToGeoJSON(nodes) {
       properties: {
         id: n.id,
         name: n.name || "",
+        short: shortId(n.publicKey),
         nodeType: n.nodeType || 0,
         observer: !!n.isObserver,
         foreign: !!n.possiblyForeign,
@@ -41,35 +46,57 @@ export function nodesToGeoJSON(nodes) {
   return { type: "FeatureCollection", features };
 }
 
-const colourExpr = ["match", ["get", "nodeType"],
-  1, TYPE_COLOURS[1], 2, TYPE_COLOURS[2], 3, TYPE_COLOURS[3], 4, TYPE_COLOURS[4], "#6b7280"];
 
-export function addNodeLayers(map, data) {
-  if (map.getSource("nodes")) { map.getSource("nodes").setData(data); return; }
-  map.addSource("nodes", { type: "geojson", data, cluster: true, clusterRadius: 36, clusterMaxZoom: 11 });
-  map.addLayer({ id: "node-clusters", type: "circle", source: "nodes", filter: ["has", "point_count"],
-    paint: { "circle-color": TYPE_COLOURS[2], "circle-opacity": 0.85,
-      "circle-radius": ["step", ["get", "point_count"], 14, 10, 18, 30, 24],
-      "circle-stroke-color": "#fff", "circle-stroke-width": 2 } });
-  map.addLayer({ id: "node-cluster-count", type: "symbol", source: "nodes", filter: ["has", "point_count"],
-    layout: { "text-field": ["get", "point_count_abbreviated"], "text-size": 12, "text-font": ["Noto Sans Bold"] },
-    paint: { "text-color": "#fff" } });
-  map.addLayer({ id: "node-points", type: "circle", source: "nodes", filter: ["!", ["has", "point_count"]],
-    paint: { "circle-color": colourExpr, "circle-radius": ["interpolate", ["linear"], ["zoom"], 6, 4, 12, 7],
-      "circle-opacity": ["case", ["get", "foreign"], 0.35, ["get", "stale"], 0.55, 1],
-      "circle-stroke-color": ["case", ["get", "observer"], "#facc15", "#ffffff"],
-      "circle-stroke-width": ["case", ["get", "observer"], 3, 1.5] } });
-  map.addLayer({ id: "node-labels", type: "symbol", source: "nodes", minzoom: 12, filter: ["!", ["has", "point_count"]],
-    layout: { "text-field": ["get", "name"], "text-size": 12, "text-offset": [0, 1.1], "text-anchor": "top",
-      "text-font": ["Noto Sans Regular"], "text-optional": true },
-    paint: { "text-color": "#111", "text-halo-color": "#fff", "text-halo-width": 1.5 } });
-  map.on("click", "node-clusters", (e) => {
-    const f = e.features[0];
-    map.getSource("nodes").getClusterExpansionZoom(f.properties.cluster_id)
-      .then((z) => map.easeTo({ center: f.geometry.coordinates, zoom: z }));
-  });
-  for (const id of ["node-clusters", "node-points"]) {
-    map.on("mouseenter", id, () => { map.getCanvas().style.cursor = "pointer"; });
-    map.on("mouseleave", id, () => { map.getCanvas().style.cursor = ""; });
+// A stretchable rounded pill drawn on a canvas, so the map needs no sprite sheet.
+function pillImage(fill, stroke, ratio) {
+  const w = 24, h = 20, r = 10, c = document.createElement("canvas");
+  c.width = w * ratio; c.height = h * ratio;
+  const g = c.getContext("2d");
+  g.scale(ratio, ratio);
+  g.beginPath(); g.roundRect(1, 1, w - 2, h - 2, r - 1);
+  g.fillStyle = fill; g.fill(); g.lineWidth = 1.5; g.strokeStyle = stroke; g.stroke();
+  return { width: c.width, height: c.height, data: g.getImageData(0, 0, c.width, c.height).data };
+}
+
+const PILLS = {
+  "pill-active": ["#ffffff", "#2f8a5f"],
+  "pill-stale": ["#eef1f3", "#9aa7b0"],
+  "pill-observer": ["#ffffff", "#1f5d82"],
+};
+
+function addPillImages(map) {
+  const ratio = Math.max(1, Math.round(window.devicePixelRatio || 1));
+  for (const [name, [fill, stroke]] of Object.entries(PILLS)) {
+    if (map.hasImage(name)) continue;
+    const img = pillImage(fill, stroke, ratio);
+    map.addImage(name, img, { pixelRatio: ratio, stretchX: [[10 * ratio, 14 * ratio]], stretchY: [[9 * ratio, 11 * ratio]],
+      content: [6 * ratio, 3 * ratio, 18 * ratio, 17 * ratio] });
   }
+}
+
+// MeshMapper-style: every node is a pill with its short id, no clustering
+// (operator, 2026-11-12). Green ring = heard recently, grey = stale, blue =
+// observer. Names appear under the pill from zoom 12.
+export function addNodeLayers(map, data) {
+  addPillImages(map);
+  if (map.getSource("nodes")) { map.getSource("nodes").setData(data); return; }
+  map.addSource("nodes", { type: "geojson", data });
+  const base = ["!", ["has", "point_count"]];
+  map.addLayer({ id: "node-points", type: "symbol", source: "nodes", filter: base,
+    layout: {
+      "icon-image": ["case", ["get", "stale"], "pill-stale", ["get", "observer"], "pill-observer", "pill-active"],
+      "icon-text-fit": "both", "icon-text-fit-padding": [2, 6, 2, 6],
+      "text-field": ["concat", ["case", ["get", "observer"], "◉ ", ""], ["get", "short"]],
+      "text-font": ["Noto Sans Bold"], "text-size": 11,
+      "icon-allow-overlap": true, "text-allow-overlap": true,
+      "symbol-sort-key": ["case", ["get", "stale"], 2, ["get", "observer"], 0, 1],
+    },
+    paint: { "text-color": ["case", ["get", "stale"], "#5b6a74", "#0f1d26"],
+      "icon-opacity": ["case", ["get", "foreign"], 0.45, 1], "text-opacity": ["case", ["get", "foreign"], 0.45, 1] } });
+  map.addLayer({ id: "node-labels", type: "symbol", source: "nodes", minzoom: 12, filter: base,
+    layout: { "text-field": ["get", "name"], "text-size": 11, "text-offset": [0, 1.4], "text-anchor": "top",
+      "text-font": ["Noto Sans Regular"], "text-optional": true },
+    paint: { "text-color": "#0f1d26", "text-halo-color": "#fff", "text-halo-width": 1.5 } });
+  map.on("mouseenter", "node-points", () => { map.getCanvas().style.cursor = "pointer"; });
+  map.on("mouseleave", "node-points", () => { map.getCanvas().style.cursor = ""; });
 }

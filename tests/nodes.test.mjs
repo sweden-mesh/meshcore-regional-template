@@ -33,3 +33,8 @@ test("companions are left out unless the site opts in", () => {
   assert.deepEqual(publicNodes(ns).map((n) => n.id), ["r", "s"]);
   assert.equal(publicNodes(ns, { companions: true }).length, 3);
 });
+import { shortId } from "../assets/js/map/nodes.js";
+test("shortId is the key's first 3 bytes in upper case", () => {
+  assert.equal(shortId("0206800f16dc"), "020680");
+  assert.equal(shortId(undefined), "");
+});

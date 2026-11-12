@@ -62,7 +62,7 @@ export class FlowLayer {
   install() {
     const map = this.map, empty = { type: "FeatureCollection", features: [] };
     if (map.getSource("flow-trails")) return;
-    const before = map.getLayer("node-clusters") ? "node-clusters" : undefined;
+    const before = map.getLayer("node-points") ? "node-points" : undefined;
     map.addSource("flow-trails", { type: "geojson", data: empty });
     map.addSource("flow-heads", { type: "geojson", data: empty });
     map.addSource("flow-glow", { type: "geojson", data: empty });

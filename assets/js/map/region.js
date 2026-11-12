@@ -23,7 +23,7 @@ export async function loadBorders(client, iatas) {
 export function addBorderLayers(map, features) {
   const data = { type: "FeatureCollection", features };
   if (map.getSource("region-border")) { map.getSource("region-border").setData(data); return; }
-  const before = map.getLayer("node-clusters") ? "node-clusters" : undefined;
+  const before = map.getLayer("node-points") ? "node-points" : undefined;
   map.addSource("region-border", { type: "geojson", data });
   map.addLayer({ id: "region-fill", type: "fill", source: "region-border",
     paint: { "fill-color": "#0b6bcb", "fill-opacity": 0.05 } }, before);
