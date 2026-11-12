@@ -53,7 +53,8 @@ Update the template later with `hugo mod get -u`.
 Hugo ≥ 0.146 and Go. `cd exampleSite && hugo server` builds the example site against the
 template in the parent directory.
 
-`scripts/check.sh` is what CI runs: the example site built with warnings as errors, then
+`scripts/check.sh` is what CI runs: the unit tests of the browser modules (`node --test`, no
+dependencies), the example site built with warnings as errors, then
 [htmltest](https://github.com/wjdp/htmltest) over the output (internal links, HTML5).
 
 ## Live data

@@ -1,0 +1,7 @@
+{
+  "name": "meshcore-regional-template",
+  "private": true,
+  "type": "module",
+  "description": "Unit tests for the template's browser modules; the site itself needs no Node.",
+  "scripts": { "test": "node --test tests/*.test.mjs" }
+}
