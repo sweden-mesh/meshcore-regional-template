@@ -2,8 +2,9 @@
 <html lang="{{ site.Language.Locale | default "sv" }}">
 <head>{{ partial "head.html" . }}</head>
 <body>
+  <a class="skip-link" href="#main">{{ T "skip_to_content" }}</a>
   {{ partial "header.html" . }}
-  <main>{{ block "main" . }}{{ end }}</main>
+  <main id="main">{{ block "main" . }}{{ end }}</main>
   {{ partial "footer.html" . }}
   {{ partial "hooks/body-end.html" . }}
 </body>

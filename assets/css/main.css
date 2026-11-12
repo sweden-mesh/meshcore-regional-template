@@ -188,3 +188,10 @@ a { color: var(--accent); }
 .namecheck output[data-verdict="ok"] { color: var(--accent-2); }
 .namecheck output[data-verdict="no-position"] { color: var(--warn); }
 .namecheck output[data-verdict="too-long"] { color: #c0392b; }
+.skip-link { position: absolute; left: -999px; top: .5rem; z-index: 100; padding: .6rem 1rem; background: var(--fg); color: var(--bg); border-radius: var(--radius-sm); }
+.skip-link:focus { left: .5rem; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.node-list { margin-top: .75rem; font-size: .92rem; }
+.node-list summary { cursor: pointer; font-weight: 600; }
+.node-list ul { columns: 16rem; margin: .5rem 0; padding-left: 1.1rem; }
+.node-short { font: 600 .8rem ui-monospace, monospace; color: var(--muted); }

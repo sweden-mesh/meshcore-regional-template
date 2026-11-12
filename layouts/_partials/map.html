@@ -28,6 +28,16 @@
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
+  {{- /* A text alternative for the map: the repeaters from the build-time snapshot,
+         readable without JavaScript and by screen readers. */ -}}
+  {{- $list := slice -}}{{- range $snap.nodes }}{{ if and (ne .nodeType 1) (not .possiblyForeign) }}{{ $list = $list | append . }}{{ end }}{{ end -}}
+  {{- with $list }}
+  <details class="node-list">
+    <summary>{{ T "map_list" (dict "Count" (len .)) }}</summary>
+    <ul>{{ range sort . "name" }}<li><span class="node-short">{{ upper (substr .publicKey 0 6) }}</span> {{ .name }}{{ if .isObserver }} · {{ T "observer" }}{{ end }}</li>{{ end }}</ul>
+    <p class="muted">{{ T "map_list_note" (dict "At" ($snap.at | time.Format "2006-01-02 15:04 MST")) }}</p>
+  </details>
+  {{- end }}
   {{ with site.Params.beacon.url }}
   <div class="packets" id="packets" hidden>
     <div>

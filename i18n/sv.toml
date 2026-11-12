@@ -124,3 +124,11 @@ other = "för långt; firmware kortar av det"
 other = "Namnregel i {{ .Region }}"
 [naming_example]
 other = "till exempel"
+[skip_to_content]
+other = "Hoppa till innehållet"
+[map_list]
+other = "Repeatrarna som lista ({{ .Count }})"
+[map_list_note]
+other = "Läget när sidan byggdes, {{ .At }}."
+[observer]
+other = "observatör"
