@@ -3,17 +3,20 @@
 import { createMap } from "./basemap.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers } from "./nodes.js";
+import { attachPopups } from "./popup.js";
 import { loadBorders, addBorderLayers, frameBorders, ForeignToggle, setForeignVisible } from "./region.js";
 
 const el = document.getElementById("map");
 
 async function start() {
-  const { map } = await createMap(el);
+  const { map, maplibregl } = await createMap(el);
+  el.mapInstance = map; // for debugging and browser tests
   const ds = el.dataset;
   if (!ds.beacon) return;
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
   const state = { nodes: [], borders: [], showForeign: true };
+  attachPopups(map, maplibregl, client);
   const draw = () => {
     addNodeLayers(map, nodesToGeoJSON(state.nodes));
     addBorderLayers(map, state.borders);
