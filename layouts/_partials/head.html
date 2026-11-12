@@ -5,3 +5,4 @@
 {{ with resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{ end }}
+{{ if site.Params.noindex }}<meta name="robots" content="noindex, nofollow">{{ end }}

@@ -5,6 +5,7 @@ title = "MeshCore Exempelregionen"
 locale = "sv"
 defaultContentLanguage = "sv"
 disableKinds = ["taxonomy", "term"]
+enableRobotsTXT = true
 
 [module]
   # Local development only: use the template from the parent directory.
