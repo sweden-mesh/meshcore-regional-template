@@ -12,3 +12,9 @@ test("junk is ignored; other params are kept", () => {
   assert.deepEqual(parseState("?ll=abc"), {});
   assert.equal(writeState("?utm=x", { foreign: false }), "?utm=x&foreign=0");
 });
+
+test("traffic focus is off by default and written only when on", () => {
+  assert.equal(writeState("", { focus: true }), "?focus=1");
+  assert.equal(writeState("?focus=1", { focus: false }), "");
+  assert.deepEqual(parseState("?focus=1"), { focus: true });
+});

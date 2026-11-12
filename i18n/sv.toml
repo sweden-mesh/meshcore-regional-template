@@ -132,3 +132,5 @@ other = "Repeatrarna som lista ({{ .Count }})"
 other = "Läget när sidan byggdes, {{ .At }}."
 [observer]
 other = "observatör"
+[map_focus]
+other = "Trafikfokus"

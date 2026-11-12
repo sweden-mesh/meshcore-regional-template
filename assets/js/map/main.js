@@ -6,7 +6,7 @@ import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
-import { FlowLayer, chainFromObservation } from "./flow.js";
+import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
 import { allLinks, selectedLinks, addLinkLayer } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
@@ -24,9 +24,9 @@ async function start() {
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
   const url = parseState(location.search);
-  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, selected: null, onLive: null };
+  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? false, selected: null, onLive: null, miniZoom: null };
   const saveUrl = (extra = {}) => {
-    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, ...extra });
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
@@ -50,6 +50,7 @@ async function start() {
       { key: "live", label: ds.liveLabel || "Live-trafik", on: state.live },
       { key: "links", label: ds.linksLabel || "Grannlänkar", on: state.showLinks },
       { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: state.showForeign },
+      { key: "focus", label: ds.focusLabel || "Trafikfokus", on: state.focus },
     ],
     legend: [
       { swatch: "pill-active", label: "repeater, hörd nyligen (prick = exakt plats)" },
@@ -63,6 +64,7 @@ async function start() {
       if (key === "links") { state.showLinks = on; drawLinks(); }
       if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
       if (key === "live") { state.live = on; state.onLive?.(on); }
+      if (key === "focus") { state.focus = on; applyFocus(map, state); }
       saveUrl();
     },
   }), "top-left");
@@ -72,7 +74,8 @@ async function start() {
     setForeignVisible(map, state.showForeign);
     drawLinks();
     drawSelected();
-    setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
+    state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
+    applyFocus(map, state);
   };
   // A style switch (dark mode) drops every layer; put them back.
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
@@ -112,6 +115,37 @@ function note(el, text) {
   let p = el.parentElement.querySelector(".map-note");
   if (!p) { p = document.createElement("p"); p.className = "map-note"; el.after(p); }
   p.textContent = text;
+}
+
+// Traffic focus (operator 2026-11-12): small circles, no pills or names, a dimmed
+// basemap, bright links; transmissions flash yellow with bubbles along links.
+function applyFocus(map, state) {
+  if (!map.getLayer("node-points")) return;
+  const on = state.focus;
+  for (const id of ["node-pills", "node-labels"]) map.setLayoutProperty(id, "visibility", on ? "none" : "visible");
+  if (on) {
+    map.setPaintProperty("node-points", "circle-radius", 3.5);
+    map.setPaintProperty("node-obs-dot", "circle-radius", 1.3);
+  } else if (state.miniZoom) {
+    map.setPaintProperty("node-points", "circle-radius", ["step", ["zoom"], 6, state.miniZoom, 3.5]);
+    map.setPaintProperty("node-obs-dot", "circle-radius", ["step", ["zoom"], 2.2, state.miniZoom, 1.2]);
+  }
+  if (map.getLayer("links")) {
+    map.setPaintProperty("links", "line-width", on ? 2.2 : ["case", ["==", ["get", "count"], 0], 1.2, 2.5]);
+    map.setPaintProperty("links", "line-color", on ? "#38bdf8" : ["case", ["==", ["get", "count"], 0], "#64748b",
+      ["interpolate", ["linear"], ["log10", ["max", ["get", "count"], 1]], 0, "#dc2626", 1.3, "#eab308", 2.2, "#16a34a"]]);
+  }
+  if (on && !map.getLayer("focus-dim")) {
+    const first = ["region-fill", "links", "node-points"].find((id) => map.getLayer(id));
+    map.addLayer({ id: "focus-dim", type: "background", paint: { "background-color": "rgba(8, 18, 25, 0.55)" } }, first);
+  } else if (!on && map.getLayer("focus-dim")) map.removeLayer("focus-dim");
+}
+
+function neighbourPoints(state, id) {
+  const byId = new Map(state.nodes.map((n) => [n.id, n]));
+  const n = byId.get(id);
+  return (n?.neighborIds || []).map((x) => byId.get(x)).filter((m) => m && Number.isFinite(m.lat) && !(m.lat === 0 && m.lng === 0))
+    .map((m) => ({ lng: m.lng, lat: m.lat }));
 }
 
 // Hops through nodes that are not shown (companions) become gaps.
@@ -175,9 +209,7 @@ function startLive(map, ds, client, iatas, state, draw) {
     addPathLayer(map, { type: "FeatureCollection", features: [] });
   });
   map.on("style.load", () => flows.install());
-  const feed = new LiveFeed(ds.beacon, {
-    iatas, events: ["packetObservation", "nodeUpdate"], resolvePath: true, includeObserverKey: true,
-    onEvent: (name, data) => {
+  function handle(name, data) {
       if (name === "nodeUpdate") {
         state.nodes = publicNodes(mergeNodeUpdate(state.nodes, data), { companions: ds.companions === "true" });
         if (!redraw) redraw = setTimeout(() => { redraw = 0; draw(); }, 2000); // batch bursts of adverts
@@ -187,15 +219,29 @@ function startLive(map, ds, client, iatas, state, draw) {
       const o = data.observation;
       const obsPt = observerPoint(state, o.observerPublicKey);
       flows.glow(obsPt);
-      flows.add(visibleOnly(state, chainFromObservation(o, obsPt)), { type: data.packet.payloadTypeName });
+      const chain = visibleOnly(state, chainFromObservation(o, obsPt));
+      flows.add(chain, { type: data.packet.payloadTypeName });
+      if (state.focus) {
+        // Every node that sent this packet on flashes and sends bubbles to its neighbours.
+        const seen = new Set();
+        chain.forEach((p, i) => {
+          if (!p || seen.has(p.id) || (obsPt && p.id === obsPt.id)) return;
+          seen.add(p.id);
+          flows.transmit(p, neighbourPoints(state, p.id), i * HOP_MS);
+        });
+      }
       recent.add(data);
       renderRecent();
-    },
+  }
+  const feed = new LiveFeed(ds.beacon, {
+    iatas, events: ["packetObservation", "nodeUpdate"], resolvePath: true, includeObserverKey: true,
+    onEvent: handle,
     // Missed events are only in REST: refresh the nodes.
     onGap: async () => {
       try { state.nodes = publicNodes(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
     },
   });
+  el.mapDebug = { flows, inject: handle }; // browser tests replay captured events through the same path
   state.onLive = (on) => {
     flows.setEnabled(on);
     if (on) feed.start(); else feed.stop();

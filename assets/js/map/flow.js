@@ -7,6 +7,14 @@
 
 export const HOP_MS = 480;
 export const FADE_MS = 900;
+export const BUBBLE_MS = 700;
+
+// A transmission seen as a radio broadcast: one bubble per neighbour, moving
+// from the transmitter to it. Pure, for tests.
+export function bubblePositions(from, neighbours, t) {
+  const f = Math.max(0, Math.min(1, t / BUBBLE_MS));
+  return neighbours.map((n) => [from.lng + (n.lng - from.lng) * f, from.lat + (n.lat - from.lat) * f]);
+}
 
 function point(hop) {
   if (!hop || hop.confidence !== "high") return null;
@@ -56,7 +64,7 @@ export function positionAt(run, t) {
 // The animation: a few sources updated per frame while anything is moving.
 export class FlowLayer {
   constructor(map, { maxFlows = 120, now = () => performance.now() } = {}) {
-    Object.assign(this, { map, maxFlows, now, flows: [], glows: new Map(), raf: 0, enabled: true });
+    Object.assign(this, { map, maxFlows, now, flows: [], glows: new Map(), raf: 0, enabled: true, transmits: [], flashes: new Map() });
   }
 
   install() {
@@ -66,8 +74,16 @@ export class FlowLayer {
     map.addSource("flow-trails", { type: "geojson", data: empty });
     map.addSource("flow-heads", { type: "geojson", data: empty });
     map.addSource("flow-glow", { type: "geojson", data: empty });
+    map.addSource("flow-flash", { type: "geojson", data: empty });
+    map.addSource("flow-bubbles", { type: "geojson", data: empty });
     map.addLayer({ id: "flow-glow", type: "circle", source: "flow-glow",
       paint: { "circle-color": "#f97316", "circle-radius": 14, "circle-blur": 0.6, "circle-opacity": ["get", "a"] } }, before);
+    map.addLayer({ id: "flow-flash", type: "circle", source: "flow-flash",
+      paint: { "circle-color": "#facc15", "circle-radius": ["+", 6, ["*", 10, ["get", "t"]]], "circle-blur": 0.3,
+        "circle-opacity": ["get", "a"], "circle-stroke-color": "#fde047", "circle-stroke-width": 2, "circle-stroke-opacity": ["get", "a"] } });
+    map.addLayer({ id: "flow-bubbles", type: "circle", source: "flow-bubbles",
+      paint: { "circle-color": "#fde047", "circle-radius": 4, "circle-opacity": ["get", "a"],
+        "circle-stroke-color": "#ffffff", "circle-stroke-width": 1, "circle-stroke-opacity": ["get", "a"] } });
     map.addLayer({ id: "flow-trails", type: "line", source: "flow-trails", layout: { "line-cap": "round" },
       paint: { "line-color": "#f97316", "line-width": 2.5, "line-dasharray": [2, 1.5], "line-opacity": ["get", "a"] } });
     map.addLayer({ id: "flow-heads", type: "circle", source: "flow-heads",
@@ -77,6 +93,14 @@ export class FlowLayer {
 
   // Light up a node (the observer that heard something), even without a path.
   glow(p) { if (p) this.glows.set(p.id, { p, t0: this.now() }); this.kick(); }
+
+  // Traffic focus: the node flashes yellow and bubbles travel out along its links.
+  transmit(p, neighbours, delay = 0) {
+    if (!this.enabled || !p) return;
+    this.transmits.push({ p, neighbours: neighbours || [], t0: this.now() + delay });
+    if (this.transmits.length > this.maxFlows * 2) this.transmits.shift();
+    this.kick();
+  }
 
   add(chain, meta = {}) {
     if (!this.enabled) return;
@@ -90,7 +114,7 @@ export class FlowLayer {
 
   setEnabled(on) {
     this.enabled = on;
-    if (!on) { this.flows = []; this.glows.clear(); this.render(); }
+    if (!on) { this.flows = []; this.glows.clear(); this.transmits = []; this.render(); }
   }
 
   kick() { if (!this.raf) this.raf = requestAnimationFrame(() => this.frame()); }
@@ -126,10 +150,24 @@ export class FlowLayer {
       if (a <= 0) { this.glows.delete(id); continue; }
       glows.push({ type: "Feature", properties: { a: 0.7 * a }, geometry: { type: "Point", coordinates: [g.p.lng, g.p.lat] } });
     }
+    const flash = [], bubbles = [];
+    this.transmits = this.transmits.filter((x) => {
+      const t = now - x.t0;
+      if (t < 0) return true; // scheduled for a later hop
+      if (t > BUBBLE_MS + FADE_MS) return false;
+      const a = t <= BUBBLE_MS ? 1 : Math.max(0, 1 - (t - BUBBLE_MS) / FADE_MS);
+      flash.push({ type: "Feature", properties: { a: 0.85 * a, t: Math.min(1, t / BUBBLE_MS) }, geometry: { type: "Point", coordinates: [x.p.lng, x.p.lat] } });
+      if (t <= BUBBLE_MS) {
+        for (const c of bubblePositions(x.p, x.neighbours, t)) bubbles.push({ type: "Feature", properties: { a: 0.95 }, geometry: { type: "Point", coordinates: c } });
+      }
+      return true;
+    });
     const fc = (features) => ({ type: "FeatureCollection", features });
+    this.map.getSource("flow-flash").setData(fc(flash));
+    this.map.getSource("flow-bubbles").setData(fc(bubbles));
     this.map.getSource("flow-trails").setData(fc(trails));
     this.map.getSource("flow-heads").setData(fc(heads));
     this.map.getSource("flow-glow").setData(fc(glows));
-    return trails.length > 0 || glows.length > 0;
+    return trails.length > 0 || glows.length > 0 || this.transmits.length > 0;
   }
 }

@@ -31,3 +31,10 @@ test("positionAt walks HOP_MS per hop and ends on the last point", () => {
   assert.deepEqual(end.reached, ["a", "b", "c"]);
   assert.deepEqual(positionAt(run, 1.5 * HOP_MS).trail, [[0, 0], [10, 0], [10, 5]]);
 });
+import { bubblePositions, BUBBLE_MS } from "../assets/js/map/flow.js";
+test("bubbles start at the transmitter and arrive at each neighbour", () => {
+  const from = { lng: 0, lat: 0 }, ns = [{ lng: 10, lat: 0 }, { lng: 0, lat: 4 }];
+  assert.deepEqual(bubblePositions(from, ns, 0), [[0, 0], [0, 0]]);
+  assert.deepEqual(bubblePositions(from, ns, BUBBLE_MS / 2), [[5, 0], [0, 2]]);
+  assert.deepEqual(bubblePositions(from, ns, BUBBLE_MS * 3), [[10, 0], [0, 4]]);
+});
