@@ -8,9 +8,18 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, sans-serif; }
 a { color: var(--accent); }
-.site-header, .site-footer, .content, .map-section { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+.site-header, .site-footer, .content, .map-section, .hero, .sections { max-width: 72rem; margin: 0 auto; padding: 1rem; }
 .site-header { display: flex; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--line); }
 .site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
 .brand { font-weight: 700; text-decoration: none; color: var(--fg); }
-.map { min-height: 50vh; border: 1px solid var(--line); border-radius: 8px; display: grid; place-items: center; color: var(--muted); }
+.map { height: min(60vh, 36rem); min-height: 18rem; border: 1px solid var(--line); border-radius: 8px; display: grid; place-items: center; color: var(--muted); }
 .site-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .9rem; }
+
+.hero h1 { margin: .5rem 0 0; font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.2; }
+.lead { margin: .25rem 0 0; color: var(--muted); font-size: 1.1rem; max-width: 46rem; }
+.map-section h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.sections { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 0 1rem 1rem; }
+.card ul { padding-left: 1.2rem; }
+.channels dt { margin-top: .5rem; }
+.channels dd { margin: 0; color: var(--muted); }

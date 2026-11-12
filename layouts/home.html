@@ -1,10 +1,42 @@
 {{ define "main" }}
+  {{- $r := site.Params.region -}}
+  <section class="hero">
+    <h1>{{ T "hero_title" (dict "Region" $r.name) }}</h1>
+    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+  </section>
+
   {{ partial "map.html" . }}
-  <article class="content">{{ .Content }}</article>
-  {{ with site.GetPage "/guider" }}
-    <section class="content">
-      <h2>{{ T "guides" }}</h2>
-      <ul>{{ range .Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+
+  <div class="sections">
+    <section class="card" id="kom-igang">
+      <h2>{{ T "section_start" }}</h2>
+      {{ with site.GetPage "/guider" }}
+        <ul>{{ range .Pages.ByWeight }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+      {{ end }}
     </section>
-  {{ end }}
+
+    <section class="card" id="natet">
+      <h2>{{ T "section_network" }}</h2>
+      <div id="stats" class="stats" data-beacon="{{ site.Params.beacon.url }}">
+        <p>{{ T "network_scope" }} <code>{{ $r.scope }}</code></p>
+      </div>
+    </section>
+
+    <section class="card" id="gemenskap">
+      <h2>{{ T "section_community" }}</h2>
+      <ul>
+        {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
+        {{ with site.Params.chat.discord }}<li><a href="{{ . }}">Discord</a></li>{{ end }}
+        {{ with site.Params.chat.matrix }}<li><a href="{{ . }}">Matrix</a></li>{{ end }}
+      </ul>
+      {{ with site.Params.channels }}
+        <h3>{{ T "channels" }}</h3>
+        <dl class="channels">
+          {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose }}</dd>{{ end }}
+        </dl>
+      {{ end }}
+    </section>
+  </div>
+
+  {{ with .Content }}<article class="content">{{ . }}</article>{{ end }}
 {{ end }}

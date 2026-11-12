@@ -1,6 +1,4 @@
 ---
 title: "Start"
+description: "Ett öppet LoRa-meshnät som fungerar utan internet. Här ser du nätet just nu och hur du kommer igång."
 ---
-
-Välkommen till MeshCore i {{< region "name" >}}. Den här sidan är standardtexten från mallen;
-regionen ersätter den med sin egen `content/_index.md`.

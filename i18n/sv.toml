@@ -1,7 +1,19 @@
+[hero_title]
+other = "MeshCore i {{ .Region }}"
 [map_heading]
 other = "Nätet just nu"
 [map_no_beacon]
 other = "Ingen Beacon-server är inställd för den här regionen ännu."
+[section_start]
+other = "Kom igång"
+[section_network]
+other = "Nätet"
+[section_community]
+other = "Gemenskap"
+[network_scope]
+other = "Regionens scope:"
+[channels]
+other = "Kanaler"
 [guides]
 other = "Guider"
 [footer_template]

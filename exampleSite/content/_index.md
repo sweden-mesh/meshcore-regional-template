@@ -1,6 +1,4 @@
 ---
 title: "Start"
+description: "Regionens egen ingress: den här filen ersätter mallens startsida, eftersom den ligger på samma sökväg."
 ---
-
-Den här texten ersätter mallens startsida, eftersom filen ligger på samma sökväg
-(`content/_index.md`) i regionens eget innehåll. Mallens guider visas fortfarande.
