@@ -1,0 +1,16 @@
+# Module configuration and defaults. A region site overrides any of the params
+# below in its own hugo.toml; everything else it overrides by putting a file at
+# the same path (content/, layouts/, assets/, i18n/, static/).
+
+[module.hugoVersion]
+  min = "0.146.0"
+
+[params.region]
+  name = "Exempelregionen"   # shown in the header and on the home page
+  iata = "XXX"               # observer IATA code(s) in the MQTT topics, filters Beacon
+  scope = "se"               # the region's MeshCore scope, e.g. se-jkp
+  center = [62.0, 16.0]      # map centre, [lat, lng]
+  zoom = 5                   # map zoom
+
+[params.beacon]
+  url = ""                   # Beacon backend base URL, e.g. https://beacon.example.se; empty = no live data

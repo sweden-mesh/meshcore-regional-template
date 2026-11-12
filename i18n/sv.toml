@@ -1,0 +1,8 @@
+[map_heading]
+other = "Nätet just nu"
+[map_no_beacon]
+other = "Ingen Beacon-server är inställd för den här regionen ännu."
+[guides]
+other = "Guider"
+[footer_template]
+other = "Byggd med meshcore-regional-template"

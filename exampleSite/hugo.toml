@@ -1,0 +1,32 @@
+# A minimal region site. A real region copies this directory into its own
+# repository, deletes the [module] replacements line and runs `hugo mod get`.
+baseURL = "https://example.org/"
+title = "MeshCore Exempelregionen"
+locale = "sv"
+defaultContentLanguage = "sv"
+disableKinds = ["taxonomy", "term"]
+
+[module]
+  # Local development only: use the template from the parent directory.
+  replacements = "github.com/sweden-mesh/meshcore-regional-template -> ../.."
+  [[module.imports]]
+    path = "github.com/sweden-mesh/meshcore-regional-template"
+
+[params.region]
+  name = "Exempelregionen"
+  iata = "XXX"
+  scope = "se-xxx"
+  center = [57.78, 14.16]
+  zoom = 9
+
+[params.beacon]
+  url = ""
+
+[[menus.main]]
+  name = "Guider"
+  pageRef = "/guider"
+  weight = 10
+[[menus.main]]
+  name = "Om regionen"
+  pageRef = "/om-regionen"
+  weight = 20

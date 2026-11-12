@@ -1,0 +1,10 @@
+{{ define "main" }}
+  {{ partial "map.html" . }}
+  <article class="content">{{ .Content }}</article>
+  {{ with site.GetPage "/guider" }}
+    <section class="content">
+      <h2>{{ T "guides" }}</h2>
+      <ul>{{ range .Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+    </section>
+  {{ end }}
+{{ end }}

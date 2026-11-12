@@ -1,0 +1,16 @@
+:root {
+  --bg: #ffffff; --fg: #1b1f24; --muted: #5b6470; --accent: #0b6bcb; --line: #e3e7ec;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111418; --fg: #e6e9ed; --muted: #9aa4b0; --accent: #5aa9ff; --line: #262c33; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, sans-serif; }
+a { color: var(--accent); }
+.site-header, .site-footer, .content, .map-section { max-width: 60rem; margin: 0 auto; padding: 1rem; }
+.site-header { display: flex; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--line); }
+.site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.brand { font-weight: 700; text-decoration: none; color: var(--fg); }
+.map { min-height: 50vh; border: 1px solid var(--line); border-radius: 8px; display: grid; place-items: center; color: var(--muted); }
+.site-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .9rem; }
