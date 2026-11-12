@@ -34,3 +34,9 @@ other = "vald nod"
 other = "av"
 [map_live]
 other = "Live-trafik"
+[packets_recent]
+other = "Senaste paket – klicka för att se vägen"
+[packets_path]
+other = "Vägen till varje observatör"
+[close]
+other = "Stäng"

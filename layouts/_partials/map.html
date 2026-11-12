@@ -21,6 +21,18 @@
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
+  {{ with site.Params.beacon.url }}
+  <div class="packets" id="packets" hidden>
+    <div>
+      <h3>{{ T "packets_recent" }}</h3>
+      <ul id="recent-packets" class="recent"></ul>
+    </div>
+    <div id="packet-path" hidden>
+      <h3>{{ T "packets_path" }} <button type="button" id="packet-path-close">{{ T "close" }}</button></h3>
+      <ul class="routes"></ul>
+    </div>
+  </div>
+  {{ end }}
 </section>
 {{ with resources.Get "js/map/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>

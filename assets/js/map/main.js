@@ -6,6 +6,7 @@ import { nodesToGeoJSON, addNodeLayers } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation } from "./flow.js";
+import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
 import { ForeignToggle as Toggle } from "./region.js";
 import { allLinks, selectedLinks, addLinkLayer, LinkModeControl } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, ForeignToggle, setForeignVisible } from "./region.js";
@@ -68,6 +69,46 @@ function observerPoint(state, key) {
 function startLive(map, ds, client, iatas, state, draw) {
   if (!iatas.length || !("WebSocket" in window)) return;
   const flows = new FlowLayer(map);
+  const recent = new RecentPackets(10);
+  const panel = document.getElementById("packets");
+  const list = document.getElementById("recent-packets");
+  const pathBox = document.getElementById("packet-path");
+  let pending = 0;
+  const renderRecent = () => {
+    if (pending || !list) return;
+    pending = requestAnimationFrame(() => { pending = 0; panel.hidden = false; list.innerHTML = recentListHtml(recent.items); });
+  };
+  const observerKeys = new Map(); // observerId → publicKey
+  const keyFor = async (id) => {
+    if (!observerKeys.has(id)) observerKeys.set(id, client.get(`/observers/${encodeURIComponent(id)}`).then((o) => o?.publicKey || null).catch(() => null));
+    return observerKeys.get(id);
+  };
+  list?.addEventListener("click", async (e) => {
+    const hash = e.target.closest("button")?.dataset.hash;
+    if (!hash) return;
+    try {
+      const detail = await client.get(`/packets/${encodeURIComponent(hash)}`);
+      const ids = [...new Set((detail.observations || []).map((o) => o.observerId))];
+      const keys = new Map();
+      for (let i = 0; i < ids.length; i += 3) { // Beacon allows 4 concurrent requests per client
+        await Promise.all(ids.slice(i, i + 3).map(async (id) => keys.set(id, await keyFor(id))));
+      }
+      const routes = packetRoutes(detail, (id) => observerPoint(state, keys.get(id)));
+      const fc = routesToGeoJSON(routes);
+      addPathLayer(map, fc);
+      const pts = fc.features.flatMap((f) => f.geometry.coordinates);
+      if (pts.length) {
+        const lngs = pts.map((p) => p[0]), lats = pts.map((p) => p[1]);
+        map.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding: 60, maxZoom: 13 });
+      }
+      pathBox.hidden = false;
+      pathBox.querySelector(".routes").innerHTML = routesListHtml(routes);
+    } catch (err) { console.error(err); }
+  });
+  document.getElementById("packet-path-close")?.addEventListener("click", () => {
+    pathBox.hidden = true;
+    addPathLayer(map, { type: "FeatureCollection", features: [] });
+  });
   map.on("style.load", () => flows.install());
   const feed = new LiveFeed(ds.beacon, {
     iatas, events: ["packetObservation"], resolvePath: true, includeObserverKey: true,
@@ -77,6 +118,8 @@ function startLive(map, ds, client, iatas, state, draw) {
       const obsPt = observerPoint(state, o.observerPublicKey);
       flows.glow(obsPt);
       flows.add(chainFromObservation(o, obsPt), { type: data.packet.payloadTypeName });
+      recent.add(data);
+      renderRecent();
     },
     // Missed events are only in REST: refresh the nodes.
     onGap: async () => {
