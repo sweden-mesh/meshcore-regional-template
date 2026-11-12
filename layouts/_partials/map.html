@@ -13,7 +13,8 @@
        data-iatas="{{ $r.iatas | jsonify }}"
        data-center="{{ $r.center | jsonify }}"
        data-zoom="{{ $r.zoom }}"
-       data-fail-text="{{ T "map_failed" }}">
+       data-fail-text="{{ T "map_failed" }}"
+       data-foreign-label="{{ T "map_foreign_toggle" }}">
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}

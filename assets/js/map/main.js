@@ -3,6 +3,7 @@
 import { createMap } from "./basemap.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers } from "./nodes.js";
+import { loadBorders, addBorderLayers, frameBorders, ForeignToggle, setForeignVisible } from "./region.js";
 
 const el = document.getElementById("map");
 
@@ -12,12 +13,24 @@ async function start() {
   if (!ds.beacon) return;
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
-  const state = { nodes: [] };
-  const draw = () => addNodeLayers(map, nodesToGeoJSON(state.nodes));
+  const state = { nodes: [], borders: [], showForeign: true };
+  const draw = () => {
+    addNodeLayers(map, nodesToGeoJSON(state.nodes));
+    addBorderLayers(map, state.borders);
+    setForeignVisible(map, state.showForeign);
+  };
   // A style switch (dark mode) drops every layer; put them back.
-  map.on("style.load", () => { if (state.nodes.length) draw(); });
-  state.nodes = await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 });
-  if (map.isStyleLoaded()) draw(); else map.once("load", draw);
+  map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
+  map.addControl(new ForeignToggle(ds.foreignLabel || "Noder utanför regionen", (v) => {
+    state.showForeign = v; setForeignVisible(map, v);
+  }), "top-left");
+  const [nodes, borders] = await Promise.all([
+    client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
+    loadBorders(client, iatas),
+  ]);
+  state.nodes = nodes; state.borders = borders;
+  const ready = () => { draw(); frameBorders(map, borders); };
+  if (map.isStyleLoaded()) ready(); else map.once("load", ready);
   return { map, client, state };
 }
 
