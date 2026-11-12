@@ -1,4 +1,6 @@
 {{- $u := urls.Parse .Destination -}}
-{{- $external := and $u.IsAbs (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} rel="noopener"{{ end }}>{{ .Text }}</a>
+{{- /* A destination written as {{< param "…" >}} reaches this hook as Hugo's
+       shortcode placeholder; in this template those params are external URLs. */ -}}
+{{- $external := or (and $u.IsAbs (ne $u.Host (urls.Parse site.BaseURL).Host)) (hasPrefix .Destination "HAHAHUGOSHORTCODE") -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} class="ext" target="_blank" rel="noopener"{{ end }}>{{ .Text }}</a>
 {{- /* chomp trailing newline */ -}}

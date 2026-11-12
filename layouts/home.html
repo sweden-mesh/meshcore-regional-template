@@ -20,7 +20,7 @@
       {{ with site.GetPage "/guider" }}
         <ul class="link-list">{{ range first 4 .Pages.ByWeight }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
         <a class="more" href="{{ .RelPermalink }}">{{ T "all_guides" }} →</a>
-        {{ with site.Params.firmware.picker }}<p class="firmware-link"><a href="{{ . }}">{{ T "firmware_link" }}</a></p>{{ end }}
+        {{ with site.Params.firmware.picker }}<p class="firmware-link"><a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "firmware_link" }}</a></p>{{ end }}
       {{ end }}
     </section>
 
@@ -48,9 +48,9 @@
       <p class="eyebrow">03</p>
       <h2>{{ T "section_community" }}</h2>
       <ul class="link-list">
-        {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
-        {{ with site.Params.chat.discord }}<li><a href="{{ . }}">Discord</a></li>{{ end }}
-        {{ with site.Params.chat.matrix }}<li><a href="{{ . }}">Matrix</a></li>{{ end }}
+        {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
+        {{ with site.Params.chat.discord }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Discord</a></li>{{ end }}
+        {{ with site.Params.chat.matrix }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Matrix</a></li>{{ end }}
       </ul>
       {{ with site.Params.channels }}
         <h3>{{ T "channels" }}</h3>

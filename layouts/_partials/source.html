@@ -1,8 +1,8 @@
 {{- /* CC BY credit for pages adapted from another source (front matter `source:`). */ -}}
 {{- with .Params.source -}}
 <aside class="source">
-  {{ T "source_based_on" }} <a href="{{ .url }}" rel="noopener">{{ .title }}</a>
-  {{- with .license }} ({{ if eq . "CC BY 4.0" }}<a href="https://creativecommons.org/licenses/by/4.0/deed.sv" rel="license noopener">CC BY 4.0</a>{{ else }}{{ . }}{{ end }}){{ end }}.
+  {{ T "source_based_on" }} <a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .title }}</a>
+  {{- with .license }} ({{ if eq . "CC BY 4.0" }}<a href="https://creativecommons.org/licenses/by/4.0/deed.sv" class="ext" target="_blank" rel="license noopener">CC BY 4.0</a>{{ else }}{{ . }}{{ end }}){{ end }}.
   {{- with .changes }} {{ T "source_changes" }} {{ . }}{{ end }}
 </aside>
 {{- end -}}

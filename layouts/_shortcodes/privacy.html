@@ -5,7 +5,7 @@
 <ul>
   <li>Sidan använder <strong>inga kakor</strong> och ingen inloggning.</li>
   {{- if and $a.plausible $a.script }}
-  <li>Vi räknar besök med <a href="https://plausible.io/privacy-focused-web-analytics">Plausible</a>, utan kakor. Varje dag räknas en slumpad kod fram av din IP-adress och webbläsare så att samma besökare inte räknas två gånger; IP-adressen sparas inte, och koden byts varje dygn. Statistiken ligger på vår egen server, inte hos Plausible eller någon annan.</li>
+  <li>Vi räknar besök med <a href="https://plausible.io/privacy-focused-web-analytics" class="ext" target="_blank" rel="noopener">Plausible</a>, utan kakor. Varje dag räknas en slumpad kod fram av din IP-adress och webbläsare så att samma besökare inte räknas två gånger; IP-adressen sparas inte, och koden byts varje dygn. Statistiken ligger på vår egen server, inte hos Plausible eller någon annan.</li>
   {{- else }}
   <li>Vi samlar <strong>ingen besöksstatistik</strong>.</li>
   {{- end }}
@@ -13,7 +13,7 @@
 </ul>
 
 <h2>Kartan</h2>
-<p>Bakgrundskartan hämtas från <a href="https://openfreemap.org/">OpenFreeMap</a>. Då ser OpenFreeMap din IP-adress, som vid all webbtrafik.</p>
+<p>Bakgrundskartan hämtas från <a href="https://openfreemap.org/" class="ext" target="_blank" rel="noopener">OpenFreeMap</a>. Då ser OpenFreeMap din IP-adress, som vid all webbtrafik.</p>
 {{- with $b }}
 <p>Noderna och trafiken på kartan kommer från vår egen Beacon-server ({{ . }}), som samlar vad observatörerna i regionen hör via MQTT. Den visar repeatrar och deras position, som ägarna själva sänder ut i sina adverts. <strong>Companions visas inte</strong>, eftersom deras position kan vara någons hem. Meddelandetexter visas inte.</p>
 {{- end }}

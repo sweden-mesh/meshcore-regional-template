@@ -195,3 +195,4 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .node-list summary { cursor: pointer; font-weight: 600; }
 .node-list ul { columns: 16rem; margin: .5rem 0; padding-left: 1.1rem; }
 .node-short { font: 600 .8rem ui-monospace, monospace; color: var(--muted); }
+a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font-size: .85em; text-decoration: none; }
