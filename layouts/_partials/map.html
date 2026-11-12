@@ -2,6 +2,11 @@
 {{- $r := site.Params.region -}}
 {{- $m := site.Params.map -}}
 {{- $ml := printf "vendor/maplibre-gl/%s/" $m.maplibre -}}
+{{- $snap := partialCached "beacon-snapshot.html" . "snapshot" -}}
+{{- $snapRes := dict -}}
+{{- if or $snap.nodes $snap.borders -}}
+  {{- $snapRes = resources.FromString "beacon/snapshot.json" ($snap | jsonify) | minify | fingerprint -}}
+{{- end -}}
 <link rel="stylesheet" href="{{ printf "%smaplibre-gl.css" $ml | relURL }}">
 <section class="map-section">
   <h2>{{ T "map_heading" }}</h2>
@@ -13,6 +18,7 @@
        data-iatas="{{ $r.iatas | jsonify }}"
        data-center="{{ $r.center | jsonify }}"
        data-zoom="{{ $r.zoom }}"
+       {{ with $snapRes }}data-snapshot="{{ .RelPermalink }}"{{ end }}
        data-fail-text="{{ T "map_failed" }}"
        data-foreign-label="{{ T "map_foreign_toggle" }}"
        data-live-label="{{ T "map_live" }}"

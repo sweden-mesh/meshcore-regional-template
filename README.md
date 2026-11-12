@@ -67,6 +67,13 @@ dependencies), the example site built with warnings as errors, then
 
 ## Live data
 
+At build time the template also fetches a **snapshot** of the region's nodes and borders from
+Beacon (cached for the hour) and publishes it as a JSON file next to the page. The map uses it
+when Beacon is unreachable from a visitor's browser. If the build cannot reach Beacon, it warns
+(`warning-beacon-snapshot`, which `ignoreLogs` can silence) and uses
+`data/beacon_snapshot.json` from the site, if one exists. Don't build with `--panicOnWarning`
+in a region's deploy pipeline, or a Beacon outage will block deploys.
+
 The map talks to a [Beacon](https://github.com/MeshCore-Beacon) backend over its public REST
 API and WebSocket. **No Beacon code is part of this repository**; it is a separate service
 under its own licence.

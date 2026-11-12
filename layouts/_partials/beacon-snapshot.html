@@ -1,0 +1,39 @@
+{{- /*
+  Build-time snapshot of the region's Beacon data: nodes (one page, up to 2000)
+  and the border of each IATA, fetched while the site builds. It feeds the map
+  when Beacon is unreachable from the visitor's browser, and the no-JS node
+  list. A failed fetch falls back to data/beacon_snapshot.json if the site has
+  one, else to nothing. Returns a dict: nodes, borders, at (RFC 3339), source.
+  The cache key changes every hour, so a rebuild within the hour reuses the
+  download and a scheduled rebuild gets fresh data.
+*/ -}}
+{{- $base := strings.TrimSuffix "/" (site.Params.beacon.url | default "") -}}
+{{- $iatas := site.Params.region.iatas | default slice -}}
+{{- $key := now.UTC.Format "2006010215" -}}
+{{- $nodes := slice -}}
+{{- $borders := slice -}}
+{{- $source := "none" -}}
+{{- if and $base $iatas -}}
+  {{- $url := printf "%s/api/v1/nodes?iatas=%s&neighbors=true&limit=2000" $base (delimit $iatas ",") -}}
+  {{- $opts := dict "key" (printf "nodes-%s-%s" (md5 $url) $key) "headers" (dict "Accept" "application/json") -}}
+  {{- with try (resources.GetRemote $url $opts) -}}
+    {{- with .Err -}}
+      {{- warnidf "beacon-snapshot" "Beacon snapshot: nodes not fetched (%s); using the fallback" . -}}
+    {{- else with .Value -}}
+      {{- $nodes = (.Content | transform.Unmarshal).items | default slice -}}
+      {{- $source = "beacon" -}}
+    {{- end -}}
+  {{- end -}}
+  {{- range $iatas -}}
+    {{- $u := printf "%s/api/v1/iatas/%s/border" $base . -}}
+    {{- with try (resources.GetRemote $u (dict "key" (printf "border-%s-%s" (md5 $u) $key))) -}}
+      {{- with .Value -}}{{- with (.Content | transform.Unmarshal) -}}{{- $borders = $borders | append . -}}{{- end -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (eq $source "none") hugo.Data.beacon_snapshot -}}
+  {{- $nodes = hugo.Data.beacon_snapshot.nodes | default slice -}}
+  {{- $borders = hugo.Data.beacon_snapshot.borders | default slice -}}
+  {{- $source = "data" -}}
+{{- end -}}
+{{- return dict "nodes" $nodes "borders" $borders "at" (now.UTC.Format "2006-01-02T15:04:05Z") "source" $source -}}
