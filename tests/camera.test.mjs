@@ -21,3 +21,9 @@ test("bboxToBounds rejects zero-area boxes", () => {
   assert.equal(bboxToBounds([14, 57, 14, 58]), null);
   assert.equal(bboxToBounds([13, 57, 15, 57]), null);
 });
+import { nodesBounds } from "../assets/js/map/camera.js";
+test("nodesBounds frames positioned, local nodes only", () => {
+  const ns = [{ lat: 57.7, lng: 14.1 }, { lat: 57.9, lng: 14.3 }, { lat: 55.4, lng: 10.5, possiblyForeign: true }, { lat: 0, lng: 0 }];
+  assert.deepEqual(nodesBounds(ns), [[14.1, 57.7], [14.3, 57.9]]);
+  assert.equal(nodesBounds([{ lat: 57.7, lng: 14.1 }]), null);
+});

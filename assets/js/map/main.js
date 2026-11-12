@@ -1,6 +1,7 @@
 // Map island entry point. Settings come from #map's data attributes, written
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
+import { nodesBounds, frameNodes } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes } from "./nodes.js";
 import { attachPopups } from "./popup.js";
@@ -63,7 +64,7 @@ async function start() {
       : (ds.offlineNote || "Beacon kan inte nås just nu."));
     console.warn("Beacon unreachable, using the snapshot", err);
   }
-  const ready = () => { draw(); frameBorders(map, state.borders); };
+  const ready = () => { draw(); if (!frameNodes(map, nodesBounds(state.nodes))) frameBorders(map, state.borders); };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
   if (live) startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };

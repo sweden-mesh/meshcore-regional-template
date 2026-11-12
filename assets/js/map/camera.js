@@ -31,3 +31,18 @@ export function trackUserMoves(map) {
   const mark = (e) => { if (e.originalEvent) map.__userMoved = true; };
   map.on("movestart", mark);
 }
+
+// Bounds of the nodes worth framing: positioned, not possiblyForeign. Null when
+// fewer than two, so the caller falls back to the region's border.
+export function nodesBounds(nodes) {
+  const pts = (nodes || []).filter((n) => !n.possiblyForeign && Number.isFinite(n.lat) && Number.isFinite(n.lng) && !(n.lat === 0 && n.lng === 0));
+  if (pts.length < 2) return null;
+  const lngs = pts.map((n) => n.lng), lats = pts.map((n) => n.lat);
+  return [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]];
+}
+
+export function frameNodes(map, bounds) {
+  if (!bounds || map.__userMoved) return false;
+  map.fitBounds(bounds, { padding: 48, maxZoom: 12, duration: 0 });
+  return true;
+}
