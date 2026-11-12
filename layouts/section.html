@@ -1,7 +1,12 @@
 {{ define "main" }}
-  <article class="content">
+  <article class="content page">
     <h1>{{ .Title }}</h1>
-    {{ .Content }}
-    <ul>{{ range .Pages }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+    {{ with .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    <ol class="guide-grid">
+      {{ range $i, $p := .Pages.ByWeight }}
+        <li><a href="{{ .RelPermalink }}"><span class="eyebrow">{{ printf "%02d" (add $i 1) }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
+      {{ end }}
+    </ol>
   </article>
 {{ end }}

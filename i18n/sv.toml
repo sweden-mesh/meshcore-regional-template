@@ -68,3 +68,11 @@ other = "repeatrar"
 other = "observatörer online"
 [stat_packets]
 other = "paket senaste dygnet"
+[breadcrumb]
+other = "Brödsmulor"
+[pager]
+other = "Föregående och nästa guide"
+[previous]
+other = "Föregående"
+[next]
+other = "Nästa"

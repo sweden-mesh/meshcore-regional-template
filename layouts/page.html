@@ -1,3 +1,17 @@
 {{ define "main" }}
-  <article class="content"><h1>{{ .Title }}</h1>{{ .Content }}{{ partial "source.html" . }}</article>
+  <article class="content page">
+    {{ with .Parent }}{{ if not .IsHome }}<nav class="crumbs" aria-label="{{ T "breadcrumb" }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a></nav>{{ end }}{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    <div class="prose">{{ .Content }}</div>
+    {{ partial "source.html" . }}
+    {{- $pages := .CurrentSection.Pages.ByWeight -}}
+    {{- if and (ne .CurrentSection .) (gt (len $pages) 1) -}}
+      {{- $i := 0 -}}{{- range $k, $p := $pages }}{{ if eq $p $ }}{{ $i = $k }}{{ end }}{{ end -}}
+      <nav class="pager" aria-label="{{ T "pager" }}">
+        {{ if gt $i 0 }}{{ with index $pages (sub $i 1) }}<a class="pager-prev" href="{{ .RelPermalink }}"><span>{{ T "previous" }}</span>{{ .Title }}</a>{{ end }}{{ else }}<span></span>{{ end }}
+        {{ if lt (add $i 1) (len $pages) }}{{ with index $pages (add $i 1) }}<a class="pager-next" href="{{ .RelPermalink }}"><span>{{ T "next" }}</span>{{ .Title }}</a>{{ end }}{{ end }}
+      </nav>
+    {{- end }}
+  </article>
 {{ end }}
