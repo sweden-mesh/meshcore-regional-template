@@ -5,7 +5,6 @@
     {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
   </section>
 
-  {{ partial "map.html" . }}
 
   <div class="sections">
     <section class="card" id="kom-igang">
@@ -37,6 +36,8 @@
       {{ end }}
     </section>
   </div>
+
+  {{ partial "map.html" . }}
 
   {{ with .Content }}<article class="content">{{ . }}</article>{{ end }}
 {{ end }}
