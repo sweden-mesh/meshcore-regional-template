@@ -4,6 +4,25 @@
 
 export const NODE_TYPES = { 1: "companion", 2: "repeater", 3: "room", 4: "sensor" };
 
+// A live nodeUpdate (Beacon WebSocket) merged into the node list. Per the API
+// contract: lat/lng omitted = keep the old position, null = cleared; iatas
+// holds only the IATA that heard this advert, so it is merged, not replaced.
+export function mergeNodeUpdate(nodes, u) {
+  const list = nodes.slice();
+  const i = list.findIndex((n) => n.id === u.nodeId);
+  const old = i >= 0 ? list[i] : { id: u.nodeId, iatas: [] };
+  const next = { ...old, publicKey: u.publicKey ?? old.publicKey, name: u.name ?? old.name,
+    nodeType: u.nodeType ?? old.nodeType, isObserver: u.isObserver ?? old.isObserver,
+    radio: u.radio ?? old.radio, stale: false, lastSeen: Date.now() };
+  if ("possiblyForeign" in u) next.possiblyForeign = u.possiblyForeign;
+  if ("lat" in u) next.lat = u.lat;
+  if ("lng" in u) next.lng = u.lng;
+  const iatas = (old.iatas || []).filter((x) => !(u.iatas || []).some((y) => y.iata === x.iata));
+  next.iatas = [...iatas, ...(u.iatas || [])];
+  if (i >= 0) list[i] = next; else list.push(next);
+  return list;
+}
+
 // Beacon uses 0/0 for "no position"; anything non-finite or out of range is junk too.
 export function validPosition(n) {
   const lat = n?.lat, lng = n?.lng;

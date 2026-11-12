@@ -3,7 +3,7 @@
 import { createMap } from "./basemap.js";
 import { nodesBounds, frameNodes } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
-import { nodesToGeoJSON, addNodeLayers, publicNodes } from "./nodes.js";
+import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation } from "./flow.js";
@@ -122,6 +122,7 @@ function observerPoint(state, key) {
 function startLive(map, ds, client, iatas, state, draw) {
   if (!iatas.length || !("WebSocket" in window)) return;
   const flows = new FlowLayer(map);
+  let redraw = 0;
   const recent = new RecentPackets(10);
   const panel = document.getElementById("packets");
   const list = document.getElementById("recent-packets");
@@ -164,8 +165,13 @@ function startLive(map, ds, client, iatas, state, draw) {
   });
   map.on("style.load", () => flows.install());
   const feed = new LiveFeed(ds.beacon, {
-    iatas, events: ["packetObservation"], resolvePath: true, includeObserverKey: true,
+    iatas, events: ["packetObservation", "nodeUpdate"], resolvePath: true, includeObserverKey: true,
     onEvent: (name, data) => {
+      if (name === "nodeUpdate") {
+        state.nodes = publicNodes(mergeNodeUpdate(state.nodes, data), { companions: ds.companions === "true" });
+        if (!redraw) redraw = setTimeout(() => { redraw = 0; draw(); }, 2000); // batch bursts of adverts
+        return;
+      }
       if (name !== "packetObservation") return;
       const o = data.observation;
       const obsPt = observerPoint(state, o.observerPublicKey);

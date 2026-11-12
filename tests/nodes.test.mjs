@@ -38,3 +38,17 @@ test("shortId is the key's first 3 bytes in upper case", () => {
   assert.equal(shortId("0206800f16dc"), "020680");
   assert.equal(shortId(undefined), "");
 });
+
+import { mergeNodeUpdate } from "../assets/js/map/nodes.js";
+test("nodeUpdate: omitted position kept, null cleared, iatas merged, new node added", () => {
+  const nodes = [{ id: "a", name: "A", lat: 57.7, lng: 14.1, iatas: [{ iata: "JKG", lastHeard: 1 }, { iata: "GOT", lastHeard: 1 }] }];
+  let out = mergeNodeUpdate(nodes, { nodeId: "a", name: "A2", iatas: [{ iata: "JKG", lastHeard: 9 }] });
+  assert.equal(out[0].name, "A2");
+  assert.equal(out[0].lat, 57.7);
+  assert.deepEqual(out[0].iatas.map((x) => [x.iata, x.lastHeard]), [["GOT", 1], ["JKG", 9]]);
+  out = mergeNodeUpdate(out, { nodeId: "a", lat: null, lng: null });
+  assert.equal(out[0].lat, null);
+  out = mergeNodeUpdate(out, { nodeId: "b", name: "B", lat: 57.8, lng: 14.2, nodeType: 2 });
+  assert.equal(out.length, 2);
+  assert.equal(nodes[0].name, "A");
+});
