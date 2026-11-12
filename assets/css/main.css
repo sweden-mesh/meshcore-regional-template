@@ -237,3 +237,13 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .wz-log { font: .85rem ui-monospace, monospace; padding-left: 1.2rem; }
 .wz-log .error { color: #c0392b; }
 .wz-commands pre { background: var(--surface); padding: .75rem; border-radius: 8px; overflow-x: auto; }
+.wz-progress { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; counter-reset: wz; }
+.wz-progress li { counter-increment: wz; padding: .3rem .7rem; border-radius: 999px; border: 1px solid var(--line); font-size: .85rem; cursor: pointer; background: var(--bg); }
+.wz-progress li::before { content: counter(wz) " "; font-weight: 700; color: var(--muted); }
+.wz-progress li[aria-current] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.wz-progress li[aria-current]::before { color: inherit; }
+.wz-nav { display: flex; justify-content: space-between; }
+.wz-diff { border-collapse: collapse; margin: .75rem 0; font-size: .92rem; }
+.wz-diff td, .wz-diff th { padding: .35rem .7rem; border-bottom: 1px solid var(--line); text-align: left; }
+.wz-diff tr.changed td:last-child { font-weight: 700; color: var(--accent-2); }
+.wz-inline { display: inline-block; background: var(--surface); padding: .3rem .6rem; border-radius: 6px; }

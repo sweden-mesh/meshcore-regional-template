@@ -1,0 +1,87 @@
+{{- /* {{< wizard-guided >}}: the guided repeater wizard, one step at a time with
+       the reason for each value. Without JavaScript all steps show at once. */ -}}
+{{- $r := site.Params.region -}}{{- $radio := site.Params.radio -}}
+<form class="wizard wizard-guided" id="wizard-guided" novalidate
+      data-pattern="{{ site.Params.naming.pattern }}" data-scope="{{ $r.scope }}" data-radio="{{ $radio | jsonify }}">
+  <ol class="wz-progress" aria-label="{{ T "wz_steps" }}"></ol>
+
+  <fieldset class="wz-step" data-step="name">
+    <legend><span class="wz-num">1</span> {{ T "wz_name" }}</legend>
+    <p>{{ T "wzg_name_why" }}</p>
+    {{ with site.Params.naming.pattern }}<p class="muted">{{ T "wz_name_rule" }} <code>{{ . }}</code>{{ with site.Params.naming.explain }} {{ . }}{{ end }}</p>{{ end }}
+    <label for="wzg-place">{{ T "wz_place_name" }}</label>
+    <div class="wz-name-row"><span class="wz-prefix" data-prefix></span><input id="wzg-place" type="text" autocomplete="off" spellcheck="false" placeholder="{{ T "wz_place_ph" }}"></div>
+    <p class="wz-status" data-out="name" aria-live="polite"></p>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="radio">
+    <legend><span class="wz-num">2</span> {{ T "wzg_radio" }}</legend>
+    <p>{{ T "wzg_radio_why" }}</p>
+    {{ partial "settings.html" . }}
+    <label for="wzg-tx">{{ T "wzg_tx" }}</label>
+    <input id="wzg-tx" type="text" inputmode="numeric" autocomplete="off" placeholder="22">
+    <p class="muted">{{ T "wzg_tx_why" }}</p>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="place">
+    <legend><span class="wz-num">3</span> {{ T "wz_place" }}</legend>
+    <p>{{ T "wzg_place_why" }}</p>
+    {{ partial "mappick.html" . }}
+    <p class="wz-status" data-out="pos" aria-live="polite">{{ T "wz_place_none" }}</p>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="region">
+    <legend><span class="wz-num">4</span> {{ T "wz_region" }}</legend>
+    <p>{{ T "wzg_region_why" }}</p>
+    <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
+    <label class="wz-check"><input type="checkbox" id="wzg-edge"> {{ T "wz_edge" }}</label>
+    <div data-edge hidden><label for="wzg-neighbour">{{ T "wz_neighbour" }}</label><input id="wzg-neighbour" type="text" autocomplete="off" spellcheck="false" placeholder="se-xxx">
+      <p class="muted">{{ T "wzg_edge_why" }}</p></div>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="duty">
+    <legend><span class="wz-num">5</span> {{ T "wzg_duty" }}</legend>
+    <p>{{ T "wzg_duty_why" }}</p>
+    <pre class="wz-inline">set dutycycle 10</pre>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="password">
+    <legend><span class="wz-num">6</span> {{ T "wz_password" }}</legend>
+    <p>{{ T "wzg_pass_why" }}</p>
+    <label for="wzg-pass">{{ T "wz_password_label" }}</label>
+    <input id="wzg-pass" type="text" autocomplete="off" spellcheck="false" maxlength="15">
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="apply">
+    <legend><span class="wz-num">7</span> {{ T "wzg_review" }}</legend>
+    <p class="muted" data-serial-help>{{ T "wz_apply_help" }}</p>
+    <p class="wz-actions">
+      <button type="button" class="button" data-connect>{{ T "wz_connect" }}</button>
+      <button type="button" class="button" data-send disabled>{{ T "wz_send" }}</button>
+    </p>
+    <p class="wz-status" data-out="device" aria-live="polite"></p>
+    <table class="wz-diff" data-diff hidden><thead><tr><th></th><th>{{ T "wzg_now" }}</th><th>{{ T "wzg_new" }}</th></tr></thead><tbody></tbody></table>
+    <ol class="wz-log" data-log aria-live="polite"></ol>
+    <details class="wz-commands"><summary>{{ T "wz_commands" }}</summary><pre data-cmds></pre>
+      <button type="button" class="button button-secondary" data-copy>{{ T "wz_copy" }}</button></details>
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="test">
+    <legend><span class="wz-num">8</span> {{ T "wzg_test" }}</legend>
+    <p>{{ T "wzg_test_why" }}</p>
+    <ol>
+      <li>{{ T "wzg_test_1" }}</li>
+      <li>{{ T "wzg_test_2" }} <code>neighbors</code></li>
+      <li>{{ T "wzg_test_3" }} <a href="{{ "/" | relURL }}#karta">{{ T "cta_map" }}</a></li>
+    </ol>
+  </fieldset>
+
+  <p class="wz-nav" hidden>
+    <button type="button" class="button button-secondary" data-prev>{{ T "wzg_prev" }}</button>
+    <button type="button" class="button" data-next>{{ T "wzg_next" }}</button>
+  </p>
+</form>
+<div id="wzg-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "name" (T "wz_name") "radio" (T "wzg_radio") "position" (T "wz_place") "regions" (T "wz_region") | jsonify }}"></div>
+{{- with resources.Get "js/wizard/guided.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

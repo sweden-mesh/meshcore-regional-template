@@ -200,3 +200,47 @@ other = "Fyll i"
 other = "Klart. Repeatern startar om och skickar en advert; leta efter den på kartan om några minuter."
 [wz_failed]
 other = "Stoppade vid ett fel; se listan ovan."
+[wz_steps]
+other = "Steg"
+[wzg_prev]
+other = "Tillbaka"
+[wzg_next]
+other = "Nästa"
+[wzg_name_why]
+other = "Namnet är det andra ser i sina listor och på kartan. Ett platsnamn säger var repeatern står, så att andra förstår vilka delar av nätet den knyter ihop."
+[wzg_radio]
+other = "Radio"
+[wzg_radio_why]
+other = "Alla som ska höra varandra måste ha exakt samma frekvens, bandbredd, spreading factor och coding rate. En repeater med andra värden hör ingen och hörs inte av någon."
+[wzg_tx]
+other = "Sändeffekt i dBm (valfritt)"
+[wzg_tx_why]
+other = "Lämna tomt för radions standard. Högre effekt hjälper mindre än en högre placering; ange bara ett värde som din radio och antenn klarar och som är tillåtet."
+[wzg_place_why]
+other = "En repeaters position är bra att dela: den står still, och den visar på kartan var nätet når. Klicka där antennen ska sitta."
+[wzg_region_why]
+other = "Regionerna avgör vilken trafik repeatern för vidare. Med se och länets region når lokala samtal hela länet och rikssamtal hela landet, utan att lokal trafik floodas över grannlänen."
+[wzg_edge_why]
+other = "Bara för repeatrar som faktiskt når grannlänets repeatrar: då kommer trafik mellan länen fram."
+[wzg_duty]
+other = "Duty cycle"
+[wzg_duty_why]
+other = "På 869,618 MHz får en sändare använda högst 10 procent av tiden. Inställningen ser till att repeatern håller sig under, så att den inte tar över frekvensen."
+[wzg_pass_why]
+other = "Med administratörslösenordet kan man ändra repeatern, även på distans via radio. Byt det, skriv upp det och dela det bara med den som ska sköta repeatern."
+[wzg_review]
+other = "Granska och skicka"
+[wzg_now]
+other = "Nu"
+[wzg_new]
+other = "Nytt"
+[wzg_test]
+other = "Testa innan montering"
+[wzg_test_why]
+other = "Kontrollera att repeatern fungerar medan du fortfarande når den, innan den monteras på tak eller i mast."
+[wzg_test_1]
+other = "Låt den stå på några minuter efter omstarten, med antennen på."
+[wzg_test_2]
+other = "Anslut igen och se vilka repeatrar den hört med kommandot"
+[wzg_test_3]
+other = "Leta efter den på kartan:"
