@@ -8,7 +8,7 @@
   {{- $snapRes = resources.FromString "beacon/snapshot.json" ($snap | jsonify) | minify | fingerprint -}}
 {{- end -}}
 <link rel="stylesheet" href="{{ printf "%smaplibre-gl.css" $ml | relURL }}">
-<section class="map-section" id="karta">
+<section class="map-section" id="karta" data-pagefind-ignore="all">
   <h2>{{ T "map_heading" }}</h2>
   <div id="map" class="map" role="region" aria-label="{{ T "map_heading" }}"
        data-maplibre="{{ printf "%smaplibre-gl.mjs" $ml | relURL }}"

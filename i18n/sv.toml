@@ -282,3 +282,5 @@ other = "Lägg till regionens kanaler med exakt samma namn. För lokala samtal, 
 other = "Testa"
 [wzc_6_text]
 other = "Skicka en advert från appen och skriv test i testkanalen. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig."
+[search_noscript]
+other = "Sökningen behöver JavaScript."

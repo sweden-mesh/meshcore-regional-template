@@ -58,7 +58,7 @@ this repository's `hugo.toml`.
 3. Set `params.region.scb` (your county), `iatas`, `center`, `zoom` and `[params.beacon]`; the
    template derives the county name and region and generates the guides and wizards. Write
    `content/_index.md` for your own lead.
-4. Build with `hugo --gc --minify`. The output in `public/` is static and can be hosted
+4. Build with `hugo --gc --minify`, then `pagefind --site public` for the search index (Pagefind ≥ 1.5). The output in `public/` is static and can be hosted
    anywhere; CI needs Hugo (extended not required) and Go.
 
 Building on GitLab, Codeberg/Forgejo, Woodpecker or a plain web host: see `CI.md`.

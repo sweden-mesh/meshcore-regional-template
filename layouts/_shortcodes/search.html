@@ -1,0 +1,7 @@
+{{- /* {{< search >}}: Pagefind's search UI (built after Hugo with `pagefind --site public`).
+       Pagefind's UI picks Swedish from <html lang="sv">. */ -}}
+<link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
+<div id="search" class="search-box" data-bundle="{{ "pagefind/" | relURL }}"><noscript>{{ T "search_noscript" }}</noscript></div>
+{{- with resources.Get "js/search.js" | js.Build (dict "minify" true "format" "esm") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

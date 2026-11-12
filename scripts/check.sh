@@ -7,6 +7,7 @@ node --test tests/*.test.mjs
 cd exampleSite
 rm -rf public
 hugo --gc --minify --panicOnWarning
+pagefind --site public --quiet
 cd ..
 htmltest --conf .htmltest.yml
 scripts/check-overrides.sh

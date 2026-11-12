@@ -5,7 +5,7 @@
   <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <a class="skip-link" href="#main">{{ T "skip_to_content" }}</a>
   {{ partial "header.html" . }}
-  <main id="main">{{ block "main" . }}{{ end }}</main>
+  <main id="main" data-pagefind-body>{{ block "main" . }}{{ end }}</main>
   {{ partial "footer.html" . }}
   {{ partial "hooks/body-end.html" . }}
 </body>

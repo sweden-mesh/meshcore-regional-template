@@ -11,11 +11,13 @@
   {{- end -}}
   <nav class="nav-wide" aria-label="{{ T "nav_main" }}">
     {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
+    {{ with site.GetPage "/sok" }}<a class="nav-search" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">⌕ {{ .Title }}</a>{{ end }}
   </nav>
   <details class="nav-narrow">
     <summary aria-label="{{ T "nav_menu" }}"><span aria-hidden="true">☰</span></summary>
     <nav aria-label="{{ T "nav_main" }}">
       {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
+      {{ with site.GetPage "/sok" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
     </nav>
   </details>
 </header>
