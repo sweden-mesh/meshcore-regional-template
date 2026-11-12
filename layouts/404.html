@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <article class="content page notfound">
+    <p class="eyebrow">404</p>
+    <h1>{{ T "nf_title" }}</h1>
+    <p class="page-lead">{{ T "nf_lead" }}</p>
+    <p class="hero-actions" style="justify-content:flex-start">
+      <a class="button" href="{{ "/" | relURL }}">{{ T "nf_home" }}</a>
+      {{ with site.GetPage "/guider" }}<a class="button button-secondary" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+    </p>
+  </article>
+{{ end }}

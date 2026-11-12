@@ -86,3 +86,9 @@ other = "Om sidan"
 other = "Kartdata: Beacon-API"
 [footer_license]
 other = "Kod BSD-2, text CC BY 4.0"
+[nf_title]
+other = "Paketet kom aldrig fram"
+[nf_lead]
+other = "Sidan finns inte här, eller så har den flyttat. Inget hopp hittade någon väg dit."
+[nf_home]
+other = "Till startsidan"
