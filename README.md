@@ -18,6 +18,7 @@ the region site wins.** That works for every kind of file:
 | styles or scripts | `assets/css/main.css`, `assets/js/…` |
 | the logo (header) | `assets/images/logo.svg` (square, shown at 32 px) |
 | the favicon | `static/favicon.svg` |
+| the social-card image (1200×630) | `static/images/og.png`, or `image:` in a page's front matter |
 
 ## Settings
 
