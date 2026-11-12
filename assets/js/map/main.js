@@ -46,15 +46,42 @@ async function start() {
   map.addControl(new ForeignToggle(ds.foreignLabel || "Noder utanför regionen", (v) => {
     state.showForeign = v; setForeignVisible(map, v);
   }), "top-left");
-  const [nodes, borders] = await Promise.all([
-    client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
-    loadBorders(client, iatas),
-  ]);
-  state.nodes = nodes; state.borders = borders;
+  let live = true;
+  try {
+    const [nodes, borders] = await Promise.all([
+      client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
+      loadBorders(client, iatas),
+    ]);
+    state.nodes = nodes; state.borders = borders;
+  } catch (err) {
+    // Beacon unreachable from this browser: fall back to the build-time snapshot.
+    live = false;
+    const snap = await loadSnapshot(ds.snapshot);
+    state.nodes = snap?.nodes || []; state.borders = snap?.borders || [];
+    note(el, snap ? (ds.snapshotNote || "Beacon kan inte nås just nu; kartan visar läget från {at}.").replace("{at}", formatAt(snap.at))
+      : (ds.offlineNote || "Beacon kan inte nås just nu."));
+    console.warn("Beacon unreachable, using the snapshot", err);
+  }
   const ready = () => { draw(); frameBorders(map, borders); };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
-  startLive(map, ds, client, iatas, state, draw);
+  if (live) startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };
+}
+
+async function loadSnapshot(url) {
+  if (!url) return null;
+  try { const r = await fetch(url); return r.ok ? r.json() : null; } catch { return null; }
+}
+
+function formatAt(iso) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? "" : d.toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short" });
+}
+
+function note(el, text) {
+  let p = el.parentElement.querySelector(".map-note");
+  if (!p) { p = document.createElement("p"); p.className = "map-note"; el.after(p); }
+  p.textContent = text;
 }
 
 // The observer's own node (and position), matched by public key: observer

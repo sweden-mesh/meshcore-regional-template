@@ -40,3 +40,7 @@ other = "Senaste paket – klicka för att se vägen"
 other = "Vägen till varje observatör"
 [close]
 other = "Stäng"
+[map_snapshot_note]
+other = "Beacon kan inte nås just nu; kartan visar läget från {at}."
+[map_offline_note]
+other = "Beacon kan inte nås just nu."
