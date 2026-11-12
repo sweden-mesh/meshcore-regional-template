@@ -1,18 +1,43 @@
+/* Fonts: self-hosted (OFL, static/fonts/), so no visitor request goes to a font CDN. */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("../fonts/space-grotesk-latin-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("../fonts/space-grotesk-latin-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* Design tokens (planning: design-direction.md, direction D). A region overrides
+   the accent tokens (and its logo) in its own assets/css/region.css, if any. */
 :root {
-  --bg: #ffffff; --fg: #1b1f24; --muted: #5b6470; --accent: #0b6bcb; --line: #e3e7ec;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-head: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --accent: #1f5d82;          /* Vättern blue */
+  --accent-2: #21664a;        /* pine green */
+  --online: #2f8a5f;
+  --warn: #d97a2b;
+  --bg: #ffffff;
+  --surface: #f6f9fb;
+  --fg: #0f1d26;
+  --muted: #4a5c68;
+  --line: #e3e8ec;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #111418; --fg: #e6e9ed; --muted: #9aa4b0; --accent: #5aa9ff; --line: #262c33; }
+  :root {
+    --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
+    --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --muted: #9fb3c0; --line: #1d3242;
+    --shadow-map: 0 24px 60px -24px rgba(0, 0, 0, .7);
+  }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body); }
+h1, h2, h3, .brand { font-family: var(--font-head); letter-spacing: -.01em; }
 a { color: var(--accent); }
 .site-header, .site-footer, .content, .map-section, .hero, .sections { max-width: 72rem; margin: 0 auto; padding: 1rem; }
 .site-header { display: flex; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--line); }
 .site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
 .brand { font-weight: 700; text-decoration: none; color: var(--fg); }
-.map { height: min(60vh, 36rem); min-height: 18rem; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.map { height: min(60vh, 36rem); min-height: 18rem; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-map); }
 .map-failed, .map noscript { display: grid; place-items: center; height: 100%; color: var(--muted); }
 .map-note { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }
 .site-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .9rem; }
@@ -21,7 +46,7 @@ a { color: var(--accent); }
 .lead { margin: .25rem 0 0; color: var(--muted); font-size: 1.1rem; max-width: 46rem; }
 .map-section h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .sections { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-.card { border: 1px solid var(--line); border-radius: 8px; padding: 0 1rem 1rem; }
+.card { border: 1px solid var(--line); border-radius: var(--radius); padding: 0 1rem 1rem; }
 .card ul { padding-left: 1.2rem; }
 .channels dt { margin-top: .5rem; }
 .channels dd { margin: 0; color: var(--muted); }
