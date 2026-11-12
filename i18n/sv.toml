@@ -76,3 +76,13 @@ other = "Föregående och nästa guide"
 other = "Föregående"
 [next]
 other = "Nästa"
+[nav_main]
+other = "Huvudmeny"
+[nav_menu]
+other = "Meny"
+[footer_about]
+other = "Om sidan"
+[footer_beacon]
+other = "Kartdata: Beacon-API"
+[footer_license]
+other = "Kod BSD-2, text CC BY 4.0"

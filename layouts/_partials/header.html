@@ -3,5 +3,19 @@
     {{- with resources.Get "images/logo.svg" }}<img class="brand-logo" src="{{ (. | minify | fingerprint).RelPermalink }}" alt="" width="32" height="32">{{ end -}}
     <span>{{ site.Title }}</span>
   </a>
-  <nav>{{ range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}</nav>
+  {{- $current := . -}}
+  {{- $links := slice -}}
+  {{- range site.Menus.main -}}
+    {{- $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) -}}
+    {{- $links = $links | append (dict "url" .URL "name" .Name "active" $active) -}}
+  {{- end -}}
+  <nav class="nav-wide" aria-label="{{ T "nav_main" }}">
+    {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
+  </nav>
+  <details class="nav-narrow">
+    <summary aria-label="{{ T "nav_menu" }}"><span aria-hidden="true">☰</span></summary>
+    <nav aria-label="{{ T "nav_main" }}">
+      {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
+    </nav>
+  </details>
 </header>

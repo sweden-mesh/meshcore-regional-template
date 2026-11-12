@@ -1,4 +1,25 @@
 <footer class="site-footer">
-  <p>{{ site.Params.region.name }} · scope <code>{{ site.Params.region.scope }}</code></p>
-  <p><a href="https://github.com/sweden-mesh/meshcore-regional-template">{{ T "footer_template" }}</a></p>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-title">{{ site.Title }}</p>
+      <p class="muted">{{ site.Params.region.name }} · {{ T "network_scope" }} <code>{{ site.Params.region.scope }}</code></p>
+    </div>
+    <div>
+      <p class="footer-title">{{ T "section_community" }}</p>
+      <ul>
+        {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
+        {{ with site.Params.chat.discord }}<li><a href="{{ . }}">Discord</a></li>{{ end }}
+        {{ with site.Params.chat.matrix }}<li><a href="{{ . }}">Matrix</a></li>{{ end }}
+        <li><a href="https://meshcore.io/">meshcore.io</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">{{ T "footer_about" }}</p>
+      <ul>
+        <li><a href="https://github.com/sweden-mesh/meshcore-regional-template">{{ T "footer_template" }}</a></li>
+        {{ with site.Params.beacon.url }}<li><a href="{{ . }}/swagger/index.html">{{ T "footer_beacon" }}</a></li>{{ end }}
+        <li>{{ T "footer_license" }}</li>
+      </ul>
+    </div>
+  </div>
 </footer>
