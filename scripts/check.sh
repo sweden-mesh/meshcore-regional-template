@@ -9,3 +9,4 @@ rm -rf public
 hugo --gc --minify --panicOnWarning
 cd ..
 htmltest --conf .htmltest.yml
+scripts/check-overrides.sh

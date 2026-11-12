@@ -5,5 +5,6 @@
   {{ partial "header.html" . }}
   <main>{{ block "main" . }}{{ end }}</main>
   {{ partial "footer.html" . }}
+  {{ partial "hooks/body-end.html" . }}
 </body>
 </html>

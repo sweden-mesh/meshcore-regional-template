@@ -17,6 +17,7 @@ the region site wins.** That works for every kind of file:
 | a UI string | `i18n/sv.toml` (only the keys you change) |
 | styles or scripts | `assets/css/main.css`, `assets/js/…` |
 | the logo (header) | `assets/images/logo.svg` (square, shown at 32 px) |
+| extra tags in `<head>` / before `</body>` | `layouts/_partials/hooks/head-end.html`, `hooks/body-end.html` (empty in the template) |
 | the favicon | `static/favicon.svg` |
 | the social-card image (1200×630) | `static/images/og.png`, or `image:` in a page's front matter |
 
