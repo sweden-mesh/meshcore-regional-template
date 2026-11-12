@@ -20,6 +20,12 @@
       {{ with site.GetPage "/guider" }}
         <ul class="link-list">{{ range first 4 .Pages.ByWeight }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
         <a class="more" href="{{ .RelPermalink }}">{{ T "all_guides" }} →</a>
+        {{ with site.GetPage "/verktyg" }}{{ with .Pages.ByWeight }}
+        <div class="wizard-links">
+          <p class="eyebrow">{{ T "wizards" }}</p>
+          <ul class="link-list">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+        </div>
+        {{ end }}{{ end }}
         {{ with site.Params.firmware.picker }}<p class="firmware-link"><a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "firmware_link" }}</a></p>{{ end }}
       {{ end }}
     </section>

@@ -46,6 +46,10 @@ enableRobotsTXT = true
   pageRef = "/guider"
   weight = 10
 [[menus.main]]
+  name = "Verktyg"
+  pageRef = "/verktyg"
+  weight = 15
+[[menus.main]]
   name = "Om regionen"
   pageRef = "/om-regionen"
   weight = 20

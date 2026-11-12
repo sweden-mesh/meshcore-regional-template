@@ -244,3 +244,5 @@ other = "Låt den stå på några minuter efter omstarten, med antennen på."
 other = "Anslut igen och se vilka repeatrar den hört med kommandot"
 [wzg_test_3]
 other = "Leta efter den på kartan:"
+[wizards]
+other = "Guidade inställningar"
