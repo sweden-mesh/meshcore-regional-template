@@ -14,13 +14,24 @@ disableKinds = ["taxonomy", "term"]
 
 [params.region]
   name = "Exempelregionen"
-  iata = "XXX"
+  iatas = ["XXX"]
   scope = "se-xxx"
   center = [57.78, 14.16]
   zoom = 9
 
 [params.beacon]
   url = ""
+
+[params.community]
+  name = "Exempel-Mesh"
+  url = "https://example.org/"
+
+[params.chat]
+  discord = "https://discord.gg/example"
+
+[[params.channels]]
+  name = "#test-xxx"
+  purpose = "Testmeddelanden till repeatrar med auto-svar"
 
 [[menus.main]]
   name = "Guider"

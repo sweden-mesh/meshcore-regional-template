@@ -3,7 +3,7 @@
 // packets from Beacon's /ws subscription filtered to the region's IATA.
 const el = document.getElementById("map");
 if (el && el.dataset.beacon) {
-  const iata = el.dataset.iata;
+  const iatas = JSON.parse(el.dataset.iatas || "[]");
   const center = JSON.parse(el.dataset.center || "[0,0]");
-  el.textContent = `Karta över ${iata} (centrum ${center.join(", ")}) kommer här.`;
+  el.textContent = `Karta över ${iatas.join(", ")} (centrum ${center.join(", ")}) kommer här.`;
 }

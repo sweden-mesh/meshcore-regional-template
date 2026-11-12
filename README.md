@@ -17,8 +17,23 @@ the region site wins.** That works for every kind of file:
 | a UI string | `i18n/sv.toml` (only the keys you change) |
 | styles or scripts | `assets/css/main.css`, `assets/js/map.js` |
 
-Settings (region name, IATA, scope, map centre, Beacon URL) are `[params]` in the region's
-`hugo.toml`; the defaults are in this repository's `hugo.toml`.
+## Settings
+
+`[params]` in the region's `hugo.toml`. A key the region leaves out falls back to the default in
+this repository's `hugo.toml`.
+
+| Key | Meaning |
+|---|---|
+| `noindex` | `true` on staging: no search-engine indexing |
+| `region.name` | the region's name, shown in the header and hero |
+| `region.iatas` | observer IATA codes (MQTT topic) whose traffic the map shows, e.g. `["JKG"]` |
+| `region.scope` | the region's MeshCore scope, e.g. `se-jkp` |
+| `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
+| `beacon.url` | base URL of the Beacon backend; empty = no live data |
+| `community.name`, `community.url` | the local group |
+| `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
+| `channels` | a list of `{name, purpose}`: the region's channels |
+| `analytics.*` | optional Plausible: `plausible`, `domain`, `script`, `api` (same-origin paths) |
 
 ## Start a region site
 

@@ -1,16 +1,39 @@
-# Module configuration and defaults. A region site overrides any of the params
-# below in its own hugo.toml; everything else it overrides by putting a file at
-# the same path (content/, layouts/, assets/, i18n/, static/).
+# Module configuration and defaults. A region site sets its own values for the
+# params below in its hugo.toml (missing keys fall back to these defaults); every
+# other file it overrides by putting a file at the same path (content/, layouts/,
+# assets/, i18n/, static/). Every key is described in README.md.
 
 [module.hugoVersion]
   min = "0.146.0"
 
+[params]
+  noindex = false            # true on staging: robots noindex + a disallow-all robots.txt
+
 [params.region]
-  name = "Exempelregionen"   # shown in the header and on the home page
-  iata = "XXX"               # observer IATA code(s) in the MQTT topics, filters Beacon
+  name = "Exempelregionen"   # shown in the header and the hero
+  iatas = ["XXX"]            # observer IATA codes in the MQTT topics; filters Beacon
   scope = "se"               # the region's MeshCore scope, e.g. se-jkp
-  center = [62.0, 16.0]      # map centre, [lat, lng]
-  zoom = 5                   # map zoom
+  center = [62.0, 16.0]      # map start, [lat, lng]
+  zoom = 5                   # map start zoom
 
 [params.beacon]
-  url = ""                   # Beacon backend base URL, e.g. https://beacon.example.se; empty = no live data
+  url = ""                   # Beacon base URL, e.g. https://beacon.example.se; empty = no live data
+
+[params.community]
+  name = ""                  # the local group, e.g. JKPG-Mesh
+  url = ""
+
+[params.chat]
+  discord = ""               # invite URL
+  matrix = ""                # room URL, e.g. https://matrix.to/#/#room:server
+
+# The region's channels, shown on the landing page and in the channel guide.
+# [[params.channels]]
+#   name = "#test-xxx"
+#   purpose = "Testmeddelanden; repeatrar med auto-svar svarar"
+
+[params.analytics]
+  plausible = false          # true = load Plausible through the paths below
+  domain = ""                # the site as registered in Plausible
+  script = ""                # same-origin script path, e.g. /js/abc123.js
+  api = ""                   # same-origin event path, e.g. /api/event

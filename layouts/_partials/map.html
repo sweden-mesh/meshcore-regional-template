@@ -4,7 +4,7 @@
   <h2>{{ T "map_heading" }}</h2>
   <div id="map" class="map"
        data-beacon="{{ site.Params.beacon.url }}"
-       data-iata="{{ $r.iata }}"
+       data-iatas="{{ $r.iatas | jsonify }}"
        data-center="{{ $r.center | jsonify }}"
        data-zoom="{{ $r.zoom }}">
     {{ if not site.Params.beacon.url }}<p>{{ T "map_no_beacon" }}</p>{{ end }}
