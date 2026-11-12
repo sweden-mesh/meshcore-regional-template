@@ -24,3 +24,11 @@ other = "Kartan kunde inte laddas."
 other = "Kartan behöver JavaScript."
 [map_foreign_toggle]
 other = "Visa noder som troligen står utanför regionen"
+[map_links]
+other = "Grannlänkar"
+[map_links_all]
+other = "alla"
+[map_links_selected]
+other = "vald nod"
+[map_links_off]
+other = "av"
