@@ -18,6 +18,7 @@
        data-iatas="{{ $r.iatas | jsonify }}"
        data-center="{{ $r.center | jsonify }}"
        data-zoom="{{ $r.zoom }}"
+       data-companions="{{ $m.companions | default false }}"
        {{ with $snapRes }}data-snapshot="{{ .RelPermalink }}"{{ end }}
        data-fail-text="{{ T "map_failed" }}"
        data-foreign-label="{{ T "map_foreign_toggle" }}"

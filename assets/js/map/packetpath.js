@@ -8,13 +8,13 @@ const PALETTE = ["#16a34a", "#0ea5e9", "#a855f7", "#f59e0b", "#ef4444", "#14b8a6
 
 // One entry per observation: who heard it, when (ms after the first), and the
 // drawable runs of its route. Fastest first.
-export function packetRoutes(detail, observerPoint) {
+export function packetRoutes(detail, observerPoint, keep = (chain) => chain) {
   return (detail?.observations || [])
     .map((o) => {
       const end = observerPoint(o.observerId);
       return { observerId: o.observerId, observerName: o.observerName || "", ms: o.propagationTimeMs ?? 0,
         snr: o.snr, hops: o.pathLength?.hopCount ?? (o.resolvedPath || []).length,
-        runs: runs(chainFromObservation(o, end)), located: !!end };
+        runs: runs(keep(chainFromObservation(o, end))), located: !!end };
     })
     .sort((a, b) => a.ms - b.ms);
 }

@@ -26,3 +26,10 @@ test("nodesToGeoJSON maps Beacon nodes to [lng, lat] points with flags", () => {
 test("nodesToGeoJSON skips nodes without a position", () => {
   assert.equal(nodesToGeoJSON([{ id: "a", lat: 0, lng: 0 }, { id: "b" }]).features.length, 0);
 });
+
+import { publicNodes } from "../assets/js/map/nodes.js";
+test("companions are left out unless the site opts in", () => {
+  const ns = [{ id: "c", nodeType: 1 }, { id: "r", nodeType: 2 }, { id: "s", nodeType: 3 }];
+  assert.deepEqual(publicNodes(ns).map((n) => n.id), ["r", "s"]);
+  assert.equal(publicNodes(ns, { companions: true }).length, 3);
+});

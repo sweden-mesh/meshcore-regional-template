@@ -13,6 +13,12 @@ export function validPosition(n) {
   return lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
 }
 
+// Companions (nodeType 1) are people's handsets; their advertised position can
+// be a home. They are left out unless the site opts in (params.map.companions).
+export function publicNodes(nodes, { companions = false } = {}) {
+  return (nodes || []).filter((n) => companions || n.nodeType !== 1);
+}
+
 export function nodesToGeoJSON(nodes) {
   const features = [];
   for (const n of nodes || []) {

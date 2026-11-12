@@ -36,4 +36,7 @@
   {{- $borders = hugo.Data.beacon_snapshot.borders | default slice -}}
   {{- $source = "data" -}}
 {{- end -}}
+{{- if not site.Params.map.companions -}}
+  {{- $nodes = where $nodes "nodeType" "!=" 1 -}}
+{{- end -}}
 {{- return dict "nodes" $nodes "borders" $borders "at" (now.UTC.Format "2006-01-02T15:04:05Z") "source" $source -}}

@@ -2,7 +2,7 @@
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
 import { createClient } from "../beacon/rest.js";
-import { nodesToGeoJSON, addNodeLayers } from "./nodes.js";
+import { nodesToGeoJSON, addNodeLayers, publicNodes } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation } from "./flow.js";
@@ -20,6 +20,7 @@ async function start() {
   if (!ds.beacon) return;
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
+  const opts = { companions: ds.companions === "true" };
   const state = { nodes: [], borders: [], showForeign: true, linkMode: "all", selected: null };
   const popup = attachPopups(map, maplibregl, client);
   const drawLinks = async () => {
@@ -52,12 +53,12 @@ async function start() {
       client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
       loadBorders(client, iatas),
     ]);
-    state.nodes = nodes; state.borders = borders;
+    state.nodes = publicNodes(nodes, opts); state.borders = borders;
   } catch (err) {
     // Beacon unreachable from this browser: fall back to the build-time snapshot.
     live = false;
     const snap = await loadSnapshot(ds.snapshot);
-    state.nodes = snap?.nodes || []; state.borders = snap?.borders || [];
+    state.nodes = publicNodes(snap?.nodes, opts); state.borders = snap?.borders || [];
     note(el, snap ? (ds.snapshotNote || "Beacon kan inte nås just nu; kartan visar läget från {at}.").replace("{at}", formatAt(snap.at))
       : (ds.offlineNote || "Beacon kan inte nås just nu."));
     console.warn("Beacon unreachable, using the snapshot", err);
@@ -82,6 +83,12 @@ function note(el, text) {
   let p = el.parentElement.querySelector(".map-note");
   if (!p) { p = document.createElement("p"); p.className = "map-note"; el.after(p); }
   p.textContent = text;
+}
+
+// Hops through nodes that are not shown (companions) become gaps.
+function visibleOnly(state, chain) {
+  const ids = new Set(state.nodes.map((n) => n.id));
+  return chain.map((p) => (p && ids.has(p.id) ? p : null));
 }
 
 // The observer's own node (and position), matched by public key: observer
@@ -120,7 +127,7 @@ function startLive(map, ds, client, iatas, state, draw) {
       for (let i = 0; i < ids.length; i += 3) { // Beacon allows 4 concurrent requests per client
         await Promise.all(ids.slice(i, i + 3).map(async (id) => keys.set(id, await keyFor(id))));
       }
-      const routes = packetRoutes(detail, (id) => observerPoint(state, keys.get(id)));
+      const routes = packetRoutes(detail, (id) => observerPoint(state, keys.get(id)), (c) => visibleOnly(state, c));
       const fc = routesToGeoJSON(routes);
       addPathLayer(map, fc);
       const pts = fc.features.flatMap((f) => f.geometry.coordinates);
@@ -144,13 +151,13 @@ function startLive(map, ds, client, iatas, state, draw) {
       const o = data.observation;
       const obsPt = observerPoint(state, o.observerPublicKey);
       flows.glow(obsPt);
-      flows.add(chainFromObservation(o, obsPt), { type: data.packet.payloadTypeName });
+      flows.add(visibleOnly(state, chainFromObservation(o, obsPt)), { type: data.packet.payloadTypeName });
       recent.add(data);
       renderRecent();
     },
     // Missed events are only in REST: refresh the nodes.
     onGap: async () => {
-      try { state.nodes = await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }); draw(); } catch { /* next gap */ }
+      try { state.nodes = publicNodes(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
     },
   });
   map.addControl(new Toggle(ds.liveLabel || "Live-trafik", (on) => {
