@@ -181,3 +181,10 @@ a { color: var(--accent); }
 .prose .settings { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1.1rem; background: var(--surface); }
 .channels-table small { display: inline-block; margin-top: .2rem; }
 .firmware-link { margin: .75rem 0 0; font-size: .9rem; }
+.namecheck { display: grid; gap: .35rem; margin: 1rem 0; padding: .9rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); }
+.namecheck label { font-weight: 600; font-size: .95rem; }
+.namecheck input { font: 500 1rem ui-monospace, monospace; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); min-height: 44px; }
+.namecheck output { font-size: .9rem; min-height: 1.3em; }
+.namecheck output[data-verdict="ok"] { color: var(--accent-2); }
+.namecheck output[data-verdict="no-position"] { color: var(--warn); }
+.namecheck output[data-verdict="too-long"] { color: #c0392b; }

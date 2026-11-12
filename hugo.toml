@@ -23,6 +23,11 @@
 [params.observer]
   preset = "meshat.se"       # the Observer firmware's MQTT preset this region's map is fed from
 
+[params.naming]
+  pattern = ""               # the region's naming rule, e.g. "SE-JKP-Plats-ABCD"; empty = general advice only
+  example = ""               # e.g. "SE-JKP-Braneryd-FD70"
+  explain = ""               # one sentence on the parts
+
 [params.radio]
   preset = "EU/UK (Narrow)"  # the preset's name in the MeshCore app
   freq = 869.618             # MHz

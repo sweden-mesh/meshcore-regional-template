@@ -33,6 +33,7 @@ this repository's `hugo.toml`.
 | `region.scope` | the region's MeshCore scope, e.g. `se-jkp` |
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
 | `firmware.picker`, `firmware.flasher` | where to get firmware (default the sweden-mesh firmware picker) and the web flasher (default meshcore.io/flasher); used by the landing page and the firmware guide |
+| `naming.pattern`, `naming.example`, `naming.explain` | the region's naming rule for nodes, shown in the naming guide; empty = general advice |
 | `observer.preset` | the Observer firmware's MQTT preset that feeds this region's Beacon (default `meshat.se`), used by the map guide |
 | `radio.preset`, `radio.freq`, `radio.bw`, `radio.sf`, `radio.cr` | the region's radio preset (default EU/UK Narrow, 869.618 MHz, BW 62.5, SF8, CR8), shown by `{{</* settings */>}}` and on the landing page |
 | `map.style_light`, `map.style_dark` | basemap style URLs; default OpenFreeMap `liberty` and `dark` (no key, attribution shown by the map) |

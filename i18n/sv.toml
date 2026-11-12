@@ -112,3 +112,15 @@ other = "Används till"
 other = "ingen"
 [firmware_link]
 other = "Firmware: välj bild för din radio ↗"
+[nc_label]
+other = "Testa ett namn"
+[nc_ok]
+other = "får plats tillsammans med positionen"
+[nc_nopos]
+other = "för långt för att positionen ska få plats i samma advert"
+[nc_long]
+other = "för långt; firmware kortar av det"
+[naming_rule]
+other = "Namnregel i {{ .Region }}"
+[naming_example]
+other = "till exempel"

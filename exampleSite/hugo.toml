@@ -20,6 +20,11 @@ enableRobotsTXT = true
   center = [57.78, 14.16]
   zoom = 9
 
+[params.naming]
+  pattern = "SE-XXX-Plats-ABCD"
+  example = "SE-XXX-Utsikten-1A2B"
+  explain = "SE för Sverige, regionens kod, platsen och de fyra första tecknen i nodens nyckel."
+
 [params.beacon]
   url = ""
 

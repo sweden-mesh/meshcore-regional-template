@@ -1,0 +1,10 @@
+{{- /* {{< namecheck >}}: a small field that counts a node name's UTF-8 bytes. */ -}}
+{{- $texts := dict "ok" (T "nc_ok") "no-position" (T "nc_nopos") "too-long" (T "nc_long") -}}
+<div class="namecheck" data-namecheck="{{ $texts | jsonify }}">
+  <label for="namecheck-{{ .Ordinal }}">{{ T "nc_label" }}</label>
+  <input id="namecheck-{{ .Ordinal }}" type="text" autocomplete="off" spellcheck="false" placeholder="{{ site.Params.naming.example | default "SE-XXX-Plats-ABCD" }}">
+  <output for="namecheck-{{ .Ordinal }}" aria-live="polite"></output>
+</div>
+{{- with resources.Get "js/namecheck.js" | js.Build (dict "minify" true "format" "esm") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}
