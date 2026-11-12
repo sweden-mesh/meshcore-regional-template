@@ -16,9 +16,21 @@
 
     <section class="card" id="natet">
       <h2>{{ T "section_network" }}</h2>
-      <div id="stats" class="stats" data-beacon="{{ site.Params.beacon.url }}">
-        <p>{{ T "network_scope" }} <code>{{ $r.scope }}</code></p>
+      <div id="stats" class="stats" data-beacon="{{ site.Params.beacon.url }}" data-iatas="{{ $r.iatas | jsonify }}">
+        {{ with site.Params.beacon.url }}
+        <dl class="stat-grid">
+          <div><dt>{{ T "stat_repeaters" }}</dt><dd data-stat="repeaters">–</dd></div>
+          <div><dt>{{ T "stat_observers" }}</dt><dd data-stat="online">–</dd></div>
+          <div><dt>{{ T "stat_packets" }}</dt><dd data-stat="packets">–</dd></div>
+        </dl>
+        {{ end }}
+        <p class="muted">{{ T "network_scope" }} <code>{{ $r.scope }}</code></p>
       </div>
+      {{ with site.Params.beacon.url }}
+      {{ with resources.Get "js/stats/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+        <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+      {{ end }}
+      {{ end }}
     </section>
 
     <section class="card" id="gemenskap">
