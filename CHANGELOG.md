@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.1.2 — 2026-11-12
+
+- Fix: the map threw `borders is not defined` after loading nodes, so it neither framed the
+  region nor started the live feed (introduced with the Beacon-unreachable fallback). Found in
+  the fresh-repo test.
+
 ## v0.1.1 — 2026-11-12
 
 - Fix: MapLibre moved from `static/vendor/` to `static/lib/`. Go module downloads leave out

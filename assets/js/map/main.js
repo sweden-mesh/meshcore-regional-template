@@ -63,7 +63,7 @@ async function start() {
       : (ds.offlineNote || "Beacon kan inte nås just nu."));
     console.warn("Beacon unreachable, using the snapshot", err);
   }
-  const ready = () => { draw(); frameBorders(map, borders); };
+  const ready = () => { draw(); frameBorders(map, state.borders); };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
   if (live) startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };
