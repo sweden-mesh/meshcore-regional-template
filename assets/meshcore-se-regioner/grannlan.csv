@@ -1,0 +1,101 @@
+scb_lan,lan,scb_grannlan,grannlan,via
+01,Stockholms län,03,Uppsala län,land
+01,Stockholms län,04,Södermanlands län,land
+01,Stockholms län,05,Östergötlands län,vatten
+01,Stockholms län,09,Gotlands län,vatten
+01,Stockholms län,19,Västmanlands län,land
+01,Stockholms län,21,Gävleborgs län,vatten
+03,Uppsala län,01,Stockholms län,land
+03,Uppsala län,04,Södermanlands län,land
+03,Uppsala län,19,Västmanlands län,land
+03,Uppsala län,20,Dalarnas län,land
+03,Uppsala län,21,Gävleborgs län,land
+04,Södermanlands län,01,Stockholms län,land
+04,Södermanlands län,03,Uppsala län,land
+04,Södermanlands län,05,Östergötlands län,land
+04,Södermanlands län,08,Kalmar län,vatten
+04,Södermanlands län,18,Örebro län,land
+04,Södermanlands län,19,Västmanlands län,land
+05,Östergötlands län,01,Stockholms län,vatten
+05,Östergötlands län,04,Södermanlands län,land
+05,Östergötlands län,06,Jönköpings län,land
+05,Östergötlands län,08,Kalmar län,land
+05,Östergötlands län,14,Västra Götalands län,land
+05,Östergötlands län,18,Örebro län,land
+05,Östergötlands län,19,Västmanlands län,land
+06,Jönköpings län,05,Östergötlands län,land
+06,Jönköpings län,07,Kronobergs län,land
+06,Jönköpings län,08,Kalmar län,land
+06,Jönköpings län,13,Hallands län,land
+06,Jönköpings län,14,Västra Götalands län,land
+06,Jönköpings län,18,Örebro län,vatten
+07,Kronobergs län,06,Jönköpings län,land
+07,Kronobergs län,08,Kalmar län,land
+07,Kronobergs län,10,Blekinge län,land
+07,Kronobergs län,12,Skåne län,land
+07,Kronobergs län,13,Hallands län,land
+07,Kronobergs län,14,Västra Götalands län,land
+08,Kalmar län,04,Södermanlands län,vatten
+08,Kalmar län,05,Östergötlands län,land
+08,Kalmar län,06,Jönköpings län,land
+08,Kalmar län,07,Kronobergs län,land
+08,Kalmar län,09,Gotlands län,vatten
+08,Kalmar län,10,Blekinge län,land
+09,Gotlands län,01,Stockholms län,vatten
+09,Gotlands län,08,Kalmar län,vatten
+10,Blekinge län,07,Kronobergs län,land
+10,Blekinge län,08,Kalmar län,land
+10,Blekinge län,12,Skåne län,land
+12,Skåne län,07,Kronobergs län,land
+12,Skåne län,10,Blekinge län,land
+12,Skåne län,13,Hallands län,land
+13,Hallands län,06,Jönköpings län,land
+13,Hallands län,07,Kronobergs län,land
+13,Hallands län,12,Skåne län,land
+13,Hallands län,14,Västra Götalands län,land
+14,Västra Götalands län,05,Östergötlands län,land
+14,Västra Götalands län,06,Jönköpings län,land
+14,Västra Götalands län,07,Kronobergs län,land
+14,Västra Götalands län,13,Hallands län,land
+14,Västra Götalands län,17,Värmlands län,land
+14,Västra Götalands län,18,Örebro län,land
+17,Värmlands län,14,Västra Götalands län,land
+17,Värmlands län,18,Örebro län,land
+17,Värmlands län,20,Dalarnas län,land
+18,Örebro län,04,Södermanlands län,land
+18,Örebro län,05,Östergötlands län,land
+18,Örebro län,06,Jönköpings län,vatten
+18,Örebro län,14,Västra Götalands län,land
+18,Örebro län,17,Värmlands län,land
+18,Örebro län,19,Västmanlands län,land
+18,Örebro län,20,Dalarnas län,land
+19,Västmanlands län,01,Stockholms län,land
+19,Västmanlands län,03,Uppsala län,land
+19,Västmanlands län,04,Södermanlands län,land
+19,Västmanlands län,05,Östergötlands län,land
+19,Västmanlands län,18,Örebro län,land
+19,Västmanlands län,20,Dalarnas län,land
+19,Västmanlands län,21,Gävleborgs län,land
+20,Dalarnas län,03,Uppsala län,land
+20,Dalarnas län,17,Värmlands län,land
+20,Dalarnas län,18,Örebro län,land
+20,Dalarnas län,19,Västmanlands län,land
+20,Dalarnas län,21,Gävleborgs län,land
+20,Dalarnas län,23,Jämtlands län,land
+21,Gävleborgs län,01,Stockholms län,omvand
+21,Gävleborgs län,03,Uppsala län,land
+21,Gävleborgs län,19,Västmanlands län,land
+21,Gävleborgs län,20,Dalarnas län,land
+21,Gävleborgs län,22,Västernorrlands län,land
+21,Gävleborgs län,23,Jämtlands län,land
+22,Västernorrlands län,21,Gävleborgs län,land
+22,Västernorrlands län,23,Jämtlands län,land
+22,Västernorrlands län,24,Västerbottens län,land
+23,Jämtlands län,20,Dalarnas län,land
+23,Jämtlands län,21,Gävleborgs län,land
+23,Jämtlands län,22,Västernorrlands län,land
+23,Jämtlands län,24,Västerbottens län,land
+24,Västerbottens län,22,Västernorrlands län,land
+24,Västerbottens län,23,Jämtlands län,land
+24,Västerbottens län,25,Norrbottens län,land
+25,Norrbottens län,24,Västerbottens län,land

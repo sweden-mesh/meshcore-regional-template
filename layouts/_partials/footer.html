@@ -2,7 +2,7 @@
   <div class="footer-grid">
     <div>
       <p class="footer-title">{{ site.Title }}</p>
-      <p class="muted">{{ site.Params.region.name }} · {{ T "network_scope" }} <code>{{ site.Params.region.scope }}</code></p>
+      <p class="muted">{{ with partialCached "region.html" . "region" }}{{ .name }} · {{ T "network_scope" }} <code>{{ .scope }}</code>{{ end }}</p>
     </div>
     <div>
       <p class="footer-title">{{ T "section_community" }}</p>

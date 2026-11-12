@@ -1,7 +1,7 @@
 {{- /* Titles for search (planning: seo.md): the home page names MeshCore and the
        place; other pages end in "MeshCore <short>". params.region.short is the
        short place name (default: the region name). */ -}}
-{{- $short := site.Params.region.short | default site.Params.region.name -}}
+{{- $short := (partialCached "region.html" . "region").short -}}
 {{- if .IsHome -}}
   {{- T "seo_home_title" (dict "Short" $short) -}}
 {{- else -}}

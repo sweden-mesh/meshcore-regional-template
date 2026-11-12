@@ -1,2 +1,2 @@
 {{- /* {{< region "name" >}} prints a field of params.region inside content. */ -}}
-{{- index site.Params.region (.Get 0) -}}
+{{- index (partialCached "region.html" .Page "region") (.Get 0) -}}

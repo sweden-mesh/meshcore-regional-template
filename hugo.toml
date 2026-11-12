@@ -10,10 +10,12 @@
   noindex = false            # true on staging: robots noindex + a disallow-all robots.txt
 
 [params.region]
-  name = "Exempelregionen"   # shown in the header and the hero
+  scb = ""                   # the county's SCB code, e.g. "06": the template then fetches the county's
+                             # name and region (scope) from zombiefredrik/meshcore-se-regioner
+  name = ""                  # optional: overrides the county name from the list
   short = ""                 # short place name for page titles, e.g. "Jönköping"; empty = name
   iatas = ["XXX"]            # observer IATA codes in the MQTT topics; filters Beacon
-  scope = "se"               # the region's MeshCore scope, e.g. se-jkp
+  scope = "se"               # optional: overrides the scope from the list ("se" = take it from the list)
   center = [62.0, 16.0]      # map start, [lat, lng]
   zoom = 5                   # map start zoom
 

@@ -1,6 +1,6 @@
 {{- /* {{< wizard-guided >}}: the guided repeater wizard, one step at a time with
        the reason for each value. Without JavaScript all steps show at once. */ -}}
-{{- $r := site.Params.region -}}{{- $radio := site.Params.radio -}}
+{{- $r := partialCached "region.html" .Page "region" -}}{{- $radio := site.Params.radio -}}
 <form class="wizard wizard-guided" id="wizard-guided" novalidate
       data-pattern="{{ site.Params.naming.pattern }}" data-scope="{{ $r.scope }}" data-radio="{{ $radio | jsonify }}">
   <ol class="wz-progress" aria-label="{{ T "wz_steps" }}"></ol>
@@ -35,7 +35,7 @@
     <p>{{ T "wzg_region_why" }}</p>
     <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
     <label class="wz-check"><input type="checkbox" id="wzg-edge"> {{ T "wz_edge" }}</label>
-    <div data-edge hidden><label for="wzg-neighbour">{{ T "wz_neighbour" }}</label><input id="wzg-neighbour" type="text" autocomplete="off" spellcheck="false" placeholder="se-xxx">
+    <div data-edge hidden><label for="wzg-neighbour">{{ T "wz_neighbour" }}</label><input id="wzg-neighbour" type="text" autocomplete="off" spellcheck="false" placeholder="se-xxx" list="wz-neighbours">
       <p class="muted">{{ T "wzg_edge_why" }}</p></div>
   </fieldset>
 
@@ -80,6 +80,7 @@
     <button type="button" class="button button-secondary" data-prev>{{ T "wzg_prev" }}</button>
     <button type="button" class="button" data-next>{{ T "wzg_next" }}</button>
   </p>
+  <datalist id="wz-neighbours">{{ range $r.neighbours }}<option value="{{ .scope }}">{{ .lan }}</option>{{ end }}</datalist>
 </form>
 <div id="wzg-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "name" (T "wz_name") "radio" (T "wzg_radio") "position" (T "wz_place") "regions" (T "wz_region") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/guided.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}

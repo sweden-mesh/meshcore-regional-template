@@ -29,10 +29,11 @@ this repository's `hugo.toml`.
 | Key | Meaning |
 |---|---|
 | `noindex` | `true` on staging: a robots `noindex` meta tag and a `robots.txt` that disallows everything. Set it in CI with `HUGO_PARAMS_NOINDEX=true`; the site's config needs `enableRobotsTXT = true` |
-| `region.name` | the region's name, shown in the header and hero |
+| `region.scb` | **the county's SCB code, e.g. `"06"`**: the template fetches the county's name, its region (scope) and its neighbours' regions from [zombiefredrik/meshcore-se-regioner](https://github.com/zombiefredrik/meshcore-se-regioner) at build time (a copy in `assets/meshcore-se-regioner/` is the fallback) |
+| `region.name` | optional: overrides the county name from the list |
 | `region.short` | a short place name for page titles ("MeshCore i Jönköping"); empty = `region.name` |
 | `region.iatas` | observer IATA codes (MQTT topic) whose traffic the map shows, e.g. `["JKG"]` |
-| `region.scope` | the region's MeshCore scope, e.g. `se-jkp` |
+| `region.scope` | optional: overrides the scope from the list (`se` = take it from the list) |
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
 | `firmware.picker`, `firmware.flasher` | where to get firmware (default the sweden-mesh firmware picker) and the web flasher (default meshcore.io/flasher); used by the landing page and the firmware guide |
 | `naming.pattern`, `naming.example`, `naming.explain` | the region's naming rule for nodes, shown in the naming guide; empty = general advice |
@@ -54,7 +55,9 @@ this repository's `hugo.toml`.
 2. Delete the `replacements` line and `go.mod` from the copy, then run
    `hugo mod init <your module path>` and
    `hugo mod get github.com/sweden-mesh/meshcore-regional-template@latest`.
-3. Fill in `[params.region]` and `[params.beacon]`, and write `content/_index.md`.
+3. Set `params.region.scb` (your county), `iatas`, `center`, `zoom` and `[params.beacon]`; the
+   template derives the county name and region and generates the guides and wizards. Write
+   `content/_index.md` for your own lead.
 4. Build with `hugo --gc --minify`. The output in `public/` is static and can be hosted
    anywhere; CI needs Hugo (extended not required) and Go.
 

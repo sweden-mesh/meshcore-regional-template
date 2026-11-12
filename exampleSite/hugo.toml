@@ -14,6 +14,7 @@ enableRobotsTXT = true
     path = "github.com/sweden-mesh/meshcore-regional-template"
 
 [params.region]
+  scb = "06"
   name = "Exempelregionen"
   iatas = ["XXX"]
   scope = "se-xxx"

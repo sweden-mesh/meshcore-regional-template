@@ -1,0 +1,17 @@
+{{- /* {{< wizard-companion >}}: the companion steps with the region's values. */ -}}
+{{- $r := partialCached "region.html" .Page "region" -}}
+<h2>1. {{ T "wzc_1" }}</h2>
+<p>{{ T "wzc_1_text" }}</p>
+<h2>2. {{ T "wzc_2" }}</h2>
+<p>{{ T "wzc_2_text" }}</p>
+{{ partial "settings.html" . }}
+<h2>3. {{ T "wz_name" }}</h2>
+<p>{{ T "wzc_3_text" }}</p>
+{{ .Page.RenderString "{{< namecheck >}}" }}
+<h2>4. {{ T "wz_place" }}</h2>
+<p>{{ T "wzc_4_text" }}</p>
+<h2>5. {{ T "channels" }}</h2>
+<p>{{ T "wzc_5_text" }} <code>{{ $r.scope }}</code>.</p>
+{{ .Page.RenderString "{{< channels >}}" }}
+<h2>6. {{ T "wzc_6" }}</h2>
+<p>{{ T "wzc_6_text" }}</p>

@@ -1,0 +1,36 @@
+{{- /*
+  The region, as every template file uses it. A region site sets
+  params.region.scb (the county's SCB code, e.g. "06") and the template
+  derives the rest from zombiefredrik/meshcore-se-regioner, fetched at build
+  time (cached per day), with the copy in assets/meshcore-se-regioner/ as the
+  fallback:
+    scope       the county's region name (lokalt / uppmätt / förslag), e.g. se-jkp
+    name        the county's name, e.g. Jönköpings län
+    neighbours  [{lan, scope}] of neighbouring counties (for edge repeaters)
+  Anything set explicitly in params.region wins (scope "se" counts as unset).
+  Call it with partialCached "region.html" . "region".
+*/ -}}
+{{- $p := site.Params.region -}}
+{{- $rows := slice -}}{{- $nrows := slice -}}{{- $source := "params" -}}
+{{- with $p.scb -}}
+  {{- $base := "https://raw.githubusercontent.com/zombiefredrik/meshcore-se-regioner/main/data/" -}}
+  {{- $key := now.UTC.Format "20060102" -}}
+  {{- with try (resources.GetRemote (print $base "regioner.csv") (dict "key" (print "regioner-" $key))) -}}
+    {{- with .Value -}}{{- $rows = after 1 (.Content | transform.Unmarshal) -}}{{- $source = "github" -}}{{- end -}}
+  {{- end -}}
+  {{- with try (resources.GetRemote (print $base "grannlan.csv") (dict "key" (print "grannlan-" $key))) -}}
+    {{- with .Value -}}{{- $nrows = after 1 (.Content | transform.Unmarshal) -}}{{- end -}}
+  {{- end -}}
+  {{- if not $rows -}}
+    {{- with resources.Get "meshcore-se-regioner/regioner.csv" -}}{{- $rows = after 1 (.Content | transform.Unmarshal) -}}{{- $source = "copy" -}}{{- end -}}
+    {{- with resources.Get "meshcore-se-regioner/grannlan.csv" -}}{{- $nrows = after 1 (.Content | transform.Unmarshal) -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $scb := printf "%02s" (string ($p.scb | default "")) -}}
+{{- $scopes := dict -}}{{- $lans := dict -}}
+{{- range $rows -}}{{- $scopes = merge $scopes (dict (index . 0) (index . 2)) -}}{{- $lans = merge $lans (dict (index . 0) (index . 1)) -}}{{- end -}}
+{{- $scope := cond (and $p.scope (ne $p.scope "se")) $p.scope (index $scopes $scb | default ($p.scope | default "se")) -}}
+{{- $name := $p.name | default (index $lans $scb) | default "" -}}
+{{- $neighbours := slice -}}
+{{- range $row := $nrows -}}{{- if eq (index $row 0) $scb -}}{{- with index $scopes (index $row 2) -}}{{- $neighbours = $neighbours | append (dict "lan" (index $lans (index $row 2)) "scope" .) -}}{{- end -}}{{- end -}}{{- end -}}
+{{- return merge $p (dict "scope" $scope "name" $name "neighbours" $neighbours "source" $source "short" ($p.short | default $name)) -}}
