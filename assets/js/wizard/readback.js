@@ -16,5 +16,7 @@ export async function readBack(link) {
   const lat = Number(strip(await get("get lat"))), lon = Number(strip(await get("get lon")));
   out.position = Number.isFinite(lat) && Number.isFinite(lon) && !(lat === 0 && lon === 0) ? { lat, lon } : null;
   out.regions = strip(await get("region")) || null;
+  const key = strip(await get("get public.key")).toLowerCase();
+  out.publicKey = /^[0-9a-f]{64}$/.test(key) ? key : null;
   return out;
 }

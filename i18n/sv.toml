@@ -138,3 +138,65 @@ other = "Trafikfokus"
 other = "MeshCore i {{ .Short }} – karta, guider och kanaler"
 [pick_label]
 other = "Karta: klicka där repeatern ska stå"
+[wz_place]
+other = "Välj plats"
+[wz_place_help]
+other = "Klicka på kartan där repeatern ska stå. Prickarna är repeatrar som redan finns."
+[wz_place_none]
+other = "Ingen plats vald än."
+[wz_pos_set]
+other = "Vald plats:"
+[wz_name]
+other = "Namn"
+[wz_name_rule]
+other = "Regionens namnregel:"
+[wz_place_name]
+other = "Platsens namn"
+[wz_place_ph]
+other = "till exempel Taberg"
+[wz_bytes]
+other = "byte"
+[wz_too_long]
+other = "för långt"
+[wz_no_room]
+other = "positionen får inte plats i samma advert"
+[wz_suffix]
+other = "nyckelns fyra tecken läggs till när radion är ansluten"
+[wz_region]
+other = "Region"
+[wz_region_help]
+other = "Repeatern får regionerna"
+[wz_edge]
+other = "Repeatern når också repeatrar i ett grannlän"
+[wz_neighbour]
+other = "Grannlänets region"
+[wz_password]
+other = "Lösenord"
+[wz_password_label]
+other = "Nytt administratörslösenord (högst 15 tecken, inga mellanslag)"
+[wz_password_help]
+other = "Skriv upp det. Utan lösenord kan vem som helst i närheten ändra repeatern."
+[wz_apply]
+other = "Anslut och skicka"
+[wz_apply_help]
+other = "Anslut repeatern med USB och använd Chrome eller Edge."
+[wz_connect]
+other = "Anslut till radion"
+[wz_send]
+other = "Skicka inställningarna"
+[wz_commands]
+other = "Kommandona, för att klistra in själv"
+[wz_copy]
+other = "Kopiera"
+[wz_copied]
+other = "Kopierat"
+[wz_no_serial]
+other = "Den här webbläsaren kan inte prata med radion via USB. Använd Chrome eller Edge på en dator, eller klistra in kommandona nedan i en konsol."
+[wz_connected]
+other = "Ansluten till"
+[wz_fix]
+other = "Fyll i"
+[wz_done]
+other = "Klart. Repeatern startar om och skickar en advert; leta efter den på kartan om några minuter."
+[wz_failed]
+other = "Stoppade vid ett fel; se listan ovan."

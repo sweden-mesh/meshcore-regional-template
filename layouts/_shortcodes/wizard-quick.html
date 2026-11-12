@@ -1,0 +1,54 @@
+{{- /* {{< wizard-quick >}}: the quick repeater wizard. Settings from the site's params. */ -}}
+{{- $r := site.Params.region -}}
+<form class="wizard" id="wizard-quick" novalidate
+      data-pattern="{{ site.Params.naming.pattern }}" data-scope="{{ $r.scope }}"
+      data-radio="{{ site.Params.radio | jsonify }}">
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">1</span> {{ T "wz_place" }}</legend>
+    <p class="muted">{{ T "wz_place_help" }}</p>
+    {{ partial "mappick.html" . }}
+    <p class="wz-status" id="wz-pos" aria-live="polite">{{ T "wz_place_none" }}</p>
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">2</span> {{ T "wz_name" }}</legend>
+    {{ with site.Params.naming.pattern }}<p class="muted">{{ T "wz_name_rule" }} <code>{{ . }}</code></p>{{ end }}
+    <label for="wz-place">{{ T "wz_place_name" }}</label>
+    <div class="wz-name-row"><span class="wz-prefix" id="wz-prefix"></span><input id="wz-place" type="text" autocomplete="off" spellcheck="false" placeholder="{{ T "wz_place_ph" }}"></div>
+    <p class="wz-status" id="wz-name" aria-live="polite"></p>
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">3</span> {{ T "wz_region" }}</legend>
+    <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
+    <label class="wz-check"><input type="checkbox" id="wz-edge"> {{ T "wz_edge" }}</label>
+    <div id="wz-edge-row" hidden><label for="wz-neighbour">{{ T "wz_neighbour" }}</label><input id="wz-neighbour" type="text" autocomplete="off" spellcheck="false" placeholder="se-xxx"></div>
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">4</span> {{ T "wz_password" }}</legend>
+    <label for="wz-pass">{{ T "wz_password_label" }}</label>
+    <input id="wz-pass" type="text" autocomplete="off" spellcheck="false" maxlength="15">
+    <p class="muted">{{ T "wz_password_help" }}</p>
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">5</span> {{ T "wz_apply" }}</legend>
+    <p class="muted" id="wz-serial-help">{{ T "wz_apply_help" }}</p>
+    <p class="wz-actions">
+      <button type="button" class="button" id="wz-connect">{{ T "wz_connect" }}</button>
+      <button type="button" class="button" id="wz-send" disabled>{{ T "wz_send" }}</button>
+    </p>
+    <p class="wz-status" id="wz-device" aria-live="polite"></p>
+    <ol class="wz-log" id="wz-log" aria-live="polite"></ol>
+    <details class="wz-commands">
+      <summary>{{ T "wz_commands" }}</summary>
+      <pre id="wz-cmds"></pre>
+      <button type="button" class="button button-secondary" id="wz-copy">{{ T "wz_copy" }}</button>
+    </details>
+  </fieldset>
+</form>
+<div id="wz-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") | jsonify }}"></div>
+{{- with resources.Get "js/wizard/quick.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

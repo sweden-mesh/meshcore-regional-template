@@ -222,3 +222,18 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .card, .pager a, .guide-grid a, .settings-box, .namecheck, .codeblock { background-color: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(6px); }
 .card-surface { background-color: color-mix(in srgb, var(--surface) 88%, transparent); }
 .map-pick { height: 22rem; }
+.wizard { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+.wz-step { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem 1.25rem; background: color-mix(in srgb, var(--bg) 85%, transparent); min-width: 0; }
+.wz-step legend { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; padding: 0 .4rem; }
+.wz-num { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); color: #fff; font-size: .9rem; margin-right: .3rem; }
+.wizard label { display: block; font-weight: 600; margin: .5rem 0 .25rem; }
+.wizard input[type="text"] { width: 100%; max-width: 26rem; min-height: 44px; padding: .5rem .7rem; border: 1px solid var(--line); border-radius: 8px; font: 500 1rem var(--font-body); background: var(--bg); color: var(--fg); }
+.wz-name-row { display: flex; align-items: center; gap: .3rem; max-width: 30rem; }
+.wz-prefix { font: 600 1rem ui-monospace, monospace; color: var(--muted); white-space: nowrap; }
+.wz-check { display: flex !important; gap: .5rem; align-items: center; font-weight: 500 !important; }
+.wz-status { font-size: .92rem; color: var(--accent-2); min-height: 1.3em; }
+.wz-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+.wz-actions .button[disabled] { opacity: .45; cursor: not-allowed; }
+.wz-log { font: .85rem ui-monospace, monospace; padding-left: 1.2rem; }
+.wz-log .error { color: #c0392b; }
+.wz-commands pre { background: var(--surface); padding: .75rem; border-radius: 8px; overflow-x: auto; }

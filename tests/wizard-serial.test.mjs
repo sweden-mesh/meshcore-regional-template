@@ -54,10 +54,10 @@ test("apply stops at the first error and reboot is not waited for", async () => 
 });
 
 test("readBack parses get replies", async () => {
-  const answers = { "get name": "> SE-JKP-Test", "get radio": "> 869.618,62.5,8,8", "get lat": "> 57.78", "get lon": "> 14.16", "region": "* se se-jkp" };
+  const answers = { "get name": "> SE-JKP-Test", "get radio": "> 869.618,62.5,8,8", "get lat": "> 57.78", "get lon": "> 14.16", "region": "* se se-jkp", "get public.key": "> " + "AB12".repeat(16) };
   const link = new SerialLink(fakePort((c) => answers[c] || ""), fast);
   await link.open();
   const rb = await readBack(link);
-  assert.deepEqual(rb, { name: "SE-JKP-Test", radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 }, position: { lat: 57.78, lon: 14.16 }, regions: "* se se-jkp" });
+  assert.deepEqual(rb, { name: "SE-JKP-Test", radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 }, position: { lat: 57.78, lon: 14.16 }, regions: "* se se-jkp", publicKey: "ab12".repeat(16) });
   assert.equal(parseRadio("> junk"), null);
 });

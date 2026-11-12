@@ -34,7 +34,16 @@ export function validateRepeater(s) {
   const r = s.radio || {};
   if (![r.freq, r.bw, r.sf, r.cr].every((v) => Number.isFinite(num(v)))) errors.push({ field: "radio", code: "incomplete" });
   if (s.scope && !/^[a-z0-9][a-z0-9-]{0,29}$/.test(s.scope)) errors.push({ field: "scope", code: "invalid" });
+  for (const x of s.extraScopes || []) if (!/^[a-z0-9][a-z0-9-]{0,29}$/.test(x)) errors.push({ field: "extraScopes", code: "invalid" });
   return { errors, warnings };
+}
+
+// region def builds a chain: each name goes under the previous one, and
+// "name|parent" jumps back to parent after creating it (CommonCLI.cpp). The
+// region's own scope and any neighbouring ones (an edge repeater) all go under se.
+export function regionDef(scope, extras = []) {
+  const under = [scope, ...extras].filter((x) => x && x !== "se");
+  return ["region def se", ...under.map((x, i) => (i < under.length - 1 ? `${x}|se` : x))].join(" ");
 }
 
 // The commands, in the order to send them; reboot last (it drops the port).
@@ -50,8 +59,7 @@ export function repeaterCommands(s) {
     c.push(`set lat ${num(s.lat).toFixed(4)}`);
     c.push(`set lon ${num(s.lon).toFixed(4)}`);
   }
-  if (s.scope && s.scope !== "se") c.push(`region def se ${s.scope}`);
-  else c.push("region def se");
+  c.push(regionDef(s.scope, s.extraScopes));
   c.push("region allowf *");
   c.push("region save");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);

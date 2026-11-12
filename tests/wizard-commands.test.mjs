@@ -49,3 +49,11 @@ test("companion settings are values for the app", () => {
   assert.deepEqual(companionSettings({ name: " Lou ", radio, scope: "se-jkp" }).map((x) => x.value),
     ["EU/UK (Narrow)", "869,618 MHz · BW 62,5 kHz · SF8 · CR8", "Lou", "se-jkp"]);
 });
+
+import { regionDef } from "../assets/js/wizard/commands.js";
+test("region def: own scope, and neighbours all under se", () => {
+  assert.equal(regionDef("se-jkp"), "region def se se-jkp");
+  assert.equal(regionDef("se-jkp", ["se-ost"]), "region def se se-jkp|se se-ost");
+  assert.equal(regionDef("se-jkp", ["se-ost", "se-kro"]), "region def se se-jkp|se se-ost|se se-kro");
+  assert.equal(regionDef("se"), "region def se");
+});
