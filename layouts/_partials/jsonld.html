@@ -1,0 +1,21 @@
+{{- /* Structured data (schema.org JSON-LD), what Google still uses for rich
+       results: WebSite + Organization on the home page, BreadcrumbList and
+       TechArticle on guides. No HowTo/FAQ (planning: seo.md). */ -}}
+{{- $logo := (resources.Get "images/logo.svg") -}}
+{{- $sameAs := slice -}}
+{{- with site.Params.community.url }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- with site.Params.chat.discord }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- range site.Params.chats }}{{ $sameAs = $sameAs | append .url }}{{ end -}}
+{{- if .IsHome -}}
+{{- $org := dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink -}}
+{{- with $logo }}{{ $org = merge $org (dict "logo" (. | fingerprint).Permalink) }}{{ end -}}
+{{- with $sameAs }}{{ $org = merge $org (dict "sameAs" .) }}{{ end -}}
+{{- $site := dict "@context" "https://schema.org" "@graph" (slice (dict "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "inLanguage" "sv") $org) -}}
+<script type="application/ld+json">{{ $site | jsonify | safeJS }}</script>
+{{- else if and .IsPage .Parent (not .Parent.IsHome) -}}
+{{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" site.Title "item" site.Home.Permalink) (dict "@type" "ListItem" "position" 2 "name" .Parent.Title "item" .Parent.Permalink) (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink) -}}
+{{- $article := dict "@type" "TechArticle" "headline" .Title "description" (.Description | default "") "inLanguage" "sv" "url" .Permalink "dateModified" (.Lastmod.Format "2006-01-02") "publisher" (dict "@type" "Organization" "name" site.Title) -}}
+{{- with .Params.source }}{{ $article = merge $article (dict "isBasedOn" .url) }}{{ end -}}
+{{- $doc := dict "@context" "https://schema.org" "@graph" (slice (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) $article) -}}
+<script type="application/ld+json">{{ $doc | jsonify | safeJS }}</script>
+{{- end -}}

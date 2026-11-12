@@ -30,6 +30,7 @@ this repository's `hugo.toml`.
 |---|---|
 | `noindex` | `true` on staging: a robots `noindex` meta tag and a `robots.txt` that disallows everything. Set it in CI with `HUGO_PARAMS_NOINDEX=true`; the site's config needs `enableRobotsTXT = true` |
 | `region.name` | the region's name, shown in the header and hero |
+| `region.short` | a short place name for page titles ("MeshCore i Jönköping"); empty = `region.name` |
 | `region.iatas` | observer IATA codes (MQTT topic) whose traffic the map shows, e.g. `["JKG"]` |
 | `region.scope` | the region's MeshCore scope, e.g. `se-jkp` |
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |

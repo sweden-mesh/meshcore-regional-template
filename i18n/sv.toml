@@ -134,3 +134,5 @@ other = "Läget när sidan byggdes, {{ .At }}."
 other = "observatör"
 [map_focus]
 other = "Trafikfokus"
+[seo_home_title]
+other = "MeshCore i {{ .Short }} – karta, guider och kanaler"

@@ -11,6 +11,7 @@
 
 [params.region]
   name = "Exempelregionen"   # shown in the header and the hero
+  short = ""                 # short place name for page titles, e.g. "Jönköping"; empty = name
   iatas = ["XXX"]            # observer IATA codes in the MQTT topics; filters Beacon
   scope = "se"               # the region's MeshCore scope, e.g. se-jkp
   center = [62.0, 16.0]      # map start, [lat, lng]

@@ -1,12 +1,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+{{- partial "seo-title.html" . | printf "<title>%s</title>" | safeHTML }}
 <meta name="description" content="{{ .Description | default site.Params.description | default (T "hero_tagline") }}">
 {{ with resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{ end }}
-{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) -}}
+{{- $title := partial "seo-title.html" . -}}
 {{- $desc := .Description | default site.Params.description | default (T "hero_tagline") -}}
 <link rel="canonical" href="{{ .Permalink }}">
 <meta property="og:type" content="{{ cond .IsHome "website" "article" }}">
@@ -23,3 +23,4 @@
 {{ if site.Params.noindex }}<meta name="robots" content="noindex, nofollow">{{ end }}
 {{ partial "analytics.html" . }}
 {{ partial "hooks/head-end.html" . }}
+{{ partial "jsonld.html" . }}
