@@ -67,6 +67,19 @@ Update the template later with `hugo mod get -u` (newest tag) or
 `hugo mod get github.com/sweden-mesh/meshcore-regional-template@v0.2.0` (a given one). Dependabot
 can do it for you: add `.github/dependabot.yml` with the `gomod` ecosystem to the region repo.
 
+## Versions of the tools
+
+| Tool | Minimum | Tested in CI | Why the minimum |
+|---|---|---|---|
+| Hugo (standard or extended) | 0.146.0 (`module.hugoVersion` in `hugo.toml`) | 0.169.0 | the 0.146 layout structure (`layouts/_partials`, `_shortcodes`, `_markup`); `try` (0.141) and content adapters (0.126) are older |
+| Go | any supported release | stable | `hugo mod` fetches the template |
+| Pagefind | 1.5 | 1.5.2 | the search UI the template loads |
+| Node (tests only) | 22 | 22 | `node --test`, global WebSocket in the live-feed smoke test |
+
+Policy: CI pins exact versions; the minimum moves only when the template starts using a newer
+feature, and that is a minor release noted in `CHANGELOG.md`. Hugo deprecations shown as warnings
+are fixed promptly, since CI builds with `--panicOnWarning`.
+
 ## Releases
 
 Tags `vX.Y.Z` on `main`, described in `CHANGELOG.md`; the version rules are at the top of that
