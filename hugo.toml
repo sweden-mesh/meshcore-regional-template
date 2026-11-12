@@ -49,8 +49,13 @@
   url = ""
 
 [params.chat]
-  discord = ""               # invite URL
+  discord = ""               # invite URL (shown as "Discord")
   matrix = ""                # room URL, e.g. https://matrix.to/#/#room:server
+
+# More chat links with their own names, e.g. a national server beside the local one:
+# [[params.chats]]
+#   name = "Sweden Mesh Discord"
+#   url = "https://discord.gg/…"
 
 # The region's channels, shown on the landing page and in the channel guide.
 # [[params.channels]]

@@ -10,6 +10,7 @@
         {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
         {{ with site.Params.chat.discord }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Discord</a></li>{{ end }}
         {{ with site.Params.chat.matrix }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Matrix</a></li>{{ end }}
+        {{ range site.Params.chats }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a></li>{{ end }}
         <li><a href="https://meshcore.io/" class="ext" target="_blank" rel="noopener">meshcore.io</a></li>
       </ul>
     </div>
