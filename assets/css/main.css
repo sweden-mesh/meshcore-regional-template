@@ -179,3 +179,4 @@ a { color: var(--accent); }
 .settings dd { margin: 0; font-weight: 500; }
 .settings-box summary { cursor: pointer; font-weight: 600; font-size: .95rem; }
 .prose .settings { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1.1rem; background: var(--surface); }
+.channels-table small { display: inline-block; margin-top: .2rem; }

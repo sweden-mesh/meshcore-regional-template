@@ -102,3 +102,11 @@ other = "Radio"
 other = "Region (scope)"
 [set_iata]
 other = "IATA för observatörer"
+[ch_name]
+other = "Kanal"
+[ch_scope]
+other = "Region"
+[ch_purpose]
+other = "Används till"
+[ch_no_scope]
+other = "ingen"

@@ -43,7 +43,9 @@
 # The region's channels, shown on the landing page and in the channel guide.
 # [[params.channels]]
 #   name = "#test-xxx"
+#   scope = "se-xxx"          # the region the channel's messages carry; empty = none
 #   purpose = "Testmeddelanden; repeatrar med auto-svar svarar"
+#   note = "Testa här, inte i chattkanalerna"   # optional
 
 [params.analytics]
   plausible = false          # true = load Plausible through the paths below

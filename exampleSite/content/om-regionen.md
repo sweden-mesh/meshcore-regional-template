@@ -35,3 +35,7 @@ Term
 - [ ] Öppen uppgift
 
 [Extern länk](https://meshcore.co.uk/) och [intern](/guider/).
+
+## Kanaler
+
+{{< channels >}}

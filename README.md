@@ -39,7 +39,7 @@ this repository's `hugo.toml`.
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
-| `channels` | a list of `{name, purpose}`: the region's channels |
+| `channels` | a list of `{name, scope, purpose, note}`: the region's channels, shown on the landing page and by `{{</* channels */>}}` |
 | `analytics.*` | optional Plausible: `plausible`, `domain`, `script`, `api` (same-origin paths) |
 
 ## Start a region site
@@ -86,6 +86,7 @@ Plain Markdown plus:
   title after the marker, folded with `[!NOTE]-` (closed) or `[!NOTE]+` (open).
 - Code-block titles: ```` ```sh {title="Konsol"} ````.
 - Tabs: `{{</* tabs */>}}{{</* tab "Rubrik" */>}}…{{</* /tab */>}}{{</* /tabs */>}}`, no JavaScript.
+- `{{</* channels */>}}`: a table of the region's channels.
 - `{{</* settings */>}}`: a box with the radio preset, region and IATA codes.
 - Region values: `{{</* region "scope" */>}}`, `{{</* region "name" */>}}`; never write a region's
   name or scope into a shared guide.

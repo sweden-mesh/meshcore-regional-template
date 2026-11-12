@@ -1,0 +1,15 @@
+{{- /* {{< channels >}}: the region's channels from params.channels as a table. */ -}}
+{{- with site.Params.channels -}}
+<table class="channels-table">
+  <thead><tr><th>{{ T "ch_name" }}</th><th>{{ T "ch_scope" }}</th><th>{{ T "ch_purpose" }}</th></tr></thead>
+  <tbody>
+    {{- range . }}
+    <tr>
+      <td><code>{{ .name }}</code></td>
+      <td>{{ with .scope }}<code>{{ . }}</code>{{ else }}{{ T "ch_no_scope" }}{{ end }}</td>
+      <td>{{ .purpose }}{{ with .note }}<br><small class="muted">{{ . }}</small>{{ end }}</td>
+    </tr>
+    {{- end }}
+  </tbody>
+</table>
+{{- end -}}
