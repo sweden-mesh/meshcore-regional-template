@@ -4,6 +4,35 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.2.0 — 2026-11-12
+
+Design direction D and the operator's review of the first deploy.
+- **Look:**
+  - design tokens (Vättern blue, pine green; light and dark);
+  - self-hosted Inter and Space Grotesk;
+  - a new landing page (badge, hero, numbered cards above the map);
+  - designed guide pages with previous/next;
+  - header, ☰ mobile menu and footer;
+  - logo, favicon and OpenGraph image slots.
+- **Map:**
+  - MeshMapper-style pills with no clustering; framed on the repeaters;
+  - one panel of pill toggles with a legend;
+  - live node updates; shareable URL state;
+  - lazy start on phones; a node list as its text alternative.
+- **Numbers:** the Nätet card shows live counts from Beacon.
+- **Guides:** companion, flashing, repeater, USB console, naming (with a name checker), channels,
+  etiquette, showing on the map. Shortcodes `settings`, `channels`, `naming`, `namecheck`,
+  `iata`. New params `radio`, `firmware`, `observer`, `naming`; `channels` gains `scope`
+  and `note`.
+- **Optional Plausible**, with the current snippet, same-origin and never on staging. A privacy
+  page built from what is switched on.
+- **SEO basics:** canonical URLs, OpenGraph, meta descriptions. A 404 page.
+- **Accessibility:** skip link, focus outlines; axe clean (WCAG 2 A/AA).
+- **Wizards:** the command generator core (pages come later).
+- **CI:** override checks; hook partials `head-end` / `body-end`; THIRD-PARTY.md.
+
+Breaking: `params.analytics.domain` is gone (Plausible's new snippet does not use it).
+
 ## v0.1.2 — 2026-11-12
 
 - Fix: the map threw `borders is not defined` after loading nodes, so it neither framed the

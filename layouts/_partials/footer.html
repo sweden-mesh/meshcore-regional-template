@@ -18,6 +18,7 @@
       <ul>
         <li><a href="https://github.com/sweden-mesh/meshcore-regional-template">{{ T "footer_template" }}</a></li>
         {{ with site.Params.beacon.url }}<li><a href="{{ . }}/swagger/index.html">{{ T "footer_beacon" }}</a></li>{{ end }}
+        {{ with site.GetPage "/integritet" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         <li>{{ T "footer_license" }}</li>
       </ul>
     </div>
