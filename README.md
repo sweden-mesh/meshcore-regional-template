@@ -83,6 +83,8 @@ are fixed promptly, since CI builds with `--panicOnWarning`.
 
 ## Releases
 
+The criteria for 1.0 are in `V1.md`.
+
 Tags `vX.Y.Z` on `main`, described in `CHANGELOG.md`; the version rules are at the top of that
 file. To release: update `CHANGELOG.md`, commit, `git tag -a vX.Y.Z -m "…"`, push the tag.
 
