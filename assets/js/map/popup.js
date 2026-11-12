@@ -42,7 +42,7 @@ export function popupHtml(n, now = Date.now()) {
 
 export function attachPopups(map, maplibregl, client) {
   const popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true });
-  map.on("click", "node-points", async (e) => {
+  const open = async (e) => {
     const f = e.features[0];
     const coords = f.geometry.coordinates.slice();
     popup.setLngLat(coords).setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>Hämtar…</p></div>`).addTo(map);
@@ -52,6 +52,7 @@ export function attachPopups(map, maplibregl, client) {
     } catch {
       if (popup.isOpen()) popup.setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>Kunde inte hämta detaljer.</p></div>`);
     }
-  });
+  };
+  for (const id of ["node-points", "node-pills"]) map.on("click", id, open);
   return popup;
 }

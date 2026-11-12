@@ -3,13 +3,13 @@
 import { createMap } from "./basemap.js";
 import { nodesBounds, frameNodes } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
-import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate } from "./nodes.js";
+import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation } from "./flow.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
 import { allLinks, selectedLinks, addLinkLayer } from "./neighbours.js";
-import { loadBorders, addBorderLayers, frameBorders, setForeignVisible } from "./region.js";
+import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
 
@@ -43,7 +43,7 @@ async function start() {
       addLinkLayer(map, selectedLinks(node, await client.get(`/nodes/${encodeURIComponent(state.selected)}/neighbors`)), "links-selected");
     } catch { addLinkLayer(map, empty, "links-selected"); }
   };
-  map.on("click", "node-points", (e) => { state.selected = e.features[0].properties.id; drawSelected(); });
+  for (const id of ["node-points", "node-pills"]) map.on("click", id, (e) => { state.selected = e.features[0].properties.id; drawSelected(); });
   popup.on("close", () => { state.selected = null; drawSelected(); });
   map.addControl(new MapPanel({
     toggles: [
@@ -52,7 +52,7 @@ async function start() {
       { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: state.showForeign },
     ],
     legend: [
-      { swatch: "pill-active", label: "repeater, hörd nyligen" },
+      { swatch: "pill-active", label: "repeater, hörd nyligen (prick = exakt plats)" },
       { swatch: "pill-stale", label: "repeater, inte hörd på länge" },
       { swatch: "pill-observer", label: "◉ observatör (rapporterar till kartan)" },
       { swatch: "link", label: "grannlänk" },
@@ -72,6 +72,7 @@ async function start() {
     setForeignVisible(map, state.showForeign);
     drawLinks();
     drawSelected();
+    setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
   };
   // A style switch (dark mode) drops every layer; put them back.
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });

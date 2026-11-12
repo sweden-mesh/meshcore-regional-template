@@ -93,22 +93,39 @@ function addPillImages(map) {
   }
 }
 
-// MeshMapper-style: every node is a pill with its short id, no clustering
-// (operator, 2026-11-12). Green ring = heard recently, grey = stale, blue =
-// observer. Names appear under the pill from zoom 12.
+// Two layers per node (operator's review, 2026-11-12):
+// - node-points: a circle at the node's true position, always drawn. Green =
+//   heard recently, grey = stale, blue ring and a centre dot = observer. At or
+//   below the zoom where the region fills the map's width ("mini mode", set by
+//   setMiniZoom) the circles are all you see.
+// - node-pills: the MeshMapper-style pill with the short id, from the mini zoom
+//   up. Pills are nudged to a free spot around their dot (variable anchors);
+//   one that cannot be placed without overlapping is left out, the dot stays.
+export const NODE_LAYERS = ["node-points", "node-obs-dot", "node-pills", "node-labels"];
+const COLOR = ["case", ["get", "stale"], "#9aa7b0", "#2f8a5f"];
+
 export function addNodeLayers(map, data) {
   addPillImages(map);
   if (map.getSource("nodes")) { map.getSource("nodes").setData(data); return; }
   map.addSource("nodes", { type: "geojson", data });
   const base = ["!", ["has", "point_count"]];
-  map.addLayer({ id: "node-points", type: "symbol", source: "nodes", filter: base,
+  map.addLayer({ id: "node-points", type: "circle", source: "nodes", filter: base,
+    paint: { "circle-radius": 6, "circle-color": COLOR,
+      "circle-stroke-color": ["case", ["get", "observer"], "#1f5d82", "#ffffff"],
+      "circle-stroke-width": ["case", ["get", "observer"], 2.5, 1.5],
+      "circle-opacity": ["case", ["get", "foreign"], 0.4, 1], "circle-stroke-opacity": ["case", ["get", "foreign"], 0.4, 1] } });
+  map.addLayer({ id: "node-obs-dot", type: "circle", source: "nodes", filter: ["all", base, ["get", "observer"]],
+    paint: { "circle-radius": 2.2, "circle-color": "#ffffff", "circle-opacity": ["case", ["get", "foreign"], 0.4, 1] } });
+  map.addLayer({ id: "node-pills", type: "symbol", source: "nodes", filter: base, minzoom: 9,
     layout: {
       "icon-image": ["case", ["get", "stale"], "pill-stale", ["get", "observer"], "pill-observer", "pill-active"],
       "icon-text-fit": "both", "icon-text-fit-padding": [2, 6, 2, 6],
       "text-field": ["concat", ["case", ["get", "observer"], "◉ ", ""], ["get", "short"]],
       "text-font": ["Noto Sans Bold"], "text-size": 11,
-      "icon-allow-overlap": true, "text-allow-overlap": true,
-      "symbol-sort-key": ["case", ["get", "stale"], 2, ["get", "observer"], 0, 1],
+      "text-variable-anchor": ["bottom", "top", "left", "right", "bottom-left", "bottom-right", "top-left", "top-right"],
+      "text-radial-offset": 1.1, "text-justify": "auto",
+      "icon-allow-overlap": false, "text-allow-overlap": false,
+      "symbol-sort-key": ["case", ["get", "observer"], 0, ["get", "stale"], 2, 1],
     },
     paint: { "text-color": ["case", ["get", "stale"], "#5b6a74", "#0f1d26"],
       "icon-opacity": ["case", ["get", "foreign"], 0.45, 1], "text-opacity": ["case", ["get", "foreign"], 0.45, 1] } });
@@ -116,6 +133,20 @@ export function addNodeLayers(map, data) {
     layout: { "text-field": ["get", "name"], "text-size": 11, "text-offset": [0, 1.4], "text-anchor": "top",
       "text-font": ["Noto Sans Regular"], "text-optional": true },
     paint: { "text-color": "#0f1d26", "text-halo-color": "#fff", "text-halo-width": 1.5 } });
-  map.on("mouseenter", "node-points", () => { map.getCanvas().style.cursor = "pointer"; });
-  map.on("mouseleave", "node-points", () => { map.getCanvas().style.cursor = ""; });
+  for (const id of ["node-points", "node-pills"]) {
+    map.on("mouseenter", id, () => { map.getCanvas().style.cursor = "pointer"; });
+    map.on("mouseleave", id, () => { map.getCanvas().style.cursor = ""; });
+  }
+}
+
+// Mini mode below the zoom at which the region fills the map's width.
+export function setMiniZoom(map, bounds) {
+  if (!bounds || !map.getLayer("node-pills")) return null;
+  const cam = map.cameraForBounds(bounds, { padding: 0 });
+  if (!cam || !Number.isFinite(cam.zoom)) return null;
+  const z = cam.zoom + 0.25;
+  map.setLayerZoomRange("node-pills", z, 24);
+  map.setPaintProperty("node-points", "circle-radius", ["step", ["zoom"], 6, z, 3.5]);
+  map.setPaintProperty("node-obs-dot", "circle-radius", ["step", ["zoom"], 2.2, z, 1.2]);
+  return z;
 }

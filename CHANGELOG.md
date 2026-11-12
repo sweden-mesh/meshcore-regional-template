@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.2.1 — 2026-11-12
+
+Operator's review of v0.2.0:
+- **Pills no longer overlap.** Each node is a circle at its true position, and its pill is nudged
+  to a free spot around it. A pill that can't be placed is left out, and the circle stays.
+- **Mini mode.** At or below the zoom where the region fills the map's width, nodes are circles
+  only: green when heard recently, grey when stale, a blue ring with a centre dot for observers.
+
 ## v0.2.0 — 2026-11-12
 
 Design direction D and the operator's review of the first deploy.

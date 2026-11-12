@@ -36,9 +36,9 @@ export function frameBorders(map, features) {
 }
 
 export function setForeignVisible(map, visible) {
-  for (const id of ["node-points", "node-labels"]) {
+  for (const id of ["node-points", "node-obs-dot", "node-pills", "node-labels"]) {
     if (!map.getLayer(id)) continue;
-    const base = ["!", ["has", "point_count"]];
+    const base = id === "node-obs-dot" ? ["all", ["!", ["has", "point_count"]], ["get", "observer"]] : ["!", ["has", "point_count"]];
     map.setFilter(id, visible ? base : ["all", base, ["!", ["get", "foreign"]]]);
   }
 }
