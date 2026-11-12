@@ -1,7 +1,7 @@
 {{- /* The map island. Settings travel as data attributes; assets/js/map/ does the rest. */ -}}
 {{- $r := site.Params.region -}}
 {{- $m := site.Params.map -}}
-{{- $ml := printf "vendor/maplibre-gl/%s/" $m.maplibre -}}
+{{- $ml := printf "lib/maplibre-gl/%s/" $m.maplibre -}}
 {{- $snap := partialCached "beacon-snapshot.html" . "snapshot" -}}
 {{- $snapRes := dict -}}
 {{- if or $snap.nodes $snap.borders -}}

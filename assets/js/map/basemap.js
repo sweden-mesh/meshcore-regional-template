@@ -1,5 +1,5 @@
 // MapLibre and the basemap. MapLibre (BSD-3-Clause) is served as static files
-// from /vendor/ and loaded with a runtime import, so it stays out of the bundle
+// from /lib/ and loaded with a runtime import, so it stays out of the bundle
 // and its worker file resolves next to it.
 
 import { startCamera, trackUserMoves } from "./camera.js";

@@ -31,7 +31,7 @@ this repository's `hugo.toml`.
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
 | `map.style_light`, `map.style_dark` | basemap style URLs; default OpenFreeMap `liberty` and `dark` (no key, attribution shown by the map) |
 | `map.companions` | `false` (default): companion nodes (people's handsets) are left off the map, the snapshot and the packet routes, because their position can be a home |
-| `map.maplibre` | the vendored MapLibre version under `static/vendor/maplibre-gl/` |
+| `map.maplibre` | the vendored MapLibre version under `static/lib/maplibre-gl/` |
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |

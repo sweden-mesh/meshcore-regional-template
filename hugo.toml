@@ -17,7 +17,7 @@
   zoom = 5                   # map start zoom
 
 [params.map]
-  maplibre = "6.16.0"        # vendored under static/vendor/maplibre-gl/<version>/
+  maplibre = "6.16.0"        # vendored under static/lib/maplibre-gl/<version>/ (not vendor/: Go module downloads drop vendor directories)
   style_light = "https://tiles.openfreemap.org/styles/liberty"
   style_dark = "https://tiles.openfreemap.org/styles/dark"
   companions = false         # true = also show companion nodes (handsets); their positions can be homes
