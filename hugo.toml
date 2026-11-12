@@ -60,7 +60,6 @@
 #   note = "Testa här, inte i chattkanalerna"   # optional
 
 [params.analytics]
-  plausible = false          # true = load Plausible through the paths below
-  domain = ""                # the site as registered in Plausible
-  script = ""                # same-origin script path, e.g. /js/abc123.js
-  api = ""                   # same-origin event path, e.g. /api/event
+  plausible = false          # true = load Plausible (cookieless) through the paths below
+  script = ""                # same-origin path to the site's Plausible script (pa-<id>.js, proxied), e.g. /p/x7k2.js
+  api = ""                   # same-origin event endpoint (proxied), e.g. /p/event

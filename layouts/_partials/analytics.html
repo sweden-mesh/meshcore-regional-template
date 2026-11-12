@@ -1,0 +1,14 @@
+{{- /*
+  Optional, cookieless visitor statistics with Plausible (params.analytics).
+  Plausible's current snippet: a site-specific script (pa-<id>.js) plus
+  plausible.init(). Serve both the script and the event endpoint from the
+  site's own origin (a proxy, e.g. a Cloudflare Pages Function) so ad blockers
+  and CSP stay out of the way. Nothing loads unless plausible = true and a
+  script path is set, and never on a noindex (staging) build.
+*/ -}}
+{{- with site.Params.analytics -}}
+{{- if and .plausible .script (not site.Params.noindex) -}}
+<script async src="{{ .script | relURL }}"></script>
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init({{ with .api }}{endpoint:{{ . | relURL }}}{{ end }})</script>
+{{- end -}}
+{{- end -}}

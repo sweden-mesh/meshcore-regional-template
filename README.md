@@ -43,7 +43,7 @@ this repository's `hugo.toml`.
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
 | `channels` | a list of `{name, scope, purpose, note}`: the region's channels, shown on the landing page and by `{{</* channels */>}}` |
-| `analytics.*` | optional Plausible: `plausible`, `domain`, `script`, `api` (same-origin paths) |
+| `analytics.plausible`, `analytics.script`, `analytics.api` | optional cookieless Plausible: the site's `pa-<id>.js` script and the event endpoint, both served from the site's own origin through a proxy; never loaded on a `noindex` build |
 
 ## Start a region site
 
