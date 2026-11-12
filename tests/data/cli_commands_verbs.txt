@@ -1,0 +1,178 @@
+`advert
+`advert.zerohop
+`bw
+`celsius
+`channel
+`clkreboot
+`clock
+`clock sync
+`cr
+`dbm
+`degrees
+`discover.neighbors
+`discover.scopes
+`epoch
+`erase
+`eth.status
+`fan.lo
+`filter
+`freq
+`frequency
+`get acl
+`get adc.multiplier
+`get advert.interval
+`get af
+`get agc.reset.interval
+`get allow.read.only
+`get bridge.baud
+`get bridge.channel
+`get bridge.delay
+`get bridge.enabled
+`get bridge.secret
+`get bridge.source
+`get cad
+`get direct.txdelay
+`get display.flip
+`get display.timeout
+`get dutycycle
+`get fan
+`get flood.advert.interval
+`get flood.max
+`get flood.max.advert
+`get flood.max.unscoped
+`get freq
+`get guest.password
+`get int.thresh
+`get lat
+`get lon
+`get loop.detect
+`get mqtt.advert.verify
+`get mqtt.neighbors
+`get mqtt.neighbors.interval
+`get mqtt.ntp
+`get mqtt.ntp.diag
+`get mqtt.rx
+`get mqtt.tx
+`get multi.acks
+`get name
+`get owner.info
+`get path.hash.mode
+`get prv.key
+`get radio
+`get radio.fem.rxgain
+`get radio.fem.txgain
+`get radio.rxgain
+`get radio.watchdog
+`get repeat
+`get rxdelay
+`get tx
+`get txdelay
+`gps
+`gps advert
+`gps setloc
+`gps sync
+`hours
+`key
+`minutes
+`mode
+`ms
+`name
+`neighbor.remove
+`neighbors
+`new
+`off
+`on
+`ota branch
+`ota check
+`ota update
+`parent
+`password
+`permissions
+`policy
+`poweroff
+`powersaving
+`powersaving off
+`powersaving on
+`private
+`pubkey
+`rate
+`reboot
+`region
+`region allowf
+`region def
+`region default
+`region denyf
+`region get
+`region home
+`region list
+`region load
+`region put
+`region remove
+`region save
+`seconds
+`secret
+`sensor get
+`sensor set
+`set adc.multiplier
+`set advert.interval
+`set af
+`set agc.reset.interval
+`set allow.read.only
+`set bridge.baud
+`set bridge.channel
+`set bridge.delay
+`set bridge.enabled
+`set bridge.secret
+`set bridge.source
+`set cad
+`set direct.txdelay
+`set display.flip
+`set display.timeout
+`set dutycycle
+`set fan
+`set fan.hi
+`set fan.lo
+`set flood.advert.interval
+`set flood.max
+`set flood.max.advert
+`set flood.max.unscoped
+`set freq
+`set guest.password
+`set int.thresh
+`set lat
+`set lon
+`set loop.detect
+`set mqtt.advert.verify
+`set mqtt.neighbors
+`set mqtt.neighbors.interval
+`set mqtt.ntp
+`set mqtt.rx
+`set mqtt.tx
+`set multi.acks
+`set name
+`set owner.info
+`set path.hash.mode
+`setperm
+`set prv.key
+`set radio
+`set radio.fem.rxgain
+`set radio.fem.txgain
+`set radio.rxgain
+`set radio.watchdog
+`set repeat
+`set rxdelay
+`set tx
+`set txdelay
+`sf
+`shutdown
+`source
+`start
+`start ota
+`state
+`stats
+`stop ota
+`tempradio
+`text
+`time
+`timeout
+`value
