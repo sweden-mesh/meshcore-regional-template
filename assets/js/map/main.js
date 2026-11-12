@@ -130,7 +130,8 @@ function observerPoint(state, key) {
 
 function startLive(map, ds, client, iatas, state, draw) {
   if (!iatas.length || !("WebSocket" in window)) return;
-  const flows = new FlowLayer(map);
+  // Fewer simultaneous flows on small screens: less to draw on a phone.
+  const flows = new FlowLayer(map, { maxFlows: window.innerWidth < 640 ? 40 : 120 });
   let redraw = 0;
   const recent = new RecentPackets(10);
   const panel = document.getElementById("packets");
@@ -202,10 +203,21 @@ function startLive(map, ds, client, iatas, state, draw) {
   return feed;
 }
 
-if (el) {
+// The map is the heaviest part of the page (MapLibre ≈ 440 kB compressed, then
+// tiles). Below the cards on a phone it is often never seen, so it starts only
+// when it comes within 400 px of the viewport.
+function whenNear(target, fn) {
+  if (!("IntersectionObserver" in window)) return fn();
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) { io.disconnect(); fn(); }
+  }, { rootMargin: "400px 0px" });
+  io.observe(target);
+}
+
+if (el) whenNear(el, () => {
   start().catch((err) => {
     el.classList.add("map-failed");
     el.textContent = el.dataset.failText || "Kartan kunde inte laddas.";
     console.error(err);
   });
-}
+});
