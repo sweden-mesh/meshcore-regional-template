@@ -61,6 +61,8 @@ this repository's `hugo.toml`.
 4. Build with `hugo --gc --minify`. The output in `public/` is static and can be hosted
    anywhere; CI needs Hugo (extended not required) and Go.
 
+Building on GitLab, Codeberg/Forgejo, Woodpecker or a plain web host: see `CI.md`.
+
 Update the template later with `hugo mod get -u` (newest tag) or
 `hugo mod get github.com/sweden-mesh/meshcore-regional-template@v0.2.0` (a given one). Dependabot
 can do it for you: add `.github/dependabot.yml` with the `gomod` ecosystem to the region repo.
