@@ -7,6 +7,7 @@
   {{ partial "header.html" . }}
   <main id="main" data-pagefind-body>{{ block "main" . }}{{ end }}</main>
   {{ partial "footer.html" . }}
+  {{ with resources.Get "js/parallax.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{ end }}
   {{ partial "hooks/body-end.html" . }}
 </body>
 </html>

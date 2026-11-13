@@ -215,12 +215,15 @@ a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font
 }
 body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; animation: bg-shift 150s ease infinite; }
 @keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-.bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.bg-blobs span { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: var(--blob); filter: blur(70px); opacity: .9; animation: blob-drift 90s ease-in-out infinite alternate; }
+/* Parallax (operator 2026-11-13): the blob layer moves up at 20 % of the scroll speed; it is
+   made 20 % of the scroll range taller so blobs keep covering the bottom (js/parallax.js sets
+   --sy and --extra). */
+.bg-blobs { position: fixed; top: 0; left: 0; right: 0; height: calc(100vh + var(--extra, 0px)); z-index: -1; overflow: hidden; pointer-events: none; transform: translate3d(0, calc(var(--sy, 0) * -0.2px), 0); will-change: transform; }
+.bg-blobs span { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: var(--blob); filter: blur(70px); opacity: .9; animation: blob-drift 36s ease-in-out infinite alternate; }
 .bg-blobs span:nth-child(1) { top: -12vmax; left: -8vmax; }
-.bg-blobs span:nth-child(2) { top: 30vh; right: -14vmax; width: 36vmax; height: 36vmax; animation-duration: 110s; animation-delay: -30s; }
-.bg-blobs span:nth-child(3) { bottom: -16vmax; left: 20vw; width: 48vmax; height: 48vmax; animation-duration: 130s; animation-delay: -60s; }
-.bg-blobs span:nth-child(4) { top: 55vh; left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 100s; animation-delay: -15s; }
+.bg-blobs span:nth-child(2) { top: 30%; right: -14vmax; width: 36vmax; height: 36vmax; animation-duration: 44s; animation-delay: -12s; }
+.bg-blobs span:nth-child(3) { bottom: -16vmax; left: 20vw; width: 48vmax; height: 48vmax; animation-duration: 52s; animation-delay: -24s; }
+.bg-blobs span:nth-child(4) { top: 55%; left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 40s; animation-delay: -6s; }
 @keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(12vw, 8vh) scale(1.12); } 66% { transform: translate(-6vw, 14vh) scale(.92); } 100% { transform: translate(8vw, -6vh) scale(1.05); } }
 @media (prefers-reduced-motion: reduce) { body, .bg-blobs span { animation: none; } }
 /* Surfaces stay readable over the moving background. */
