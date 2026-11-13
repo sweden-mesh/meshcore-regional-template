@@ -3,6 +3,7 @@
 // are mapped to their node by public key via /observers/{id} (cached).
 import { chainFromObservation, runs } from "./flow.js";
 import { escapeHtml } from "./popup.js";
+import { t } from "./texts.js";
 
 const PALETTE = ["#16a34a", "#0ea5e9", "#a855f7", "#f59e0b", "#ef4444", "#14b8a6", "#64748b"];
 
@@ -44,20 +45,19 @@ export class RecentPackets {
   }
 }
 
-const TYPE_SV = { ADVERT: "Annons", GRP_TXT: "Kanalmeddelande", TXT_MSG: "Direktmeddelande", ACK: "Kvittens",
-  PATH: "Väg", REQ: "Förfrågan", RESPONSE: "Svar", TRACE: "Trace" };
+const typeLabel = (type) => { const s = t(`pk_${type}`); return s === `pk_${type}` ? type : s; };
 
 export function recentListHtml(items) {
   if (!items.length) return "";
   return items.map((p) => `<li><button type="button" data-hash="${escapeHtml(p.hash)}">` +
-    `${escapeHtml(TYPE_SV[p.type] || p.type)}${p.summary ? ` · ${escapeHtml(p.summary)}` : ""}` +
-    ` <span class="muted">· hörd ${p.count}×</span></button></li>`).join("");
+    `${escapeHtml(typeLabel(p.type))}${p.summary ? ` · ${escapeHtml(p.summary)}` : ""}` +
+    ` <span class="muted">· ${escapeHtml(t("heard_times", { n: p.count }))}</span></button></li>`).join("");
 }
 
 export function routesListHtml(routes) {
   return routes.map((r, i) => `<li><span class="swatch" style="background:${PALETTE[Math.min(i, PALETTE.length - 1)]}"></span>` +
-    `${escapeHtml(r.observerName)} <span class="muted">+${r.ms} ms · ${r.hops} hopp` +
-    `${r.runs.length ? "" : " · vägen okänd"}</span></li>`).join("");
+    `${escapeHtml(r.observerName)} <span class="muted">+${r.ms} ms · ${escapeHtml(t("hops", { n: r.hops }))}` +
+    `${r.runs.length ? "" : ` · ${escapeHtml(t("route_unknown"))}`}</span></li>`).join("");
 }
 
 export function addPathLayer(map, data) {

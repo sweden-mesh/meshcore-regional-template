@@ -20,6 +20,7 @@
        data-zoom="{{ $r.zoom }}"
        data-companions="{{ $m.companions | default false }}"
        {{ with $snapRes }}data-snapshot="{{ .RelPermalink }}"{{ end }}
+       data-texts="{{ dict "legend" (T "mt_legend") "lg_active" (T "mt_lg_active") "lg_stale" (T "mt_lg_stale") "lg_observer" (T "mt_lg_observer") "lg_link" (T "mt_lg_link") "lg_link_strong" (T "mt_lg_link_strong") "lg_flow" (T "mt_lg_flow") "type_1" (T "mt_type_1") "type_2" (T "mt_type_2") "type_3" (T "mt_type_3") "type_4" (T "mt_type_4") "type_node" (T "mt_type_node") "observer" (T "mt_observer") "stale" (T "mt_stale") "foreign" (T "mt_foreign") "heard" (T "mt_heard") "radio" (T "mt_radio") "neighbours" (T "mt_neighbours") "unnamed" (T "mt_unnamed") "loading" (T "mt_loading") "load_failed" (T "mt_load_failed") "unknown" (T "mt_unknown") "just_now" (T "mt_just_now") "min_ago" (T "mt_min_ago") "h_ago" (T "mt_h_ago") "d_ago" (T "mt_d_ago") "decimal" (T "mt_decimal") "pk_ADVERT" (T "mt_pk_ADVERT") "pk_GRP_TXT" (T "mt_pk_GRP_TXT") "pk_TXT_MSG" (T "mt_pk_TXT_MSG") "pk_ACK" (T "mt_pk_ACK") "pk_PATH" (T "mt_pk_PATH") "pk_REQ" (T "mt_pk_REQ") "pk_RESPONSE" (T "mt_pk_RESPONSE") "pk_TRACE" (T "mt_pk_TRACE") "heard_times" (T "mt_heard_times") "hops" (T "mt_hops") "route_unknown" (T "mt_route_unknown") | jsonify }}"
        data-fail-text="{{ T "map_failed" }}"
        data-foreign-label="{{ T "map_foreign_toggle" }}"
        data-snapshot-note="{{ T "map_snapshot_note" }}" data-offline-note="{{ T "map_offline_note" }}"

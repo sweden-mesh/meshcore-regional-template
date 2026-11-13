@@ -1,6 +1,7 @@
 // One floating panel for the map: pill toggles (aria-pressed buttons) and a
 // small legend, styled after the design direction (swe.meshmapper.net-like
 // pills). Replaces MapLibre's stock checkbox boxes.
+import { t } from "./texts.js";
 
 export class MapPanel {
   constructor({ toggles, legend, onToggle }) {
@@ -34,7 +35,7 @@ export class MapPanel {
       // Open on desktop; closed on phones so it doesn't cover the map.
       d.open = !(typeof matchMedia === "function" && matchMedia("(max-width: 639px)").matches);
       const s = document.createElement("summary");
-      s.textContent = "Teckenförklaring";
+      s.textContent = t("legend");
       d.append(s);
       const ul = document.createElement("ul");
       for (const item of this.legend) {

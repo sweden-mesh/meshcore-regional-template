@@ -12,6 +12,7 @@ import { allLinks, selectedLinks, addLinkLayer } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
+import { setTexts, t } from "./texts.js";
 
 const el = document.getElementById("map");
 
@@ -19,6 +20,7 @@ async function start() {
   const { map, maplibregl } = await createMap(el);
   el.mapInstance = map; // for debugging and browser tests
   const ds = el.dataset;
+  try { setTexts(JSON.parse(ds.texts || "{}")); } catch { /* keep the defaults */ }
   if (!ds.beacon) return;
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
@@ -53,12 +55,12 @@ async function start() {
       { key: "focus", label: ds.focusLabel || "Trafikfokus", on: state.focus },
     ],
     legend: [
-      { swatch: "pill-active", label: "repeater, hörd nyligen (prick = exakt plats)" },
-      { swatch: "pill-stale", label: "repeater, inte hörd på länge" },
-      { swatch: "pill-observer", label: "◉ observatör (rapporterar till kartan)" },
-      { swatch: "link", label: "grannlänk" },
-      { swatch: "link-strong", label: "vald nods länkar: röd sällan, grön ofta" },
-      { swatch: "flow", label: "paket i rörelse" },
+      { swatch: "pill-active", label: t("lg_active") },
+      { swatch: "pill-stale", label: t("lg_stale") },
+      { swatch: "pill-observer", label: t("lg_observer") },
+      { swatch: "link", label: t("lg_link") },
+      { swatch: "link-strong", label: t("lg_link_strong") },
+      { swatch: "flow", label: t("lg_flow") },
     ],
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); }

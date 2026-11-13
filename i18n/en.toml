@@ -316,3 +316,80 @@ The mesh is built by the people who use it. Someone puts a repeater on a roof or
 All you need to start is a radio and the app. [Read more about MeshCore]({{ .Guide }})."""
 [theme_toggle]
 other = "Switch between light and dark"
+# The map scripts' own texts (assets/js/map/texts.js), passed in through #map's data-texts.
+[mt_legend]
+other = "Legend"
+[mt_lg_active]
+other = "repeater, heard recently (dot = exact position)"
+[mt_lg_stale]
+other = "repeater, not heard for a long time"
+[mt_lg_observer]
+other = "◉ observer (reports to the map)"
+[mt_lg_link]
+other = "neighbour link"
+[mt_lg_link_strong]
+other = "selected node's links: red rarely, green often"
+[mt_lg_flow]
+other = "packet on the move"
+[mt_type_1]
+other = "Companion"
+[mt_type_2]
+other = "Repeater"
+[mt_type_3]
+other = "Room server"
+[mt_type_4]
+other = "Sensor"
+[mt_type_node]
+other = "Node"
+[mt_observer]
+other = "observer"
+[mt_stale]
+other = "stale"
+[mt_foreign]
+other = "probably outside the region"
+[mt_heard]
+other = "Last heard"
+[mt_radio]
+other = "Radio"
+[mt_neighbours]
+other = "Known neighbours"
+[mt_unnamed]
+other = "Unnamed node"
+[mt_loading]
+other = "Loading…"
+[mt_load_failed]
+other = "Could not load the details."
+[mt_unknown]
+other = "unknown"
+[mt_just_now]
+other = "just now"
+[mt_min_ago]
+other = "{n} min ago"
+[mt_h_ago]
+other = "{n} h ago"
+[mt_d_ago]
+other = "{n} d ago"
+[mt_decimal]
+other = "."
+[mt_pk_ADVERT]
+other = "Advert"
+[mt_pk_GRP_TXT]
+other = "Channel message"
+[mt_pk_TXT_MSG]
+other = "Direct message"
+[mt_pk_ACK]
+other = "Acknowledgement"
+[mt_pk_PATH]
+other = "Path"
+[mt_pk_REQ]
+other = "Request"
+[mt_pk_RESPONSE]
+other = "Response"
+[mt_pk_TRACE]
+other = "Trace"
+[mt_heard_times]
+other = "heard {n}×"
+[mt_hops]
+other = "{n} hops"
+[mt_route_unknown]
+other = "route unknown"
