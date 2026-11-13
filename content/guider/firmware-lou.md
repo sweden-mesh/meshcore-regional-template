@@ -9,7 +9,7 @@ Utöver MeshCore-projektets egen firmware finns modifierade varianter av Louie: 
 MeshCore och lägger till funktioner som hjälper nätet att mäta sig självt. Allt annat fungerar som
 i vanlig MeshCore, och noder med och utan lou pratar med varandra som vanligt.
 
-Den senaste versionen är `v1.18.0-lou-15`, byggd på MeshCore 1.18.0.
+Den senaste versionen är `v1.18.0-lou-16`, byggd på MeshCore 1.18.0.
 
 ## Varianterna
 
