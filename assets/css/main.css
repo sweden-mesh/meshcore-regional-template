@@ -149,10 +149,11 @@ a { color: var(--accent); }
 .maplibregl-popup-content { border-radius: var(--radius-sm); padding: .75rem 1rem; box-shadow: 0 8px 24px rgba(15, 29, 38, .2); font-family: var(--font-body); }
 .node-popup h3 { font-family: var(--font-head); }
 .packets { background: var(--surface); border-radius: var(--radius); padding: 1rem 1.25rem; }
-/* Pages share the header's 72rem column and keep a 46rem reading width inside it, so the text
-   starts where the logo starts (second design pass). */
+/* Pages share the header's 72rem column and keep a 56rem reading width inside it, so the text
+   starts where the logo starts (second design pass) without leaving a third of a wide screen
+   empty (operator 2026-11-13: 46rem looked like a bug). */
 .page { max-width: 72rem; padding-top: 2rem; padding-bottom: 3rem; }
-.page > :not(.guide-grid) { max-width: 46rem; }
+.page > :not(.guide-grid) { max-width: 56rem; }
 .page h1 { font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.1; letter-spacing: -.02em; margin: .25rem 0 .5rem; }
 .page-lead { font-size: 1.2rem; color: var(--muted); margin: 0 0 2rem; line-height: 1.5; }
 .crumbs { font-size: .9rem; }
