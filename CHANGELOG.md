@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.8 — 2026-11-13
+
+- The naming suggestion is for repeaters: *Namnförslag för repeatrar i …*, and the box, the
+  naming guide and the companion guide say a companion is named however its owner likes.
+- `{{< namecheck kind="companion" >}}` no longer falls back to the repeater example; its
+  placeholder is `naming.companion_example` or empty. Regions: drop the pattern from
+  `companion_example` (the example site's is now `Kim`).
+
 ## v0.12.7 — 2026-11-13
 
 - The region's naming pattern is a suggestion, not a rule: *Namnförslag i …* in the naming

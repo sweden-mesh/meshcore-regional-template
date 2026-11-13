@@ -1,6 +1,6 @@
 ---
 title: "Namnge din nod"
-description: "Ett bra namn talar om var noden står. Så väljer du namn, och regionens namnförslag."
+description: "Ett bra namn talar om var noden står. Så väljer du namn, och regionens namnförslag för repeatrar."
 weight: 70
 source:
   title: "Vad är MeshCore? (avsnittet Namnge din enhet)"
@@ -28,5 +28,5 @@ utan position.
 - Hoppa över `å`, `ä` och `ö` om namnet blir för långt (`Braneryd` i stället för `Bråneryd`).
 - Fyra tecken av nodens nyckel på slutet (som `FD70`) gör namnet unikt även om två noder står
   på samma plats. De syns som nodens kortnamn på kartan.
-- En companion behöver inget platsnamn; ett kort namn räcker, och det behöver inte avslöja vem
-  du är.
+- En companion namnger du som du vill. Namnförslaget ovan gäller repeatrar, och namnet behöver
+  inte avslöja vem du är.
