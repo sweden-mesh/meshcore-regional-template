@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.11.1 — 2026-11-13
+
+- The front-page boxes and the map share one width from 640 px: `min(100rem, 94vw)` (the map
+  was 80vw, the boxes up to 96vw).
+
 ## v0.11.0 — 2026-11-13
 
 - **Front page: five boxes.** The guides and the guided settings are separate boxes, and so are

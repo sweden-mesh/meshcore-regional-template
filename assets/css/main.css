@@ -65,9 +65,9 @@ a { color: var(--accent); }
 .lead { margin: 1rem 0 0; color: var(--muted); font-size: 1.15rem; line-height: 1.55; max-width: 40rem; }
 .map-section h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .sections { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-/* Five boxes side by side on wide screens, wider than the text column so each has room;
-   the network box (the settings list) gets the most. Narrower: as many 16rem columns as fit. */
-@media (min-width: 1200px) { .sections { max-width: min(100rem, 96vw); grid-template-columns: 1fr 1fr 1.35fr 1fr 1.1fr; } }
+/* Five boxes side by side on wide screens, the network box (the settings list) widest; the row
+   shares the map's width (below). Narrower: as many 16rem columns as fit. */
+@media (min-width: 1200px) { .sections { grid-template-columns: 1fr 1fr 1.35fr 1fr 1.1fr; } }
 .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 0 1rem 1rem; }
 .card ul { padding-left: 1.2rem; }
 .channels dt { margin-top: .5rem; }
@@ -127,7 +127,8 @@ a { color: var(--accent); }
 .map-section { padding-top: 2rem; }
 /* The map breaks out of the content column: 80 % of the window, 10 % margin each side
    (operator 2026-11-13); phones keep the 16 px gutter. */
-@media (min-width: 640px) { .map-section { max-width: none; width: 80vw; padding-left: 0; padding-right: 0; } }
+/* The boxes and the map share one width, wider than the text column (operator 2026-11-13). */
+@media (min-width: 640px) { .map-section, .sections { max-width: none; width: min(100rem, 94vw); padding-left: 0; padding-right: 0; } }
 .site-header { border-bottom: 0; padding-top: 1.25rem; padding-bottom: 1.25rem; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .site-header nav a:hover { color: var(--fg); }
