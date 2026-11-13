@@ -11,9 +11,9 @@
   {{- end -}}
   <nav class="nav-wide" aria-label="{{ T "nav_main" }}">
     {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
-    {{ with site.GetPage "/sok" }}<a class="nav-search" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">⌕ {{ .Title }}</a>{{ end }}
+    {{ with site.GetPage "/sok" }}<a class="nav-search" href="{{ .RelPermalink }}" >{{ .Title }}</a>{{ end }}
   </nav>
-  <button type="button" class="theme-toggle" hidden aria-label="{{ T "theme_toggle" }}" title="{{ T "theme_toggle" }}"><span class="moon" aria-hidden="true">☾</span><span class="sun" aria-hidden="true">☀</span></button>
+  <button type="button" class="theme-toggle" hidden aria-label="{{ T "theme_toggle" }}" title="{{ T "theme_toggle" }}"><svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
   {{- with resources.Get "js/theme-toggle.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
   {{- end }}
