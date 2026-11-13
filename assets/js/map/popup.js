@@ -45,6 +45,11 @@ export function attachPopups(map, maplibregl, client) {
     const f = e.features[0];
     const coords = f.geometry.coordinates.slice();
     popup.setLngLat(coords).setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>${escapeHtml(t("loading"))}</p></div>`).addTo(map);
+    if (f.properties.seeded) {
+      // Known only from another Beacon: our own has no details for it yet.
+      popup.setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>${escapeHtml(t("seeded"))}</p></div>`);
+      return;
+    }
     try {
       const n = await client.get(`/nodes/${encodeURIComponent(f.properties.id)}`);
       if (popup.isOpen()) popup.setHTML(popupHtml(n));

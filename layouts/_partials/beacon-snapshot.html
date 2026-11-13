@@ -31,6 +31,32 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
+{{- /* Seeds (params.beacon.seeds): other Beacons with a longer memory of the same IATAs. Their
+       nodes that ours has not heard yet, and that lie within the region's border box, are
+       added, marked "seeded", until ours hears them; a young Beacon knows only nodes that have
+       advertised since it started. The map keeps only those inside the border itself. */ -}}
+{{- if and $iatas (eq $source "beacon") -}}
+  {{- $known := dict -}}
+  {{- range $nodes }}{{ $known = merge $known (dict .publicKey true) }}{{ end -}}
+  {{- range site.Params.beacon.seeds -}}
+    {{- $u := printf "%s/api/v1/nodes?iatas=%s&neighbors=true&limit=2000" (strings.TrimSuffix "/" .) (delimit $iatas ",") -}}
+    {{- with try (resources.GetRemote $u (dict "key" (printf "seed-%s-%s" (md5 $u) $key) "headers" (dict "Accept" "application/json"))) -}}
+      {{- with .Err -}}
+        {{- warnidf "beacon-seed" "Beacon seed not fetched (%s)" . -}}
+      {{- else with .Value -}}
+        {{- range (.Content | transform.Unmarshal).items -}}
+          {{- $node := . -}}
+          {{- $in := false -}}
+          {{- range $borders }}{{ with .bbox }}{{ if and $node.lat $node.lng (ge $node.lng (index . 0)) (ge $node.lat (index . 1)) (le $node.lng (index . 2)) (le $node.lat (index . 3)) }}{{ $in = true }}{{ end }}{{ end }}{{ end -}}
+          {{- if and $in (not (index $known .publicKey)) -}}
+            {{- $nodes = $nodes | append (merge . (dict "seeded" true)) -}}
+            {{- $known = merge $known (dict .publicKey true) -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
 {{- if and (eq $source "none") hugo.Data.beacon_snapshot -}}
   {{- $nodes = hugo.Data.beacon_snapshot.nodes | default slice -}}
   {{- $borders = hugo.Data.beacon_snapshot.borders | default slice -}}

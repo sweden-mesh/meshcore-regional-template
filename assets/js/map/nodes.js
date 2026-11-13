@@ -1,6 +1,7 @@
 // The node layer: Beacon nodes as a GeoJSON source (no clustering) with one circle
 // per node, coloured by type, ringed when the node is an observer, and
 // labelled from zoom 12. Pure parts are exported for tests.
+import { distanceKm } from "../wizard/neighbours.js";
 
 export const NODE_TYPES = { 1: "companion", 2: "repeater", 3: "room", 4: "sensor" };
 
@@ -45,6 +46,19 @@ export function shortId(publicKey) {
 // `relays`: node id -> packets seen passing through it since the page loaded. A node's
 // traffic is its known neighbours plus those relays: the busiest keep their pill longest
 // when zooming out (operator 2026-11-13).
+// The snapshot's seeded nodes (from another Beacon) that the live list does not have yet and
+// that lie inside one of the region's borders: another Beacon's IATA list also holds nodes its
+// observers hear from far away.
+export function withSeeded(live, snapshotNodes, borders = []) {
+  const keys = new Set((live || []).map((n) => n.publicKey));
+  const polygons = borders.flatMap((f) =>
+    f?.geometry?.type === "MultiPolygon" ? f.geometry.coordinates
+      : f?.geometry?.type === "Polygon" ? [f.geometry.coordinates] : []);
+  const inRegion = (n) => validPosition(n) && distanceKm(n.lat, n.lng, polygons) === 0;
+  return [...(live || []),
+    ...(snapshotNodes || []).filter((n) => n.seeded && !keys.has(n.publicKey) && inRegion(n))];
+}
+
 export function nodesToGeoJSON(nodes, relays = new Map()) {
   const features = [];
   for (const n of nodes || []) {
@@ -63,6 +77,7 @@ export function nodesToGeoJSON(nodes, relays = new Map()) {
         stale: !!n.stale,
         lastSeen: n.lastSeen || 0,
         traffic: (n.knownNeighborCount || 0) + (relays.get(n.id) || 0),
+        seeded: !!n.seeded,
       },
     });
   }

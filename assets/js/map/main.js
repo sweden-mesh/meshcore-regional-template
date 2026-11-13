@@ -3,7 +3,7 @@
 import { createMap } from "./basemap.js";
 import { nodesBounds, frameNodes } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
-import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom } from "./nodes.js";
+import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom, withSeeded } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
@@ -93,11 +93,13 @@ async function start() {
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
   let live = true;
   try {
-    const [nodes, borders] = await Promise.all([
+    const [nodes, borders, snap] = await Promise.all([
       client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
       loadBorders(client, iatas),
+      loadSnapshot(ds.snapshot),
     ]);
-    state.nodes = publicNodes(nodes, opts); state.borders = borders;
+    state.seeded = snap?.nodes || [];
+    state.nodes = publicNodes(withSeeded(nodes, state.seeded, borders), opts); state.borders = borders;
   } catch (err) {
     // Beacon unreachable from this browser: fall back to the build-time snapshot.
     live = false;
@@ -256,7 +258,7 @@ function startLive(map, ds, client, iatas, state, draw) {
     onEvent: handle,
     // Missed events are only in REST: refresh the nodes.
     onGap: async () => {
-      try { state.nodes = publicNodes(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
+      try { state.nodes = publicNodes(withSeeded(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }), state.seeded, state.borders), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
     },
   });
   el.mapDebug = { flows, inject: handle }; // browser tests replay captured events through the same path

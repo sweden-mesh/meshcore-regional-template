@@ -29,6 +29,9 @@ enableRobotsTXT = true
 
 [params.beacon]
   url = ""
+  # Other Beacons that have heard the region longer; their nodes fill the map until ours
+  # has heard them. Example: seeds = ["https://beacon.meshat.se"]
+  seeds = []
 
 [params.community]
   name = "Exempel-Mesh"

@@ -13,6 +13,7 @@ const SV = {
   observer: "observatör", stale: "inaktuell", foreign: "troligen utanför regionen",
   heard: "Senast hörd", radio: "Radio", neighbours: "Kända grannar", unnamed: "Namnlös nod",
   loading: "Hämtar…", load_failed: "Kunde inte hämta detaljer.",
+  seeded: "Känd från en annan Beacon; regionens egen har inte hört den än.",
   unknown: "okänt", just_now: "nyss", min_ago: "{n} min sedan", h_ago: "{n} h sedan", d_ago: "{n} d sedan",
   decimal: ",",
   pk_ADVERT: "Annons", pk_GRP_TXT: "Kanalmeddelande", pk_TXT_MSG: "Direktmeddelande", pk_ACK: "Kvittens",

@@ -361,6 +361,8 @@ other = "Kända grannar"
 other = "Namnlös nod"
 [mt_loading]
 other = "Hämtar…"
+[mt_seeded]
+other = "Känd från en annan Beacon; regionens egen har inte hört den än."
 [mt_load_failed]
 other = "Kunde inte hämta detaljer."
 [mt_unknown]

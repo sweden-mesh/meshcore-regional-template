@@ -365,6 +365,8 @@ other = "Known neighbours"
 other = "Unnamed node"
 [mt_loading]
 other = "Loading…"
+[mt_seeded]
+other = "Known from another Beacon; the region's own has not heard it yet."
 [mt_load_failed]
 other = "Could not load the details."
 [mt_unknown]

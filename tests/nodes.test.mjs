@@ -62,3 +62,17 @@ test("nodesToGeoJSON: traffic is known neighbours plus relays seen since load", 
   assert.deepEqual(fc.features.map((f) => f.properties.traffic), [5, 5]);
   assert.deepEqual(nodesToGeoJSON(nodes).features.map((f) => f.properties.traffic), [3, 0]);
 });
+
+test("withSeeded adds the snapshot's seeded nodes the live list lacks", async () => {
+  const { withSeeded } = await import("../assets/js/map/nodes.js");
+  const square = [{ geometry: { type: "Polygon", coordinates: [[[14, 57], [15, 57], [15, 58], [14, 58], [14, 57]]] } }];
+  const live = [{ id: "a", publicKey: "aa", lat: 57.5, lng: 14.5 }];
+  const snap = [
+    { id: "x", publicKey: "aa", seeded: true, lat: 57.5, lng: 14.5 },   // already live
+    { id: "b", publicKey: "bb", seeded: true, lat: 57.6, lng: 14.6 },   // inside: added
+    { id: "f", publicKey: "ff", seeded: true, lat: 59.3, lng: 18.0 },   // far away: left out
+    { id: "c", publicKey: "cc", lat: 57.7, lng: 14.7 },                 // not seeded
+  ];
+  assert.deepEqual(withSeeded(live, snap, square).map((n) => n.id), ["a", "b"]);
+  assert.deepEqual(withSeeded(live, null, square).map((n) => n.id), ["a"]);
+});
