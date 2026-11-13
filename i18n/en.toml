@@ -136,8 +136,6 @@ other = "too long; the firmware cuts it short"
 other = "Suggested repeater names in {{ .Region }}"
 [naming_example]
 other = "for example"
-[naming_companion]
-other = "Name your companion however you like."
 [skip_to_content]
 other = "Skip to content"
 [map_list]

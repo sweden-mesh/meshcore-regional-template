@@ -1,6 +1,6 @@
 ---
-title: "Namnge din nod"
-description: "Ett bra namn talar om var noden står. Så väljer du namn, och regionens namnförslag för repeatrar."
+title: "Namnge din repeater"
+description: "Regionens namnförslag för repeatrar, hur långt ett namn får vara, och hur du namnger en companion."
 weight: 70
 source:
   title: "Vad är MeshCore? (avsnittet Namnge din enhet)"
@@ -9,8 +9,7 @@ source:
   changes: "Egen guide; regionens namnförslag från sidans parametrar; namnlängden räknas av ett eget verktyg."
 ---
 
-Namnet syns för alla när din nod skickar en *advert*. För en repeater är namnet det andra ser i
-sina listor och på kartan, så det ska tala om **var den står**.
+En repeaters namn syns för alla i listor och på kartan, så det ska tala om **var den står**.
 
 {{< naming >}}
 
@@ -28,4 +27,11 @@ utan position.
 - Hoppa över `å`, `ä` och `ö` om namnet blir för långt (`Braneryd` i stället för `Bråneryd`).
 - Fyra tecken av nodens nyckel på slutet (som `FD70`) gör namnet unikt även om två noder står
   på samma plats. De syns som nodens kortnamn på kartan.
-- En companions namn behöver inte avslöja vem du är.
+
+## Namnge din companion
+
+En companion namnger du som du vill; namnförslaget ovan gäller bara repeatrar. Namnet syns för
+andra när radion skickar en advert, och det behöver inte avslöja vem du är. Samma gräns gäller:
+22 byte om positionen ska följa med. En emoji tar fyra byte.
+
+{{< namecheck kind="companion" >}}

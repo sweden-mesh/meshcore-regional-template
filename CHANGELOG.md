@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.10 — 2026-11-13
+
+- The naming guide is *Namnge din repeater* (same address), with its own section *Namnge din
+  companion* at the end. The naming box no longer carries the companion line.
+
 ## v0.12.9 — 2026-11-13
 
 - The naming guide says once, not twice, that companions are named freely.

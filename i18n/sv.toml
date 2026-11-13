@@ -132,8 +132,6 @@ other = "för långt; firmware kortar av det"
 other = "Namnförslag för repeatrar i {{ .Region }}"
 [naming_example]
 other = "till exempel"
-[naming_companion]
-other = "En companion namnger du som du vill."
 [skip_to_content]
 other = "Hoppa till innehållet"
 [map_list]
