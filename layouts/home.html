@@ -8,7 +8,7 @@
     {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
     <p class="hero-actions">
       {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
-      <a class="button button-secondary" href="#karta">{{ T "cta_map" }}</a>
+      <a class="button button-secondary" href="#karta" data-ease>{{ T "cta_map" }}</a>
     </p>
   </section>
 
@@ -43,6 +43,9 @@
         {{ end }}
         {{ partial "settings.html" . }}
       </div>
+      {{ with resources.Get "js/easescroll.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+        <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+      {{ end }}
       {{ with site.Params.beacon.url }}
       {{ with resources.Get "js/stats/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
         <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
