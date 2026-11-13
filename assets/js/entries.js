@@ -2,6 +2,14 @@
 // every typed word, then groups left empty. Without JavaScript the whole list shows.
 import { matches } from "./entries-match.js";
 
+// A link to one question (#name) opens it.
+const openHash = () => {
+  const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  el?.querySelector("details")?.setAttribute("open", "");
+};
+openHash();
+addEventListener("hashchange", openHash);
+
 for (const root of document.querySelectorAll("[data-entries]")) {
   const input = root.querySelector("[data-entries-filter]");
   const none = root.querySelector("[data-entries-none]");

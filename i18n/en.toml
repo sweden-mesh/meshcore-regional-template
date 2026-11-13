@@ -445,3 +445,23 @@ other = "MQTT and observers"
 other = "Power and battery"
 [ts_cat_ovrigt]
 other = "Other"
+[faq_filter]
+other = "Filter"
+[faq_filter_placeholder]
+other = "Type a word, e.g. \"licence\""
+[faq_filter_none]
+other = "No question matches. Try fewer words."
+[faq_cat_grunder]
+other = "The basics"
+[faq_cat_utrustning]
+other = "Hardware and cost"
+[faq_cat_natet]
+other = "The network"
+[faq_cat_integritet]
+other = "Privacy and security"
+[faq_cat_regioner]
+other = "Regions"
+[faq_cat_bidra]
+other = "Helping out"
+[faq_cat_ovrigt]
+other = "Other"

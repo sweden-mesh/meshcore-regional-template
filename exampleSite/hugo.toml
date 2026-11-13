@@ -59,6 +59,10 @@ enableRobotsTXT = true
   pageRef = "/felsokning"
   weight = 17
 [[menus.main]]
+  name = "Frågor"
+  pageRef = "/fragor"
+  weight = 18
+[[menus.main]]
   name = "Om regionen"
   pageRef = "/om-regionen"
   weight = 20

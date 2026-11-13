@@ -13,6 +13,7 @@ the region site wins.** That works for every kind of file:
 |---|---|
 | a shared guide | `content/guider/<name>.md` |
 | a troubleshooting entry: add, replace or hide | `content/felsokning/<name>.md` (see below) |
+| an FAQ question: add, replace or hide | `content/fragor/<name>.md` (see below) |
 | the home page text | `content/_index.md` |
 | a layout or part of one | `layouts/…`, e.g. `layouts/_partials/footer.html` |
 | a UI string | `i18n/sv.toml` (only the keys you change) |
@@ -38,6 +39,12 @@ entries; a region changes the list with files of its own in `content/felsokning/
 
 `exampleSite/content/felsokning/` does all three, and `scripts/check-overrides.sh` tests them.
 Add a menu item in your `hugo.toml` if you want one (`pageRef = "/felsokning"`).
+
+**The FAQ** (`/fragor/`) works the same way: one question per file in `content/fragor/`, the
+title is the question, the body the answer, `category` one of `grunder`, `utrustning`, `natet`,
+`integritet`, `regioner`, `bidra` or your own. Questions are shown folded on the one page (no page
+of their own); `/fragor/#<file name>` links to one and opens it. The old combined page
+`/guider/fragor-och-ord/` redirects there, and the glossary is `/guider/ordlista/`.
 
 ## Settings
 

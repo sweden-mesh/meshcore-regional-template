@@ -16,6 +16,13 @@ check felsokning/index.html "Radion startar om hela tiden" "felsokning: the temp
 if grep -q "gammal-version-efter-flashning" "$P/felsokning/index.html" "$P/sitemap.xml" || [ -e "$P/felsokning/gammal-version-efter-flashning" ] || grep -rqs "fortfarande den gamla versionen" "$P/pagefind/"; then
   echo "FAIL felsokning: a hidden entry is still built, listed or in the sitemap"; fail=1
 else echo "ok   felsokning: a hidden entry is not built, listed or in the sitemap"; fi
+# FAQ: the same three ways, and the old combined page still leads here.
+check fragor/index.html "Exempelregionen: när ses vi?" "fragor: a region's own question is listed"
+check fragor/index.html "Regionens egen version: vem äger nätet?" "fragor: a region's file replaces the template's question"
+check fragor/index.html "Behöver jag licens för att sända?" "fragor: the template's questions the region leaves alone are listed"
+if grep -q "Meshtastic prata" "$P/fragor/index.html"; then echo "FAIL fragor: a hidden question is still listed"; fail=1; else echo "ok   fragor: a hidden question is not listed"; fi
+if [ -e "$P/fragor/licens/index.html" ]; then echo "FAIL fragor: questions get pages of their own"; fail=1; else echo "ok   fragor: questions are shown only on the list page"; fi
+check guider/fragor-och-ord/index.html "/fragor/" "fragor: the old FAQ URL redirects"
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

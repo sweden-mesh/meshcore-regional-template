@@ -441,3 +441,23 @@ other = "MQTT och observatörer"
 other = "Ström och batteri"
 [ts_cat_ovrigt]
 other = "Övrigt"
+[faq_filter]
+other = "Filtrera"
+[faq_filter_placeholder]
+other = "Skriv ett ord, till exempel \"licens\""
+[faq_filter_none]
+other = "Ingen fråga matchar. Prova färre ord."
+[faq_cat_grunder]
+other = "Grunderna"
+[faq_cat_utrustning]
+other = "Utrustning och kostnad"
+[faq_cat_natet]
+other = "Nätet"
+[faq_cat_integritet]
+other = "Integritet och säkerhet"
+[faq_cat_regioner]
+other = "Regioner"
+[faq_cat_bidra]
+other = "Hjälpa till"
+[faq_cat_ovrigt]
+other = "Övrigt"
