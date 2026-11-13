@@ -2,10 +2,10 @@
 {{- $r := partialCached "region.html" . "region" -}}{{- $radio := site.Params.radio -}}
 <dl class="settings">
   <div><dt>{{ T "set_preset" }}</dt><dd>{{ $radio.preset }}</dd></div>
-  <div><dt>{{ T "set_freq" }}</dt><dd>{{ replace (string $radio.freq) "." "," }} MHz</dd></div>
-  <div><dt>{{ T "set_bw" }}</dt><dd>{{ replace (string $radio.bw) "." "," }} kHz</dd></div>
-  <div><dt>{{ T "set_sf" }}</dt><dd>{{ $radio.sf }}</dd></div>
-  <div><dt>{{ T "set_cr" }}</dt><dd>{{ $radio.cr }}</dd></div>
+  <div class="settings-part"><dt>{{ T "set_freq" }}</dt><dd>{{ replace (string $radio.freq) "." "," }} MHz</dd></div>
+  <div class="settings-part"><dt>{{ T "set_bw" }}</dt><dd>{{ replace (string $radio.bw) "." "," }} kHz</dd></div>
+  <div class="settings-part"><dt>{{ T "set_sf" }}</dt><dd>{{ $radio.sf }}</dd></div>
+  <div class="settings-part"><dt>{{ T "set_cr" }}</dt><dd>{{ $radio.cr }}</dd></div>
   <div><dt>{{ T "set_scope" }}</dt><dd><code>{{ $r.scope }}</code></dd></div>
   <div><dt>{{ T "set_iata" }}</dt><dd>{{ range $i, $c := $r.iatas }}{{ if $i }}, {{ end }}<code>{{ $c }}</code>{{ end }}</dd></div>
 </dl>

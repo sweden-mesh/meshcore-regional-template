@@ -201,6 +201,9 @@ a { color: var(--accent); }
 .settings div { display: grid; grid-template-columns: minmax(8rem, 40%) 1fr; gap: .5rem; }
 .settings dt { color: var(--muted); margin: 0; font-weight: 400; }
 .settings dd { margin: 0; font-weight: 500; }
+/* The four radio values are what the preset means: indented under it, values still aligned. */
+.settings .settings-part dt { margin-left: .4rem; padding-left: .75rem; border-left: 2px solid var(--line); font-size: .88rem; font-style: italic; }
+.settings .settings-part dd { font-weight: 400; }
 .settings dd.muted { color: var(--muted); font-weight: 400; font-style: italic; }
 .settings-box summary { cursor: pointer; font-weight: 600; font-size: .95rem; }
 .wz-review-head { font-size: 1rem; margin: .25rem 0 0; }
