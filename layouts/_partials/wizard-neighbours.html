@@ -1,5 +1,6 @@
-{{- /* The neighbouring counties as checkboxes, each with its border, so the wizard can
-  tick the ones near the picked position (40 km over land, 80 km over water, the rule
+{{- /* An edge repeater is a choice (the wizard rules, as on meshat.se): a box, unticked.
+  Ticked, it shows the neighbouring counties as checkboxes, each with its border, with the
+  ones near the picked position already ticked (40 km over land, 80 km over water, the rule
   zombiefredrik/meshcore-se-regioner's neighbour list was calculated with). */ -}}
 {{- $r := partialCached "region.html" . "region" -}}
 {{- $shapes := dict -}}
@@ -10,8 +11,9 @@
 {{- end -}}
 {{- if $r.neighbours -}}
 <div class="wz-neighbours" data-areas="{{ $areas | jsonify }}" data-texts="{{ dict "near" (T "wz_nb_near") "far" (T "wz_nb_far") "inside" (T "wz_nb_inside") | jsonify }}">
-  <p class="muted" data-nb-hint>{{ T "wz_nb_hint" }}</p>
-  <ul class="wz-nb-list">
+  <label class="wz-check"><input type="checkbox" data-edge> {{ T "wz_nb_edge" }}</label>
+  <p class="muted" data-nb-hint hidden>{{ T "wz_nb_hint" }}</p>
+  <ul class="wz-nb-list" hidden>
     {{- range $r.neighbours }}
     <li><label class="wz-check"><input type="checkbox" value="{{ .scope }}"> {{ .lan }} <code>{{ .scope }}</code></label> <span class="muted" data-why></span></li>
     {{- end }}

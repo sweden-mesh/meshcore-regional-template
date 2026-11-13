@@ -43,16 +43,24 @@ export function nearNeighbours(lat, lon, areas) {
   });
 }
 
-// Wire the checkbox list; returns { scopes(), setPosition(lat, lon) }.
+// Wire the edge-repeater box and the neighbour list; returns { scopes(), setPosition(lat, lon) }.
+// No neighbour is carried unless the user says the repeater is an edge repeater; the list
+// then starts with the counties near the position ticked.
 export function initNeighbours(root, onChange) {
   if (!root) return { scopes: () => [], setPosition: () => {} };
   const areas = JSON.parse(root.dataset.areas || "[]");
   const t = JSON.parse(root.dataset.texts || "{}");
-  const boxes = [...root.querySelectorAll('input[type="checkbox"]')];
+  const edge = root.querySelector("input[data-edge]");
+  const list = root.querySelector(".wz-nb-list");
+  const hint = root.querySelector("[data-nb-hint]");
+  const boxes = [...list.querySelectorAll('input[type="checkbox"]')];
   for (const b of boxes) b.addEventListener("change", onChange);
+  edge.addEventListener("change", () => { list.hidden = hint.hidden = !edge.checked; onChange(); });
   return {
-    scopes: () => boxes.filter((b) => b.checked).map((b) => b.value),
+    scopes: () => (edge.checked ? boxes.filter((b) => b.checked).map((b) => b.value) : []),
     setPosition(lat, lon) {
+      // The box is offered everywhere (operator 2026-11-13): over a large lake a repeater
+      // can reach a county far beyond the 40/80 km rule. Only the preselection follows it.
       const res = nearNeighbours(lat, lon, areas);
       for (const r of res) {
         const box = boxes.find((b) => b.value === r.scope);

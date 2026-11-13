@@ -24,3 +24,36 @@ test("near uses each neighbour's own limit", () => {
   const r = Object.fromEntries(nearNeighbours(57.917, 13.878, areas).map((x) => [x.scope, x.near]));
   assert.deepEqual(r, { "se-a": true, "se-b": false });
 });
+
+// A minimal stand-in for the partial's DOM: the edge box, the hint, and one checkbox per neighbour.
+function fakeRoot(scopes) {
+  const listeners = new Map();
+  const el = (props = {}) => ({ hidden: true, checked: false, ...props,
+    addEventListener(type, fn) { listeners.set(this, fn); },
+    fire() { listeners.get(this)?.(); } });
+  const boxes = scopes.map((value) => {
+    const why = { textContent: "" };
+    return el({ value, closest: () => ({ querySelector: () => why }) });
+  });
+  const list = { hidden: true, querySelectorAll: () => boxes };
+  const edge = el(), hint = el();
+  const root = {
+    dataset: { areas: JSON.stringify(scopes.map((scope, i) => ({ scope, lan: scope, km: 40,
+      rings: i === 0 ? [[[[14, 57], [15, 57], [15, 58], [14, 58], [14, 57]]]] : [] }))), texts: "{}" },
+    querySelector: (sel) => (sel === "input[data-edge]" ? edge : sel === ".wz-nb-list" ? list : hint),
+  };
+  return { root, edge, list, boxes };
+}
+
+test("edge repeater: no neighbour unless the box is ticked; then the near ones are preselected", async () => {
+  const { initNeighbours } = await import("../assets/js/wizard/neighbours.js");
+  const { root, edge, list } = fakeRoot(["se-ost", "se-kro"]);
+  const nb = initNeighbours(root, () => {});
+  nb.setPosition(57.5, 14.5);            // inside se-ost's square
+  assert.deepEqual(nb.scopes(), []);     // not an edge repeater yet
+  edge.checked = true; edge.fire();
+  assert.equal(list.hidden, false);
+  assert.deepEqual(nb.scopes(), ["se-ost"]);
+  edge.checked = false; edge.fire();
+  assert.deepEqual(nb.scopes(), []);
+});

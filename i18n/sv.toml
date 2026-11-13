@@ -302,8 +302,10 @@ other = "Duty cycle"
 other = "Adminlösenord"
 [wz_rv_none]
 other = "inte valt ännu"
+[wz_nb_edge]
+other = "Kantrepeater: repeatern pratar regelbundet med repeatrar i ett grannlän och bär även grannlänets region. Alla andra är vanliga repeatrar, även nära en länsgräns."
 [wz_nb_hint]
-other = "Grannlän nära platsen du väljer på kartan bockas i automatiskt (inom 40 km, 80 km över vatten). Du kan ändra."
+other = "Grannlän nära platsen du väljer på kartan är förvalda (inom 40 km, 80 km över vatten). Du kan ändra."
 [wz_nb_near]
 other = "{km} km till länsgränsen: läggs till"
 [wz_nb_far]
