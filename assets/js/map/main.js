@@ -26,7 +26,7 @@ async function start() {
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
   const url = parseState(location.search);
-  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? false, selected: null, onLive: null, miniZoom: null, relays: new Map() };
+  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   const saveUrl = (extra = {}) => {
     const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);

@@ -30,7 +30,7 @@ server's public API. No build step beyond Hugo's `js.Build`; no Beacon code is i
 | `map/packetpath.js` | The route one packet took to every observer that heard it (`/packets/{hash}`) |
 | `map/popup.js` | Node details (`/nodes/{id}`); names are untrusted and escaped |
 | `map/panel.js` | The pill toggles and the legend (open on desktop, closed under 640 px) |
-| `map/urlstate.js` | Toggles and view in the URL (`?live=0&links=0&foreign=0&focus=1&z=…&ll=…`) |
+| `map/urlstate.js` | Toggles and view in the URL (`?live=0&links=0&foreign=0&focus=0&z=…&ll=…`) |
 | `beacon/rest.js` | REST client: retries on 429/503 with `Retry-After`, cursor paging |
 | `beacon/live.js` | The WebSocket feed (`/ws`), see below |
 
