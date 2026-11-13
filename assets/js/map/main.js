@@ -26,7 +26,7 @@ async function start() {
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
   const url = parseState(location.search);
-  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? false, selected: null, onLive: null, miniZoom: null };
+  const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? false, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   const saveUrl = (extra = {}) => {
     const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
@@ -71,7 +71,7 @@ async function start() {
     },
   }), "top-left");
   const draw = () => {
-    addNodeLayers(map, nodesToGeoJSON(state.nodes));
+    addNodeLayers(map, nodesToGeoJSON(state.nodes, state.relays));
     addBorderLayers(map, state.borders);
     setForeignVisible(map, state.showForeign);
     drawLinks();
@@ -180,6 +180,7 @@ function startLive(map, ds, client, iatas, state, draw) {
   // Fewer simultaneous flows on small screens: less to draw on a phone.
   const flows = new FlowLayer(map, { maxFlows: window.innerWidth < 640 ? 40 : 120 });
   let redraw = 0;
+  let recount = 0; // pills re-ranked by traffic at most every 10 s
   const recent = new RecentPackets(10);
   const panel = document.getElementById("packets");
   const list = document.getElementById("recent-packets");
@@ -233,6 +234,11 @@ function startLive(map, ds, client, iatas, state, draw) {
       flows.glow(obsPt);
       const chain = visibleOnly(state, chainFromObservation(o, obsPt));
       flows.add(chain, { type: data.packet.payloadTypeName });
+      for (const p of chain) if (p) state.relays.set(p.id, (state.relays.get(p.id) || 0) + 1);
+      if (!recount) recount = setTimeout(() => {
+        recount = 0;
+        map.getSource("nodes")?.setData(nodesToGeoJSON(state.nodes, state.relays));
+      }, 10000);
       if (state.focus) {
         // Every node that sent this packet on flashes and sends bubbles to its neighbours.
         const seen = new Set();

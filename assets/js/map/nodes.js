@@ -42,7 +42,10 @@ export function shortId(publicKey) {
   return String(publicKey || "").slice(0, 6).toUpperCase();
 }
 
-export function nodesToGeoJSON(nodes) {
+// `relays`: node id -> packets seen passing through it since the page loaded. A node's
+// traffic is its known neighbours plus those relays: the busiest keep their pill longest
+// when zooming out (operator 2026-11-13).
+export function nodesToGeoJSON(nodes, relays = new Map()) {
   const features = [];
   for (const n of nodes || []) {
     if (!validPosition(n)) continue;
@@ -59,6 +62,7 @@ export function nodesToGeoJSON(nodes) {
         foreign: !!n.possiblyForeign,
         stale: !!n.stale,
         lastSeen: n.lastSeen || 0,
+        traffic: (n.knownNeighborCount || 0) + (relays.get(n.id) || 0),
       },
     });
   }
@@ -125,7 +129,8 @@ export function addNodeLayers(map, data) {
       "text-variable-anchor": ["bottom", "top", "left", "right", "bottom-left", "bottom-right", "top-left", "top-right"],
       "text-radial-offset": 1.1, "text-justify": "auto",
       "icon-allow-overlap": false, "text-allow-overlap": false,
-      "symbol-sort-key": ["case", ["get", "observer"], 0, ["get", "stale"], 2, 1],
+      // Lower keys are placed first: most traffic first, stale nodes last.
+      "symbol-sort-key": ["case", ["get", "stale"], 1e6, ["-", 0, ["get", "traffic"]]],
     },
     paint: { "text-color": ["case", ["get", "stale"], "#5b6a74", "#0f1d26"],
       "icon-opacity": ["case", ["get", "foreign"], 0.45, 1], "text-opacity": ["case", ["get", "foreign"], 0.45, 1] } });

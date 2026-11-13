@@ -52,3 +52,13 @@ test("nodeUpdate: omitted position kept, null cleared, iatas merged, new node ad
   assert.equal(out.length, 2);
   assert.equal(nodes[0].name, "A");
 });
+
+test("nodesToGeoJSON: traffic is known neighbours plus relays seen since load", () => {
+  const nodes = [
+    { id: "a", lat: 57.7, lng: 14.1, knownNeighborCount: 3 },
+    { id: "b", lat: 57.8, lng: 14.2 },
+  ];
+  const fc = nodesToGeoJSON(nodes, new Map([["a", 2], ["b", 5]]));
+  assert.deepEqual(fc.features.map((f) => f.properties.traffic), [5, 5]);
+  assert.deepEqual(nodesToGeoJSON(nodes).features.map((f) => f.properties.traffic), [3, 0]);
+});
