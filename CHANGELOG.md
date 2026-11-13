@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.5.0 — 2026-11-13
+
+- **Light and dark:** dark is now the base. Light comes from the system setting (no JavaScript
+  needed) or from a new ☾/☀ button in the header, which is remembered and applied before the
+  page paints. The map's basemap follows the choice. The console style stays dark.
+- **The map in the site's language:** the legend, the node popup and the packet list take their
+  texts from i18n (`mt_*` keys, Swedish and English), passed in through `#map`'s `data-texts`.
+- New i18n keys: `theme_toggle`, `mt_*`.
+
 ## v0.4.0 — 2026-11-13
 
 - **Design:** a second pass after a review against 32 common signs of AI-made sites
