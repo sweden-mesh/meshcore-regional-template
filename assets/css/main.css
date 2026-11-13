@@ -319,7 +319,7 @@ body.style-console .theme-toggle { display: none; }
 .entries-group h2 { margin: 0 0 .6rem; font-size: 1.15rem; }
 .entries-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
 .entries-list li { border-bottom: 1px solid var(--line); }
-.entries-list a { display: flex; flex-direction: column; gap: .15rem; padding: .7rem 0; text-decoration: none; color: var(--fg); }
-.entries-list a:hover strong, .entries-list a:focus-visible strong { text-decoration: underline; }
+.entries-list > li > a { display: flex; flex-direction: column; gap: .15rem; padding: .7rem 0; text-decoration: none; color: var(--fg); }
+.entries-list > li > a:hover strong, .entries-list > li > a:focus-visible strong { text-decoration: underline; }
 .entries-list summary { padding: .7rem 0; font-weight: 600; cursor: pointer; }
 .entries-list details .prose { padding: 0 0 1rem; }

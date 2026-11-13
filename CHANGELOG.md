@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.3 — 2026-11-13
+
+- Links inside FAQ answers stay in the text: they had been their own lines, the arrow and any
+  full stop after them too (the list-row link style reached them).
+- `lead: false` in a page's front matter hides the lead line under the title; the description
+  still goes in the page's meta tags.
+
 ## v0.12.2 — 2026-11-13
 
 - Troubleshooting entries page *Föregående*/*Nästa* within their own category.
