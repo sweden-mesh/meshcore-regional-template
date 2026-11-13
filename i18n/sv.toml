@@ -310,3 +310,5 @@ other = """MeshCore är fri programvara för små LoRa-radior. Radiorna skickar 
 Nätet byggs av de som använder det. Någon sätter upp en repeater på taket eller i en mast, någon annan har en companion i fickan och skriver i MeshCore-appen på telefonen. Ingen äger nätet, och det finns ingen central server som kan gå ner.
 
 Det enda du behöver för att börja är en radio och appen. [Läs mer om MeshCore]({{ .Guide }})."""
+[theme_toggle]
+other = "Byt mellan ljust och mörkt"

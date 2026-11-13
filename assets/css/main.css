@@ -12,27 +12,34 @@
   --font-body: "IBM Plex Sans", system-ui, sans-serif;
   --font-head: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --accent: #1f5d82;          /* Vättern blue */
-  --accent-2: #21664a;        /* pine green */
-  --online: #2f8a5f;
-  --warn: #d97a2b;
-  --bg: #ffffff;
-  --surface: #f6f9fb;
-  --fg: #0f1d26;
-  --muted: #4a5c68;
-  --line: #e3e8ec;
   --radius: 10px;
   --radius-sm: 6px;
   --radius-xs: 4px;
-  --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
-  color-scheme: light dark;
+  /* Dark is the base (operator 2026-11-13): a browser that reports no colour scheme gets dark.
+     Light comes from the system setting (no JS needed) or the header toggle (data-theme). */
+  --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
+  --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --muted: #9fb3c0; --line: #1d3242;
+  --shadow-map: 0 24px 60px -24px rgba(0, 0, 0, .7);
+  --bg-a: #0b1a24; --bg-b: #0b141b; --bg-c: #0c1f19; --bg-d: #101a26; --blob: rgba(120, 175, 205, .14);
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
-    --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --muted: #9fb3c0; --line: #1d3242;
-    --shadow-map: 0 24px 60px -24px rgba(0, 0, 0, .7);
+/* Light: Vättern blue and pine green on white. The same tokens twice, because the system
+   setting and the toggle are two selectors CSS cannot merge across a media query. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --accent: #1f5d82; --accent-2: #21664a; --online: #2f8a5f; --warn: #d97a2b;
+    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --muted: #4a5c68; --line: #e3e8ec;
+    --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
+    --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9);
+    color-scheme: light;
   }
+}
+:root[data-theme="light"] {
+    --accent: #1f5d82; --accent-2: #21664a; --online: #2f8a5f; --warn: #d97a2b;
+    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --muted: #4a5c68; --line: #e3e8ec;
+    --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
+    --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9);
+    color-scheme: light;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -223,10 +230,6 @@ a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font
    codepen P1N2O/pyBNzX at 1/10 speed: 150 s a cycle) with soft blurred blobs
    lighter than it drifting on top (after shrinathprabhu/dyvOWma). Kept pale so
    text contrast holds; off for prefers-reduced-motion. */
-:root { --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9); }
-@media (prefers-color-scheme: dark) {
-  :root { --bg-a: #0b1a24; --bg-b: #0b141b; --bg-c: #0c1f19; --bg-d: #101a26; --blob: rgba(120, 175, 205, .14); }
-}
 body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; animation: bg-shift 150s ease infinite; }
 @keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 /* Parallax (operator 2026-11-13): the blob layer moves up at 20 % of the scroll speed; it is
@@ -291,3 +294,9 @@ body.style-console .button-secondary { background: transparent; color: var(--fg)
 .about { max-width: 72rem; margin: 2rem auto 0; padding: 1rem; display: grid; gap: 2rem; }
 .about-two { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
 .about h2 { margin-top: 0; }
+.theme-toggle { margin-left: auto; min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); font-size: 1.1rem; cursor: pointer; }
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle .sun, :root[data-theme-now="light"] .theme-toggle .moon { display: none; }
+:root[data-theme-now="light"] .theme-toggle .sun { display: inline; }
+body.style-console .theme-toggle { display: none; }
+.theme-toggle + .nav-narrow { margin-left: .5rem; }

@@ -1,5 +1,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{{- /* The visitor's saved light/dark choice, applied before the first paint (no flash).
+  Inline and tiny on purpose; without JS or storage the CSS follows the system. */}}
+<script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 {{- partial "seo-title.html" . | printf "<title>%s</title>" | safeHTML }}
 <meta name="description" content="{{ .Description | default site.Params.description | default (T "hero_tagline") }}">

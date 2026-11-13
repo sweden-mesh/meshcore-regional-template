@@ -13,6 +13,10 @@
     {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
     {{ with site.GetPage "/sok" }}<a class="nav-search" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">⌕ {{ .Title }}</a>{{ end }}
   </nav>
+  <button type="button" class="theme-toggle" hidden aria-label="{{ T "theme_toggle" }}" title="{{ T "theme_toggle" }}"><span class="moon" aria-hidden="true">☾</span><span class="sun" aria-hidden="true">☀</span></button>
+  {{- with resources.Get "js/theme-toggle.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+  <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+  {{- end }}
   <details class="nav-narrow">
     <summary aria-label="{{ T "nav_menu" }}"><span aria-hidden="true">☰</span></summary>
     <nav aria-label="{{ T "nav_main" }}">

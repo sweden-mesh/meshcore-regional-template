@@ -3,10 +3,10 @@
 // and its worker file resolves next to it.
 
 import { startCamera, trackUserMoves } from "./camera.js";
+import { effectiveTheme } from "../theme.js";
 
-const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-export function styleUrl(ds, dark = darkQuery.matches) {
+// The basemap follows the site's theme: the system setting, the header toggle, or dark.
+export function styleUrl(ds, dark = effectiveTheme() === "dark") {
   return dark ? ds.styleDark : ds.styleLight;
 }
 
@@ -23,6 +23,6 @@ export async function createMap(el) {
   });
   trackUserMoves(map);
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-  darkQuery.addEventListener("change", (e) => map.setStyle(styleUrl(ds, e.matches)));
+  document.addEventListener("themechange", (e) => map.setStyle(styleUrl(ds, e.detail === "dark")));
   return { map, maplibregl };
 }
