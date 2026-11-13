@@ -102,6 +102,14 @@ other = "Settings here"
 other = "Preset"
 [set_radio]
 other = "Radio"
+[set_freq]
+other = "Frequency"
+[set_bw]
+other = "Bandwidth"
+[set_sf]
+other = "Spreading factor"
+[set_cr]
+other = "Coding rate"
 [set_scope]
 other = "Region (scope)"
 [set_iata]

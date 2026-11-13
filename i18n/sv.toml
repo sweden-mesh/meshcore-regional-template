@@ -98,6 +98,14 @@ other = "Inställningar här"
 other = "Förinställning"
 [set_radio]
 other = "Radio"
+[set_freq]
+other = "Frekvens"
+[set_bw]
+other = "Bandbredd"
+[set_sf]
+other = "Spreading factor"
+[set_cr]
+other = "Coding rate"
 [set_scope]
 other = "Region (scope)"
 [set_iata]
