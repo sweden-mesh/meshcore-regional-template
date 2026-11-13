@@ -44,6 +44,7 @@ this repository's `hugo.toml`.
 | `map.companions` | `false` (default): companion nodes (people's handsets) are left off the map, the snapshot and the packet routes, because their position can be a home |
 | `map.maplibre` | the vendored MapLibre version under `static/lib/maplibre-gl/` |
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
+| `links` | plain links in the footer's community column (`[[params.links]]` with `name`, `url`), for sites that are not chats |
 | `beacon.seeds` | other Beacons that have heard the region longer (e.g. `["https://beacon.meshat.se"]`); their nodes inside the region's border fill the map until `beacon.url` has heard them |
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
