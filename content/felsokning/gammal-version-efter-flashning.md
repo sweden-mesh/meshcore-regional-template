@@ -1,6 +1,6 @@
 ---
 title: "Radion visar fortfarande den gamla versionen efter flashningen"
-description: "Flashningen gick bra, men `ver` säger samma version som förut."
+description: "Flashningen gick bra, men ver säger samma version som förut."
 category: flasha
 weight: 20
 ---
