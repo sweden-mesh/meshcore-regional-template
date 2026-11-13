@@ -65,7 +65,9 @@ a { color: var(--accent); }
 .lead { margin: 1rem 0 0; color: var(--muted); font-size: 1.15rem; line-height: 1.55; max-width: 40rem; }
 .map-section h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .sections { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-@media (min-width: 1000px) { .sections { grid-template-columns: 1.3fr 1.15fr .85fr; } }
+/* Five boxes side by side on wide screens, wider than the text column so each has room;
+   the network box (the settings list) gets the most. Narrower: as many 16rem columns as fit. */
+@media (min-width: 1200px) { .sections { max-width: min(100rem, 96vw); grid-template-columns: 1fr 1fr 1.35fr 1fr 1.1fr; } }
 .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 0 1rem 1rem; }
 .card ul { padding-left: 1.2rem; }
 .channels dt { margin-top: .5rem; }
@@ -113,7 +115,6 @@ a { color: var(--accent); }
 .card h2 { margin: .1rem 0 .6rem; font-size: 1.3rem; }
 .card-surface { background: var(--surface); }
 .eyebrow { margin: 0; font: 500 .78rem var(--font-mono); color: var(--muted); letter-spacing: .02em; }
-.wizard-links .eyebrow { font: 600 .8rem var(--font-body); letter-spacing: .02em; }
 .card .link-list, .link-list { list-style: none; padding: 0; margin: 0 0 .5rem; }
 .link-list li { padding: .3rem 0; border-bottom: 1px solid var(--line); }
 .link-list li:last-child { border-bottom: 0; }
@@ -277,7 +278,6 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .wz-diff td, .wz-diff th { padding: .35rem .7rem; border-bottom: 1px solid var(--line); text-align: left; }
 .wz-diff tr.changed td:last-child { font-weight: 700; color: var(--accent-2); }
 .wz-inline { display: inline-block; background: var(--surface); padding: .3rem .6rem; border-radius: var(--radius-xs); }
-.wizard-links { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--line); }
 .search-box { margin-top: 1rem; --pagefind-ui-font: var(--font-body); --pagefind-ui-primary: var(--accent); --pagefind-ui-text: var(--fg); --pagefind-ui-background: var(--bg); --pagefind-ui-border: var(--line); --pagefind-ui-border-radius: 10px; }
 
 /* Style "console" (params.style = "console"): the dark, technical direction A of the
