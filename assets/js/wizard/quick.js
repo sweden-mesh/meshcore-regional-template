@@ -4,6 +4,7 @@
 import { createPicker } from "./mappick.js";
 import { repeaterCommands, repeaterReview } from "./commands.js";
 import { initNeighbours } from "./neighbours.js";
+import { initMqtt } from "./mqtt.js";
 import { buildName, namePrefix, wantsKeySuffix } from "./naming.js";
 import { SerialLink } from "./serial.js";
 import { applyCommands } from "./apply.js";
@@ -22,10 +23,11 @@ function init(form) {
   $("wz-prefix").textContent = namePrefix(ds.pattern);
 
   const nb = initNeighbours(form.querySelector(".wz-neighbours"), () => update());
+  const mqtt = initMqtt(form.querySelector(".wz-mqtt"), () => update());
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, $("wz-place").value, state.publicKey), lat: state.pos?.lat, lon: state.pos?.lon,
-      password: $("wz-pass").value, radio, scope: ds.scope, extraScopes: extra };
+      password: $("wz-pass").value, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
   };
 
   const update = () => {

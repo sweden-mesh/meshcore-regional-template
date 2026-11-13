@@ -46,9 +46,41 @@ export function regionDef(scope, extras = []) {
   return ["region def se", ...under.map((x, i) => (i < under.length - 1 ? `${x}|se` : x))].join(" ");
 }
 
+// An Observer build can also report to the region's own MQTT broker, through one of its
+// "custom" slots (operator 2026-11-13; planning: mqtt-regional-brokers-20261112.md).
+// Commands from the Observer firmware (CommonCLI_Observer.cpp): preset custom, server
+// (a URI up to 63 characters; a scheme keeps it as given), port, audience (JWT login
+// signed by the node's own key; empty = username/password). `preset custom` keeps the
+// audience of an earlier preset, so it is always sent, empty or not.
+export const MQTT_LIMITS = { slots: 6, server: 63, audience: 63 };
+
+export function validateMqtt(m) {
+  const errors = [];
+  if (!m) return errors;
+  const slot = Number(m.slot);
+  if (!Number.isInteger(slot) || slot < 1 || slot > MQTT_LIMITS.slots) errors.push({ field: "mqtt", code: "slot" });
+  if (!m.server || m.server.length > MQTT_LIMITS.server || /\s/.test(m.server)) errors.push({ field: "mqtt", code: "server" });
+  const port = Number(m.port);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) errors.push({ field: "mqtt", code: "port" });
+  if ((m.audience || "").length > MQTT_LIMITS.audience) errors.push({ field: "mqtt", code: "audience" });
+  if (!m.audience && !(m.username && m.password)) errors.push({ field: "mqtt", code: "auth" });
+  if (!/^[A-Z0-9]{2,8}$/.test(m.iata || "")) errors.push({ field: "mqtt", code: "iata" });
+  return errors;
+}
+
+export function mqttCommands(m) {
+  const n = Number(m.slot);
+  const c = [`set mqtt${n}.preset custom`, `set mqtt${n}.server ${m.server}`, `set mqtt${n}.port ${Number(m.port)}`];
+  c.push(m.audience ? `set mqtt${n}.audience ${m.audience}` : `set mqtt${n}.audience`);
+  if (!m.audience) c.push(`set mqtt${n}.username ${m.username}`, `set mqtt${n}.password ${m.password}`);
+  c.push(`set mqtt.iata ${m.iata}`);
+  return c;
+}
+
 // The commands, in the order to send them; reboot last (it drops the port).
 export function repeaterCommands(s) {
   const { errors, warnings } = validateRepeater(s);
+  errors.push(...validateMqtt(s.mqtt));
   if (errors.length) return { commands: [], errors, warnings };
   const r = s.radio;
   const c = [];
@@ -64,6 +96,7 @@ export function repeaterCommands(s) {
   c.push("region save");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);
   if (s.password) c.push(`password ${s.password}`);
+  if (s.mqtt) c.push(...mqttCommands(s.mqtt));
   c.push("advert");
   c.push("reboot");
   return { commands: c, errors, warnings };
@@ -83,6 +116,7 @@ export function repeaterReview(s) {
     { key: "regions", value: ["se", ...[s.scope, ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
     { key: "dutycycle", value: `${s.dutycycle ?? 10} %` },
     { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
+    ...(s.mqtt ? [{ key: "mqtt", value: `${s.mqtt.server} (${s.mqtt.slot})` }] : []),
   ];
 }
 

@@ -55,3 +55,8 @@ enableRobotsTXT = true
   name = "Om regionen"
   pageRef = "/om-regionen"
   weight = 20
+
+[params.observer.mqtt]
+  server = "wss://mqtt.example.org"
+  audience = "mqtt.example.org"
+  slot = 3

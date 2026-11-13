@@ -1,0 +1,10 @@
+{{- /* {{< region-mqtt >}}: the region's own MQTT broker and the commands for it; nothing
+  when params.observer.mqtt.server is empty. */ -}}
+{{- $r := partialCached "region.html" .Page "region" -}}
+{{- with site.Params.observer.mqtt -}}{{- if .server -}}
+{{- $n := .slot | default 3 -}}
+{{- $cmds := slice (printf "set mqtt%v.preset custom" $n) (printf "set mqtt%v.server %s" $n .server) (printf "set mqtt%v.port %v" $n (.port | default 443)) -}}
+{{- if .audience }}{{ $cmds = $cmds | append (printf "set mqtt%v.audience %s" $n .audience) }}{{ else }}{{ $cmds = $cmds | append (printf "set mqtt%v.audience" $n) (printf "set mqtt%v.username %s" $n .username) (printf "set mqtt%v.password %s" $n .password) }}{{ end -}}
+{{- $cmds = $cmds | append (printf "set mqtt.iata %s" (index ($r.iatas | default (slice "XXX")) 0)) -}}
+{{ $.Page.RenderString (printf "## %s\n\n%s\n\n```text {title=\"%s\"}\n%s\n```\n\n%s\n" (T "rm_title") (T "rm_text" (dict "Server" .server "Slot" $n)) (T "rm_cmds") (delimit $cmds "\n") (T "rm_note")) }}
+{{- end -}}{{- end -}}

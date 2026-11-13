@@ -393,3 +393,17 @@ other = "heard {n}×"
 other = "{n} hops"
 [mt_route_unknown]
 other = "route unknown"
+[wz_mqtt_label]
+other = "Also report to the region's MQTT broker (Observer firmware only)"
+[wz_mqtt_help]
+other = "The repeater then also sends what it hears to `{{ .Server }}`, through MQTT slot {{ .Slot }}, signed with its own key. Boards without PSRAM keep only two MQTT connections up at once, so the slot can push out another one."
+[wz_rv_mqtt]
+other = "MQTT"
+[rm_title]
+other = "The region's own MQTT broker"
+[rm_text]
+other = "The region has its own MQTT broker, `{{ .Server }}`. An observer can report there as well as to the map above, by pointing one of its MQTT slots (here slot {{ .Slot }}) at it. Packets are signed with the repeater's own key, just as for the big brokers. The wizards under [Tools](/verktyg/) can send the settings for you."
+[rm_cmds]
+other = "Commands for the region's MQTT broker"
+[rm_note]
+other = "Boards without PSRAM keep only two MQTT connections up at once. If your repeater already uses two slots, choose which one to replace."

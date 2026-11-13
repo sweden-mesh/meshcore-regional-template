@@ -78,3 +78,26 @@ test("review summary leaves missing values empty", () => {
   const r = Object.fromEntries(repeaterReview({ radio: {} }).map((x) => [x.key, x.value]));
   assert.equal(r.name, ""); assert.equal(r.position, ""); assert.equal(r.password, ""); assert.equal(r.radio, "");
 });
+
+import { mqttCommands, validateMqtt } from "../assets/js/wizard/commands.js";
+const MQ = { slot: 3, server: "wss://mqtt.example.se", port: 443, audience: "mqtt.example.se", iata: "JKG" };
+test("region MQTT: custom slot commands, audience always sent", () => {
+  assert.deepEqual(mqttCommands(MQ), ["set mqtt3.preset custom", "set mqtt3.server wss://mqtt.example.se",
+    "set mqtt3.port 443", "set mqtt3.audience mqtt.example.se", "set mqtt.iata JKG"]);
+  const up = mqttCommands({ ...MQ, audience: "", username: "u", password: "p" });
+  assert.equal(up[3], "set mqtt3.audience");       // clears an old preset's audience
+  assert.deepEqual(up.slice(4, 6), ["set mqtt3.username u", "set mqtt3.password p"]);
+});
+test("region MQTT: validated, and part of the repeater commands before advert/reboot", () => {
+  assert.deepEqual(validateMqtt(MQ), []);
+  assert.deepEqual(validateMqtt({ ...MQ, slot: 7 }).map((e) => e.code), ["slot"]);
+  assert.deepEqual(validateMqtt({ ...MQ, server: "x".repeat(64) }).map((e) => e.code), ["server"]);
+  assert.deepEqual(validateMqtt({ ...MQ, audience: "" }).map((e) => e.code), ["auth"]);
+  assert.deepEqual(validateMqtt({ ...MQ, iata: "jkg" }).map((e) => e.code), ["iata"]);
+  const s = { name: "SE-JKP-Test", radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 }, scope: "se-jkp", mqtt: MQ };
+  const c = repeaterCommands(s).commands;
+  assert.ok(c.indexOf("set mqtt3.preset custom") < c.indexOf("advert"));
+  assert.equal(c.at(-1), "reboot");
+  assert.ok(!repeaterCommands(s).commands.includes(undefined));
+  assert.ok(!repeaterCommands({ ...s, mqtt: undefined }).commands.some((x) => x.includes("mqtt")));
+});

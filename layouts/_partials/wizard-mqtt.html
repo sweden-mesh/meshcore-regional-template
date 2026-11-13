@@ -1,0 +1,10 @@
+{{- /* Optional: an Observer also reports to the region's own MQTT broker (custom slot).
+  Offered only when params.observer.mqtt.server is set. */ -}}
+{{- $r := partialCached "region.html" . "region" -}}
+{{- with site.Params.observer.mqtt -}}{{- if .server -}}
+{{- $cfg := dict "server" .server "port" (.port | default 443) "audience" (.audience | default "") "username" (.username | default "") "password" (.password | default "") "slot" (.slot | default 3) "iata" (index ($r.iatas | default (slice "")) 0) -}}
+<div class="wz-mqtt" data-mqtt="{{ $cfg | jsonify }}">
+  <label class="wz-check"><input type="checkbox" data-mqtt-on> {{ T "wz_mqtt_label" }}</label>
+  <p class="muted">{{ T "wz_mqtt_help" (dict "Server" .server "Slot" ($cfg.slot)) | markdownify }}</p>
+</div>
+{{- end -}}{{- end -}}

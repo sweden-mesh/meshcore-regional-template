@@ -27,6 +27,14 @@
 [params.observer]
   preset = "meshat.se"       # the Observer firmware's MQTT preset this region's map is fed from
 
+[params.observer.mqtt]       # the region's own MQTT broker; empty server = the wizards don't offer it
+  server = ""                # e.g. "wss://mqtt.example.se" (up to 63 characters)
+  port = 443
+  audience = ""              # JWT audience, usually the host; empty = username/password below
+  username = ""              # only a public login: it is printed in the page
+  password = ""
+  slot = 3                   # which of the Observer's 6 MQTT slots (1-6) the wizard sets
+
 [params.naming]
   pattern = ""               # the region's naming rule, e.g. "SE-JKP-Plats-ABCD"; empty = general advice only
   example = ""               # e.g. "SE-JKP-Braneryd-FD70"

@@ -36,6 +36,7 @@
     <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
     {{ partial "wizard-neighbours.html" .Page }}
     <p class="muted">{{ T "wzg_edge_why" }}</p>
+    {{ partial "wizard-mqtt.html" .Page }}
   </fieldset>
 
   <fieldset class="wz-step" data-step="duty">

@@ -42,6 +42,8 @@ set mqtt1.preset {{< param "observer.preset" >}}
 `{{< iata >}}` är koden kartan i {{< region "name" >}} filtrerar på. Den är bara en etikett för
 servern och påverkar inte vilken trafik repeatern för vidare.
 
+{{< region-mqtt >}}
+
 ## Kontrollera
 
 Efter några minuter ska repeatern dyka upp på kartan på [startsidan](/) med en blå ring

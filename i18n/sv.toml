@@ -389,3 +389,17 @@ other = "hörd {n}×"
 other = "{n} hopp"
 [mt_route_unknown]
 other = "vägen okänd"
+[wz_mqtt_label]
+other = "Rapportera också till regionens MQTT-server (bara Observer-firmware)"
+[wz_mqtt_help]
+other = "Repeatern skickar då det den hör till `{{ .Server }}` också, via MQTT-plats {{ .Slot }}, signerat med sin egen nyckel. Kort utan PSRAM håller bara två MQTT-anslutningar uppe samtidigt, så platsen kan tränga undan en annan."
+[wz_rv_mqtt]
+other = "MQTT"
+[rm_title]
+other = "Regionens egen MQTT-server"
+[rm_text]
+other = "Regionen har en egen MQTT-server, `{{ .Server }}`. En observatör kan rapportera dit också, utöver kartan ovan, genom att en av dess MQTT-platser (här plats {{ .Slot }}) pekas dit. Paketen signeras med repeaterns egen nyckel, precis som till de stora servrarna. Guiderna under [Verktyg](/verktyg/) kan skicka inställningarna åt dig."
+[rm_cmds]
+other = "Kommandon för regionens MQTT-server"
+[rm_note]
+other = "Kort utan PSRAM håller bara två MQTT-anslutningar uppe samtidigt. Har din repeater redan två platser i bruk, välj vilken den ska ersätta."
