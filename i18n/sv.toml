@@ -419,3 +419,25 @@ other = "Kommandon för regionens MQTT-server"
 other = "Kort utan PSRAM håller bara två MQTT-anslutningar uppe samtidigt. Har din repeater redan två platser i bruk, välj vilken den ska ersätta."
 [or]
 other = "eller"
+[ts_filter]
+other = "Filtrera"
+[ts_filter_placeholder]
+other = "Skriv vad du ser, till exempel \"startar om\""
+[ts_filter_none]
+other = "Inget matchar. Prova färre ord."
+[ts_cat_flasha]
+other = "Flasha och firmware"
+[ts_cat_radio]
+other = "Radio och räckvidd"
+[ts_cat_companion]
+other = "Companion och appen"
+[ts_cat_repeater]
+other = "Repeater"
+[ts_cat_regioner]
+other = "Regioner"
+[ts_cat_mqtt]
+other = "MQTT och observatörer"
+[ts_cat_strom]
+other = "Ström och batteri"
+[ts_cat_ovrigt]
+other = "Övrigt"

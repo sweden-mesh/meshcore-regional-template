@@ -32,6 +32,10 @@ en öppen mall som vilket län som helst kan använda.
 3. Skriv din egen ingress och en sida om er.
 4. Bygg med Hugo och lägg upp.
 
+Felsökningen och guiderna kommer från mallen och uppdateras när mallen gör det. Vill ni lägga
+till en egen felsökningspost, skriva om en eller dölja en gör ni det med en fil i ert eget repo;
+inget behöver kopieras.
+
 Steg för steg står i mallens
 [README](https://github.com/sweden-mesh/meshcore-regional-template#readme). Förbättringar av
 mallen görs med pull requests och kommer alla regioner till godo.

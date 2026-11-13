@@ -9,6 +9,13 @@ check index.html "Regionens egen ingress" "page: exampleSite/content/_index.md r
 check index.html 'x-override-check' "partial: exampleSite hooks/head-end.html replaces the template's"
 check index.html "Exempelregionens egen slogan" "i18n: exampleSite i18n/sv.toml hero_tagline replaces the template's"
 check guider/regioner/index.html "Regioner (scope)" "a template page the region does not override is still there"
+# Troubleshooting: a region adds, replaces and hides entries with files of its own.
+check felsokning/index.html "Exempelregionens lokala felsökning" "felsokning: a region's own entry is listed"
+check felsokning/index.html "Regionens egen version: webbläsaren hittar ingen port" "felsokning: a region's file replaces the template's entry"
+check felsokning/index.html "Radion startar om hela tiden" "felsokning: the template's entries the region leaves alone are listed"
+if grep -q "gammal-version-efter-flashning" "$P/felsokning/index.html" "$P/sitemap.xml" || [ -e "$P/felsokning/gammal-version-efter-flashning" ] || grep -rqs "fortfarande den gamla versionen" "$P/pagefind/"; then
+  echo "FAIL felsokning: a hidden entry is still built, listed or in the sitemap"; fail=1
+else echo "ok   felsokning: a hidden entry is not built, listed or in the sitemap"; fi
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

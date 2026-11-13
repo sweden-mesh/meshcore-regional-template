@@ -311,3 +311,15 @@ body.style-console .button-secondary { background: transparent; color: var(--fg)
 :root[data-theme-now="light"] .theme-toggle .sun { display: block; }
 body.style-console .theme-toggle { display: none; }
 .theme-toggle + .nav-narrow { margin-left: .5rem; }
+
+/* Troubleshooting and FAQ lists (partial entries.html). */
+.entries-filter { display: flex; flex-direction: column; gap: .3rem; max-width: 32rem; margin: 1.5rem 0 1rem; font-weight: 600; }
+.entries-filter input { font: inherit; font-weight: 400; padding: .55rem .75rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); color: var(--fg); }
+.entries-group { margin-top: 2rem; }
+.entries-group h2 { margin: 0 0 .6rem; font-size: 1.15rem; }
+.entries-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+.entries-list li { border-bottom: 1px solid var(--line); }
+.entries-list a { display: flex; flex-direction: column; gap: .15rem; padding: .7rem 0; text-decoration: none; color: var(--fg); }
+.entries-list a:hover strong, .entries-list a:focus-visible strong { text-decoration: underline; }
+.entries-list summary { padding: .7rem 0; font-weight: 600; cursor: pointer; }
+.entries-list details .prose { padding: 0 0 1rem; }

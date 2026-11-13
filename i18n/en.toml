@@ -423,3 +423,25 @@ other = "Commands for the region's MQTT broker"
 other = "Boards without PSRAM keep only two MQTT connections up at once. If your repeater already uses two slots, choose which one to replace."
 [or]
 other = "or"
+[ts_filter]
+other = "Filter"
+[ts_filter_placeholder]
+other = "Type what you see, e.g. \"restarts\""
+[ts_filter_none]
+other = "Nothing matches. Try fewer words."
+[ts_cat_flasha]
+other = "Flashing and firmware"
+[ts_cat_radio]
+other = "Radio and range"
+[ts_cat_companion]
+other = "Companion and the app"
+[ts_cat_repeater]
+other = "Repeater"
+[ts_cat_regioner]
+other = "Regions"
+[ts_cat_mqtt]
+other = "MQTT and observers"
+[ts_cat_strom]
+other = "Power and battery"
+[ts_cat_ovrigt]
+other = "Other"

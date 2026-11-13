@@ -1,0 +1,36 @@
+{{- /* A section of one-file entries, grouped by front matter `category` (troubleshooting, FAQ).
+     Called with (dict "section" . "order" (slice "a" "b") "prefix" "ts" "inline" false).
+     `order` puts the template's categories first; a region's own category comes after them, its
+     label from i18n `<prefix>_cat_<category>` or the category name. With `inline` the entry's
+     content is shown folded under its title (FAQ); without, the title links to the entry page.
+     A region adds an entry with its own file, replaces one with the same file name, and hides
+     one with `build: {render: never, list: never}` in a file of that name. */ -}}
+{{- $s := .section -}}{{- $prefix := .prefix -}}{{- $inline := .inline -}}
+{{- $pages := $s.RegularPages.ByWeight -}}
+{{- $cats := slice -}}
+{{- range .order }}{{ if where $pages "Params.category" . }}{{ $cats = $cats | append . }}{{ end }}{{ end -}}
+{{- range $pages }}{{ $c := .Params.category | default "ovrigt" }}{{ if not (in $cats $c) }}{{ $cats = $cats | append $c }}{{ end }}{{ end -}}
+<div class="entries" data-entries>
+  <label class="entries-filter"><span>{{ T (printf "%s_filter" $prefix) }}</span>
+    <input type="search" data-entries-filter autocomplete="off" placeholder="{{ T (printf "%s_filter_placeholder" $prefix) }}"></label>
+  <p class="muted" data-entries-none hidden>{{ T (printf "%s_filter_none" $prefix) }}</p>
+  {{- range $cats }}
+    {{- $c := . -}}
+    {{- $label := T (printf "%s_cat_%s" $prefix $c) | default (humanize $c) -}}
+    <section class="entries-group" id="{{ $c | urlize }}" data-entries-group>
+      <h2>{{ $label }}</h2>
+      <ul class="entries-list">
+      {{- range $pages }}{{ if eq (.Params.category | default "ovrigt") $c }}
+        <li id="{{ .File.ContentBaseName }}" data-entries-item>
+        {{- if $inline }}
+          <details><summary>{{ .Title }}</summary><div class="prose">{{ .Content }}</div></details>
+        {{- else }}
+          <a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a>
+        {{- end }}
+        </li>
+      {{- end }}{{ end }}
+      </ul>
+    </section>
+  {{- end }}
+</div>
+{{- with resources.Get "js/entries.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{ end }}

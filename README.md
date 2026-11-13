@@ -12,6 +12,7 @@ the region site wins.** That works for every kind of file:
 | To change | Put a file at |
 |---|---|
 | a shared guide | `content/guider/<name>.md` |
+| a troubleshooting entry: add, replace or hide | `content/felsokning/<name>.md` (see below) |
 | the home page text | `content/_index.md` |
 | a layout or part of one | `layouts/…`, e.g. `layouts/_partials/footer.html` |
 | a UI string | `i18n/sv.toml` (only the keys you change) |
@@ -20,6 +21,23 @@ the region site wins.** That works for every kind of file:
 | extra tags in `<head>` / before `</body>` | `layouts/_partials/hooks/head-end.html`, `hooks/body-end.html` (empty in the template) |
 | the favicon | `static/favicon.svg` |
 | the social-card image (1200×630) | `static/images/og.png`, or `image:` in a page's front matter |
+
+### Troubleshooting: add, replace or hide entries
+
+`/felsokning/` lists one entry per file, grouped by `category`. The template ships the shared
+entries; a region changes the list with files of its own in `content/felsokning/`:
+
+- **Add:** a new file. Start from `hugo new felsokning/<name>.md` (the archetype has the
+  headings). Use one of the template's categories (`flasha`, `radio`, `companion`, `repeater`,
+  `regioner`, `mqtt`, `strom`) or your own, e.g. `lokalt`: it is listed after the template's,
+  labelled from i18n `ts_cat_lokalt` or the name itself.
+- **Replace:** a file with the same name as the template's.
+- **Hide:** a file with the same name that holds only
+  `build: {render: never, list: never}`. The entry is then not built, listed, in the sitemap or
+  in search.
+
+`exampleSite/content/felsokning/` does all three, and `scripts/check-overrides.sh` tests them.
+Add a menu item in your `hugo.toml` if you want one (`pageRef = "/felsokning"`).
 
 ## Settings
 
