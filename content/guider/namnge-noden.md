@@ -28,5 +28,4 @@ utan position.
 - Hoppa över `å`, `ä` och `ö` om namnet blir för långt (`Braneryd` i stället för `Bråneryd`).
 - Fyra tecken av nodens nyckel på slutet (som `FD70`) gör namnet unikt även om två noder står
   på samma plats. De syns som nodens kortnamn på kartan.
-- En companion namnger du som du vill. Namnförslaget ovan gäller repeatrar, och namnet behöver
-  inte avslöja vem du är.
+- En companions namn behöver inte avslöja vem du är.
