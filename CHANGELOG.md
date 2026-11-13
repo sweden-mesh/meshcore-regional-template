@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.6 — 2026-11-13
+
+- The firmware guide's first sentence: *modifierade varianter av Louie*.
+
 ## v0.12.5 — 2026-11-13
 
 - The firmware guide is titled *Firmwarevarianterna av Louie*.
