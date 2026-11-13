@@ -4,6 +4,28 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.4.0 — 2026-11-13
+
+- **Design:** a second pass after a review against 32 common signs of AI-made sites
+  (planning: ai-design-tells.md):
+  - fonts IBM Plex Sans and IBM Plex Mono (self-hosted, OFL) instead of Inter and Space Grotesk;
+  - a left-aligned hero without the badge; the three landing boxes sized to their content;
+  - solid cards instead of frosted glass; three corner radii (4, 6, 10 px); no violet;
+  - page text aligned with the header; guide and tool cards three per row on desktop;
+  - background blobs 2.5× faster, with a 20 % scroll parallax.
+- **Landing:** "Vad är MeshCore?" beside the region's own text (the body of
+  `content/_index.md`); "MeshCore-kanaler"; an eased scroll from "Se kartan".
+- **Map:** 80 % of the window wide; the legend open on desktop, closed on phones; mini mode
+  follows resizes.
+- **Wizards:** neighbouring regions ticked automatically from the position (county borders from
+  Natural Earth, 40 km over land, 80 km over water); a "Det här ställs in" summary in the quick
+  wizard; the tool cards show their descriptions.
+- **New params:** `naming.companion_example` (falls back to `naming.example`).
+- **English:** `i18n/en.toml`; select it with `locale` and `defaultContentLanguage = "en"`.
+- **Maintainers:** MAP.md (how the map works); `scripts/beacon-contract.mjs` and a weekly
+  workflow checking a Beacon has every endpoint and field the map reads.
+- Removed i18n key: `badge_online`.
+
 ## v0.3.0 — 2026-11-12
 
 - **The region comes from its county code.** Set `params.region.scb` (e.g. `"06"`). The template
