@@ -1,5 +1,5 @@
 ---
-title: "Firmwarevarianterna lou"
+title: "Firmwarevarianterna av Louie"
 description: "Vad sweden-mesh:s lou-firmware är, vilka varianter som finns (auto-svar, Observer, fjärrstyrning) och hur du väljer rätt."
 weight: 45
 ---
