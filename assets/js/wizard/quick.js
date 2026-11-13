@@ -3,6 +3,7 @@
 // map pick are their own tested modules.
 import { createPicker } from "./mappick.js";
 import { repeaterCommands, repeaterReview } from "./commands.js";
+import { initNeighbours } from "./neighbours.js";
 import { buildName, namePrefix, wantsKeySuffix } from "./naming.js";
 import { SerialLink } from "./serial.js";
 import { applyCommands } from "./apply.js";
@@ -20,8 +21,9 @@ function init(form) {
   const bytes = (s) => new TextEncoder().encode(s).length;
   $("wz-prefix").textContent = namePrefix(ds.pattern);
 
+  const nb = initNeighbours(form.querySelector(".wz-neighbours"), () => update());
   const settings = () => {
-    const extra = $("wz-edge").checked ? [$("wz-neighbour").value.trim().toLowerCase()].filter(Boolean) : [];
+    const extra = nb.scopes();
     return { name: buildName(ds.pattern, $("wz-place").value, state.publicKey), lat: state.pos?.lat, lon: state.pos?.lon,
       password: $("wz-pass").value, radio, scope: ds.scope, extraScopes: extra };
   };
@@ -48,11 +50,10 @@ function init(form) {
   };
 
   createPicker(form.querySelector(".map-pick"), { onChange: (p) => {
-    state.pos = p; $("wz-pos").textContent = `${t.posSet} ${p.lat}, ${p.lon}`; update();
+    state.pos = p; $("wz-pos").textContent = `${t.posSet} ${p.lat}, ${p.lon}`; nb.setPosition(p.lat, p.lon);
   } }).catch(() => {});
 
-  for (const id of ["wz-place", "wz-pass", "wz-neighbour"]) $(id).addEventListener("input", update);
-  $("wz-edge").addEventListener("change", () => { $("wz-edge-row").hidden = !$("wz-edge").checked; update(); });
+  for (const id of ["wz-place", "wz-pass"]) $(id).addEventListener("input", update);
 
   if (!("serial" in navigator)) {
     $("wz-connect").disabled = true;

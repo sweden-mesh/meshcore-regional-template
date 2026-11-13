@@ -1,0 +1,20 @@
+{{- /* The neighbouring counties as checkboxes, each with its border, so the wizard can
+  tick the ones near the picked position (40 km over land, 80 km over water, the rule
+  zombiefredrik/meshcore-se-regioner's neighbour list was calculated with). */ -}}
+{{- $r := partialCached "region.html" . "region" -}}
+{{- $shapes := dict -}}
+{{- with resources.Get "se-lan.geojson" -}}{{- range (.Content | transform.Unmarshal).features -}}{{- $shapes = merge $shapes (dict .properties.scb .geometry.coordinates) -}}{{- end -}}{{- end -}}
+{{- $areas := slice -}}
+{{- range $r.neighbours -}}
+  {{- $areas = $areas | append (dict "scope" .scope "lan" .lan "km" (cond (eq .via "vatten") 80 40) "rings" (index $shapes .scb | default slice)) -}}
+{{- end -}}
+{{- if $r.neighbours -}}
+<div class="wz-neighbours" data-areas="{{ $areas | jsonify }}" data-texts="{{ dict "near" (T "wz_nb_near") "far" (T "wz_nb_far") "inside" (T "wz_nb_inside") | jsonify }}">
+  <p class="muted" data-nb-hint>{{ T "wz_nb_hint" }}</p>
+  <ul class="wz-nb-list">
+    {{- range $r.neighbours }}
+    <li><label class="wz-check"><input type="checkbox" value="{{ .scope }}"> {{ .lan }} <code>{{ .scope }}</code></label> <span class="muted" data-why></span></li>
+    {{- end }}
+  </ul>
+</div>
+{{- end -}}

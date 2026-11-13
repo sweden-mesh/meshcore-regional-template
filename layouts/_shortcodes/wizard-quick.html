@@ -21,8 +21,7 @@
   <fieldset class="wz-step">
     <legend><span class="wz-num">3</span> {{ T "wz_region" }}</legend>
     <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
-    <label class="wz-check"><input type="checkbox" id="wz-edge"> {{ T "wz_edge" }}</label>
-    <div id="wz-edge-row" hidden><label for="wz-neighbour">{{ T "wz_neighbour" }}</label><input id="wz-neighbour" type="text" autocomplete="off" spellcheck="false" placeholder="se-xxx" list="wz-neighbours"></div>
+    {{ partial "wizard-neighbours.html" .Page }}
   </fieldset>
 
   <fieldset class="wz-step">
@@ -49,7 +48,6 @@
       <button type="button" class="button button-secondary" id="wz-copy">{{ T "wz_copy" }}</button>
     </details>
   </fieldset>
-  <datalist id="wz-neighbours">{{ range $r.neighbours }}<option value="{{ .scope }}">{{ .lan }}</option>{{ end }}</datalist>
 </form>
 <div id="wz-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "review" (dict "name" (T "wz_rv_name") "position" (T "wz_rv_position") "radio" (T "set_radio") "regions" (T "wz_rv_regions") "dutycycle" (T "wz_rv_dutycycle") "password" (T "wz_rv_password") "none" (T "wz_rv_none")) | jsonify }}"></div>
 {{- with resources.Get "js/wizard/quick.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}

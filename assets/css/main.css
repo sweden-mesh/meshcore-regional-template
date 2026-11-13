@@ -274,3 +274,5 @@ body.style-console {
 body.style-console .eyebrow, body.style-console .stat-grid dd, body.style-console .badge, body.style-console .footer-title { font-family: ui-monospace, "JetBrains Mono", monospace; letter-spacing: .04em; }
 body.style-console .button { background: #21664a; color: #f2fff8; }
 body.style-console .button-secondary { background: transparent; color: var(--fg); }
+.wz-nb-list { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .35rem; }
+.wz-nb-list li { display: flex; flex-wrap: wrap; gap: .25rem .75rem; align-items: baseline; }

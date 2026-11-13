@@ -168,10 +168,6 @@ other = "nyckelns fyra tecken läggs till när radion är ansluten"
 other = "Region"
 [wz_region_help]
 other = "Repeatern får regionerna"
-[wz_edge]
-other = "Repeatern når också repeatrar i ett grannlän"
-[wz_neighbour]
-other = "Grannlänets region"
 [wz_password]
 other = "Lösenord"
 [wz_password_label]
@@ -223,7 +219,7 @@ other = "En repeaters position är bra att dela: den står still, och den visar 
 [wzg_region_why]
 other = "Regionerna avgör vilken trafik repeatern för vidare. Med se och länets region når lokala samtal hela länet och rikssamtal hela landet, utan att lokal trafik floodas över grannlänen."
 [wzg_edge_why]
-other = "Bara för repeatrar som faktiskt når grannlänets repeatrar: då kommer trafik mellan länen fram."
+other = "En repeater nära länsgränsen får grannlänets region också, så att trafik mellan länen kommer fram. Står den inte så att den når grannlänets repeatrar kan du ta bort bocken."
 [wzg_duty]
 other = "Duty cycle"
 [wzg_duty_why]
@@ -300,3 +296,11 @@ other = "Duty cycle"
 other = "Adminlösenord"
 [wz_rv_none]
 other = "inte valt ännu"
+[wz_nb_hint]
+other = "Grannlän nära platsen du väljer på kartan bockas i automatiskt (inom 40 km, 80 km över vatten). Du kan ändra."
+[wz_nb_near]
+other = "{km} km till länsgränsen: läggs till"
+[wz_nb_far]
+other = "{km} km bort"
+[wz_nb_inside]
+other = "vid länsgränsen: läggs till"

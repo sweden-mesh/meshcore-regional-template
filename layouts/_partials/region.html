@@ -32,5 +32,5 @@
 {{- $scope := cond (and $p.scope (ne $p.scope "se")) $p.scope (index $scopes $scb | default ($p.scope | default "se")) -}}
 {{- $name := $p.name | default (index $lans $scb) | default "" -}}
 {{- $neighbours := slice -}}
-{{- range $row := $nrows -}}{{- if eq (index $row 0) $scb -}}{{- with index $scopes (index $row 2) -}}{{- $neighbours = $neighbours | append (dict "lan" (index $lans (index $row 2)) "scope" .) -}}{{- end -}}{{- end -}}{{- end -}}
+{{- range $row := $nrows -}}{{- if eq (index $row 0) $scb -}}{{- with index $scopes (index $row 2) -}}{{- $neighbours = $neighbours | append (dict "lan" (index $lans (index $row 2)) "scope" . "scb" (index $row 2) "via" (index $row 4)) -}}{{- end -}}{{- end -}}{{- end -}}
 {{- return merge $p (dict "scope" $scope "name" $name "neighbours" $neighbours "source" $source "short" ($p.short | default $name)) -}}
