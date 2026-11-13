@@ -74,12 +74,16 @@ En repeaters position är bra att dela: den står still och den visar var nätet
 
 ### Region
 
-Repeatern behöver regionerna för hela Sverige och för länet. Hur och varför står i
+Repeatern behöver regionerna för Europa, hela Sverige och länet, med länet som hemregion och
+`se` som standardregion (repeater-firmware 1.16 eller senare). Hur och varför står i
 [Regioner](../regioner/):
 
 ```text {title="Regioner"}
-region def se {{< region "scope" >}}
+set flood.max.unscoped 16
 region allowf *
+region def eu|* europe|eu se {{< region "scope" >}}
+region home {{< region "scope" >}}
+region default se
 region save
 ```
 

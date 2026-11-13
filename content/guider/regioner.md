@@ -43,13 +43,14 @@ namn. Det finns inga kommunregioner.
 ## Ställ in en repeater
 
 Repeatern behöver alla regioner som trafiken genom den ska kunna ha: ingen etikett (`*`),
-`se` och länets region.
+`eu` och `europe`, `se` och länets region. Länet blir också repeaterns hemregion och `se` dess
+standardregion. Kommandona kräver repeater-firmware 1.16 eller senare.
 
 ### I appen
 
 1. Öppna repeatern som kontakt och logga in som administratör.
 2. Gå till inställningarna för regioner (*Manage Regions*).
-3. Lägg till `se` och `{{< region "scope" >}}`.
+3. Lägg till `eu`, `europe`, `se` och `{{< region "scope" >}}`.
 4. Se till att *Allow Flood* är på för varje region, också för `*`.
 5. Spara.
 
@@ -64,24 +65,35 @@ Kommandona skrivs ett i taget i en seriell konsol, till exempel *Console* i
 region
 ```
 
-```text {title="Skapa regionerna"}
-region def se {{< region "scope" >}}
+```text {title="Tillåt trafik utan regionetikett, högst 16 hopp"}
+set flood.max.unscoped 16
+region allowf *
 ```
 
-```text {title="Tillåt trafik utan regionetikett"}
-region allowf *
+```text {title="Skapa regionerna"}
+region def eu|* europe|eu se {{< region "scope" >}}
+```
+
+```text {title="Länet som hemregion, se som standardregion"}
+region home {{< region "scope" >}}
+region default se
 ```
 
 ```text {title="Spara"}
 region save
 ```
 
-`region def` bygger en kedja: `se` hamnar under `*` och `{{< region "scope" >}}` under `se`.
-Kedjan styr bara hur regionerna visas, inte vad som förs vidare.
+`region def` bygger en kedja: `eu` och `europe` hamnar bredvid varandra, `se` under `eu` och
+`{{< region "scope" >}}` under `se`. Kedjan styr bara hur regionerna visas, inte vad som förs
+vidare.
+
+Hemregionen används inte för vidarebefordran; firmware med autosvar tar sin testkanal därifrån.
+Standardregionen är det scope repeaterns egna adverts skickas med: med `se` når de hela Sverige.
 
 > [!TIP] Repeatrar nära länsgränsen
 > En repeater som också når grannlänets repeatrar kan ha grannlänets region i listan, så att
-> trafik mellan länen kommer fram. Lägg bara till regioner för län du faktiskt når.
+> trafik mellan länen kommer fram. Lägg bara till regioner för län du faktiskt når. Även en
+> sådan kantrepeater tillåter trafik utan regionetikett (`region allowf *`).
 
 ## Vilken region ska ett meddelande ha?
 

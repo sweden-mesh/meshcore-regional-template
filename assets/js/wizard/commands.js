@@ -40,10 +40,12 @@ export function validateRepeater(s) {
 
 // region def builds a chain: each name goes under the previous one, and
 // "name|parent" jumps back to parent after creating it (CommonCLI.cpp). The
-// region's own scope and any neighbouring ones (an edge repeater) all go under se.
+// wizard rules (planning/mesh/wizard-rules.md, shared with meshat.se): eu and
+// europe side by side, se under eu, and the region's own scope and any
+// neighbouring ones (an edge repeater) all under se.
 export function regionDef(scope, extras = []) {
   const under = [scope, ...extras].filter((x) => x && x !== "se");
-  return ["region def se", ...under.map((x, i) => (i < under.length - 1 ? `${x}|se` : x))].join(" ");
+  return ["region def eu|* europe|eu se", ...under.map((x, i) => (i < under.length - 1 ? `${x}|se` : x))].join(" ");
 }
 
 // An Observer build can also report to the region's own MQTT broker, through one of its
@@ -91,8 +93,13 @@ export function repeaterCommands(s) {
     c.push(`set lat ${num(s.lat).toFixed(4)}`);
     c.push(`set lon ${num(s.lon).toFixed(4)}`);
   }
-  c.push(regionDef(s.scope, s.extraScopes));
+  c.push("set flood.max.unscoped 16");
   c.push("region allowf *");
+  c.push(regionDef(s.scope, s.extraScopes));
+  // The county is the home region (auto-reply's test channel); the repeater's own
+  // adverts go out under se, so the whole country hears them.
+  if (s.scope && s.scope !== "se") c.push(`region home ${s.scope}`);
+  c.push("region default se");
   c.push("region save");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);
   if (s.password) c.push(`password ${s.password}`);
@@ -113,7 +120,7 @@ export function repeaterReview(s) {
     { key: "name", value: (s.name || "").trim() },
     { key: "position", value: hasPos ? `${num(s.lat).toFixed(4)}, ${num(s.lon).toFixed(4)}` : "" },
     { key: "radio", value: r.freq ? `${sv(r.freq)} MHz · BW ${sv(r.bw)} kHz · SF${r.sf} · CR${r.cr}` : "" },
-    { key: "regions", value: ["se", ...[s.scope, ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
+    { key: "regions", value: ["eu", "europe", "se", ...[s.scope, ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
     { key: "dutycycle", value: `${s.dutycycle ?? 10} %` },
     { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
     ...(s.mqtt ? [{ key: "mqtt", value: `${s.mqtt.server} (${s.mqtt.slot})` }] : []),

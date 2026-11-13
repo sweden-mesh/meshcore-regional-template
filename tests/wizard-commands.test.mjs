@@ -11,7 +11,8 @@ test("a full repeater setup in order, reboot last", () => {
   assert.deepEqual(errors, []);
   assert.deepEqual(commands, [
     "set radio 869.618,62.5,8,8", "set tx 22", "set name SE-JKP-Braneryd-FD70",
-    "set lat 57.7616", "set lon 14.1335", "region def se se-jkp", "region allowf *", "region save",
+    "set lat 57.7616", "set lon 14.1335", "set flood.max.unscoped 16", "region allowf *",
+    "region def eu|* europe|eu se se-jkp", "region home se-jkp", "region default se", "region save",
     "set dutycycle 10", "password hemligt123", "advert", "reboot"]);
 });
 
@@ -52,10 +53,10 @@ test("companion settings are values for the app", () => {
 
 import { regionDef } from "../assets/js/wizard/commands.js";
 test("region def: own scope, and neighbours all under se", () => {
-  assert.equal(regionDef("se-jkp"), "region def se se-jkp");
-  assert.equal(regionDef("se-jkp", ["se-ost"]), "region def se se-jkp|se se-ost");
-  assert.equal(regionDef("se-jkp", ["se-ost", "se-kro"]), "region def se se-jkp|se se-ost|se se-kro");
-  assert.equal(regionDef("se"), "region def se");
+  assert.equal(regionDef("se-jkp"), "region def eu|* europe|eu se se-jkp");
+  assert.equal(regionDef("se-jkp", ["se-ost"]), "region def eu|* europe|eu se se-jkp|se se-ost");
+  assert.equal(regionDef("se-jkp", ["se-ost", "se-kro"]), "region def eu|* europe|eu se se-jkp|se se-ost|se se-kro");
+  assert.equal(regionDef("se"), "region def eu|* europe|eu se");
 });
 
 import { repeaterReview } from "../assets/js/wizard/commands.js";
@@ -66,13 +67,13 @@ test("review summary matches the commands and masks the password", () => {
   assert.equal(r.name, "SE-JKP-Test-ABCD");
   assert.equal(r.position, "57.7812, 14.1600");
   assert.equal(r.radio, "869,618 MHz · BW 62,5 kHz · SF8 · CR8");
-  assert.equal(r.regions, "se, se-jkp, se-ost");
+  assert.equal(r.regions, "eu, europe, se, se-jkp, se-ost");
   assert.equal(r.dutycycle, "10 %");
   assert.equal(r.password, "•••••••");
   assert.ok(!JSON.stringify(r).includes("hemligt"));
   const cmds = repeaterCommands(s).commands.join("\n");
   assert.match(cmds, /set lat 57\.7812/);
-  assert.match(cmds, /region def se se-jkp\|se se-ost/);
+  assert.match(cmds, /region def eu\|\* europe\|eu se se-jkp\|se se-ost/);
 });
 test("review summary leaves missing values empty", () => {
   const r = Object.fromEntries(repeaterReview({ radio: {} }).map((x) => [x.key, x.value]));

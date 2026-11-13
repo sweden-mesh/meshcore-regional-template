@@ -75,7 +75,7 @@ function init(form) {
       [t.name, d.name || "–", s.name || "–"],
       [t.radio, d.radio ? `${d.radio.freq},${d.radio.bw},${d.radio.sf},${d.radio.cr}` : "–", `${radio.freq},${radio.bw},${radio.sf},${radio.cr}`],
       [t.position, d.position ? `${d.position.lat}, ${d.position.lon}` : "–", s.lat != null ? `${s.lat}, ${s.lon}` : "–"],
-      [t.regions, d.regions || "–", ["se", s.scope, ...s.extraScopes].join(" ")],
+      [t.regions, d.regions || "–", ["eu", "europe", "se", s.scope, ...s.extraScopes].join(" ")],
     ];
     const tbody = table.querySelector("tbody");
     tbody.textContent = "";
