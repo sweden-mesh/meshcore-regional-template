@@ -6,7 +6,7 @@ source:
   title: "Sätt upp en egen MeshCore Companion"
   url: "https://meshat.se/meshcore/satt-upp-egen-companion/"
   license: "CC BY 4.0"
-  changes: "Flashningsdelen omskriven som egen guide; val av firmware via firmwareväljaren; felsökning tillagd."
+  changes: "Flashningsdelen omskriven som egen guide; val av firmware via firmwareväljaren; filer och adresser för ESP32; felsökning tillagd."
 ---
 
 Att *flasha* är att installera programvaran (firmware) i radion. Samma radio kan bli companion,
@@ -29,8 +29,13 @@ Börja i [firmwareväljaren]({{< param "firmware.picker" >}}). Den frågar efter
    identitet.
 4. **Din radio**: välj exakt modell och hårdvaruversion.
 
-Svaret är en fil och instruktioner för just den. Du kan också flasha med MeshCore-projektets
-egen [webbflasher]({{< param "firmware.flasher" >}}), som har stödet för fler modeller.
+Svaret är en fil och instruktioner för just den. För ESP32-radior har sidan en egen knapp,
+**Flasha via USB**, som flashar direkt från webbläsaren. Den kontrollerar att filen passar
+radions chip och skriver den på rätt ställe. Välj *Uppdatera* för att behålla inställningar och
+identitet; *Ny installation* raderar dem.
+
+Du kan också flasha med MeshCore-projektets egen [webbflasher]({{< param "firmware.flasher" >}}),
+som har stöd för fler modeller.
 
 > [!WARNING] Rätt modell
 > Firmware för fel modell kan göra att skärm, radio eller knappar inte fungerar. Kontrollera
@@ -55,6 +60,18 @@ Starta flashningen och vänta tills flashern säger att den är klar. Under tide
 Många radior startar om av sig själva. Står den kvar i bootloader-läge: tryck på reset eller
 koppla ur och in strömmen.
 
+### Med en annan flasher (ESP32)
+
+Varje version finns som två filer. De ska skrivas till olika adresser:
+
+| Fil | Adress | Innehåller |
+| --- | --- | --- |
+| `…-merged.bin` | `0x0` | hela flashen: startkod, partitionstabell och firmware |
+| `….bin` (utan *merged*) | `0x10000` | bara firmwaren |
+
+Är du osäker: ta `-merged.bin` och skriv den till `0x0`, utan att radera. Inställningarna ligger
+längre in i flashen och skrivs inte över.
+
 > [!CAUTION] Radera inte i onödan
 > *Erase flash* och *ny installation* raderar radions inställningar och identitet, så att den blir
 > en ny nod för alla andra. Använd det bara när du vill börja om från början.
@@ -75,6 +92,18 @@ koppla ur och in strömmen.
 
 > [!NOTE]- Flashningen avbröts halvvägs
 > Det går nästan alltid att flasha igen. Starta radion i bootloader-läge och gör om flashningen.
+
+> [!NOTE]- Radion startar om hela tiden efter flashningen
+> Syns `load:0x3c120020` och sedan *Guru Meditation Error* i USB-konsolen har filen utan
+> *merged* skrivits till `0x0`, där startkoden ska ligga. Flasha `-merged.bin` till `0x0`, utan
+> att radera. Inställningarna finns kvar.
+
+> [!NOTE]- `ver` visar fortfarande den gamla versionen
+> Har radion uppdaterats trådlöst (OTA) tidigare startar den från den andra firmwareplatsen i
+> flashen. En fil utan *merged*, skriven till `0x10000`, hamnar då på platsen som inte används.
+> Flasha `-merged.bin` till `0x0`: den pekar om starten till den nya firmwaren. Kontrollera också
+> att firmwareväljaren visar den senaste versionen; den uppdateras inom någon timme efter en ny
+> version.
 
 > [!NOTE]- Radion startar men syns inte i nätet
 > Kontrollera att radioinställningarna ovan stämmer och att regionen är rätt. En repeater syns på
