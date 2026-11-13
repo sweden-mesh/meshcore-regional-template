@@ -31,6 +31,8 @@ export class MapPanel {
     if (this.legend?.length) {
       const d = document.createElement("details");
       d.className = "map-legend";
+      // Open on desktop; closed on phones so it doesn't cover the map.
+      d.open = !(typeof matchMedia === "function" && matchMedia("(max-width: 639px)").matches);
       const s = document.createElement("summary");
       s.textContent = "Teckenförklaring";
       d.append(s);
