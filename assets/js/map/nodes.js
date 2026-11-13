@@ -1,4 +1,4 @@
-// The node layer: Beacon nodes as a clustered GeoJSON source with one circle
+// The node layer: Beacon nodes as a GeoJSON source (no clustering) with one circle
 // per node, coloured by type, ringed when the node is an observer, and
 // labelled from zoom 12. Pure parts are exported for tests.
 

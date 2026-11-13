@@ -63,6 +63,7 @@ this repository's `hugo.toml`.
    anywhere; CI needs Hugo (extended not required) and Go.
 
 Building on GitLab, Codeberg/Forgejo, Woodpecker or a plain web host: see `CI.md`.
+How the map works, for maintainers: see `MAP.md`.
 
 Update the template later with `hugo mod get -u` (newest tag) or
 `hugo mod get github.com/sweden-mesh/meshcore-regional-template@v0.2.0` (a given one). Dependabot
