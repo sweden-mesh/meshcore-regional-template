@@ -52,7 +52,7 @@ a { color: var(--accent); }
 .site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
 .brand { font-weight: 700; text-decoration: none; color: var(--fg); display: inline-flex; align-items: center; gap: .6rem; }
 .brand-logo { width: 32px; height: 32px; display: block; }
-.map { height: min(60vh, 36rem); min-height: 18rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-map); }
+.map { height: min(90vh, 54rem); min-height: 27rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-map); }
 .map-failed, .map noscript { display: grid; place-items: center; height: 100%; color: var(--muted); }
 .map-note { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }
 .site-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .9rem; margin-top: 3rem; padding-top: 2rem; padding-bottom: 2.5rem; }
