@@ -415,3 +415,5 @@ other = "Regionen har en egen MQTT-server, `{{ .Server }}`. En observatör kan r
 other = "Kommandon för regionens MQTT-server"
 [rm_note]
 other = "Kort utan PSRAM håller bara två MQTT-anslutningar uppe samtidigt. Har din repeater redan två platser i bruk, välj vilken den ska ersätta."
+[or]
+other = "eller"

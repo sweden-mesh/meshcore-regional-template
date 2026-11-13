@@ -419,3 +419,5 @@ other = "The region has its own MQTT broker, `{{ .Server }}`. An observer can re
 other = "Commands for the region's MQTT broker"
 [rm_note]
 other = "Boards without PSRAM keep only two MQTT connections up at once. If your repeater already uses two slots, choose which one to replace."
+[or]
+other = "or"

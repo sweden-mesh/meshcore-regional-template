@@ -1,0 +1,8 @@
+{{- /* {{< contact >}}: where to get in touch in this region, from params.community and
+  params.chats (and chat.discord/matrix), as an inline list of links. */ -}}
+{{- $links := slice -}}
+{{- with site.Params.community }}{{ if .url }}{{ $links = $links | append (dict "name" (.name | default .url) "url" .url) }}{{ end }}{{ end -}}
+{{- with site.Params.chat.discord }}{{ $links = $links | append (dict "name" "Discord" "url" .) }}{{ end -}}
+{{- with site.Params.chat.matrix }}{{ $links = $links | append (dict "name" "Matrix" "url" .) }}{{ end -}}
+{{- range site.Params.chats }}{{ $links = $links | append (dict "name" .name "url" .url) }}{{ end -}}
+{{- range $i, $l := $links }}{{ if $i }}{{ if eq $i (sub (len $links) 1) }} {{ T "or" }} {{ else }}, {{ end }}{{ end }}<a href="{{ $l.url }}" class="ext" target="_blank" rel="noopener">{{ $l.name }}</a>{{ end -}}

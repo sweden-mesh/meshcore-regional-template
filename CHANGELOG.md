@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.9.0 — 2026-11-13
+
+- **Page "Bli nodvärd"** (`/bli-nodvard/`): for people with a roof, a mast or a high spot who
+  could host a repeater: what places are needed, what it means for the host (power, no
+  internet, weak radio), who does what, and how to get in touch. Linked from the footer.
+- **Shortcode `{{< contact >}}`:** the region's community and chat links as an inline list
+  (from `params.community`, `params.chat`, `params.chats`). New i18n key `or`.
+
 ## v0.8.0 — 2026-11-13
 
 - **The wizard rules** shared with meshat.se: the wizards send `set flood.max.unscoped 16`,

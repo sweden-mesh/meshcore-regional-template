@@ -20,6 +20,7 @@
       <ul>
         <li><a href="https://github.com/sweden-mesh/meshcore-regional-template" class="ext" target="_blank" rel="noopener">{{ T "footer_template" }}</a></li>
         {{ with site.Params.beacon.url }}<li><a href="{{ . }}/swagger/index.html" class="ext" target="_blank" rel="noopener">{{ T "footer_beacon" }}</a></li>{{ end }}
+        {{ with site.GetPage "/bli-nodvard" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         {{ with site.GetPage "/egen-regional-sida" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         {{ with site.GetPage "/integritet" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         <li>{{ T "footer_license" }}</li>
