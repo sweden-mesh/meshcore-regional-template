@@ -41,6 +41,8 @@ antenn och vad som är tillåtet; många använder 22 dBm, men kontrollera vad d
 Namnet syns för andra när din radio skickar en *advert*, ett kort paket som säger att den finns.
 Håll det kort och igenkännbart, och under 22 byte om positionen ska få plats i samma advert.
 
+{{< namecheck kind="companion" >}}
+
 ## 5. Position, eller inte
 
 Position är frivillig. En companion följer med dig, så en delad position kan visa var du bor.

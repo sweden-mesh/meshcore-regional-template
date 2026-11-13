@@ -30,6 +30,7 @@
 [params.naming]
   pattern = ""               # the region's naming rule, e.g. "SE-JKP-Plats-ABCD"; empty = general advice only
   example = ""               # e.g. "SE-JKP-Braneryd-FD70"
+  companion_example = ""     # e.g. "SE-JKP-Jeppe"; empty = the repeater example
   explain = ""               # one sentence on the parts
 
 [params.radio]
