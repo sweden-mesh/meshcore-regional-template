@@ -2,7 +2,6 @@
   {{- $r := partialCached "region.html" . "region" -}}
   {{- $first := "" -}}{{- with site.GetPage "/guider" }}{{ with index .Pages.ByWeight 0 }}{{ $first = .RelPermalink }}{{ end }}{{ end -}}
   <section class="hero">
-    {{ with site.Params.beacon.url }}<p class="badge" id="online-badge" hidden><span class="dot" aria-hidden="true"></span> <span data-stat="repeaters">–</span> {{ T "badge_online" (dict "Region" $r.name) }}</p>{{ end }}
     <h1>{{ T "hero_title" (dict "Region" $r.name) }}</h1>
     <p class="tagline">{{ T "hero_tagline" }}</p>
     {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}

@@ -6,8 +6,6 @@
 other = "MeshCore in {{ .Region }}"
 [hero_tagline]
 other = "Messages that get through without the internet."
-[badge_online]
-other = "repeaters heard in {{ .Region }}"
 [cta_start]
 other = "Get started"
 [cta_map]

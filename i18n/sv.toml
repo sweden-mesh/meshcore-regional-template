@@ -2,8 +2,6 @@
 other = "MeshCore i {{ .Region }}"
 [hero_tagline]
 other = "Meddelanden som tar sig fram utan internet."
-[badge_online]
-other = "repeatrar hörs i {{ .Region }}"
 [cta_start]
 other = "Kom igång"
 [cta_map]
