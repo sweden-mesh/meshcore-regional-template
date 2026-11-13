@@ -1,12 +1,12 @@
 ---
 title: "Namnge din nod"
-description: "Ett bra namn talar om var noden står. Så väljer du namn, och regionens namnregel."
+description: "Ett bra namn talar om var noden står. Så väljer du namn, och regionens namnförslag."
 weight: 70
 source:
   title: "Vad är MeshCore? (avsnittet Namnge din enhet)"
   url: "https://meshat.se/meshcore/meshcore-info/#namnge-din-enhet"
   license: "CC BY 4.0"
-  changes: "Egen guide; regionens namnregel från sidans parametrar; namnlängden räknas av ett eget verktyg."
+  changes: "Egen guide; regionens namnförslag från sidans parametrar; namnlängden räknas av ett eget verktyg."
 ---
 
 Namnet syns för alla när din nod skickar en *advert*. För en repeater är namnet det andra ser i

@@ -129,7 +129,7 @@ other = "för långt för att positionen ska få plats i samma advert"
 [nc_long]
 other = "för långt; firmware kortar av det"
 [naming_rule]
-other = "Namnregel i {{ .Region }}"
+other = "Namnförslag i {{ .Region }}"
 [naming_example]
 other = "till exempel"
 [skip_to_content]
@@ -157,7 +157,7 @@ other = "Vald plats:"
 [wz_name]
 other = "Namn"
 [wz_name_rule]
-other = "Regionens namnregel:"
+other = "Namnförslag i regionen:"
 [wz_place_name]
 other = "Platsens namn"
 [wz_place_ph]

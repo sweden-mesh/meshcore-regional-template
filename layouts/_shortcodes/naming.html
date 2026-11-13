@@ -1,4 +1,4 @@
-{{- /* {{< naming >}}: the region's naming rule from params.naming, if it has one. */ -}}
+{{- /* {{< naming >}}: the region's suggested names from params.naming, if it has one. */ -}}
 {{- with site.Params.naming -}}{{- if .pattern -}}
 <div class="alert alert-tip" role="note">
   <p class="alert-title">{{ T "naming_rule" (dict "Region" (partialCached "region.html" . "region").name) }}</p>

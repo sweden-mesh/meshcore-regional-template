@@ -133,7 +133,7 @@ other = "too long for the position to fit in the same advert"
 [nc_long]
 other = "too long; the firmware cuts it short"
 [naming_rule]
-other = "Naming rule in {{ .Region }}"
+other = "Suggested names in {{ .Region }}"
 [naming_example]
 other = "for example"
 [skip_to_content]
@@ -161,7 +161,7 @@ other = "Chosen place:"
 [wz_name]
 other = "Name"
 [wz_name_rule]
-other = "The region's naming rule:"
+other = "Suggested names in the region:"
 [wz_place_name]
 other = "Name of the place"
 [wz_place_ph]
