@@ -2,6 +2,7 @@
 // per node, coloured by type, ringed when the node is an observer, and
 // labelled from zoom 12. Pure parts are exported for tests.
 import { distanceKm } from "../wizard/neighbours.js";
+import { effectiveTheme } from "../theme.js";
 
 export const NODE_TYPES = { 1: "companion", 2: "repeater", 3: "room", 4: "sensor" };
 
@@ -123,6 +124,14 @@ function addPillImages(map) {
 export const NODE_LAYERS = ["node-points", "node-obs-dot", "node-pills", "node-labels"];
 const COLOR = ["case", ["get", "stale"], "#9aa7b0", "#2f8a5f"];
 
+// The full names under the nodes (zoom 12 and in): dark ink with a white halo on the light map,
+// white with a black halo on the dark one. The layers are re-added after a theme's setStyle.
+export function labelPaint(dark) {
+  return dark
+    ? { "text-color": "#fff", "text-halo-color": "#000", "text-halo-width": 1.5 }
+    : { "text-color": "#0f1d26", "text-halo-color": "#fff", "text-halo-width": 1.5 };
+}
+
 export function addNodeLayers(map, data) {
   addPillImages(map);
   if (map.getSource("nodes")) { map.getSource("nodes").setData(data); return; }
@@ -152,7 +161,7 @@ export function addNodeLayers(map, data) {
   map.addLayer({ id: "node-labels", type: "symbol", source: "nodes", minzoom: 12, filter: base,
     layout: { "text-field": ["get", "name"], "text-size": 11, "text-offset": [0, 1.4], "text-anchor": "top",
       "text-font": ["Noto Sans Regular"], "text-optional": true },
-    paint: { "text-color": "#0f1d26", "text-halo-color": "#fff", "text-halo-width": 1.5 } });
+    paint: labelPaint(effectiveTheme() === "dark") });
   for (const id of ["node-points", "node-pills"]) {
     map.on("mouseenter", id, () => { map.getCanvas().style.cursor = "pointer"; });
     map.on("mouseleave", id, () => { map.getCanvas().style.cursor = ""; });

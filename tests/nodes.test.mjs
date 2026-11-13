@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { validPosition, nodesToGeoJSON } from "../assets/js/map/nodes.js";
+import { validPosition, nodesToGeoJSON, labelPaint } from "../assets/js/map/nodes.js";
 
 const page = JSON.parse(readFileSync(new URL("./data/nodes-page.json", import.meta.url)));
 
@@ -75,4 +75,9 @@ test("withSeeded adds the snapshot's seeded nodes the live list lacks", async ()
   ];
   assert.deepEqual(withSeeded(live, snap, square).map((n) => n.id), ["a", "b"]);
   assert.deepEqual(withSeeded(live, null, square).map((n) => n.id), ["a"]);
+});
+
+test("labelPaint: white names with a black halo on the dark map, dark ink on the light one", () => {
+  assert.deepEqual(labelPaint(true), { "text-color": "#fff", "text-halo-color": "#000", "text-halo-width": 1.5 });
+  assert.deepEqual(labelPaint(false), { "text-color": "#0f1d26", "text-halo-color": "#fff", "text-halo-width": 1.5 });
 });

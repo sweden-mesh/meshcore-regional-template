@@ -134,8 +134,14 @@ a { color: var(--accent); }
 .site-header nav a:hover { color: var(--fg); }
 .map-panel { display: flex; flex-direction: column; gap: .4rem; font-family: var(--font-body); }
 .map-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
-.map-pill { min-height: 36px; padding: 0 .9rem; border-radius: 999px; border: 1px solid rgba(15, 29, 38, .35); background: transparent; color: rgba(15, 29, 38, .6); text-shadow: 0 0 3px #fff, 0 0 3px #fff; font: 600 .82rem var(--font-body); cursor: pointer; box-shadow: 0 2px 8px rgba(15, 29, 38, .12); }
-.map-pill[aria-pressed="true"] { background: rgba(255, 255, 255, .8); color: #000; border-color: transparent; text-shadow: none; }
+.map-pill { min-height: 36px; padding: 0 .9rem; border-radius: 999px; background: transparent; font: 600 .82rem var(--font-body); cursor: pointer; box-shadow: 0 2px 8px rgba(15, 29, 38, .12); }
+/* Off: transparent with dimmed text, readable on the map's tiles: white on the dark map, ink on the light one. */
+.map-pill[aria-pressed="false"] { border: 1px solid rgba(255, 255, 255, .45); color: rgba(255, 255, 255, .72); text-shadow: 0 0 3px #000, 0 0 3px #000; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .map-pill[aria-pressed="false"] { border-color: rgba(15, 29, 38, .35); color: rgba(15, 29, 38, .6); text-shadow: 0 0 3px #fff, 0 0 3px #fff; }
+}
+:root[data-theme="light"] .map-pill[aria-pressed="false"] { border-color: rgba(15, 29, 38, .35); color: rgba(15, 29, 38, .6); text-shadow: 0 0 3px #fff, 0 0 3px #fff; }
+.map-pill[aria-pressed="true"] { background: rgba(255, 255, 255, .8); color: #000; border: 1px solid transparent; text-shadow: none; }
 .map-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .map-legend { background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .35rem .75rem; font-size: .8rem; box-shadow: 0 2px 8px rgba(15, 29, 38, .12); max-width: 17rem; }
 .map-legend summary { cursor: pointer; font-weight: 600; }
