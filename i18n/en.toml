@@ -1,0 +1,318 @@
+# English texts for the template. Every key in sv.toml must be here too
+# (tests/i18n.test.mjs). A region selects English with locale = "en" and
+# defaultContentLanguage = "en" in its hugo.toml. The guides (content/) and a few texts inside
+# the map scripts are still Swedish only.
+[hero_title]
+other = "MeshCore in {{ .Region }}"
+[hero_tagline]
+other = "Messages that get through without the internet."
+[badge_online]
+other = "repeaters heard in {{ .Region }}"
+[cta_start]
+other = "Get started"
+[cta_map]
+other = "See the map"
+[all_guides]
+other = "All guides"
+[map_heading]
+other = "The mesh right now"
+[map_no_beacon]
+other = "No Beacon server is set up for this region yet."
+[section_start]
+other = "Get started"
+[section_network]
+other = "The mesh"
+[section_community]
+other = "Community"
+[network_scope]
+other = "The region's scope:"
+[channels]
+other = "Channels"
+[home_channels]
+other = "MeshCore channels"
+[guides]
+other = "Guides"
+[footer_template]
+other = "Built with meshcore-regional-template"
+[map_failed]
+other = "The map could not be loaded."
+[map_noscript]
+other = "The map needs JavaScript."
+[map_foreign_toggle]
+other = "Outside the region"
+[map_links]
+other = "Neighbour links"
+[map_live]
+other = "Live traffic"
+[packets_recent]
+other = "Latest packets – click to see the route"
+[packets_path]
+other = "The route to each observer"
+[close]
+other = "Close"
+[map_snapshot_note]
+other = "Beacon can't be reached right now; the map shows the state from {at}."
+[map_offline_note]
+other = "Beacon can't be reached right now."
+[alert_note]
+other = "Note"
+[alert_tip]
+other = "Tip"
+[alert_important]
+other = "Important"
+[alert_warning]
+other = "Warning"
+[alert_caution]
+other = "Caution"
+[source_based_on]
+other = "Based on"
+[source_changes]
+other = "Changed:"
+[stat_repeaters]
+other = "repeaters heard"
+[stat_observers]
+other = "of them observers"
+[stat_packets]
+other = "packets in the last day"
+[breadcrumb]
+other = "Breadcrumbs"
+[pager]
+other = "Previous and next guide"
+[previous]
+other = "Previous"
+[next]
+other = "Next"
+[nav_main]
+other = "Main menu"
+[nav_menu]
+other = "Menu"
+[footer_about]
+other = "About this site"
+[footer_beacon]
+other = "Map data: Beacon API"
+[footer_license]
+other = "Code BSD-2, text CC BY 4.0"
+[nf_title]
+other = "The packet never arrived"
+[nf_lead]
+other = "The page isn't here, or it has moved. No hop found a route to it."
+[nf_home]
+other = "To the home page"
+[set_title]
+other = "Settings here"
+[set_preset]
+other = "Preset"
+[set_radio]
+other = "Radio"
+[set_scope]
+other = "Region (scope)"
+[set_iata]
+other = "IATA for observers"
+[ch_name]
+other = "Channel"
+[ch_scope]
+other = "Region"
+[ch_purpose]
+other = "Used for"
+[ch_no_scope]
+other = "none"
+[firmware_link]
+other = "Choose your firmware here"
+[nc_label]
+other = "Try a name"
+[nc_ok]
+other = "fits together with the position"
+[nc_nopos]
+other = "too long for the position to fit in the same advert"
+[nc_long]
+other = "too long; the firmware cuts it short"
+[naming_rule]
+other = "Naming rule in {{ .Region }}"
+[naming_example]
+other = "for example"
+[skip_to_content]
+other = "Skip to content"
+[map_list]
+other = "The repeaters as a list ({{ .Count }})"
+[map_list_note]
+other = "As it was when the site was built, {{ .At }}."
+[observer]
+other = "observer"
+[map_focus]
+other = "Traffic focus"
+[seo_home_title]
+other = "MeshCore in {{ .Short }} – map, guides and channels"
+[pick_label]
+other = "Map: click where the repeater will stand"
+[wz_place]
+other = "Choose a place"
+[wz_place_help]
+other = "Click the map where the repeater will stand. The dots are repeaters that are already there."
+[wz_place_none]
+other = "No place chosen yet."
+[wz_pos_set]
+other = "Chosen place:"
+[wz_name]
+other = "Name"
+[wz_name_rule]
+other = "The region's naming rule:"
+[wz_place_name]
+other = "Name of the place"
+[wz_place_ph]
+other = "for example Hilltop"
+[wz_bytes]
+other = "bytes"
+[wz_too_long]
+other = "too long"
+[wz_no_room]
+other = "the position won't fit in the same advert"
+[wz_suffix]
+other = "the key's four characters are added when the radio is connected"
+[wz_region]
+other = "Region"
+[wz_region_help]
+other = "The repeater gets the regions"
+[wz_password]
+other = "Password"
+[wz_password_label]
+other = "New admin password (at most 15 characters, no spaces)"
+[wz_password_help]
+other = "Write it down. Without a password anyone nearby can change the repeater."
+[wz_apply]
+other = "Connect and send"
+[wz_apply_help]
+other = "Connect the repeater over USB and use Chrome or Edge."
+[wz_connect]
+other = "Connect to the radio"
+[wz_send]
+other = "Send the settings"
+[wz_commands]
+other = "The commands, to paste yourself"
+[wz_copy]
+other = "Copy"
+[wz_copied]
+other = "Copied"
+[wz_no_serial]
+other = "This browser can't talk to the radio over USB. Use Chrome or Edge on a computer, or paste the commands below into a console."
+[wz_connected]
+other = "Connected to"
+[wz_fix]
+other = "Fill in"
+[wz_done]
+other = "Done. The repeater restarts and sends an advert; look for it on the map in a few minutes."
+[wz_failed]
+other = "Stopped at an error; see the list above."
+[wz_steps]
+other = "Steps"
+[wzg_prev]
+other = "Back"
+[wzg_next]
+other = "Next"
+[wzg_name_why]
+other = "The name is what others see in their lists and on the map. A place name says where the repeater stands, so others understand which parts of the mesh it joins."
+[wzg_radio]
+other = "Radio"
+[wzg_radio_why]
+other = "Everyone who is to hear each other must have exactly the same frequency, bandwidth, spreading factor and coding rate. A repeater with other values hears no one and is heard by no one."
+[wzg_tx]
+other = "Transmit power in dBm (optional)"
+[wzg_tx_why]
+other = "Leave empty for the radio's default. More power helps less than a higher site; only enter a value your radio and antenna can take and that is allowed."
+[wzg_place_why]
+other = "A repeater's position is good to share: it doesn't move, and it shows on the map where the mesh reaches. Click where the antenna will be."
+[wzg_region_why]
+other = "The regions decide which traffic the repeater passes on. With se and the county's region, local conversations reach the whole county and national ones the whole country, without local traffic flooding the neighbouring counties."
+[wzg_edge_why]
+other = "A repeater near the county border also gets the neighbouring county's region, so traffic between the counties gets through. If it can't reach the neighbouring county's repeaters, untick it."
+[wzg_duty]
+other = "Duty cycle"
+[wzg_duty_why]
+other = "On 869.618 MHz a transmitter may use at most 10 percent of the time. The setting keeps the repeater under it, so it doesn't take over the frequency."
+[wzg_pass_why]
+other = "The admin password lets you change the repeater, even remotely over the radio. Change it, write it down and share it only with whoever will look after the repeater."
+[wzg_review]
+other = "Review and send"
+[wzg_now]
+other = "Now"
+[wzg_new]
+other = "New"
+[wzg_test]
+other = "Test before mounting"
+[wzg_test_why]
+other = "Check that the repeater works while you can still reach it, before it goes up on a roof or a mast."
+[wzg_test_1]
+other = "Leave it on for a few minutes after the restart, with the antenna attached."
+[wzg_test_2]
+other = "Connect again and see which repeaters it has heard with the command"
+[wzg_test_3]
+other = "Look for it on the map:"
+[wizards]
+other = "Guided setup"
+[wz_quick_title]
+other = "Quick repeater setup"
+[wz_quick_desc]
+other = "Choose a place and a name, and the page sends the rest of the settings to your repeater over USB."
+[wz_quick_intro]
+other = "Four choices, then the page sends the settings to the radio over USB. Everything else gets the region's defaults. To understand each value, take the [guided setup](../repeater-guidad/)."
+[wz_guided_title]
+other = "Guided repeater setup"
+[wz_guided_desc]
+other = "Step by step through each setting, with explanations, until your repeater is ready to mount."
+[wz_guided_intro]
+other = "This guide takes one setting at a time and explains why it is the way it is. If you have done it before, the [quick setup](../repeater-snabb/) is faster."
+[wz_comp_title]
+other = "Set up a companion"
+[wz_comp_desc]
+other = "The values to enter in the MeshCore app for a companion in the region, step by step."
+[wz_comp_intro]
+other = "A companion is set up in the MeshCore app, not over the USB console. Here are the region's values in the order the app asks for them. If you haven't flashed the radio yet, start with [Flash firmware](../../guider/flasha-firmware/) and choose *companion*."
+[wzc_1]
+other = "Connect the app"
+[wzc_1_text]
+other = "Connect the app to the radio over Bluetooth, or USB for a USB companion. If the radio has a screen the PIN is shown there; otherwise it is often 123456."
+[wzc_2]
+other = "Radio settings"
+[wzc_2_text]
+other = "Choose the preset, or fill in the values by hand:"
+[wzc_3_text]
+other = "Short, recognisable and without giving away more than you want. Under 22 bytes leaves room for the position in the same advert."
+[wzc_4_text]
+other = "Optional for a companion. It goes where you go, so a shared position can show where you live. The map on this site doesn't show companions."
+[wzc_5_text]
+other = "Add the region's channels with exactly the same names. For local conversations, set the channel's region to"
+[wzc_6]
+other = "Test"
+[wzc_6_text]
+other = "Send an advert from the app and write test in the test channel. Repeaters with auto-reply answer, and you see which ones heard you."
+[search_noscript]
+other = "Search needs JavaScript."
+[wz_review]
+other = "What will be set"
+[wz_rv_name]
+other = "Name"
+[wz_rv_position]
+other = "Position"
+[wz_rv_regions]
+other = "Regions"
+[wz_rv_dutycycle]
+other = "Duty cycle"
+[wz_rv_password]
+other = "Admin password"
+[wz_rv_none]
+other = "not chosen yet"
+[wz_nb_hint]
+other = "Neighbouring counties near the place you choose on the map are ticked automatically (within 40 km, 80 km over water). You can change this."
+[wz_nb_near]
+other = "{km} km to the county border: added"
+[wz_nb_far]
+other = "{km} km away"
+[wz_nb_inside]
+other = "at the county border: added"
+[about_meshcore_title]
+other = "What is MeshCore?"
+[about_meshcore]
+other = """MeshCore is free software for small LoRa radios. The radios send short text messages to each other without a mobile network and without the internet. When a message can't get through directly, repeaters pass it on, one hop at a time, often for tens of kilometres.
+
+The mesh is built by the people who use it. Someone puts a repeater on a roof or a mast, someone else carries a companion and writes from the MeshCore app on their phone. No one owns the mesh, and there is no central server that can go down.
+
+All you need to start is a radio and the app. [Read more about MeshCore]({{ .Guide }})."""
