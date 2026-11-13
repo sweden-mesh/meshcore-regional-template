@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.10.0 — 2026-11-13
+
+- **Wizards follow the updated wizard rules** (shared with meshat.se):
+  - the admin password is **required** (a new repeater's is `password`);
+  - `set flood.advert.interval 47` (the firmware default) is sent;
+  - new **off-grid** box: adds the region `offgrid` under the county and sends `powersaving on`;
+    unticked, power saving is left alone. New i18n key `wz_offgrid`.
+
 ## v0.9.0 — 2026-11-13
 
 - **Page "Bli nodvärd"** (`/bli-nodvard/`): for people with a roof, a mast or a high spot who

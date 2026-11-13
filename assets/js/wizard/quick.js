@@ -27,7 +27,7 @@ function init(form) {
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, $("wz-place").value, state.publicKey), lat: state.pos?.lat, lon: state.pos?.lon,
-      password: $("wz-pass").value, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
+      password: $("wz-pass").value, offgrid: $("wz-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
   };
 
   const update = () => {
@@ -56,6 +56,7 @@ function init(form) {
   } }).catch(() => {});
 
   for (const id of ["wz-place", "wz-pass"]) $(id).addEventListener("input", update);
+  $("wz-offgrid").addEventListener("change", update);
 
   if (!("serial" in navigator)) {
     $("wz-connect").disabled = true;

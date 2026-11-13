@@ -35,6 +35,7 @@
     <p>{{ T "wzg_region_why" }}</p>
     <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
     {{ partial "wizard-neighbours.html" .Page }}
+    <label class="wz-check"><input type="checkbox" id="wzg-offgrid"> {{ T "wz_offgrid" }}</label>
     <p class="muted">{{ T "wzg_edge_why" }}</p>
     {{ partial "wizard-mqtt.html" .Page }}
   </fieldset>

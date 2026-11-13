@@ -23,7 +23,10 @@ export function validateRepeater(s) {
     if (!Number.isFinite(lat) || lat < -90 || lat > 90) errors.push({ field: "lat", code: "range" });
     if (!Number.isFinite(lon) || lon < -180 || lon > 180) errors.push({ field: "lon", code: "range" });
   }
-  if (s.password != null && s.password !== "") {
+  // Required (the wizard rules): a new repeater's admin password is "password", which anyone
+  // in radio range can log in with.
+  if (!s.password) errors.push({ field: "password", code: "required" });
+  else {
     if (s.password.length > LIMITS.password) errors.push({ field: "password", code: "too-long" });
     if (/\s/.test(s.password)) errors.push({ field: "password", code: "whitespace" });
   }
@@ -43,9 +46,14 @@ export function validateRepeater(s) {
 // wizard rules (planning/mesh/wizard-rules.md, shared with meshat.se): eu and
 // europe side by side, se under eu, and the region's own scope and any
 // neighbouring ones (an edge repeater) all under se.
-export function regionDef(scope, extras = []) {
-  const under = [scope, ...extras].filter((x) => x && x !== "se");
-  return ["region def eu|* europe|eu se", ...under.map((x, i) => (i < under.length - 1 ? `${x}|se` : x))].join(" ");
+// offgrid (backup power) sits under the county; each neighbour goes back to se first.
+export function regionDef(scope, extras = [], offgrid = false) {
+  const tokens = [scope && scope !== "se" ? scope : null, offgrid ? "offgrid" : null].filter(Boolean);
+  for (const x of extras.filter((x) => x && x !== "se")) {
+    if (tokens.length) tokens.push(`${tokens.pop()}|se`);
+    tokens.push(x);
+  }
+  return ["region def eu|* europe|eu se", ...tokens].join(" ");
 }
 
 // An Observer build can also report to the region's own MQTT broker, through one of its
@@ -95,14 +103,18 @@ export function repeaterCommands(s) {
   }
   c.push("set flood.max.unscoped 16");
   c.push("region allowf *");
-  c.push(regionDef(s.scope, s.extraScopes));
+  c.push(regionDef(s.scope, s.extraScopes, s.offgrid));
   // The county is the home region (auto-reply's test channel); the repeater's own
   // adverts go out under se, so the whole country hears them.
   if (s.scope && s.scope !== "se") c.push(`region home ${s.scope}`);
   c.push("region default se");
   c.push("region save");
+  // Flood adverts every 47 h, the firmware's default: the odd number spreads them over the day.
+  c.push("set flood.advert.interval 47");
+  // Off-grid repeaters save power; otherwise the repeater's own setting is left alone.
+  if (s.offgrid) c.push("powersaving on");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);
-  if (s.password) c.push(`password ${s.password}`);
+  c.push(`password ${s.password}`);
   if (s.mqtt) c.push(...mqttCommands(s.mqtt));
   c.push("advert");
   c.push("reboot");
@@ -120,7 +132,7 @@ export function repeaterReview(s) {
     { key: "name", value: (s.name || "").trim() },
     { key: "position", value: hasPos ? `${num(s.lat).toFixed(4)}, ${num(s.lon).toFixed(4)}` : "" },
     { key: "radio", value: r.freq ? `${sv(r.freq)} MHz · BW ${sv(r.bw)} kHz · SF${r.sf} · CR${r.cr}` : "" },
-    { key: "regions", value: ["eu", "europe", "se", ...[s.scope, ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
+    { key: "regions", value: ["eu", "europe", "se", ...[s.scope, ...(s.offgrid ? ["offgrid"] : []), ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
     { key: "dutycycle", value: `${s.dutycycle ?? 10} %` },
     { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
     ...(s.mqtt ? [{ key: "mqtt", value: `${s.mqtt.server} (${s.mqtt.slot})` }] : []),

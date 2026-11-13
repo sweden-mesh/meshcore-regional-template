@@ -178,12 +178,14 @@ other = "the key's four characters are added when the radio is connected"
 other = "Region"
 [wz_region_help]
 other = "The repeater gets the regions"
+[wz_offgrid]
+other = "Off-grid: the repeater has backup power (solar or battery). Adds the region offgrid and turns on power saving."
 [wz_password]
 other = "Password"
 [wz_password_label]
 other = "New admin password (at most 15 characters, no spaces)"
 [wz_password_help]
-other = "Write it down. Without a password anyone nearby can change the repeater."
+other = "Required. A new repeater's password is password, which anyone in radio range can log in with. Write the new one down."
 [wz_apply]
 other = "Connect and send"
 [wz_apply_help]

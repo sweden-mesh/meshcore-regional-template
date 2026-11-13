@@ -13,6 +13,7 @@ test("a full repeater setup in order, reboot last", () => {
     "set radio 869.618,62.5,8,8", "set tx 22", "set name SE-JKP-Braneryd-FD70",
     "set lat 57.7616", "set lon 14.1335", "set flood.max.unscoped 16", "region allowf *",
     "region def eu|* europe|eu se se-jkp", "region home se-jkp", "region default se", "region save",
+    "set flood.advert.interval 47",
     "set dutycycle 10", "password hemligt123", "advert", "reboot"]);
 });
 
@@ -95,10 +96,19 @@ test("region MQTT: validated, and part of the repeater commands before advert/re
   assert.deepEqual(validateMqtt({ ...MQ, server: "x".repeat(64) }).map((e) => e.code), ["server"]);
   assert.deepEqual(validateMqtt({ ...MQ, audience: "" }).map((e) => e.code), ["auth"]);
   assert.deepEqual(validateMqtt({ ...MQ, iata: "jkg" }).map((e) => e.code), ["iata"]);
-  const s = { name: "SE-JKP-Test", radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 }, scope: "se-jkp", mqtt: MQ };
+  const s = { name: "SE-JKP-Test", password: "hemligt", radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 }, scope: "se-jkp", mqtt: MQ };
   const c = repeaterCommands(s).commands;
   assert.ok(c.indexOf("set mqtt3.preset custom") < c.indexOf("advert"));
   assert.equal(c.at(-1), "reboot");
   assert.ok(!repeaterCommands(s).commands.includes(undefined));
   assert.ok(!repeaterCommands({ ...s, mqtt: undefined }).commands.some((x) => x.includes("mqtt")));
+});
+
+test("the wizard rules: password required, offgrid under the county with power saving", () => {
+  assert.deepEqual(validateRepeater({ ...base, password: "" }).errors.map((e) => `${e.field}:${e.code}`), ["password:required"]);
+  const c = repeaterCommands({ ...base, offgrid: true, extraScopes: ["se-vgr"] }).commands;
+  assert.ok(c.includes("region def eu|* europe|eu se se-jkp offgrid|se se-vgr"));
+  assert.ok(c.includes("powersaving on"));
+  assert.ok(!repeaterCommands(base).commands.some((x) => x.startsWith("powersaving")));
+  assert.equal(regionDef("se-jkp", [], true), "region def eu|* europe|eu se se-jkp offgrid");
 });

@@ -174,12 +174,14 @@ other = "nyckelns fyra tecken läggs till när radion är ansluten"
 other = "Region"
 [wz_region_help]
 other = "Repeatern får regionerna"
+[wz_offgrid]
+other = "Off-grid: repeatern har reservkraft (sol eller batteri). Lägger till regionen offgrid och slår på strömsparläge."
 [wz_password]
 other = "Lösenord"
 [wz_password_label]
 other = "Nytt administratörslösenord (högst 15 tecken, inga mellanslag)"
 [wz_password_help]
-other = "Skriv upp det. Utan lösenord kan vem som helst i närheten ändra repeatern."
+other = "Krävs. En ny repeater har lösenordet password, som vem som helst inom räckhåll kan logga in med. Skriv upp det nya."
 [wz_apply]
 other = "Anslut och skicka"
 [wz_apply_help]

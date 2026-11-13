@@ -49,7 +49,7 @@ function init(form) {
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, q("#wzg-place").value, state.publicKey), lat: state.pos?.lat, lon: state.pos?.lon,
-      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
+      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
   };
 
   const update = () => {
@@ -94,6 +94,7 @@ function init(form) {
   } }).then((pk) => { picker = pk; }).catch(() => {});
 
   for (const id of ["#wzg-place", "#wzg-pass", "#wzg-tx"]) q(id).addEventListener("input", update);
+  q("#wzg-offgrid").addEventListener("change", update);
 
   if (!("serial" in navigator)) {
     q("[data-connect]").disabled = true;
