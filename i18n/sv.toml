@@ -304,3 +304,11 @@ other = "{km} km till länsgränsen: läggs till"
 other = "{km} km bort"
 [wz_nb_inside]
 other = "vid länsgränsen: läggs till"
+[about_meshcore_title]
+other = "Vad är MeshCore?"
+[about_meshcore]
+other = """MeshCore är fri programvara för små LoRa-radior. Radiorna skickar korta textmeddelanden till varandra utan mobilnät och utan internet. Når ett meddelande inte fram direkt skickar repeatrar det vidare, ett hopp i taget, ofta flera mil.
+
+Nätet byggs av de som använder det. Någon sätter upp en repeater på taket eller i en mast, någon annan har en companion i fickan och skriver i MeshCore-appen på telefonen. Ingen äger nätet, och det finns ingen central server som kan gå ner.
+
+Det enda du behöver för att börja är en radio och appen. [Läs mer om MeshCore]({{ .Guide }})."""

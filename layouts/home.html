@@ -73,5 +73,14 @@
 
   {{ partial "map.html" . }}
 
-  {{ with .Content }}<article class="content">{{ . }}</article>{{ end }}
+  {{- /* What MeshCore is (the template's text, same for every region) beside the region's own
+     text about its mesh (the body of content/_index.md). */ -}}
+  <div class="about{{ if .Content }} about-two{{ end }}">
+    <section class="about-meshcore prose">
+      <h2>{{ T "about_meshcore_title" }}</h2>
+      {{- $guide := "" }}{{ with site.GetPage "/guider/vad-ar-meshcore" }}{{ $guide = .RelPermalink }}{{ end }}
+      {{ T "about_meshcore" (dict "Guide" $guide) | markdownify }}
+    </section>
+    {{ with .Content }}<section class="about-region prose">{{ . }}</section>{{ end }}
+  </div>
 {{ end }}
