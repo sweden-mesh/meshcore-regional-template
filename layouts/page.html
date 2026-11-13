@@ -6,6 +6,8 @@
     <div class="prose">{{ .Content }}</div>
     {{ partial "source.html" . }}
     {{- $pages := .CurrentSection.Pages.ByWeight -}}
+    {{- /* Entries with a category (troubleshooting) page within it. */ -}}
+    {{- with .Params.category }}{{ $pages = where $pages "Params.category" . }}{{ end -}}
     {{- if and (ne .CurrentSection .) (gt (len $pages) 1) -}}
       {{- $i := 0 -}}{{- range $k, $p := $pages }}{{ if eq $p $ }}{{ $i = $k }}{{ end }}{{ end -}}
       <nav class="pager" aria-label="{{ T "pager" }}">

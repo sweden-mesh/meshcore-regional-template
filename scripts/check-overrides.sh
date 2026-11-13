@@ -16,6 +16,8 @@ check felsokning/index.html "Radion startar om hela tiden" "felsokning: the temp
 if grep -q "gammal-version-efter-flashning" "$P/felsokning/index.html" "$P/sitemap.xml" || [ -e "$P/felsokning/gammal-version-efter-flashning" ] || grep -rqs "fortfarande den gamla versionen" "$P/pagefind/"; then
   echo "FAIL felsokning: a hidden entry is still built, listed or in the sitemap"; fail=1
 else echo "ok   felsokning: a hidden entry is not built, listed or in the sitemap"; fi
+if grep -q 'pager-prev' "$P/felsokning/hor-inga-repeatrar/index.html"; then echo "FAIL felsokning: the first radio entry's pager reaches into another category"; fail=1; else echo "ok   felsokning: an entry's pager stays in its category"; fi
+check felsokning/kort-rackvidd/index.html 'pager-prev' "felsokning: entries in the same category still page to each other"
 # FAQ: the same three ways, and the old combined page still leads here.
 check fragor/index.html "Exempelregionen: när ses vi?" "fragor: a region's own question is listed"
 check fragor/index.html "Regionens egen version: vem äger nätet?" "fragor: a region's file replaces the template's question"

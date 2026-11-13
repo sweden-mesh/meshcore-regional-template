@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.2 — 2026-11-13
+
+- Troubleshooting entries page *Föregående*/*Nästa* within their own category.
+
 ## v0.12.1 — 2026-11-13
 
 - FAQ page: the script that opens a linked question no longer throws when the URL has no
