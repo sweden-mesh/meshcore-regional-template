@@ -4,6 +4,21 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.7.0 — 2026-11-13
+
+- **Guides wider.** The reading column is 56rem (was 46rem), still starting where the logo
+  starts, so a wide screen is no longer a third empty.
+- **Map 50 % taller:** `min(90vh, 54rem)`, at least 27rem.
+- **Settings box:** one labelled row each for frequency, bandwidth, spreading factor and coding
+  rate (new i18n keys `set_freq`, `set_bw`, `set_sf`, `set_cr`), and more space between rows.
+- **Map pills ranked by traffic** when zooming out: known neighbours plus the packets seen
+  passing through a node since the page loaded; stale nodes go first.
+- **`params.beacon.seeds`:** other Beacons for the same IATAs. Their nodes inside the region's
+  border that ours has not heard yet fill the map (marked as known from another Beacon) until
+  ours hears them. For a young Beacon, which only knows nodes that have advertised since it
+  started.
+- **`params.links`:** plain links in the footer's community column, next to the chats.
+
 ## v0.6.0 — 2026-11-13
 
 - **The region's own MQTT broker:** new `params.observer.mqtt` (server, port, audience or
