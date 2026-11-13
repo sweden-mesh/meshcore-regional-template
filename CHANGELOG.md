@@ -4,6 +4,18 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.8.0 — 2026-11-13
+
+- **The wizard rules** shared with meshat.se: the wizards send `set flood.max.unscoped 16`,
+  `region allowf *`, `region def eu|* europe|eu se <county>` (neighbours under `se`),
+  `region home <county>`, `region default se`, `region save`. The region and repeater guides
+  say the same and name repeater firmware 1.16 as the minimum. `region home` is where
+  auto-reply firmware (MeshCore-lou lou-16) takes its test channel from; `se` as the default
+  lets a repeater's own adverts reach the whole country.
+- **Edge repeater is a choice:** a box, unticked, on every position. Ticked, the neighbour list
+  shows with the counties within 40 km (80 km over water) preselected (new i18n key
+  `wz_nb_edge`).
+
 ## v0.7.0 — 2026-11-13
 
 - **Guides wider.** The reading column is 56rem (was 46rem), still starting where the logo
