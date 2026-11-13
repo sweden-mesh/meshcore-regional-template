@@ -4,6 +4,16 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.6.0 — 2026-11-13
+
+- **The region's own MQTT broker:** new `params.observer.mqtt` (server, port, audience or
+  username/password, slot). When a server is set, the quick and guided wizards offer to point
+  one of an Observer's `custom` slots at it (the commands from the Observer firmware; the
+  audience is always sent), with the 2-slot limit of boards without PSRAM explained, and the
+  observer guide shows the commands (`{{< region-mqtt >}}`). Empty server: nothing changes.
+- **AI-design review, iteration 2:** the theme button draws its icons (the text glyphs became
+  emoji on phones); no glyph before "Sök"; the map legend follows the theme.
+
 ## v0.5.0 — 2026-11-13
 
 - **Light and dark:** dark is now the base. Light comes from the system setting (no JavaScript
