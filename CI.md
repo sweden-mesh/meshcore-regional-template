@@ -55,3 +55,17 @@ rsync -a --delete public/ user@host:/var/www/meshcore/
 
 Serve `404.html` for missing paths. Without a Pages Function, leave `params.analytics` off (or
 point it at a same-origin proxy your server provides).
+
+## Checking a Beacon
+
+The map reads a fixed set of Beacon endpoints and fields. `scripts/beacon-contract.mjs` checks
+that a Beacon still has them all:
+
+```sh
+node scripts/beacon-contract.mjs https://beacon.example.org JKG
+```
+
+It prints one line per endpoint and exits 1 if a field is missing. Run it before moving a region to
+a new Beacon version. In this repository it runs weekly against beacon.meshcore-jkp.se
+(`.github/workflows/beacon-contract.yml`), and the same field list is tested against the captured
+responses in `tests/data`.

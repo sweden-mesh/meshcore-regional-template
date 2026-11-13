@@ -1,0 +1,23 @@
+name: beacon-contract
+# Weekly: do the Beacon endpoints and fields the map reads still exist? Run by hand
+# with another Beacon before a region moves to it.
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      beacon:
+        description: Beacon base URL
+        default: https://beacon.meshcore-jkp.se
+      iata:
+        description: An IATA code with nodes on that Beacon
+        default: JKG
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/beacon-contract.mjs "${{ inputs.beacon || 'https://beacon.meshcore-jkp.se' }}" "${{ inputs.iata || 'JKG' }}"
