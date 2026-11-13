@@ -4,7 +4,7 @@ import { matches } from "./entries-match.js";
 
 // A link to one question (#name) opens it.
 const openHash = () => {
-  const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  const el = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
   el?.querySelector("details")?.setAttribute("open", "");
 };
 openHash();
