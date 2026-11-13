@@ -107,6 +107,9 @@ a { color: var(--accent); }
 .stat-grid div:nth-child(2) dd { color: var(--accent-2); }
 .stat-grid div:nth-child(3) dd { color: var(--fg); }
 .map-section { padding-top: 2rem; }
+/* The map breaks out of the content column: 80 % of the window, 10 % margin each side
+   (operator 2026-11-13); phones keep the 16 px gutter. */
+@media (min-width: 640px) { .map-section { max-width: none; width: 80vw; padding-left: 0; padding-right: 0; } }
 .site-header { border-bottom: 0; padding-top: 1.25rem; padding-bottom: 1.25rem; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .site-header nav a:hover { color: var(--fg); }

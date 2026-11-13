@@ -77,6 +77,16 @@ async function start() {
     state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
     applyFocus(map, state);
   };
+  // The threshold depends on the map's width: recompute after a resize.
+  let resizeTimer;
+  map.on("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (!map.getLayer("node-pills")) return;
+      state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
+      applyFocus(map, state);
+    }, 200);
+  });
   // A style switch (dark mode) drops every layer; put them back.
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
   let live = true;
