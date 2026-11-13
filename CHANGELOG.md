@@ -4,6 +4,21 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.0 — 2026-11-13
+
+- **Troubleshooting** (`/felsokning/`): 27 entries in Swedish, one file each, grouped by category
+  (flashing, radio, companion, repeater, regions, MQTT, power) with a filter box. A region adds an
+  entry with its own file in `content/felsokning/`, replaces one with the same file name, and
+  hides one with a same-named file holding `build: {render: never, list: never}`. Archetype:
+  `hugo new felsokning/<name>.md`.
+- **FAQ** (`/fragor/`): 23 questions, one file each, folded on one page, `#<name>` opens one;
+  added, replaced and hidden the same way. The old page `/guider/fragor-och-ord/` redirects
+  there; the glossary is now `/guider/ordlista/`.
+- Menus are per site: add `/felsokning` and `/fragor` to your `menus.main` to show them.
+- Flashing guide: the firmware page's *Flasha via USB* button, which file goes to which address,
+  and what to do when the board restarts in a loop or still shows the old version.
+- Dark map: repeater names white with a black halo; the off map buttons readable in both themes.
+
 ## v0.11.2 — 2026-11-13
 
 - Map buttons show their state: on is a white background (80 %) with black text, off is
