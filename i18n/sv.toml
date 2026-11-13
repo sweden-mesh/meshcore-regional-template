@@ -24,6 +24,8 @@ other = "Gemenskap"
 other = "Regionens scope:"
 [channels]
 other = "Kanaler"
+[home_channels]
+other = "MeshCore-kanaler"
 [guides]
 other = "Guider"
 [footer_template]
