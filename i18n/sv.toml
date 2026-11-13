@@ -286,3 +286,17 @@ other = "Testa"
 other = "Skicka en advert från appen och skriv test i testkanalen. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig."
 [search_noscript]
 other = "Sökningen behöver JavaScript."
+[wz_review]
+other = "Det här ställs in"
+[wz_rv_name]
+other = "Namn"
+[wz_rv_position]
+other = "Position"
+[wz_rv_regions]
+other = "Regioner"
+[wz_rv_dutycycle]
+other = "Duty cycle"
+[wz_rv_password]
+other = "Adminlösenord"
+[wz_rv_none]
+other = "inte valt ännu"

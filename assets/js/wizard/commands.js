@@ -69,6 +69,23 @@ export function repeaterCommands(s) {
   return { commands: c, errors, warnings };
 }
 
+// A readable summary of what repeaterCommands will set, for review before sending
+// (operator 2026-11-12). Same inputs, so it can never disagree with the commands.
+// Missing values are "" so the page can show a dash; the password is masked.
+export function repeaterReview(s) {
+  const r = s.radio || {};
+  const sv = (x) => String(x).replace(".", ",");
+  const hasPos = s.lat != null && s.lon != null;
+  return [
+    { key: "name", value: (s.name || "").trim() },
+    { key: "position", value: hasPos ? `${num(s.lat).toFixed(4)}, ${num(s.lon).toFixed(4)}` : "" },
+    { key: "radio", value: r.freq ? `${sv(r.freq)} MHz · BW ${sv(r.bw)} kHz · SF${r.sf} · CR${r.cr}` : "" },
+    { key: "regions", value: ["se", ...[s.scope, ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
+    { key: "dutycycle", value: `${s.dutycycle ?? 10} %` },
+    { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
+  ];
+}
+
 // Companions are set up in the MeshCore app (their USB link speaks the app's
 // binary protocol, not this CLI), so the companion wizard gets values to enter.
 export function companionSettings(s) {

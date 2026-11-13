@@ -2,7 +2,7 @@
 // Web Serial (or copy the commands). Command building, the serial link and the
 // map pick are their own tested modules.
 import { createPicker } from "./mappick.js";
-import { repeaterCommands } from "./commands.js";
+import { repeaterCommands, repeaterReview } from "./commands.js";
 import { buildName, namePrefix, wantsKeySuffix } from "./naming.js";
 import { SerialLink } from "./serial.js";
 import { applyCommands } from "./apply.js";
@@ -33,6 +33,14 @@ function init(form) {
     if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 22) msg += ` · ${t.noPos}`;
     if (s.name && wantsKeySuffix(ds.pattern) && !state.publicKey) msg += ` · ${t.suffix}`;
     $("wz-name").textContent = msg;
+    $("wz-review").replaceChildren(...repeaterReview(s).map(({ key, value }) => {
+      const row = document.createElement("div");
+      const dt = document.createElement("dt"); dt.textContent = t.review[key];
+      const dd = document.createElement("dd"); dd.textContent = value || t.review.none;
+      if (!value) dd.className = "muted";
+      row.append(dt, dd);
+      return row;
+    }));
     const { commands, errors } = repeaterCommands(s);
     $("wz-cmds").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => e.field))].join(", ")}` : commands.join("\n");
     $("wz-send").disabled = !state.link || errors.length > 0;

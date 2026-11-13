@@ -57,3 +57,24 @@ test("region def: own scope, and neighbours all under se", () => {
   assert.equal(regionDef("se-jkp", ["se-ost", "se-kro"]), "region def se se-jkp|se se-ost|se se-kro");
   assert.equal(regionDef("se"), "region def se");
 });
+
+import { repeaterReview } from "../assets/js/wizard/commands.js";
+test("review summary matches the commands and masks the password", () => {
+  const s = { name: "SE-JKP-Test-ABCD", lat: 57.78123, lon: 14.16, password: "hemligt", scope: "se-jkp",
+    extraScopes: ["se-ost"], radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 } };
+  const r = Object.fromEntries(repeaterReview(s).map((x) => [x.key, x.value]));
+  assert.equal(r.name, "SE-JKP-Test-ABCD");
+  assert.equal(r.position, "57.7812, 14.1600");
+  assert.equal(r.radio, "869,618 MHz · BW 62,5 kHz · SF8 · CR8");
+  assert.equal(r.regions, "se, se-jkp, se-ost");
+  assert.equal(r.dutycycle, "10 %");
+  assert.equal(r.password, "•••••••");
+  assert.ok(!JSON.stringify(r).includes("hemligt"));
+  const cmds = repeaterCommands(s).commands.join("\n");
+  assert.match(cmds, /set lat 57\.7812/);
+  assert.match(cmds, /region def se se-jkp\|se se-ost/);
+});
+test("review summary leaves missing values empty", () => {
+  const r = Object.fromEntries(repeaterReview({ radio: {} }).map((x) => [x.key, x.value]));
+  assert.equal(r.name, ""); assert.equal(r.position, ""); assert.equal(r.password, ""); assert.equal(r.radio, "");
+});

@@ -180,9 +180,12 @@ a { color: var(--accent); }
 .site-footer a:hover { color: var(--fg); }
 .settings { margin: .75rem 0 0; padding-top: .75rem; border-top: 1px solid var(--line); display: grid; gap: .35rem; font-size: .92rem; }
 .settings div { display: grid; grid-template-columns: minmax(8rem, 40%) 1fr; gap: .5rem; }
-.settings dt { color: var(--muted); }
+.settings dt { color: var(--muted); margin: 0; font-weight: 400; }
 .settings dd { margin: 0; font-weight: 500; }
+.settings dd.muted { color: var(--muted); font-weight: 400; font-style: italic; }
 .settings-box summary { cursor: pointer; font-weight: 600; font-size: .95rem; }
+.wz-review-head { font-size: 1rem; margin: .25rem 0 0; }
+.wz-review { margin-bottom: 1.25rem; }
 .prose .settings { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1.1rem; background: var(--surface); }
 .channels-table small { display: inline-block; margin-top: .2rem; }
 .firmware-link { margin: .75rem 0 0; font-size: .9rem; }
