@@ -22,10 +22,10 @@ enableRobotsTXT = true
   zoom = 9
 
 [params.naming]
-  pattern = "SE-XXX-Plats-ABCD"
-  example = "SE-XXX-Utsikten-1A2B"
+  pattern = "SE-XXX-Plats"
+  example = "SE-XXX-Utsikten"
   companion_example = "Kim"
-  explain = "SE för Sverige, regionens kod, platsen och de fyra första tecknen i nodens nyckel."
+  explain = "SE för Sverige, regionens kod och en välkänd plats. Står flera repeatrar på samma plats läggs de fyra första tecknen i nodens nyckel till, så att namnen inte krockar."
 
 [params.beacon]
   url = ""

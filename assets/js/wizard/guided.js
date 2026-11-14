@@ -48,7 +48,7 @@ function init(form) {
   const mqtt = initMqtt(q(".wz-mqtt"), () => update());
   const settings = () => {
     const extra = nb.scopes();
-    return { name: buildName(ds.pattern, q("#wzg-place").value, state.publicKey), lat: state.pos?.lat, lon: state.pos?.lon,
+    return { name: buildName(ds.pattern, q("#wzg-place").value, state.publicKey, q("#wzg-key").checked), lat: state.pos?.lat, lon: state.pos?.lon,
       tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
   };
 
@@ -57,7 +57,7 @@ function init(form) {
     const b = bytes(s.name);
     let msg = s.name ? `${s.name} · ${b} ${t.bytes}` : "";
     if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 22) msg += ` · ${t.noPos}`;
-    if (s.name && wantsKeySuffix(ds.pattern) && !state.publicKey) msg += ` · ${t.suffix}`;
+    if (s.name && q("#wzg-key").checked && !state.publicKey) msg += ` · ${t.suffix}`;
     q('[data-out="name"]').textContent = msg;
     const { commands, errors } = repeaterCommands(s);
     q("[data-cmds]").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => e.field))].join(", ")}` : commands.join("\n");
@@ -94,7 +94,8 @@ function init(form) {
   } }).then((pk) => { picker = pk; }).catch(() => {});
 
   for (const id of ["#wzg-place", "#wzg-pass", "#wzg-tx"]) q(id).addEventListener("input", update);
-  q("#wzg-offgrid").addEventListener("change", update);
+  q("#wzg-key").checked = wantsKeySuffix(ds.pattern);
+  for (const id of ["#wzg-offgrid", "#wzg-key"]) q(id).addEventListener("change", update);
 
   if (!("serial" in navigator)) {
     q("[data-connect]").disabled = true;

@@ -161,7 +161,7 @@ other = "Namnförslag för repeatrar i regionen:"
 [wz_place_name]
 other = "Platsens namn"
 [wz_place_ph]
-other = "till exempel Taberg"
+other = "en välkänd plats, till exempel Taberg"
 [wz_bytes]
 other = "byte"
 [wz_too_long]
@@ -170,6 +170,8 @@ other = "för långt"
 other = "positionen får inte plats i samma advert"
 [wz_suffix]
 other = "nyckelns fyra tecken läggs till när radion är ansluten"
+[wz_key_suffix]
+other = "Lägg till nyckelns fyra första tecken (som -FD70). Behövs bara om flera repeatrar står på samma plats, så att namnen inte krockar."
 [wz_region]
 other = "Region"
 [wz_region_help]

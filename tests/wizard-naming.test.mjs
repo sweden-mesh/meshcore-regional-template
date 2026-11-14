@@ -15,3 +15,8 @@ test("names are built from the place and the key", () => {
   assert.equal(cleanPlace("Taberg!? 2"), "Taberg2");
   assert.equal(buildName("SE-JKP-Plats-ABCD", "", "fd70"), "");
 });
+test("the key suffix is opt-in: only when the owner ticks it", () => {
+  assert.equal(buildName("SE-JKP-Plats", "Taberg", "fd70aa"), "SE-JKP-Taberg");
+  assert.equal(buildName("SE-JKP-Plats", "Taberg", "fd70aa", true), "SE-JKP-Taberg-FD70");
+  assert.equal(buildName("SE-JKP-Plats-ABCD", "Taberg", "fd70aa", false), "SE-JKP-Taberg");
+});

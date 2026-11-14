@@ -23,10 +23,11 @@ utan position.
 
 ## Tips
 
-- Använd platsen, inte ditt namn: andra ska förstå var repeatern står, inte vem som äger den.
+- Använd en välkänd plats som de flesta i trakten känner igen, inte ditt namn: andra ska förstå
+  var repeatern står, inte vem som äger den.
 - Hoppa över `å`, `ä` och `ö` om namnet blir för långt (`Braneryd` i stället för `Bråneryd`).
-- Fyra tecken av nodens nyckel på slutet (som `FD70`) gör namnet unikt även om två noder står
-  på samma plats. De syns som nodens kortnamn på kartan.
+- Står flera repeatrar på samma plats? Lägg då till de fyra första tecknen av nodens publika
+  nyckel (som `-FD70`), så krockar inte namnen. Står den ensam behövs de inte.
 
 ## Namnge din companion
 

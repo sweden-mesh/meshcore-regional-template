@@ -12,7 +12,7 @@
   {{- $.AddPage (dict
     "path" .path
     "title" .title
-    "params" (dict "description" .description)
+    "params" (dict "description" .description "lead" false)
     "description" .description
     "weight" .weight
     "content" (dict "mediaType" "text/markdown" "value" (printf "%s\n\n{{< %s >}}\n" .intro .shortcode))

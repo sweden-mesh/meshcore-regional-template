@@ -1,7 +1,7 @@
 {{ define "main" }}
   <article class="content page page-wide">
     <h1>{{ .Title }}</h1>
-    {{ with .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    {{ with and (ne .Params.lead false) .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
     {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
     {{ partial "entries.html" (dict "section" . "prefix" "faq" "inline" true
          "order" (slice "grunder" "utrustning" "natet" "integritet" "regioner" "bidra")) }}

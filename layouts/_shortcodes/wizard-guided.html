@@ -11,6 +11,7 @@
     {{ with site.Params.naming.pattern }}<p class="muted">{{ T "wz_name_rule" }} <code>{{ . }}</code>{{ with site.Params.naming.explain }} {{ . }}{{ end }}</p>{{ end }}
     <label for="wzg-place">{{ T "wz_place_name" }}</label>
     <div class="wz-name-row"><span class="wz-prefix" data-prefix></span><input id="wzg-place" type="text" autocomplete="off" spellcheck="false" placeholder="{{ T "wz_place_ph" }}"></div>
+    <label class="wz-check"><input type="checkbox" id="wzg-key"> {{ T "wz_key_suffix" }}</label>
     <p class="wz-status" data-out="name" aria-live="polite"></p>
   </fieldset>
 

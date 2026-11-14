@@ -26,7 +26,7 @@ function init(form) {
   const mqtt = initMqtt(form.querySelector(".wz-mqtt"), () => update());
   const settings = () => {
     const extra = nb.scopes();
-    return { name: buildName(ds.pattern, $("wz-place").value, state.publicKey), lat: state.pos?.lat, lon: state.pos?.lon,
+    return { name: buildName(ds.pattern, $("wz-place").value, state.publicKey, $("wz-key").checked), lat: state.pos?.lat, lon: state.pos?.lon,
       password: $("wz-pass").value, offgrid: $("wz-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, mqtt: mqtt() };
   };
 
@@ -35,7 +35,7 @@ function init(form) {
     const b = bytes(s.name);
     let msg = s.name ? `${s.name} · ${b} ${t.bytes}` : "";
     if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 22) msg += ` · ${t.noPos}`;
-    if (s.name && wantsKeySuffix(ds.pattern) && !state.publicKey) msg += ` · ${t.suffix}`;
+    if (s.name && $("wz-key").checked && !state.publicKey) msg += ` · ${t.suffix}`;
     $("wz-name").textContent = msg;
     $("wz-review").replaceChildren(...repeaterReview(s).map(({ key, value }) => {
       const row = document.createElement("div");
@@ -56,7 +56,8 @@ function init(form) {
   } }).catch(() => {});
 
   for (const id of ["wz-place", "wz-pass"]) $(id).addEventListener("input", update);
-  $("wz-offgrid").addEventListener("change", update);
+  $("wz-key").checked = wantsKeySuffix(ds.pattern);
+  for (const id of ["wz-offgrid", "wz-key"]) $(id).addEventListener("change", update);
 
   if (!("serial" in navigator)) {
     $("wz-connect").disabled = true;

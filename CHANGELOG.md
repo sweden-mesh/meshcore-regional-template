@@ -4,6 +4,18 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.13.0 — 2026-11-14
+
+- No lead line under the title on Felsökning, Frågor, Verktyg and the three wizard pages (as on
+  the guides since v0.12.12). `lead: false` now works on section pages too.
+- `{{< domain >}}` prints the site's own address 5 % larger and in the strongest text colour
+  (black in light mode, white in dark), new token `--strong`.
+- Repeater names: the key's four characters are opt-in. Both wizards have a checkbox for them,
+  off by default ("only needed when several repeaters stand at the same place"); a pattern that
+  still ends in `ABCD` ticks it by default. The naming guide and the example site say to use a
+  well-known place. Regions: drop `-ABCD` from `naming.pattern` and `naming.example`, and say
+  in `naming.explain` when the key is needed.
+
 ## v0.12.12 — 2026-11-14
 
 Visitor feedback:
