@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.18.1 — 2026-11-14
+
+- The solar guide is published (no longer a draft).
+
 ## v0.18.0 — 2026-11-14
 
 - Solar guide (still a draft): battery figures for all 20 county map codes in `data/solar.toml`,

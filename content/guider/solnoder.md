@@ -3,7 +3,6 @@ title: "Solnoder"
 linkTitle: "Solnoder"
 description: "Varför en repeater på solcell, vad som gör vintern svår så här långt norrut, och vad som krävs: panel, batteri, laddare och firmware. Med batteritabeller och ett fälttest från hösten 2026."
 weight: 40
-draft: true
 ---
 
 ## Varför sol?
