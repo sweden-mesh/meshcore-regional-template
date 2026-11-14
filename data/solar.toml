@@ -721,7 +721,7 @@ lon = 20.1
 irradiation = [0.18, 1.58, 3.73, 4.21, 3.78, 3.44, 3.11, 2.97, 2.57, 1.80, 0.42, 0.00]
 dec_of_june = 0
 source = "PVGIS-ERA5"
-note = """**Solcell är i praktiken inte ett alternativ här**, utom möjligen på en öppen och hög plats, och även där med knapp marginal. Siffrorna bygger på en annan datakälla (PVGIS-ERA5, eftersom platsen ligger utanför satellitdatan), som överskattar molnigt vinterljus: de är 11–29 procent för optimistiska. Med kylan inräknad (köldfaktor 0,75, cirka 23 procent större batteri) blir behovet vid en trädlinje på 20° ungefär 28 000 mAh, mer än tabellernas största batteri. Middagssolen står under horisonten från ungefär 13 december till 1 januari. Batteriet ligger under 0 °C i flera månader, och rimfrost på utsatta höjder är inte med i beräkningen."""
+note = """**Solcell är i praktiken inte ett alternativ här**, utom möjligen på en öppen och hög plats, och även där med knapp marginal. Siffrorna bygger på en annan datakälla (PVGIS-ERA5, eftersom platsen ligger utanför satellitdatan), som överskattar molnigt vinterljus: de är 11–29 procent för optimistiska. Med kylan inräknad (köldfaktor 0,75) behövs cirka 23 procent större batteri än tabellerna. Middagssolen står under horisonten från ungefär 13 december till 1 januari. Batteriet ligger under 0 °C i flera månader, och rimfrost på utsatta höjder är inte med i beräkningen."""
 snow_sheltered = 5
 snow_exposed = 8
 
