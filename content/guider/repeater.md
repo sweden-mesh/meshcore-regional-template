@@ -89,7 +89,14 @@ region save
 
 ### Duty cycle
 
-Duty cycle begränsar hur stor del av tiden radion får sända. På 869,618 MHz gäller 10 procent.
+Duty cycle begränsar hur stor del av tiden radion får sända. I bandet 869,4–869,65 MHz, där
+869,618 MHz ligger, är högst 10 procent ett krav i hela EU (i Sverige genom PTS föreskrifter).
+Det gäller varje sändare, även en repeater.
+
+Gränsen skyddar också nätet. Medan en repeater sänder kan grannarna som hör den inte sända
+själva, och sänder två samtidigt krockar paketen. En repeater som sänder för mycket dränker
+repeatrarna runt sig, och deras trafik når inte fram. 10 är taket, inte ett mål: sätt den aldrig
+högre.
 
 ```text {title="Duty cycle"}
 set dutycycle 10

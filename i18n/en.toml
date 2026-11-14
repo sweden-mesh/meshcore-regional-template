@@ -255,7 +255,7 @@ other = "A repeater near the county border also gets the neighbouring county's r
 [wzg_duty]
 other = "Duty cycle"
 [wzg_duty_why]
-other = "On 869.618 MHz a transmitter may use at most 10 percent of the time. The setting keeps the repeater under it, so it doesn't take over the frequency."
+other = "Duty cycle is the share of time the repeater may transmit. In the 869.4–869.65 MHz band, where 869.618 MHz lies, at most 10 percent is a requirement throughout the EU, and it applies to every transmitter, a repeater too. The limit also protects the mesh: while a repeater transmits, the neighbours that hear it cannot transmit themselves, and when two transmit at once the packets collide. A repeater that transmits too much drowns out the repeaters around it, and their traffic does not get through. 10 is the ceiling, not a target: never set it higher."
 [wzg_pass_why]
 other = "The admin password lets you change the repeater, even remotely over the radio. Change it, write it down and share it only with whoever will look after the repeater."
 [wzg_review]
