@@ -79,6 +79,12 @@ bakom 20°, och nysnö på marken, som kan ge upp till 15 procent mer i januari 
 > laddström begränsad till 1 A sänker toppen, och bakom en trädlinje på 20° är strömmarna i
 > december och januari ungefär tio gånger mindre. Hälften av energin december–februari kommer när
 > luften är under 0 °C, så en laddare som vägrar ladda under 0 °C kastar bort halva vintern.
+>
+> Erfarenhet från ett annat kallt nät: i Kanada har [YYCMesh](https://yycmesh.com/blog/cold-weather-charging)
+> laddat repeatrar med solcell i två vintrar, bland annat på tre bergstoppar över 2 100 meter i
+> Klippiga bergen, med temperaturer ner mot −40 °C och laddström under 0,1 C, utan något fel i
+> nätet. En cell som mättes efter två vintrar hade kvar cirka 3 100 mAh, mot cirka 3 300 mAh för
+> nya. Det är erfarenhet från ett nät, inte ett kontrollerat test, och mätningen gäller en enda cell.
 
 ## Vad som krävs
 
@@ -133,9 +139,9 @@ hur mycket beräkningen kan slå fel. 3 000 mAh är det praktiska golvet, vad ta
 ## Vad ett fälttest i Jönköping visade
 
 Ett fälttest från 17 oktober till 13 november 2026 mätte en riktig laddaruppställning under
-senhösten. Det är **inte** samma bygge som ovan: det använde en annan panel, en annan laddare och
-ett fönster inomhus, så det prövar inte beräkningens siffror. Det visar hur en liten verklig
-solcellsuppställning beter sig på senhösten.
+senhösten. Omgång 2 använde Clas Ohlsons panel, men med en annan laddare (en billig linjär HW-736
+i stället för CN3791) och inomhus bakom två glasrutor, så testet prövar inte beräkningens
+siffror. Det visar hur en liten verklig solcellsuppställning beter sig på senhösten.
 
 **Uppställning:** panelen lodrätt i ett söderfönster inomhus, bakom två gamla glasrutor.
 Laddaren HW-736, en billig linjär laddare som behöver cirka 4,7 V från panelen innan någon ström
@@ -156,8 +162,9 @@ strömsparning. Ljuset mättes av en väderstation på taket med en vågrät sen
 | Nio dygn, 23 oktober–1 november | gick jämnt ut med ungefär en solig dag av tre eller fyra |
 | Samma panel mot väster, med en kulle i öster | 3–6 mA mot upp till 208 mA mot söder, cirka 40 gånger mindre |
 
-**Omgång 2, en större fyrkantig panel med svart ram,** okänd märkeffekt, uppskattad till cirka
-15 W (från 4 november, samma laddare, celler och last):
+**Omgång 2, Clas Ohlsons panel** (från 4 november, samma laddare, celler och last). Den 4 november
+kl. 13.04, inomhus bakom glaset och med cirka 145 W/m² på takets sensor: tomgångsspänning 5,90 V,
+kortslutningsström 1,12 A, cirka 4,7 W i det ögonblicket.
 
 | Förhållanden | Resultat |
 |---|---|
@@ -168,7 +175,7 @@ strömsparning. Ljuset mättes av en väderstation på taket med en vågrät sen
 Det testet visade:
 
 - **Skörden är mycket olinjär.** Under en viss ljusnivå ger en linjär laddare ingenting alls,
-  eftersom panelen inte orkar hålla spänningen över tröskeln. Den större panelen gjorde mörka
+  eftersom panelen inte orkar hålla spänningen över tröskeln. Clas Ohlsons panel gjorde mörka
   dagar från noll till 50–100 mAh. Testarna tror att en laddare som arbetar vid lägre ljus (en
   MPPT-laddare som CN3791) också hjälper, men det prövades inte.
 - **Ett fullt batteri ser ut som att det inte laddar:** laddaren drar ner strömmen nära 4,2 V och
@@ -179,8 +186,8 @@ Det testet visade:
 
 Testarnas grova uppskattning utifrån mätningarna hittills: ett vinterunderskott från november
 till mitten av februari på cirka 14 Ah vid 180 mAh per dygn för den lilla panelen, och cirka
-5–8 Ah för den större panelen i samma fönster. Båda kan vara fel med en faktor två åt endera
-hållet. De räknar med att den större panelen ger ungefär 30–50 procent mer utomhus utan glas,
+5–8 Ah för Clas Ohlsons panel i samma fönster. Båda kan vara fel med en faktor två åt endera
+hållet. De räknar med att Clas Ohlsons panel ger ungefär 30–50 procent mer utomhus utan glas,
 men det är inte uppmätt.
 
 ## Vad siffrorna förutsätter
@@ -207,7 +214,10 @@ Tabellerna ovan gäller bara för det här bygget:
    7 V. Visar den cirka 14 V är arket kopplat åt andra hållet, och laddaren ska då ställas på
    11,5 V i nästa steg. Vid alla andra värden: stanna och kontrollera att du har rätt trådar.
 2. Ställ in laddaren med ett labbaggregat på 5,6 V (eller 11,5 V, se steg 1) tills kortets
-   MPPT-stift visar 1,205 V. Kontrollera att laddströmmen är högst 2 A.
+   MPPT-stift visar 1,205 V. Kontrollera att laddströmmen är högst 2 A. CN3791 börjar bara ladda
+   när panelens tomgångsspänning är över cirka 5,7 V; i fälttestet visade panelen 5,90 V inomhus i
+   svagt ljus, nära gränsen. Mät tomgångsspänningen utomhus en kall, ljus dag före vintern och
+   kontrollera att 5,6 V-inställningen stämmer.
 3. Ta bort laddarens lysdiodmotstånd. Koppla laddare → skyddskort → XIAO:ns batteriplattor.
 4. Kontrollera att en provladdning slutar mellan 4,16 och 4,25 V och börjar igen av sig själv
    under 4,0 V.
