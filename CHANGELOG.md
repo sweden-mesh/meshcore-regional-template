@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.17.0 — 2026-11-14
+
+- New guide **Solnoder** (`/guider/solnoder/`), still a draft: why a repeater on solar, why winter
+  is hard, what it needs (panel, battery, charger, firmware), battery tables, a field test.
+- The region-specific numbers come from `data/solar.toml`, keyed by the region's first map code,
+  through `{{%/* solar "where|short|irradiation|trees|capacity" */%}}`. Only Jönköping (JKG) has
+  figures so far; other regions are shown those, with a notice saying so. Numbers are never scaled
+  or interpolated in the template.
+
 ## v0.16.0 — 2026-11-14
 
 **Breaking:** the wizards moved from `/verktyg/` to `/wizard/` (content/wizard/), with no

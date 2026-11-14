@@ -1,0 +1,48 @@
+{{- /* {{< solar "<part>" >}}: the solar-node page's region-specific numbers, from data/solar.toml
+  keyed by the region's first map code (params.region.iatas). A region without its own entry
+  gets Jönköping's (JKG), and the "where" part says so. Never scaled here.
+  Parts: where, short, irradiation, trees, capacity. */ -}}
+{{- $code := index (site.Params.region.iatas | default slice) 0 | default "" -}}
+{{- $d := index site.Data.solar $code -}}
+{{- $own := ne $d nil -}}
+{{- if not $own }}{{ $d = site.Data.solar.JKG }}{{ end -}}
+{{- $fmt := "-|,| " -}}{{/* minus | decimal comma | non-breaking space grouping, "|" as delimiter */}}
+{{- $part := .Get 0 -}}
+{{- if eq $part "where" -}}
+  {{- if $own -}}
+*Siffrorna på sidan är räknade för {{ $d.place }} ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N).*
+  {{- else -}}
+> [!NOTE] Räknat för Jönköping
+> Det finns ännu inga beräkningar för {{ (partialCached "region.html" .Page "region").name }}, så
+> tabellerna visar siffrorna för Jönköping ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N). Längre
+> norrut behövs mer batteri, längre söderut mindre, och skillnaden växer med trädlinjen.
+  {{- end -}}
+{{- else if eq $part "short" -}}
+  {{- $need := dict -}}{{- range $d.trees }}{{ if eq .deg 20 }}{{ $need = . }}{{ end }}{{ end -}}
+  {{- $rec20 := 0 }}{{ $rec30 := 0 }}{{ $off20 := 0 -}}
+  {{- range $d.capacity -}}
+    {{- if and (eq $rec20 0) (ge .trees 20) }}{{ $rec20 = .mah }}{{ end -}}
+    {{- if and (eq $rec30 0) (ge .trees 30) }}{{ $rec30 = .mah }}{{ end -}}
+    {{- if and (eq $off20 0) (ge .official 20) }}{{ $off20 = .mah }}{{ end -}}
+  {{- end -}}
+- Panelen står lodrätt mot söder och träden når upp till 20° över horisonten: {{ with $rec20 }}**{{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh**.{{ else }}**inget batteri i tabellen räcker**.{{ end }}
+  {{- with $need.vertical }} Det beräknade behovet är {{ lang.FormatNumberCustom 0 (index . 0) $fmt "|" }} mAh, med en osäkerhet från {{ lang.FormatNumberCustom 0 (index . 1) $fmt "|" }} till {{ lang.FormatNumberCustom 0 (index . 2) $fmt "|" }} mAh{{ with $rec20 }}, och {{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh täcker hela spannet{{ end }}.{{ end }}
+- Träd upp till 30°: {{ with $rec30 }}{{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh{{ else }}inget batteri i tabellen räcker{{ end }}.
+- Med officiell MeshCore-firmware i stället för strömsparversionen EasySkyMesh, träd upp till 20°: {{ with $off20 }}ungefär {{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh{{ else }}inget batteri i tabellen räcker{{ end }}.
+{{- else if eq $part "irradiation" -}}
+| Jan | Feb | Mar | Apr | Maj | Jun | Jul | Aug | Sep | Okt | Nov | Dec |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+|{{ range $d.irradiation }} {{ lang.FormatNumberCustom 2 . $fmt "|" }} |{{ end }}
+{{- else if eq $part "trees" -}}
+| Trädlinje, högsta punkt från sydost till sydväst | Lodrät, söder | 60° lutning, söder | 40° lutning, söder | Lodrät, officiell firmware |
+|---|---:|---:|---:|---:|
+{{ range $d.trees -}}
+| {{ if eq .deg 0 }}Inga träd, fri horisont{{ else }}Trädlinje {{ .deg }}°{{ end }} |{{ range slice .vertical .tilt60 .tilt40 }} {{ lang.FormatNumberCustom 0 (index . 0) $fmt "|" }} ({{ lang.FormatNumberCustom 0 (index . 1) $fmt "|" }}–{{ lang.FormatNumberCustom 0 (index . 2) $fmt "|" }}) |{{ end }} {{ lang.FormatNumberCustom 0 .official $fmt "|" }} |
+{{ end -}}
+{{- else if eq $part "capacity" -}}
+| Batteri | Dagar i totalmörker | Klarar en dålig vinter med | Om beräkningen är för optimistisk | Med officiell firmware |
+|---|---:|---|---|---|
+{{ range $d.capacity -}}
+| {{ lang.FormatNumberCustom 0 .mah $fmt "|" }} mAh | {{ .days }} |{{ range slice .trees .pessimistic .official }} {{ if eq . 0 }}bara fri horisont{{ else }}träd upp till {{ . }}°{{ end }} |{{ end }}
+{{ end -}}
+{{- end -}}

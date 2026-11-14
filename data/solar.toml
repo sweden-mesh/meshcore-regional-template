@@ -1,0 +1,92 @@
+# Battery sizing for a solar repeater, per region map code (operator 2026-11-14). From the
+# hour-by-hour simulation of the "Solar meshcore repeater battery sizing" session: PVGIS v5.3
+# SARAH3 2005-2023, the Clas Ohlson panel gutted, CN3791 at 5.6 V, XIAO nRF52840 + Wio-SX1262,
+# EasySkyMesh 4.5 mA / official MeshCore 7.1 mA, worst winter in five + 20 %. Never scaled or
+# interpolated here: a region without its own entry is shown Jönköping's numbers, labelled so.
+# Values are mAh; ranges are [low, high] of the uncertainty.
+
+[JKG]
+place = "Jönköping"
+lat = 57.78
+lon = 14.16
+# kWh/m² per day on a vertical south panel, Jan..Dec
+irradiation = [0.86, 1.70, 3.06, 3.67, 3.32, 3.25, 3.12, 2.97, 2.78, 1.99, 0.90, 0.62]
+dec_of_june = 19
+
+  # tree line (degrees) → [vertical, 60° tilt, 40° tilt] each as [value, low, high], and official firmware vertical
+  [[JKG.trees]]
+  deg = 0
+  vertical = [500, 500, 600]
+  tilt60 = [400, 400, 400]
+  tilt40 = [400, 400, 400]
+  official = 1100
+  [[JKG.trees]]
+  deg = 10
+  vertical = [4100, 3600, 4800]
+  tilt60 = [700, 600, 1600]
+  tilt40 = [400, 400, 500]
+  official = 8400
+  [[JKG.trees]]
+  deg = 15
+  vertical = [5700, 5000, 7300]
+  tilt60 = [1000, 600, 2000]
+  tilt40 = [400, 400, 500]
+  official = 14100
+  [[JKG.trees]]
+  deg = 20
+  vertical = [6800, 5700, 8300]
+  tilt60 = [1400, 800, 2500]
+  tilt40 = [500, 400, 600]
+  official = 15600
+  [[JKG.trees]]
+  deg = 30
+  vertical = [9300, 8100, 11300]
+  tilt60 = [2800, 2100, 4100]
+  tilt40 = [600, 500, 1300]
+  official = 20600
+
+  # battery size → days of total darkness (load only), and the highest tree line (degrees) it
+  # survives a bad winter with: EasySkyMesh, if the calculation is pessimistic, official firmware.
+  # 0 = open horizon only.
+  [[JKG.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+  [[JKG.capacity]]
+  mah = 6000
+  days = 32
+  trees = 15
+  pessimistic = 10
+  official = 0
+  [[JKG.capacity]]
+  mah = 9000
+  days = 47
+  trees = 20
+  pessimistic = 20
+  official = 10
+  [[JKG.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 10
+  [[JKG.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 15
+  [[JKG.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+  [[JKG.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
