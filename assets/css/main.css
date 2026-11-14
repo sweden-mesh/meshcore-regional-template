@@ -69,7 +69,8 @@ a { color: var(--accent); }
 .sections { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 /* Five boxes side by side on wide screens, the network box (the settings list) widest; the row
    shares the map's width (below). Narrower: as many 16rem columns as fit. */
-@media (min-width: 1200px) { .sections { grid-template-columns: 1fr 1fr 1.35fr 1fr 1.1fr; } }
+@media (min-width: 720px) and (max-width: 1199px) { .sections { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .sections { grid-template-columns: 1fr 1fr 1fr 1.35fr; } }
 .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 0 1rem 1rem; }
 .card ul { padding-left: 1.2rem; }
 .channels dt { margin-top: .5rem; }

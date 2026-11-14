@@ -12,9 +12,9 @@
   </section>
 
 
-  {{- /* Five boxes on wide screens (operator 2026-11-13): the guides, the guided settings, the
-         network, the community and the channels. A box with nothing to show is left out, and the
-         numbers follow what is shown. */ -}}
+  {{- /* Four boxes on wide screens: the guides, the wizards, the channels and, last and widest,
+         the network (operator 2026-11-14; the community moved to a text column below and the
+         footer). A box with nothing to show is left out, and the numbers follow what is shown. */ -}}
   {{- $n := 0 -}}
   <div class="sections">
     {{ with site.GetPage "/guider" }}{{ $n = add $n 1 }}
@@ -34,6 +34,18 @@
       {{ with site.Params.firmware.picker }}<p class="firmware-link"><a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "firmware_link" }}</a></p>{{ end }}
     </section>
     {{ end }}{{ end }}
+
+
+    {{ with site.Params.channels }}{{ $n = add $n 1 }}
+    <section class="card" id="kanaler">
+      <p class="eyebrow">{{ printf "%02d" $n }}</p>
+      <h2>{{ T "home_channels" }}</h2>
+      <dl class="channels">
+        {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose | markdownify }}{{ with .note }}<br><small>{{ . | markdownify }}</small>{{ end }}</dd>{{ end }}
+      </dl>
+    </section>
+    {{ end }}
+
     {{ $n = add $n 1 }}
     <section class="card card-surface" id="natet">
       <p class="eyebrow">{{ printf "%02d" $n }}</p>
@@ -57,28 +69,6 @@
       {{ end }}
       {{ end }}
     </section>
-
-    {{ $n = add $n 1 }}
-    <section class="card" id="gemenskap">
-      <p class="eyebrow">{{ printf "%02d" $n }}</p>
-      <h2>{{ T "section_community" }}</h2>
-      <ul class="link-list">
-        {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
-        {{ with site.Params.chat.discord }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Discord</a></li>{{ end }}
-        {{ with site.Params.chat.matrix }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Matrix</a></li>{{ end }}
-        {{ range site.Params.chats }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a></li>{{ end }}
-      </ul>
-    </section>
-
-    {{ with site.Params.channels }}{{ $n = add $n 1 }}
-    <section class="card" id="kanaler">
-      <p class="eyebrow">{{ printf "%02d" $n }}</p>
-      <h2>{{ T "home_channels" }}</h2>
-      <dl class="channels">
-        {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose | markdownify }}{{ with .note }}<br><small>{{ . | markdownify }}</small>{{ end }}</dd>{{ end }}
-      </dl>
-    </section>
-    {{ end }}
   </div>
 
   {{- /* What MeshCore is (the template's text, same for every region) beside the region's own
