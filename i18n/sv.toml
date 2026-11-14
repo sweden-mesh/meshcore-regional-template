@@ -253,7 +253,7 @@ other = "Duty cycle"
 [wzg_duty_why]
 other = "Duty cycle är hur stor del av tiden repeatern får sända. I bandet 869,4–869,65 MHz, där 869,618 MHz ligger, är högst 10 procent ett krav i hela EU (i Sverige genom PTS föreskrifter), och det gäller varje sändare, även en repeater. Gränsen skyddar också nätet: medan en repeater sänder kan grannarna som hör den inte sända själva, och sänder två samtidigt krockar paketen. En repeater som sänder för mycket dränker alltså repeatrarna runt sig, och deras trafik når inte fram. 10 är taket, inte ett mål: sätt den aldrig högre."
 [wzg_pass_why]
-other = "Med administratörslösenordet kan man ändra repeatern, även på distans via radio. Byt det, skriv upp det och dela det bara med den som ska sköta repeatern."
+other = "Med administratörslösenordet kan man ändra inställningar i repeatern, även på distans via radio. Byt det, skriv upp det och dela det bara med den som ska sköta repeatern."
 [wzg_review]
 other = "Granska och skicka"
 [wzg_now]
@@ -507,3 +507,11 @@ other = "wifi-namn"
 other = "wifi-lösenord"
 [wz_f_iata]
 other = "kartkod"
+[wzg_guest_label]
+other = "Gästlösenord (valfritt)"
+[wzg_guest_why]
+other = "Den som loggar in som gäst kan läsa repeaterns status (batteri, brusnivå, antal paket), grundläggande mätvärden och vilka grannar den hör, men inte ändra något. Det gör gäståtkomst till ett bra sätt för andra att felsöka nätet, och det räknas som säkert att låta andra logga in som gäst. Som standard är gästlösenordet tomt, och då kan vem som helst logga in som gäst utan lösenord. Vill du begränsa det skriver du ett eget här och delar det med dem du vill. Lämna fältet tomt så ändras inget."
+[wz_f_guest]
+other = "gästlösenord"
+[wzg_test_4]
+other = "**Syns den inte?** Ställ dig nära repeatern med en **companion** och skicka en *flood-advert* från appen. Repeatern skickar den vidare, och repeatrarna runt omkring hör då din nya repeater och lägger till den bland sina grannar. Är din repeater ingen observatör syns den på kartan först när en observatör hör den: det den skickar vidare låter observatörerna i närheten upptäcka den."

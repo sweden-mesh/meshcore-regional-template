@@ -53,7 +53,7 @@ function init(form) {
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, q("#wzg-place").value, state.publicKey, q("#wzg-key").checked), lat: state.pos?.lat, lon: state.pos?.lon,
-      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()) };
+      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, guest: q("#wzg-guest").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()) };
   };
 
   const update = () => {
@@ -97,7 +97,7 @@ function init(form) {
     state.pos = p; q('[data-out="pos"]').textContent = `${t.posSet} ${p.lat}, ${p.lon}`; nb.setPosition(p.lat, p.lon); obs.setPosition(p.lat, p.lon);
   } }).then((pk) => { picker = pk; }).catch(() => {});
 
-  for (const id of ["#wzg-place", "#wzg-pass", "#wzg-tx"]) q(id).addEventListener("input", update);
+  for (const id of ["#wzg-place", "#wzg-pass", "#wzg-guest", "#wzg-tx"]) q(id).addEventListener("input", update);
   q("#wzg-key").checked = wantsKeySuffix(ds.pattern);
   for (const id of ["#wzg-offgrid", "#wzg-key"]) q(id).addEventListener("change", update);
 

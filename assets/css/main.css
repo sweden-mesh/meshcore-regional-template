@@ -329,3 +329,8 @@ body.style-console .theme-toggle { display: none; }
 /* The site's own name in running text ({{< domain >}}): a little larger and stronger than the text
    around it (operator 2026-11-14). */
 .site-domain { font-size: 1.05em; color: var(--strong); }
+/* Everything clickable shows a pointer (operator 2026-11-14): one rule instead of one per
+   component, so a new <details> or button cannot miss it. Disabled controls keep their own. */
+summary, button:not([disabled]), .button:not([disabled]), select, [role="button"], label[for],
+label:has(input), input[type="checkbox"], input[type="radio"], .wz-progress li { cursor: pointer; }
+input[type="text"], input[type="search"], input:not([type]), textarea { cursor: text; }

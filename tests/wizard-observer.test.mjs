@@ -43,3 +43,10 @@ test("the map code follows the county the position lies in", () => {
   assert.deepEqual(iataFor(57.5, 13.9, areas), { iata: "JKG", lan: "Jönköpings län" }); // ~7 km outside
   assert.equal(iataFor(57.5, 12, areas), null);
 });
+
+test("an optional guest password is set after the admin password, and checked", () => {
+  const c = repeaterCommands({ ...base, guest: "gast1" }).commands;
+  assert.equal(c[c.indexOf("password hemligt123") + 1], "set guest.password gast1");
+  assert.ok(!repeaterCommands(base).commands.some((x) => x.startsWith("set guest.password")));
+  assert.deepEqual(repeaterCommands({ ...base, guest: "x".repeat(16) }).errors.map((e) => e.field), ["guest"]);
+});

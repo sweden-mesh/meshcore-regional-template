@@ -257,7 +257,7 @@ other = "Duty cycle"
 [wzg_duty_why]
 other = "Duty cycle is the share of time the repeater may transmit. In the 869.4–869.65 MHz band, where 869.618 MHz lies, at most 10 percent is a requirement throughout the EU, and it applies to every transmitter, a repeater too. The limit also protects the mesh: while a repeater transmits, the neighbours that hear it cannot transmit themselves, and when two transmit at once the packets collide. A repeater that transmits too much drowns out the repeaters around it, and their traffic does not get through. 10 is the ceiling, not a target: never set it higher."
 [wzg_pass_why]
-other = "The admin password lets you change the repeater, even remotely over the radio. Change it, write it down and share it only with whoever will look after the repeater."
+other = "The admin password lets you change the repeater's settings, even remotely over the radio. Change it, write it down and share it only with whoever will look after the repeater."
 [wzg_review]
 other = "Review and send"
 [wzg_now]
@@ -511,3 +511,11 @@ other = "wifi name"
 other = "wifi password"
 [wz_f_iata]
 other = "map code"
+[wzg_guest_label]
+other = "Guest password (optional)"
+[wzg_guest_why]
+other = "Whoever logs in as a guest can read the repeater's status (battery, noise floor, packet counts), basic telemetry and which neighbours it hears, but cannot change anything. That makes guest access a good way for others to troubleshoot the mesh, and letting others log in as a guest is considered safe. By default the guest password is empty, and then anyone can log in as a guest without a password. To limit it, type your own here and share it with whoever you like. Leave the field empty to change nothing."
+[wz_f_guest]
+other = "guest password"
+[wzg_test_4]
+other = "**Not showing?** Stand near the repeater with a **companion** and send a *flood advert* from the app. The repeater passes it on, so the repeaters around it hear your new repeater and add it to their neighbours. If your repeater is not an Observer, it only shows on the map once an Observer hears it: what it passes on lets the Observers nearby discover it."

@@ -30,6 +30,8 @@ export function validateRepeater(s) {
     if (s.password.length > LIMITS.password) errors.push({ field: "password", code: "too-long" });
     if (/\s/.test(s.password)) errors.push({ field: "password", code: "whitespace" });
   }
+  // Optional guest password (guided wizard, operator 2026-11-14): char guest_password[16].
+  if (s.guest && (s.guest.length > LIMITS.password || /\s/.test(s.guest))) errors.push({ field: "guest", code: "invalid" });
   if (s.tx != null && s.tx !== "") {
     const tx = num(s.tx);
     if (!Number.isInteger(tx) || tx < 1 || tx > 30) errors.push({ field: "tx", code: "range" });
@@ -141,6 +143,7 @@ export function repeaterCommands(s) {
   if (s.offgrid) c.push("powersaving on");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);
   c.push(`password ${s.password}`);
+  if (s.guest) c.push(`set guest.password ${s.guest}`);
   if (s.observer) c.push(...observerCommands(s.observer));
   // The regional slot repeats mqtt.iata; the Observer section has already set it.
   if (s.mqtt) c.push(...mqttCommands(s.mqtt).filter((x) => !(s.observer && x.startsWith("set mqtt.iata "))));

@@ -4,6 +4,20 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.14.3 — 2026-11-14
+
+- Every clickable element shows the pointing hand: one rule for summaries (fold-outs such as
+  *Kommandona, för att klistra in själv*), buttons, labels, checkboxes and the wizard's step
+  list; text fields keep the text cursor. 23 elements lacked it, most in the guided wizard.
+- The guided wizard's password step has an optional **guest password**: what a guest can do
+  (read status, basic telemetry and neighbours, change nothing), that it is empty by default
+  (anyone can then log in as a guest), and that guest access is considered safe. Sent as
+  `set guest.password`, up to 15 characters.
+- "Med administratörslösenordet kan man ändra inställningar i repeatern".
+- *Testa innan montering*: if the repeater does not show, a flood advert from a companion near
+  it makes the repeaters around hear it, and lets nearby Observers discover a repeater that is
+  not one itself.
+
 ## v0.14.2 — 2026-11-14
 
 - Duty cycle, in the guided wizard and the repeater guide: 10 % is an EU requirement in
