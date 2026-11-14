@@ -580,7 +580,7 @@ other = "Capacity per cell (mAh)"
 [sol_cap_help]
 other = "Biltema's cell (art. 84-1378) is labelled 3000 mAh, but nobody has measured it. Cheap cells with the same label gave about half in a field test. If you have measured yours, enter the value."
 [sol_result]
-other = "With a {W} W panel, {N} cells ({MAH} mAh) are needed for the worst winter in five, sized to the pessimistic case with {M} % margin. Expected need with the same margin: {EXP} mAh."
+other = "With a {W} W panel, {N} cells ({MAH} mAh) are needed for the worst winter in five, sized to the pessimistic case, snow on the panel and {M} % margin. Expected need with the same margin: {EXP} mAh."
 [sol_w_summer]
 other = "The panel is not enough even in summer here: no battery is enough. Pick a bigger panel."
 [sol_w_panel]
@@ -605,3 +605,11 @@ other = "All assumptions, the tables and the field test are in [the solar guide]
 other = "Further north"
 [sol_min]
 other = "The calculation needs less, but it is at least 2 cells: the charger gives up to 2 A and a Biltema cell takes 1.5 A."
+[sol_exposed]
+other = "**Exposed hilltop or summit:** more snow and rime on the panel"
+[sol_snow]
+other = "That includes {D} days with snow or frost covering the panel."
+[sol_buried]
+other = "North of about 63° N a vertical panel can be buried in snow for 2–3 weeks in midwinter; that is not in the figure."
+[sol_n_setpoint]
+other = "**Set the charger (CN3791) to 5.0 V**, never 5.6 V with the Clas Ohlson panel: the numbers assume 5.0 V. At 5.6 V the charger starts only in fairly bright light and misses most of the weak winter light."

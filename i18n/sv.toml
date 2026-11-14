@@ -576,7 +576,7 @@ other = "Kapacitet per cell (mAh)"
 [sol_cap_help]
 other = "Biltemas cell (art. 84-1378) är märkt 3000 mAh, men ingen har mätt den. Billiga celler med samma märkning gav ungefär hälften i ett fälttest. Har du mätt dina, skriv in värdet."
 [sol_result]
-other = "Med en panel på {W} W behövs {N} celler ({MAH} mAh) för den sämsta vintern på fem år, räknat på det pessimistiska utfallet och {M} % marginal. Väntat behov med samma marginal: {EXP} mAh."
+other = "Med en panel på {W} W behövs {N} celler ({MAH} mAh) för den sämsta vintern på fem år, räknat på det pessimistiska utfallet, snö på panelen och {M} % marginal. Väntat behov med samma marginal: {EXP} mAh."
 [sol_w_summer]
 other = "Panelen räcker inte ens på sommaren här: inget batteri räcker. Välj en större panel."
 [sol_w_panel]
@@ -601,3 +601,11 @@ other = "Alla förutsättningar, tabellerna och fälttestet står i [Solnoder]({
 other = "Längre norrut"
 [sol_min]
 other = "Beräkningen räcker med mindre, men det blir minst 2 celler: laddaren ger upp till 2 A och en Biltema-cell tål 1,5 A."
+[sol_exposed]
+other = "**Utsatt höjd eller topp:** mer snö och rimfrost på panelen"
+[sol_snow]
+other = "Det inkluderar {D} dagar då snö eller frost täcker panelen."
+[sol_buried]
+other = "Norr om ungefär 63° N kan en lodrät panel vara begravd i snö i 2–3 veckor mitt i vintern; det är inte med i siffran."
+[sol_n_setpoint]
+other = "**Ställ laddaren (CN3791) på 5,0 V**, aldrig 5,6 V med Clas Ohlsons panel: siffrorna förutsätter 5,0 V. Vid 5,6 V startar laddaren bara i ganska starkt ljus och missar det mesta av vinterns svaga ljus."

@@ -30,6 +30,7 @@
     <p class="sol-label">{{ T "sol_fw" }}</p>
     <label class="wz-check"><input type="radio" name="sol-fw" value="esm" checked> <span>{{ T "sol_fw_esm" | markdownify }}</span></label>
     <label class="wz-check"><input type="radio" name="sol-fw" value="official"> <span>{{ T "sol_fw_official" | markdownify }}</span></label>
+    <label class="wz-check"><input type="checkbox" id="sol-exposed"> <span>{{ T "sol_exposed" | markdownify }}</span></label>
     <label class="wz-check"><input type="checkbox" id="sol-brush"> <span>{{ T "sol_brush" | markdownify }}</span></label>
     <div class="sol-tilt" data-tilt hidden>
       <p class="sol-label">{{ T "sol_tilt" }}</p>
@@ -65,6 +66,7 @@
   <fieldset class="wz-step">
     <legend><span class="wz-num">4</span> {{ T "sol_build" }}</legend>
     <ul class="sol-notes">
+      <li>{{ T "sol_n_setpoint" | markdownify }}</li>
       <li>{{ T "sol_n_cells" | markdownify }}</li>
       <li>{{ T "sol_n_cold" | markdownify }}</li>
       <li data-bigpanel hidden>{{ T "sol_n_big" | markdownify }}</li>
@@ -72,7 +74,7 @@
     </ul>
   </fieldset>
 </form>
-<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "outside" (T "sol_outside") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") | jsonify }}"></div>
+<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "outside" (T "sol_outside") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") "snow" (T "sol_snow") "buried" (T "sol_buried") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/solar-ui.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

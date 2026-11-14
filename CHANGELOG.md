@@ -4,6 +4,20 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.20.0 — 2026-11-14
+
+Solar figures corrected (the solar session's model v2, `solar-006`, sha256 6d7b57f2…9b2d):
+- The first figures were too optimistic everywhere: the guide's CN3791 set-point of 5.6 V starts
+  the charger only in fairly bright light with this panel (about 6.4–6.6 V open circuit, not 7 V).
+  Everything is now modelled hour by hour at **5.0 V**; expected values rise 5–20 % with an open
+  horizon and 23–55 % behind a 20° tree line, the pessimistic end about doubles.
+- Calculator: new data; snow and frost allowance (2/4 days south of 60° N, 5/8 north, sheltered /
+  exposed) added before the margin, with an "utsatt höjd" option; a notice north of 63° N; the
+  5.0 V setting in the build notes; cell maximum from tree lines up to 30° at the default margin.
+- Guide: tables at 50 % margin, rounded up, with a 50° row; the short answer recommends for the
+  pessimistic case; 5.0 V (and how to trim it by measurement), panel voltage 6.0–6.6 V, an
+  optional dim-light measurement, a snow and frost section, the corrected formula.
+
 ## v0.19.3 — 2026-11-14
 
 - Solar calculator: the margin starts at 50 % instead of 20 %.

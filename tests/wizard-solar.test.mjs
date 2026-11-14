@@ -7,19 +7,26 @@ const data = JSON.parse(readFileSync(new URL("../assets/data/solar-calc.json", i
 const s = (o = {}) => ({ tilt: "vertical", fw: "esm", tree: 20, margin: 0.2, cap: 3000, ...o });
 const i10 = data.JKG.panels.indexOf(10);
 
-test("at 10 W the calculator reproduces the published Jönköping table (value × 1.2, to 100)", () => {
-  const published = { 0: 500, 10: 4100, 15: 5700, 20: 6800, 30: 9300 }; // vertical, EasySkyMesh
-  for (const [tree, mah] of Object.entries(published)) {
-    const v = data.JKG.need.vertical.esm[tree][i10][0];
-    assert.equal(Math.round((v * 1.2) / 100) * 100, mah, `tree ${tree}`);
-  }
-  assert.equal(Math.round((data.JKG.need.vertical.official["20"][i10][0] * 1.2) / 100) * 100, 15600);
+test("at 10 W the data reproduce the solar session's Jönköping preview (value × 1.5, rounded up to 100)", () => {
+  const up = (x) => Math.ceil((x * 1.5) / 100) * 100;
+  const preview = { 0: [800, 600, 1300], 10: [6200, 4100, 9600], 20: [10400, 6400, 22100], 30: [14700, 9500, 29800] };
+  for (const [tree, row] of Object.entries(preview))
+    assert.deepEqual(data.JKG.need.vertical.esm[tree][i10].map(up), row, `tree ${tree}`);
+  assert.equal(up(data.JKG.need.vertical.official["20"][i10][0]), 23200);
+  assert.equal(data.JKG.setpoint_V, 5.0);
+});
+test("the snow allowance is added before the margin; exposed sites get more days", () => {
+  const high = data.JKG.need.vertical.esm["20"][i10][2];
+  const sheltered = 2 * 153.5, exposed = 4 * 153.5;
+  assert.ok(Math.abs(needAt(data.JKG, s(), i10) - (high + sheltered) * 1.2) < 1e-6);
+  assert.ok(Math.abs(needAt(data.JKG, s({ exposed: true }), i10) - (high + exposed) * 1.2) < 1e-6);
+  assert.ok(needAt(data.BLE, s({ exposed: true }), i10) - needAt(data.BLE, s(), i10) > 0);
 });
 test("cells are sized to the pessimistic value with the margin", () => {
-  const high = data.JKG.need.vertical.esm["20"][i10][2];
-  assert.equal(needAt(data.JKG, s(), i10), high * 1.2);
+  const high = data.JKG.need.vertical.esm["20"][i10][2] + 2 * 153.5;
+  assert.ok(Math.abs(needAt(data.JKG, s(), i10) - high * 1.2) < 1e-6);
   assert.equal(cellsFor(data.JKG, s(), i10), Math.ceil((high * 1.2) / 3000));
-  assert.equal(cellsFor(data.JKG, s({ margin: 0 }), i10), Math.ceil(high / 3000));
+  assert.equal(cellsFor(data.JKG, s({ margin: 0 }), i10), Math.max(2, Math.ceil(high / 3000)));
   assert.ok(cellsFor(data.JKG, s({ cap: 1500 }), i10) > cellsFor(data.JKG, s(), i10));
 });
 test("a panel that cannot refill even in summer gives no cell count", () => {
@@ -40,8 +47,8 @@ test("past the slider's end: a panel beyond 100 W is named; past 300 W the floor
   const r = couple(data.UME, north, { lock: "cells", panelIdx: 2, cells: 1, max: 30 });
   assert.equal(r.panelIdx, SLIDER_PANELS.length - 1);
   assert.ok(["panel", "nopanel", "beyond"].includes(r.warn.kind));
-  const floor = data.UME.floor.vertical.official["50"][2];
-  assert.equal(panelFor(data.UME, north, 1).noPanel, floor * 1.2 > 3000);
+  const floor = (data.UME.floor.vertical.official["50"][2] + 5 * 242.1) * 1.2;
+  assert.equal(panelFor(data.UME, north, 2).noPanel, floor > 6000);
 });
 test("too many cells for the slider: the slider stops at max and says how many", () => {
   const r = couple(data.JKG, s({ fw: "official", tree: 50 }), { lock: "panel", panelIdx: i10, cells: 3, max: 5 });

@@ -1,5 +1,6 @@
-// The solar calculator's arithmetic (operator 2026-11-14, backlog B-259). Pure: takes one county's
-// entry from assets/data/solar-calc.json (the solar session's model, sha256 2deb946d…fe8b) and
+// The solar calculator's arithmetic (operator 2026-11-14, backlog B-259/B-260). Pure: takes one
+// county's entry from assets/data/solar-calc.json (the solar session's model v2, charger at 5.0 V,
+// sha256 6d7b57f2…9b2d) and
 // the visitor's settings. Never scales across counties and never extrapolates past the model's
 // panel sizes. Battery needs are mAh WITHOUT margin as [value, low, high]; null = no battery is
 // enough with that panel (it cannot refill even in summer). Cells are sized to the HIGH value.
@@ -11,18 +12,28 @@ export const DEFAULT_PANEL = 10;                                         // the 
 // cell takes 1.5 A, so one cell alone is charged beyond its rating.
 export const MIN_CELLS = 2;
 
-// s = { tilt: "vertical"|"tilt60"|"tilt40", fw: "esm"|"official", tree: 0..50, margin: 0..1, cap: mAh per cell }
+// s = { tilt: "vertical"|"tilt60"|"tilt40", fw: "esm"|"official", tree: 0..50, margin: 0..1,
+//       cap: mAh per cell, exposed: true for an exposed hilltop (more snow and rime days) }
 const entry = (d, s, i) => d?.need?.[s.tilt]?.[s.fw]?.[String(s.tree)]?.[i] ?? null;
 
-// The pessimistic need for panel index i, with margin; null if no battery is enough.
+// Snow and frost on the panel: days of zero harvest × the daily load through the derates (the
+// solar session's allowance, added before the margin). Sheltered unless the visitor says exposed.
+export function snowAllowance(d, s) {
+  const a = d?.snow_allowance;
+  if (!a) return 0;
+  return (s.exposed ? a.days.exposed : a.days.sheltered) * (a.per_day_mAh[s.fw] ?? 0);
+}
+const withMargin = (d, s, x) => (x == null ? null : (x + snowAllowance(d, s)) * (1 + s.margin));
+
+// The pessimistic need for panel index i, snow and margin included; null if no battery is enough.
 export function needAt(d, s, i) {
   const e = entry(d, s, i);
-  return e && e[2] != null ? e[2] * (1 + s.margin) : null;
+  return withMargin(d, s, e ? e[2] : null);
 }
-// The expected need (the model's middle value), with margin, for the summary line.
+// The expected need (the model's middle value), snow and margin included, for the summary line.
 export function expectedAt(d, s, i) {
   const e = entry(d, s, i);
-  return e && e[0] != null ? e[0] * (1 + s.margin) : null;
+  return withMargin(d, s, e ? e[0] : null);
 }
 
 // Cells needed with panel index i: a whole number ≥ MIN_CELLS, or null (no battery is enough).
@@ -41,21 +52,24 @@ export function panelFor(d, s, cells) {
     if (n != null && n <= have) return { i };
   }
   const f = d?.floor?.[s.tilt]?.[s.fw]?.[String(s.tree)];
-  return { i: null, noPanel: !!(f && f[2] != null && f[2] * (1 + s.margin) > have) };
+  const floor = withMargin(d, s, f ? f[2] : null);
+  return { i: null, noPanel: floor != null && floor > have };
 }
 
-// The cell slider's maximum for a county: enough for its worst case with the 10 W panel, at the
-// pessimistic value and 100 % margin (operator: "for the northern parts, make the sliders max
-// higher"), and never below 10.
+// The cell slider's maximum for a county (operator: "for the northern parts, make the sliders max
+// higher"): enough cells for its worst case with the 10 W panel and tree lines up to 30°, at the
+// pessimistic value, an exposed site's snow days and the default 50 % margin; never below 10.
+// Cases beyond (50° trees, official firmware behind high trees) get the red "kräver N celler".
 export function maxCells(d, cap = 3000) {
   const i = d.panels.indexOf(DEFAULT_PANEL);
   let worst = 0;
   for (const tilt of Object.keys(d.need)) for (const fw of Object.keys(d.need[tilt]))
     for (const tree of Object.keys(d.need[tilt][fw])) {
+      if (Number(tree) > 30) continue;
       const e = d.need[tilt][fw][tree][i];
-      if (e && e[2] != null) worst = Math.max(worst, e[2]);
+      if (e && e[2] != null) worst = Math.max(worst, e[2] + snowAllowance(d, { fw, exposed: true }));
     }
-  return Math.max(10, Math.ceil((worst * 2) / cap));
+  return Math.max(10, Math.ceil((worst * 1.5) / cap));
 }
 
 // Coupling: the slider touched last stays; the other follows. Returns the new slider values and a

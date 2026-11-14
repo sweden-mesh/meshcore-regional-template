@@ -15,8 +15,8 @@ Priset är att den måste klara sig själv hela vintern. En repeater på solcell
 nästan oavsett hur den byggs; det är vintern som avgör hur stort batteri som behövs och hur
 panelen ska sitta. Siffrorna på den här sidan gäller ett vanligt bygge med
 [Clas Ohlsons panel](https://www.clasohlson.com/se/Northlight-Flexible-Solar-System-solpanel-15-W/p/36-9423)
-där du bor, och de är räknade för **den sämsta vintern på fem år, plus 20 procent
-marginal**. En vinter av det slag som kommer en gång på hundra år klarar de inte säkert.
+där du bor, och de är räknade för **den sämsta vintern på fem år, plus 50 procent
+marginal**, avrundade uppåt. Laddaren är inställd på **5,0 V**. En vinter av det slag som kommer en gång på hundra år klarar de inte säkert.
 
 ## Det korta svaret
 
@@ -95,7 +95,7 @@ I korthet, för en nod som ska klara sig själv:
   borstar bort snön, och så fri sikt mot söder som platsen tillåter.
 - **Batteri:** litiumjon, **minst två celler** parallellt, med skyddskort, i en isolerad låda. Storleken beror
   på trädlinjen och var i landet noden står; se tabellerna nedan.
-- **Laddare:** en MPPT-solladdare (CN3791), inställd efter panelen. Undvik laddare som slutar
+- **Laddare:** en MPPT-solladdare (CN3791), inställd på **5,0 V** med Clas Ohlsons panel. Undvik laddare som slutar
   ladda under 0 °C: hälften av vinterns energi kommer när det är minusgrader.
 - **Firmware:** en strömsnål repeater. Med EasySkyMesh drar den cirka 4,5 mA i snitt, med
   officiell MeshCore cirka 7,1 mA, och det ändrar batteribehovet ungefär två gånger om.
@@ -112,7 +112,7 @@ vägleda dig när du väljer en annan panel:
 |---|---|
 | Märkeffekt enligt butiken | 15 W |
 | Verklig effekt i full sol, uppmätt | cirka 10 W |
-| Tomgångsspänning i sol utomhus, uppmätt | cirka 7 V |
+| Tomgångsspänning i full sol, beräknad från fälttestet | cirka 6,4–6,6 V |
 | Inomhus bakom två glasrutor, 4 november kl. 13.04 | 5,90 V tomgång, 1,12 A kortslutning, cirka 4,7 W |
 
 Väljer du en annan panel:
@@ -120,9 +120,11 @@ Väljer du en annan panel:
 - **Räkna med verklig effekt, inte märkeffekt.** Clas Ohlsons panel ger cirka två tredjedelar av
   sin märkeffekt i full sol. En panel som verkligen ger cirka 10 W ger ungefär samma vinterskörd
   som i tabellerna; en mindre panel behöver ett större batteri.
-- **Spänningen ska passa laddaren.** Tabellerna förutsätter en panel med cirka 7 V tomgång och
-  CN3791 inställd på 5,6 V. Har din panel en annan spänning ställer du in laddaren efter den, och
-  CN3791 börjar bara ladda när panelens tomgångsspänning är över cirka 5,7 V.
+- **Spänningen ska passa laddaren.** Tabellerna förutsätter Clas Ohlsons panel (cirka 6,4–6,6 V
+  tomgång i full sol) och CN3791 inställd på 5,0 V. CN3791 laddar bara när panelens
+  tomgångsspänning är över cirka 1,02 gånger inställningen; ställs den för högt startar laddaren
+  bara i starkt ljus och missar vinterns svaga ljus. Har din panel en annan spänning ställer du in
+  laddaren efter den.
 - **Mät den själv** innan vintern: tomgångsspänningen i sol, utomhus, utan något anslutet.
 
 ## Hur stort batteri
@@ -135,7 +137,8 @@ Vill du räkna på en annan panel eller ett annat antal celler? Använd
 Panelen lodrät mot söder. *Dagar i totalmörker* är hur länge batteriet ensamt håller repeatern
 igång utan någon sol alls, med kyla, urladdningsgräns, åldrande och självurladdning inräknat.
 *Klarar* betyder att batteriet aldrig går under 3,4 V under den sämsta vintern på fem år, med
-marginalen. *Utan träd* betyder att bara terrängen runt platsen skymmer; i kuperade trakter längre
+marginalen. Snö på panelen är inte med i tabellerna; se [Snö och frost](#snö-och-frost-på-panelen).
+*Utan träd* betyder att bara terrängen runt platsen skymmer; i kuperade trakter längre
 norrut skymmer den ensam en stor del av vintersolen.
 
 {{% solar "capacity" %}}
@@ -156,13 +159,12 @@ hur mycket beräkningen kan slå fel. Bygg aldrig med färre än **två celler**
   eller berg skär av himlen.
 - **Lutning och snö:** en lutad panel ser mycket mer himmel och behöver därför mycket mindre
   batteri under en trädlinje, men bara om någon borstar bort snön. En panel på 60° håller snön
-  ungefär lika länge som en på 40°; bara en lodrät panel blir fri av sig själv. Varje dag under
-  snö kostar cirka 108 mAh (EasySkyMesh) eller 170 mAh (officiell firmware), så tre veckor med
-  snö kräver cirka 3 900 mAh, mer än hela 60°-kolumnen. För en plats som ingen besöker på
+  ungefär lika länge som en på 40°; bara en lodrät panel blir oftast fri av sig själv (se [Snö och frost](#snö-och-frost-på-panelen)). Varje dag under
+  snö kostar cirka 154 mAh (EasySkyMesh) eller 242 mAh (officiell firmware), så tre veckor med
+  snö kräver cirka 3 200 mAh till, före marginalen. För en plats som ingen besöker på
   vintern: använd den lodräta kolumnen.
-- **Riktning:** i Jönköping ändrar sydväst i stället för söder en öppen plats från 500 till 600 mAh, och
-  under en trädlinje på 20° gör det ingen skillnad i beräkningen (i verkligheten har söder en
-  liten fördel vid växlande moln). Mot väster fungerar inte, se fälttestet nedan.
+- **Riktning:** söder är bäst. Sydväst ändrade behovet lite med fri horisont i den första
+  beräkningen och har inte räknats om. Mot väster fungerar inte, se fälttestet nedan.
 
 ## Vad ett fälttest i Jönköping visade
 
@@ -230,7 +232,7 @@ Tabellerna ovan gäller bara för det här bygget:
 - **Firmware:** EasySkyMesh, MeshCores strömsparande gren, repeaterbygget, med `powersaving on`
   och `set radio.rxps max`: cirka 4,5 mA i snitt. Officiell MeshCore med `powersaving on`: cirka
   7,1 mA.
-- **Laddare:** justerbart CN3791-solladdarkort inställt på 5,6 V, med lysdiodernas motstånd
+- **Laddare:** justerbart CN3791-solladdarkort inställt på **5,0 V** (aldrig 5,6 V med den här panelen), med lysdiodernas motstånd
   borttagna, laddström högst 2 A.
 - **Batteri:** litiumjon, 3,6–3,7 V, celler parallellt, med skyddskort, i en isolerad låda.
 - **Montering:** lodrät, mot söder, underkanten över höjden där snön driver.
@@ -239,14 +241,17 @@ Tabellerna ovan gäller bara för det här bygget:
 ### Innan första vintern
 
 1. Mät spänningen mellan panelens två utgångstrådar i sol, utan något anslutet. Räkna med cirka
-   7 V. Visar den cirka 14 V är arket kopplat åt andra hållet, och laddaren ska då ställas på
-   11,5 V i nästa steg. Vid alla andra värden: stanna och kontrollera att du har rätt trådar.
-2. Ställ in laddaren med ett labbaggregat på 5,6 V (eller 11,5 V, se steg 1) tills kortets
-   MPPT-stift visar 1,205 V. Kontrollera att laddströmmen är högst 2 A. CN3791 börjar bara ladda
-   när panelens tomgångsspänning är över cirka 5,7 V; i fälttestet visade panelen 5,90 V inomhus i
-   svagt ljus, nära gränsen. Mät tomgångsspänningen utomhus en kall, ljus dag före vintern och
-   kontrollera att 5,6 V-inställningen stämmer.
-3. Ta bort laddarens lysdiodmotstånd. Koppla laddare → skyddskort → XIAO:ns batteriplattor.
+   6,0–6,6 V i full sol (fälttestet mätte 5,90 V inomhus bakom glas). Visar den cirka 12–13 V är
+   arket kopplat åt andra hållet, och laddaren ska då ställas på 10,0 V i nästa steg. Vid alla
+   andra värden: stanna och kontrollera att du har rätt trådar.
+2. Ställ in laddaren med ett labbaggregat på **5,0 V** (eller 10,0 V, se steg 1) tills kortets
+   MPPT-stift visar 1,205 V. Kontrollera att laddströmmen är högst 2 A. CN3791:s referens är
+   noggrann på cirka ±2 procent, ungefär ±0,1 V, så mät sedan spänningen vid panelens anslutning
+   medan kortet laddar och justera mot 5,0 V. 4,8 V är ännu lite bättre bakom träd, men bara om
+   kortets spänningsfall på ingången är under cirka 0,15 V och det inte har någon seriediod före
+   spolen; annars 5,0 V.
+3. Ta bort laddarens lysdiodmotstånd: kortets egen ström äter av det svaga ljusets skörd. Koppla
+   laddare → skyddskort → XIAO:ns batteriplattor.
 4. Kontrollera att en provladdning slutar mellan 4,16 och 4,25 V och börjar igen av sig själv
    under 4,0 V.
 5. Täck panelen och kontrollera att batteriet tappar mindre än 0,1 mA på natten.
@@ -257,30 +262,67 @@ Tabellerna ovan gäller bara för det här bygget:
 Ett dygns strömlogg vid batteriet innan du köper celler är värd mer än vilken beräkning som
 helst.
 
+> [!TIP]- Valfritt: mät panelens spänning i svagt ljus
+> Hur mycket batteri som behövs beror på hur panelens spänning faller i svagt ljus, och det har
+> ingen mätt än. Det är skillnaden mellan tabellernas låga, väntade och höga värde. Så mäter du:
+>
+> 1. Inom cirka två minuter, med panelen vid samma temperatur, mät tomgångsspänning och
+>    kortslutningsström vid 4–6 ljusnivåer.
+> 2. Dämpa hela panelen jämnt med lager av tyll eller myggnät; skugga aldrig bara en del.
+> 3. Täck kortslutningsströmmar från cirka 1 A ner till cirka 0,03 A.
+> 4. Rita spänningen mot logaritmen av strömmen. Hur mycket spänningen stiger när strömmen
+>    tiodubblas visar vilket värde som gäller: cirka 0,85–0,9 V det låga, cirka 1,0 V det väntade,
+>    cirka 1,3 V det höga.
+
+### Snö och frost på panelen
+
+Även en lodrät panel kan täckas av snö som fastnar på glaset genom ett tunt lager frost eller is;
+i ett försök i Piteå (65° N) var till och med den lodräta modulen helt täckt hela januari. Rimfrost
+försvinner efter en timme eller två med låg sol och behöver ingen egen marginal. Räkna med dagar
+utan skörd och lägg till dem innan marginalen, cirka 154 mAh per dag med EasySkyMesh och 242 mAh
+med officiell firmware:
+
+| | Skyddad plats | Utsatt höjd eller topp |
+|---|---|---|
+| Söder om 60° N | 2 dagar | 4 dagar |
+| Norr om 60° N | 5 dagar | 8 dagar |
+
+Norr om ungefär 63° N kan en lodrät panel vara begravd i 2–3 veckor mitt i vintern; det är inte
+med i siffrorna. [Solcellskalkylatorn](/wizard/solcell/) lägger till snödagarna åt dig.
+
 ## Så togs siffrorna fram
 
 En simulering timme för timme över de 18 vintrarna 2005–2023, med PVGIS satellitdata för
 instrålning och temperatur för regionens plats (Jönköping: 57,78° N, 14,16° Ö). Trädlinjen stänger ute den direkta solen och
 en del av himlen. Modellen räknar med panelens sämre verkningsgrad i svagt ljus, laddarens egna
 förluster och repeaterns förbrukning. Varje vinter ger det största underskott batteriet måste
-överbrygga. Tabellerna använder den sämsta vintern på fem år och lägger till 20 procent.
+överbrygga. Tabellerna använder den sämsta vintern på fem år och lägger till 50 procent,
+avrundat uppåt till närmaste hundratal mAh.
+
+Laddaren modelleras timme för timme vid 5,0 V: panelens spänning i svagt ljus avgör när CN3791
+startar. Den första versionen av beräkningen antog att laddaren arbetade i ljus där den inte kan
+starta vid 5,6 V, och gav därför för låga siffror; den här sidan visar den rättade versionen.
+Modellen stämmer med fälttestet om fönstret i testet hade en skyline på cirka 10°, vilket visar
+att trädlinjen, eller horisonten, är det som betyder mest.
 
 En oberoende omskrivning av batterisimuleringen, gjord bara utifrån dess beskrivning, gav exakt
 samma värden i båda batteritabellerna. En annan gav samma instrålning och temperatur per månad
 på tre decimaler.
 
 > [!NOTE]- Formeln för batteristorleken
-> batteri (mAh) = underskott / (0,92 × 0,85 × 0,90) / (1 − 0,03 × dagar/30) × 1,20
+> batteri (mAh) = (underskott / (0,92 × 0,85 × 0,90) / (1 − 0,03 × dagar/30) + snödagar) × 1,50
 >
 > - 0,92: kapacitet kvar vid −20 °C vid så liten urladdning
 > - 0,85: användbart fönster, 4,2 V ner till en gräns på 3,4 V
 > - 0,90: åldrande, dimensionerat för tredje vintern
 > - 3 %: självurladdning per månad under underskottsperioden
-> - 1,20: marginal
+> - snödagar: dagar utan skörd × dygnets förbrukning genom samma faktorer (bara i kalkylatorn)
+> - 1,50: marginal, och svaret avrundas uppåt
 
-Inte med i beräkningen: snö eller frost på panelen, och extra ljus som reflekteras från nysnö på
-marken. De största osäkerheterna är firmwarens verkliga medelförbrukning, panelens effekt i mycket
-svagt ljus och den verkliga trädlinjen.
+Inte med i tabellerna: snö eller frost på panelen (se ovan), och extra ljus som reflekteras från
+nysnö på marken. De största osäkerheterna är panelens spänning i svagt ljus (se mätningen ovan),
+firmwarens verkliga medelförbrukning och den verkliga trädlinjen. Osäkerheten är stor, cirka
+±25–50 procent, tills panelens beteende i svagt ljus är uppmätt.
 
 **Källor:** PVGIS v5.3 (EU:s Joint Research Centre), SARAH3 timvis instrålning med
 ERA5-temperatur, 2005–2023; SMHI:s stationsdata för Jönköping-Axamo och Växjö; strömmätningar av

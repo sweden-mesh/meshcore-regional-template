@@ -16,7 +16,7 @@ async function init(form) {
 
   const st = { code: all[form.dataset.own] ? form.dataset.own : "JKG", lock: "panel" };
   const panel = q("#sol-panel"), cells = q("#sol-cells"), margin = q("#sol-margin"), tree = q("#sol-tree");
-  const brush = q("#sol-brush"), cap = q("#sol-cap");
+  const brush = q("#sol-brush"), cap = q("#sol-cap"), exposed = q("#sol-exposed");
   panel.value = SLIDER_PANELS.indexOf(DEFAULT_PANEL);
 
   const settings = () => ({
@@ -25,6 +25,7 @@ async function init(form) {
     tree: TREES[Number(tree.value)],
     margin: Number(margin.value) / 100,
     cap: Math.max(100, Number(String(cap.value).replace(/\s/g, "")) || 3000),
+    exposed: exposed.checked,
   });
 
   const warn = (on, text) => {
@@ -71,13 +72,15 @@ async function init(form) {
     q('[data-out="result"]').textContent = need == null || exp == null ? "" : t.result
       .replace("{W}", W).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
       .replace("{EXP}", fmt(exp)).replace("{M}", margin.value)
-      + (Math.ceil(needAt(d, s, r.panelIdx) / s.cap) < MIN_CELLS ? ` ${t.min}` : "");
+      + ` ${t.snow.replace("{D}", s.exposed ? d.snow_allowance.days.exposed : d.snow_allowance.days.sheltered)}`
+      + (Math.ceil(needAt(d, s, r.panelIdx) / s.cap) < MIN_CELLS ? ` ${t.min}` : "")
+      + (d.lat >= 63 ? ` ${t.buried}` : "");
   };
 
   panel.addEventListener("input", () => { st.lock = "panel"; update(); });
   cells.addEventListener("input", () => { st.lock = "cells"; update(); });
   for (const el of [margin, tree, cap]) el.addEventListener("input", update);
-  for (const el of form.querySelectorAll('input[type="radio"], #sol-brush')) el.addEventListener("change", update);
+  for (const el of form.querySelectorAll('input[type="radio"], #sol-brush, #sol-exposed')) el.addEventListener("change", update);
 
   showPlace();
   update();
