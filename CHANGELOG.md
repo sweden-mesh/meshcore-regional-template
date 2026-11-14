@@ -4,6 +4,16 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.25.0 — 2026-11-14
+
+- Solar calculator: a methods and verification page at /wizard/solcell/metod/ (B.1–B.16: model,
+  data, checks, limitations, test vectors, sources), linked only from the calculator, kept out of
+  lists and the sitemap. Downloads the reference script and the calculator data with their sha256,
+  computed at build time.
+- Solar guide: the ±15 % claim and the "independent rewrite" paragraph corrected to match the
+  methods page.
+- Long bare URLs in page text now wrap instead of widening the page on phones.
+
 ## v0.24.1 — 2026-11-14
 
 - Privacy: Jönköping's point in the solar data is rounded to 57.78, 14.16 (it was the project's own

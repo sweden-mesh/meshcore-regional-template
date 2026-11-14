@@ -1,0 +1,21 @@
+{{- /* {{< solar-files >}}: the methods page's downloads, each with the sha256 of the exact file the
+  site serves (computed at build time, so it can never disagree with the file). B.275. */ -}}
+{{- $script := resources.Get "solar/reference_solar_need.py" -}}
+{{- $data := resources.Get "data/solar-calc.json" | minify | fingerprint -}}
+<table>
+  <thead><tr><th>Fil</th><th>Innehåll</th><th>sha256</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><a href="{{ with $script }}{{ .RelPermalink }}{{ end }}" download><code>reference_solar_need.py</code></a></td>
+      <td>Referensskriptet (B.14), Python 3 och numpy</td>
+      <td><code class="nobreak">{{ with $script }}{{ .Content | crypto.SHA256 }}{{ else }}–{{ end }}</code></td>
+    </tr>
+    {{- with $data }}
+    <tr>
+      <td><a href="{{ .RelPermalink }}" download="solar-calc.json"><code>solar-calc.json</code></a></td>
+      <td>Kalkylatorns data, den fil kalkylatorn läser (B.14)</td>
+      <td><code class="nobreak">{{ .Content | crypto.SHA256 }}</code></td>
+    </tr>
+    {{- end }}
+  </tbody>
+</table>

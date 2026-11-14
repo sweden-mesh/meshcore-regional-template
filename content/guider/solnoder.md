@@ -31,7 +31,7 @@ marginal**, avrundade uppåt. Laddaren är inställd på **5,0 V**. En vinter av
 {{% solar "short" %}}
 
 Det som ändrar behovet mest är trädlinjen, panelens vinkel och hur mycket ström firmwaren drar.
-Vädret en enskild vinter betyder mindre.
+Hur dålig en enskild vinter är betyder mindre.
 
 ## Utmaningen: vintern
 
@@ -52,8 +52,9 @@ Exemplet nedan gäller Jönköping (57,8° N). Längre norrut är vintern mörka
   och 119 Wh i januari. Med fri horisont är det 656 och 912 Wh. Träden tar alltså bort nästan
   90 procent av december och januari.
 
-Underskottet på vintern är därför inte otur. Det byggs upp från ungefär mitten av november till
-slutet av januari varje år, och skiljer sig bara cirka ±15 procent mellan vintrar.
+Underskottet på vintern är därför inbyggt: i simuleringen byggs det upp varje vinter från ungefär
+mitten av november till slutet av januari. Hur djupt det blir varierar mycket mellan vintrarna; metodbeskrivningen, som
+nås från [kalkylatorn](/wizard/solcell/), räknar igenom ett exempel.
 
 ## Hjälper det att panelerna är kalla?
 
@@ -311,9 +312,9 @@ starta vid 5,6 V, och gav därför för låga siffror; den här sidan visar den 
 Modellen stämmer med fälttestet om fönstret i testet hade en skyline på cirka 10°, vilket visar
 att trädlinjen, eller horisonten, är det som betyder mest.
 
-En oberoende omskrivning av batterisimuleringen, gjord bara utifrån dess beskrivning, gav exakt
-samma värden i båda batteritabellerna. En annan gav samma instrålning och temperatur per månad
-på tre decimaler.
+En oberoende ombyggnad av den nuvarande modellen, skriven enbart utifrån metodbeskrivningen, gav
+exakt samma värden som kalkylatorns data. Hela metoden och kontrollerna står i
+metodbeskrivningen, som nås från [kalkylatorn](/wizard/solcell/).
 
 > [!NOTE]- Formeln för batteristorleken
 > batteri (mAh) = (underskott / (0,92 × 0,85 × 0,90) / (1 − 0,03 × dagar/30) + snödagar) × 1,50

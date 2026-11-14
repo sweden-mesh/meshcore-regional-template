@@ -591,6 +591,8 @@ other = "Biltema anger laddning från **0 °C**. Beräkningen förutsätter, som
 other = "**Stora paneler:** en panel på 20 W eller mer med Clas Ohlson-panelens cirka 6 V ger mycket ström in i laddaren. Välj då en panel på 12–18 V och ställ in laddaren efter den."
 [sol_n_guide]
 other = "Alla förutsättningar, tabellerna och fälttestet står i [Solnoder]({{ .Guide }})."
+[sol_n_method]
+other = "Hur siffrorna räknas fram, vad som kontrollerats och hur du räknar om dem själv står i [metod och verifiering]({{ .Method }})."
 [sol_north]
 other = "Längre norrut"
 [sol_min]

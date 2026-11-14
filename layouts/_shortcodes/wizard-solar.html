@@ -8,6 +8,7 @@
 {{- $own := index ($r.iatas | default slice) 0 | default "JKG" -}}
 {{- $calc := resources.Get "data/solar-calc.json" | minify | fingerprint -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}
+{{- $method := "" }}{{ with site.GetPage "/solcell-metod" }}{{ $method = .RelPermalink }}{{ end -}}
 <form class="wizard solar-calc" id="solar-calc" novalidate
       data-calc="{{ $calc.RelPermalink }}" data-own="{{ $own }}" data-notes="{{ $notes | jsonify }}">
 
@@ -63,6 +64,9 @@
       <li>{{ T "sol_n_cold" | markdownify }}</li>
       <li data-bigpanel hidden>{{ T "sol_n_big" | markdownify }}</li>
       <li>{{ T "sol_n_guide" (dict "Guide" $guide) | markdownify }}</li>
+      {{- with $method }}
+      <li>{{ T "sol_n_method" (dict "Method" .) | markdownify }}</li>
+      {{- end }}
     </ul>
   </fieldset>
 </form>

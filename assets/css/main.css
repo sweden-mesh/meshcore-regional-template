@@ -181,7 +181,7 @@ a { color: var(--accent); }
 .crumbs { font-size: .9rem; }
 .crumbs a { color: var(--muted); text-decoration: none; font-weight: 600; }
 .crumbs a::after { content: " ›"; }
-.prose { font-size: 1.05rem; line-height: 1.7; }
+.prose { font-size: 1.05rem; line-height: 1.7; overflow-wrap: break-word; }
 .prose h2 { font-size: 1.5rem; margin: 2.5rem 0 .5rem; letter-spacing: -.01em; }
 .prose h3 { font-size: 1.15rem; margin: 1.75rem 0 .4rem; }
 .prose a { color: var(--accent); text-underline-offset: 2px; }

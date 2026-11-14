@@ -595,6 +595,8 @@ other = "Biltema rates charging from **0 °C**. The calculation assumes, like th
 other = "**Large panels:** a panel of 20 W or more at the Clas Ohlson panel's about 6 V pushes a lot of current into the charger. Use a 12–18 V panel then, and set the charger to match."
 [sol_n_guide]
 other = "All assumptions, the tables and the field test are in [the solar guide]({{ .Guide }})."
+[sol_n_method]
+other = "How the numbers are computed, what has been checked and how to recompute them yourself: [method and verification]({{ .Method }})."
 [sol_north]
 other = "Further north"
 [sol_min]
