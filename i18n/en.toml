@@ -67,11 +67,11 @@ other = "Based on"
 [source_changes]
 other = "Changed:"
 [stat_repeaters]
-other = "repeaters heard"
+other = "Repeaters"
 [stat_observers]
-other = "of them observers"
+other = "Observers"
 [stat_packets]
-other = "packets in the last day"
+other = "Packets/day"
 [breadcrumb]
 other = "Breadcrumbs"
 [pager]

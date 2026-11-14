@@ -4,6 +4,16 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.12.12 — 2026-11-14
+
+Visitor feedback:
+- The "Nätet" card: one-line labels *Repeatrar*, *Observatörer*, *Paket/dygn*. Observers are
+  counted on their own, of any node type (a companion can be an observer), not as a share of the
+  repeaters. The three columns size to their labels.
+- The narrow menu closes on a tap outside it, or on Escape.
+- Guides show no lead line under the title (it repeated the first paragraph); the description
+  still goes in the meta tags and the guide lists. Set by a cascade in `content/guider/_index.md`.
+
 ## v0.12.11 — 2026-11-13
 
 - The firmware guide names `v1.18.0-lou-16` as the latest version.

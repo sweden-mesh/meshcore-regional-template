@@ -24,4 +24,7 @@
       {{ with site.GetPage "/sok" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
     </nav>
   </details>
+  {{- with resources.Get "js/menu.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+  <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+  {{- end }}
 </header>

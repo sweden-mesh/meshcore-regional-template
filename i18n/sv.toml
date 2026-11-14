@@ -63,11 +63,11 @@ other = "Bygger på"
 [source_changes]
 other = "Ändrat:"
 [stat_repeaters]
-other = "repeatrar hörda"
+other = "Repeatrar"
 [stat_observers]
-other = "av dem observatörer"
+other = "Observatörer"
 [stat_packets]
-other = "paket senaste dygnet"
+other = "Paket/dygn"
 [breadcrumb]
 other = "Brödsmulor"
 [pager]

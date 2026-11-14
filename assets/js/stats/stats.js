@@ -1,15 +1,15 @@
 // The "Nätet" card: live counts from Beacon. Both node counts come from one
-// list, /nodes for the region, so they are consistent: repeaters heard in the
-// region and not placed elsewhere, and how many of those are observers (a
-// subset). (The earlier /stats/node-types + /observers pair counted different
+// list, /nodes for the region, nodes not placed elsewhere: the repeaters, and
+// the observers of any type, counted on their own (a companion can be an
+// observer too; visitor feedback 2026-11-14). (The earlier /stats/node-types + /observers pair counted different
 // populations: observers that had not yet advertised as nodes, and all node
 // types; two equal numbers looked wrong. Operator's review, 2026-11-12.)
 // Packets in the last 24 h come from /stats/payload-breakdown.
 
 export function summarize(nodes, breakdown) {
-  const reps = (nodes || []).filter((n) => n.nodeType === 2 && !n.possiblyForeign);
-  const repeaters = reps.length;
-  const online = reps.filter((n) => n.isObserver).length;
+  const local = (nodes || []).filter((n) => !n.possiblyForeign);
+  const repeaters = local.filter((n) => n.nodeType === 2).length;
+  const online = local.filter((n) => n.isObserver).length;
   const packets = (breakdown || []).reduce((n, b) => n + (b.count || 0), 0);
   return { repeaters, online, packets };
 }
