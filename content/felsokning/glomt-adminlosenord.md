@@ -16,7 +16,7 @@ password <nytt-lösenord>
 
 Högst 15 tecken. Repeatern svarar med det nya lösenordet.
 
-> [!WARNING] Byt standardlösenordet
+> [!CAUTION] Byt standardlösenordet
 > En repeater med standardlösenordet `password` kan styras av vem som helst inom räckhåll.
 
 ## Så vet du att det fungerar

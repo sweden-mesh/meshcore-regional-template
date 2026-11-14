@@ -75,7 +75,7 @@ Det stämmer att en solcell ger mer i kyla, men för vintern spelar det nästan 
 Det som verkligen styr vinterskörden är trädlinjen, som tar bort cirka 90 procent av december
 bakom 20°, och nysnö på marken, som kan ge upp till 15 procent mer i januari på en lodrät panel.
 
-> [!NOTE]- Laddning av kalla celler
+> [!WARNING]- Laddning av kalla celler
 > Vid så små strömmar är risken begränsad men inte noll. Inga publicerade tester täcker så låga
 > laddströmmar mellan 0 och −10 °C. Utifrån de data som finns hamnar gränsen ungefär vid
 > 0,15–0,25 C vid −10 °C (1 C betyder att hela kapaciteten laddas på en timme). Vanlig

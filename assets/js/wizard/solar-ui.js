@@ -41,7 +41,7 @@ async function init(form) {
     q('[data-out="where"]').textContent = n
       ? `${t.where} ${n.place} (${String(n.lat.toFixed(1)).replace(".", ",")}° N)${n.source && n.source !== "PVGIS-SARAH3" ? ` · ${t.era5}` : ""}`
       : t.outside.replace("{PLACE}", st.code);
-    q('[data-out="note"]').innerHTML = n?.note ? `<div class="alert alert-warning" role="note"><p class="alert-title">${t.north}</p><p>${n.note}</p></div>` : "";
+    q('[data-out="note"]').innerHTML = n?.note ? `<div class="alert alert-warning" role="note"><p class="alert-title"><svg class="alert-icon alert-icon-warning" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2.5 1.5 21h21L12 2.5z" fill="currentColor"/><path d="M12 9.5v5M12 17.5v.5" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/></svg>${t.north}</p><p>${n.note}</p></div>` : "";
   };
 
   const update = () => {

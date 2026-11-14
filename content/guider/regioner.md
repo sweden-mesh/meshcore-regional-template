@@ -37,7 +37,7 @@ Sverige använder två nivåer:
 Länets namn bestäms av länet självt; finns inget beslut används ett uppmätt eller föreslaget
 namn. Det finns inga kommunregioner.
 
-> [!NOTE] `*` betyder inte "allt"
+> [!WARNING] `*` betyder inte "allt"
 > `*` är trafik som saknar regionetikett, inte ett jokertecken för alla regioner.
 
 ## Ställ in en repeater

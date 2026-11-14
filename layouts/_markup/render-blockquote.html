@@ -4,12 +4,12 @@
   {{- $title := .AlertTitle | default (T (printf "alert_%s" $type)) | default (title $type) -}}
   {{- if .AlertSign -}}
     <details class="alert alert-{{ $type }}"{{ if eq .AlertSign "+" }} open{{ end }}>
-      <summary>{{ $title }}</summary>
+      <summary>{{ partial "alert-icon.html" $type }}{{ $title }}</summary>
       {{ .Text }}
     </details>
   {{- else -}}
     <div class="alert alert-{{ $type }}" role="note">
-      <p class="alert-title">{{ $title }}</p>
+      <p class="alert-title">{{ partial "alert-icon.html" $type }}{{ $title }}</p>
       {{ .Text }}
     </div>
   {{- end -}}

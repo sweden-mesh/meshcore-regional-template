@@ -1,0 +1,12 @@
+{{- /* The icon at the start of a notice's title (operator 2026-11-14, B-268): the level comes from the
+  notice type: note/tip = info (blue), important/warning = warning (yellow), caution = critical
+  (red). Always next to the title text, never alone. Call with the type. */ -}}
+{{- $level := "info" -}}
+{{- if in (slice "important" "warning") . }}{{ $level = "warning" }}{{ else if eq . "caution" }}{{ $level = "critical" }}{{ end -}}
+{{- if eq $level "info" -}}
+<svg class="alert-icon alert-icon-info" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 10.5v6.5M12 7v.5" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/></svg>
+{{- else if eq $level "warning" -}}
+<svg class="alert-icon alert-icon-warning" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2.5 1.5 21h21L12 2.5z" fill="currentColor"/><path d="M12 9.5v5M12 17.5v.5" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/></svg>
+{{- else -}}
+<svg class="alert-icon alert-icon-critical" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" fill="currentColor"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/></svg>
+{{- end -}}

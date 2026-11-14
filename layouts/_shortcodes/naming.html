@@ -1,7 +1,7 @@
 {{- /* {{< naming >}}: the region's suggested names from params.naming, if it has one. */ -}}
 {{- with site.Params.naming -}}{{- if .pattern -}}
 <div class="alert alert-tip" role="note">
-  <p class="alert-title">{{ T "naming_rule" (dict "Region" (partialCached "region.html" . "region").name) }}</p>
+  <p class="alert-title">{{ partial "alert-icon.html" "tip" }}{{ T "naming_rule" (dict "Region" (partialCached "region.html" . "region").name) }}</p>
   <p><code>{{ .pattern }}</code>{{ with .example }}, {{ T "naming_example" }} <code>{{ . }}</code>{{ end }}</p>
   {{ with .explain }}<p>{{ partial "scopes.html" (. | markdownify) }}</p>{{ end }}
 </div>

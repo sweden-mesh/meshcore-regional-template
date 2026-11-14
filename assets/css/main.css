@@ -18,7 +18,7 @@
   /* Dark is the base (operator 2026-11-13): a browser that reports no colour scheme gets dark.
      Light comes from the system setting (no JS needed) or the header toggle (data-theme). */
   --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
-  --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --strong: #ffffff; --danger: #ff6b6b; --muted: #9fb3c0; --line: #1d3242;
+  --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --strong: #ffffff; --danger: #ff6b6b; --info: #60a5fa; --caution: #facc15; --muted: #9fb3c0; --line: #1d3242;
   --shadow-map: 0 24px 60px -24px rgba(0, 0, 0, .7);
   --bg-a: #0b1a24; --bg-b: #0b141b; --bg-c: #0c1f19; --bg-d: #101a26; --blob: rgba(120, 175, 205, .14);
   color-scheme: dark;
@@ -28,7 +28,7 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --accent: #1f5d82; --accent-2: #21664a; --online: #2f8a5f; --warn: #d97a2b;
-    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --danger: #c62828; --muted: #4a5c68; --line: #e3e8ec;
+    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --danger: #c62828; --info: #1d4ed8; --caution: #a16207; --muted: #4a5c68; --line: #e3e8ec;
     --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
     --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9);
     color-scheme: light;
@@ -36,7 +36,7 @@
 }
 :root[data-theme="light"] {
     --accent: #1f5d82; --accent-2: #21664a; --online: #2f8a5f; --warn: #d97a2b;
-    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --danger: #c62828; --muted: #4a5c68; --line: #e3e8ec;
+    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --danger: #c62828; --info: #1d4ed8; --caution: #a16207; --muted: #4a5c68; --line: #e3e8ec;
     --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
     --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9);
     color-scheme: light;
@@ -89,7 +89,8 @@ a { color: var(--accent); }
 .alert { border-left: 4px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--bg)); padding: .5rem 1rem; margin: 1rem 0; border-radius: 4px; }
 .alert-title, .alert summary { font-weight: 600; margin: 0; cursor: default; }
 .alert summary { cursor: pointer; }
-.alert-warning, .alert-caution { border-color: #d97706; background: color-mix(in srgb, #d97706 10%, var(--bg)); }
+.alert-warning { border-color: #d97706; background: color-mix(in srgb, #d97706 10%, var(--bg)); }
+.alert-caution { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 9%, var(--bg)); }
 .alert-important { border-color: #9a3412; background: color-mix(in srgb, #9a3412 7%, var(--bg)); }
 .alert-tip { border-color: #16a34a; background: color-mix(in srgb, #16a34a 8%, var(--bg)); }
 .codeblock { margin: 1rem 0; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
@@ -306,7 +307,7 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
    design mockups, regardless of the OS colour scheme. Tokens only; the layout is the same. */
 body.style-console {
   --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
-  --bg: #081219; --surface: #0d1f2b; --fg: #d8e6ee; --strong: #ffffff; --danger: #ff6b6b; --muted: #8aa4b3; --line: #17384b;
+  --bg: #081219; --surface: #0d1f2b; --fg: #d8e6ee; --strong: #ffffff; --danger: #ff6b6b; --info: #60a5fa; --caution: #facc15; --muted: #8aa4b3; --line: #17384b;
   --bg-a: #081219; --bg-b: #0a1821; --bg-c: #08161a; --bg-d: #0b1a24; --blob: rgba(61, 220, 132, .06);
   --font-head: "IBM Plex Mono", ui-monospace, monospace;
   --shadow-map: 0 0 0 1px #17384b;
@@ -364,3 +365,15 @@ input[type="text"], input[type="search"], input:not([type]), textarea { cursor: 
 .sol-result { font-weight: 600; margin-top: 1rem; }
 .sol-note:empty { display: none; }
 .sol-notes li { margin-bottom: .5rem; }
+
+/* Notice icons (B-268): blue information, yellow warning, red critical; shape and colour both carry
+   the level, and the title text is always there. */
+.alert-title, .alert summary { display: flex; align-items: center; gap: .45rem; }
+.alert summary::-webkit-details-marker { display: none; }
+.alert summary { list-style: none; }
+.alert summary::after { content: "▸"; margin-left: auto; color: var(--muted); }
+.alert[open] summary::after { content: "▾"; }
+.alert-icon { flex: none; }
+.alert-icon-info { color: var(--info); }
+.alert-icon-warning { color: var(--caution); }
+.alert-icon-critical { color: var(--danger); }
