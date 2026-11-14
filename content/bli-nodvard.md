@@ -1,6 +1,7 @@
 ---
 title: "Bli nodvärd"
 description: "Har du ett tak, en mast eller ett högt läge? Så kan du låta en repeater stå hos dig och hjälpa nätet att nå längre."
+lead: false
 ---
 
 Nätet i {{< region "name" >}} når så långt som repeatrarna kan höra varandra, och det avgörs
