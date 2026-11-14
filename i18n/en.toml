@@ -519,6 +519,130 @@ other = "Whoever logs in as a guest can read the repeater's status (battery, noi
 other = "guest password"
 [wzg_test_4]
 other = "**Not showing?** Stand near the repeater with a **companion** and send a *flood advert* from the app. The repeater passes it on, so the repeaters around it hear your new repeater and add it to their neighbours. If your repeater is not an Observer, it only shows on the map once an Observer hears it: what it passes on lets the Observers nearby discover it."
+[hp_title]
+other = "Become a node host: test your site"
+[hp_desc]
+other = "Answer a few questions and point out the site on the map to see what makes your site good for a repeater."
+[hp_intro]
+other = "Every repeater helps the mesh. Some sites help more than others: high up, with a clear view, with power, with Wi-Fi, and where the mesh reaches poorly today. Answer the questions to see what is good about your site and what could make it even better. Nothing you answer is sent or stored."
+[hp_where]
+other = "Where is the site?"
+[hp_where_help]
+other = "Click the map where the repeater would stand. The green area is about {{ .Km }} km around every repeater today; outside it is the edge of the mesh, where a new repeater helps most."
+[hp_shadow]
+other = "Is the site in a valley or behind a hill, seen from the nearest town?"
+[hp_s_yes]
+other = "Yes"
+[hp_s_no]
+other = "No"
+[hp_s_unknown]
+other = "Don't know"
+[hp_up]
+other = "Height and view"
+[hp_height]
+other = "How high can the antenna go?"
+[hp_h_high]
+other = "High: a mast, tower, silo, tall building or a hilltop"
+[hp_h_mid]
+other = "Roof height of an ordinary house, a few floors up"
+[hp_h_low]
+other = "Low: ground level, first floor or indoors"
+[hp_view]
+other = "What is the view like?"
+[hp_v_open]
+other = "Clear in most directions"
+[hp_v_partial]
+other = "Clear in some directions, blocked in others"
+[hp_v_blocked]
+other = "Mostly blocked by buildings, trees or hills"
+[hp_power_wifi]
+other = "Power and Wi-Fi"
+[hp_power]
+other = "Is there power there?"
+[hp_p_mains]
+other = "Yes, a socket can be reached"
+[hp_p_none]
+other = "No"
+[hp_wifi]
+other = "Does Wi-Fi reach there?"
+[hp_w_yes]
+other = "Yes"
+[hp_w_no]
+other = "No"
+[hp_result]
+other = "Your site"
+[hp_empty]
+other = "Answer the questions or click the map, and the result shows here."
+[hp_strengths]
+other = "What is good about the site"
+[hp_tips]
+other = "How it could be even better"
+[hp_all_help]
+other = "Whatever the answers: every repeater gives the mesh more paths and makes it tougher when another repeater is down."
+[hp_next]
+other = "Get in touch"
+[hp_next_help]
+other = "Copy the text below and paste it in the chat, so the community knows the essentials at once. The position is rounded to about a kilometre."
+[hp_contact]
+other = "Send it to:"
+[hp_self]
+other = "Rather set up the repeater yourself? Follow the guide [Set up a repeater]({{ .Guide }})."
+[hp_st_high]
+other = "High up: the antenna reaches far and over the rooftops."
+[hp_st_mid]
+other = "Roof height: the antenna clears most things on the ground."
+[hp_st_view]
+other = "Clear view: the signal reaches many directions unhindered."
+[hp_st_power]
+other = "Power available: the repeater runs all year without a battery or solar panel."
+[hp_st_wifi]
+other = "Wi-Fi available: the repeater can also be an observer, reporting the traffic to the map."
+[hp_st_edge]
+other = "Outside today's coverage: here a repeater extends the mesh."
+[hp_st_inside]
+other = "Inside today's coverage: here a repeater adds paths and fills in where the signal is weak."
+[hp_st_shadow]
+other = "In radio shadow: a repeater here reaches places other repeaters cannot hear."
+[hp_tp_low]
+other = "Can the antenna go higher, for example on a pole at the gable or in an attic window? A few metres make a big difference."
+[hp_tp_partial]
+other = "Place the antenna where it faces the directions where the mesh is, or where it is missing."
+[hp_tp_blocked]
+other = "Is there a higher point nearby, such as a roof or a pole? Even blocked, the repeater helps close by."
+[hp_tp_solar]
+other = "Without power, a solar panel and a battery work fine. [The solar calculator]({{ .Solar }}) shows how big they need to be."
+[hp_tp_nowifi]
+other = "Wi-Fi is not needed. The repeater works fully without it; Wi-Fi is only for also reporting to the map."
+[hp_tp_outside]
+other = "The site is outside the region. Contact the region where it lies; a repeater near the border helps both."
+[hp_pl_edge]
+other = "The site is outside today's coverage, {D} km from the nearest repeater."
+[hp_pl_inside]
+other = "The site is inside today's coverage, {D} km from the nearest repeater."
+[hp_pl_outside]
+other = "The site is outside the region."
+[hp_pl_none]
+other = "No site picked yet."
+[hp_sum_intro]
+other = "I can host a repeater."
+[hp_sum_pos]
+other = "Position, roughly:"
+[hp_sum_edge]
+other = "outside today's coverage"
+[hp_sum_inside]
+other = "inside today's coverage"
+[hp_sum_outside]
+other = "outside the region"
+[hp_sum_shadow]
+other = "The site is in a valley or behind a hill."
+[hp_sum_height]
+other = "Height"
+[hp_sum_view]
+other = "View"
+[hp_sum_power]
+other = "Power"
+[hp_sum_wifi]
+other = "Wi-Fi"
 [sol_title]
 other = "Solar calculator"
 [sol_desc]

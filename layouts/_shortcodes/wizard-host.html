@@ -1,0 +1,70 @@
+{{- /* {{< wizard-host >}}: "Bli nodvärd: testa din plats" (backlog B-276). Questions plus a map step;
+  the result lists the site's strengths and tips, never a grade. Coverage until MeshMapper data
+  exists: a circle of params.host.edge_km (default 2) around every repeater; outside them all is
+  the edge. Nothing is sent or stored; the summary is for the visitor to paste in the chat. */ -}}
+{{- $km := site.Params.host.edge_km | default 2 -}}
+{{- $guide := "" }}{{ with site.GetPage "/guider/repeater" }}{{ $guide = .RelPermalink }}{{ end -}}
+{{- $solar := "" }}{{ with site.GetPage "/wizard/solcell" }}{{ $solar = .RelPermalink }}{{ end -}}
+{{- $q := dict
+  "height" (slice (slice "high" (T "hp_h_high")) (slice "mid" (T "hp_h_mid")) (slice "low" (T "hp_h_low")))
+  "view" (slice (slice "open" (T "hp_v_open")) (slice "partial" (T "hp_v_partial")) (slice "blocked" (T "hp_v_blocked")))
+  "power" (slice (slice "mains" (T "hp_p_mains")) (slice "none" (T "hp_p_none")))
+  "wifi" (slice (slice "yes" (T "hp_w_yes")) (slice "no" (T "hp_w_no")))
+  "shadow" (slice (slice "yes" (T "hp_s_yes")) (slice "no" (T "hp_s_no")) (slice "unknown" (T "hp_s_unknown")))
+-}}
+<form class="wizard host-wizard" id="host-wizard" novalidate data-edge-km="{{ $km }}">
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">1</span> {{ T "hp_where" }}</legend>
+    <p class="muted">{{ T "hp_where_help" (dict "Km" (lang.FormatNumberCustom 0 $km)) }}</p>
+    {{ partial "mappick.html" . }}
+    <p class="wz-status" data-out="place" aria-live="polite"></p>
+    {{ partial "hp-radios.html" (dict "name" "shadow" "label" (T "hp_shadow") "opts" $q.shadow) }}
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">2</span> {{ T "hp_up" }}</legend>
+    {{ partial "hp-radios.html" (dict "name" "height" "label" (T "hp_height") "opts" $q.height) }}
+    {{ partial "hp-radios.html" (dict "name" "view" "label" (T "hp_view") "opts" $q.view) }}
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">3</span> {{ T "hp_power_wifi" }}</legend>
+    {{ partial "hp-radios.html" (dict "name" "power" "label" (T "hp_power") "opts" $q.power) }}
+    {{ partial "hp-radios.html" (dict "name" "wifi" "label" (T "hp_wifi") "opts" $q.wifi) }}
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">4</span> {{ T "hp_result" }}</legend>
+    <p data-out="empty">{{ T "hp_empty" }}</p>
+    <div data-out="lists" hidden>
+      <p class="sol-label" data-head="strengths">{{ T "hp_strengths" }}</p>
+      <ul class="hp-list" data-out="strengths"></ul>
+      <p class="sol-label" data-head="tips">{{ T "hp_tips" }}</p>
+      <ul class="hp-list" data-out="tips"></ul>
+      <p>{{ T "hp_all_help" }}</p>
+      <p class="sol-label">{{ T "hp_next" }}</p>
+      <p>{{ T "hp_next_help" }}</p>
+      <div class="codeblock"><pre data-out="summary"></pre></div>
+      <p>{{ T "hp_contact" }} {{ partial "contact-links.html" . }}</p>
+      {{ with $guide }}<p>{{ T "hp_self" (dict "Guide" .) | markdownify }}</p>{{ end }}
+    </div>
+  </fieldset>
+</form>
+{{- $t := dict "s" (dict
+    "high" (T "hp_st_high") "mid" (T "hp_st_mid") "view" (T "hp_st_view") "power" (T "hp_st_power")
+    "wifi" (T "hp_st_wifi") "edge" (T "hp_st_edge") "inside" (T "hp_st_inside") "shadow" (T "hp_st_shadow"))
+  "t" (dict
+    "low" (T "hp_tp_low") "partial" (T "hp_tp_partial") "blocked" (T "hp_tp_blocked")
+    "solar" (T "hp_tp_solar" (dict "Solar" $solar) | markdownify | string) "nowifi" (T "hp_tp_nowifi")
+    "outside" (T "hp_tp_outside"))
+  "place" (dict "edge" (T "hp_pl_edge") "inside" (T "hp_pl_inside") "outside" (T "hp_pl_outside") "none" (T "hp_pl_none"))
+  "sum" (dict "intro" (T "hp_sum_intro") "pos" (T "hp_sum_pos") "edge" (T "hp_sum_edge") "inside" (T "hp_sum_inside") "outside" (T "hp_sum_outside")
+    "shadow" (T "hp_sum_shadow"))
+  "q" $q
+  "heads" (dict "height" (T "hp_sum_height") "view" (T "hp_sum_view") "power" (T "hp_sum_power") "wifi" (T "hp_sum_wifi"))
+-}}
+<div id="hp-texts" hidden data-texts="{{ $t | jsonify }}"></div>
+{{- with resources.Get "js/wizard/host-ui.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

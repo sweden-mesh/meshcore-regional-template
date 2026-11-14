@@ -1,0 +1,5 @@
+{{- /* Radio buttons for the host wizard: dict name, label, opts (slice of [value, text]). */ -}}
+<p class="sol-label">{{ .label }}</p>
+{{- range .opts }}
+<label class="wz-check"><input type="radio" name="hp-{{ $.name }}" value="{{ index . 0 }}"> <span>{{ index . 1 }}</span></label>
+{{- end }}

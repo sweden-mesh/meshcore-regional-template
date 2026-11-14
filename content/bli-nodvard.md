@@ -16,6 +16,9 @@ sådan plats kan du bli **nodvärd**: du låter en repeater stå hos dig.
   visar var repeatrarna står i dag.
 - **Fast:** repeatern ska stå kvar. Nätets vägar bygger på att den inte flyttar sig.
 
+Vill du veta hur din plats står sig? [Testa din plats](/wizard/nodvard/): några frågor och en karta
+visar vad som är bra med den.
+
 ## Vad det innebär för dig
 
 - **En liten låda och en antenn.** Lådan är ungefär som en tvålask; antennen är en pinne på

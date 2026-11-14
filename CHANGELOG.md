@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.26.0 — 2026-11-14
+
+- New wizard "Bli nodvärd: testa din plats" (/wizard/nodvard/): questions about height, view,
+  power, Wi-Fi and radio shadow plus a map step. Coverage is drawn as a circle of
+  `params.host.edge_km` (default 2 km) around each repeater; outside them all is the edge. The
+  result lists strengths and tips, never a grade, and ends with a summary to copy into the
+  region's chat (position rounded to about 1 km), the contact links and the setup guide.
+  Linked from the Bli nodvärd page.
+- The map picker takes an `onNodes` callback; the contact links are a partial
+  (`contact-links.html`) shared by `{{< contact >}}` and the wizard.
+
 ## v0.25.1 — 2026-11-14
 
 - Solar calculator data v4: Jönköping is computed at the rounded public point 57.78, 14.16 (317

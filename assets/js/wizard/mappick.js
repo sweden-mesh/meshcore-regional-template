@@ -23,7 +23,7 @@ export function lockToRegion(map, bounds, slack = 0.15) {
   map.setMaxBounds([[w - dx, s - dy], [e + dx, n + dy]]);
 }
 
-export async function createPicker(el, { onChange = () => {}, initial } = {}) {
+export async function createPicker(el, { onChange = () => {}, initial, onNodes } = {}) {
   const { map, maplibregl } = await createMap(el);
   el.mapInstance = map;
   const marker = new maplibregl.Marker({ draggable: true, color: "#2f8a5f" });
@@ -49,6 +49,7 @@ export async function createPicker(el, { onChange = () => {}, initial } = {}) {
         map.addLayer({ id: "pick-nodes", type: "circle", source: "nodes",
           paint: { "circle-radius": 4, "circle-color": "#2f8a5f", "circle-stroke-color": "#fff", "circle-stroke-width": 1.5, "circle-opacity": 0.8 } });
         lockToRegion(map, unionBbox(borders) || nodesBounds(nodes));
+        if (onNodes) onNodes(map, nodes, borders);
       };
       if (map.isStyleLoaded()) add(); else map.once("load", add);
     } catch { /* the picker works without the repeaters */ }

@@ -515,6 +515,130 @@ other = "Den som loggar in som gäst kan läsa repeaterns status (batteri, brusn
 other = "gästlösenord"
 [wzg_test_4]
 other = "**Syns den inte?** Ställ dig nära repeatern med en **companion** och skicka en *flood-advert* från appen. Repeatern skickar den vidare, och repeatrarna runt omkring hör då din nya repeater och lägger till den bland sina grannar. Är din repeater ingen observatör syns den på kartan först när en observatör hör den: det den skickar vidare låter observatörerna i närheten upptäcka den."
+[hp_title]
+other = "Bli nodvärd: testa din plats"
+[hp_desc]
+other = "Svara på några frågor och peka ut platsen på kartan, så ser du vad som gör just din plats bra för en repeater."
+[hp_intro]
+other = "Alla repeatrar hjälper nätet. Några platser hjälper mer än andra: högt upp, med fri sikt, med el, med wifi och där nätet når dåligt i dag. Svara på frågorna så ser du vad som är bra med din plats och vad som kan göra den ännu bättre. Inget du svarar skickas eller sparas."
+[hp_where]
+other = "Var är platsen?"
+[hp_where_help]
+other = "Klicka på kartan där repeatern skulle stå. Det gröna fältet är ungefär {{ .Km }} km runt varje repeater i dag; utanför det är nätets kant, där en ny repeater gör mest nytta."
+[hp_shadow]
+other = "Ligger platsen i en dalgång eller bakom en höjd, sett från närmaste ort?"
+[hp_s_yes]
+other = "Ja"
+[hp_s_no]
+other = "Nej"
+[hp_s_unknown]
+other = "Vet inte"
+[hp_up]
+other = "Höjd och sikt"
+[hp_height]
+other = "Hur högt kan antennen sitta?"
+[hp_h_high]
+other = "Högt: mast, torn, silo, högt hus eller en topp"
+[hp_h_mid]
+other = "Takhöjd på ett vanligt hus, några våningar upp"
+[hp_h_low]
+other = "Lågt: marknivå, första våningen eller inomhus"
+[hp_view]
+other = "Hur är sikten runt om?"
+[hp_v_open]
+other = "Fri åt de flesta håll"
+[hp_v_partial]
+other = "Fri åt några håll, skymd åt andra"
+[hp_v_blocked]
+other = "Mest skymd av hus, träd eller berg"
+[hp_power_wifi]
+other = "Ström och wifi"
+[hp_power]
+other = "Finns det el där?"
+[hp_p_mains]
+other = "Ja, ett eluttag går att nå"
+[hp_p_none]
+other = "Nej"
+[hp_wifi]
+other = "Når wifi dit?"
+[hp_w_yes]
+other = "Ja"
+[hp_w_no]
+other = "Nej"
+[hp_result]
+other = "Din plats"
+[hp_empty]
+other = "Svara på frågorna eller klicka på kartan, så visas resultatet här."
+[hp_strengths]
+other = "Det här är bra med platsen"
+[hp_tips]
+other = "Så kan den bli ännu bättre"
+[hp_all_help]
+other = "Oavsett svaren: varje repeater ger nätet fler vägar och gör det tåligare när en annan repeater är nere."
+[hp_next]
+other = "Hör av dig"
+[hp_next_help]
+other = "Kopiera texten nedan och klistra in den i chatten, så vet gemenskapen det viktigaste direkt. Platsen är avrundad till ungefär en kilometer."
+[hp_contact]
+other = "Skicka den till:"
+[hp_self]
+other = "Vill du hellre sätta upp repeatern själv? Följ guiden [Sätt upp en repeater]({{ .Guide }})."
+[hp_st_high]
+other = "Högt upp: antennen når långt och över hustaken."
+[hp_st_mid]
+other = "Takhöjd: antennen kommer över det mesta på marken."
+[hp_st_view]
+other = "Fri sikt: signalen når många håll utan hinder."
+[hp_st_power]
+other = "El finns: repeatern går året runt utan batteri eller solpanel."
+[hp_st_wifi]
+other = "Wifi finns: repeatern kan också bli observatör, som rapporterar trafiken till kartan."
+[hp_st_edge]
+other = "Utanför dagens täckning: här utökar en repeater nätet."
+[hp_st_inside]
+other = "Inom dagens täckning: här ger en repeater fler vägar och fyller ut där signalen är svag."
+[hp_st_shadow]
+other = "I radioskugga: en repeater här når platser som andra repeatrar inte hör."
+[hp_tp_low]
+other = "Kan antennen komma högre upp, till exempel på en stång vid gaveln eller ett vindsfönster? Några meter gör stor skillnad."
+[hp_tp_partial]
+other = "Sätt antennen där den ser mot de håll där nätet finns, eller dit nätet saknas."
+[hp_tp_blocked]
+other = "Finns det en högre punkt i närheten, som ett tak eller en stolpe? Även skymd gör repeatern nytta nära sig."
+[hp_tp_solar]
+other = "Utan el går det bra med solpanel och batteri. [Räkna på solcell]({{ .Solar }}) visar hur stort det behöver vara."
+[hp_tp_nowifi]
+other = "Wifi behövs inte. Repeatern fungerar helt utan; wifi behövs bara för att den också ska rapportera till kartan."
+[hp_tp_outside]
+other = "Platsen ligger utanför regionen. Kontakta gärna regionen där den ligger; en repeater nära gränsen hjälper båda."
+[hp_pl_edge]
+other = "Platsen ligger utanför dagens täckning, {D} km från närmaste repeater."
+[hp_pl_inside]
+other = "Platsen ligger inom dagens täckning, {D} km från närmaste repeater."
+[hp_pl_outside]
+other = "Platsen ligger utanför regionen."
+[hp_pl_none]
+other = "Ingen plats vald ännu."
+[hp_sum_intro]
+other = "Jag kan bli nodvärd för en repeater."
+[hp_sum_pos]
+other = "Plats, ungefär:"
+[hp_sum_edge]
+other = "utanför dagens täckning"
+[hp_sum_inside]
+other = "inom dagens täckning"
+[hp_sum_outside]
+other = "utanför regionen"
+[hp_sum_shadow]
+other = "Platsen ligger i en dalgång eller bakom en höjd."
+[hp_sum_height]
+other = "Höjd"
+[hp_sum_view]
+other = "Sikt"
+[hp_sum_power]
+other = "El"
+[hp_sum_wifi]
+other = "Wifi"
 [sol_title]
 other = "Räkna på solcell"
 [sol_desc]

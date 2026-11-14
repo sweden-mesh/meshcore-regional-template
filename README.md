@@ -170,6 +170,18 @@ Content (`content/`): CC BY 4.0, see `LICENSE-CONTENT`. Parts are adapted from
 [meshat.se](https://meshat.se), with permission and attribution.
 Third-party code, fonts, map data and services: `THIRD-PARTY.md`.
 
+## Host wizard
+
+`/wizard/nodvard/` ("Bli nodvärd: testa din plats") asks about height, view, power, Wi-Fi and radio
+shadow, and lets the visitor pick the spot on the map. Until real coverage data exists, a spot
+farther than `params.host.edge_km` (default 2) from every repeater counts as the edge of the mesh.
+Nothing is sent or stored; the visitor copies a summary, with the position rounded to about 1 km.
+
+```toml
+[params.host]
+  edge_km = 2
+```
+
 ## Contributors list
 
 `{{< contributors >}}` prints one list of everyone who contributed to the site's content, for the
