@@ -49,7 +49,7 @@ code, pre, kbd, samp { font-family: var(--font-mono); }
 code.scope { color: var(--strong); }
 h1, h2, h3, .brand { font-family: var(--font-head); letter-spacing: -.01em; }
 a { color: var(--accent); }
-.site-header, .site-footer, .content, .map-section, .hero, .sections { max-width: 72rem; margin: 0 auto; padding: 1rem; }
+.site-header, .site-footer, .content, .map-section, .hero, .sections, .about { max-width: 72rem; margin: 0 auto; padding: 1rem; }
 .site-header { display: flex; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--line); }
 .site-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
 .brand { font-weight: 700; text-decoration: none; color: var(--fg); display: inline-flex; align-items: center; gap: .6rem; }
@@ -130,7 +130,8 @@ a { color: var(--accent); }
 /* The map breaks out of the content column: 80 % of the window, 10 % margin each side
    (operator 2026-11-13); phones keep the 16 px gutter. */
 /* The boxes and the map share one width, wider than the text column (operator 2026-11-13). */
-@media (min-width: 640px) { .map-section, .sections { max-width: none; width: min(100rem, 94vw); padding-left: 0; padding-right: 0; } }
+@media (min-width: 640px) { .map-section, .sections, .about { max-width: none; width: min(100rem, 94vw); padding-left: 0; padding-right: 0; } }
+/* The text columns share the boxes' and the map's width (operator 2026-11-14). */
 .site-header { border-bottom: 0; padding-top: 1.25rem; padding-bottom: 1.25rem; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .site-header nav a:hover { color: var(--fg); }
@@ -308,7 +309,7 @@ body.style-console .button { background: #21664a; color: #f2fff8; }
 body.style-console .button-secondary { background: transparent; color: var(--fg); }
 .wz-nb-list { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .35rem; }
 .wz-nb-list li { display: flex; flex-wrap: wrap; gap: .25rem .75rem; align-items: baseline; }
-.about { max-width: 72rem; margin: 2rem auto; padding: 1rem; display: grid; gap: 2rem; }
+.about { margin-top: 2rem; margin-bottom: 2rem; display: grid; gap: 2rem; }
 .about-cols { grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
 .about h2 { margin-top: 0; }
 .theme-toggle { margin-left: auto; min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); font-size: 1.1rem; cursor: pointer; }
