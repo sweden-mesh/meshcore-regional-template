@@ -643,6 +643,8 @@ other = "View"
 other = "Power"
 [hp_sum_wifi]
 other = "Wi-Fi"
+[photo_by]
+other = "Photo:"
 [sol_title]
 other = "Solar calculator"
 [sol_desc]

@@ -23,6 +23,8 @@ Platsen betyder mer än sändeffekten. En bra repeaterplats har:
 - **stabil ström**: nätström, eller solpanel och batteri dimensionerat för vintern,
 - **fast montering**, väderskyddad om den står ute.
 
+{{< region-photo "mount" >}}
+
 En repeater ska stå still. Nätets vägar bygger på att repeatrarna inte flyttar sig, så en
 repeater i en bil gör mer skada än nytta.
 

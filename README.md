@@ -170,6 +170,21 @@ Content (`content/`): CC BY 4.0, see `LICENSE-CONTENT`. Parts are adapted from
 [meshat.se](https://meshat.se), with permission and attribution.
 Third-party code, fonts, map data and services: `THIRD-PARTY.md`.
 
+## Region photos
+
+Template pages have photo spots, `{{< region-photo "key" >}}`, that print nothing until the region
+supplies a photo: `host` on Bli nodvärd and `mount` in the repeater guide. A region can use any
+key on its own pages too. Put the source under the site's `assets/`; it is served only as WebP
+(640 and 1000 px wide, never enlarged, metadata dropped).
+
+```toml
+[params.photos.host]
+  src = "photos/utsikt.jpg"
+  alt = "What the photo shows, for someone who cannot see it."
+  caption = "Optional caption."
+  credit = "Photographer"
+```
+
 ## Host wizard
 
 `/wizard/nodvard/` ("Bli nodvärd: testa din plats") asks about height, view, power, Wi-Fi and radio

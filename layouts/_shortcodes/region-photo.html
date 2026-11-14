@@ -1,0 +1,19 @@
+{{- /* {{< region-photo "key" >}}: a photo the region supplies, from params.photos.<key>
+  (src under the site's assets/, alt, caption, credit). Prints nothing when the region has none,
+  so template pages can offer a photo spot without every region filling it. Re-encoded as WebP
+  (metadata dropped) at two widths; backlog B-219. */ -}}
+{{- with index (site.Params.photos | default dict) (.Get 0) -}}
+{{- $p := . -}}
+{{- with resources.Get $p.src -}}
+{{- $w := cond (lt .Width 1000) .Width 1000 -}}{{- $s := .Resize (printf "%dx webp q78" (cond (lt .Width 640) .Width 640)) -}}{{- $l := .Resize (printf "%dx webp q78" $w) -}}
+<figure class="photo">
+  <img src="{{ $l.RelPermalink }}" srcset="{{ $s.RelPermalink }} {{ $s.Width }}w, {{ $l.RelPermalink }} {{ $l.Width }}w" sizes="(max-width: 44rem) 100vw, 40rem"
+       width="{{ $l.Width }}" height="{{ $l.Height }}" alt="{{ $p.alt }}" loading="lazy" decoding="async">
+  {{- if or $p.caption $p.credit }}
+  <figcaption>{{ with $p.caption }}{{ . }}{{ end }}{{ if and $p.caption $p.credit }} · {{ end }}{{ with $p.credit }}{{ T "photo_by" }} {{ . }}{{ end }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+{{- warnf "region-photo: %s not found under assets/" $p.src -}}
+{{- end -}}
+{{- end -}}

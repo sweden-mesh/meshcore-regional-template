@@ -639,6 +639,8 @@ other = "Sikt"
 other = "El"
 [hp_sum_wifi]
 other = "Wifi"
+[photo_by]
+other = "Foto:"
 [sol_title]
 other = "Räkna på solcell"
 [sol_desc]
