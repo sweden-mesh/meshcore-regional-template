@@ -5,6 +5,12 @@ description: "Varför en repeater på solcell, vad som gör vintern svår så h�
 weight: 40
 ---
 
+## Räkna på din egen plats
+
+Den här sidan förklarar varför och hur. Vill du bara veta hur stor panel och hur många batterier
+du behöver där du bor, använd [solcellskalkylatorn](/wizard/solcell/): välj platsen på kartan,
+trädlinje och firmware, så räknar den ut resten.
+
 ## Varför sol?
 
 En repeater gör mest nytta högt upp med fri sikt: på en höjd, i en mast, vid en skogskant mot en
