@@ -204,6 +204,24 @@ other = "Den här webbläsaren kan inte prata med radion via USB. Använd Chrome
 other = "Ansluten till"
 [wz_fix]
 other = "Fyll i"
+[wz_f_name]
+other = "namn"
+[wz_f_lat]
+other = "latitud"
+[wz_f_lon]
+other = "longitud"
+[wz_f_password]
+other = "adminlösenord"
+[wz_f_tx]
+other = "sändeffekt"
+[wz_f_radio]
+other = "radioinställningar"
+[wz_f_scope]
+other = "region"
+[wz_f_extraScopes]
+other = "grannlän"
+[wz_f_mqtt]
+other = "MQTT-inställningar"
 [wz_done]
 other = "Klart. Repeatern startar om och skickar en advert; leta efter den på kartan om några minuter."
 [wz_failed]

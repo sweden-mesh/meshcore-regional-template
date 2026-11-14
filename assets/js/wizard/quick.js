@@ -46,7 +46,7 @@ function init(form) {
       return row;
     }));
     const { commands, errors } = repeaterCommands(s);
-    $("wz-cmds").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => e.field))].join(", ")}` : commands.join("\n");
+    $("wz-cmds").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => t.fields?.[e.field] || e.field))].join(", ")}` : commands.join("\n");
     $("wz-send").disabled = !state.link || errors.length > 0;
     return { commands, errors };
   };

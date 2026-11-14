@@ -208,6 +208,24 @@ other = "This browser can't talk to the radio over USB. Use Chrome or Edge on a 
 other = "Connected to"
 [wz_fix]
 other = "Fill in"
+[wz_f_name]
+other = "name"
+[wz_f_lat]
+other = "latitude"
+[wz_f_lon]
+other = "longitude"
+[wz_f_password]
+other = "admin password"
+[wz_f_tx]
+other = "transmit power"
+[wz_f_radio]
+other = "radio settings"
+[wz_f_scope]
+other = "region"
+[wz_f_extraScopes]
+other = "neighbouring regions"
+[wz_f_mqtt]
+other = "MQTT settings"
 [wz_done]
 other = "Done. The repeater restarts and sends an advert; look for it on the map in a few minutes."
 [wz_failed]

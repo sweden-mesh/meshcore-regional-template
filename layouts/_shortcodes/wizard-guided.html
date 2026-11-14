@@ -83,7 +83,7 @@
     <button type="button" class="button" data-next>{{ T "wzg_next" }}</button>
   </p>
 </form>
-<div id="wzg-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "name" (T "wz_name") "radio" (T "wzg_radio") "position" (T "wz_place") "regions" (T "wz_region") | jsonify }}"></div>
+<div id="wzg-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "fields" (dict "name" (T "wz_f_name") "lat" (T "wz_f_lat") "lon" (T "wz_f_lon") "password" (T "wz_f_password") "tx" (T "wz_f_tx") "radio" (T "wz_f_radio") "scope" (T "wz_f_scope") "extraScopes" (T "wz_f_extraScopes") "mqtt" (T "wz_f_mqtt")) "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "name" (T "wz_name") "radio" (T "wzg_radio") "position" (T "wz_place") "regions" (T "wz_region") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/guided.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

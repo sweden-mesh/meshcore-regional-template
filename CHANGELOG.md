@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.13.1 — 2026-11-14
+
+- The wizards name missing or wrong fields in the page's language (*Fyll i: namn, adminlösenord*),
+  not by their code names.
+
 ## v0.13.0 — 2026-11-14
 
 - No lead line under the title on Felsökning, Frågor, Verktyg and the three wizard pages (as on

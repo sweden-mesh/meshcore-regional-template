@@ -60,7 +60,7 @@ function init(form) {
     if (s.name && q("#wzg-key").checked && !state.publicKey) msg += ` · ${t.suffix}`;
     q('[data-out="name"]').textContent = msg;
     const { commands, errors } = repeaterCommands(s);
-    q("[data-cmds]").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => e.field))].join(", ")}` : commands.join("\n");
+    q("[data-cmds]").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => t.fields?.[e.field] || e.field))].join(", ")}` : commands.join("\n");
     q("[data-send]").disabled = !state.link || errors.length > 0;
     renderDiff(s);
     return { commands, errors };
