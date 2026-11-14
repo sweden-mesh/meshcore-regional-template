@@ -103,6 +103,28 @@ I korthet, för en nod som ska klara sig själv:
 
 Detaljerna står under [Vad siffrorna förutsätter](#vad-siffrorna-förutsätter).
 
+### Clas Ohlsons panel, och om du köper en annan
+
+Clas Ohlsons panel håller på att gå ur sortimentet, men många har redan en. Siffrorna för den kan
+vägleda dig när du väljer en annan panel:
+
+| | Clas Ohlsons panel |
+|---|---|
+| Märkeffekt enligt butiken | 15 W |
+| Verklig effekt i full sol, uppmätt | cirka 10 W |
+| Tomgångsspänning i sol utomhus, uppmätt | cirka 7 V |
+| Inomhus bakom två glasrutor, 4 november kl. 13.04 | 5,90 V tomgång, 1,12 A kortslutning, cirka 4,7 W |
+
+Väljer du en annan panel:
+
+- **Räkna med verklig effekt, inte märkeffekt.** Clas Ohlsons panel ger cirka två tredjedelar av
+  sin märkeffekt i full sol. En panel som verkligen ger cirka 10 W ger ungefär samma vinterskörd
+  som i tabellerna; en mindre panel behöver ett större batteri.
+- **Spänningen ska passa laddaren.** Tabellerna förutsätter en panel med cirka 7 V tomgång och
+  CN3791 inställd på 5,6 V. Har din panel en annan spänning ställer du in laddaren efter den, och
+  CN3791 börjar bara ladda när panelens tomgångsspänning är över cirka 5,7 V.
+- **Mät den själv** innan vintern: tomgångsspänningen i sol, utomhus, utan något anslutet.
+
 ## Hur stort batteri
 
 ### Efter batteriets kapacitet
