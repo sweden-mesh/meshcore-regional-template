@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.18.0 — 2026-11-14
+
+- Solar guide (still a draft): battery figures for all 20 county map codes in `data/solar.toml`,
+  from the same simulation as Jönköping's (sha256 66f16a36…0391), unchanged. Each county is told
+  the point and latitude its numbers are for; Norrbotten is marked as another data source
+  (PVGIS-ERA5), and the four northern counties and Dalarna get a caveat (cold below −20 °C, rime,
+  snow height; Norrbotten: solar not practical). New label *inte ens utan träd* where a battery
+  does not survive even without trees; the no-trees row means the local terrain only.
+- The YYCMesh note is corrected: a Meshtastic network in Calgary; about 6 % capacity loss on one
+  cell; useful for cold tolerance, not for sizing (51° N).
+
 ## v0.17.0 — 2026-11-14
 
 - New guide **Solnoder** (`/guider/solnoder/`), still a draft: why a repeater on solar, why winter

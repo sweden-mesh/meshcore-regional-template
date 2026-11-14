@@ -80,11 +80,13 @@ bakom 20°, och nysnö på marken, som kan ge upp till 15 procent mer i januari 
 > december och januari ungefär tio gånger mindre. Hälften av energin december–februari kommer när
 > luften är under 0 °C, så en laddare som vägrar ladda under 0 °C kastar bort halva vintern.
 >
-> Erfarenhet från ett annat kallt nät: i Kanada har [YYCMesh](https://yycmesh.com/blog/cold-weather-charging)
-> laddat repeatrar med solcell i två vintrar, bland annat på tre bergstoppar över 2 100 meter i
-> Klippiga bergen, med temperaturer ner mot −40 °C och laddström under 0,1 C, utan något fel i
-> nätet. En cell som mättes efter två vintrar hade kvar cirka 3 100 mAh, mot cirka 3 300 mAh för
-> nya. Det är erfarenhet från ett nät, inte ett kontrollerat test, och mätningen gäller en enda cell.
+> Erfarenhet från ett annat kallt nät: [YYCMesh](https://yycmesh.com/blog/cold-weather-charging),
+> ett Meshtastic-nät i Calgary i Kanada, har haft solcellsnoder utan värme i Alberta i ungefär två
+> vintrar, bland annat på tre bergstoppar över 2 100 meter. Cellerna laddades med låg ström genom
+> vintrar ner mot −40 °C, utan något fel i nätet. En cell som mättes efteråt hade cirka 6 procent
+> mindre kapacitet än nya celler. Det är erfarenhet från ett nät, inte ett kontrollerat test, och
+> cellernas temperatur loggades inte. Det säger något om kylan, inte om batteristorlek: Calgary
+> ligger på 51° N, där middagssolen i december fortfarande står cirka 15° över horisonten.
 
 ## Vad som krävs
 
@@ -109,7 +111,8 @@ Detaljerna står under [Vad siffrorna förutsätter](#vad-siffrorna-förutsätte
 Panelen lodrät mot söder. *Dagar i totalmörker* är hur länge batteriet ensamt håller repeatern
 igång utan någon sol alls, med kyla, urladdningsgräns, åldrande och självurladdning inräknat.
 *Klarar* betyder att batteriet aldrig går under 3,4 V under den sämsta vintern på fem år, med
-marginalen.
+marginalen. *Utan träd* betyder att bara terrängen runt platsen skymmer; i kuperade trakter längre
+norrut skymmer den ensam en stor del av vintersolen.
 
 {{% solar "capacity" %}}
 

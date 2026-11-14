@@ -1,43 +1,50 @@
-# Battery sizing for a solar repeater, per region map code (operator 2026-11-14). From the
-# hour-by-hour simulation of the "Solar meshcore repeater battery sizing" session: PVGIS v5.3
-# SARAH3 2005-2023, the Clas Ohlson panel gutted, CN3791 at 5.6 V, XIAO nRF52840 + Wio-SX1262,
-# EasySkyMesh 4.5 mA / official MeshCore 7.1 mA, worst winter in five + 20 %. Never scaled or
-# interpolated here: a region without its own entry is shown Jönköping's numbers, labelled so.
-# Values are mAh; ranges are [low, high] of the uncertainty.
+# Battery sizing for a solar repeater, per region map code (operator 2026-11-14). Copied unchanged
+# from the "Solar meshcore repeater battery sizing" session's solar.toml (sha256 66f16a36…0391,
+# 2026-11-14), with two fields added per region by us: source (the PVGIS dataset) and, for the
+# northern counties, note (that session's caveats, in Swedish). Never scaled or interpolated here.
+# Solar battery sizing per county for MeshCore repeaters on the Clas Ohlson panel.
+# Same model and assumptions as the Jönköping guide: CN3791 at 5.6 V, XIAO nRF52840 + Wio-SX1262,
+# EasySkyMesh 4.5 mA / official MeshCore 7.1 mA, PVGIS 2005-2023, worst winter in five + 20 %.
+# All battery values are nominal mAh rounded to 100, NOT floored: apply the 3 000 mAh practical floor when displaying.
+# capacity.trees / pessimistic / official = highest tree line (deg) survived; 0 = open horizon only; -1 = not even an open horizon.
+# LLA (Norrbotten) uses PVGIS-ERA5 (outside SARAH3 coverage); all other points use PVGIS-SARAH3.
 
 [JKG]
 place = "Jönköping"
-lat = 57.78
-lon = 14.16
-# kWh/m² per day on a vertical south panel, Jan..Dec
+lat = 57.776
+lon = 14.159
 irradiation = [0.86, 1.70, 3.06, 3.67, 3.32, 3.25, 3.12, 2.97, 2.78, 1.99, 0.90, 0.62]
 dec_of_june = 19
+source = "PVGIS-SARAH3"
 
-  # tree line (degrees) → [vertical, 60° tilt, 40° tilt] each as [value, low, high], and official firmware vertical
   [[JKG.trees]]
   deg = 0
   vertical = [500, 500, 600]
   tilt60 = [400, 400, 400]
   tilt40 = [400, 400, 400]
   official = 1100
+
   [[JKG.trees]]
   deg = 10
   vertical = [4100, 3600, 4800]
   tilt60 = [700, 600, 1600]
   tilt40 = [400, 400, 500]
   official = 8400
+
   [[JKG.trees]]
   deg = 15
   vertical = [5700, 5000, 7300]
   tilt60 = [1000, 600, 2000]
   tilt40 = [400, 400, 500]
   official = 14100
+
   [[JKG.trees]]
   deg = 20
   vertical = [6800, 5700, 8300]
   tilt60 = [1400, 800, 2500]
   tilt40 = [500, 400, 600]
   official = 15600
+
   [[JKG.trees]]
   deg = 30
   vertical = [9300, 8100, 11300]
@@ -45,46 +52,1802 @@ dec_of_june = 19
   tilt40 = [600, 500, 1300]
   official = 20600
 
-  # battery size → days of total darkness (load only), and the highest tree line (degrees) it
-  # survives a bad winter with: EasySkyMesh, if the calculation is pessimistic, official firmware.
-  # 0 = open horizon only.
   [[JKG.capacity]]
   mah = 3000
   days = 16
   trees = 0
   pessimistic = 0
   official = 0
+
   [[JKG.capacity]]
   mah = 6000
   days = 32
   trees = 15
   pessimistic = 10
   official = 0
+
   [[JKG.capacity]]
   mah = 9000
   days = 47
   trees = 20
   pessimistic = 20
   official = 10
+
   [[JKG.capacity]]
   mah = 12000
   days = 61
   trees = 30
   pessimistic = 30
   official = 10
+
   [[JKG.capacity]]
   mah = 15000
   days = 75
   trees = 30
   pessimistic = 30
   official = 15
+
   [[JKG.capacity]]
   mah = 18000
   days = 89
   trees = 30
   pessimistic = 30
   official = 20
+
   [[JKG.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[BLE]
+place = "Dalarna"
+lat = 60.972
+lon = 14.37
+irradiation = [0.72, 1.76, 3.24, 3.58, 3.23, 3.35, 3.23, 3.07, 2.69, 2.08, 0.88, 0.47]
+dec_of_june = 14
+source = "PVGIS-SARAH3"
+note = """Vintrarna här kan bli kallare än −20 °C, som beräkningen utgår från. Räkna med cirka 8 procent större batteri än tabellerna (köldfaktor 0,85). Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+
+  [[BLE.trees]]
+  deg = 0
+  vertical = [1300, 1300, 1400]
+  tilt60 = [1200, 1200, 1300]
+  tilt40 = [1200, 1100, 1300]
+  official = 2300
+
+  [[BLE.trees]]
+  deg = 10
+  vertical = [11100, 10400, 11900]
+  tilt60 = [6800, 5900, 8100]
+  tilt40 = [4600, 4100, 5600]
+  official = 19300
+
+  [[BLE.trees]]
+  deg = 15
+  vertical = [12100, 11300, 13600]
+  tilt60 = [7300, 6400, 8600]
+  tilt40 = [4800, 4300, 5800]
+  official = 23300
+
+  [[BLE.trees]]
+  deg = 20
+  vertical = [13000, 12100, 14600]
+  tilt60 = [7900, 7100, 9200]
+  tilt40 = [5100, 4700, 6500]
+  official = 24500
+
+  [[BLE.trees]]
+  deg = 30
+  vertical = [15400, 14400, 16700]
+  tilt60 = [9400, 8700, 10600]
+  tilt40 = [6400, 5500, 7900]
+  official = 29000
+
+  [[BLE.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[BLE.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[BLE.capacity]]
+  mah = 9000
+  days = 47
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[BLE.capacity]]
+  mah = 12000
+  days = 61
+  trees = 10
+  pessimistic = 10
+  official = 0
+
+  [[BLE.capacity]]
+  mah = 15000
+  days = 75
+  trees = 20
+  pessimistic = 20
+  official = 0
+
+  [[BLE.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+  [[BLE.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 15
+
+[GOT]
+place = "Västra Götaland"
+lat = 58.318
+lon = 12.91
+irradiation = [0.77, 1.72, 3.30, 3.98, 3.61, 3.52, 3.43, 3.29, 3.19, 2.26, 1.03, 0.57]
+dec_of_june = 16
+source = "PVGIS-SARAH3"
+
+  [[GOT.trees]]
+  deg = 0
+  vertical = [600, 500, 700]
+  tilt60 = [400, 300, 400]
+  tilt40 = [300, 300, 300]
+  official = 1300
+
+  [[GOT.trees]]
+  deg = 10
+  vertical = [4900, 4200, 5900]
+  tilt60 = [1100, 700, 2100]
+  tilt40 = [500, 400, 700]
+  official = 10400
+
+  [[GOT.trees]]
+  deg = 15
+  vertical = [6500, 5500, 8000]
+  tilt60 = [1400, 800, 2400]
+  tilt40 = [500, 400, 700]
+  official = 15400
+
+  [[GOT.trees]]
+  deg = 20
+  vertical = [7500, 6400, 9200]
+  tilt60 = [1800, 1300, 2800]
+  tilt40 = [600, 500, 800]
+  official = 17200
+
+  [[GOT.trees]]
+  deg = 30
+  vertical = [10200, 9000, 12100]
+  tilt60 = [3100, 2400, 4400]
+  tilt40 = [800, 700, 1800]
+  official = 21500
+
+  [[GOT.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[GOT.capacity]]
+  mah = 6000
+  days = 32
+  trees = 10
+  pessimistic = 10
+  official = 0
+
+  [[GOT.capacity]]
+  mah = 9000
+  days = 47
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[GOT.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 20
+  official = 10
+
+  [[GOT.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[GOT.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[GOT.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[GVX]
+place = "Gävleborg"
+lat = 61.477
+lon = 16.3
+irradiation = [0.65, 1.73, 3.29, 3.64, 3.38, 3.47, 3.41, 3.20, 2.82, 2.11, 0.89, 0.39]
+dec_of_june = 11
+source = "PVGIS-SARAH3"
+
+  [[GVX.trees]]
+  deg = 0
+  vertical = [1300, 1300, 1300]
+  tilt60 = [1200, 1200, 1300]
+  tilt40 = [1200, 1200, 1300]
+  official = 2200
+
+  [[GVX.trees]]
+  deg = 10
+  vertical = [11700, 10900, 12600]
+  tilt60 = [8200, 7500, 9300]
+  tilt40 = [5800, 5200, 7200]
+  official = 20700
+
+  [[GVX.trees]]
+  deg = 15
+  vertical = [13000, 12300, 14100]
+  tilt60 = [8600, 7900, 9600]
+  tilt40 = [6200, 5300, 7600]
+  official = 23900
+
+  [[GVX.trees]]
+  deg = 20
+  vertical = [13700, 13000, 14800]
+  tilt60 = [9000, 8400, 10100]
+  tilt40 = [6700, 5800, 7900]
+  official = 25500
+
+  [[GVX.trees]]
+  deg = 30
+  vertical = [15800, 14800, 17700]
+  tilt60 = [10300, 9700, 11300]
+  tilt40 = [7900, 7200, 9000]
+  official = 30100
+
+  [[GVX.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[GVX.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[GVX.capacity]]
+  mah = 9000
+  days = 47
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[GVX.capacity]]
+  mah = 12000
+  days = 61
+  trees = 10
+  pessimistic = 0
+  official = 0
+
+  [[GVX.capacity]]
+  mah = 15000
+  days = 75
+  trees = 20
+  pessimistic = 20
+  official = 0
+
+  [[GVX.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+  [[GVX.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 15
+
+[HAD]
+place = "Halland"
+lat = 56.976
+lon = 12.827
+irradiation = [0.88, 1.67, 2.82, 3.49, 3.23, 3.09, 2.96, 2.87, 2.70, 1.92, 1.01, 0.66]
+dec_of_june = 21
+source = "PVGIS-SARAH3"
+
+  [[HAD.trees]]
+  deg = 0
+  vertical = [500, 400, 500]
+  tilt60 = [400, 400, 400]
+  tilt40 = [400, 400, 400]
+  official = 900
+
+  [[HAD.trees]]
+  deg = 10
+  vertical = [2200, 1800, 2900]
+  tilt60 = [500, 400, 700]
+  tilt40 = [400, 400, 400]
+  official = 5200
+
+  [[HAD.trees]]
+  deg = 15
+  vertical = [4900, 4000, 6500]
+  tilt60 = [500, 500, 1100]
+  tilt40 = [400, 400, 400]
+  official = 12900
+
+  [[HAD.trees]]
+  deg = 20
+  vertical = [6000, 5000, 7700]
+  tilt60 = [700, 500, 1600]
+  tilt40 = [400, 400, 500]
+  official = 15000
+
+  [[HAD.trees]]
+  deg = 30
+  vertical = [8800, 7500, 10800]
+  tilt60 = [1900, 1200, 3200]
+  tilt40 = [500, 400, 600]
+  official = 19800
+
+  [[HAD.capacity]]
+  mah = 3000
+  days = 16
+  trees = 10
+  pessimistic = 10
+  official = 0
+
+  [[HAD.capacity]]
+  mah = 6000
+  days = 32
+  trees = 20
+  pessimistic = 10
+  official = 10
+
+  [[HAD.capacity]]
+  mah = 9000
+  days = 47
+  trees = 30
+  pessimistic = 20
+  official = 10
+
+  [[HAD.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[HAD.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[HAD.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[HAD.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[KLR]
+place = "Kalmar"
+lat = 57.252
+lon = 16.05
+irradiation = [1.03, 1.80, 3.20, 3.76, 3.44, 3.35, 3.22, 3.20, 3.13, 2.16, 1.12, 0.82]
+dec_of_june = 24
+source = "PVGIS-SARAH3"
+
+  [[KLR.trees]]
+  deg = 0
+  vertical = [500, 400, 600]
+  tilt60 = [300, 300, 300]
+  tilt40 = [300, 200, 300]
+  official = 1200
+
+  [[KLR.trees]]
+  deg = 10
+  vertical = [2600, 2100, 3300]
+  tilt60 = [600, 500, 800]
+  tilt40 = [400, 300, 400]
+  official = 6100
+
+  [[KLR.trees]]
+  deg = 15
+  vertical = [4400, 3400, 6000]
+  tilt60 = [700, 500, 1100]
+  tilt40 = [400, 300, 500]
+  official = 12200
+
+  [[KLR.trees]]
+  deg = 20
+  vertical = [5400, 4400, 7100]
+  tilt60 = [700, 600, 1300]
+  tilt40 = [400, 400, 600]
+  official = 13800
+
+  [[KLR.trees]]
+  deg = 30
+  vertical = [8200, 7100, 10000]
+  tilt60 = [1600, 1100, 2600]
+  tilt40 = [600, 500, 700]
+  official = 18700
+
+  [[KLR.capacity]]
+  mah = 3000
+  days = 16
+  trees = 10
+  pessimistic = 0
+  official = 0
+
+  [[KLR.capacity]]
+  mah = 6000
+  days = 32
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[KLR.capacity]]
+  mah = 9000
+  days = 47
+  trees = 30
+  pessimistic = 20
+  official = 10
+
+  [[KLR.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[KLR.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[KLR.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[KLR.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[KSD]
+place = "Värmland"
+lat = 59.786
+lon = 13.154
+irradiation = [0.77, 1.70, 3.31, 3.65, 3.36, 3.48, 3.33, 3.16, 2.85, 2.03, 0.94, 0.54]
+dec_of_june = 16
+source = "PVGIS-SARAH3"
+
+  [[KSD.trees]]
+  deg = 0
+  vertical = [700, 700, 800]
+  tilt60 = [600, 600, 700]
+  tilt40 = [500, 500, 600]
+  official = 1400
+
+  [[KSD.trees]]
+  deg = 10
+  vertical = [8500, 7800, 9500]
+  tilt60 = [3500, 2900, 5000]
+  tilt40 = [1800, 1300, 2600]
+  official = 16000
+
+  [[KSD.trees]]
+  deg = 15
+  vertical = [10100, 9000, 11500]
+  tilt60 = [4100, 3300, 5700]
+  tilt40 = [2000, 1400, 2900]
+  official = 20400
+
+  [[KSD.trees]]
+  deg = 20
+  vertical = [11100, 10100, 12600]
+  tilt60 = [4800, 3900, 6300]
+  tilt40 = [2300, 1800, 3200]
+  official = 21700
+
+  [[KSD.trees]]
+  deg = 30
+  vertical = [13400, 12400, 14900]
+  tilt60 = [6700, 5800, 8200]
+  tilt40 = [3200, 2600, 4700]
+  official = 27000
+
+  [[KSD.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[KSD.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[KSD.capacity]]
+  mah = 9000
+  days = 47
+  trees = 10
+  pessimistic = 0
+  official = 0
+
+  [[KSD.capacity]]
+  mah = 12000
+  days = 61
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[KSD.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+  [[KSD.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[KSD.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+[LLA]
+place = "Norrbotten"
+lat = 66.951
+lon = 20.1
+irradiation = [0.18, 1.58, 3.73, 4.21, 3.78, 3.44, 3.11, 2.97, 2.57, 1.80, 0.42, 0.00]
+dec_of_june = 0
+source = "PVGIS-ERA5"
+note = """**Solcell är i praktiken inte ett alternativ här**, utom möjligen på en öppen och hög plats, och även där med knapp marginal. Siffrorna bygger på en annan datakälla (PVGIS-ERA5, eftersom platsen ligger utanför satellitdatan), som överskattar molnigt vinterljus: de är 11–29 procent för optimistiska. Med kylan inräknad (köldfaktor 0,75, cirka 23 procent större batteri) blir behovet vid en trädlinje på 20° ungefär 28 000 mAh, mer än tabellernas största batteri. Middagssolen står under horisonten från ungefär 13 december till 1 januari. Batteriet ligger under 0 °C i flera månader, och rimfrost på utsatta höjder är inte med i beräkningen."""
+
+  [[LLA.trees]]
+  deg = 0
+  vertical = [11600, 11600, 11700]
+  tilt60 = [11500, 11400, 11600]
+  tilt40 = [11400, 11200, 11500]
+  official = 18600
+
+  [[LLA.trees]]
+  deg = 10
+  vertical = [18600, 17900, 19500]
+  tilt60 = [15300, 14900, 16100]
+  tilt40 = [14000, 13700, 14800]
+  official = 31600
+
+  [[LLA.trees]]
+  deg = 15
+  vertical = [19400, 18700, 20500]
+  tilt60 = [15600, 15100, 16300]
+  tilt40 = [14300, 13800, 14900]
+  official = 34100
+
+  [[LLA.trees]]
+  deg = 20
+  vertical = [20100, 19400, 21500]
+  tilt60 = [15900, 15500, 16800]
+  tilt40 = [14500, 14000, 15100]
+  official = 35300
+
+  [[LLA.trees]]
+  deg = 30
+  vertical = [22300, 21400, 23900]
+  tilt60 = [17100, 16500, 18000]
+  tilt40 = [15100, 14700, 15800]
+  official = 39900
+
+  [[LLA.capacity]]
+  mah = 3000
+  days = 16
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[LLA.capacity]]
+  mah = 6000
+  days = 32
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[LLA.capacity]]
+  mah = 9000
+  days = 47
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[LLA.capacity]]
+  mah = 12000
+  days = 61
+  trees = 0
+  pessimistic = 0
+  official = -1
+
+  [[LLA.capacity]]
+  mah = 15000
+  days = 75
+  trees = 0
+  pessimistic = 0
+  official = -1
+
+  [[LLA.capacity]]
+  mah = 18000
+  days = 89
+  trees = 0
+  pessimistic = 0
+  official = -1
+
+  [[LLA.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+[LPI]
+place = "Östergötland"
+lat = 58.368
+lon = 15.662
+irradiation = [0.90, 1.77, 3.37, 3.78, 3.45, 3.45, 3.29, 3.17, 3.11, 2.19, 1.09, 0.63]
+dec_of_june = 18
+source = "PVGIS-SARAH3"
+
+  [[LPI.trees]]
+  deg = 0
+  vertical = [700, 700, 800]
+  tilt60 = [500, 500, 600]
+  tilt40 = [400, 400, 500]
+  official = 1400
+
+  [[LPI.trees]]
+  deg = 10
+  vertical = [5100, 4600, 6100]
+  tilt60 = [1200, 800, 2200]
+  tilt40 = [500, 400, 700]
+  official = 10600
+
+  [[LPI.trees]]
+  deg = 15
+  vertical = [6600, 5500, 8000]
+  tilt60 = [1400, 1000, 2700]
+  tilt40 = [600, 500, 800]
+  official = 15400
+
+  [[LPI.trees]]
+  deg = 20
+  vertical = [7500, 6600, 9400]
+  tilt60 = [2000, 1400, 3300]
+  tilt40 = [700, 500, 1100]
+  official = 17200
+
+  [[LPI.trees]]
+  deg = 30
+  vertical = [10300, 9300, 12200]
+  tilt60 = [3600, 2900, 4800]
+  tilt40 = [1100, 700, 1900]
+  official = 21900
+
+  [[LPI.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[LPI.capacity]]
+  mah = 6000
+  days = 32
+  trees = 10
+  pessimistic = 0
+  official = 0
+
+  [[LPI.capacity]]
+  mah = 9000
+  days = 47
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[LPI.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 20
+  official = 10
+
+  [[LPI.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[LPI.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[LPI.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[MMX]
+place = "Skåne"
+lat = 55.964
+lon = 13.603
+irradiation = [0.90, 1.64, 2.85, 3.55, 3.34, 3.21, 3.16, 3.11, 3.01, 2.11, 1.00, 0.65]
+dec_of_june = 20
+source = "PVGIS-SARAH3"
+
+  [[MMX.trees]]
+  deg = 0
+  vertical = [400, 400, 500]
+  tilt60 = [300, 300, 400]
+  tilt40 = [200, 200, 300]
+  official = 1000
+
+  [[MMX.trees]]
+  deg = 10
+  vertical = [600, 500, 800]
+  tilt60 = [400, 400, 400]
+  tilt40 = [300, 200, 400]
+  official = 1400
+
+  [[MMX.trees]]
+  deg = 15
+  vertical = [3000, 2200, 4500]
+  tilt60 = [400, 400, 500]
+  tilt40 = [300, 300, 400]
+  official = 9600
+
+  [[MMX.trees]]
+  deg = 20
+  vertical = [3900, 3100, 5500]
+  tilt60 = [400, 400, 600]
+  tilt40 = [400, 300, 400]
+  official = 11500
+
+  [[MMX.trees]]
+  deg = 30
+  vertical = [6300, 5300, 8500]
+  tilt60 = [600, 500, 1300]
+  tilt40 = [400, 400, 400]
+  official = 16000
+
+  [[MMX.capacity]]
+  mah = 3000
+  days = 16
+  trees = 15
+  pessimistic = 10
+  official = 10
+
+  [[MMX.capacity]]
+  mah = 6000
+  days = 32
+  trees = 20
+  pessimistic = 20
+  official = 10
+
+  [[MMX.capacity]]
+  mah = 9000
+  days = 47
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[MMX.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[MMX.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[MMX.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+  [[MMX.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[NYO]
+place = "Södermanland"
+lat = 59.094
+lon = 16.7
+irradiation = [0.83, 1.72, 3.17, 3.76, 3.52, 3.53, 3.43, 3.30, 3.10, 2.18, 1.04, 0.61]
+dec_of_june = 17
+source = "PVGIS-SARAH3"
+
+  [[NYO.trees]]
+  deg = 0
+  vertical = [900, 800, 1000]
+  tilt60 = [700, 600, 700]
+  tilt40 = [500, 400, 700]
+  official = 1700
+
+  [[NYO.trees]]
+  deg = 10
+  vertical = [6800, 6200, 7700]
+  tilt60 = [2400, 1800, 3600]
+  tilt40 = [800, 600, 1400]
+  official = 13400
+
+  [[NYO.trees]]
+  deg = 15
+  vertical = [8300, 7300, 9800]
+  tilt60 = [2800, 2100, 4000]
+  tilt40 = [900, 700, 1600]
+  official = 17900
+
+  [[NYO.trees]]
+  deg = 20
+  vertical = [9100, 8300, 11000]
+  tilt60 = [3300, 2600, 4600]
+  tilt40 = [1100, 800, 2000]
+  official = 19400
+
+  [[NYO.trees]]
+  deg = 30
+  vertical = [12000, 10900, 13800]
+  tilt60 = [4900, 4100, 6400]
+  tilt40 = [2100, 1500, 3200]
+  official = 23300
+
+  [[NYO.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[NYO.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[NYO.capacity]]
+  mah = 9000
+  days = 47
+  trees = 15
+  pessimistic = 10
+  official = 0
+
+  [[NYO.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 20
+  official = 0
+
+  [[NYO.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[NYO.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 15
+
+  [[NYO.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[ORB]
+place = "Örebro"
+lat = 59.376
+lon = 14.998
+irradiation = [0.71, 1.72, 3.28, 3.71, 3.41, 3.52, 3.38, 3.24, 3.00, 2.10, 0.96, 0.54]
+dec_of_june = 15
+source = "PVGIS-SARAH3"
+
+  [[ORB.trees]]
+  deg = 0
+  vertical = [1000, 900, 1200]
+  tilt60 = [700, 600, 900]
+  tilt40 = [600, 500, 700]
+  official = 2200
+
+  [[ORB.trees]]
+  deg = 10
+  vertical = [7600, 6800, 8700]
+  tilt60 = [3300, 2600, 4500]
+  tilt40 = [1100, 1000, 2200]
+  official = 14700
+
+  [[ORB.trees]]
+  deg = 15
+  vertical = [9000, 8000, 10600]
+  tilt60 = [3700, 2900, 5000]
+  tilt40 = [1300, 1000, 2600]
+  official = 19200
+
+  [[ORB.trees]]
+  deg = 20
+  vertical = [9900, 9100, 11600]
+  tilt60 = [4300, 3500, 5600]
+  tilt40 = [1800, 1200, 2900]
+  official = 20500
+
+  [[ORB.trees]]
+  deg = 30
+  vertical = [12700, 11600, 14300]
+  tilt60 = [5900, 5100, 7300]
+  tilt40 = [2900, 2300, 4200]
+  official = 24600
+
+  [[ORB.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[ORB.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[ORB.capacity]]
+  mah = 9000
+  days = 47
+  trees = 15
+  pessimistic = 10
+  official = 0
+
+  [[ORB.capacity]]
+  mah = 12000
+  days = 61
+  trees = 20
+  pessimistic = 20
+  official = 0
+
+  [[ORB.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[ORB.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[ORB.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+[OSD]
+place = "Jämtland"
+lat = 63.267
+lon = 14.329
+irradiation = [0.33, 1.21, 2.64, 3.08, 3.28, 3.43, 3.39, 3.07, 2.44, 1.57, 0.61, 0.16]
+dec_of_june = 5
+source = "PVGIS-SARAH3"
+note = """Norr om ungefär 63° N bär batteriet större delen av vintern. Inlandet kan ha −35 till −40 °C en sämre vinter, och vanliga celler är inte specificerade under −20 °C: räkna med cirka 8 procent större batteri än tabellerna (köldfaktor 0,85). Batteriet ligger under 0 °C från ungefär november till mars eller april, och på utsatta höjder och fjäll kan rimfrost täcka panelen, vilket inte är med i beräkningen. Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+
+  [[OSD.trees]]
+  deg = 0
+  vertical = [3900, 3800, 3900]
+  tilt60 = [3900, 3900, 4000]
+  tilt40 = [4100, 4000, 4100]
+  official = 6700
+
+  [[OSD.trees]]
+  deg = 10
+  vertical = [15800, 15400, 16500]
+  tilt60 = [12800, 12400, 13700]
+  tilt40 = [11300, 10800, 12000]
+  official = 26500
+
+  [[OSD.trees]]
+  deg = 15
+  vertical = [16900, 16400, 18400]
+  tilt60 = [13000, 12600, 14000]
+  tilt40 = [11500, 10900, 12200]
+  official = 30300
+
+  [[OSD.trees]]
+  deg = 20
+  vertical = [17600, 17000, 19000]
+  tilt60 = [13500, 13000, 14500]
+  tilt40 = [11700, 11200, 12600]
+  official = 31600
+
+  [[OSD.trees]]
+  deg = 30
+  vertical = [19800, 18700, 21000]
+  tilt60 = [14800, 14200, 15700]
+  tilt40 = [12600, 12100, 13300]
+  official = 35000
+
+  [[OSD.capacity]]
+  mah = 3000
+  days = 16
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[OSD.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = -1
+
+  [[OSD.capacity]]
+  mah = 9000
+  days = 47
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[OSD.capacity]]
+  mah = 12000
+  days = 61
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[OSD.capacity]]
+  mah = 15000
+  days = 75
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[OSD.capacity]]
+  mah = 18000
+  days = 89
+  trees = 20
+  pessimistic = 10
+  official = 0
+
+  [[OSD.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+[RNB]
+place = "Blekinge"
+lat = 56.296
+lon = 15.204
+irradiation = [1.07, 1.77, 3.15, 3.82, 3.63, 3.48, 3.39, 3.35, 3.27, 2.26, 1.17, 0.81]
+dec_of_june = 23
+source = "PVGIS-SARAH3"
+
+  [[RNB.trees]]
+  deg = 0
+  vertical = [400, 400, 400]
+  tilt60 = [300, 200, 400]
+  tilt40 = [200, 200, 300]
+  official = 800
+
+  [[RNB.trees]]
+  deg = 10
+  vertical = [600, 500, 800]
+  tilt60 = [400, 300, 400]
+  tilt40 = [200, 200, 300]
+  official = 1400
+
+  [[RNB.trees]]
+  deg = 15
+  vertical = [3000, 2100, 4400]
+  tilt60 = [400, 300, 500]
+  tilt40 = [300, 200, 300]
+  official = 9500
+
+  [[RNB.trees]]
+  deg = 20
+  vertical = [3900, 3000, 5300]
+  tilt60 = [400, 400, 600]
+  tilt40 = [300, 200, 400]
+  official = 11400
+
+  [[RNB.trees]]
+  deg = 30
+  vertical = [6500, 5200, 8500]
+  tilt60 = [600, 500, 1300]
+  tilt40 = [300, 300, 400]
+  official = 15900
+
+  [[RNB.capacity]]
+  mah = 3000
+  days = 16
+  trees = 15
+  pessimistic = 10
+  official = 10
+
+  [[RNB.capacity]]
+  mah = 6000
+  days = 32
+  trees = 20
+  pessimistic = 20
+  official = 10
+
+  [[RNB.capacity]]
+  mah = 9000
+  days = 47
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[RNB.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[RNB.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[RNB.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+  [[RNB.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[SDL]
+place = "Västernorrland"
+lat = 63.116
+lon = 17.271
+irradiation = [0.44, 1.71, 3.17, 3.43, 3.40, 3.51, 3.36, 3.18, 2.75, 1.96, 0.65, 0.18]
+dec_of_june = 5
+source = "PVGIS-SARAH3"
+note = """Norr om ungefär 63° N bär batteriet större delen av vintern. Vintrarna här kan bli kallare än −20 °C, som beräkningen utgår från: räkna med cirka 8 procent större batteri än tabellerna (köldfaktor 0,85). Batteriet ligger under 0 °C från ungefär november till mars eller april, och på utsatta höjder kan rimfrost täcka panelen, vilket inte är med i beräkningen. Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+
+  [[SDL.trees]]
+  deg = 0
+  vertical = [3100, 3100, 3100]
+  tilt60 = [3100, 3100, 3100]
+  tilt40 = [3200, 3200, 3200]
+  official = 5200
+
+  [[SDL.trees]]
+  deg = 10
+  vertical = [15000, 14600, 15600]
+  tilt60 = [12500, 11800, 13100]
+  tilt40 = [10900, 10400, 11600]
+  official = 25600
+
+  [[SDL.trees]]
+  deg = 15
+  vertical = [16300, 15600, 17400]
+  tilt60 = [12700, 12200, 13300]
+  tilt40 = [11100, 10500, 11800]
+  official = 29500
+
+  [[SDL.trees]]
+  deg = 20
+  vertical = [17300, 16100, 18300]
+  tilt60 = [13000, 12800, 13900]
+  tilt40 = [11300, 10900, 12300]
+  official = 30500
+
+  [[SDL.trees]]
+  deg = 30
+  vertical = [19100, 18300, 20200]
+  tilt60 = [13900, 13500, 15200]
+  tilt40 = [12300, 11600, 12900]
+  official = 33900
+
+  [[SDL.capacity]]
+  mah = 3000
+  days = 16
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[SDL.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[SDL.capacity]]
+  mah = 9000
+  days = 47
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[SDL.capacity]]
+  mah = 12000
+  days = 61
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[SDL.capacity]]
+  mah = 15000
+  days = 75
+  trees = 10
+  pessimistic = 0
+  official = 0
+
+  [[SDL.capacity]]
+  mah = 18000
+  days = 89
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[SDL.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+[STO]
+place = "Stockholm/Uppsala"
+lat = 59.794
+lon = 17.872
+irradiation = [0.77, 1.71, 3.14, 3.68, 3.57, 3.55, 3.45, 3.34, 3.03, 2.13, 0.96, 0.53]
+dec_of_june = 15
+source = "PVGIS-SARAH3"
+
+  [[STO.trees]]
+  deg = 0
+  vertical = [1100, 1000, 1100]
+  tilt60 = [900, 800, 1000]
+  tilt40 = [700, 700, 900]
+  official = 1900
+
+  [[STO.trees]]
+  deg = 10
+  vertical = [8000, 7300, 8900]
+  tilt60 = [3500, 2800, 4600]
+  tilt40 = [1700, 1400, 2500]
+  official = 15500
+
+  [[STO.trees]]
+  deg = 15
+  vertical = [9600, 8700, 11100]
+  tilt60 = [3900, 3200, 5300]
+  tilt40 = [2000, 1500, 2600]
+  official = 19600
+
+  [[STO.trees]]
+  deg = 20
+  vertical = [10500, 9800, 12200]
+  tilt60 = [4400, 3700, 6000]
+  tilt40 = [2200, 1800, 3100]
+  official = 21100
+
+  [[STO.trees]]
+  deg = 30
+  vertical = [12700, 12000, 14900]
+  tilt60 = [6300, 5400, 7600]
+  tilt40 = [3100, 2500, 4300]
+  official = 25700
+
+  [[STO.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[STO.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[STO.capacity]]
+  mah = 9000
+  days = 47
+  trees = 10
+  pessimistic = 10
+  official = 0
+
+  [[STO.capacity]]
+  mah = 12000
+  days = 61
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[STO.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+  [[STO.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[STO.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+[UME]
+place = "Västerbotten"
+lat = 64.87
+lon = 17.837
+irradiation = [0.27, 1.41, 3.30, 3.43, 3.33, 3.39, 3.33, 3.09, 2.51, 1.61, 0.45, 0.06]
+dec_of_june = 2
+source = "PVGIS-SARAH3"
+note = """Norr om ungefär 63° N bär batteriet större delen av vintern, och redan utan träd behövs ett stort batteri eftersom terrängen skymmer vintersolen. Inlandet kan ha −35 till −40 °C en sämre vinter: räkna med 8–23 procent större batteri än tabellerna (köldfaktor 0,75–0,85). Platsen ligger vid kanten av satellitdatans täckning, och inlandet norr om cirka 65° N ligger utanför den. Rimfrost på utsatta höjder är inte med i beräkningen. Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+
+  [[UME.trees]]
+  deg = 0
+  vertical = [8800, 8800, 8800]
+  tilt60 = [8700, 8700, 8800]
+  tilt40 = [8800, 8800, 8800]
+  official = 14100
+
+  [[UME.trees]]
+  deg = 10
+  vertical = [18100, 17800, 18700]
+  tilt60 = [15900, 15400, 16600]
+  tilt40 = [14700, 14500, 15400]
+  official = 29700
+
+  [[UME.trees]]
+  deg = 15
+  vertical = [19600, 19100, 20700]
+  tilt60 = [16300, 15700, 17100]
+  tilt40 = [14800, 14600, 15300]
+  official = 34200
+
+  [[UME.trees]]
+  deg = 20
+  vertical = [20300, 19800, 21300]
+  tilt60 = [16700, 16200, 17400]
+  tilt40 = [14900, 14700, 15700]
+  official = 35100
+
+  [[UME.trees]]
+  deg = 30
+  vertical = [22100, 21300, 22900]
+  tilt60 = [17600, 17200, 18500]
+  tilt40 = [15700, 15300, 16600]
+  official = 38100
+
+  [[UME.capacity]]
+  mah = 3000
+  days = 16
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[UME.capacity]]
+  mah = 6000
+  days = 32
+  trees = -1
+  pessimistic = -1
+  official = -1
+
+  [[UME.capacity]]
+  mah = 9000
+  days = 47
+  trees = 0
+  pessimistic = 0
+  official = -1
+
+  [[UME.capacity]]
+  mah = 12000
+  days = 61
+  trees = 0
+  pessimistic = 0
+  official = -1
+
+  [[UME.capacity]]
+  mah = 15000
+  days = 75
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[UME.capacity]]
+  mah = 18000
+  days = 89
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[UME.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+[VBY]
+place = "Gotland"
+lat = 57.482
+lon = 18.514
+irradiation = [0.97, 1.77, 3.19, 4.07, 3.82, 3.64, 3.53, 3.40, 3.32, 2.21, 1.10, 0.81]
+dec_of_june = 22
+source = "PVGIS-SARAH3"
+
+  [[VBY.trees]]
+  deg = 0
+  vertical = [600, 500, 700]
+  tilt60 = [400, 400, 400]
+  tilt40 = [400, 400, 400]
+  official = 1100
+
+  [[VBY.trees]]
+  deg = 10
+  vertical = [3400, 2800, 4400]
+  tilt60 = [600, 500, 1200]
+  tilt40 = [400, 400, 500]
+  official = 8000
+
+  [[VBY.trees]]
+  deg = 15
+  vertical = [4700, 4000, 6300]
+  tilt60 = [800, 600, 1300]
+  tilt40 = [400, 400, 500]
+  official = 12400
+
+  [[VBY.trees]]
+  deg = 20
+  vertical = [5700, 4700, 7300]
+  tilt60 = [1200, 800, 1700]
+  tilt40 = [400, 400, 600]
+  official = 14400
+
+  [[VBY.trees]]
+  deg = 30
+  vertical = [8200, 7100, 10300]
+  tilt60 = [2100, 1400, 3100]
+  tilt40 = [600, 500, 1100]
+  official = 18700
+
+  [[VBY.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[VBY.capacity]]
+  mah = 6000
+  days = 32
+  trees = 20
+  pessimistic = 10
+  official = 0
+
+  [[VBY.capacity]]
+  mah = 9000
+  days = 47
+  trees = 30
+  pessimistic = 20
+  official = 10
+
+  [[VBY.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[VBY.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[VBY.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[VBY.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 30
+
+[VST]
+place = "Västmanland"
+lat = 59.82
+lon = 16.341
+irradiation = [0.77, 1.77, 3.27, 3.70, 3.43, 3.49, 3.40, 3.28, 3.00, 2.17, 0.95, 0.53]
+dec_of_june = 15
+source = "PVGIS-SARAH3"
+
+  [[VST.trees]]
+  deg = 0
+  vertical = [1100, 1100, 1200]
+  tilt60 = [800, 700, 900]
+  tilt40 = [700, 600, 800]
+  official = 2000
+
+  [[VST.trees]]
+  deg = 10
+  vertical = [8300, 7600, 9200]
+  tilt60 = [4000, 3400, 5100]
+  tilt40 = [1900, 1300, 3000]
+  official = 15300
+
+  [[VST.trees]]
+  deg = 15
+  vertical = [10000, 9100, 11500]
+  tilt60 = [4500, 3800, 5700]
+  tilt40 = [2200, 1600, 3300]
+  official = 20000
+
+  [[VST.trees]]
+  deg = 20
+  vertical = [11000, 9900, 12400]
+  tilt60 = [5100, 4400, 6300]
+  tilt40 = [2600, 2000, 3800]
+  official = 21500
+
+  [[VST.trees]]
+  deg = 30
+  vertical = [13400, 12200, 14700]
+  tilt60 = [6700, 5800, 8000]
+  tilt40 = [3800, 3100, 5000]
+  official = 25500
+
+  [[VST.capacity]]
+  mah = 3000
+  days = 16
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[VST.capacity]]
+  mah = 6000
+  days = 32
+  trees = 0
+  pessimistic = 0
+  official = 0
+
+  [[VST.capacity]]
+  mah = 9000
+  days = 47
+  trees = 10
+  pessimistic = 0
+  official = 0
+
+  [[VST.capacity]]
+  mah = 12000
+  days = 61
+  trees = 20
+  pessimistic = 15
+  official = 0
+
+  [[VST.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 0
+
+  [[VST.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 10
+
+  [[VST.capacity]]
+  mah = 24000
+  days = 115
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+[VXO]
+place = "Kronoberg"
+lat = 56.803
+lon = 14.585
+irradiation = [0.89, 1.56, 3.00, 3.61, 3.35, 3.23, 3.16, 3.08, 2.90, 2.03, 0.97, 0.64]
+dec_of_june = 20
+source = "PVGIS-SARAH3"
+
+  [[VXO.trees]]
+  deg = 0
+  vertical = [400, 400, 500]
+  tilt60 = [300, 200, 300]
+  tilt40 = [200, 200, 300]
+  official = 900
+
+  [[VXO.trees]]
+  deg = 10
+  vertical = [2000, 1700, 2600]
+  tilt60 = [400, 300, 700]
+  tilt40 = [300, 200, 300]
+  official = 5200
+
+  [[VXO.trees]]
+  deg = 15
+  vertical = [4300, 3500, 6100]
+  tilt60 = [500, 400, 900]
+  tilt40 = [300, 200, 400]
+  official = 11700
+
+  [[VXO.trees]]
+  deg = 20
+  vertical = [5500, 4400, 7000]
+  tilt60 = [600, 500, 1300]
+  tilt40 = [300, 300, 400]
+  official = 14200
+
+  [[VXO.trees]]
+  deg = 30
+  vertical = [8100, 7000, 10200]
+  tilt60 = [1600, 1000, 2600]
+  tilt40 = [400, 400, 600]
+  official = 18200
+
+  [[VXO.capacity]]
+  mah = 3000
+  days = 16
+  trees = 10
+  pessimistic = 10
+  official = 0
+
+  [[VXO.capacity]]
+  mah = 6000
+  days = 32
+  trees = 20
+  pessimistic = 10
+  official = 10
+
+  [[VXO.capacity]]
+  mah = 9000
+  days = 47
+  trees = 30
+  pessimistic = 20
+  official = 10
+
+  [[VXO.capacity]]
+  mah = 12000
+  days = 61
+  trees = 30
+  pessimistic = 30
+  official = 15
+
+  [[VXO.capacity]]
+  mah = 15000
+  days = 75
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[VXO.capacity]]
+  mah = 18000
+  days = 89
+  trees = 30
+  pessimistic = 30
+  official = 20
+
+  [[VXO.capacity]]
   mah = 24000
   days = 115
   trees = 30
