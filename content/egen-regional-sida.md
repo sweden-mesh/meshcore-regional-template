@@ -1,6 +1,7 @@
 ---
 title: "Starta en sida för din region"
 description: "Den här sidan är byggd på en öppen mall. Så startar du en likadan sida för ditt län, med egen karta och egna guider."
+lead: false
 ---
 
 MeshCore är ett nät utan centrum, och informationen om nätet kan vara det också. Den här sidan är

@@ -6,7 +6,7 @@ params with safe defaults. **Patch** = fixes and text.
 
 ## v0.23.6 — 2026-11-14
 
-- "Bli nodvärd" shows no lead line under the title.
+- "Bli nodvärd" and "Starta en sida för din region" show no lead line under the title.
 
 ## v0.23.5 — 2026-11-14
 
