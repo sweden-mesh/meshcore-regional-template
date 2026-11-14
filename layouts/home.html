@@ -86,7 +86,7 @@
      of the region's text is a column of its own, so a region adds a column by adding a heading. */ -}}
   {{- $parts := slice -}}
   {{- with .Content -}}{{- range $i, $p := split . "<h2" -}}{{- if strings.TrimSpace $p -}}{{- $parts = $parts | append (cond (gt $i 0) (print "<h2" $p) $p) -}}{{- end -}}{{- end -}}{{- end -}}
-  <div class="about{{ if $parts }} about-cols{{ end }}">
+  <div class="about{{ if $parts }} about-cols{{ end }}" style="--about-n: {{ add (len $parts) 1 }}">
     <section class="about-meshcore prose">
       <h2>{{ T "about_meshcore_title" }}</h2>
       {{- $guide := "" }}{{ with site.GetPage "/guider/vad-ar-meshcore" }}{{ $guide = .RelPermalink }}{{ end }}
