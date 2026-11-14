@@ -39,8 +39,8 @@ Exemplet nedan gäller Jönköping (57,8° N). Längre norrut är vintern mörka
   vinter har en period på fem, sex dagar under 0,1.
 - Middagssolen står bara cirka 10° över horisonten i början av december, 9° vid vintersolståndet
   och cirka 15° i slutet av januari.
-- Bakom en trädlinje på 20° kommer ingen direkt sol alls från slutet av oktober till slutet av
-  februari. Bakom 15° gäller det ungefär 20 november till slutet av januari. Då lever panelen
+- Bakom en trädlinje på 20° kommer ingen direkt sol alls från slutet av oktober till mitten av
+  februari. Bakom 15° gäller det ungefär 10 november till början av februari. Då lever panelen
   bara på ljuset från himlen.
 - Med en trädlinje på 20° runt om ger panelen per kilowatt märkeffekt 79 Wh per dag i december
   och 119 Wh i januari. Med fri horisont är det 656 och 912 Wh. Träden tar alltså bort nästan
@@ -241,10 +241,10 @@ Tabellerna ovan gäller bara för det här bygget:
 ### Innan första vintern
 
 1. Mät spänningen mellan panelens två utgångstrådar i sol, utan något anslutet. Räkna med cirka
-   6,0–6,6 V i full sol (fälttestet mätte 5,90 V inomhus bakom glas). Visar den cirka 12–13 V är
-   arket kopplat åt andra hållet, och laddaren ska då ställas på 10,0 V i nästa steg. Vid alla
-   andra värden: stanna och kontrollera att du har rätt trådar.
-2. Ställ in laddaren med ett labbaggregat på **5,0 V** (eller 10,0 V, se steg 1) tills kortets
+   6,0–6,6 V i full sol (fälttestet mätte 5,90 V inomhus bakom glas). Visar den något annat:
+   stanna och kontrollera att du har rätt trådar, och gå inte vidare förrän du läser cirka
+   6,0–6,6 V.
+2. Ställ in laddaren med ett labbaggregat på **5,0 V** tills kortets
    MPPT-stift visar 1,205 V. Kontrollera att laddströmmen är högst 2 A. CN3791:s referens är
    noggrann på cirka ±2 procent, ungefär ±0,1 V, så mät sedan spänningen vid panelens anslutning
    medan kortet laddar och justera mot 5,0 V. 4,8 V är ännu lite bättre bakom träd, men bara om
@@ -316,7 +316,7 @@ på tre decimaler.
 > - 0,85: användbart fönster, 4,2 V ner till en gräns på 3,4 V
 > - 0,90: åldrande, dimensionerat för tredje vintern
 > - 3 %: självurladdning per månad under underskottsperioden
-> - snödagar: dagar utan skörd × dygnets förbrukning genom samma faktorer (bara i kalkylatorn)
+> - snödagar: dagar utan skörd × dygnsbehovet, där dygnsbehovet är förbrukningen × 24 h / (0,92 × 0,85 × 0,90): cirka 153 mAh med EasySkyMesh (4,5 mA) och 242 mAh med officiell firmware (7,1 mA), före marginalen (bara i kalkylatorn)
 > - 1,50: marginal, och svaret avrundas uppåt
 
 Inte med i tabellerna: snö eller frost på panelen (se ovan), och extra ljus som reflekteras från

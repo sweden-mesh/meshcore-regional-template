@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.20.2 — 2026-11-14
+
+- Solar guide corrections from the solar session: the sun dates behind 20° and 15° tree lines
+  (to mid-February; about 10 November to early February), the panel-voltage step without the
+  12–13 V / 10.0 V branch, and "daily need" defined in the formula.
+
 ## v0.20.1 — 2026-11-14
 
 - Solar: the Norrbotten notice no longer quotes a figure from the first calculation.
