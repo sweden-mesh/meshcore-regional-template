@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.23.0 — 2026-11-14
+
+- Notice boxes show their level with an icon at the start of the title: blue information (NOTE, TIP),
+  yellow warning (IMPORTANT, WARNING), red critical (CAUTION), shape and colour both, always with
+  the text; critical boxes get a red tint. Three boxes' types corrected to match their content.
+  Fold-out notices put their open/closed marker at the end of the title line.
+- "Solnoder" opens with a pointer to the solar calculator.
+
 ## v0.22.0 — 2026-11-14
 
 - Guide lists: the number on the title's line ("01 Vad är MeshCore?"), long titles wrap under the title.
