@@ -35,7 +35,8 @@ Sverige använder två nivåer:
 {{< settings >}}
 
 Länets namn bestäms av länet självt; finns inget beslut används ett uppmätt eller föreslaget
-namn. Det finns inga kommunregioner.
+namn. Alla läns namn finns i [meshcore-se-regioner](https://github.com/zombiefredrik/meshcore-se-regioner).
+Det finns inga kommunregioner.
 
 > [!WARNING] `*` betyder inte "allt"
 > `*` är trafik som saknar regionetikett, inte ett jokertecken för alla regioner.
