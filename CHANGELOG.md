@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.23.3 — 2026-11-14
+
+- Tables in text (e.g. the channel table) align their cells to the top, not the middle.
+
 ## v0.23.2 — 2026-11-14
 
 - Solar calculator: no map. The data has one point per county, so a position inside the county
