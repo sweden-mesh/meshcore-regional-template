@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.23.2 — 2026-11-14
+
+- Solar calculator: no map. The data has one point per county, so a position inside the county
+  changed nothing; the calculator uses the region's own county and says which (three steps now).
+- Troubleshooting entries show no lead line under the title (cascade in content/felsokning/_index.md);
+  the list keeps each description.
+
 ## v0.23.1 — 2026-11-14
 
 - The map guide (now "Din repeater på kartan, och som observatör") says first that a repeater does

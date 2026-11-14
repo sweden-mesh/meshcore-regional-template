@@ -8,8 +8,8 @@ weight: 40
 ## Räkna på din egen plats
 
 Den här sidan förklarar varför och hur. Vill du bara veta hur stor panel och hur många batterier
-du behöver där du bor, använd [solcellskalkylatorn](/wizard/solcell/): välj platsen på kartan,
-trädlinje och firmware, så räknar den ut resten.
+du behöver där du bor, använd [solcellskalkylatorn](/wizard/solcell/): välj trädlinje och
+firmware, så räknar den ut resten för ditt län.
 
 ## Varför sol?
 
@@ -136,7 +136,7 @@ Väljer du en annan panel:
 ## Hur stort batteri
 
 Vill du räkna på en annan panel eller ett annat antal celler? Använd
-[solcellskalkylatorn](/wizard/solcell/): välj plats, trädlinje och firmware, och dra i reglagen.
+[solcellskalkylatorn](/wizard/solcell/): välj trädlinje och firmware, och dra i reglagen.
 
 ### Efter batteriets kapacitet
 

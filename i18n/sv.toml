@@ -520,17 +520,11 @@ other = "Räkna på solcell"
 [sol_desc]
 other = "Hur stor panel och hur många batterier en solcellsdriven repeater behöver för att klara vintern där du bor."
 [sol_intro]
-other = "Välj platsen, berätta om trädlinjen och firmwaren, och dra i reglagen. Flyttar du panelen räknar sidan ut antalet celler, och tvärtom. Siffrorna kommer från samma beräkning som guiden [Solnoder](/guider/solnoder/)."
-[sol_place]
-other = "Välj plats"
-[sol_place_help]
-other = "Klicka där repeatern ska stå. Siffrorna gäller en punkt i det län du klickar i."
+other = "Berätta om trädlinjen och firmwaren, och dra i reglagen. Flyttar du panelen räknar sidan ut antalet celler, och tvärtom. Siffrorna kommer från samma beräkning som guiden [Solnoder](/guider/solnoder/)."
 [sol_where]
 other = "Räknat för en punkt i"
 [sol_era5]
 other = "en annan datakälla (PVGIS-ERA5), som kan vara för optimistisk"
-[sol_outside]
-other = "Platsen ligger utanför de län vi har siffror för; sidan visar fortfarande {PLACE}."
 [sol_site]
 other = "Platsen och repeatern"
 [sol_tree]

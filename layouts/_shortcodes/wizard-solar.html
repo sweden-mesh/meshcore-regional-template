@@ -1,29 +1,20 @@
 {{- /* {{< wizard-solar >}}: the solar calculator (backlog B-259). Panel watts ⇄ Biltema cells, for the
-  county the visitor picks on the map. Numbers from assets/data/solar-calc.json (the solar
+  region's own county (B-272: no map; the data has one point per county, so a position inside the
+  county changed nothing). Numbers from assets/data/solar-calc.json (the solar
   session's model); county notes from data/solar.toml. */ -}}
 {{- $r := partialCached "region.html" .Page "region" -}}
-{{- $codes := site.Params.observer.iatas | default dict -}}
-{{- $areas := slice -}}
-{{- with resources.Get "se-lan.geojson" -}}{{- range $f := (.Content | transform.Unmarshal).features -}}
-  {{- with index $codes $f.properties.scb -}}{{- $areas = $areas | append (dict "iata" . "lan" "" "rings" $f.geometry.coordinates) -}}{{- end -}}
-{{- end -}}{{- end -}}
 {{- $notes := dict -}}
 {{- range $code, $d := hugo.Data.solar -}}{{- $notes = merge $notes (dict $code (dict "place" $d.place "lat" $d.lat "source" ($d.source | default "") "note" (cond (ne $d.note nil) ($d.note | markdownify | string) ""))) -}}{{- end -}}
 {{- $own := index ($r.iatas | default slice) 0 | default "JKG" -}}
 {{- $calc := resources.Get "data/solar-calc.json" | minify | fingerprint -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}
 <form class="wizard solar-calc" id="solar-calc" novalidate
-      data-calc="{{ $calc.RelPermalink }}" data-own="{{ $own }}" data-areas="{{ $areas | jsonify }}" data-notes="{{ $notes | jsonify }}">
-  <fieldset class="wz-step">
-    <legend><span class="wz-num">1</span> {{ T "sol_place" }}</legend>
-    <p class="muted">{{ T "sol_place_help" }}</p>
-    {{ partial "mappick.html" . }}
-    <p class="wz-status" data-out="where" aria-live="polite"></p>
-    <div class="sol-note" data-out="note"></div>
-  </fieldset>
+      data-calc="{{ $calc.RelPermalink }}" data-own="{{ $own }}" data-notes="{{ $notes | jsonify }}">
 
   <fieldset class="wz-step">
-    <legend><span class="wz-num">2</span> {{ T "sol_site" }}</legend>
+    <legend><span class="wz-num">1</span> {{ T "sol_site" }}</legend>
+    <p class="wz-status" data-out="where" aria-live="polite"></p>
+    <div class="sol-note" data-out="note"></div>
     <label for="sol-tree">{{ T "sol_tree" }} <output data-out="tree"></output></label>
     <input type="range" id="sol-tree" min="0" max="5" step="1" value="3">
     <p class="muted">{{ T "sol_tree_help" }}</p>
@@ -42,7 +33,7 @@
   </fieldset>
 
   <fieldset class="wz-step">
-    <legend><span class="wz-num">3</span> {{ T "sol_size" }}</legend>
+    <legend><span class="wz-num">2</span> {{ T "sol_size" }}</legend>
     <div class="sol-slider">
       <label for="sol-panel">{{ T "sol_panel" }} <output data-out="panel"></output> <span class="sol-lock" data-lock="panel" hidden>{{ T "sol_held" }}</span></label>
       <input type="range" id="sol-panel" min="0" max="9" step="1" value="2">
@@ -64,7 +55,7 @@
   </fieldset>
 
   <fieldset class="wz-step">
-    <legend><span class="wz-num">4</span> {{ T "sol_build" }}</legend>
+    <legend><span class="wz-num">3</span> {{ T "sol_build" }}</legend>
     <ul class="sol-notes">
       <li>{{ T "sol_n_setpoint" | markdownify }}</li>
       <li>{{ T "sol_n_cells" | markdownify }}</li>
@@ -74,7 +65,7 @@
     </ul>
   </fieldset>
 </form>
-<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "outside" (T "sol_outside") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") "snow" (T "sol_snow") "buried" (T "sol_buried") | jsonify }}"></div>
+<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") "snow" (T "sol_snow") "buried" (T "sol_buried") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/solar-ui.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

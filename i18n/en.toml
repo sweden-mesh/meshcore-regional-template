@@ -524,17 +524,11 @@ other = "Solar calculator"
 [sol_desc]
 other = "How big a panel and how many batteries a solar repeater needs to get through the winter where you live."
 [sol_intro]
-other = "Pick the place, give the tree line and firmware, and move the sliders. Moving the panel works out the number of cells, and the other way round. The numbers come from the same calculation as the [solar guide](/guider/solnoder/)."
-[sol_place]
-other = "Pick the place"
-[sol_place_help]
-other = "Click where the repeater will stand. The numbers apply to one point in the county you click in."
+other = "Give the tree line and firmware, and move the sliders. Moving the panel works out the number of cells, and the other way round. The numbers come from the same calculation as the [solar guide](/guider/solnoder/)."
 [sol_where]
 other = "Calculated for a point in"
 [sol_era5]
 other = "another data source (PVGIS-ERA5), which may be optimistic"
-[sol_outside]
-other = "That place is outside the counties we have numbers for; the page still shows {PLACE}."
 [sol_site]
 other = "The site and the repeater"
 [sol_tree]
