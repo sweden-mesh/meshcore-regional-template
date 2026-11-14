@@ -11,7 +11,7 @@
 {{- end -}}
 {{- if $r.neighbours -}}
 <div class="wz-neighbours" data-areas="{{ $areas | jsonify }}" data-texts="{{ dict "near" (T "wz_nb_near") "far" (T "wz_nb_far") "inside" (T "wz_nb_inside") | jsonify }}">
-  <label class="wz-check"><input type="checkbox" data-edge> {{ T "wz_nb_edge" }}</label>
+  <label class="wz-check"><input type="checkbox" data-edge> <span>{{ T "wz_nb_edge" | markdownify }}</span></label>
   <p class="muted" data-nb-hint hidden>{{ T "wz_nb_hint" }}</p>
   <ul class="wz-nb-list" hidden>
     {{- range $r.neighbours }}

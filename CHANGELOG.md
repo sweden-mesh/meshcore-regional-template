@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.14.1 — 2026-11-14
+
+- Wizard checkboxes sit at the first line of a long label, and the label is normal weight with only
+  its lead word bold (*Kantrepeater*, *Off-grid*).
+
 ## v0.14.0 — 2026-11-14
 
 - Both repeater wizards have an **Observatör** step (step 5 in the quick one, step 5 of 9 in the

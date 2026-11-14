@@ -181,7 +181,7 @@ other = "Region"
 [wz_region_help]
 other = "The repeater gets the regions"
 [wz_offgrid]
-other = "Off-grid: the repeater has backup power (solar or battery). Adds the region offgrid and turns on power saving."
+other = "**Off-grid**: the repeater has backup power (solar or battery). Adds the region offgrid and turns on power saving."
 [wz_password]
 other = "Password"
 [wz_password_label]
@@ -329,7 +329,7 @@ other = "Admin password"
 [wz_rv_none]
 other = "not chosen yet"
 [wz_nb_edge]
-other = "Edge repeater: the repeater regularly talks to repeaters in a neighbouring county and also carries that county's region. All others are ordinary repeaters, even near a county border."
+other = "**Edge repeater**: the repeater regularly talks to repeaters in a neighbouring county and also carries that county's region. All others are ordinary repeaters, even near a county border."
 [wz_nb_hint]
 other = "Neighbouring counties near the place you choose on the map are preselected (within 40 km, 80 km over water). You can change this."
 [wz_nb_near]
