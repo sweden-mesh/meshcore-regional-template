@@ -192,6 +192,8 @@ a { color: var(--accent); }
 .guide-grid a { display: flex; flex-direction: column; gap: .3rem; height: 100%; padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--fg); }
 .guide-grid a:hover { border-color: var(--accent); }
 .guide-grid strong { font-family: var(--font-head); font-size: 1.15rem; }
+/* The number on the title's line; a long title wraps under itself, not under the number (operator 2026-11-14). */
+.guide-head { display: grid; grid-template-columns: auto 1fr; column-gap: .5rem; align-items: baseline; }
 .guide-grid .muted { font-size: .92rem; line-height: 1.45; }
 .site-header { position: relative; }
 .site-header nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }

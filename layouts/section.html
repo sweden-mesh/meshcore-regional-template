@@ -5,7 +5,7 @@
     {{ with .Content }}<div class="prose">{{ partial "scopes.html" . }}</div>{{ end }}
     <ol class="guide-grid">
       {{ range $i, $p := .Pages.ByWeight }}
-        <li><a href="{{ .RelPermalink }}"><span class="eyebrow">{{ printf "%02d" (add $i 1) }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
+        <li><a href="{{ .RelPermalink }}"><span class="guide-head"><span class="eyebrow">{{ printf "%02d" (add $i 1) }}</span> <strong>{{ .Title }}</strong></span>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
       {{ end }}
     </ol>
   </article>
