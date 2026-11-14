@@ -24,10 +24,11 @@
 {{- else if eq $part "short" -}}
   {{- $need := dict -}}{{- range $d.trees }}{{ if eq .deg 20 }}{{ $need = . }}{{ end }}{{ end -}}
   {{- $rec20 := 0 }}{{ $rec30 := 0 }}{{ $off20 := 0 -}}
+  {{- /* Never fewer than two cells (operator 2026-11-14): the smallest pack recommended is 6 000 mAh. */ -}}
   {{- range $d.capacity -}}
-    {{- if and (eq $rec20 0) (ge .trees 20) }}{{ $rec20 = .mah }}{{ end -}}
-    {{- if and (eq $rec30 0) (ge .trees 30) }}{{ $rec30 = .mah }}{{ end -}}
-    {{- if and (eq $off20 0) (ge .official 20) }}{{ $off20 = .mah }}{{ end -}}
+    {{- if and (eq $rec20 0) (ge .trees 20) (ge .mah 6000) }}{{ $rec20 = .mah }}{{ end -}}
+    {{- if and (eq $rec30 0) (ge .trees 30) (ge .mah 6000) }}{{ $rec30 = .mah }}{{ end -}}
+    {{- if and (eq $off20 0) (ge .official 20) (ge .mah 6000) }}{{ $off20 = .mah }}{{ end -}}
   {{- end -}}
 - Panelen står lodrätt mot söder och träden når upp till 20° över horisonten: {{ with $rec20 }}**{{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh**.{{ else }}**inget batteri upp till 24 000 mAh räcker**.{{ end }}
   {{- with $need.vertical }} Det beräknade behovet är {{ lang.FormatNumberCustom 0 (index . 0) $fmt "|" }} mAh, med en osäkerhet från {{ lang.FormatNumberCustom 0 (index . 1) $fmt "|" }} till {{ lang.FormatNumberCustom 0 (index . 2) $fmt "|" }} mAh{{ with $rec20 }}, och {{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh täcker hela spannet{{ end }}.{{ end }}

@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.19.2 — 2026-11-14
+
+- Solar guide: never fewer than two cells, like the calculator. The short answer recommends at
+  least 6 000 mAh, the requirements say "minst två celler", and the old "3 000 mAh is the practical
+  floor" is replaced.
+
 ## v0.19.1 — 2026-11-14
 
 - Solar calculator: never fewer than 2 cells (the charger gives up to 2 A, a Biltema cell takes

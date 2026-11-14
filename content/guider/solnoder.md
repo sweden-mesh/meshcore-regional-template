@@ -93,7 +93,7 @@ I korthet, för en nod som ska klara sig själv:
 
 - **Panel:** Clas Ohlsons panel (urplockad, bara solcellsarket), **lodrät mot söder** om ingen
   borstar bort snön, och så fri sikt mot söder som platsen tillåter.
-- **Batteri:** litiumjon, celler parallellt, med skyddskort, i en isolerad låda. Storleken beror
+- **Batteri:** litiumjon, **minst två celler** parallellt, med skyddskort, i en isolerad låda. Storleken beror
   på trädlinjen och var i landet noden står; se tabellerna nedan.
 - **Laddare:** en MPPT-solladdare (CN3791), inställd efter panelen. Undvik laddare som slutar
   ladda under 0 °C: hälften av vinterns energi kommer när det är minusgrader.
@@ -146,7 +146,8 @@ långa underskottsperioderna bakom träd är dunkla, inte mörka: panelen ger li
 ### Efter trädlinje och panelvinkel
 
 Batteri i mAh för den sämsta vintern på fem år, med EasySkyMesh om inget annat står. Inom parentes
-hur mycket beräkningen kan slå fel. 3 000 mAh är det praktiska golvet, vad tabellen än säger.
+hur mycket beräkningen kan slå fel. Bygg aldrig med färre än **två celler** (6 000 mAh med
+3000 mAh-celler), vad tabellen än säger: laddaren ger upp till 2 A, mer än en ensam cell brukar tåla.
 
 {{% solar "trees" %}}
 
