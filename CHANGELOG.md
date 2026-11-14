@@ -6,7 +6,8 @@ params with safe defaults. **Patch** = fixes and text.
 
 ## v0.23.3 — 2026-11-14
 
-- Tables in text (e.g. the channel table) align their cells to the top, not the middle.
+- Every table aligns its cells to the top, not the middle (checked: 238 cells on all pages; the
+  guided wizard's comparison table follows too).
 
 ## v0.23.2 — 2026-11-14
 
