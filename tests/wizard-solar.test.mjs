@@ -67,3 +67,16 @@ test("never fewer than two cells, even where the model needs less than one", () 
   assert.equal(cellsFor(data.JKG, s({ tree: 0 }), i5), MIN_CELLS);
   assert.equal(MIN_CELLS, 2);
 });
+
+test("the smallest panels: 0.15 W never keeps up, the slider starts there and holds 10 W by default", () => {
+  assert.deepEqual(SLIDER_PANELS.slice(0, 5), [0.15, 0.5, 1, 1.5, 3]);
+  for (const [code, d] of Object.entries(data)) {
+    const i = d.panels.indexOf(0.15);
+    for (const tilt of ["vertical", "tilt60", "tilt40"]) for (const fw of ["esm", "official"])
+      for (const tree of [0, 10, 15, 20, 30, 50])
+        assert.equal(cellsFor(d, s({ tilt, fw, tree }), i), null, `${code} ${tilt} ${fw} ${tree}`);
+  }
+  const r = couple(data.JKG, s({ tree: 0 }), { lock: "panel", panelIdx: data.JKG.panels.indexOf(0.15), cells: 3, max: 19 });
+  assert.equal(r.warn.kind, "summer");
+  assert.equal(SLIDER_PANELS.indexOf(10), 6);
+});

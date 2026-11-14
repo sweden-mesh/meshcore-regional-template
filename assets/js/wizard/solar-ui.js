@@ -54,7 +54,7 @@ async function init(form) {
     cells.value = r.cells;
     const W = SLIDER_PANELS[r.panelIdx];
     q('[data-out="tree"]').textContent = t.trees[Number(tree.value)];
-    q('[data-out="panel"]').textContent = `${W} ${t.w}`;
+    q('[data-out="panel"]').textContent = `${String(W).replace(".", ",")} ${t.w}`;
     q('[data-out="cells"]').textContent = `${r.cells} ${t.cellsUnit} (${fmt(r.cells * s.cap)} mAh)`;
     q('[data-out="margin"]').textContent = `${margin.value} %`;
     for (const k of ["panel", "cells"]) q(`[data-lock="${k}"]`).hidden = st.lock !== k;
@@ -67,7 +67,7 @@ async function init(form) {
     else warn("cells", t.cellsNeed.replace("{N}", r.warn.value));
     const exp = expectedAt(d, s, r.panelIdx), need = cellsFor(d, s, r.panelIdx);
     q('[data-out="result"]').textContent = need == null || exp == null ? "" : t.result
-      .replace("{W}", W).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
+      .replace("{W}", String(W).replace(".", ",")).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
       .replace("{EXP}", fmt(exp)).replace("{M}", margin.value)
       + ` ${t.snow.replace("{D}", s.exposed ? d.snow_allowance.days.exposed : d.snow_allowance.days.sheltered)}`
       + (Math.ceil(needAt(d, s, r.panelIdx) / s.cap) < MIN_CELLS ? ` ${t.min}` : "")

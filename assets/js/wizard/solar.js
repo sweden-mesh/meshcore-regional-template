@@ -1,11 +1,11 @@
 // The solar calculator's arithmetic (operator 2026-11-14, backlog B-259/B-260). Pure: takes one
 // county's entry from assets/data/solar-calc.json (the solar session's model v2, charger at 5.0 V,
-// sha256 6d7b57f2…9b2d) and
+// sha256 f95a993f…6b9a, v3: 17 panel sizes) and
 // the visitor's settings. Never scales across counties and never extrapolates past the model's
 // panel sizes. Battery needs are mAh WITHOUT margin as [value, low, high]; null = no battery is
 // enough with that panel (it cannot refill even in summer). Cells are sized to the HIGH value.
 
-export const SLIDER_PANELS = [1, 5, 10, 15, 20, 25, 30, 40, 50, 100]; // W, real output in full sun
+export const SLIDER_PANELS = [0.15, 0.5, 1, 1.5, 3, 5, 10, 15, 20, 25, 30, 40, 50, 100]; // W, real output in full sun (operator 2026-11-14)
 export const TREES = [0, 10, 15, 20, 30, 50];                          // degrees; 0 = terrain only
 export const DEFAULT_PANEL = 10;                                         // the Clas Ohlson panel
 // Never fewer than 2 cells (operator 2026-11-14): the guide's charger gives up to 2 A and a Biltema
