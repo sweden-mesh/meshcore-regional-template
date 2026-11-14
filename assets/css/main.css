@@ -304,8 +304,8 @@ body.style-console .button { background: #21664a; color: #f2fff8; }
 body.style-console .button-secondary { background: transparent; color: var(--fg); }
 .wz-nb-list { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .35rem; }
 .wz-nb-list li { display: flex; flex-wrap: wrap; gap: .25rem .75rem; align-items: baseline; }
-.about { max-width: 72rem; margin: 2rem auto 0; padding: 1rem; display: grid; gap: 2rem; }
-.about-two { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.about { max-width: 72rem; margin: 2rem auto; padding: 1rem; display: grid; gap: 2rem; }
+.about-cols { grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
 .about h2 { margin-top: 0; }
 .theme-toggle { margin-left: auto; min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); font-size: 1.1rem; cursor: pointer; }
 .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }

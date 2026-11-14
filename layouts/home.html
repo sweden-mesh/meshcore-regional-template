@@ -81,16 +81,22 @@
     {{ end }}
   </div>
 
-  {{ partial "map.html" . }}
-
   {{- /* What MeshCore is (the template's text, same for every region) beside the region's own
-     text about its mesh (the body of content/_index.md). */ -}}
-  <div class="about{{ if .Content }} about-two{{ end }}">
+     text (the body of content/_index.md), above the map (operator 2026-11-14). Each "##" section
+     of the region's text is a column of its own, so a region adds a column by adding a heading. */ -}}
+  {{- $parts := slice -}}
+  {{- with .Content -}}{{- range $i, $p := split . "<h2" -}}{{- if strings.TrimSpace $p -}}{{- $parts = $parts | append (cond (gt $i 0) (print "<h2" $p) $p) -}}{{- end -}}{{- end -}}{{- end -}}
+  <div class="about{{ if $parts }} about-cols{{ end }}">
     <section class="about-meshcore prose">
       <h2>{{ T "about_meshcore_title" }}</h2>
       {{- $guide := "" }}{{ with site.GetPage "/guider/vad-ar-meshcore" }}{{ $guide = .RelPermalink }}{{ end }}
       {{ T "about_meshcore" (dict "Guide" $guide) | markdownify }}
     </section>
-    {{ with .Content }}<section class="about-region prose">{{ . }}</section>{{ end }}
+    {{- range $parts }}
+    <section class="about-region prose">{{ . | safeHTML }}</section>
+    {{- end }}
   </div>
+
+  {{ partial "map.html" . }}
+
 {{ end }}

@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.15.0 — 2026-11-14
+
+- Front page: *Vad är MeshCore?* and the region's own text now come above the map, not below.
+- Each `##` section of the region's `content/_index.md` is a column of its own beside *Vad är
+  MeshCore?* (three side by side from about 64rem, stacked on a phone). A region adds a column by
+  adding a heading; text before the first heading is a column too. Class `about-two` → `about-cols`.
+
 ## v0.14.3 — 2026-11-14
 
 - Every clickable element shows the pointing hand: one rule for summaries (fold-outs such as
