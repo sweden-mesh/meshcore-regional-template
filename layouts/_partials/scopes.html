@@ -6,6 +6,9 @@
      the match needs a non-letter on both sides and code words are not on the list.
   Usage: partial "scopes.html" .Content */ -}}
 {{- $h := replaceRE `<code>(se|eu|europe|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` (string .) -}}
+{{- /* Short code items without spaces (channel names, scopes, single words like `region`) never break
+  at their own hyphens (operator 2026-11-14); longer commands with spaces still wrap. */ -}}
+{{- $h = replaceRE `<code>([^<\s]{1,28})</code>` `<code class="nobreak">$1</code>` $h -}}
 {{- range hugo.Data.hyphenate.words -}}
   {{- $plain := replace . "|" "" -}}
   {{- $soft := replace . "|" "­" -}}

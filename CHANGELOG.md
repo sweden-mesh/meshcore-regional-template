@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.23.5 — 2026-11-14
+
+- Scopes, channel names and other short code items without spaces never break across lines.
+
 ## v0.23.3 — 2026-11-14
 
 - Every table aligns its cells to the top, not the middle (checked: 238 cells on all pages; the
