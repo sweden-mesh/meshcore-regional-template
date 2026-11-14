@@ -4,6 +4,19 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.19.0 — 2026-11-14
+
+- New wizard **Räkna på solcell** (`/wizard/solcell/`): pick the place (→ county), tree line
+  (inga träd, 10, 15, 20, 30, 50°), firmware, and whether someone brushes snow (only then 60°/40°
+  tilt). Sliders: panel 1–100 W real output, Biltema 3000 mAh cells (max follows the county's worst
+  case), margin 0–100 %. The slider touched last is held, the other follows; when it cannot, a
+  red warning says what is needed ("kräver en panel på 150 W", "kräver 27 celler", "ingen
+  panelstorlek räcker", "panelen räcker inte ens på sommaren"). Sized to the model's pessimistic
+  value × margin; capacity per cell editable. Data: `assets/data/solar-calc.json` from the solar
+  session (sha256 2deb946d…fe8b), never extrapolated. Logic in `wizard/solar.js`, tested,
+  including that 10 W reproduces the published Jönköping table.
+- New colour token `--danger` for warnings. The solar guide links to the calculator.
+
 ## v0.18.2 — 2026-11-14
 
 - Solar guide: the Clas Ohlson panel's stated and measured figures, and what to look for in another

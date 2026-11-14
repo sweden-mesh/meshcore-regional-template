@@ -515,3 +515,87 @@ other = "Den som loggar in som gäst kan läsa repeaterns status (batteri, brusn
 other = "gästlösenord"
 [wzg_test_4]
 other = "**Syns den inte?** Ställ dig nära repeatern med en **companion** och skicka en *flood-advert* från appen. Repeatern skickar den vidare, och repeatrarna runt omkring hör då din nya repeater och lägger till den bland sina grannar. Är din repeater ingen observatör syns den på kartan först när en observatör hör den: det den skickar vidare låter observatörerna i närheten upptäcka den."
+[sol_title]
+other = "Räkna på solcell"
+[sol_desc]
+other = "Hur stor panel och hur många batterier en solcellsdriven repeater behöver för att klara vintern där du bor."
+[sol_intro]
+other = "Välj platsen, berätta om trädlinjen och firmwaren, och dra i reglagen. Flyttar du panelen räknar sidan ut antalet celler, och tvärtom. Siffrorna kommer från samma beräkning som guiden [Solnoder](/guider/solnoder/)."
+[sol_place]
+other = "Välj plats"
+[sol_place_help]
+other = "Klicka där repeatern ska stå. Siffrorna gäller en punkt i det län du klickar i."
+[sol_where]
+other = "Räknat för en punkt i"
+[sol_era5]
+other = "en annan datakälla (PVGIS-ERA5), som kan vara för optimistisk"
+[sol_outside]
+other = "Platsen ligger utanför de län vi har siffror för; sidan visar fortfarande {PLACE}."
+[sol_site]
+other = "Platsen och repeatern"
+[sol_tree]
+other = "Trädlinje:"
+[sol_tree_0]
+other = "inga träd"
+[sol_tree_help]
+other = "Den högsta vinkeln där träd, hus eller berg skär av himlen, från sydost via söder till sydväst. Mät med en lutningsmätare i telefonen. Är du osäker, välj nästa högre."
+[sol_fw]
+other = "Firmware"
+[sol_fw_esm]
+other = "**EasySkyMesh**, strömsparande (cirka 4,5 mA)"
+[sol_fw_official]
+other = "**Officiell MeshCore** med strömsparläge (cirka 7,1 mA)"
+[sol_brush]
+other = "**Någon borstar bort snön** från panelen på vintern"
+[sol_tilt]
+other = "Panelens vinkel, mot söder"
+[sol_tilt_v]
+other = "Lodrät"
+[sol_tilt_60]
+other = "60° lutning"
+[sol_tilt_40]
+other = "40° lutning"
+[sol_tilt_off]
+other = "Panelen räknas som lodrät: bara en lodrät panel blir fri från snö av sig själv."
+[sol_size]
+other = "Panel och batteri"
+[sol_panel]
+other = "Panel, verklig effekt i full sol:"
+[sol_cells]
+other = "Batteri, Biltema 3000 mAh-celler parallellt:"
+[sol_margin]
+other = "Marginal:"
+[sol_held]
+other = "(håller värdet)"
+[sol_w]
+other = "W"
+[sol_cells_unit]
+other = "celler"
+[sol_cap]
+other = "Kapacitet per cell (mAh)"
+[sol_cap_help]
+other = "Biltemas cell (art. 84-1378) är märkt 3000 mAh, men ingen har mätt den. Billiga celler med samma märkning gav ungefär hälften i ett fälttest. Har du mätt dina, skriv in värdet."
+[sol_result]
+other = "Med en panel på {W} W behövs {N} celler ({MAH} mAh) för den sämsta vintern på fem år, räknat på det pessimistiska utfallet och {M} % marginal. Väntat behov med samma marginal: {EXP} mAh."
+[sol_w_summer]
+other = "Panelen räcker inte ens på sommaren här: inget batteri räcker. Välj en större panel."
+[sol_w_panel]
+other = "De nuvarande inställningarna kräver en panel på {W} W."
+[sol_w_beyond]
+other = "De nuvarande inställningarna kräver en panel på mer än {W} W."
+[sol_w_nopanel]
+other = "Ingen panelstorlek räcker med så här få celler: de mörkaste veckorna måste batteriet klara ensamt. Lägg till celler."
+[sol_w_cells]
+other = "De nuvarande inställningarna kräver {N} celler."
+[sol_build]
+other = "Innan du bygger"
+[sol_n_cells]
+other = "**Minst två celler**, eller en laddare inställd på högst 1,5 A: laddaren i guiden ger upp till 2 A, och Biltemas cell tål 1,5 A. Cellerna saknar eget skydd, så batteriet behöver ett **skyddskort**. Använd celler från samma köp, laddade till samma spänning innan du kopplar ihop dem."
+[sol_n_cold]
+other = "Biltema anger laddning från **0 °C**. Beräkningen förutsätter, som guiden, att panelen laddar även under 0 °C med de här små strömmarna, vilket är utanför tillverkarens specifikation."
+[sol_n_big]
+other = "**Stora paneler:** en panel på 20 W eller mer med Clas Ohlson-panelens cirka 6 V ger mycket ström in i laddaren. Välj då en panel på 12–18 V och ställ in laddaren efter den."
+[sol_n_guide]
+other = "Alla förutsättningar, tabellerna och fälttestet står i [Solnoder]({{ .Guide }})."
+[sol_north]
+other = "Längre norrut"

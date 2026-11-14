@@ -18,7 +18,7 @@
   /* Dark is the base (operator 2026-11-13): a browser that reports no colour scheme gets dark.
      Light comes from the system setting (no JS needed) or the header toggle (data-theme). */
   --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
-  --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --strong: #ffffff; --muted: #9fb3c0; --line: #1d3242;
+  --bg: #0b141b; --surface: #0f1f2a; --fg: #e6eef3; --strong: #ffffff; --danger: #ff6b6b; --muted: #9fb3c0; --line: #1d3242;
   --shadow-map: 0 24px 60px -24px rgba(0, 0, 0, .7);
   --bg-a: #0b1a24; --bg-b: #0b141b; --bg-c: #0c1f19; --bg-d: #101a26; --blob: rgba(120, 175, 205, .14);
   color-scheme: dark;
@@ -28,7 +28,7 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --accent: #1f5d82; --accent-2: #21664a; --online: #2f8a5f; --warn: #d97a2b;
-    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --muted: #4a5c68; --line: #e3e8ec;
+    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --danger: #c62828; --muted: #4a5c68; --line: #e3e8ec;
     --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
     --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9);
     color-scheme: light;
@@ -36,7 +36,7 @@
 }
 :root[data-theme="light"] {
     --accent: #1f5d82; --accent-2: #21664a; --online: #2f8a5f; --warn: #d97a2b;
-    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --muted: #4a5c68; --line: #e3e8ec;
+    --bg: #ffffff; --surface: #f6f9fb; --fg: #0f1d26; --strong: #000000; --danger: #c62828; --muted: #4a5c68; --line: #e3e8ec;
     --shadow-map: 0 24px 60px -24px rgba(15, 29, 38, .35);
     --bg-a: #d6e8f3; --bg-b: #eef6f1; --bg-c: #d5eadf; --bg-d: #e4eef6; --blob: rgba(255, 255, 255, .9);
     color-scheme: light;
@@ -295,7 +295,7 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
    design mockups, regardless of the OS colour scheme. Tokens only; the layout is the same. */
 body.style-console {
   --accent: #6fb3dc; --accent-2: #5fbf8f; --online: #3ddc84; --warn: #f08a3c;
-  --bg: #081219; --surface: #0d1f2b; --fg: #d8e6ee; --strong: #ffffff; --muted: #8aa4b3; --line: #17384b;
+  --bg: #081219; --surface: #0d1f2b; --fg: #d8e6ee; --strong: #ffffff; --danger: #ff6b6b; --muted: #8aa4b3; --line: #17384b;
   --bg-a: #081219; --bg-b: #0a1821; --bg-c: #08161a; --bg-d: #0b1a24; --blob: rgba(61, 220, 132, .06);
   --font-head: "IBM Plex Mono", ui-monospace, monospace;
   --shadow-map: 0 0 0 1px #17384b;
@@ -336,3 +336,16 @@ body.style-console .theme-toggle { display: none; }
 summary, button:not([disabled]), .button:not([disabled]), select, [role="button"], label[for],
 label:has(input), input[type="checkbox"], input[type="radio"], .wz-progress li { cursor: pointer; }
 input[type="text"], input[type="search"], input:not([type]), textarea { cursor: text; }
+
+/* Solar calculator (wizard-solar.html). */
+.solar-calc input[type="range"] { width: 100%; max-width: 32rem; accent-color: var(--accent); min-height: 32px; }
+.solar-calc .sol-label { font-weight: 600; margin: 1rem 0 .25rem; }
+.solar-calc output { font-weight: 700; color: var(--strong); }
+.sol-slider { margin-bottom: .75rem; }
+.sol-lock { font-weight: 400; font-size: .85rem; color: var(--muted); }
+.sol-warn { display: flex; gap: .4rem; align-items: flex-start; color: var(--danger); font-weight: 600; margin: .25rem 0 0; }
+.sol-warn svg { flex: none; margin-top: .15em; }
+.sol-cap { max-width: 8rem !important; }
+.sol-result { font-weight: 600; margin-top: 1rem; }
+.sol-note:empty { display: none; }
+.sol-notes li { margin-bottom: .5rem; }

@@ -519,3 +519,87 @@ other = "Whoever logs in as a guest can read the repeater's status (battery, noi
 other = "guest password"
 [wzg_test_4]
 other = "**Not showing?** Stand near the repeater with a **companion** and send a *flood advert* from the app. The repeater passes it on, so the repeaters around it hear your new repeater and add it to their neighbours. If your repeater is not an Observer, it only shows on the map once an Observer hears it: what it passes on lets the Observers nearby discover it."
+[sol_title]
+other = "Solar calculator"
+[sol_desc]
+other = "How big a panel and how many batteries a solar repeater needs to get through the winter where you live."
+[sol_intro]
+other = "Pick the place, give the tree line and firmware, and move the sliders. Moving the panel works out the number of cells, and the other way round. The numbers come from the same calculation as the [solar guide](/guider/solnoder/)."
+[sol_place]
+other = "Pick the place"
+[sol_place_help]
+other = "Click where the repeater will stand. The numbers apply to one point in the county you click in."
+[sol_where]
+other = "Calculated for a point in"
+[sol_era5]
+other = "another data source (PVGIS-ERA5), which may be optimistic"
+[sol_outside]
+other = "That place is outside the counties we have numbers for; the page still shows {PLACE}."
+[sol_site]
+other = "The site and the repeater"
+[sol_tree]
+other = "Tree line:"
+[sol_tree_0]
+other = "no trees"
+[sol_tree_help]
+other = "The highest angle where trees, buildings or hills cut the sky, from south-east through south to south-west. Measure it with a clinometer app on a phone. If unsure, pick the next higher one."
+[sol_fw]
+other = "Firmware"
+[sol_fw_esm]
+other = "**EasySkyMesh**, power-saving (about 4.5 mA)"
+[sol_fw_official]
+other = "**Official MeshCore** with power saving (about 7.1 mA)"
+[sol_brush]
+other = "**Someone brushes the snow** off the panel in winter"
+[sol_tilt]
+other = "Panel angle, facing south"
+[sol_tilt_v]
+other = "Vertical"
+[sol_tilt_60]
+other = "60° tilt"
+[sol_tilt_40]
+other = "40° tilt"
+[sol_tilt_off]
+other = "The panel is counted as vertical: only a vertical panel sheds snow by itself."
+[sol_size]
+other = "Panel and battery"
+[sol_panel]
+other = "Panel, real output in full sun:"
+[sol_cells]
+other = "Battery, Biltema 3000 mAh cells in parallel:"
+[sol_margin]
+other = "Margin:"
+[sol_held]
+other = "(held)"
+[sol_w]
+other = "W"
+[sol_cells_unit]
+other = "cells"
+[sol_cap]
+other = "Capacity per cell (mAh)"
+[sol_cap_help]
+other = "Biltema's cell (art. 84-1378) is labelled 3000 mAh, but nobody has measured it. Cheap cells with the same label gave about half in a field test. If you have measured yours, enter the value."
+[sol_result]
+other = "With a {W} W panel, {N} cells ({MAH} mAh) are needed for the worst winter in five, sized to the pessimistic case with {M} % margin. Expected need with the same margin: {EXP} mAh."
+[sol_w_summer]
+other = "The panel is not enough even in summer here: no battery is enough. Pick a bigger panel."
+[sol_w_panel]
+other = "The current settings need a {W} W panel."
+[sol_w_beyond]
+other = "The current settings need a panel of more than {W} W."
+[sol_w_nopanel]
+other = "No panel size is enough with this few cells: the battery must carry the darkest weeks alone. Add cells."
+[sol_w_cells]
+other = "The current settings need {N} cells."
+[sol_build]
+other = "Before you build"
+[sol_n_cells]
+other = "**At least two cells**, or a charger set to at most 1.5 A: the guide's charger gives up to 2 A, and Biltema's cell takes 1.5 A. The cells have no protection of their own, so the pack needs a **protection board**. Use cells from one purchase, charged to the same voltage before joining them."
+[sol_n_cold]
+other = "Biltema rates charging from **0 °C**. The calculation assumes, like the guide, that the panel charges below 0 °C at these small currents, which is outside the maker's rating."
+[sol_n_big]
+other = "**Large panels:** a panel of 20 W or more at the Clas Ohlson panel's about 6 V pushes a lot of current into the charger. Use a 12–18 V panel then, and set the charger to match."
+[sol_n_guide]
+other = "All assumptions, the tables and the field test are in [the solar guide]({{ .Guide }})."
+[sol_north]
+other = "Further north"

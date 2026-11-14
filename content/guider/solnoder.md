@@ -127,6 +127,9 @@ Väljer du en annan panel:
 
 ## Hur stort batteri
 
+Vill du räkna på en annan panel eller ett annat antal celler? Använd
+[solcellskalkylatorn](/wizard/solcell/): välj plats, trädlinje och firmware, och dra i reglagen.
+
 ### Efter batteriets kapacitet
 
 Panelen lodrät mot söder. *Dagar i totalmörker* är hur länge batteriet ensamt håller repeatern
