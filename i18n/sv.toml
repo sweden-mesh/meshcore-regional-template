@@ -484,7 +484,7 @@ other = "Övrigt"
 [wz_obs]
 other = "Observatör"
 [wz_obs_help]
-other = "En observatör rapporterar det repeatern hör till kartan via wifi. Den behöver ett kort med wifi (ESP32) och Observer-firmware. Mer i [Visa din repeater på kartan]({{ .Link }})."
+other = "En observatör rapporterar det repeatern hör till kartan via wifi. Den behöver ett kort med wifi (ESP32) och Observer-firmware. Mer i [Din repeater på kartan]({{ .Link }})."
 [wz_obs_on]
 other = "Den här repeatern är en observatör"
 [wz_obs_ssid]

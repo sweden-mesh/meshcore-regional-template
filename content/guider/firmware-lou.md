@@ -20,7 +20,7 @@ Auto-svar (`ar`)
 
 Observer
 : Repeatern rapporterar vad den hör till kartan via wifi (se
-  [Visa din repeater på kartan](../visa-pa-kartan/)). Bygger på agessamans Observer-firmware och
+  [Din repeater på kartan](../visa-pa-kartan/)). Bygger på agessamans Observer-firmware och
   kan uppdatera sig själv över nätet (OTA), med uppdateringar signerade av sweden-mesh.
 
 Fjärrstyrning (`rc`)

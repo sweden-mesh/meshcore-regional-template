@@ -4,6 +4,6 @@ category: natet
 weight: 40
 ---
 
-Kartan visar det observatörerna hör. Din repeater syns när den har skickat en advert och en
-observatör har hört den. Ingen observatör nära? Gör din egen till en, se
-[Visa din repeater på kartan](../guider/visa-pa-kartan/).
+Din repeater behöver inte vara observatör för att synas. Den syns när den har en position, har
+skickat en advert, och en observatör i närheten har hört den. Ingen observatör nära? Gör din egen
+till en, se [Din repeater på kartan](../guider/visa-pa-kartan/).

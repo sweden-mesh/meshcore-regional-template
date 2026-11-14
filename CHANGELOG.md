@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.23.1 — 2026-11-14
+
+- The map guide (now "Din repeater på kartan, och som observatör") says first that a repeater does
+  not have to be an Observer to show on the map: it shows once an Observer hears its advert (checked
+  on Beacon: several JKG repeaters on the map have `isObserver: false`). Being an Observer adds what
+  it hears. The FAQ answers say the same; links follow the new title.
+
 ## v0.23.0 — 2026-11-14
 
 - Notice boxes show their level with an icon at the start of the title: blue information (NOTE, TIP),

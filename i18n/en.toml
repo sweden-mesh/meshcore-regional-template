@@ -488,7 +488,7 @@ other = "Other"
 [wz_obs]
 other = "Observer"
 [wz_obs_help]
-other = "An Observer reports what the repeater hears to the map over wifi. It needs a board with wifi (ESP32) and the Observer firmware. More in [Show your repeater on the map]({{ .Link }})."
+other = "An Observer reports what the repeater hears to the map over wifi. It needs a board with wifi (ESP32) and the Observer firmware. More in [Your repeater on the map]({{ .Link }})."
 [wz_obs_on]
 other = "This repeater is an Observer"
 [wz_obs_ssid]

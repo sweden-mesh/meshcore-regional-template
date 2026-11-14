@@ -1,6 +1,6 @@
 ---
-title: "Visa din repeater på kartan"
-description: "Kartan visar det observatörerna hör. Så gör du din repeater till observatör och kopplar den till kartan via wifi."
+title: "Din repeater på kartan, och som observatör"
+description: "Din repeater syns på kartan när en observatör hör den; den behöver inte vara observatör själv. Så gör du den till en ändå, så att kartan också ser vad den hör."
 weight: 100
 source:
   title: "MeshCore till MQTT"
@@ -9,10 +9,16 @@ source:
   changes: "Bara observer-firmware-vägen, omskriven; regionens IATA och förinställning från sidans parametrar; övriga metoder länkade."
 ---
 
-Kartan på startsidan ritas av vad **observatörerna** hör. En observatör är en repeater som också
-rapporterar varje paket den hör, med signalstyrka, till en server via wifi. Ju fler
-observatörer, desto mer av nätet syns, och desto bättre går det att se var det behövs fler
-repeatrar.
+**Din repeater behöver inte vara observatör för att synas på kartan.** Den syns så fort en
+observatör i närheten hör dess advert, det korta paket med namn och position som repeatern skickar
+ut. Har den en position inställd (`set lat`, `set lon`) och skickar adverts, kommer den med. Av
+länets repeatrar på kartan i dag är flera inte observatörer.
+
+En observatör är en repeater som också rapporterar varje paket den hör, med signalstyrka, till en
+server via wifi. Att göra din repeater till en lägger till det **den** hör: andra repeatrar,
+vägarna paketen tar och hur starka länkarna är. Ju fler observatörer, desto mer av nätet syns, och
+desto bättre går det att se var det behövs fler repeatrar. Står din repeater där ingen observatör
+når den, är det också så den kommer med på kartan.
 
 Att rapportera påverkar inte meshnätet: repeatern för vidare trafik precis som förut.
 
@@ -46,8 +52,8 @@ servern och påverkar inte vilken trafik repeatern för vidare.
 
 ## Kontrollera
 
-Efter några minuter ska repeatern dyka upp på kartan på [startsidan](/) med en blå ring
-(observatör), och siffran för observatörer online öka.
+Efter några minuter ska repeatern ha en blå ring (observatör) på kartan på [startsidan](/), och
+siffran för observatörer öka. Utan ring syns den redan, om en annan observatör hör den.
 
 > [!NOTE]- Andra sätt att rapportera
 > Det går också att rapportera från en dator eller en Raspberry Pi som är ansluten till en

@@ -28,7 +28,7 @@ get mqtt.iata
 
 1. Wi-Fi: `set wifi.ssid <namn>` och `set wifi.pwd <lösenord>`, sedan `reboot`.
 2. IATA: `set mqtt.iata {{< iata >}}`.
-3. Brokern: kör MQTT-steget i guiden igen, eller se [Få med din repeater på
+3. Brokern: kör MQTT-steget i guiden igen, eller se [Din repeater på
    kartan](../../guider/visa-pa-kartan/).
 4. Saknas `observer` i `ver`: [flasha](../../guider/flasha-firmware/) Observer-firmware med
    *Uppdatera*.
