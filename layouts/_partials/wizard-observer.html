@@ -1,0 +1,35 @@
+{{- /* The Observer section of both repeater wizards (operator 2026-11-14): a box, unticked; ticked,
+  it shows the wifi fields and the map code. The code is filled from the county the picked
+  position lies in (params.observer.iatas; the region's own iatas for its own county); the
+  owner can change it. The optional regional-broker slot (wizard-mqtt.html) sits inside, since
+  only an Observer can use it. Call with (dict "page" .Page "id" "<prefix for element ids>"). */ -}}
+{{- $page := .page -}}{{- $id := .id -}}
+{{- $r := partialCached "region.html" $page "region" -}}
+{{- $codes := site.Params.observer.iatas | default dict -}}
+{{- $shapes := dict -}}
+{{- with resources.Get "se-lan.geojson" -}}{{- range (.Content | transform.Unmarshal).features -}}{{- $shapes = merge $shapes (dict .properties.scb .geometry.coordinates) -}}{{- end -}}{{- end -}}
+{{- $own := printf "%02s" (string ($r.scb | default "")) -}}
+{{- $ownCode := index ($r.iatas | default slice) 0 | default (index $codes $own) | default "" -}}
+{{- $areas := slice -}}
+{{- with index $shapes $own -}}{{- $areas = $areas | append (dict "iata" $ownCode "lan" $r.name "rings" .) -}}{{- end -}}
+{{- range $n := $r.neighbours -}}
+  {{- $code := index $codes $n.scb -}}{{- $rings := index $shapes $n.scb -}}
+  {{- if and $code $rings -}}{{- $areas = $areas | append (dict "iata" $code "lan" $n.lan "rings" $rings) -}}{{- end -}}
+{{- end -}}
+{{- $link := "" -}}{{- with site.GetPage "/guider/visa-pa-kartan" -}}{{- $link = .RelPermalink -}}{{- end -}}
+<div class="wz-observer" data-observer="{{ dict "preset" (site.Params.observer.preset | default "") "fallback" $ownCode "areas" $areas | jsonify }}"
+     data-texts="{{ dict "from" (T "wz_obs_iata_from") "none" (T "wz_obs_iata_none") | jsonify }}">
+  <p class="muted">{{ T "wz_obs_help" (dict "Link" $link) | markdownify }}</p>
+  <label class="wz-check"><input type="checkbox" data-obs-on> {{ T "wz_obs_on" }}</label>
+  <div class="wz-obs-fields" data-obs-fields hidden>
+    <label for="{{ $id }}-ssid">{{ T "wz_obs_ssid" }}</label>
+    <input id="{{ $id }}-ssid" data-obs-ssid type="text" autocomplete="off" spellcheck="false" maxlength="31">
+    <label for="{{ $id }}-wpwd">{{ T "wz_obs_pwd" }}</label>
+    <input id="{{ $id }}-wpwd" data-obs-pwd type="text" autocomplete="off" spellcheck="false" maxlength="63">
+    <p class="muted">{{ T "wz_obs_pwd_help" }}</p>
+    <label for="{{ $id }}-iata">{{ T "wz_obs_iata" }}</label>
+    <input id="{{ $id }}-iata" data-obs-iata type="text" autocomplete="off" spellcheck="false" maxlength="7" value="{{ $ownCode }}">
+    <p class="wz-status" data-obs-iata-why aria-live="polite">{{ T "wz_obs_iata_none" }}</p>
+    {{ partial "wizard-mqtt.html" $page }}
+  </div>
+</div>

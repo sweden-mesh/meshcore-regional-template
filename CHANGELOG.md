@@ -4,6 +4,20 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.14.0 — 2026-11-14
+
+- Both repeater wizards have an **Observatör** step (step 5 in the quick one, step 5 of 9 in the
+  guided one): a short explanation with a link to the map guide, a box, and, when it is ticked,
+  wifi name and password and the map code. The wizard then sends `set wifi.ssid`,
+  `set wifi.pwd` (not for an open network), `set mqtt.iata` and `set mqtt1.preset
+  <params.observer.preset>`, checked against the Observer firmware's limits (31, 63, 7).
+- The map code is filled from the county the picked position lies in (or within 25 km of),
+  from the new `params.observer.iatas` (Beacon's code per county; the region's own
+  `region.iatas` wins for its county). The owner can type another.
+- The regional-broker option moved into the Observer step; it reports under the Observer's code.
+- The text above the wizard maps says a click within 200–300 m is enough for privacy, and why
+  not further.
+
 ## v0.13.1 — 2026-11-14
 
 - The wizards name missing or wrong fields in the page's language (*Fyll i: namn, adminlösenord*),

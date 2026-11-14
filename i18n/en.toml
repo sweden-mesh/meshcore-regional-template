@@ -153,7 +153,7 @@ other = "Map: click where the repeater will stand"
 [wz_place]
 other = "Choose a place"
 [wz_place_help]
-other = "Click the map where the repeater will stand. The dots are repeaters that are already there."
+other = "Click the map where the repeater will stand. The dots are repeaters that are already there. If you would rather not show exactly where you live, a click within 200–300 metres is enough, but no further: a position too far off gives a misleading picture of where the mesh reaches."
 [wz_place_none]
 other = "No place chosen yet."
 [wz_pos_set]
@@ -247,7 +247,7 @@ other = "Transmit power in dBm (optional)"
 [wzg_tx_why]
 other = "Leave empty for the radio's default. More power helps less than a higher site; only enter a value your radio and antenna can take and that is allowed."
 [wzg_place_why]
-other = "A repeater's position is good to share: it doesn't move, and it shows on the map where the mesh reaches. Click where the antenna will be."
+other = "A repeater's position is good to share: it doesn't move, and it shows on the map where the mesh reaches. Click where the antenna will be. If you would rather not show exactly where you live, a click within 200–300 metres is enough, but no further: a position too far off gives a misleading picture of where the mesh reaches."
 [wzg_region_why]
 other = "The regions decide which traffic the repeater passes on. With se and the county's region, local conversations reach the whole county and national ones the whole country, without local traffic flooding the neighbouring counties."
 [wzg_edge_why]
@@ -485,3 +485,29 @@ other = "Regions"
 other = "Helping out"
 [faq_cat_ovrigt]
 other = "Other"
+[wz_obs]
+other = "Observer"
+[wz_obs_help]
+other = "An Observer reports what the repeater hears to the map over wifi. It needs a board with wifi (ESP32) and the Observer firmware. More in [Show your repeater on the map]({{ .Link }})."
+[wz_obs_on]
+other = "This repeater is an Observer"
+[wz_obs_ssid]
+other = "Wifi network name"
+[wz_obs_pwd]
+other = "Wifi password"
+[wz_obs_pwd_help]
+other = "Sent only to the radio over USB; the page does not store it. Leave empty for an open network."
+[wz_obs_iata]
+other = "Map code (IATA)"
+[wz_obs_iata_from]
+other = "From the place you picked:"
+[wz_obs_iata_none]
+other = "Filled in from the place you pick on the map."
+[wzg_obs_why]
+other = "The map on the home page shows what the Observers hear. If the repeater has wifi where it stands it can be one, and you can see for yourself what it reaches."
+[wz_f_wifi]
+other = "wifi name"
+[wz_f_wifiPwd]
+other = "wifi password"
+[wz_f_iata]
+other = "map code"

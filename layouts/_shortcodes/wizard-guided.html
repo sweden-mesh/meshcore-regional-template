@@ -38,24 +38,29 @@
     {{ partial "wizard-neighbours.html" .Page }}
     <label class="wz-check"><input type="checkbox" id="wzg-offgrid"> {{ T "wz_offgrid" }}</label>
     <p class="muted">{{ T "wzg_edge_why" }}</p>
-    {{ partial "wizard-mqtt.html" .Page }}
+  </fieldset>
+
+  <fieldset class="wz-step" data-step="observer">
+    <legend><span class="wz-num">5</span> {{ T "wz_obs" }}</legend>
+    <p>{{ T "wzg_obs_why" }}</p>
+    {{ partial "wizard-observer.html" (dict "page" .Page "id" "wzg-obs") }}
   </fieldset>
 
   <fieldset class="wz-step" data-step="duty">
-    <legend><span class="wz-num">5</span> {{ T "wzg_duty" }}</legend>
+    <legend><span class="wz-num">6</span> {{ T "wzg_duty" }}</legend>
     <p>{{ T "wzg_duty_why" }}</p>
     <pre class="wz-inline">set dutycycle 10</pre>
   </fieldset>
 
   <fieldset class="wz-step" data-step="password">
-    <legend><span class="wz-num">6</span> {{ T "wz_password" }}</legend>
+    <legend><span class="wz-num">7</span> {{ T "wz_password" }}</legend>
     <p>{{ T "wzg_pass_why" }}</p>
     <label for="wzg-pass">{{ T "wz_password_label" }}</label>
     <input id="wzg-pass" type="text" autocomplete="off" spellcheck="false" maxlength="15">
   </fieldset>
 
   <fieldset class="wz-step" data-step="apply">
-    <legend><span class="wz-num">7</span> {{ T "wzg_review" }}</legend>
+    <legend><span class="wz-num">8</span> {{ T "wzg_review" }}</legend>
     <p class="muted" data-serial-help>{{ T "wz_apply_help" }}</p>
     <p class="wz-actions">
       <button type="button" class="button" data-connect>{{ T "wz_connect" }}</button>
@@ -69,7 +74,7 @@
   </fieldset>
 
   <fieldset class="wz-step" data-step="test">
-    <legend><span class="wz-num">8</span> {{ T "wzg_test" }}</legend>
+    <legend><span class="wz-num">9</span> {{ T "wzg_test" }}</legend>
     <p>{{ T "wzg_test_why" }}</p>
     <ol>
       <li>{{ T "wzg_test_1" }}</li>
@@ -83,7 +88,7 @@
     <button type="button" class="button" data-next>{{ T "wzg_next" }}</button>
   </p>
 </form>
-<div id="wzg-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "fields" (dict "name" (T "wz_f_name") "lat" (T "wz_f_lat") "lon" (T "wz_f_lon") "password" (T "wz_f_password") "tx" (T "wz_f_tx") "radio" (T "wz_f_radio") "scope" (T "wz_f_scope") "extraScopes" (T "wz_f_extraScopes") "mqtt" (T "wz_f_mqtt")) "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "name" (T "wz_name") "radio" (T "wzg_radio") "position" (T "wz_place") "regions" (T "wz_region") | jsonify }}"></div>
+<div id="wzg-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "fields" (dict "name" (T "wz_f_name") "lat" (T "wz_f_lat") "lon" (T "wz_f_lon") "password" (T "wz_f_password") "tx" (T "wz_f_tx") "radio" (T "wz_f_radio") "scope" (T "wz_f_scope") "extraScopes" (T "wz_f_extraScopes") "mqtt" (T "wz_f_mqtt") "wifi" (T "wz_f_wifi") "wifiPwd" (T "wz_f_wifiPwd") "iata" (T "wz_f_iata")) "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "name" (T "wz_name") "radio" (T "wzg_radio") "position" (T "wz_place") "regions" (T "wz_region") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/guided.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

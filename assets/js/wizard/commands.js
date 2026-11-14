@@ -87,9 +87,35 @@ export function mqttCommands(m) {
   return c;
 }
 
+// An Observer build reports what it hears to the map over wifi (operator 2026-11-14).
+// Commands from the Observer firmware (CommonCLI_Observer.cpp): wifi.ssid (up to 31
+// bytes) and wifi.pwd (up to 63) take the rest of the line, so spaces are fine; mqtt.iata
+// up to 7 characters; mqtt1.preset the server the region's map reads. An empty wifi
+// password (an open network) is not sent.
+export const OBSERVER_LIMITS = { ssid: 31, pwd: 63, iata: 7 };
+
+export function validateObserver(o) {
+  const errors = [];
+  if (!o) return errors;
+  const ssid = o.ssid || "";
+  if (!ssid.trim() || bytes(ssid) > OBSERVER_LIMITS.ssid || /[\r\n]/.test(ssid)) errors.push({ field: "wifi", code: "ssid" });
+  if (bytes(o.pwd || "") > OBSERVER_LIMITS.pwd || /[\r\n]/.test(o.pwd || "")) errors.push({ field: "wifiPwd", code: "pwd" });
+  if (!/^[A-Z0-9]{2,7}$/.test(o.iata || "")) errors.push({ field: "iata", code: "iata" });
+  if (!o.preset) errors.push({ field: "iata", code: "preset" });
+  return errors;
+}
+
+export function observerCommands(o) {
+  const c = [`set wifi.ssid ${o.ssid}`];
+  if (o.pwd) c.push(`set wifi.pwd ${o.pwd}`);
+  c.push(`set mqtt.iata ${o.iata}`, `set mqtt1.preset ${o.preset}`);
+  return c;
+}
+
 // The commands, in the order to send them; reboot last (it drops the port).
 export function repeaterCommands(s) {
   const { errors, warnings } = validateRepeater(s);
+  errors.push(...validateObserver(s.observer));
   errors.push(...validateMqtt(s.mqtt));
   if (errors.length) return { commands: [], errors, warnings };
   const r = s.radio;
@@ -115,7 +141,9 @@ export function repeaterCommands(s) {
   if (s.offgrid) c.push("powersaving on");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);
   c.push(`password ${s.password}`);
-  if (s.mqtt) c.push(...mqttCommands(s.mqtt));
+  if (s.observer) c.push(...observerCommands(s.observer));
+  // The regional slot repeats mqtt.iata; the Observer section has already set it.
+  if (s.mqtt) c.push(...mqttCommands(s.mqtt).filter((x) => !(s.observer && x.startsWith("set mqtt.iata "))));
   c.push("advert");
   c.push("reboot");
   return { commands: c, errors, warnings };
@@ -135,6 +163,7 @@ export function repeaterReview(s) {
     { key: "regions", value: ["eu", "europe", "se", ...[s.scope, ...(s.offgrid ? ["offgrid"] : []), ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
     { key: "dutycycle", value: `${s.dutycycle ?? 10} %` },
     { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
+    ...(s.observer ? [{ key: "observer", value: `${s.observer.iata} · wifi ${s.observer.ssid}` }] : []),
     ...(s.mqtt ? [{ key: "mqtt", value: `${s.mqtt.server} (${s.mqtt.slot})` }] : []),
   ];
 }

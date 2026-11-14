@@ -27,6 +27,32 @@
 [params.observer]
   preset = "meshat.se"       # the Observer firmware's MQTT preset this region's map is fed from
 
+# The map code (IATA) of each county by SCB code, as Beacon lists them (2026-11-14). The wizards
+# fill an Observer's mqtt.iata from the county its picked position lies in. A region's own
+# params.region.iatas wins for its own county.
+[params.observer.iatas]
+  "01" = "STO"
+  "03" = "STO"
+  "04" = "NYO"
+  "05" = "LPI"
+  "06" = "JKG"
+  "07" = "VXO"
+  "08" = "KLR"
+  "09" = "VBY"
+  "10" = "RNB"
+  "12" = "MMX"
+  "13" = "HAD"
+  "14" = "GOT"
+  "17" = "KSD"
+  "18" = "ORB"
+  "19" = "VST"
+  "20" = "BLE"
+  "21" = "GVX"
+  "22" = "SDL"
+  "23" = "OSD"
+  "24" = "UME"
+  "25" = "LLA"
+
 [params.observer.mqtt]       # the region's own MQTT broker; empty server = the wizards don't offer it
   server = ""                # e.g. "wss://mqtt.example.se" (up to 63 characters)
   port = 443
@@ -36,8 +62,8 @@
   slot = 3                   # which of the Observer's 6 MQTT slots (1-6) the wizard sets
 
 [params.naming]
-  pattern = ""               # the region's naming rule, e.g. "SE-JKP-Plats-ABCD"; empty = general advice only
-  example = ""               # e.g. "SE-JKP-Braneryd-FD70"
+  pattern = ""               # the region's suggested repeater name, e.g. "SE-JKP-Plats"; empty = general advice only
+  example = ""               # e.g. "SE-JKP-Braneryd"
   companion_example = ""     # e.g. "SE-JKP-Jeppe"; empty = the repeater example
   explain = ""               # one sentence on the parts
 

@@ -24,7 +24,6 @@
     <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
     {{ partial "wizard-neighbours.html" .Page }}
     <label class="wz-check"><input type="checkbox" id="wz-offgrid"> {{ T "wz_offgrid" }}</label>
-    {{ partial "wizard-mqtt.html" .Page }}
   </fieldset>
 
   <fieldset class="wz-step">
@@ -35,7 +34,12 @@
   </fieldset>
 
   <fieldset class="wz-step">
-    <legend><span class="wz-num">5</span> {{ T "wz_apply" }}</legend>
+    <legend><span class="wz-num">5</span> {{ T "wz_obs" }}</legend>
+    {{ partial "wizard-observer.html" (dict "page" .Page "id" "wz-obs") }}
+  </fieldset>
+
+  <fieldset class="wz-step">
+    <legend><span class="wz-num">6</span> {{ T "wz_apply" }}</legend>
     <h3 class="wz-review-head">{{ T "wz_review" }}</h3>
     <dl class="settings wz-review" id="wz-review" aria-live="polite"></dl>
     <p class="muted" id="wz-serial-help">{{ T "wz_apply_help" }}</p>
@@ -52,7 +56,7 @@
     </details>
   </fieldset>
 </form>
-<div id="wz-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "fields" (dict "name" (T "wz_f_name") "lat" (T "wz_f_lat") "lon" (T "wz_f_lon") "password" (T "wz_f_password") "tx" (T "wz_f_tx") "radio" (T "wz_f_radio") "scope" (T "wz_f_scope") "extraScopes" (T "wz_f_extraScopes") "mqtt" (T "wz_f_mqtt")) "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "review" (dict "name" (T "wz_rv_name") "position" (T "wz_rv_position") "radio" (T "set_radio") "regions" (T "wz_rv_regions") "dutycycle" (T "wz_rv_dutycycle") "mqtt" (T "wz_rv_mqtt") "password" (T "wz_rv_password") "none" (T "wz_rv_none")) | jsonify }}"></div>
+<div id="wz-texts" hidden data-texts="{{ dict "noSerial" (T "wz_no_serial") "connected" (T "wz_connected") "fix" (T "wz_fix") "fields" (dict "name" (T "wz_f_name") "lat" (T "wz_f_lat") "lon" (T "wz_f_lon") "password" (T "wz_f_password") "tx" (T "wz_f_tx") "radio" (T "wz_f_radio") "scope" (T "wz_f_scope") "extraScopes" (T "wz_f_extraScopes") "mqtt" (T "wz_f_mqtt") "wifi" (T "wz_f_wifi") "wifiPwd" (T "wz_f_wifiPwd") "iata" (T "wz_f_iata")) "done" (T "wz_done") "failed" (T "wz_failed") "copied" (T "wz_copied") "posSet" (T "wz_pos_set") "bytes" (T "wz_bytes") "tooLong" (T "wz_too_long") "noPos" (T "wz_no_room") "suffix" (T "wz_suffix") "review" (dict "name" (T "wz_rv_name") "position" (T "wz_rv_position") "radio" (T "set_radio") "regions" (T "wz_rv_regions") "dutycycle" (T "wz_rv_dutycycle") "observer" (T "wz_obs") "mqtt" (T "wz_rv_mqtt") "password" (T "wz_rv_password") "none" (T "wz_rv_none")) | jsonify }}"></div>
 {{- with resources.Get "js/wizard/quick.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

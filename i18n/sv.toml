@@ -149,7 +149,7 @@ other = "Karta: klicka där repeatern ska stå"
 [wz_place]
 other = "Välj plats"
 [wz_place_help]
-other = "Klicka på kartan där repeatern ska stå. Prickarna är repeatrar som redan finns."
+other = "Klicka på kartan där repeatern ska stå. Prickarna är repeatrar som redan finns. Vill du inte visa exakt var du bor räcker det att klicka inom 200–300 meter, men inte längre bort än så: en position för långt ifrån ger en missvisande bild av var nätet når."
 [wz_place_none]
 other = "Ingen plats vald än."
 [wz_pos_set]
@@ -243,7 +243,7 @@ other = "Sändeffekt i dBm (valfritt)"
 [wzg_tx_why]
 other = "Lämna tomt för radions standard. Högre effekt hjälper mindre än en högre placering; ange bara ett värde som din radio och antenn klarar och som är tillåtet."
 [wzg_place_why]
-other = "En repeaters position är bra att dela: den står still, och den visar på kartan var nätet når. Klicka där antennen ska sitta."
+other = "En repeaters position är bra att dela: den står still, och den visar på kartan var nätet når. Klicka där antennen ska sitta. Vill du inte visa exakt var du bor räcker det att klicka inom 200–300 meter, men inte längre bort än så: en position för långt ifrån ger en missvisande bild av var nätet når."
 [wzg_region_why]
 other = "Regionerna avgör vilken trafik repeatern för vidare. Med se och länets region når lokala samtal hela länet och rikssamtal hela landet, utan att lokal trafik floodas över grannlänen."
 [wzg_edge_why]
@@ -481,3 +481,29 @@ other = "Regioner"
 other = "Hjälpa till"
 [faq_cat_ovrigt]
 other = "Övrigt"
+[wz_obs]
+other = "Observatör"
+[wz_obs_help]
+other = "En observatör rapporterar det repeatern hör till kartan via wifi. Den behöver ett kort med wifi (ESP32) och Observer-firmware. Mer i [Visa din repeater på kartan]({{ .Link }})."
+[wz_obs_on]
+other = "Den här repeatern är en observatör"
+[wz_obs_ssid]
+other = "Wifi-nätverkets namn"
+[wz_obs_pwd]
+other = "Wifi-lösenord"
+[wz_obs_pwd_help]
+other = "Skickas bara till radion via USB; sidan sparar det inte. Lämna tomt för ett öppet nätverk."
+[wz_obs_iata]
+other = "Kartkod (IATA)"
+[wz_obs_iata_from]
+other = "Från platsen du valde:"
+[wz_obs_iata_none]
+other = "Fylls i från platsen du väljer på kartan."
+[wzg_obs_why]
+other = "Kartan på startsidan visar det observatörerna hör. Har repeatern wifi där den står kan den bli en, och då ser du själv vad den når."
+[wz_f_wifi]
+other = "wifi-namn"
+[wz_f_wifiPwd]
+other = "wifi-lösenord"
+[wz_f_iata]
+other = "kartkod"
