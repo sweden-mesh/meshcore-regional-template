@@ -45,10 +45,9 @@ import numpy as np
 # B.3: the 20 points. Coordinates are kept as the strings in the dossier's
 # table, because they are sent to PVGIS exactly as written.
 POINTS = {
-    # Jönköping: the model used a private site; this is the public point,
-    # rounded to two decimals. Results agree with the published data within
-    # about 4 mAh behind tree lines and 9 mAh in the open (floors identical),
-    # except one 3 W value near the "no battery is enough" limit.
+    # Jönköping: the public point, rounded to two decimals. Since calculator
+    # data v4 the published Jönköping values are computed at this point too,
+    # and this script reproduces them exactly.
     "JKG": ("57.78", "14.16", "PVGIS-SARAH3"),      # Jönköping (rounded)
     "BLE": ("60.972", "14.37", "PVGIS-SARAH3"),     # Dalarna
     "GOT": ("58.318", "12.91", "PVGIS-SARAH3"),     # Västra Götaland

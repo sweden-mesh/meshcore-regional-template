@@ -21,7 +21,7 @@ Siffror i texten är märkta med hur de ska läsas:
 | *historisk* | Från en ersatt version av modellen. Visar bara vad som ändrats. |
 | *känslighet* | En tänkt körning. Används aldrig för dimensionering. |
 | *exempel* | Ett steg i det räknade exemplet (B.8). |
-| *testvektor* | För den som räknar om. Jönköpingsvärden gäller den avrundade punkten 57,78° N, 14,16° Ö. |
+| *testvektor* | För den som räknar om. Jönköpingsvärden gäller den avrundade punkten 57,78° N, 14,16° Ö, som datan också använder. |
 | *fältmätning* | Från fälttestet inomhus, med en annan laddare. Används aldrig för dimensionering. |
 | *kontrollresultat* | Utfallet av en kontroll. |
 
@@ -143,7 +143,7 @@ länet; punkterna ligger inte vid flygplatserna. Höjden är värdet i PVGIS-fil
 
 | Kod | Län | Latitud | Longitud | Höjd (m) | Dataset |
 |---|---|---|---|---|---|
-| JKG | Jönköping | 57,78 (avrundad) | 14,16 (avrundad) | 104 | SARAH3 |
+| JKG | Jönköping | 57,78 | 14,16 | 104 | SARAH3 |
 | BLE | Dalarna | 60,972 | 14,37 | 290 | SARAH3 |
 | GOT | Västra Götaland | 58,318 | 12,91 | 77 | SARAH3 |
 | GVX | Gävleborg | 61,477 | 16,3 | 228 | SARAH3 |
@@ -164,11 +164,12 @@ länet; punkterna ligger inte vid flygplatserna. Höjden är värdet i PVGIS-fil
 | VST | Västmanland | 59,82 | 16,341 | 71 | SARAH3 |
 | VXO | Kronoberg | 56,803 | 14,585 | 151 | SARAH3 |
 
-**Jönköpingspunkten.** Modellen kördes på en privat plats i Jönköping; bara den avrundade punkten
-publiceras. PVGIS ger den nästan samma timdata. *Kontrollresultat:* alla golv är identiska; behoven
-stämmer inom cirka 4 mAh bakom trädlinjer och cirka 9 mAh med fri horisont, och inom cirka 1 mAh
-för paneler från 5 W. Ett värde nära gränsen där inget batteri räcker skiljer: lodrät, officiell
-firmware, 50° träd, 3 W, låg variant är ändligt i datan och null vid den avrundade punkten.
+**Jönköpingspunkten.** Jönköpings punkt är avrundad till två decimaler. Kalkylatorns data (v4) är
+räknad i exakt den punkten, så tabellen, datan och referensskriptet stämmer exakt. Tidigare versioner
+använde en privat plats i närheten. *Historisk:* bytet till den avrundade punkten ändrade 317 av
+1 836 behovsvärden för Jönköping, med högst 8,3 mAh; inget golv ändrades; ett värde nära gränsen
+där inget batteri räcker blev null (lodrät, officiell firmware, 50° träd, 3 W, låg variant); inget
+avrundat tabellvärde och inget resultat i kalkylatorn ändrades.
 
 ## B.4 Från solljus till laddning, timme för timme {#b4}
 
@@ -365,10 +366,10 @@ tidsordningen. Återkomstnivån för fem år tas med Weibulls plotposition r = (
 T = 5, alltså r = 3,8:
 
 ```text
-nivå = v3 + 0.8 × (v4 − v3)
+nivå = w3 + 0.8 × (w4 − w3)
 ```
 
-där v3 och v4 är det tredje och fjärde sämsta vintermaximumet. D tas från den vinter vars maximum
+där w3 och w4 är det tredje och fjärde sämsta vintermaximumet. D tas från den vinter vars maximum
 ligger närmast nivån; med de här talen är det den fjärde sämsta. Är flera lika nära tas den första i
 ordningen sämst till bäst; i den publicerade datan ändrar det aldrig D.
 
@@ -546,8 +547,9 @@ det enda underlaget gjort av människor.
 | 11 | Byggguiden | Varje tabellcell och påstående i Jönköpingsguiden | Alla 72 celler och 8 kapacitetsrader omräknade rätt; 11 textfel rättade. |
 | 12 | Små paneler | 0,15, 0,5, 1,5 och 3 W | Alla 28 080 värden gemensamma med föregående version identiska. |
 | 13 | Specifikationskontroll | En ny implementation ur den här beskrivningen, Jönköping och Norrbotten, utvalda fall | Alla 120 behovstripplar och 24 golvtripplar stämde till 0,1 mAh, null inräknat. |
-| 14 | **Återgivning ur dokumentet ensamt** | En ny agent fick bara ett tidigare utkast av den här beskrivningen och PVGIS-filerna, och skrev referensskriptet (B.14) | *Kontrollresultat:* alla 36 720 behov och 2 160 golv återgavs exakt, 0,0 mAh skillnad, alla 3 494 null på samma ställen. |
-| 15 | Datans konsekvens | Alla 12 240 tripplar | *Kontrollresultat:* högre trädlinje sänker aldrig behovet; inget behov under sitt golv; officiell firmware behöver aldrig mindre än EasySkyMesh. Variantordningen har undantagen i B.6. |
+| 14 | **Återgivning ur dokumentet ensamt** | En ny agent fick bara ett tidigare utkast av den här beskrivningen och PVGIS-filerna, och skrev referensskriptet (B.14) | *Kontrollresultat:* alla 36 720 behov och 2 160 golv i kalkylatordata v3 återgavs exakt, 0,0 mAh skillnad, alla 3 494 null på samma ställen. Den publicerade kopian använder Jönköpings avrundade punkt, som även kalkylatordata v4 använder (kontroll 16). |
+| 15 | Datans konsekvens | Alla 12 240 tripplar i v3, upprepat för v4 | *Kontrollresultat:* högre trädlinje sänker aldrig behovet; inget behov under sitt golv; officiell firmware behöver aldrig mindre än EasySkyMesh. Variantordningen har undantagen i B.6, desamma i båda versionerna. |
+| 16 | Jönköping omräknad för kalkylatordata v4 | Produktionsmodellen, oförändrad, körd i den avrundade punkten för alla 36 Jönköpingsfall | *Kontrollresultat:* alla andra punkter identiska med v3. Referensskriptet återger alla 1 944 behov och golv för Jönköping i v4 exakt. Inget tabellvärde vid 10 W och inget resultat i kalkylatorn ändrades, vid någon marginal 0–100 %. |
 
 **Inte gjort.**
 
@@ -560,14 +562,15 @@ det enda underlaget gjort av människor.
 
 ## B.10 Vad som rättades på vägen {#b10}
 
-Modellen har gått igenom fyra dataversioner; bara den sista gäller.
+Modellen har gått igenom fem dataversioner; bara den sista gäller.
 
 | Version | Vad som ändrades | Status |
 |---|---|---|
 | Länstabeller | Laddaren på 5,6 V, 20 % marginal, avrundat till närmaste 100 mAh | *Historisk.* Används inte. |
 | Kalkylatordata v1 | Panelstorlekar 1–300 W, 50° träd, null-regel, 2 A-tak; fortfarande 5,6 V | *Historisk.* Dragen tillbaka. |
-| Kalkylatordata v2 | Inställning 5,0 V, timvis panelspänning, snötillägg | *Historisk.* Ersatt av v3, som upprepar alla dess värden. |
-| **Kalkylatordata v3** | 0,15, 0,5, 1,5 och 3 W tillagda | **Aktuell** |
+| Kalkylatordata v2 | Inställning 5,0 V, timvis panelspänning, snötillägg | *Historisk.* v3 upprepar alla dess värden. |
+| Kalkylatordata v3 | 0,15, 0,5, 1,5 och 3 W tillagda | *Historisk.* v4 upprepar alla dess värden utom Jönköpings. |
+| **Kalkylatordata v4** | Jönköping räknad i den avrundade punkten | **Aktuell** |
 
 **Den stora rättelsen: laddaren 5,6 V → 5,0 V.**
 
@@ -763,8 +766,7 @@ python reference_solar_need.py --example
 Den första raden skriver behovstripplarna för alla 17 panelstorlekar, före och efter det löpande
 minimumet, plus golvet. `--check` kör testvektorerna nedan, `--tables` skriver R, Voc_stc och
 tabellen över startljus, `--example` skriver exemplet i B.8. Skriptet använder Jönköpings avrundade
-punkt, så några Jönköpingsvärden skiljer något från datan (B.3). Där skriptet och datan skiljer är
-datan resultatet.
+punkt, samma punkt som kalkylatordata v4, och återger dess Jönköpingsvärden exakt.
 
 **Recept.**
 
@@ -812,7 +814,7 @@ snödagar, till 0,1 mAh, null betyder att inget batteri räcker (vinkelnycklar `
 `per_day_mAh` (esm, official); och `setpoint_V`: 5,0.
 
 **Testvektorer** (*testvektor*, behov utan marginal i mAh, [central, låg, hög]). Jönköpingsrader
-gäller den avrundade punkten 57,78° N, 14,16° Ö.
+gäller den avrundade punkten 57,78° N, 14,16° Ö och stämmer exakt med kalkylatordata v4.
 
 | Punkt | Vinkel | Firmware | Träd | Panel | Behov [central, låg, hög] |
 |---|---|---|---|---|---|

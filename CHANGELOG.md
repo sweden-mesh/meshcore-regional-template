@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.25.1 — 2026-11-14
+
+- Solar calculator data v4: Jönköping is computed at the rounded public point 57.78, 14.16 (317
+  need values moved by at most 8.3 mAh; no table figure and no calculator result changed). The
+  reference script (v2) reproduces it exactly. The methods page now says so.
+
 ## v0.25.0 — 2026-11-14
 
 - Solar calculator: a methods and verification page at /wizard/solcell/metod/ (B.1–B.16: model,
