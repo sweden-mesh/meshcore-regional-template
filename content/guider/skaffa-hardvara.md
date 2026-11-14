@@ -32,7 +32,7 @@ Färdiga enheter
 
 Antennen och dess placering betyder mer än något annat.
 
-- Köp en antenn **avstämd för 868 MHz**. Den lilla antennen som följer med kortet duger för bordet,
+- Köp en antenn **gjord för 868 MHz**. Den lilla antennen som följer med kortet duger för bordet,
   inte för en repeater.
 - Placera repeaterns antenn **högt och fritt**, lodrätt och borta från metall.
 - Kort kabel mellan radio och antenn; varje meter koaxialkabel äter signal.
