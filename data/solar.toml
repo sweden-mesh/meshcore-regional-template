@@ -8,8 +8,8 @@
 
 [JKG]
 place = "Jönköping"
-lat = 57.776
-lon = 14.159
+lat = 57.78
+lon = 14.16
 irradiation = [0.86, 1.70, 3.06, 3.67, 3.32, 3.25, 3.12, 2.97, 2.78, 1.99, 0.90, 0.62]
 dec_of_june = 19
 source = "PVGIS-SARAH3"

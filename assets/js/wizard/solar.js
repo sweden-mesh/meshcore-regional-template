@@ -25,10 +25,13 @@ export function snowAllowance(d, s) {
 }
 const withMargin = (d, s, x) => (x == null ? null : (x + snowAllowance(d, s)) * (1 + s.margin));
 
-// The pessimistic need for panel index i, snow and margin included; null if no battery is enough.
+// The cautious need for panel index i, snow and margin included: the larger of the central and the
+// high value, because for a few panels of 0.5–3 W "high" is not the largest (solar-013 note 1).
+// null when either is null: then no battery is enough.
 export function needAt(d, s, i) {
   const e = entry(d, s, i);
-  return withMargin(d, s, e ? e[2] : null);
+  if (!e || e[0] == null || e[2] == null) return null;
+  return withMargin(d, s, Math.max(e[0], e[2]));
 }
 // The expected need (the model's middle value), snow and margin included, for the summary line.
 export function expectedAt(d, s, i) {

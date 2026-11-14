@@ -16,14 +16,16 @@ test("at 10 W the data reproduce the solar session's Jönköping preview (value 
   assert.equal(data.JKG.setpoint_V, 5.0);
 });
 test("the snow allowance is added before the margin; exposed sites get more days", () => {
-  const high = data.JKG.need.vertical.esm["20"][i10][2];
+  const e = data.JKG.need.vertical.esm["20"][i10];
+  const high = Math.max(e[0], e[2]);
   const sheltered = 2 * 153.5, exposed = 4 * 153.5;
   assert.ok(Math.abs(needAt(data.JKG, s(), i10) - (high + sheltered) * 1.2) < 1e-6);
   assert.ok(Math.abs(needAt(data.JKG, s({ exposed: true }), i10) - (high + exposed) * 1.2) < 1e-6);
   assert.ok(needAt(data.BLE, s({ exposed: true }), i10) - needAt(data.BLE, s(), i10) > 0);
 });
 test("cells are sized to the pessimistic value with the margin", () => {
-  const high = data.JKG.need.vertical.esm["20"][i10][2] + 2 * 153.5;
+  const e = data.JKG.need.vertical.esm["20"][i10];
+  const high = Math.max(e[0], e[2]) + 2 * 153.5;
   assert.ok(Math.abs(needAt(data.JKG, s(), i10) - high * 1.2) < 1e-6);
   assert.equal(cellsFor(data.JKG, s(), i10), Math.ceil((high * 1.2) / 3000));
   assert.equal(cellsFor(data.JKG, s({ margin: 0 }), i10), Math.max(2, Math.ceil(high / 3000)));
@@ -79,4 +81,19 @@ test("the smallest panels: 0.15 W never keeps up, the slider starts there and ho
   const r = couple(data.JKG, s({ tree: 0 }), { lock: "panel", panelIdx: data.JKG.panels.indexOf(0.15), cells: 3, max: 19 });
   assert.equal(r.warn.kind, "summer");
   assert.equal(SLIDER_PANELS.indexOf(10), 6);
+});
+
+test("sized to the larger of central and high; null when either is null (solar-013 note 1)", () => {
+  let checked = 0;
+  for (const d of Object.values(data)) for (const tilt of Object.keys(d.need)) for (const fw of Object.keys(d.need[tilt]))
+    for (const tree of Object.keys(d.need[tilt][fw])) d.need[tilt][fw][tree].forEach((e, i) => {
+      const n = needAt(d, s({ tilt, fw, tree: Number(tree), margin: 0 }), i);
+      if (!e || e[0] == null || e[2] == null) { assert.equal(n, null); return; }
+      assert.ok(n >= Math.max(e[0], e[2]));
+      checked++;
+    });
+  assert.ok(checked > 1000);
+  // the one case with central null but high finite: Halland, vertical, official, 10°, 0.5 W
+  const i05 = data.HAD.panels.indexOf(0.5);
+  assert.equal(needAt(data.HAD, s({ fw: "official", tree: 10 }), i05), null);
 });

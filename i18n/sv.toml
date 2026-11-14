@@ -609,3 +609,5 @@ other = "Kopiera"
 other = "Kopierat"
 [code_copy_failed]
 other = "Gick inte att kopiera"
+[sol_panel_note]
+other = "Gäller en 6 V-panel (tomgångsspänning cirka 6–6,6 V i full sol) med laddaren inställd på 5,0 V. För en 12 V-panel ställer du laddaren på ungefär 77 % av panelens tomgångsspänning, och då blir siffrorna något för låga, eftersom laddarens egen förbrukning ungefär tredubblas."

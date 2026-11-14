@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.24.1 — 2026-11-14
+
+- Privacy: Jönköping's point in the solar data is rounded to 57.78, 14.16 (it was the project's own
+  site to about 100 m) in the served calculator data and data/solar.toml. No calculation uses it.
+- Solar calculator sizes to the larger of the central and the high value (for a few 0.5–3 W panels
+  "high" was the smaller), and shows "not enough" when either says no battery is enough.
+- A note at the panel slider: the figures hold for a 6 V panel with the charger at 5.0 V.
+
 ## v0.24.0 — 2026-11-14
 
 - Solar calculator: smaller panel steps. The slider is 0.15, 0.5, 1, 1.5, 3, 5, 10 … 100 W (default
