@@ -6,7 +6,7 @@
      the match needs a non-letter on both sides and code words are not on the list.
   Usage: partial "scopes.html" .Content */ -}}
 {{- $h := replaceRE `<code>(se|eu|europe|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` (string .) -}}
-{{- range site.Data.hyphenate.words -}}
+{{- range hugo.Data.hyphenate.words -}}
   {{- $plain := replace . "|" "" -}}
   {{- $soft := replace . "|" "­" -}}
   {{- range $pair := slice (slice $plain $soft) (slice (printf "%s%s" (title (substr $plain 0 1)) (substr $plain 1)) (printf "%s%s" (title (substr $soft 0 1)) (substr $soft 1))) -}}

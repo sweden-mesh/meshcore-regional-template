@@ -8,7 +8,7 @@
   {{- with index $codes $f.properties.scb -}}{{- $areas = $areas | append (dict "iata" . "lan" "" "rings" $f.geometry.coordinates) -}}{{- end -}}
 {{- end -}}{{- end -}}
 {{- $notes := dict -}}
-{{- range $code, $d := site.Data.solar -}}{{- $notes = merge $notes (dict $code (dict "place" $d.place "lat" $d.lat "source" ($d.source | default "") "note" (cond (ne $d.note nil) ($d.note | markdownify | string) ""))) -}}{{- end -}}
+{{- range $code, $d := hugo.Data.solar -}}{{- $notes = merge $notes (dict $code (dict "place" $d.place "lat" $d.lat "source" ($d.source | default "") "note" (cond (ne $d.note nil) ($d.note | markdownify | string) ""))) -}}{{- end -}}
 {{- $own := index ($r.iatas | default slice) 0 | default "JKG" -}}
 {{- $calc := resources.Get "data/solar-calc.json" | minify | fingerprint -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}

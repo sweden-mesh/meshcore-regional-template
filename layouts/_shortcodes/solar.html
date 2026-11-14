@@ -3,9 +3,9 @@
   gets Jönköping's (JKG), and the "where" part says so. Never scaled here.
   Parts: where, short, irradiation, trees, capacity. */ -}}
 {{- $code := index (site.Params.region.iatas | default slice) 0 | default "" -}}
-{{- $d := index site.Data.solar $code -}}
+{{- $d := index hugo.Data.solar $code -}}
 {{- $own := ne $d nil -}}
-{{- if not $own }}{{ $d = site.Data.solar.JKG }}{{ end -}}
+{{- if not $own }}{{ $d = hugo.Data.solar.JKG }}{{ end -}}
 {{- $fmt := "-|,| " -}}{{/* minus | decimal comma | non-breaking space grouping, "|" as delimiter */}}
 {{- $part := .Get 0 -}}
 {{- if eq $part "where" -}}

@@ -4,6 +4,20 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.22.0 — 2026-11-14
+
+- Guide lists: the number on the title's line ("01 Vad är MeshCore?"), long titles wrap under the title.
+- Front page: the text columns share the boxes' and the map's width; one column per "##" laid out by
+  count (all side by side from 1200 px, two by two from 720 px); the community box is gone (its links
+  are in the footer, and a region can add a "Gemenskap" column); four boxes with "Nätet" last and widest.
+- "Vad är MeshCore?": Observatör before Room server, and room servers explained, including that they
+  are hard to get working reliably (known MeshCore faults, autumn 2026).
+- Code boxes: a copy button, top right, on hover, keyboard focus and always on touch screens.
+- Swedish compounds get hidden break points (soft hyphens) from `data/hyphenate.toml`, applied in the
+  content pass (`scopes.html`); search still finds the words. `scripts/long-words.sh` lists long words
+  still without one.
+- `site.Data` → `hugo.Data` (deprecated in Hugo 0.156).
+
 ## v0.21.0 — 2026-11-14
 
 - `{{< contributors >}}`: one list of the people behind the site's content (backlog B-258), from the
