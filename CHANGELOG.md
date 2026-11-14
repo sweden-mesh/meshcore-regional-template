@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.16.0 — 2026-11-14
+
+**Breaking:** the wizards moved from `/verktyg/` to `/wizard/` (content/wizard/), with no
+redirect. Regions: change the menu entry's `pageRef = "/verktyg"` to `pageRef = "/wizard"`.
+
 ## v0.15.2 — 2026-11-14
 
 - *Skaffa hårdvara*: "en antenn gjord för 868 MHz".

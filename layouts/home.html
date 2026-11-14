@@ -26,7 +26,7 @@
     </section>
     {{ end }}
 
-    {{ with site.GetPage "/verktyg" }}{{ with .Pages.ByWeight }}{{ $n = add $n 1 }}
+    {{ with site.GetPage "/wizard" }}{{ with .Pages.ByWeight }}{{ $n = add $n 1 }}
     <section class="card" id="guidade">
       <p class="eyebrow">{{ printf "%02d" $n }}</p>
       <h2>{{ T "wizards" }}</h2>

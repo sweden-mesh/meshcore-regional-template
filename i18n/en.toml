@@ -436,7 +436,7 @@ other = "MQTT"
 [rm_title]
 other = "The region's own MQTT broker"
 [rm_text]
-other = "The region has its own MQTT broker, `{{ .Server }}`. An observer can report there as well as to the map above, by pointing one of its MQTT slots (here slot {{ .Slot }}) at it. Packets are signed with the repeater's own key, just as for the big brokers. The wizards under [Tools](/verktyg/) can send the settings for you."
+other = "The region has its own MQTT broker, `{{ .Server }}`. An observer can report there as well as to the map above, by pointing one of its MQTT slots (here slot {{ .Slot }}) at it. Packets are signed with the repeater's own key, just as for the big brokers. The wizards under [Wizards](/wizard/) can send the settings for you."
 [rm_cmds]
 other = "Commands for the region's MQTT broker"
 [rm_note]
