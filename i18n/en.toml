@@ -613,3 +613,9 @@ other = "That includes {D} days with snow or frost covering the panel."
 other = "North of about 63° N a vertical panel can be buried in snow for 2–3 weeks in midwinter; that is not in the figure."
 [sol_n_setpoint]
 other = "**Set the charger (CN3791) to 5.0 V**, never 5.6 V with the Clas Ohlson panel: the numbers assume 5.0 V. At 5.6 V the charger starts only in fairly bright light and misses most of the weak winter light."
+[code_copy]
+other = "Copy"
+[code_copied]
+other = "Copied"
+[code_copy_failed]
+other = "Could not copy"

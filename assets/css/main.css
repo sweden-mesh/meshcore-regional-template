@@ -95,6 +95,13 @@ a { color: var(--accent); }
 .codeblock { margin: 1rem 0; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
 .codeblock-title { font-size: .8rem; padding: .25rem .75rem; background: var(--line); color: var(--muted); font-family: var(--font-mono); }
 .codeblock pre { margin: 0; padding: .75rem; overflow-x: auto; }
+/* Copy button (codecopy.js): top right, shown on hover or keyboard focus, always on touch screens;
+   absolutely placed so nothing moves when it appears (operator 2026-11-14). */
+.codeblock { position: relative; }
+.code-copy { position: absolute; top: .3rem; right: .3rem; font: 600 .78rem var(--font-body); padding: .2rem .55rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); opacity: 0; transition: opacity .12s; }
+.codeblock:hover .code-copy, .code-copy:focus-visible, .codeblock:focus-within .code-copy { opacity: 1; }
+@media (hover: none) { .code-copy { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .code-copy { transition: none; } }
 .tabs { display: flex; flex-wrap: wrap; margin: 1rem 0; }
 .tabs > input { position: absolute; opacity: 0; }
 .tabs > label { padding: .4rem .9rem; border-bottom: 2px solid var(--line); cursor: pointer; color: var(--muted); }

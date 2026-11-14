@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ site.Language.Locale | default "sv" }}">
+<html lang="{{ site.Language.Locale | default "sv" }}" data-copy-label="{{ T "code_copy" }}" data-copied-label="{{ T "code_copied" }}" data-copy-failed="{{ T "code_copy_failed" }}">
 <head>{{ partial "head.html" . }}</head>
 <body class="style-{{ site.Params.style | default "product" }}">
   <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -8,6 +8,9 @@
   <main id="main" data-pagefind-body>{{ block "main" . }}{{ end }}</main>
   {{ partial "footer.html" . }}
   {{ with resources.Get "js/parallax.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{ end }}
+  {{- if in (string .Content) "class=\"codeblock\"" }}
+  {{ with resources.Get "js/codecopy.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{ end }}
+  {{- end }}
   {{ partial "hooks/body-end.html" . }}
 </body>
 </html>

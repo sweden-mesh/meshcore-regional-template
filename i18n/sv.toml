@@ -609,3 +609,9 @@ other = "Det inkluderar {D} dagar då snö eller frost täcker panelen."
 other = "Norr om ungefär 63° N kan en lodrät panel vara begravd i snö i 2–3 veckor mitt i vintern; det är inte med i siffran."
 [sol_n_setpoint]
 other = "**Ställ laddaren (CN3791) på 5,0 V**, aldrig 5,6 V med Clas Ohlsons panel: siffrorna förutsätter 5,0 V. Vid 5,6 V startar laddaren bara i ganska starkt ljus och missar det mesta av vinterns svaga ljus."
+[code_copy]
+other = "Kopiera"
+[code_copied]
+other = "Kopierat"
+[code_copy_failed]
+other = "Gick inte att kopiera"
