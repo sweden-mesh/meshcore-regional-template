@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.19.1 — 2026-11-14
+
+- Solar calculator: never fewer than 2 cells (the charger gives up to 2 A, a Biltema cell takes
+  1.5 A), and the result says when that minimum decides the count.
+
 ## v0.19.0 — 2026-11-14
 
 - New wizard **Räkna på solcell** (`/wizard/solcell/`): pick the place (→ county), tree line

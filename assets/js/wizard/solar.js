@@ -7,6 +7,9 @@
 export const SLIDER_PANELS = [1, 5, 10, 15, 20, 25, 30, 40, 50, 100]; // W, real output in full sun
 export const TREES = [0, 10, 15, 20, 30, 50];                          // degrees; 0 = terrain only
 export const DEFAULT_PANEL = 10;                                         // the Clas Ohlson panel
+// Never fewer than 2 cells (operator 2026-11-14): the guide's charger gives up to 2 A and a Biltema
+// cell takes 1.5 A, so one cell alone is charged beyond its rating.
+export const MIN_CELLS = 2;
 
 // s = { tilt: "vertical"|"tilt60"|"tilt40", fw: "esm"|"official", tree: 0..50, margin: 0..1, cap: mAh per cell }
 const entry = (d, s, i) => d?.need?.[s.tilt]?.[s.fw]?.[String(s.tree)]?.[i] ?? null;
@@ -22,10 +25,10 @@ export function expectedAt(d, s, i) {
   return e && e[0] != null ? e[0] * (1 + s.margin) : null;
 }
 
-// Cells needed with panel index i: a whole number ≥ 1, or null (no battery is enough).
+// Cells needed with panel index i: a whole number ≥ MIN_CELLS, or null (no battery is enough).
 export function cellsFor(d, s, i) {
   const n = needAt(d, s, i);
-  return n == null ? null : Math.max(1, Math.ceil(n / s.cap));
+  return n == null ? null : Math.max(MIN_CELLS, Math.ceil(n / s.cap));
 }
 
 // The smallest panel that is enough for `cells` cells. Returns { i } (an index into d.panels; it

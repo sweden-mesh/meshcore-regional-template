@@ -1,7 +1,7 @@
 // The solar calculator page (wizard-solar.html). DOM only; the arithmetic is in solar.js.
 import { createPicker } from "./mappick.js";
 import { iataFor } from "./observer.js";
-import { SLIDER_PANELS, TREES, DEFAULT_PANEL, cellsFor, expectedAt, maxCells, couple } from "./solar.js";
+import { SLIDER_PANELS, TREES, DEFAULT_PANEL, MIN_CELLS, cellsFor, needAt, expectedAt, maxCells, couple } from "./solar.js";
 
 const form = document.getElementById("solar-calc");
 if (form) init(form);
@@ -70,7 +70,8 @@ async function init(form) {
     const exp = expectedAt(d, s, r.panelIdx), need = cellsFor(d, s, r.panelIdx);
     q('[data-out="result"]').textContent = need == null || exp == null ? "" : t.result
       .replace("{W}", W).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
-      .replace("{EXP}", fmt(exp)).replace("{M}", margin.value);
+      .replace("{EXP}", fmt(exp)).replace("{M}", margin.value)
+      + (Math.ceil(needAt(d, s, r.panelIdx) / s.cap) < MIN_CELLS ? ` ${t.min}` : "");
   };
 
   panel.addEventListener("input", () => { st.lock = "panel"; update(); });

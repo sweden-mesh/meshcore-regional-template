@@ -599,3 +599,5 @@ other = "**Stora paneler:** en panel på 20 W eller mer med Clas Ohlson-panelens
 other = "Alla förutsättningar, tabellerna och fälttestet står i [Solnoder]({{ .Guide }})."
 [sol_north]
 other = "Längre norrut"
+[sol_min]
+other = "Beräkningen räcker med mindre, men det blir minst 2 celler: laddaren ger upp till 2 A och en Biltema-cell tål 1,5 A."

@@ -603,3 +603,5 @@ other = "**Large panels:** a panel of 20 W or more at the Clas Ohlson panel's ab
 other = "All assumptions, the tables and the field test are in [the solar guide]({{ .Guide }})."
 [sol_north]
 other = "Further north"
+[sol_min]
+other = "The calculation needs less, but it is at least 2 cells: the charger gives up to 2 A and a Biltema cell takes 1.5 A."

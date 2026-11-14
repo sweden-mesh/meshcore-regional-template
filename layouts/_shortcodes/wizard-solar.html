@@ -49,7 +49,7 @@
     </div>
     <div class="sol-slider">
       <label for="sol-cells">{{ T "sol_cells" }} <output data-out="cells"></output> <span class="sol-lock" data-lock="cells" hidden>{{ T "sol_held" }}</span></label>
-      <input type="range" id="sol-cells" min="1" max="10" step="1" value="3">
+      <input type="range" id="sol-cells" min="2" max="10" step="1" value="3">
       <p class="sol-warn" data-warn="cells" role="status" hidden></p>
     </div>
     <div class="sol-slider">
@@ -72,7 +72,7 @@
     </ul>
   </fieldset>
 </form>
-<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "outside" (T "sol_outside") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") | jsonify }}"></div>
+<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "outside" (T "sol_outside") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/solar-ui.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

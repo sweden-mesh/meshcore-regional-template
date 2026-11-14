@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { needAt, cellsFor, panelFor, maxCells, couple, SLIDER_PANELS } from "../assets/js/wizard/solar.js";
+import { needAt, cellsFor, panelFor, maxCells, couple, SLIDER_PANELS, MIN_CELLS } from "../assets/js/wizard/solar.js";
 
 const data = JSON.parse(readFileSync(new URL("../assets/data/solar-calc.json", import.meta.url)));
 const s = (o = {}) => ({ tilt: "vertical", fw: "esm", tree: 20, margin: 0.2, cap: 3000, ...o });
@@ -52,4 +52,11 @@ test("too many cells for the slider: the slider stops at max and says how many",
 test("the cell slider reaches higher in the north", () => {
   assert.ok(maxCells(data.UME) > maxCells(data.MMX));
   assert.ok(maxCells(data.MMX) >= 10);
+});
+
+test("never fewer than two cells, even where the model needs less than one", () => {
+  const i5 = data.JKG.panels.indexOf(5);
+  assert.ok(needAt(data.JKG, s({ tree: 0 }), i5) < 3000);
+  assert.equal(cellsFor(data.JKG, s({ tree: 0 }), i5), MIN_CELLS);
+  assert.equal(MIN_CELLS, 2);
 });
