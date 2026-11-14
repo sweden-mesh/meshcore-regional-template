@@ -10,7 +10,7 @@ en öppen mall som vilket län som helst kan använda.
 ## Det här får du
 
 - En startsida med en **karta som visar nätet live**: repeatrar, länkar och paket i rörelse.
-- **Guider** och **verktyg** för companions och repeatrar, med ditt läns region och inställningar
+- **Guider** och **wizards** för companions och repeatrar, med ditt läns region och inställningar
   ifyllda.
 - Allt räknas fram ur länskoden: länets namn och region hämtas från den gemensamma listan över
   svenska regionnamn.

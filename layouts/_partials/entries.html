@@ -23,7 +23,7 @@
       {{- range $pages }}{{ if eq (.Params.category | default "ovrigt") $c }}
         <li id="{{ .File.ContentBaseName }}" data-entries-item>
         {{- if $inline }}
-          <details><summary>{{ .Title }}</summary><div class="prose">{{ .Content }}</div></details>
+          <details><summary>{{ .Title }}</summary><div class="prose">{{ partial "scopes.html" .Content }}</div></details>
         {{- else }}
           <a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a>
         {{- end }}

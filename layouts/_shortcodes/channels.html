@@ -6,7 +6,7 @@
     {{- range . }}
     <tr>
       <td><code>{{ .name }}</code></td>
-      <td>{{ with .scope }}<code>{{ . }}</code>{{ else }}{{ T "ch_no_scope" }}{{ end }}</td>
+      <td>{{ with .scope }}<code class="scope">{{ . }}</code>{{ else }}{{ T "ch_no_scope" }}{{ end }}</td>
       <td>{{ .purpose | markdownify }}{{ with .note }}<br><small class="muted">{{ . | markdownify }}</small>{{ end }}</td>
     </tr>
     {{- end }}

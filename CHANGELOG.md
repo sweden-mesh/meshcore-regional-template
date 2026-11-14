@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.15.1 — 2026-11-14
+
+- Region names (`se`, `eu`, `europe`, `se-<county>`) are fixed width and in the strongest text
+  colour wherever they are named: in content (a `<code>` holding just the name gets
+  `class="scope"`, partial `scopes.html`), and in the settings card, footer, channel table and
+  wizards. `naming.explain` may now hold Markdown.
+- The tools section is called *Wizards* (menu, section title, mentions); its address stays
+  `/verktyg/`.
+
 ## v0.15.0 — 2026-11-14
 
 - Front page: *Vad är MeshCore?* and the region's own text now come above the map, not below.

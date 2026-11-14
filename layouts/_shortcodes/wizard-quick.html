@@ -21,7 +21,7 @@
 
   <fieldset class="wz-step">
     <legend><span class="wz-num">3</span> {{ T "wz_region" }}</legend>
-    <p class="muted">{{ T "wz_region_help" }} <code>se</code> + <code>{{ $r.scope }}</code>.</p>
+    <p class="muted">{{ T "wz_region_help" }} <code class="scope">se</code> + <code class="scope">{{ $r.scope }}</code>.</p>
     {{ partial "wizard-neighbours.html" .Page }}
     <label class="wz-check"><input type="checkbox" id="wz-offgrid"> <span>{{ T "wz_offgrid" | markdownify }}</span></label>
   </fieldset>

@@ -93,7 +93,7 @@
       {{ T "about_meshcore" (dict "Guide" $guide) | markdownify }}
     </section>
     {{- range $parts }}
-    <section class="about-region prose">{{ . | safeHTML }}</section>
+    <section class="about-region prose">{{ partial "scopes.html" . }}</section>
     {{- end }}
   </div>
 

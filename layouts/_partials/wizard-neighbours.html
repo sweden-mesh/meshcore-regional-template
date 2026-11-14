@@ -15,7 +15,7 @@
   <p class="muted" data-nb-hint hidden>{{ T "wz_nb_hint" }}</p>
   <ul class="wz-nb-list" hidden>
     {{- range $r.neighbours }}
-    <li><label class="wz-check"><input type="checkbox" value="{{ .scope }}"> {{ .lan }} <code>{{ .scope }}</code></label> <span class="muted" data-why></span></li>
+    <li><label class="wz-check"><input type="checkbox" value="{{ .scope }}"> {{ .lan }} <code class="scope">{{ .scope }}</code></label> <span class="muted" data-why></span></li>
     {{- end }}
   </ul>
 </div>

@@ -14,7 +14,7 @@ weight: 40
 
 ## Åtgärda
 
-Ställ in noden igen: namn, lösenord, radioinställningar och regioner. Guiderna och verktygen på
+Ställ in noden igen: namn, lösenord, radioinställningar och regioner. Guiderna och wizards på
 den här sidan ger kommandona.
 
 Har du sparat nodens privata nyckel tidigare kan du ge den tillbaka sin identitet. Skriv i

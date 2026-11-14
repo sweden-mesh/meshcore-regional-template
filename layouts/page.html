@@ -3,7 +3,7 @@
     {{ with .Parent }}{{ if not .IsHome }}<nav class="crumbs" aria-label="{{ T "breadcrumb" }}"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></nav>{{ end }}{{ end }}
     <h1>{{ .Title }}</h1>
     {{ with and (ne .Params.lead false) .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
-    <div class="prose">{{ .Content }}</div>
+    <div class="prose">{{ partial "scopes.html" .Content }}</div>
     {{ partial "source.html" . }}
     {{- $pages := .CurrentSection.Pages.ByWeight -}}
     {{- /* Entries with a category (troubleshooting) page within it. */ -}}

@@ -1,0 +1,4 @@
+{{- /* Marks region names (scopes) in rendered HTML: a <code> holding just se, eu, europe or
+  se-<county> gets class "scope", which sets it off (operator 2026-11-14). Commands that contain a
+  scope are not touched. Usage: partial "scopes.html" .Content */ -}}
+{{- return (replaceRE `<code>(se|eu|europe|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` . | safeHTML) -}}

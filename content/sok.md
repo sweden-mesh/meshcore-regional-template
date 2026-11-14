@@ -1,6 +1,6 @@
 ---
 title: "Sök"
-description: "Sök i guiderna och verktygen."
+description: "Sök i guiderna och wizards."
 ---
 
 {{< search >}}

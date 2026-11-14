@@ -45,6 +45,8 @@
 [hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body); }
 code, pre, kbd, samp { font-family: var(--font-mono); }
+/* A region name (scope) wherever it is named: fixed width, strongest text colour (operator 2026-11-14). */
+code.scope { color: var(--strong); }
 h1, h2, h3, .brand { font-family: var(--font-head); letter-spacing: -.01em; }
 a { color: var(--accent); }
 .site-header, .site-footer, .content, .map-section, .hero, .sections { max-width: 72rem; margin: 0 auto; padding: 1rem; }

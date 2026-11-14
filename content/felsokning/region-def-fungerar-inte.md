@@ -22,8 +22,8 @@ region
 ## Åtgärda
 
 1. Äldre än 1.16: [flasha](../../guider/flasha-firmware/) en ny version med *Uppdatera*.
-2. Kopiera kommandot från guiden eller verktyget på den här sidan i stället för att skriva av.
+2. Kopiera kommandot från guiden eller wizarden på den här sidan i stället för att skriva av.
 
 ## Så vet du att det fungerar
 
-`region` listar `se` och {{< region "scope" >}} under den, och `^` vid länet.
+`region` listar `se` och `{{< region "scope" >}}` under den, och `^` vid länet.
