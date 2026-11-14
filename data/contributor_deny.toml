@@ -1,0 +1,17 @@
+# Accounts never shown in the site's contributors list (operator 2026-11-14, backlog B-258):
+# bots and AI/LLM agents, best effort. A login is dropped when it equals an entry, or when any of
+# its parts (split on - _ [ ] .) equals one, or when GitHub marks it type "Bot" or it ends in
+# "[bot]". Matching ignores case. A region adds its own entries with params.contributors.deny.
+deny = [
+  "claude", "anthropic", "claude-code", "copilot", "github-copilot", "copilot-swe-agent",
+  "openai", "chatgpt", "codex", "gpt", "gemini", "google-labs-jules", "jules", "bard",
+  "devin", "devin-ai", "devin-ai-integration", "cognition", "cursor", "cursoragent", "aider",
+  "codeium", "windsurf", "tabnine", "amazon-q", "codewhisperer", "q-developer", "sweep",
+  "sweep-ai", "coderabbit", "coderabbitai", "codiumai", "qodo", "qodo-merge", "sourcery",
+  "sourcery-ai", "deepsource", "deepsourcebot", "mistral", "llama", "grok", "perplexity",
+  "replit", "lovable", "bolt", "v0", "dependabot", "dependabot-preview", "renovate",
+  "renovate-bot", "github-actions", "web-flow", "actions-user", "pre-commit-ci", "snyk",
+  "snyk-bot", "mergify", "kodiak", "imgbot", "allcontributors", "all-contributors",
+  "semantic-release", "semantic-release-bot", "release-please", "greenkeeper", "codecov",
+  "codecov-io", "sonarcloud", "netlify", "vercel", "cloudflare-pages", "stale", "bot",
+]

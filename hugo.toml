@@ -83,6 +83,14 @@
 [params.beacon]
   url = ""                   # Beacon base URL, e.g. https://beacon.example.se; empty = no live data
 
+# The contributors list ({{< contributors >}}, backlog B-258): the GitHub contributors of these repos,
+# read at build time, with bots and AI agents filtered (data/contributor_deny.toml + deny). people
+# lists work done outside git (name, what, optional url); exclude leaves out anyone who asks.
+[params.contributors]
+  repos = ["sweden-mesh/meshcore-regional-template"]
+  deny = []
+  exclude = []
+
 [params.community]
   name = ""                  # the local group, e.g. JKPG-Mesh
   url = ""

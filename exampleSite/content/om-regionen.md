@@ -39,3 +39,7 @@ Term
 ## Kanaler
 
 {{< channels >}}
+
+## Vem har bidragit
+
+{{< contributors >}}

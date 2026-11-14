@@ -1,0 +1,19 @@
+{{- /* Contributors list, filtered (backlog B-258). Input: dict "people" (slice of {login, type,
+  contributions, html_url}) "deny" (slice of strings) "exclude" (logins to leave out on request).
+  Returns the kept people, each login once (contributions added up across repos), most
+  contributions first. Pure, so the example site can test it with a fixed list. */ -}}
+{{- $deny := apply .deny "lower" "." -}}
+{{- $exclude := apply (.exclude | default slice) "lower" "." -}}
+{{- $byLogin := dict -}}
+{{- range $p := .people -}}
+  {{- $login := lower ($p.login | default "") -}}
+  {{- $drop := or (eq $login "") (eq $p.type "Bot") (strings.HasSuffix $login "[bot]") (in $deny $login) (in $exclude $login) -}}
+  {{- range $part := split (replaceRE `[\[\]._]` "-" $login) "-" -}}{{- if and $part (in $deny $part) -}}{{- $drop = true -}}{{- end -}}{{- end -}}
+  {{- if not $drop -}}
+    {{- $prev := index $byLogin $login -}}
+    {{- $n := add ($p.contributions | default 0) (cond (ne $prev nil) ($prev.contributions | default 0) 0) -}}
+    {{- $byLogin = merge $byLogin (dict $login (dict "login" $p.login "html_url" $p.html_url "contributions" $n)) -}}
+  {{- end -}}
+{{- end -}}
+{{- $kept := slice -}}{{- range $byLogin -}}{{- $kept = $kept | append . -}}{{- end -}}
+{{- return (sort $kept "contributions" "desc") -}}

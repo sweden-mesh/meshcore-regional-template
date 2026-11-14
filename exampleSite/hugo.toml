@@ -71,3 +71,14 @@ enableRobotsTXT = true
   server = "wss://mqtt.example.org"
   audience = "mqtt.example.org"
   slot = 3
+
+# Contributors list ({{< contributors >}}). The example site reads a fixed list instead of GitHub,
+# so the bot/LLM filter can be tested offline: dependabot[bot], claude and copilot-swe-agent must
+# not show; exempel-person (twice, 16 contributions) and annan-person must; vill-inte-synas has
+# asked to be left out.
+[params.contributors]
+  fixture = "contributors-fixture.json"
+  exclude = ["vill-inte-synas"]
+  [[params.contributors.people]]
+    name = "Exempeltestaren"
+    what = "fälttest av en solnod"

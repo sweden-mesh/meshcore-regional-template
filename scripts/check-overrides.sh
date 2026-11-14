@@ -25,6 +25,13 @@ check fragor/index.html "Behöver jag licens för att sända?" "fragor: the temp
 if grep -q "Meshtastic prata" "$P/fragor/index.html"; then echo "FAIL fragor: a hidden question is still listed"; fail=1; else echo "ok   fragor: a hidden question is not listed"; fi
 if [ -e "$P/fragor/licens/index.html" ]; then echo "FAIL fragor: questions get pages of their own"; fail=1; else echo "ok   fragor: questions are shown only on the list page"; fi
 check guider/fragor-och-ord/index.html "/fragor/" "fragor: the old FAQ URL redirects"
+# Contributors list (B-258): humans kept (once, across repos), bots and AI agents filtered, opt-outs honoured.
+check om-regionen/index.html 'github.com/exempel-person' "contributors: a human is listed"
+check om-regionen/index.html 'Exempeltestaren' "contributors: the hand-kept list is shown"
+if [ "$(grep -oE 'github.com/exempel-person[" >]' "$P/om-regionen/index.html" | wc -l)" = "1" ]; then echo "ok   contributors: a person in two repos is listed once"; else echo "FAIL contributors: a person is listed twice"; fail=1; fi
+for who in 'dependabot' 'github.com/claude' 'copilot-swe-agent' 'team-claude-helper' 'vill-inte-synas'; do
+  if grep -q "$who" "$P/om-regionen/index.html"; then echo "FAIL contributors: $who is listed"; fail=1; else echo "ok   contributors: $who is filtered out"; fi
+done
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

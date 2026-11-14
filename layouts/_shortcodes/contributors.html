@@ -1,0 +1,31 @@
+{{- /* {{< contributors >}}: everyone who contributed to the site's content, one list for the whole
+  site (operator 2026-11-14, backlog B-258). From the GitHub contributors of params.contributors.repos
+  (fetched at build time, cached per day; a failed fetch leaves that repo out), or the fixture file
+  params.contributors.fixture (tests), plus params.contributors.people for work outside git.
+  Bots and AI agents are filtered by data/contributor_deny.toml + params.contributors.deny;
+  params.contributors.exclude leaves out anyone who asks. */ -}}
+{{- $c := site.Params.contributors | default dict -}}
+{{- $people := slice -}}
+{{- with $c.fixture -}}
+  {{- with resources.Get . -}}{{- $people = .Content | transform.Unmarshal -}}{{- end -}}
+{{- else -}}
+  {{- $day := now.UTC.Format "20060102" -}}
+  {{- range $repo := $c.repos | default (slice "sweden-mesh/meshcore-regional-template") -}}
+    {{- $url := printf "https://api.github.com/repos/%s/contributors?per_page=100" $repo -}}
+    {{- with try (resources.GetRemote $url (dict "key" (printf "contrib-%s-%s" $repo $day))) -}}
+      {{- with .Value -}}{{- $people = $people | append (.Content | transform.Unmarshal) -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $deny := (site.Data.contributor_deny.deny | default slice) | append ($c.deny | default slice) -}}
+{{- $kept := partial "contributors-filter.html" (dict "people" $people "deny" $deny "exclude" $c.exclude) -}}
+{{- if or $kept $c.people -}}
+<ul class="contributors">
+  {{- range $kept }}
+  <li><a href="{{ .html_url }}" class="ext" target="_blank" rel="noopener">{{ .login }}</a></li>
+  {{- end }}
+  {{- range $p := $c.people }}
+  <li>{{ with $p.url }}<a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ $p.name }}</a>{{ else }}{{ $p.name }}{{ end }}{{ with $p.what }}: {{ . }}{{ end }}</li>
+  {{- end }}
+</ul>
+{{- end -}}

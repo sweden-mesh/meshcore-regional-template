@@ -169,3 +169,21 @@ Code (layouts, assets, configuration): BSD 2-Clause, see `LICENSE`.
 Content (`content/`): CC BY 4.0, see `LICENSE-CONTENT`. Parts are adapted from
 [meshat.se](https://meshat.se), with permission and attribution.
 Third-party code, fonts, map data and services: `THIRD-PARTY.md`.
+
+## Contributors list
+
+`{{< contributors >}}` prints one list of everyone who contributed to the site's content, for the
+whole site. It reads the GitHub contributors of `params.contributors.repos` at build time (the
+template's repo by default; add your own site's repo), adds `params.contributors.people` for work
+done outside git, and leaves out bots and AI agents (`data/contributor_deny.toml`, extend with
+`params.contributors.deny`) and anyone listed in `params.contributors.exclude`. A login is dropped
+when it, or any part of it split on `- _ . [ ]`, matches the deny list, or when GitHub marks it a bot.
+
+```toml
+[params.contributors]
+  repos = ["sweden-mesh/meshcore-regional-template", "you/your-region-site"]
+  exclude = []
+  [[params.contributors.people]]
+    name = "Kim"
+    what = "fälttest av en solnod"
+```

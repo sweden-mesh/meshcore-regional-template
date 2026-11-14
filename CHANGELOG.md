@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.21.0 — 2026-11-14
+
+- `{{< contributors >}}`: one list of the people behind the site's content (backlog B-258), from the
+  GitHub contributors of `params.contributors.repos` at build time, plus `params.contributors.people`
+  for work outside git. Bots and AI agents are left out (`data/contributor_deny.toml`, about 80
+  entries, matched on the login and its parts; GitHub's bot type), and `exclude` honours opt-outs.
+  A person in two repos appears once. Tested offline on the example site with a fixed list.
+
 ## v0.20.2 — 2026-11-14
 
 - Solar guide corrections from the solar session: the sun dates behind 20° and 15° tree lines

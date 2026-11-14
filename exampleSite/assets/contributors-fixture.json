@@ -1,0 +1,50 @@
+[
+  {
+    "login": "exempel-person",
+    "type": "User",
+    "contributions": 12,
+    "html_url": "https://github.com/exempel-person"
+  },
+  {
+    "login": "dependabot[bot]",
+    "type": "Bot",
+    "contributions": 30,
+    "html_url": "https://github.com/apps/dependabot"
+  },
+  {
+    "login": "claude",
+    "type": "User",
+    "contributions": 8,
+    "html_url": "https://github.com/claude"
+  },
+  {
+    "login": "copilot-swe-agent",
+    "type": "User",
+    "contributions": 5,
+    "html_url": "https://github.com/copilot-swe-agent"
+  },
+  {
+    "login": "annan-person",
+    "type": "User",
+    "contributions": 3,
+    "html_url": "https://github.com/annan-person"
+  },
+  {
+    "login": "exempel-person",
+    "type": "User",
+    "contributions": 4,
+    "html_url": "https://github.com/exempel-person"
+  },
+  {
+    "login": "vill-inte-synas",
+    "type": "User",
+    "contributions": 2,
+    "html_url": "https://github.com/vill-inte-synas"
+  },
+  {
+    "login": "team-claude-helper",
+    "type": "User",
+    "contributions": 6,
+    "html_url": "https://github.com/team-claude-helper"
+  }
+]
