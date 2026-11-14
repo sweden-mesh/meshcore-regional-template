@@ -1,0 +1,27 @@
+# Swedish compound words and where they may break (operator 2026-11-14, backlog B-262). Each "|" is
+# a hidden break point: a soft hyphen (U+00AD) the browser shows as "text-" only when the line
+# actually breaks there, and that is invisible otherwise. Applied to rendered content by
+# layouts/_partials/scopes.html. Browsers' own Swedish hyphenation is not used: headless Chrome had
+# no dictionary for it. Add words as they show up; a capitalised first letter is handled too.
+words = [
+  "text|meddelanden", "test|meddelanden", "direkt|meddelanden", "direkt|meddelande", "direkt|meddelandet",
+  "kanal|meddelande", "radio|inställningar", "radio|inställningarna", "standard|region", "standard|regionen",
+  "ström|förbrukning", "medel|förbrukning", "fjärr|administration", "administratörs|lösenordet",
+  "administratörs|lösenord", "standard|lösenordet", "gäst|lösenordet", "gäst|lösenord", "standard|inställningar",
+  "standard|värden", "standard|intervallet", "solcells|kalkylatorn", "solcells|driven", "solcells|uppställning",
+  "själv|urladdning", "region|verktyget", "partitions|tabell", "lutnings|mätare", "kortslutnings|ström",
+  "kortslutnings|strömmar", "hårdvaru|version", "för|inställning", "för|inställningen", "firmware|varianterna",
+  "firmware|väljaren", "firmware|väljarens", "firmware|platsen", "chatt|kanalerna", "chatt|kanal",
+  "vinter|underskott", "vinter|solståndet", "vinter|laddning", "vidare|befordran", "versions|numret",
+  "urladdnings|gräns", "underskotts|perioderna", "underskotts|perioden", "tvånivå|modellen",
+  "trädgårds|lamps|panel", "tomgångs|spänning", "tomgångs|spänningen", "tecken|förklaring",
+  "ström|spar|inställningarna", "ström|spar|läget", "ström|spar|läge", "ström|mätningar", "ström|försörjning",
+  "status|lys|dioder", "snabb|konfigurationen", "snabb|konfiguration", "skymnings|sensorn", "sändtids|gränsen",
+  "sänd|fördröjningar", "repeater|firmware", "repeater|bygget", "över|dimensionerad", "observatörs|rollen",
+  "modul|temperaturer", "lysdiod|motstånd", "litium|batterier", "laminat|datablad", "laddar|uppställning",
+  "konsol|kommandon", "kommun|regioner", "köld|egenskaper", "kabel|genomföringar", "jönköpings|området",
+  "internet|anslutning", "integritets|råd", "inställnings|kommandon", "förut|sättningar", "flashnings|delen",
+  "fin|justeringen", "felsöknings|post", "enhets|hanteraren", "batteri|tabellerna", "batteri|tabeller",
+  "batteri|storleken", "batteri|storlek", "batteri|spänningen", "batteri|simuleringen", "batteri|plattor",
+  "batteri|behovet", "analys|verktygen", "mobil|nätet", "mobil|nät", "program|vara", "program|varan", "ström|spar|versionen", "meddelande|texter",
+]

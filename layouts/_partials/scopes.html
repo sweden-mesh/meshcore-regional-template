@@ -1,4 +1,16 @@
-{{- /* Marks region names (scopes) in rendered HTML: a <code> holding just se, eu, europe or
-  se-<county> gets class "scope", which sets it off (operator 2026-11-14). Commands that contain a
-  scope are not touched. Usage: partial "scopes.html" .Content */ -}}
-{{- return (replaceRE `<code>(se|eu|europe|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` . | safeHTML) -}}
+{{- /* The last pass over rendered HTML, used wherever content is printed:
+  1. Region names (scopes): a <code> holding just se, eu, europe or se-<county> gets class "scope",
+     which sets it off (operator 2026-11-14). Commands that contain a scope are not touched.
+  2. Swedish compounds from data/hyphenate.toml get hidden break points (soft hyphens) between
+     their parts (operator 2026-11-14, B-262); a word inside <code> or a tag is left alone because
+     the match needs a non-letter on both sides and code words are not on the list.
+  Usage: partial "scopes.html" .Content */ -}}
+{{- $h := replaceRE `<code>(se|eu|europe|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` (string .) -}}
+{{- range site.Data.hyphenate.words -}}
+  {{- $plain := replace . "|" "" -}}
+  {{- $soft := replace . "|" "­" -}}
+  {{- range $pair := slice (slice $plain $soft) (slice (printf "%s%s" (title (substr $plain 0 1)) (substr $plain 1)) (printf "%s%s" (title (substr $soft 0 1)) (substr $soft 1))) -}}
+    {{- $h = replaceRE (printf `(^|[^\p{L}/#=.-])%s([^\p{L}]|$)` (index $pair 0)) (printf `${1}%s${2}` (index $pair 1)) $h -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($h | safeHTML) -}}

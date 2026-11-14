@@ -80,7 +80,7 @@
     <section class="about-meshcore prose">
       <h2>{{ T "about_meshcore_title" }}</h2>
       {{- $guide := "" }}{{ with site.GetPage "/guider/vad-ar-meshcore" }}{{ $guide = .RelPermalink }}{{ end }}
-      {{ T "about_meshcore" (dict "Guide" $guide) | markdownify }}
+      {{ partial "scopes.html" (T "about_meshcore" (dict "Guide" $guide) | markdownify) }}
     </section>
     {{- range $parts }}
     <section class="about-region prose">{{ partial "scopes.html" . }}</section>
