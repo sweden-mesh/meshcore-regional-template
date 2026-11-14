@@ -4,9 +4,20 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.24.0 — 2026-11-14
+
+- Solar calculator: smaller panel steps. The slider is 0.15, 0.5, 1, 1.5, 3, 5, 10 … 100 W (default
+  still 10 W), from the solar session's data v3 (solar-009, sha256 f95a993f…6b9a; values for the sizes
+  already there are unchanged). 0.15 W is "not enough even in summer" everywhere. Decimal comma in
+  the panel figure.
+
+## v0.23.7 — 2026-11-14
+
+- "Starta en sida för din region" shows no lead line under the title.
+
 ## v0.23.6 — 2026-11-14
 
-- "Bli nodvärd" and "Starta en sida för din region" show no lead line under the title.
+- "Bli nodvärd" shows no lead line under the title.
 
 ## v0.23.5 — 2026-11-14
 
