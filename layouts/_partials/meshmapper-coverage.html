@@ -8,7 +8,7 @@
   (HTTP error, success != true, no grid_squares) gives one warning and nothing; the build goes on.
   The cache key changes every 6 hours, so local rebuilds reuse one download (the key allows 100
   calls a day). Accept-Encoding is left to Go, which then decompresses the gzip answer itself.
-  Returns the parsed response plus at and newest (below), or nil.
+  Returns the parsed response plus at, newest and compact (a JSON string, below), or nil.
 */ -}}
 {{- $mm := site.Params.meshmapper | default dict -}}
 {{- $data := dict -}}
@@ -33,12 +33,35 @@
 {{- end -}}
 {{- /* Freshness: when MeshMapper computed the answer (at) and the newest ping in it (newest), both
        in seconds; the API's timestamps above 2e10 are milliseconds. Nothing is kept between builds,
-       so a revoked key means no layer from the next build on. */ -}}
-{{- $sec := dict -}}
+       so a revoked key means no layer from the next build on.
+       The compact form for the browser (squares): [latIdx, lonIdx, kind, eff10, ageDays, type, pings]
+       per square. latIdx/lonIdx come from grid_id ("latIndex_lonIndex"): south = latIdx × grid[0],
+       west = lonIdx × grid[1]. kind "w" = working (BIDIR, DISC, TX, RX), "d" = dead (DEAD, DROP);
+       eff10 = round(effective × 10); ageDays = UTC days from the square's newest ping to at, so
+       at's day minus ageDays is the ping's date; type = index into types; pings = count. */ -}}
+{{- $out := dict -}}
 {{- if $data -}}
-  {{- $newest := 0 -}}
-  {{- range $data.grid_squares -}}{{- with .timestamp -}}{{- $t := cond (gt . 2e10) (div . 1000) . -}}{{- if gt $t $newest }}{{ $newest = $t }}{{ end -}}{{- end -}}{{- end -}}
+  {{- $types := slice "BIDIR" "DISC" "TX" "RX" "DEAD" "DROP" -}}
   {{- $at := $data.generated_at | default 0 -}}
-  {{- $sec = dict "at" (int (cond (gt $at 2e10) (div $at 1000) $at)) "newest" (int $newest) -}}
+  {{- $at = cond (gt $at 2e10) (div $at 1000) $at -}}
+  {{- $atDay := math.Floor (div $at 86400.0) -}}
+  {{- $newest := 0 -}}
+  {{- $squares := slice -}}
+  {{- range $data.grid_squares -}}
+    {{- $t := .timestamp | default 0 -}}
+    {{- $t = cond (gt $t 2e10) (div $t 1000) $t -}}
+    {{- if gt $t $newest }}{{ $newest = $t }}{{ end -}}
+    {{- $ix := split (.grid_id | default "") "_" -}}
+    {{- $type := 0 -}}{{- $known := false -}}
+    {{- $ct := .coverage_type -}}
+    {{- range $i, $name := $types }}{{ if eq $name $ct }}{{ $type = $i }}{{ $known = true }}{{ end }}{{ end -}}
+    {{- if and $known (eq (len $ix) 2) -}}
+      {{- $squares = $squares | append (printf "[%d,%d,%q,%d,%d,%d,%d]" (int (index $ix 0)) (int (index $ix 1)) (cond (ge $type 4) "d" "w") (int (math.Round (mul (.effective | default 0) 10))) (int (sub $atDay (math.Floor (div $t 86400.0)))) $type (int (.count | default 0))) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $grid := slice ($data.grid_size.lat | default 0) ($data.grid_size.lon | default 0) -}}
+  {{- $head := dict "v" 1 "grid" $grid "at" (int $at) "newest" (int $newest) "types" $types | jsonify -}}
+  {{- $compact := printf "%s,\"squares\":[%s]}" (strings.TrimSuffix "}" $head) (delimit $squares ",") -}}
+  {{- $out = merge $data (dict "at" (int $at) "newest" (int $newest) "compact" $compact) -}}
 {{- end -}}
-{{- return (cond (gt (len $data) 0) (merge $data $sec) nil) -}}
+{{- return (cond (gt (len $out) 0) $out nil) -}}

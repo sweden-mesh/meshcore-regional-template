@@ -32,6 +32,9 @@ if [ "$(grep -oE 'github.com/exempel-person[" >]' "$P/om-regionen/index.html" | 
 for who in 'dependabot' 'github.com/claude' 'copilot-swe-agent' 'team-claude-helper' 'vill-inte-synas'; do
   if grep -q "$who" "$P/om-regionen/index.html"; then echo "FAIL contributors: $who is listed"; fail=1; else echo "ok   contributors: $who is filtered out"; fi
 done
+# MeshMapper coverage (MMAP): the fixture becomes one compact file the map points at.
+cov=$(grep -oE 'data-coverage="?/meshmapper/coverage\.[0-9a-f]+\.json' "$P/index.html" | sed 's/.*="\{0,1\}//' || true)
+if [ -n "$cov" ] && [ "$(grep -o '\],\[' "$P$cov" | wc -l)" = "31" ]; then echo "ok   meshmapper: the map points at a 32-square coverage file"; else echo "FAIL meshmapper: no coverage file, or not 32 squares"; fail=1; fi
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi
