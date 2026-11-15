@@ -4,7 +4,8 @@
   region; it is sent only as the X-API-Key header and never written anywhere. Filters: the
   region's radio setting (params.radio, any coding rate) and the last params.meshmapper.days
   days. params.meshmapper.fixture reads a saved response from the site's assets instead (tests,
-  the example site). No key and no fixture: no request and nothing returned. A failed request
+  the example site). Off unless params.meshmapper.coverage is true. No key and no fixture: no
+  request and nothing returned. A failed request
   (HTTP error, success != true, no grid_squares) gives one warning and nothing; the build goes on.
   The cache key changes every 6 hours, so local rebuilds reuse one download (the key allows 100
   calls a day). Accept-Encoding is left to Go, which then decompresses the gzip answer itself.
@@ -12,6 +13,8 @@
 */ -}}
 {{- $mm := site.Params.meshmapper | default dict -}}
 {{- $data := dict -}}
+{{- /* Only when the region has turned the layer on (params.meshmapper.coverage). */ -}}
+{{- if $mm.coverage -}}
 {{- with $mm.fixture -}}
   {{- with resources.Get . -}}{{- $data = .Content | transform.Unmarshal -}}{{- end -}}
 {{- else with getenv "HUGO_MESHMAPPER_KEY" -}}
@@ -26,6 +29,7 @@
       {{- $data = .Content | transform.Unmarshal -}}
     {{- end -}}
   {{- end -}}
+{{- end -}}
 {{- end -}}
 {{- if and $data (or (ne $data.success true) (not $data.grid_squares)) -}}
   {{- warnidf "meshmapper" "MeshMapper coverage unusable (success %v, error %q, %d squares); the map has no coverage layer" $data.success ($data.error | default "") (len ($data.grid_squares | default slice)) -}}

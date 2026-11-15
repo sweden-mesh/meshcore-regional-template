@@ -4,6 +4,27 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## Unreleased
+
+- **MeshMapper coverage on the map** (README "MeshMapper coverage"): with
+  `[params.meshmapper] coverage = true` and the region's MeshMapper key in `HUGO_MESHMAPPER_KEY`,
+  the build fetches the region's measured coverage (last `days`, default 180, the region's radio
+  setting) into one compact file, and the map gets a **Täckning** toggle, off by default and
+  loaded on first use (`?cov=1`): four reliability bands in one violet ramp per theme, squares
+  older than 90 days fainter, a **Döda zoner** toggle with a muted-red hatch (`?dead=1`), a popup
+  per square, legend entries and the credit "Täckning: MeshMapper" while it is on, and a line
+  under the map with the date measured. Works without Beacon. No key or no `coverage`: nothing is
+  fetched. `params.meshmapper.fixture` reads a saved response (tests, the example site).
+- `params.meshmapper.url`: the region's MeshMapper map, linked under the map and in a new section
+  of the guide "Visa på kartan" (`{{</* meshmapper */>}}`), which also explains the coverage and
+  how to contribute.
+- `MapPanel`: toggles shown only while another is on (`showWhen`), legend entries shown only while
+  their layers are on (`when`); the legend hides when empty.
+- New i18n keys: `map_coverage`, `map_dead`, `map_coverage_measured`, `map_coverage_hint`,
+  `map_meshmapper_note`, `mm_title`, `mm_text`, `mm_link`, `mm_layer`, `mm_contribute`,
+  `mt_cov_*`, `mt_lg_cov`, `mt_lg_cov_old`, `mt_lg_cov_dead`. A region that overrides
+  `i18n/*.toml` gets the template's texts for them until it adds its own.
+
 ## v0.28.0 — 2026-11-15
 
 A modern-web-guidance pass (Google Chrome's guides for coding agents) over the whole template;

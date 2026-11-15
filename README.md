@@ -69,6 +69,7 @@ this repository's `hugo.toml`.
 | `map.companions` | `false` (default): companion nodes (people's handsets) are left off the map, the snapshot and the packet routes, because their position can be a home |
 | `map.maplibre` | the vendored MapLibre version under `static/lib/maplibre-gl/` |
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
+| `meshmapper.url`, `meshmapper.coverage`, `meshmapper.days`, `meshmapper.fixture` | MeshMapper: the region's map link, and its measured coverage on the map. See [MeshMapper coverage](#meshmapper-coverage) |
 | `links` | plain links in the footer's community column (`[[params.links]]` with `name`, `url`), for sites that are not chats |
 | `beacon.seeds` | other Beacons that have heard the region longer (e.g. `["https://beacon.meshat.se"]`); their nodes inside the region's border fill the map until `beacon.url` has heard them |
 | `community.name`, `community.url` | the local group |
@@ -162,6 +163,49 @@ in a region's deploy pipeline, or a Beacon outage will block deploys.
 The map talks to a [Beacon](https://github.com/MeshCore-Beacon) backend over its public REST
 API and WebSocket. **No Beacon code is part of this repository**; it is a separate service
 under its own licence.
+
+## MeshMapper coverage
+
+[MeshMapper](https://meshmapper.net/) collects measurements from people who drive or walk around
+with its app (wardriving). The template can show a region's measurements as a **Täckning**
+(coverage) toggle on the front-page map: ~300 m squares coloured by how reliably contact worked,
+older squares fainter, a second toggle for dead zones, a popup per square, a legend and credit
+while it is on, and a section in the guide "Visa på kartan". It is off by default and loads
+only when a visitor switches it on (`?cov=1` opens with it on).
+
+1. **Permission.** Publishing a region's coverage needs the permission of the region's
+   MeshMapper admin; ask before turning it on.
+2. **An integration key.** The region's MeshMapper admin creates one under *User Settings ›
+   API Access*, with the Coverage API granted. The key decides the region. Keep it out of the
+   repository.
+3. **The secret.** Store it as a repository secret (e.g. `MESHMAPPER_API_KEY`) and give it to
+   Hugo as the environment variable `HUGO_MESHMAPPER_KEY` in the build steps that deploy, never
+   in pull-request builds:
+
+   ```yaml
+   env:
+     HUGO_MESHMAPPER_KEY: ${{ github.event_name != 'pull_request' && secrets.MESHMAPPER_API_KEY || '' }}
+   ```
+4. **The params:**
+
+   ```toml
+   [params.meshmapper]
+     url = "https://xxx.meshmapper.net/"  # the region's MeshMapper map: linked from the map, the guide and the credit
+     coverage = true                       # the coverage layer
+     days = 180                            # only pings from the last N days (default 180)
+     # fixture = "meshmapper-fixture.json" # a saved response under assets/, read instead of the API
+   ```
+
+**Call budget.** The key allows 100 coverage calls per UTC day and every call counts. Each build
+makes one (filtered to the region's radio setting, `params.radio`, any coding rate); a local
+build reuses its download within the same 6-hour slot. Four scheduled builds a day plus pushes
+stay well under it. A refused call (e.g. 429) gives a warning (`warning-meshmapper`) and a build
+without the layer; Hugo retries a 429 for up to a minute first. Nothing is kept between builds,
+so a revoked key means no layer from the next build on, as MeshMapper asks.
+
+Without the key or `coverage = true` nothing is fetched and the map is as before; `url` alone
+gives only the links. The example site shows the layer from a 32-square fixture of a real
+Jönköping response.
 
 ## Licence
 
