@@ -796,9 +796,23 @@ other = "no contact"
 other = "Dead zones"
 [mm_title]
 other = "Coverage, measured"
-[mm_text]
-other = "Where the mesh really reaches is measured by people driving or walking around with the MeshMapper app. The region's measurements are on [the region's map at MeshMapper]({{ .URL }})."
 [map_meshmapper_note]
 other = "Measured coverage: [the region's map at MeshMapper]({{ .URL }})."
 [mt_cov_credit]
 other = "Coverage: MeshMapper"
+[mm_text]
+other = "Where the mesh really reaches is measured by people driving, cycling or walking around with the MeshMapper app, pinging the mesh as they go (wardriving)."
+[mm_link]
+other = "All of the region's measurements are on [the region's map at MeshMapper]({{ .URL }})."
+[mm_layer]
+other = '''The **Coverage** toggle on the map on the [front page](/) shows the measurements. The map is divided into squares of about 300 × 300 metres. Each square shows the best any ping there achieved, for example contact both ways or only a repeater hearing it; click a square to see which. The colour shows how reliably it worked on average, from weak to steady (see the legend).
+
+- **Fainter squares** have not been measured for {{ .Old }} days. Things may have changed there.
+- **An empty square** has not been measured at all. It says nothing about the coverage there.
+- **Dead zones** (hatched, a toggle of their own) were measured: someone pinged there and nothing got through.
+
+Only measurements from the last {{ .Days }} days and with the region's radio setting ({{ .Radio }}) count.'''
+[mm_contribute]
+other = "Want to help? The app connects to your companion and pings as you move. MeshMapper explains how to start in [Getting started](https://wiki.meshmapper.net/app_getting_started/)."
+[map_coverage_hint]
+other = "The colour shows how reliably contact worked per square of about 300 m; faint is not measured for {{ .Old }} days, empty not measured at all. [How to read the coverage]({{ .URL }})."

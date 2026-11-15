@@ -792,9 +792,23 @@ other = "ingen kontakt"
 other = "Döda zoner"
 [mm_title]
 other = "Täckning, uppmätt"
-[mm_text]
-other = "Var nätet faktiskt når mäts av folk som kör eller går runt med appen MeshMapper. Mätningarna för regionen finns på [regionens karta hos MeshMapper]({{ .URL }})."
 [map_meshmapper_note]
 other = "Uppmätt täckning: [regionens karta hos MeshMapper]({{ .URL }})."
 [mt_cov_credit]
 other = "Täckning: MeshMapper"
+[mm_text]
+other = "Var nätet faktiskt når mäts av folk som kör, cyklar eller går runt med appen MeshMapper och pingar nätet på vägen (wardriving)."
+[mm_link]
+other = "Alla mätningar för regionen finns på [regionens karta hos MeshMapper]({{ .URL }})."
+[mm_layer]
+other = '''Valet **Täckning** på kartan på [startsidan](/) visar mätningarna. Kartan är indelad i rutor om ungefär 300 × 300 meter. I varje ruta gäller det bästa som någon ping där lyckades med, till exempel kontakt åt båda hållen eller att bara en repeater hörde den; klicka på en ruta så står det. Färgen visar hur pålitligt det fungerade i snitt, från svag till stabil (se teckenförklaringen).
+
+- **Blekare rutor** är inte uppmätta på {{ .Old }} dagar. Där kan läget ha ändrats.
+- **En tom ruta** är inte uppmätt alls. Den säger ingenting om täckningen där.
+- **Döda zoner** (randiga, ett eget val) är uppmätta: någon pingade där och inget kom fram.
+
+Bara mätningar från de senaste {{ .Days }} dagarna och med regionens radioinställning ({{ .Radio }}) räknas.'''
+[mm_contribute]
+other = "Vill du bidra? Appen kopplas till din companion och pingar medan du rör dig. MeshMapper förklarar hur du kommer igång i [Getting started](https://wiki.meshmapper.net/app_getting_started/) (på engelska)."
+[map_coverage_hint]
+other = "Färgen visar hur pålitligt kontakten fungerade per ruta om cirka 300 m, blekt är inte uppmätt på {{ .Old }} dagar och tomt inte uppmätt alls. [Så läser du täckningen]({{ .URL }})."

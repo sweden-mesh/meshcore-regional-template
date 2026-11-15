@@ -36,7 +36,8 @@
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
-  {{ with $cov }}<p class="map-note map-mm map-cov-at" hidden>{{ T "map_coverage_measured" (dict "Date" (time.Format "2006-01-02" (time.AsTime .newest))) }}</p>{{ end }}
+  {{ with $cov }}<p class="map-note map-mm map-cov-at" hidden>{{ T "map_coverage_measured" (dict "Date" (time.Format "2006-01-02" (time.AsTime .newest))) }}
+    {{- with site.GetPage "/guider/visa-pa-kartan" }} {{ T "map_coverage_hint" (dict "Old" 90 "URL" (printf "%s#%s" .RelPermalink (anchorize (T "mm_title")))) | $.Page.RenderString }}{{ end }}</p>{{ end }}
   {{ with site.Params.meshmapper.url }}<p class="map-note map-mm">{{ T "map_meshmapper_note" (dict "URL" .) | $.Page.RenderString }}</p>{{ end }}
   {{- /* A text alternative for the map: the repeaters from the build-time snapshot,
          readable without JavaScript and by screen readers. */ -}}

@@ -1,5 +1,14 @@
-{{- /* {{< meshmapper >}}: a section on measured coverage with a link to the region's
-  MeshMapper map (params.meshmapper.url); nothing when it is empty. */ -}}
-{{- with site.Params.meshmapper.url -}}
-{{ $.Page.RenderString (printf "## %s\n\n%s\n" (T "mm_title") (T "mm_text" (dict "URL" .))) }}
+{{- /* {{< meshmapper >}}: a section on measured coverage: what MeshMapper is, a link to the
+  region's MeshMapper map (params.meshmapper.url), what the map's coverage layer shows (when the
+  site has the coverage data) and how to contribute. Nothing when there is neither. */ -}}
+{{- $url := site.Params.meshmapper.url -}}
+{{- $cov := partialCached "meshmapper-coverage.html" . "meshmapper" -}}
+{{- if or $url $cov -}}
+{{- $r := site.Params.radio -}}
+{{- $radio := printf "%v MHz, %v kHz, SF%v" (replace (string $r.freq) "." (T "mt_decimal")) (replace (string $r.bw) "." (T "mt_decimal")) $r.sf -}}
+{{- $parts := slice (printf "## %s" (T "mm_title")) (T "mm_text") -}}
+{{- with $url }}{{ $parts = $parts | append (T "mm_link" (dict "URL" .)) }}{{ end -}}
+{{- with $cov }}{{ $parts = $parts | append (T "mm_layer" (dict "Old" 90 "Days" ($.Site.Params.meshmapper.days | default 180) "Radio" $radio)) }}{{ end -}}
+{{- $parts = $parts | append (T "mm_contribute") -}}
+{{ $.Page.RenderString (delimit $parts "\n\n") }}
 {{- end -}}
