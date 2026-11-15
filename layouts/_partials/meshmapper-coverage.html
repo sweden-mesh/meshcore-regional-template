@@ -8,7 +8,7 @@
   (HTTP error, success != true, no grid_squares) gives one warning and nothing; the build goes on.
   The cache key changes every 6 hours, so local rebuilds reuse one download (the key allows 100
   calls a day). Accept-Encoding is left to Go, which then decompresses the gzip answer itself.
-  Returns the parsed response, or nil.
+  Returns the parsed response plus at and newest (below), or nil.
 */ -}}
 {{- $mm := site.Params.meshmapper | default dict -}}
 {{- $data := dict -}}
@@ -31,4 +31,14 @@
   {{- warnidf "meshmapper" "MeshMapper coverage unusable (success %v, error %q, %d squares); the map has no coverage layer" $data.success ($data.error | default "") (len ($data.grid_squares | default slice)) -}}
   {{- $data = dict -}}
 {{- end -}}
-{{- return (cond (gt (len $data) 0) $data nil) -}}
+{{- /* Freshness: when MeshMapper computed the answer (at) and the newest ping in it (newest), both
+       in seconds; the API's timestamps above 2e10 are milliseconds. Nothing is kept between builds,
+       so a revoked key means no layer from the next build on. */ -}}
+{{- $sec := dict -}}
+{{- if $data -}}
+  {{- $newest := 0 -}}
+  {{- range $data.grid_squares -}}{{- with .timestamp -}}{{- $t := cond (gt . 2e10) (div . 1000) . -}}{{- if gt $t $newest }}{{ $newest = $t }}{{ end -}}{{- end -}}{{- end -}}
+  {{- $at := $data.generated_at | default 0 -}}
+  {{- $sec = dict "at" (int (cond (gt $at 2e10) (div $at 1000) $at)) "newest" (int $newest) -}}
+{{- end -}}
+{{- return (cond (gt (len $data) 0) (merge $data $sec) nil) -}}

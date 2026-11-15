@@ -750,3 +750,5 @@ other = "Copied"
 other = "Could not copy"
 [sol_panel_note]
 other = "For a 6 V panel (open-circuit about 6–6.6 V in full sun) with the charger set to 5.0 V. For a 12 V panel, set the charger to about 77 % of the panel\u0027s open-circuit voltage; the figures are then somewhat low, because the charger\u0027s own consumption roughly triples."
+[map_coverage_measured]
+other = "Coverage from MeshMapper, measured up to and including {{ .Date }}."
