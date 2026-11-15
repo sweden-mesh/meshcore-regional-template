@@ -13,6 +13,7 @@ import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbo
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
 import { setTexts, t } from "./texts.js";
+import { coverageControl } from "./coverage.js";
 
 const el = document.getElementById("map");
 
@@ -21,14 +22,25 @@ async function start() {
   el.mapInstance = map; // for debugging and browser tests
   const ds = el.dataset;
   try { setTexts(JSON.parse(ds.texts || "{}")); } catch { /* keep the defaults */ }
-  if (!ds.beacon) return;
+  const url = parseState(location.search);
+  // MeshMapper coverage (data-coverage): off by default, loaded on first switch-on. Works
+  // without Beacon too, with a panel of its own.
+  const cov = ds.coverage ? coverageControl(map, ds.coverage, url.cov ?? false) : null;
+  const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on }] : [];
+  const covToggle = (key, on) => { if (key === "cov") cov.set(on); };
+  if (!ds.beacon) {
+    if (cov) map.addControl(new MapPanel({ toggles: covToggles, legend: [], onToggle: (key, on) => {
+      covToggle(key, on);
+      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov.on }) + location.hash);
+    } }), "top-left");
+    return;
+  }
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
-  const url = parseState(location.search);
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   const saveUrl = (extra = {}) => {
-    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, ...extra });
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
@@ -53,6 +65,7 @@ async function start() {
       { key: "links", label: ds.linksLabel || "Grannlänkar", on: state.showLinks },
       { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: state.showForeign },
       { key: "focus", label: ds.focusLabel || "Trafikfokus", on: state.focus },
+      ...covToggles,
     ],
     legend: [
       { swatch: "pill-active", label: t("lg_active") },
@@ -67,6 +80,7 @@ async function start() {
       if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
       if (key === "live") { state.live = on; state.onLive?.(on); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); }
+      covToggle(key, on);
       saveUrl();
     },
   }), "top-left");
@@ -150,7 +164,9 @@ function applyFocus(map, state) {
       ["interpolate", ["linear"], ["log10", ["max", ["get", "count"], 1]], 0, "#dc2626", 1.3, "#eab308", 2.2, "#16a34a"]]);
   }
   if (on && !map.getLayer("focus-dim")) {
-    const first = ["region-fill", "links", "node-points"].find((id) => map.getLayer(id));
+    // Under the lowest of our layers, whichever order they were added in.
+    const ours = ["region-fill", "coverage-fill", "links", "node-points"];
+    const first = map.getStyle().layers.find((l) => ours.includes(l.id))?.id;
     map.addLayer({ id: "focus-dim", type: "background", paint: { "background-color": "rgba(8, 18, 25, 0.55)" } }, first);
   } else if (!on && map.getLayer("focus-dim")) map.removeLayer("focus-dim");
 }

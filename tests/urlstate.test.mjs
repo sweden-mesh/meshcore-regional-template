@@ -19,3 +19,11 @@ test("traffic focus is on by default and written only when off", () => {
   assert.deepEqual(parseState("?focus=0"), { focus: false });
   assert.deepEqual(parseState("?focus=1"), { focus: true }); // links shared before v0.12.4
 });
+
+test("coverage is off by default and written only when on", () => {
+  assert.equal(writeState("", { cov: true }), "?cov=1");
+  assert.equal(writeState("?cov=1&z=9.0", { cov: false }), "?z=9.0");
+  assert.deepEqual(parseState("?cov=1"), { cov: true });
+  assert.deepEqual(parseState("?cov=0"), { cov: false });
+  assert.deepEqual(parseState(writeState("?live=0", { cov: true })), { live: false, cov: true });
+});

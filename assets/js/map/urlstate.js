@@ -1,13 +1,15 @@
 // Map state in the URL, so a view can be shared: ?live=0&links=0&foreign=0&focus=0
-// &z=11.2&ll=57.78,14.16 (zoom, then lat,lng). Only non-default values are
+// &cov=1&z=11.2&ll=57.78,14.16 (zoom, then lat,lng). Only non-default values are
 // written; anything unparseable is ignored.
 
-const TOGGLES = ["live", "links", "foreign", "focus"];
+const TOGGLES = ["live", "links", "foreign", "focus"]; // on by default
+const OFF_TOGGLES = ["cov"];                           // off by default
 
 export function parseState(search) {
   const q = new URLSearchParams(search);
   const out = {};
   for (const k of TOGGLES) if (q.has(k)) out[k] = q.get(k) !== "0";
+  for (const k of OFF_TOGGLES) if (q.has(k)) out[k] = q.get(k) !== "0";
   const z = Number(q.get("z"));
   const ll = (q.get("ll") || "").split(",").map(Number);
   if (Number.isFinite(z) && z >= 0 && z <= 22 && ll.length === 2 && ll.every(Number.isFinite)
@@ -19,6 +21,9 @@ export function writeState(search, state) {
   const q = new URLSearchParams(search);
   for (const k of TOGGLES) {
     if (state[k] === false) q.set(k, "0"); else if (state[k] === true) q.delete(k);
+  }
+  for (const k of OFF_TOGGLES) {
+    if (state[k] === true) q.set(k, "1"); else if (state[k] === false) q.delete(k);
   }
   if (state.view) {
     q.set("z", state.view.zoom.toFixed(1));

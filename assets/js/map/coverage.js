@@ -28,3 +28,39 @@ export function toGeoJSON(data) {
   }
   return { type: "FeatureCollection", features };
 }
+
+// The layer: one fill under the region line, the links and the nodes, so the network stays on
+// top. Re-run after a style switch (setStyle drops every layer).
+const ABOVE = ["region-line", "links", "links-selected", "packet-path", "flow-glow", "node-points"];
+
+export function addCoverageLayers(map, data, visible) {
+  if (!map.getSource("coverage")) map.addSource("coverage", { type: "geojson", data });
+  if (!map.getLayer("coverage-fill")) {
+    map.addLayer({ id: "coverage-fill", type: "fill", source: "coverage", filter: ["==", ["get", "kind"], "w"],
+      paint: { "fill-color": "#2563eb", "fill-opacity": 0.45 } }, ABOVE.find((id) => map.getLayer(id)));
+  }
+  map.setLayoutProperty("coverage-fill", "visibility", visible ? "visible" : "none");
+}
+
+// Loads the data the first time the layer is switched on, keeps it, and puts the layer back
+// after a style switch. A failed load leaves the toggle on with nothing drawn and is retried
+// on the next switch-on.
+export function coverageControl(map, url, on) {
+  let fc = null, loading = null;
+  const ctl = { on };
+  const draw = () => {
+    if (!fc || !map.getStyle()) return;
+    try { addCoverageLayers(map, fc, ctl.on); } catch { map.once("idle", draw); }
+  };
+  ctl.set = async (value) => {
+    ctl.on = value;
+    if (value && !fc) {
+      loading ??= fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))));
+      try { fc = toGeoJSON(await loading); } catch (err) { loading = null; console.warn("Coverage not loaded", err); return; }
+    }
+    draw();
+  };
+  map.on("style.load", draw);
+  if (on) ctl.set(true);
+  return ctl;
+}
