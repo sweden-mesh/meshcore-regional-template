@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.30.0 — 2026-11-15
+
+- `params.channels`: `autoreply = true` on a channel adds a small, muted line **Kräver auto-reply
+  firmware** under its text, on the landing page and in `{{</* channels */>}}`, linking the firmware
+  picker's auto-reply update (`params.firmware.picker` + `#f=ar&install=update`). New i18n key
+  `ch_requires_ar`; new partial `channel-autoreply.html` (a region that overrides `home.html` calls
+  it after the note).
+
 ## v0.29.0 — 2026-11-15
 
 - **MeshMapper coverage on the map** (README "MeshMapper coverage"): with

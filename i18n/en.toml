@@ -129,6 +129,8 @@ other = "Region"
 other = "Used for"
 [ch_no_scope]
 other = "none"
+[ch_requires_ar]
+other = "Requires auto-reply firmware"
 [firmware_link]
 other = "Choose your firmware here"
 [nc_label]

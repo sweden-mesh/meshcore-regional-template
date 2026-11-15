@@ -45,6 +45,7 @@ enableRobotsTXT = true
   scope = "se-xxx"
   purpose = "Skriv `test` så svarar repeatrar med auto-svar"
   note = "Testa här, inte i chattkanalerna"
+  autoreply = true
 
 [[menus.main]]
   name = "Guider"

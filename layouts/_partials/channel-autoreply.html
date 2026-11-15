@@ -1,0 +1,6 @@
+{{- /* One channel from params.channels: with `autoreply = true`, a small line saying the replies
+     need auto-reply firmware, linked to the firmware picker's auto-reply update. */ -}}
+{{- if .autoreply -}}
+{{- $picker := site.Params.firmware.picker | default "https://sweden-mesh.github.io/firmware/" -}}
+<br><a class="ch-ar" href="{{ $picker }}#f=ar&amp;install=update" target="_blank" rel="noopener">{{ T "ch_requires_ar" }}</a>
+{{- end -}}

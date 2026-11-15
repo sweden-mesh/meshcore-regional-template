@@ -125,6 +125,8 @@ other = "Region"
 other = "Används till"
 [ch_no_scope]
 other = "ingen"
+[ch_requires_ar]
+other = "Kräver auto-reply firmware"
 [firmware_link]
 other = "Välj din firmware här"
 [nc_label]
