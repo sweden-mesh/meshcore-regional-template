@@ -304,7 +304,10 @@ td, th { vertical-align: top; }
 .wz-review { margin-bottom: 1.25rem; }
 .prose .settings { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1.1rem; background: var(--surface); }
 .channels-table small { display: inline-block; margin-top: .2rem; }
-.ch-ar { font-size: .6em; font-style: italic; color: var(--muted); opacity: .85; }
+.ch-ar { margin: .9rem 0 0; font-size: .75rem; font-style: italic; }
+.ch-ar a { color: var(--fg); text-decoration: none; }
+.ch-ar a:hover, .ch-ar a:focus-visible { text-decoration: underline; }
+.ch-ar-mark { margin-left: .15em; font-weight: 700; color: var(--accent-2); }
 .firmware-link { margin: .75rem 0 0; font-size: .9rem; }
 .namecheck { display: grid; grid-template-columns: minmax(0, 1fr); gap: .35rem; margin: 1rem 0; padding: .9rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); }
 .namecheck label { font-weight: 600; font-size: .95rem; }

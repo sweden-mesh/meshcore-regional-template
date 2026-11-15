@@ -41,8 +41,9 @@
       <p class="eyebrow">{{ printf "%02d" $n }}</p>
       <h2>{{ T "home_channels" }}</h2>
       <dl class="channels">
-        {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose | markdownify }}{{ with .note }}<br><small>{{ . | markdownify }}</small>{{ end }}{{ partial "channel-autoreply.html" . }}</dd>{{ end }}
+        {{ range . }}<dt><code>{{ .name }}</code>{{ if .autoreply }}<span class="ch-ar-mark" aria-hidden="true">*</span>{{ end }}</dt><dd>{{ .purpose | markdownify }}{{ with .note }}<br><small>{{ . | markdownify }}</small>{{ end }}</dd>{{ end }}
       </dl>
+      {{ partial "channel-autoreply.html" . }}
     </section>
     {{ end }}
 

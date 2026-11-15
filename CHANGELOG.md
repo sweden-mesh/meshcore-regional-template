@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.31.0 — 2026-11-15
+
+- The auto-reply notice is now **one line under the channel list** (landing page box and
+  `{{</* channels */>}}`), "* Kräver auto-reply firmware ↗", not underlined, with a `*` after each
+  channel that has `autoreply = true`. `channel-autoreply.html` now takes the channel list: a region
+  whose `home.html` override called it per channel calls it once after `</dl>` with
+  `site.Params.channels`.
+
 ## v0.30.0 — 2026-11-15
 
 - `params.channels`: `autoreply = true` on a channel adds a small, muted line **Kräver auto-reply
