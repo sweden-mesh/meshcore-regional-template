@@ -1,0 +1,34 @@
+{{- /*
+  The region's measured coverage from MeshMapper (coverage API, schema 2), fetched while the
+  site builds. The key comes from the environment variable HUGO_MESHMAPPER_KEY and decides the
+  region; it is sent only as the X-API-Key header and never written anywhere. Filters: the
+  region's radio setting (params.radio, any coding rate) and the last params.meshmapper.days
+  days. params.meshmapper.fixture reads a saved response from the site's assets instead (tests,
+  the example site). No key and no fixture: no request and nothing returned. A failed request
+  (HTTP error, success != true, no grid_squares) gives one warning and nothing; the build goes on.
+  The cache key changes every 6 hours, so local rebuilds reuse one download (the key allows 100
+  calls a day). Accept-Encoding is left to Go, which then decompresses the gzip answer itself.
+  Returns the parsed response, or nil.
+*/ -}}
+{{- $mm := site.Params.meshmapper | default dict -}}
+{{- $data := dict -}}
+{{- with $mm.fixture -}}
+  {{- with resources.Get . -}}{{- $data = .Content | transform.Unmarshal -}}{{- end -}}
+{{- else with getenv "HUGO_MESHMAPPER_KEY" -}}
+  {{- $r := site.Params.radio -}}
+  {{- $url := printf "https://meshmapper.net/coverage.php?f_freq=%v&f_bw=%v&f_sf=%v&f_days=%v" $r.freq $r.bw $r.sf ($mm.days | default 180) -}}
+  {{- $slot := printf "%s-%d" (now.UTC.Format "20060102") (div now.UTC.Hour 6) -}}
+  {{- $opts := dict "key" (printf "meshmapper-%s-%s-%s" (md5 .) (md5 $url) $slot) "headers" (dict "X-API-Key" . "Accept" "application/json") -}}
+  {{- with try (resources.GetRemote $url $opts) -}}
+    {{- with .Err -}}
+      {{- warnidf "meshmapper" "MeshMapper coverage not fetched (%s); the map has no coverage layer" . -}}
+    {{- else with .Value -}}
+      {{- $data = .Content | transform.Unmarshal -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $data (or (ne $data.success true) (not $data.grid_squares)) -}}
+  {{- warnidf "meshmapper" "MeshMapper coverage unusable (success %v, error %q, %d squares); the map has no coverage layer" $data.success ($data.error | default "") (len ($data.grid_squares | default slice)) -}}
+  {{- $data = dict -}}
+{{- end -}}
+{{- return (cond (gt (len $data) 0) $data nil) -}}

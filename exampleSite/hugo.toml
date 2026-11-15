@@ -82,3 +82,9 @@ enableRobotsTXT = true
   [[params.contributors.people]]
     name = "Exempeltestaren"
     what = "fälttest av en solnod"
+
+# MeshMapper coverage on the map: the example site reads a saved excerpt of a real response
+# (32 squares around Jönköping, every coverage type, recent and older than 90 days) instead of
+# the API, so it builds and tests without a key.
+[params.meshmapper]
+  fixture = "meshmapper-fixture.json"

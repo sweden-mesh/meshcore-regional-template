@@ -1,0 +1,720 @@
+{
+ "success": true,
+ "region": "JKG",
+ "region_name": "Jönköpings län, SE",
+ "grid_size": {
+  "lat": 0.0027,
+  "lon": 0.00384
+ },
+ "schema_version": 2,
+ "generated_at": 1794744000,
+ "data_age_seconds": 70560,
+ "total_squares": 32,
+ "point_count": 1221,
+ "coverage_type_counts": {
+  "RX": 2,
+  "DEAD": 2,
+  "BIDIR": 16,
+  "DISC": 4,
+  "TX": 6,
+  "DROP": 2
+ },
+ "type_bits": {
+  "BIDIR": 1,
+  "TX": 2,
+  "RX": 4,
+  "DISC": 8,
+  "DEAD": 16,
+  "DROP": 32
+ },
+ "bbox": {
+  "minLat": 56.8863,
+  "minLon": 13.09824,
+  "maxLat": 58.1553,
+  "maxLon": 15.59424
+ },
+ "radio_configs": {
+  "869.618,62.5,8,8": 86548,
+  "869.618,62.5,8,5": 15859
+ },
+ "filters": {
+  "days": 180,
+  "freq": "869.618",
+  "bw": "62.5",
+  "sf": "8"
+ },
+ "grid_squares": [
+  {
+   "grid_id": "21397_3677",
+   "bounds": {
+    "south": 57.7719,
+    "west": 14.11968,
+    "north": 57.7746,
+    "east": 14.12352
+   },
+   "coverage_type": "RX",
+   "fill_color": "#6f42c1",
+   "border_color": "#59359a",
+   "snr": 1.8,
+   "timestamp": 1794568727,
+   "count": 5,
+   "snr_min": 1.8,
+   "snr_max": 1.8,
+   "status_mask": 36,
+   "first_seen": 1789208615,
+   "noise": 11.6,
+   "effective": 0.4
+  },
+  {
+   "grid_id": "21427_3682",
+   "bounds": {
+    "south": 57.8529,
+    "west": 14.13888,
+    "north": 57.8556,
+    "east": 14.14272
+   },
+   "coverage_type": "RX",
+   "fill_color": "#6f42c1",
+   "border_color": "#59359a",
+   "snr": -7.8,
+   "timestamp": 1785437342,
+   "count": 2,
+   "snr_min": -7.8,
+   "snr_max": -7.8,
+   "status_mask": 36,
+   "first_seen": 1785437342,
+   "noise": 20.5,
+   "effective": 1
+  },
+  {
+   "grid_id": "21416_3674",
+   "bounds": {
+    "south": 57.8232,
+    "west": 14.10816,
+    "north": 57.8259,
+    "east": 14.112
+   },
+   "coverage_type": "DEAD",
+   "fill_color": "#6c757d",
+   "border_color": "#545b62",
+   "snr": -6,
+   "timestamp": 1789137388,
+   "count": 99,
+   "snr_min": -11.5,
+   "snr_max": -2.5,
+   "status_mask": 48,
+   "first_seen": 1782282374,
+   "noise": 1.5,
+   "effective": 0.04
+  },
+  {
+   "grid_id": "21418_3670",
+   "bounds": {
+    "south": 57.8286,
+    "west": 14.0928,
+    "north": 57.8313,
+    "east": 14.09664
+   },
+   "coverage_type": "DEAD",
+   "fill_color": "#6c757d",
+   "border_color": "#545b62",
+   "snr": -7.8,
+   "timestamp": 1786280944,
+   "count": 30,
+   "snr_min": -7.8,
+   "snr_max": -7.8,
+   "status_mask": 48,
+   "first_seen": 1782282259,
+   "noise": 1.7,
+   "effective": 0.03
+  },
+  {
+   "grid_id": "21400_3688",
+   "bounds": {
+    "south": 57.78,
+    "west": 14.16192,
+    "north": 57.7827,
+    "east": 14.16576
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 3.9,
+   "timestamp": 1794412523,
+   "count": 294,
+   "snr_min": -10.3,
+   "snr_max": 12.8,
+   "status_mask": 47,
+   "first_seen": 1781985207,
+   "noise": 5.7,
+   "effective": 1.93
+  },
+  {
+   "grid_id": "21400_3687",
+   "bounds": {
+    "south": 57.78,
+    "west": 14.15808,
+    "north": 57.7827,
+    "east": 14.16192
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 1.1,
+   "timestamp": 1794412432,
+   "count": 188,
+   "snr_min": -11.3,
+   "snr_max": 12.8,
+   "status_mask": 47,
+   "first_seen": 1782753990,
+   "noise": 10.3,
+   "effective": 2.01
+  },
+  {
+   "grid_id": "21399_3688",
+   "bounds": {
+    "south": 57.7773,
+    "west": 14.16192,
+    "north": 57.78,
+    "east": 14.16576
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 5.8,
+   "timestamp": 1794586912,
+   "count": 169,
+   "snr_min": -11.5,
+   "snr_max": 12.8,
+   "status_mask": 47,
+   "first_seen": 1781985161,
+   "noise": 12.9,
+   "effective": 2.28
+  },
+  {
+   "grid_id": "21399_3689",
+   "bounds": {
+    "south": 57.7773,
+    "west": 14.16576,
+    "north": 57.78,
+    "east": 14.1696
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 7.8,
+   "timestamp": 1794586942,
+   "count": 143,
+   "snr_min": -10.5,
+   "snr_max": 14.3,
+   "status_mask": 47,
+   "first_seen": 1781985137,
+   "noise": 14,
+   "effective": 2.27
+  },
+  {
+   "grid_id": "21400_3685",
+   "bounds": {
+    "south": 57.78,
+    "west": 14.1504,
+    "north": 57.7827,
+    "east": 14.15424
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -3.9,
+   "timestamp": 1794556794,
+   "count": 70,
+   "snr_min": -10.5,
+   "snr_max": 3.3,
+   "status_mask": 47,
+   "first_seen": 1783943337,
+   "noise": 4.6,
+   "effective": 0.86
+  },
+  {
+   "grid_id": "21402_3687",
+   "bounds": {
+    "south": 57.7854,
+    "west": 14.15808,
+    "north": 57.7881,
+    "east": 14.16192
+   },
+   "coverage_type": "DISC",
+   "fill_color": "#17a2b8",
+   "border_color": "#117a8b",
+   "snr": 6.6,
+   "timestamp": 1789049492,
+   "count": 5,
+   "snr_min": -0.8,
+   "snr_max": 10.8,
+   "status_mask": 10,
+   "first_seen": 1786436670,
+   "noise": 1,
+   "effective": 2
+  },
+  {
+   "grid_id": "21401_3685",
+   "bounds": {
+    "south": 57.7827,
+    "west": 14.1504,
+    "north": 57.7854,
+    "east": 14.15424
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -3.4,
+   "timestamp": 1793454230,
+   "count": 67,
+   "snr_min": -11.5,
+   "snr_max": 8,
+   "status_mask": 47,
+   "first_seen": 1783943370,
+   "noise": 7.5,
+   "effective": 1.04
+  },
+  {
+   "grid_id": "21399_3685",
+   "bounds": {
+    "south": 57.7773,
+    "west": 14.1504,
+    "north": 57.78,
+    "east": 14.15424
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -2.9,
+   "timestamp": 1791301712,
+   "count": 53,
+   "snr_min": -12.5,
+   "snr_max": 7.3,
+   "status_mask": 47,
+   "first_seen": 1783943316,
+   "noise": 9.3,
+   "effective": 1.23
+  },
+  {
+   "grid_id": "21399_3683",
+   "bounds": {
+    "south": 57.7773,
+    "west": 14.14272,
+    "north": 57.78,
+    "east": 14.14656
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -7.4,
+   "timestamp": 1784386405,
+   "count": 7,
+   "snr_min": -9.8,
+   "snr_max": -3.5,
+   "status_mask": 45,
+   "first_seen": 1784386405,
+   "noise": 3.4,
+   "effective": 1.57
+  },
+  {
+   "grid_id": "21398_3692",
+   "bounds": {
+    "south": 57.7746,
+    "west": 14.17728,
+    "north": 57.7773,
+    "east": 14.18112
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -2.9,
+   "timestamp": 1794662424,
+   "count": 11,
+   "snr_min": -8.8,
+   "snr_max": 5.3,
+   "status_mask": 47,
+   "first_seen": 1789223071,
+   "noise": 8.5,
+   "effective": 0.82
+  },
+  {
+   "grid_id": "21396_3687",
+   "bounds": {
+    "south": 57.7692,
+    "west": 14.15808,
+    "north": 57.7719,
+    "east": 14.16192
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 3.7,
+   "timestamp": 1784387036,
+   "count": 4,
+   "snr_min": 1,
+   "snr_max": 6.8,
+   "status_mask": 11,
+   "first_seen": 1784387036,
+   "noise": 1.3,
+   "effective": 2.25
+  },
+  {
+   "grid_id": "21397_3692",
+   "bounds": {
+    "south": 57.7719,
+    "west": 14.17728,
+    "north": 57.7746,
+    "east": 14.18112
+   },
+   "coverage_type": "DISC",
+   "fill_color": "#17a2b8",
+   "border_color": "#117a8b",
+   "snr": 1,
+   "timestamp": 1794662234,
+   "count": 6,
+   "snr_min": 1,
+   "snr_max": 1,
+   "status_mask": 40,
+   "first_seen": 1789222209,
+   "noise": 5.3,
+   "effective": 0.33
+  },
+  {
+   "grid_id": "21400_3681",
+   "bounds": {
+    "south": 57.78,
+    "west": 14.13504,
+    "north": 57.7827,
+    "east": 14.13888
+   },
+   "coverage_type": "DISC",
+   "fill_color": "#17a2b8",
+   "border_color": "#117a8b",
+   "snr": -7,
+   "timestamp": 1790430556,
+   "count": 2,
+   "snr_min": -7,
+   "snr_max": -7,
+   "status_mask": 40,
+   "first_seen": 1790430521,
+   "noise": 0,
+   "effective": 1
+  },
+  {
+   "grid_id": "21395_3686",
+   "bounds": {
+    "south": 57.7665,
+    "west": 14.15424,
+    "north": 57.7692,
+    "east": 14.15808
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 5.7,
+   "timestamp": 1784983397,
+   "count": 5,
+   "snr_min": -6,
+   "snr_max": 10,
+   "status_mask": 9,
+   "first_seen": 1784983397,
+   "noise": 1.4,
+   "effective": 2.2
+  },
+  {
+   "grid_id": "21400_3680",
+   "bounds": {
+    "south": 57.78,
+    "west": 14.1312,
+    "north": 57.7827,
+    "east": 14.13504
+   },
+   "coverage_type": "TX",
+   "fill_color": "#fd7e14",
+   "border_color": "#d96b0c",
+   "snr": null,
+   "timestamp": 1792847624,
+   "count": 5,
+   "snr_min": null,
+   "snr_max": null,
+   "status_mask": 34,
+   "first_seen": 1792847581,
+   "noise": 33.4,
+   "effective": 0.8
+  },
+  {
+   "grid_id": "21397_3681",
+   "bounds": {
+    "south": 57.7719,
+    "west": 14.13504,
+    "north": 57.7746,
+    "east": 14.13888
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 8.3,
+   "timestamp": 1786280422,
+   "count": 1,
+   "snr_min": 8.3,
+   "snr_max": 8.3,
+   "status_mask": 1,
+   "first_seen": 1786280422,
+   "noise": -1,
+   "effective": 3
+  },
+  {
+   "grid_id": "21397_3695",
+   "bounds": {
+    "south": 57.7719,
+    "west": 14.1888,
+    "north": 57.7746,
+    "east": 14.19264
+   },
+   "coverage_type": "TX",
+   "fill_color": "#fd7e14",
+   "border_color": "#d96b0c",
+   "snr": null,
+   "timestamp": 1789209242,
+   "count": 2,
+   "snr_min": null,
+   "snr_max": null,
+   "status_mask": 34,
+   "first_seen": 1789209242,
+   "noise": 4.5,
+   "effective": 1
+  },
+  {
+   "grid_id": "21402_3679",
+   "bounds": {
+    "south": 57.7854,
+    "west": 14.12736,
+    "north": 57.7881,
+    "east": 14.1312
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -0.1,
+   "timestamp": 1786350716,
+   "count": 7,
+   "snr_min": -6.3,
+   "snr_max": 7.8,
+   "status_mask": 47,
+   "first_seen": 1785170504,
+   "noise": 11,
+   "effective": 2
+  },
+  {
+   "grid_id": "21404_3680",
+   "bounds": {
+    "south": 57.7908,
+    "west": 14.1312,
+    "north": 57.7935,
+    "east": 14.13504
+   },
+   "coverage_type": "DROP",
+   "fill_color": "#bd2130",
+   "border_color": "#8b101b",
+   "snr": null,
+   "timestamp": 1786350652,
+   "count": 1,
+   "snr_min": null,
+   "snr_max": null,
+   "status_mask": 32,
+   "first_seen": 1786350652,
+   "noise": 0,
+   "effective": 0
+  },
+  {
+   "grid_id": "21403_3679",
+   "bounds": {
+    "south": 57.7881,
+    "west": 14.12736,
+    "north": 57.7908,
+    "east": 14.1312
+   },
+   "coverage_type": "DROP",
+   "fill_color": "#bd2130",
+   "border_color": "#8b101b",
+   "snr": null,
+   "timestamp": 1788505212,
+   "count": 3,
+   "snr_min": null,
+   "snr_max": null,
+   "status_mask": 32,
+   "first_seen": 1787607752,
+   "noise": 1,
+   "effective": 0
+  },
+  {
+   "grid_id": "21403_3678",
+   "bounds": {
+    "south": 57.7881,
+    "west": 14.12352,
+    "north": 57.7908,
+    "east": 14.12736
+   },
+   "coverage_type": "DISC",
+   "fill_color": "#17a2b8",
+   "border_color": "#117a8b",
+   "snr": -4,
+   "timestamp": 1785170489,
+   "count": 8,
+   "snr_min": -4,
+   "snr_max": -4,
+   "status_mask": 42,
+   "first_seen": 1785170471,
+   "noise": 13.3,
+   "effective": 0.75
+  },
+  {
+   "grid_id": "21397_3678",
+   "bounds": {
+    "south": 57.7719,
+    "west": 14.12352,
+    "north": 57.7746,
+    "east": 14.12736
+   },
+   "coverage_type": "TX",
+   "fill_color": "#fd7e14",
+   "border_color": "#d96b0c",
+   "snr": null,
+   "timestamp": 1794568721,
+   "count": 1,
+   "snr_min": null,
+   "snr_max": null,
+   "status_mask": 2,
+   "first_seen": 1794568721,
+   "noise": 22,
+   "effective": 2
+  },
+  {
+   "grid_id": "21401_3677",
+   "bounds": {
+    "south": 57.7827,
+    "west": 14.11968,
+    "north": 57.7854,
+    "east": 14.12352
+   },
+   "coverage_type": "TX",
+   "fill_color": "#fd7e14",
+   "border_color": "#d96b0c",
+   "snr": -1.8,
+   "timestamp": 1786280561,
+   "count": 3,
+   "snr_min": -1.8,
+   "snr_max": -1.8,
+   "status_mask": 38,
+   "first_seen": 1786280561,
+   "noise": -0.3,
+   "effective": 1.33
+  },
+  {
+   "grid_id": "21402_3676",
+   "bounds": {
+    "south": 57.7854,
+    "west": 14.11584,
+    "north": 57.7881,
+    "east": 14.11968
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -5.4,
+   "timestamp": 1786350844,
+   "count": 7,
+   "snr_min": -10.5,
+   "snr_max": -2.5,
+   "status_mask": 47,
+   "first_seen": 1786280584,
+   "noise": 0.3,
+   "effective": 1.29
+  },
+  {
+   "grid_id": "21403_3676",
+   "bounds": {
+    "south": 57.7881,
+    "west": 14.11584,
+    "north": 57.7908,
+    "east": 14.11968
+   },
+   "coverage_type": "TX",
+   "fill_color": "#fd7e14",
+   "border_color": "#d96b0c",
+   "snr": null,
+   "timestamp": 1786280609,
+   "count": 9,
+   "snr_min": null,
+   "snr_max": null,
+   "status_mask": 34,
+   "first_seen": 1785170423,
+   "noise": 4.6,
+   "effective": 0.44
+  },
+  {
+   "grid_id": "21391_3690",
+   "bounds": {
+    "south": 57.7557,
+    "west": 14.1696,
+    "north": 57.7584,
+    "east": 14.17344
+   },
+   "coverage_type": "TX",
+   "fill_color": "#fd7e14",
+   "border_color": "#d96b0c",
+   "snr": -5.9,
+   "timestamp": 1784897308,
+   "count": 4,
+   "snr_min": -9,
+   "snr_max": -2.8,
+   "status_mask": 22,
+   "first_seen": 1782230204,
+   "noise": 0.3,
+   "effective": 1.75
+  },
+  {
+   "grid_id": "21403_3675",
+   "bounds": {
+    "south": 57.7881,
+    "west": 14.112,
+    "north": 57.7908,
+    "east": 14.11584
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": 2.8,
+   "timestamp": 1786280631,
+   "count": 4,
+   "snr_min": 2.8,
+   "snr_max": 2.8,
+   "status_mask": 33,
+   "first_seen": 1786280631,
+   "noise": 0.3,
+   "effective": 0.75
+  },
+  {
+   "grid_id": "21404_3675",
+   "bounds": {
+    "south": 57.7908,
+    "west": 14.112,
+    "north": 57.7935,
+    "east": 14.11584
+   },
+   "coverage_type": "BIDIR",
+   "fill_color": "#1e7e34",
+   "border_color": "#14522d",
+   "snr": -7,
+   "timestamp": 1785170404,
+   "count": 6,
+   "snr_min": -8.3,
+   "snr_max": -5.8,
+   "status_mask": 37,
+   "first_seen": 1785170404,
+   "noise": 7.7,
+   "effective": 0.83
+  }
+ ]
+}

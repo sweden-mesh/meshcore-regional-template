@@ -83,6 +83,11 @@
 [params.beacon]
   url = ""                   # Beacon base URL, e.g. https://beacon.example.se; empty = no live data
 
+# MeshMapper coverage, fetched at build time when HUGO_MESHMAPPER_KEY is set (the key decides the region).
+[params.meshmapper]
+  days = 180                 # only pings from the last N days
+  fixture = ""               # a saved coverage response under the site's assets, read instead of the API (tests)
+
 # The contributors list ({{< contributors >}}, backlog B-258): the GitHub contributors of these repos,
 # read at build time, with bots and AI agents filtered (data/contributor_deny.toml + deny). people
 # lists work done outside git (name, what, optional url); exclude leaves out anyone who asks.
