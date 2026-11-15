@@ -24,7 +24,11 @@
         {{ with site.GetPage "/egen-regional-sida" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         {{ with site.GetPage "/integritet" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         <li>{{ T "footer_license" }}</li>
+        <li hidden><button type="button" class="motion-toggle" data-stop="{{ T "motion_stop" }}" data-start="{{ T "motion_start" }}">{{ T "motion_stop" }}</button></li>
       </ul>
+      {{- with resources.Get "js/motion-toggle.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+      <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+      {{- end }}
     </div>
   </div>
 </footer>

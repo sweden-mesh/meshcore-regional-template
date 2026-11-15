@@ -93,6 +93,10 @@ other = "About this site"
 other = "Map data: Beacon API"
 [footer_license]
 other = "Code BSD-2, text CC BY 4.0"
+[motion_stop]
+other = "Stop background motion"
+[motion_start]
+other = "Start background motion"
 [nf_title]
 other = "The packet never arrived"
 [nf_lead]

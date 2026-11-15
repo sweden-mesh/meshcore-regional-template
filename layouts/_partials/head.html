@@ -8,6 +8,11 @@
 {{- if not $console }}
 <script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;document.querySelector('meta[name="color-scheme"]').content=t}}catch(e){}</script>
 {{- end }}
+{{- /* The visitor's "stop background motion" choice (footer button, motion-toggle.js), before paint. */}}
+<script>try{if(localStorage.getItem("motion")==="off")document.documentElement.dataset.motion="off"}catch(e){}</script>
+{{- with site.Params.beacon.url }}
+<link rel="preconnect" href="{{ . }}" crossorigin>
+{{- end }}
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 {{- partial "seo-title.html" . | printf "<title>%s</title>" | safeHTML }}
 <meta name="description" content="{{ .Description | default site.Params.description | default (T "hero_tagline") }}">

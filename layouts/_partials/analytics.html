@@ -8,7 +8,7 @@
 */ -}}
 {{- with site.Params.analytics -}}
 {{- if and .plausible .script (not site.Params.noindex) -}}
-<script async src="{{ .script | relURL }}"></script>
+<script async fetchpriority="low" src="{{ .script | relURL }}"></script>
 <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init({{ with .api }}{endpoint:{{ . | relURL }}}{{ end }})</script>
 {{- end -}}
 {{- end -}}

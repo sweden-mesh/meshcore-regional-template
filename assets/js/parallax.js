@@ -15,7 +15,9 @@ if (typeof document !== "undefined") {
       layer.style.setProperty("--extra", `${extraHeight(root.scrollHeight, innerHeight)}px`);
     };
     const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-    addEventListener("scroll", queue, { passive: true });
+    // Where scroll-driven animations exist the CSS moves the layer; only the height is set here.
+    const native = typeof CSS !== "undefined" && CSS.supports("(animation-timeline: view()) and (animation-range: entry)");
+    if (!native) addEventListener("scroll", queue, { passive: true });
     addEventListener("resize", queue);
     new ResizeObserver(queue).observe(document.body);
     update();

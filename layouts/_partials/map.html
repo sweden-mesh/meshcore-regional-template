@@ -7,11 +7,11 @@
 {{- if or $snap.nodes $snap.borders -}}
   {{- $snapRes = resources.FromString "beacon/snapshot.json" ($snap | jsonify) | minify | fingerprint -}}
 {{- end -}}
-<link rel="stylesheet" href="{{ printf "%smaplibre-gl.css" $ml | relURL }}">
 <section class="map-section" id="karta" data-pagefind-ignore="all">
   <h2>{{ T "map_heading" }}</h2>
   <div id="map" class="map" role="region" aria-label="{{ T "map_heading" }}"
        data-maplibre="{{ printf "%smaplibre-gl.mjs" $ml | relURL }}"
+       data-maplibre-css="{{ printf "%smaplibre-gl.css" $ml | relURL }}"
        data-style-light="{{ $m.style_light }}"
        data-style-dark="{{ $m.style_dark }}"
        data-beacon="{{ site.Params.beacon.url }}"

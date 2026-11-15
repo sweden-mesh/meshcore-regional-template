@@ -190,8 +190,20 @@ function startLive(map, ds, client, iatas, state, draw) {
   let pending = 0;
   const renderRecent = () => {
     if (pending || !list) return;
-    pending = requestAnimationFrame(() => { pending = 0; panel.hidden = false; list.innerHTML = recentListHtml(recent.items); });
+    pending = requestAnimationFrame(() => {
+      pending = 0; panel.hidden = false;
+      // Not under the visitor's focus or pointer: a redraw would drop the button they are on.
+      if (list.contains(document.activeElement) || list.matches(":hover")) return;
+      list.innerHTML = recentListHtml(recent.items);
+    });
   };
+  list?.addEventListener("focusout", (e) => { if (!list.contains(e.relatedTarget)) renderRecent(); });
+  list?.addEventListener("mouseleave", renderRecent);
+  // Movement only on screen, and not for visitors who ask for reduced motion: then the
+  // observer glow (a fade in place) stays, the travelling flows and bubbles do not.
+  const calm = matchMedia("(prefers-reduced-motion: reduce)");
+  let onScreen = true;
+  if ("IntersectionObserver" in window) new IntersectionObserver((es) => { onScreen = es[es.length - 1].isIntersecting; }).observe(el);
   const observerKeys = new Map(); // observerId → publicKey
   const keyFor = async (id) => {
     if (!observerKeys.has(id)) observerKeys.set(id, client.get(`/observers/${encodeURIComponent(id)}`).then((o) => o?.publicKey || null).catch(() => null));
@@ -233,15 +245,16 @@ function startLive(map, ds, client, iatas, state, draw) {
       if (name !== "packetObservation") return;
       const o = data.observation;
       const obsPt = observerPoint(state, o.observerPublicKey);
-      flows.glow(obsPt);
+      const animate = onScreen && !calm.matches;
+      if (onScreen) flows.glow(obsPt);
       const chain = visibleOnly(state, chainFromObservation(o, obsPt));
-      flows.add(chain, { type: data.packet.payloadTypeName });
+      if (animate) flows.add(chain, { type: data.packet.payloadTypeName });
       for (const p of chain) if (p) state.relays.set(p.id, (state.relays.get(p.id) || 0) + 1);
       if (!recount) recount = setTimeout(() => {
         recount = 0;
         map.getSource("nodes")?.setData(nodesToGeoJSON(state.nodes, state.relays));
       }, 10000);
-      if (state.focus) {
+      if (state.focus && animate) {
         // Every node that sent this packet on flashes and sends bubbles to its neighbours.
         const seen = new Set();
         chain.forEach((p, i) => {
@@ -258,7 +271,7 @@ function startLive(map, ds, client, iatas, state, draw) {
     onEvent: handle,
     // Missed events are only in REST: refresh the nodes.
     onGap: async () => {
-      try { state.nodes = publicNodes(withSeeded(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }), state.seeded, state.borders), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
+      try { state.nodes = publicNodes(withSeeded(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }, { priority: "low" }), state.seeded, state.borders), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }
     },
   });
   el.mapDebug = { flows, inject: handle }; // browser tests replay captured events through the same path

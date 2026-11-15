@@ -35,14 +35,15 @@ export function createClient(base, opts = {}) {
   const retries = opts.retries ?? 2;
   const maxWaitS = opts.maxWaitS ?? 30;
 
-  async function get(path, params) {
+  // priority: "low" for background refreshes (Fetch Priority; ignored where unsupported).
+  async function get(path, params, { priority } = {}) {
     const url = buildUrl(base, path, params);
     for (let attempt = 0; ; attempt++) {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), timeoutMs);
       let res;
       try {
-        res = await fetchFn(url, { signal: ctrl.signal, headers: { Accept: "application/json" } });
+        res = await fetchFn(url, { signal: ctrl.signal, headers: { Accept: "application/json" }, ...(priority && { priority }) });
       } catch (err) {
         throw new BeaconError(err.name === "AbortError" ? "timeout" : "network error", { code: "network" });
       } finally {
@@ -63,13 +64,13 @@ export function createClient(base, opts = {}) {
   }
 
   // Walk a paged list. Returns every item, at most maxPages pages.
-  async function getAll(path, params = {}, { maxPages = 20 } = {}) {
+  async function getAll(path, params = {}, { maxPages = 20, priority } = {}) {
     const items = [];
     let cursor, pageCursor, restarted = false;
     for (let page = 0; page < maxPages; page++) {
       let body;
       try {
-        body = await get(path, { ...params, cursor, pageCursor });
+        body = await get(path, { ...params, cursor, pageCursor }, { priority });
       } catch (err) {
         if (err.status === 400 && pageCursor && !restarted) {
           restarted = true; items.length = 0; cursor = pageCursor = undefined; page = -1;

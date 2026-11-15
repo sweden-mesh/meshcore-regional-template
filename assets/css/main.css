@@ -128,7 +128,6 @@ a { color: var(--accent); }
 .code-copy:hover { border-color: var(--accent); color: var(--accent); }
 /* What the copy button says, for screen readers (codecopy.js): beside the button, not inside it. */
 .code-copy-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-@media (prefers-reduced-motion: reduce) { .code-copy { transition: none; } }
 .tabs { display: flex; flex-wrap: wrap; margin: 1rem 0; }
 .tabs > input { position: absolute; opacity: 0; }
 .tabs > label { padding: .4rem .9rem; border-bottom: 2px solid var(--line); cursor: pointer; color: var(--muted); }
@@ -277,6 +276,8 @@ td, th { vertical-align: top; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
 .site-footer a { color: var(--muted); }
 .site-footer a:hover { color: var(--fg); }
+.motion-toggle { min-block-size: 24px; padding: 0; border: 0; background: none; font: inherit; color: var(--muted); text-decoration: underline; cursor: pointer; text-align: start; }
+.motion-toggle:hover { color: var(--fg); }
 .settings { margin: .75rem 0 0; padding-top: .75rem; border-top: 1px solid var(--line); display: grid; gap: .65rem; font-size: .92rem; }
 .settings div { display: grid; grid-template-columns: minmax(min(8rem, 50%), 40%) minmax(0, 1fr); gap: .5rem; }
 .settings dt { color: var(--muted); margin: 0; font-weight: 400; }
@@ -318,20 +319,31 @@ a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font
 /* Background (operator's review): a slow four-colour gradient (the effect of
    codepen P1N2O/pyBNzX at 1/10 speed: 150 s a cycle) with soft blurred blobs
    lighter than it drifting on top (after shrinathprabhu/dyvOWma). Kept pale so
-   text contrast holds; off for prefers-reduced-motion. */
-body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; animation: bg-shift 150s ease infinite; }
+   text contrast holds. Moves only for prefers-reduced-motion: no-preference (below), and the
+   footer button (js/motion-toggle.js, html[data-motion="off"]) pauses it. */
+body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; }
 @keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 /* Parallax (operator 2026-11-13): the blob layer moves up at 20 % of the scroll speed; it is
    made 20 % of the scroll range taller so blobs keep covering the bottom (js/parallax.js sets
-   --sy and --extra). */
+   --extra, and --sy where scroll-driven animations are missing). */
 .bg-blobs { position: fixed; top: 0; left: 0; right: 0; height: calc(100vh + var(--extra, 0px)); z-index: -1; overflow: hidden; pointer-events: none; transform: translate3d(0, calc(var(--sy, 0) * -0.2px), 0); will-change: transform; }
-.bg-blobs span { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: var(--blob); filter: blur(70px); opacity: .9; animation: blob-drift 36s ease-in-out infinite alternate; }
+.bg-blobs span { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: var(--blob); filter: blur(70px); opacity: .9; }
 .bg-blobs span:nth-child(1) { top: -12vmax; left: -8vmax; }
 .bg-blobs span:nth-child(2) { top: 30%; right: -14vmax; width: 36vmax; height: 36vmax; animation-duration: 44s; animation-delay: -12s; }
 .bg-blobs span:nth-child(3) { bottom: -16vmax; left: 20vw; width: 48vmax; height: 48vmax; animation-duration: 52s; animation-delay: -24s; }
 .bg-blobs span:nth-child(4) { top: 55%; left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 40s; animation-delay: -6s; }
 @keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(12vw, 8vh) scale(1.12); } 66% { transform: translate(-6vw, 14vh) scale(.92); } 100% { transform: translate(8vw, -6vh) scale(1.05); } }
-@media (prefers-reduced-motion: reduce) { body, .bg-blobs span { animation: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  body { animation: bg-shift 150s ease infinite; }
+  .bg-blobs span { animation: blob-drift 36s ease-in-out infinite alternate; }
+  /* Scroll-driven parallax: the end offset is the layer's extra height, i.e. 20 % of the scroll. */
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .bg-blobs { transform: none; animation: bg-parallax linear both; animation-timeline: scroll(root); }
+  }
+}
+@keyframes bg-parallax { to { translate: 0 calc(100vh - 100%); } }
+:root[data-motion="off"] body, :root[data-motion="off"] .bg-blobs span { animation-play-state: paused; }
+:root[data-motion="off"] .bg-blobs { animation: none; transform: none; }
 /* Surfaces stay readable over the moving background. */
 /* Solid, not frosted glass (AI-design review 2026-11-13). */
 .card, .pager a, .guide-grid a, .settings-box, .namecheck, .codeblock { background-color: var(--bg); }

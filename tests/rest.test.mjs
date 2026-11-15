@@ -65,3 +65,13 @@ test("204 is null (e.g. an IATA without a border)", async () => {
 test("no URL configured is an error, not a request", () => {
   assert.throws(() => createClient(""), BeaconError);
 });
+
+test("a background walk asks for low priority on every page; a normal one sets none", async () => {
+  const opts = [];
+  const pages = [{ items: [{ id: "a" }], hasMore: true, nextCursor: 1 }, { items: [{ id: "b" }], hasMore: false }];
+  const c = createClient("https://b.example", { sleep: noSleep, fetch: async (url, o) => { opts.push(o); return res(200, pages[(opts.length - 1) % 2]); } });
+  await c.getAll("/nodes", {}, { priority: "low" });
+  assert.deepEqual(opts.map((o) => o.priority), ["low", "low"]);
+  await c.get("/nodes/x");
+  assert.equal("priority" in opts[2], false);
+});

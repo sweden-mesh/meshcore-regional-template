@@ -12,7 +12,12 @@ export function styleUrl(ds, dark = effectiveTheme() === "dark") {
 
 export async function createMap(el) {
   const ds = el.dataset;
-  const maplibregl = await import(/* @vite-ignore */ ds.maplibre);
+  // MapLibre's stylesheet comes with the map, not with the page: it is only needed once the
+  // map starts. Both are awaited, so the controls never show unstyled.
+  const css = ds.maplibreCss && !document.querySelector(`link[href="${ds.maplibreCss}"]`)
+    ? Object.assign(document.createElement("link"), { rel: "stylesheet", href: ds.maplibreCss }) : null;
+  const cssReady = css ? new Promise((done) => { css.onload = css.onerror = done; document.head.append(css); }) : null;
+  const [maplibregl] = await Promise.all([import(/* @vite-ignore */ ds.maplibre), cssReady]);
   el.textContent = "";
   const map = new maplibregl.Map({
     container: el,
