@@ -22,7 +22,7 @@
       <p class="eyebrow">{{ printf "%02d" $n }}</p>
       <h2>{{ T "section_start" }}</h2>
       <ul class="link-list">{{ range first 4 .Pages.ByWeight }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
-      <a class="more" href="{{ .RelPermalink }}">{{ T "all_guides" }} →</a>
+      <a class="more" href="{{ .RelPermalink }}">{{ T "all_guides" }} <span aria-hidden="true">→</span></a>
     </section>
     {{ end }}
 

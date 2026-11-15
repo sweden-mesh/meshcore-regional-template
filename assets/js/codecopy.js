@@ -1,9 +1,12 @@
 // A copy button on every code box (operator 2026-11-14, backlog B-267). Added by script, so a
 // browser without JavaScript or the clipboard API simply has no button. The button copies the
-// code only (not the title bar) and says so for a moment; it is reachable by keyboard and its
-// state is announced to screen readers.
+// code only (not the title bar) and says so for a moment; it is reachable by keyboard, and what
+// it says is announced by a status element beside it (a live region inside a button is not
+// reliably read).
 const boxes = document.querySelectorAll(".codeblock");
 const t = document.documentElement.dataset;
+const label = t.copyLabel || "Kopiera";
+let lastMessage = "";
 if (boxes.length && navigator.clipboard?.writeText) {
   for (const box of boxes) {
     const pre = box.querySelector("pre");
@@ -11,17 +14,26 @@ if (boxes.length && navigator.clipboard?.writeText) {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "code-copy";
-    b.textContent = t.copyLabel || "Kopiera";
+    b.textContent = label;
+    const status = document.createElement("span");
+    status.className = "code-copy-status";
+    status.setAttribute("role", "status");
+    let timer = 0;
     b.addEventListener("click", async () => {
+      let message;
       try {
         await navigator.clipboard.writeText(pre.innerText.replace(/\n$/, ""));
-        b.textContent = t.copiedLabel || "Kopierat";
+        message = t.copiedLabel || "Kopierat";
       } catch {
-        b.textContent = t.copyFailed || "Gick inte att kopiera";
+        message = t.copyFailed || "Gick inte att kopiera";
       }
-      setTimeout(() => { b.textContent = t.copyLabel || "Kopiera"; }, 1800);
+      b.textContent = message;
+      // VoiceOver skips a message identical to the last one; a no-break space makes it differ.
+      status.textContent = message === lastMessage ? message + " " : message;
+      lastMessage = status.textContent;
+      clearTimeout(timer);
+      timer = setTimeout(() => { b.textContent = label; status.textContent = ""; }, 1800);
     });
-    b.setAttribute("aria-live", "polite");
-    box.append(b);
+    box.append(b, status);
   }
 }

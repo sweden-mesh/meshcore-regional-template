@@ -68,6 +68,9 @@ other = "Repeatrar"
 other = "Observatörer"
 [stat_packets]
 other = "Paket/dygn"
+# The name of a scrolling table region: "Tabell: Månad, Jan, Feb".
+[table]
+other = "Tabell"
 [breadcrumb]
 other = "Brödsmulor"
 [pager]

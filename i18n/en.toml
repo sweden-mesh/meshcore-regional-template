@@ -72,6 +72,9 @@ other = "Repeaters"
 other = "Observers"
 [stat_packets]
 other = "Packets/day"
+# The name of a scrolling table region: "Tabell: Månad, Jan, Feb".
+[table]
+other = "Table"
 [breadcrumb]
 other = "Breadcrumbs"
 [pager]

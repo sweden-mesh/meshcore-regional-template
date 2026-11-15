@@ -17,13 +17,15 @@
   {{- with resources.Get "js/theme-toggle.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
   {{- end }}
-  <details class="nav-narrow">
-    <summary aria-label="{{ T "nav_menu" }}"><span aria-hidden="true">☰</span></summary>
-    <nav aria-label="{{ T "nav_main" }}">
+  {{- /* The narrow menu is a native popover: it closes on a tap outside it or on Escape and hands
+         focus back to the button by itself. menu.js loads the polyfill where the API is missing. */}}
+  <nav class="nav-narrow" aria-label="{{ T "nav_main" }}">
+    <button type="button" class="nav-toggle" popovertarget="nav-menu" aria-controls="nav-menu" aria-label="{{ T "nav_menu" }}" data-polyfill="{{ "lib/popover-polyfill/0.7.3/popover.min.js" | relURL }}"><span aria-hidden="true">☰</span></button>
+    <div id="nav-menu" popover>
       {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
       {{ with site.GetPage "/sok" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
-    </nav>
-  </details>
+    </div>
+  </nav>
   {{- with resources.Get "js/menu.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
   {{- end }}

@@ -26,6 +26,7 @@
        data-snapshot-note="{{ T "map_snapshot_note" }}" data-offline-note="{{ T "map_offline_note" }}"
        data-live-label="{{ T "map_live" }}"
        data-links-label="{{ T "map_links" }}" data-focus-label="{{ T "map_focus" }}">
+    <progress class="map-loading" aria-label="{{ T "mt_loading" }}"></progress>
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}

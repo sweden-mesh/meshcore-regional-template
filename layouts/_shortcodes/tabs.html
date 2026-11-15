@@ -4,7 +4,7 @@
 <div class="tabs">
   {{- range $i, $t := .Store.Get "tabs" -}}
     <input type="radio" name="{{ $name }}" id="{{ $name }}-{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
-    <label for="{{ $name }}-{{ $i }}">{{ $t.title }}</label>
+    <label for="{{ $name }}-{{ $i }}" data-text="{{ $t.title }}">{{ $t.title }}</label>
     <div class="tab-panel">{{ $t.body }}</div>
   {{- end -}}
 </div>

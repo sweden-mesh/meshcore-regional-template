@@ -1,0 +1,21 @@
+{{- /* Markdown tables: a wrapper that scrolls a wide table sideways on a phone. It is a named
+       region in the tab order, so a keyboard can scroll it too; the name is "Tabell" and the first
+       column headings. The table inside is the one Hugo would render. */ -}}
+{{- $heads := slice }}{{ with .THead }}{{ range index . 0 }}{{ with .Text | plainify | htmlUnescape | strings.TrimSpace }}{{ $heads = $heads | append . }}{{ end }}{{ end }}{{ end -}}
+<div class="table-wrap" tabindex="0" role="region" aria-label="{{ T "table" }}{{ with $heads }}: {{ delimit (first 3 .) ", " }}{{ end }}">
+<table{{ range $k, $v := .Attributes }} {{ $k }}="{{ $v }}"{{ end }}>
+  {{- with .THead }}
+  <thead>
+    {{- range . }}
+    <tr>{{ range . }}<th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>{{ end }}</tr>
+    {{- end }}
+  </thead>
+  {{- end }}
+  <tbody>
+    {{- range .TBody }}
+    <tr>{{ range . }}<td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>{{ end }}</tr>
+    {{- end }}
+  </tbody>
+</table>
+</div>
+{{- /* chomp trailing newline */ -}}
