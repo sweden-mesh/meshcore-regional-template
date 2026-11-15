@@ -14,6 +14,7 @@ import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
 import { setTexts, t } from "./texts.js";
 import { coverageControl, coverageLegend } from "./coverage.js";
+import { wantedControl, wantedLegend } from "./wanted.js";
 
 const el = document.getElementById("map");
 
@@ -34,10 +35,19 @@ async function start() {
     { key: "dead", label: ds.deadLabel || "Döda zoner", on: cov.dead, showWhen: "cov" }] : [];
   const covLegend = cov ? coverageLegend() : [];
   const covToggle = (key, on) => { if (key === "cov" || key === "dead") cov.set(key, on); };
+  // Places wanted for new repeaters (data-wanted, params.wanted): off by default, with or
+  // without Beacon. No places, no toggle.
+  let places = [];
+  try { places = JSON.parse(ds.wanted || "[]"); } catch { /* none */ }
+  const want = places.length ? wantedControl(map, maplibregl, places, { on: url.want ?? false }) : null;
+  el.wanted = want; // for browser tests
+  const extraToggles = [...covToggles, ...(want ? [{ key: "want", label: ds.wantedLabel || "Önskade platser", on: want.on }] : [])];
+  const extraLegend = [...covLegend, ...(want ? wantedLegend() : [])];
+  const extraToggle = (key, on) => { covToggle(key, on); if (key === "want") want.set(on); };
   if (!ds.beacon) {
-    if (cov) map.addControl(new MapPanel({ toggles: covToggles, legend: covLegend, onToggle: (key, on) => {
-      covToggle(key, on);
-      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov.on, dead: cov.dead }) + location.hash);
+    if (extraToggles.length) map.addControl(new MapPanel({ toggles: extraToggles, legend: extraLegend, onToggle: (key, on) => {
+      extraToggle(key, on);
+      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov?.on, dead: cov?.dead, want: want?.on }) + location.hash);
     } }), "top-left");
     return;
   }
@@ -46,7 +56,7 @@ async function start() {
   const opts = { companions: ds.companions === "true" };
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   const saveUrl = (extra = {}) => {
-    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, dead: cov?.dead, ...extra });
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, dead: cov?.dead, want: want?.on, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
@@ -71,7 +81,7 @@ async function start() {
       { key: "links", label: ds.linksLabel || "Grannlänkar", on: state.showLinks },
       { key: "foreign", label: ds.foreignLabel || "Utanför regionen", on: state.showForeign },
       { key: "focus", label: ds.focusLabel || "Trafikfokus", on: state.focus },
-      ...covToggles,
+      ...extraToggles,
     ],
     legend: [
       { swatch: "pill-active", label: t("lg_active") },
@@ -80,14 +90,14 @@ async function start() {
       { swatch: "link", label: t("lg_link") },
       { swatch: "link-strong", label: t("lg_link_strong") },
       { swatch: "flow", label: t("lg_flow") },
-      ...covLegend,
+      ...extraLegend,
     ],
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); }
       if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
       if (key === "live") { state.live = on; state.onLive?.(on); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); }
-      covToggle(key, on);
+      extraToggle(key, on);
       saveUrl();
     },
   }), "top-left");
@@ -172,7 +182,7 @@ function applyFocus(map, state) {
   }
   if (on && !map.getLayer("focus-dim")) {
     // Under the lowest of our layers, whichever order they were added in.
-    const ours = ["region-fill", "coverage-fill", "links", "node-points"];
+    const ours = ["region-fill", "coverage-fill", "wanted-area", "links", "node-points"];
     const first = map.getStyle().layers.find((l) => ours.includes(l.id))?.id;
     map.addLayer({ id: "focus-dim", type: "background", paint: { "background-color": "rgba(8, 18, 25, 0.55)" } }, first);
   } else if (!on && map.getLayer("focus-dim")) map.removeLayer("focus-dim");

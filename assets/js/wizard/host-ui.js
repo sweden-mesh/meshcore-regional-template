@@ -50,17 +50,25 @@ function init(form) {
   };
 
   for (const el of form.querySelectorAll('input[type="radio"]')) el.addEventListener("change", update);
+  // The wanted places' names pan the picker to the place; the pin stays where the visitor put it.
+  let picker = null;
+  form.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-want-lat]");
+    if (!b || !picker) return;
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    picker.map.easeTo({ center: [Number(b.dataset.wantLon), Number(b.dataset.wantLat)], zoom: Math.max(picker.map.getZoom(), 12), duration: calm ? 0 : 600 });
+  });
   createPicker(q(".map-pick"), {
     onChange: (p) => { st.pos = p; update(); },
     onNodes: (map, nodes, borders) => {
       st.repeaters = nodes.filter((n) => Number.isFinite(n.lat) && Number.isFinite(n.lng));
       st.polygons = borderPolygons(borders);
-      const before = map.getLayer("pick-nodes") ? "pick-nodes" : undefined;
+      const before = ["wanted-area", "pick-nodes"].find((id) => map.getLayer(id));
       map.addSource("hp-cover", { type: "geojson", data: coverageGeoJSON(st.repeaters, km) });
       map.addLayer({ id: "hp-cover", type: "fill", source: "hp-cover",
         paint: { "fill-color": "#2f8a5f", "fill-opacity": 0.18 } }, before);
       update();
     },
-  }).catch(() => {});
+  }).then((p) => { picker = p; }).catch(() => {});
   update();
 }

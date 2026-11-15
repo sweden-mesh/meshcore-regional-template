@@ -3,6 +3,7 @@
   exists: a circle of params.host.edge_km (default 2) around every repeater; outside them all is
   the edge. Nothing is sent or stored; the summary is for the visitor to paste in the chat. */ -}}
 {{- $km := site.Params.host.edge_km | default 2 -}}
+{{- $wanted := (partialCached "wanted.html" . "wanted").list -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/repeater" }}{{ $guide = .RelPermalink }}{{ end -}}
 {{- $solar := "" }}{{ with site.GetPage "/wizard/solcell" }}{{ $solar = .RelPermalink }}{{ end -}}
 {{- $q := dict
@@ -17,6 +18,15 @@
   <fieldset class="wz-step">
     <legend><span class="wz-num">1</span> {{ T "hp_where" }}</legend>
     <p class="muted">{{ T "hp_where_help" (dict "Km" (lang.FormatNumberCustom 0 $km)) }}</p>
+    {{- with $wanted }}
+    <p class="sol-label" id="hp-wanted">{{ T "hp_wanted" }}</p>
+    <ul class="hp-wanted" aria-labelledby="hp-wanted">
+      {{- range . }}
+      <li><button type="button" class="hp-want" data-want-lat="{{ .lat }}" data-want-lon="{{ .lon }}">{{ .name }}</button>{{ with .note }}: {{ . }}{{ end }}</li>
+      {{- end }}
+    </ul>
+    <p class="muted">{{ T "hp_wanted_help" }}</p>
+    {{- end }}
     {{ partial "mappick.html" . }}
     <p class="wz-status" data-out="place" aria-live="polite"></p>
     {{ partial "hp-radios.html" (dict "name" "shadow" "label" (T "hp_shadow") "opts" $q.shadow) }}

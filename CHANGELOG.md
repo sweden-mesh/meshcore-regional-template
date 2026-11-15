@@ -4,6 +4,18 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.33.0 — 2026-11-15
+
+- **Places wanted for new repeaters**: new optional `[[params.wanted]]` with `name`, `lat`, `lon`
+  and an optional `note` (inline Markdown). "Bli nodvärd" lists the places by name (a name moves
+  the wizard's map to the place) and its map shows them; the home map gets a toggle "Önskade
+  platser" (off by default, `want=1` in the URL, a legend entry while on) drawing a circle 1 km
+  across with a small gold star at each place, and a popup with the name and note. Works with and
+  without Beacon. Unset: nothing changes. New partial `wanted.html`, module
+  `assets/js/map/wanted.js`, i18n keys `map_wanted`, `mt_lg_wanted`, `mt_want_popup`,
+  `hp_wanted`, `hp_wanted_help`. A region with its own `map.html`, `mappick.html` or
+  `wizard-host.html` override copies the new `data-wanted` lines to get the feature.
+
 ## v0.32.0 — 2026-11-15
 
 - **Region borders on the wizard maps without a live Beacon**: new optional `params.region.borders`

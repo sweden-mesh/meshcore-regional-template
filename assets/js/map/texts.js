@@ -38,6 +38,8 @@ const SV = {
   cov_RX: "hörde nätet",
   cov_DEAD: "repeater utan vidare",
   cov_DROP: "ingen kontakt",
+  lg_wanted: "önskad plats för en ny repeater (cirka 1 km)",
+  want_popup: "Här vill regionen gärna ha en ny repeater.",
 };
 let texts = { ...SV };
 

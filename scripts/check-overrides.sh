@@ -39,6 +39,14 @@ check index.html 'map-mm">[^<]*<a href=https://meshmapper.net/' "meshmapper: the
 check guider/visa-pa-kartan/index.html 'href=https://meshmapper.net/' "meshmapper: the map guide links the region's MeshMapper map"
 check guider/visa-pa-kartan/index.html 'app_getting_started' "meshmapper: the map guide explains the coverage and how to contribute"
 check index.html 'map-cov-at" hidden>' "meshmapper: the measured-until line waits under the map"
+# Places wanted for new repeaters (B-285): the example's two places on Bli nodvärd, on the home
+# map's toggle and on the host picker; not on the other wizards' pickers.
+check wizard/nodvard/index.html 'class=hp-want data-want-lat=57.7012 data-want-lon=14.2471>Utsikten</button>: högt läge med fri sikt mot <strong>söder' "wanted: Bli nodvärd lists a place with its note"
+check wizard/nodvard/index.html '>Västra höjden</button></li>' "wanted: Bli nodvärd lists a place without a note"
+check wizard/nodvard/index.html 'map-pick[^>]*data-wanted=.*"name":"Västra höjden"' "wanted: the host picker gets the places"
+check index.html 'data-wanted=.*"name":"Utsikten","note":"högt läge med fri sikt mot söder"' "wanted: the home map gets the places, the note as plain text"
+check index.html 'data-wanted-label="Önskade platser"' "wanted: the home map's toggle has its label"
+if grep -q 'data-wanted' "$P/wizard/repeater-snabb/index.html"; then echo "FAIL wanted: the quick wizard's picker draws the places"; fail=1; else echo "ok   wanted: only the host wizard's picker draws the places"; fi
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

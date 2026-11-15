@@ -80,7 +80,7 @@ export function coverageLegend() {
 
 // The layers sit under the region line, the links and the nodes, so the network stays on top.
 // Re-run after a style switch (setStyle drops every layer and image).
-const ABOVE = ["region-line", "links", "links-selected", "packet-path", "flow-glow", "node-points"];
+const ABOVE = ["region-line", "wanted-area", "links", "links-selected", "packet-path", "flow-glow", "node-points"];
 
 export function addCoverageLayers(map, data, { visible = false, dead = false, theme = effectiveTheme(), credit = "" } = {}) {
   const ramp = RAMP[theme] || RAMP.light;
@@ -106,8 +106,8 @@ export function addCoverageLayers(map, data, { visible = false, dead = false, th
 // Loads the data the first time the layer is switched on, keeps it, and puts the layer back
 // after a style switch. A failed load leaves the toggle on with nothing drawn and is retried
 // on the next switch-on. A click on a square opens its popup, unless a node is under the
-// pointer (the node's own popup wins).
-const NODE_LAYERS = ["node-points", "node-pills"];
+// pointer (the node's own popup wins) or a wanted place (wanted.js).
+const NODE_LAYERS = ["node-points", "node-pills", "wanted-star", "wanted-area"];
 
 export function coverageControl(map, maplibregl, url, { on = false, dead = false, link = "", onChange = () => {} } = {}) {
   let fc = null, loading = null;

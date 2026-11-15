@@ -820,3 +820,13 @@ Bara mätningar från de senaste {{ .Days }} dagarna och med regionens radioinst
 other = "Vill du bidra? Appen kopplas till din companion och pingar medan du rör dig. MeshMapper förklarar hur du kommer igång i [Getting started](https://wiki.meshmapper.net/app_getting_started/) (på engelska)."
 [map_coverage_hint]
 other = "Färgen visar hur pålitligt kontakten fungerade per ruta om cirka 300 m, blekt är inte uppmätt på {{ .Old }} dagar och tomt inte uppmätt alls. [Så läser du täckningen]({{ .URL }})."
+[map_wanted]
+other = "Önskade platser"
+[mt_lg_wanted]
+other = "önskad plats för en ny repeater (cirka 1 km)"
+[mt_want_popup]
+other = "Här vill regionen gärna ha en ny repeater."
+[hp_wanted]
+other = "Här vill regionen gärna ha nya repeatrar"
+[hp_wanted_help]
+other = "Stjärnorna på kartan visar platserna, med en ring på cirka 1 km runt. Välj ett namn för att visa platsen på kartan."

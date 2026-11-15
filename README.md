@@ -73,6 +73,7 @@ this repository's `hugo.toml`.
 | `map.maplibre` | the vendored MapLibre version under `static/lib/maplibre-gl/` |
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
 | `meshmapper.url`, `meshmapper.coverage`, `meshmapper.days`, `meshmapper.fixture` | MeshMapper: the region's map link, and its measured coverage on the map. See [MeshMapper coverage](#meshmapper-coverage) |
+| `wanted` | places where the region wants a new repeater (`[[params.wanted]]` with `name`, `lat`, `lon` and an optional `note` in inline Markdown): listed on "Bli nodvärd" and drawn as a circle of about 1 km with a star on the maps. See [Wanted places](#wanted-places) |
 | `links` | plain links in the footer's community column (`[[params.links]]` with `name`, `url`), for sites that are not chats |
 | `beacon.seeds` | other Beacons that have heard the region longer (e.g. `["https://beacon.meshat.se"]`); their nodes inside the region's border fill the map until `beacon.url` has heard them |
 | `community.name`, `community.url` | the local group |
@@ -243,6 +244,29 @@ Nothing is sent or stored; the visitor copies a summary, with the position round
 [params.host]
   edge_km = 2
 ```
+
+## Wanted places
+
+A region can point out places where a new repeater would help most:
+
+```toml
+[[params.wanted]]
+  name = "Omberg"
+  lat = 58.33
+  lon = 14.65
+  note = "högt läge med fri sikt mot **Vättern**"   # optional, inline Markdown
+```
+
+- **Bli nodvärd** (`/wizard/nodvard/`) lists the places by name, with the note after the name.
+  A name is a button that moves the wizard's map to the place; the visitor's own pin stays put.
+  The wizard's map always shows the places.
+- **The home map** gets a toggle, "Önskade platser" (off by default, `?want=1` in the URL), that
+  draws each place as a circle 1 km across (500 m radius, in real metres, so it scales with the
+  zoom) with a small gold star at the centre. A click opens a popup with the name and the note
+  (as plain text). With or without Beacon.
+
+Places with no name or no usable `lat`/`lon` are left out. Without any places there is no list and
+no toggle.
 
 ## Contributors list
 

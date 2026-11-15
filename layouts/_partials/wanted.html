@@ -1,0 +1,13 @@
+{{- /* Places wanted for new repeaters (params.wanted, backlog B-285): [[params.wanted]] with name,
+       lat, lon and an optional note (inline Markdown). Returns the valid places as "list" (note
+       rendered as HTML, for the host wizard's list) and "json" (note as plain text, for the
+       maps' data-wanted). No places: an empty list and an empty json string. */ -}}
+{{- $list := slice -}}{{- $plain := slice -}}
+{{- range site.Params.wanted -}}
+  {{- if and .name (isset . "lat") (isset . "lon") -}}
+    {{- $note := .note | default "" -}}
+    {{- $list = $list | append (dict "name" .name "lat" (float .lat) "lon" (float .lon) "note" ($note | markdownify)) -}}
+    {{- $plain = $plain | append (dict "name" .name "lat" (float .lat) "lon" (float .lon) "note" ($note | markdownify | plainify | htmlUnescape)) -}}
+  {{- end -}}
+{{- end -}}
+{{- return dict "list" $list "json" (cond (gt (len $plain) 0) ($plain | jsonify) "") -}}

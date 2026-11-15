@@ -53,6 +53,19 @@ enableRobotsTXT = true
   note = "Testa här, inte i chattkanalerna"
   autoreply = true
 
+# Places wanted for new repeaters: listed on "Bli nodvärd", and a circle of about 1 km with a
+# star on the maps (the home map's "Önskade platser" toggle, the host wizard's map). The note is
+# optional, inline Markdown.
+[[params.wanted]]
+  name = "Utsikten"
+  lat = 57.7012
+  lon = 14.2471
+  note = "högt läge med fri sikt mot **söder**"
+[[params.wanted]]
+  name = "Västra höjden"
+  lat = 57.8031
+  lon = 13.9822
+
 [[menus.main]]
   name = "Guider"
   pageRef = "/guider"

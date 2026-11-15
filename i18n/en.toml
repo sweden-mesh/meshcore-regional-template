@@ -824,3 +824,13 @@ Only measurements from the last {{ .Days }} days and with the region's radio set
 other = "Want to help? The app connects to your companion and pings as you move. MeshMapper explains how to start in [Getting started](https://wiki.meshmapper.net/app_getting_started/)."
 [map_coverage_hint]
 other = "The colour shows how reliably contact worked per square of about 300 m; faint is not measured for {{ .Old }} days, empty not measured at all. [How to read the coverage]({{ .URL }})."
+[map_wanted]
+other = "Wanted sites"
+[mt_lg_wanted]
+other = "wanted site for a new repeater (about 1 km)"
+[mt_want_popup]
+other = "The region would like a new repeater here."
+[hp_wanted]
+other = "Where the region would like new repeaters"
+[hp_wanted_help]
+other = "The stars on the map mark the places, with a ring of about 1 km around each. Choose a name to show the place on the map."

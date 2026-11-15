@@ -7,6 +7,7 @@ import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, publicNodes } from "../map/nodes.js";
 import { loadBorders, unionBbox, addBorderLayers } from "../map/region.js";
 import { nodesBounds } from "../map/camera.js";
+import { wantedControl } from "../map/wanted.js";
 
 export const round4 = (x) => Math.round(x * 1e4) / 1e4;
 
@@ -37,6 +38,8 @@ export async function createPicker(el, { onChange = () => {}, initial, onNodes }
   map.on("click", (e) => set(e.lngLat));
   marker.on("dragend", () => set(marker.getLngLat()));
   const ds = el.dataset;
+  // The places wanted for new repeaters (host wizard): always on, no popups (a click sets the pin).
+  if (ds.wanted) { try { wantedControl(map, maplibregl, JSON.parse(ds.wanted), { on: true, popups: false }); } catch { /* none */ } }
   // Live Beacon first; without one, the borders and repeaters the build fetched (data-pick).
   const load = ds.beacon
     ? async () => {
