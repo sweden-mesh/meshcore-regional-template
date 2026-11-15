@@ -22,7 +22,7 @@ const SV = {
   lg_cov: "täckning: {q}",
   lg_cov_old: "blekare: senast uppmätt för över 90 dagar sedan",
   lg_cov_dead: "död zon: uppmätt, inget kom fram",
-  cov_heading: "Täckning",
+  cov_heading: "Täckning", cov_credit: "Täckning: MeshMapper",
   cov_dead_heading: "Död zon",
   cov_quality: "Kvalitet",
   cov_q_0: "svag",

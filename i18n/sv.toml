@@ -796,3 +796,5 @@ other = "Täckning, uppmätt"
 other = "Var nätet faktiskt når mäts av folk som kör eller går runt med appen MeshMapper. Mätningarna för regionen finns på [regionens karta hos MeshMapper]({{ .URL }})."
 [map_meshmapper_note]
 other = "Uppmätt täckning: [regionens karta hos MeshMapper]({{ .URL }})."
+[mt_cov_credit]
+other = "Täckning: MeshMapper"

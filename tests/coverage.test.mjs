@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { band, toGeoJSON, hatchImage, RAMP, coveragePopupHtml, coverageLegend } from "../assets/js/map/coverage.js";
+import { band, toGeoJSON, hatchImage, RAMP, coveragePopupHtml, coverageLegend, creditHtml } from "../assets/js/map/coverage.js";
 
 // The example site's fixture: a real MeshMapper answer (32 squares). The compact rows are built
 // here the way the Hugo partial builds them.
@@ -79,4 +79,10 @@ test("legend: four bands and the fade with the layer, dead zones only with their
   assert.deepEqual(l.map((x) => x.swatch), ["cov-0", "cov-1", "cov-2", "cov-3", "cov-old", "cov-dead"]);
   assert.equal(l[3].label, "täckning: stabil");
   assert.deepEqual(l.at(-1).when, ["cov", "dead"]);
+});
+
+test("the credit links the region's MeshMapper map, or is plain text without one", () => {
+  assert.equal(creditHtml("https://jkg.meshmapper.net/"), '<a href="https://jkg.meshmapper.net/" target="_blank" rel="noopener">Täckning: MeshMapper</a>');
+  assert.equal(creditHtml(""), "Täckning: MeshMapper");
+  assert.ok(!creditHtml('x" onmouseover="y').includes('" onmouseover'));
 });

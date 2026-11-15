@@ -57,6 +57,12 @@ export function hatchImage(rgb, ratio = 1) {
   return { width: n, height: n, data };
 }
 
+// "Täckning: MeshMapper", linking the region's MeshMapper map when there is one.
+export function creditHtml(url) {
+  const text = escapeHtml(t("cov_credit"));
+  return url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${text}</a>` : text;
+}
+
 // The square's popup: quality band (or dead zone), best type, pings, last measured date.
 export function coveragePopupHtml(p) {
   const dead = p.kind === "d";
@@ -76,11 +82,13 @@ export function coverageLegend() {
 // Re-run after a style switch (setStyle drops every layer and image).
 const ABOVE = ["region-line", "links", "links-selected", "packet-path", "flow-glow", "node-points"];
 
-export function addCoverageLayers(map, data, { visible = false, dead = false, theme = effectiveTheme() } = {}) {
+export function addCoverageLayers(map, data, { visible = false, dead = false, theme = effectiveTheme(), credit = "" } = {}) {
   const ramp = RAMP[theme] || RAMP.light;
   const ratio = Math.max(1, Math.round(globalThis.devicePixelRatio || 1));
   if (!map.hasImage("coverage-hatch")) map.addImage("coverage-hatch", hatchImage(HATCH[theme] || HATCH.light, ratio), { pixelRatio: ratio });
-  if (!map.getSource("coverage")) map.addSource("coverage", { type: "geojson", data });
+  // The credit rides on the source: MapLibre lists a source's attribution only while a visible
+  // layer uses it, so it shows while the layer is on.
+  if (!map.getSource("coverage")) map.addSource("coverage", { type: "geojson", data, attribution: credit });
   const before = ABOVE.find((id) => map.getLayer(id));
   if (!map.getLayer("coverage-fill")) {
     map.addLayer({ id: "coverage-fill", type: "fill", source: "coverage", filter: ["==", ["get", "kind"], "w"],
@@ -101,15 +109,16 @@ export function addCoverageLayers(map, data, { visible = false, dead = false, th
 // pointer (the node's own popup wins).
 const NODE_LAYERS = ["node-points", "node-pills"];
 
-export function coverageControl(map, maplibregl, url, { on = false, dead = false } = {}) {
+export function coverageControl(map, maplibregl, url, { on = false, dead = false, link = "", onChange = () => {} } = {}) {
   let fc = null, loading = null;
   const ctl = { on, dead };
   const draw = () => {
     if (!fc || !map.getStyle()) return;
-    try { addCoverageLayers(map, fc, { visible: ctl.on, dead: ctl.dead }); } catch { map.once("idle", draw); }
+    try { addCoverageLayers(map, fc, { visible: ctl.on, dead: ctl.dead, credit: creditHtml(link) }); } catch { map.once("idle", draw); }
   };
   ctl.set = async (key, value) => {
     ctl[key === "dead" ? "dead" : "on"] = value;
+    onChange(ctl);
     if (ctl.on && !fc) {
       loading ??= fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))));
       try { fc = toGeoJSON(await loading); } catch (err) { loading = null; console.warn("Coverage not loaded", err); return; }

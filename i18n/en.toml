@@ -800,3 +800,5 @@ other = "Coverage, measured"
 other = "Where the mesh really reaches is measured by people driving or walking around with the MeshMapper app. The region's measurements are on [the region's map at MeshMapper]({{ .URL }})."
 [map_meshmapper_note]
 other = "Measured coverage: [the region's map at MeshMapper]({{ .URL }})."
+[mt_cov_credit]
+other = "Coverage: MeshMapper"

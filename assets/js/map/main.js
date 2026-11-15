@@ -25,7 +25,10 @@ async function start() {
   const url = parseState(location.search);
   // MeshMapper coverage (data-coverage): off by default, loaded on first switch-on. Works
   // without Beacon too, with a panel of its own.
-  const cov = ds.coverage ? coverageControl(map, maplibregl, ds.coverage, { on: url.cov ?? false, dead: url.dead ?? false }) : null;
+  // The line "measured up to and including …" under the map shows while the layer is on.
+  const covAt = el.parentElement.querySelector(".map-cov-at");
+  const cov = ds.coverage ? coverageControl(map, maplibregl, ds.coverage, { on: url.cov ?? false, dead: url.dead ?? false,
+    link: ds.meshmapperUrl, onChange: (c) => { if (covAt) covAt.hidden = !c.on; } }) : null;
   el.coverage = cov; // for browser tests
   const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on },
     { key: "dead", label: ds.deadLabel || "Döda zoner", on: cov.dead, showWhen: "cov" }] : [];
