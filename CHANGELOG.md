@@ -4,7 +4,7 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
-## Unreleased
+## v0.29.0 — 2026-11-15
 
 - **MeshMapper coverage on the map** (README "MeshMapper coverage"): with
   `[params.meshmapper] coverage = true` and the region's MeshMapper key in `HUGO_MESHMAPPER_KEY`,
@@ -24,6 +24,7 @@ params with safe defaults. **Patch** = fixes and text.
   `map_meshmapper_note`, `mm_title`, `mm_text`, `mm_link`, `mm_layer`, `mm_contribute`,
   `mt_cov_*`, `mt_lg_cov`, `mt_lg_cov_old`, `mt_lg_cov_dead`. A region that overrides
   `i18n/*.toml` gets the template's texts for them until it adds its own.
+- Map pills wrap before the zoom buttons; the coverage ramp is lighter on the dark map.
 
 ## v0.28.0 — 2026-11-15
 
