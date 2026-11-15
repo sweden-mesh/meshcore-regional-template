@@ -17,19 +17,20 @@
     <p class="wz-status" data-out="where" aria-live="polite"></p>
     <div class="sol-note" data-out="note"></div>
     <label for="sol-tree">{{ T "sol_tree" }} <output data-out="tree"></output></label>
-    <input type="range" id="sol-tree" min="0" max="5" step="1" value="3">
-    <p class="muted">{{ T "sol_tree_help" }}</p>
-    <p class="sol-label">{{ T "sol_fw" }}</p>
+    <input type="range" id="sol-tree" min="0" max="5" step="1" value="3" aria-describedby="sol-tree-help">
+    <p class="muted" id="sol-tree-help">{{ T "sol_tree_help" }}</p>
+    <fieldset class="wz-q"><legend class="sol-label">{{ T "sol_fw" }}</legend>
     <label class="wz-check"><input type="radio" name="sol-fw" value="esm" checked> <span>{{ T "sol_fw_esm" | markdownify }}</span></label>
     <label class="wz-check"><input type="radio" name="sol-fw" value="official"> <span>{{ T "sol_fw_official" | markdownify }}</span></label>
+    </fieldset>
     <label class="wz-check"><input type="checkbox" id="sol-exposed"> <span>{{ T "sol_exposed" | markdownify }}</span></label>
     <label class="wz-check"><input type="checkbox" id="sol-brush"> <span>{{ T "sol_brush" | markdownify }}</span></label>
-    <div class="sol-tilt" data-tilt hidden>
-      <p class="sol-label">{{ T "sol_tilt" }}</p>
+    <fieldset class="sol-tilt wz-q" data-tilt hidden>
+      <legend class="sol-label">{{ T "sol_tilt" }}</legend>
       <label class="wz-check"><input type="radio" name="sol-tilt" value="vertical" checked> <span>{{ T "sol_tilt_v" }}</span></label>
       <label class="wz-check"><input type="radio" name="sol-tilt" value="tilt60"> <span>{{ T "sol_tilt_60" }}</span></label>
       <label class="wz-check"><input type="radio" name="sol-tilt" value="tilt40"> <span>{{ T "sol_tilt_40" }}</span></label>
-    </div>
+    </fieldset>
     <p class="muted" data-tilt-off>{{ T "sol_tilt_off" }}</p>
   </fieldset>
 
@@ -38,21 +39,21 @@
     <div class="sol-slider">
       <label for="sol-panel">{{ T "sol_panel" }} <output data-out="panel"></output> <span class="sol-lock" data-lock="panel" hidden>{{ T "sol_held" }}</span></label>
       <input type="range" id="sol-panel" min="0" max="13" step="1" value="6">
-      <p class="sol-warn" data-warn="panel" role="status" hidden></p>
+      <p class="sol-warn" data-warn="panel" role="status"></p>
       <p class="muted">{{ T "sol_panel_note" }}</p>
     </div>
     <div class="sol-slider">
       <label for="sol-cells">{{ T "sol_cells" }} <output data-out="cells"></output> <span class="sol-lock" data-lock="cells" hidden>{{ T "sol_held" }}</span></label>
       <input type="range" id="sol-cells" min="2" max="10" step="1" value="3">
-      <p class="sol-warn" data-warn="cells" role="status" hidden></p>
+      <p class="sol-warn" data-warn="cells" role="status"></p>
     </div>
     <div class="sol-slider">
       <label for="sol-margin">{{ T "sol_margin" }} <output data-out="margin"></output></label>
       <input type="range" id="sol-margin" min="0" max="100" step="5" value="50">
     </div>
     <label for="sol-cap">{{ T "sol_cap" }}</label>
-    <input type="text" id="sol-cap" inputmode="numeric" value="3000" maxlength="5" class="sol-cap">
-    <p class="muted">{{ T "sol_cap_help" | markdownify }}</p>
+    <input type="text" id="sol-cap" inputmode="numeric" value="3000" maxlength="5" class="sol-cap" aria-describedby="sol-cap-help">
+    <p class="muted" id="sol-cap-help">{{ T "sol_cap_help" | markdownify }}</p>
     <p class="sol-result" data-out="result" aria-live="polite"></p>
   </fieldset>
 

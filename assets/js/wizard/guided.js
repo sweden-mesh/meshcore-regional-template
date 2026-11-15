@@ -23,6 +23,8 @@ function init(form) {
   const state = { pos: null, publicKey: null, link: null, device: null, step: 0 };
   const bytes = (s) => new TextEncoder().encode(s).length;
   q("[data-prefix]").textContent = namePrefix(ds.pattern);
+  // Nothing is submitted; Enter in a field must not reload the page.
+  form.addEventListener("submit", (e) => e.preventDefault());
 
   // Step navigation (the page shows all steps without JavaScript).
   const progress = q(".wz-progress");
@@ -37,13 +39,15 @@ function init(form) {
   const show = (i) => {
     state.step = Math.max(0, Math.min(steps.length - 1, i));
     steps.forEach((s, k) => { s.hidden = k !== state.step; });
-    [...progress.children].forEach((li, k) => li.toggleAttribute("aria-current", k === state.step));
+    [...progress.children].forEach((li, k) => { if (k === state.step) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current"); });
     q("[data-prev]").disabled = state.step === 0;
     q("[data-next]").hidden = state.step === steps.length - 1;
     if (steps[state.step].dataset.step === "place") picker?.map.resize();
   };
-  q("[data-prev]").addEventListener("click", () => show(state.step - 1));
-  q("[data-next]").addEventListener("click", () => show(state.step + 1));
+  // Moving between steps takes focus to the new step, so its name is read out.
+  const go = (i) => { show(i); const s = steps[state.step]; s.tabIndex = -1; s.focus(); };
+  q("[data-prev]").addEventListener("click", () => go(state.step - 1));
+  q("[data-next]").addEventListener("click", () => go(state.step + 1));
 
   const nb = initNeighbours(q(".wz-neighbours"), () => update());
   const mqtt = initMqtt(q(".wz-mqtt"), () => update());
@@ -65,7 +69,7 @@ function init(form) {
     q('[data-out="name"]').textContent = msg;
     const { commands, errors } = repeaterCommands(s);
     q("[data-cmds]").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => t.fields?.[e.field] || e.field))].join(", ")}` : commands.join("\n");
-    q("[data-send]").disabled = !state.link || errors.length > 0;
+    q("[data-send]").disabled = !state.link;
     renderDiff(s);
     return { commands, errors };
   };
@@ -126,7 +130,15 @@ function init(form) {
 
   q("[data-send]").addEventListener("click", async () => {
     const { commands, errors } = update();
-    if (errors.length || !state.link) return;
+    if (!state.link) return;
+    if (errors.length) {
+      // Say what to fix and go to the first field that has it; nothing is sent.
+      q('[data-out="device"]').textContent = q("[data-cmds]").textContent;
+      const el = { name: q("#wzg-place"), password: q("#wzg-pass"), guest: q("#wzg-guest"), tx: q("#wzg-tx"),
+        wifi: q("[data-obs-ssid]"), wifiPwd: q("[data-obs-pwd]"), iata: q("[data-obs-iata]") }[errors[0].field];
+      if (el) { show(steps.indexOf(el.closest(".wz-step"))); el.focus(); }
+      return;
+    }
     const log = q("[data-log]");
     log.textContent = "";
     q("[data-send]").disabled = true;

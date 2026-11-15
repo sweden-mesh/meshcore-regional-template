@@ -286,7 +286,7 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .map-pick { height: 22rem; }
 .wizard { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
 .wz-step { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem 1.25rem; background: color-mix(in srgb, var(--bg) 85%, transparent); min-width: 0; }
-.wz-step legend { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; padding: 0 .4rem; }
+.wz-step > legend { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; padding: 0 .4rem; }
 .wz-num { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); color: var(--bg); font-size: .9rem; margin-right: .3rem; }
 .wizard label { display: block; font-weight: 600; margin: .5rem 0 .25rem; }
 .wizard input[type="text"] { width: 100%; max-width: 26rem; min-height: 44px; padding: .5rem .7rem; border: 1px solid var(--field-border); border-radius: 8px; font: 500 1rem var(--font-body); background: var(--bg); color: var(--fg); }
@@ -374,6 +374,16 @@ input[type="text"], input[type="search"], input:not([type]), textarea { cursor: 
 .sol-lock { font-weight: 400; font-size: .85rem; color: var(--muted); }
 .sol-warn { display: flex; gap: .4rem; align-items: flex-start; color: var(--danger); font-weight: 600; margin: .25rem 0 0; }
 .sol-warn svg { flex: none; margin-top: .15em; }
+.sol-warn:empty { margin: 0; }
+/* A question with radio buttons (hp-radios.html, the solar page): a bare fieldset whose legend
+   looks like the paragraph it replaced. The fieldset carries the paragraph's outer margins, which
+   collapse with its neighbours as the paragraph's did; the legend's own do not, so they are zero. */
+.wz-q { border: 0; padding: 0; margin: 1rem 0 .25rem; min-width: 0; }
+.wizard .wz-q > legend { padding: 0; margin: 0; }
+.wz-q > label:last-child { margin-bottom: 0; }
+/* The host page's question was a plain paragraph: 1em above and below, in the text's own size. */
+.host-wizard .wz-q { margin-top: 1em; }
+.host-wizard .wz-q > legend { margin-bottom: calc(1em - .5rem); }
 .sol-cap { max-width: 8rem !important; }
 .sol-result { font-weight: 600; margin-top: 1rem; }
 .sol-note:empty { display: none; }

@@ -14,9 +14,9 @@
     <legend><span class="wz-num">2</span> {{ T "wz_name" }}</legend>
     {{ with site.Params.naming.pattern }}<p class="muted">{{ T "wz_name_rule" }} <code>{{ . }}</code></p>{{ end }}
     <label for="wz-place">{{ T "wz_place_name" }}</label>
-    <div class="wz-name-row"><span class="wz-prefix" id="wz-prefix"></span><input id="wz-place" type="text" autocomplete="off" spellcheck="false" placeholder="{{ T "wz_place_ph" }}"></div>
+    <div class="wz-name-row"><span class="wz-prefix" id="wz-prefix"></span><input id="wz-place" type="text" autocomplete="off" spellcheck="false" autocorrect="off" placeholder="{{ T "wz_place_ph" }}" aria-describedby="wz-name"></div>
     <label class="wz-check"><input type="checkbox" id="wz-key"> {{ T "wz_key_suffix" }}</label>
-    <p class="wz-status" id="wz-name" aria-live="polite"></p>
+    <p class="wz-status" id="wz-name"></p>
   </fieldset>
 
   <fieldset class="wz-step">
@@ -29,8 +29,8 @@
   <fieldset class="wz-step">
     <legend><span class="wz-num">4</span> {{ T "wz_password" }}</legend>
     <label for="wz-pass">{{ T "wz_password_label" }}</label>
-    <input id="wz-pass" type="text" autocomplete="off" spellcheck="false" maxlength="15">
-    <p class="muted">{{ T "wz_password_help" }}</p>
+    <input id="wz-pass" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" maxlength="15" aria-describedby="wz-pass-help">
+    <p class="muted" id="wz-pass-help">{{ T "wz_password_help" }}</p>
   </fieldset>
 
   <fieldset class="wz-step">
@@ -41,14 +41,14 @@
   <fieldset class="wz-step">
     <legend><span class="wz-num">6</span> {{ T "wz_apply" }}</legend>
     <h3 class="wz-review-head">{{ T "wz_review" }}</h3>
-    <dl class="settings wz-review" id="wz-review" aria-live="polite"></dl>
+    <dl class="settings wz-review" id="wz-review"></dl>
     <p class="muted" id="wz-serial-help">{{ T "wz_apply_help" }}</p>
     <p class="wz-actions">
       <button type="button" class="button" id="wz-connect">{{ T "wz_connect" }}</button>
       <button type="button" class="button" id="wz-send" disabled>{{ T "wz_send" }}</button>
     </p>
     <p class="wz-status" id="wz-device" aria-live="polite"></p>
-    <ol class="wz-log" id="wz-log" aria-live="polite"></ol>
+    <ol class="wz-log" id="wz-log"></ol>
     <details class="wz-commands">
       <summary>{{ T "wz_commands" }}</summary>
       <pre id="wz-cmds"></pre>

@@ -10,9 +10,9 @@
     <p>{{ T "wzg_name_why" }}</p>
     {{ with site.Params.naming.pattern }}<p class="muted">{{ T "wz_name_rule" }} <code>{{ . }}</code>{{ with site.Params.naming.explain }} {{ partial "scopes.html" (. | markdownify) }}{{ end }}</p>{{ end }}
     <label for="wzg-place">{{ T "wz_place_name" }}</label>
-    <div class="wz-name-row"><span class="wz-prefix" data-prefix></span><input id="wzg-place" type="text" autocomplete="off" spellcheck="false" placeholder="{{ T "wz_place_ph" }}"></div>
+    <div class="wz-name-row"><span class="wz-prefix" data-prefix></span><input id="wzg-place" type="text" autocomplete="off" spellcheck="false" autocorrect="off" placeholder="{{ T "wz_place_ph" }}" aria-describedby="wzg-name-out"></div>
     <label class="wz-check"><input type="checkbox" id="wzg-key"> {{ T "wz_key_suffix" }}</label>
-    <p class="wz-status" data-out="name" aria-live="polite"></p>
+    <p class="wz-status" data-out="name" id="wzg-name-out"></p>
   </fieldset>
 
   <fieldset class="wz-step" data-step="radio">
@@ -20,8 +20,8 @@
     <p>{{ T "wzg_radio_why" }}</p>
     {{ partial "settings.html" . }}
     <label for="wzg-tx">{{ T "wzg_tx" }}</label>
-    <input id="wzg-tx" type="text" inputmode="numeric" autocomplete="off" placeholder="22">
-    <p class="muted">{{ T "wzg_tx_why" }}</p>
+    <input id="wzg-tx" type="text" inputmode="numeric" autocomplete="off" placeholder="22" aria-describedby="wzg-tx-help">
+    <p class="muted" id="wzg-tx-help">{{ T "wzg_tx_why" }}</p>
   </fieldset>
 
   <fieldset class="wz-step" data-step="place">
@@ -56,10 +56,10 @@
     <legend><span class="wz-num">7</span> {{ T "wz_password" }}</legend>
     <p>{{ T "wzg_pass_why" }}</p>
     <label for="wzg-pass">{{ T "wz_password_label" }}</label>
-    <input id="wzg-pass" type="text" autocomplete="off" spellcheck="false" maxlength="15">
+    <input id="wzg-pass" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" maxlength="15">
     <label for="wzg-guest">{{ T "wzg_guest_label" }}</label>
-    <input id="wzg-guest" type="text" autocomplete="off" spellcheck="false" maxlength="15">
-    <p class="muted">{{ T "wzg_guest_why" }}</p>
+    <input id="wzg-guest" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" maxlength="15" aria-describedby="wzg-guest-help">
+    <p class="muted" id="wzg-guest-help">{{ T "wzg_guest_why" }}</p>
   </fieldset>
 
   <fieldset class="wz-step" data-step="apply">
@@ -71,7 +71,7 @@
     </p>
     <p class="wz-status" data-out="device" aria-live="polite"></p>
     <table class="wz-diff" data-diff hidden><thead><tr><th></th><th>{{ T "wzg_now" }}</th><th>{{ T "wzg_new" }}</th></tr></thead><tbody></tbody></table>
-    <ol class="wz-log" data-log aria-live="polite"></ol>
+    <ol class="wz-log" data-log></ol>
     <details class="wz-commands"><summary>{{ T "wz_commands" }}</summary><pre data-cmds></pre>
       <button type="button" class="button button-secondary" data-copy>{{ T "wz_copy" }}</button></details>
   </fieldset>

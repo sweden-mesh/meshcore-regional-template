@@ -9,6 +9,8 @@ async function init(form) {
   const notes = JSON.parse(form.dataset.notes || "{}");
   const q = (sel) => form.querySelector(sel);
   const fmt = (n) => Math.round(n).toLocaleString("sv-SE");
+  // Enter in the one text field would submit the form and reload the page.
+  form.addEventListener("submit", (e) => e.preventDefault());
   const all = await fetch(form.dataset.calc).then((r) => r.json());
 
   const st = { code: all[form.dataset.own] ? form.dataset.own : "JKG", lock: "panel" };
@@ -28,8 +30,9 @@ async function init(form) {
   const warn = (on, text) => {
     for (const k of ["panel", "cells"]) {
       const el = q(`[data-warn="${k}"]`);
-      el.hidden = k !== on;
-      if (k === on) el.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3 2 21h20L12 3z" fill="currentColor"/><path d="M12 10v5M12 17.5v.5" stroke="var(--bg)" stroke-width="2" stroke-linecap="round"/></svg> ${text}`;
+      // Kept in the page, empty when quiet: a live region that is shown is not announced reliably.
+      if (k !== on) el.textContent = "";
+      else el.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3 2 21h20L12 3z" fill="currentColor"/><path d="M12 10v5M12 17.5v.5" stroke="var(--bg)" stroke-width="2" stroke-linecap="round"/></svg> ${text}`;
     }
   };
 
@@ -57,6 +60,10 @@ async function init(form) {
     q('[data-out="panel"]').textContent = `${String(W).replace(".", ",")} ${t.w}`;
     q('[data-out="cells"]').textContent = `${r.cells} ${t.cellsUnit} (${fmt(r.cells * s.cap)} mAh)`;
     q('[data-out="margin"]').textContent = `${margin.value} %`;
+    tree.setAttribute("aria-valuetext", t.trees[Number(tree.value)]);
+    panel.setAttribute("aria-valuetext", `${String(W).replace(".", ",")} ${t.w}`);
+    cells.setAttribute("aria-valuetext", `${r.cells} ${t.cellsUnit} (${fmt(r.cells * s.cap)} mAh)`);
+    margin.setAttribute("aria-valuetext", `${margin.value} %`);
     for (const k of ["panel", "cells"]) q(`[data-lock="${k}"]`).hidden = st.lock !== k;
     q("[data-bigpanel]").hidden = W < 20;
     if (!r.warn) warn(null);
@@ -66,13 +73,17 @@ async function init(form) {
     else if (r.warn.kind === "nopanel") warn("panel", t.nopanel);
     else warn("cells", t.cellsNeed.replace("{N}", r.warn.value));
     const exp = expectedAt(d, s, r.panelIdx), need = cellsFor(d, s, r.panelIdx);
-    q('[data-out="result"]').textContent = need == null || exp == null ? "" : t.result
+    const text = need == null || exp == null ? "" : t.result
       .replace("{W}", String(W).replace(".", ",")).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
       .replace("{EXP}", fmt(exp)).replace("{M}", margin.value)
       + ` ${t.snow.replace("{D}", s.exposed ? d.snow_allowance.days.exposed : d.snow_allowance.days.sheltered)}`
       + (Math.ceil(needAt(d, s, r.panelIdx) / s.cap) < MIN_CELLS ? ` ${t.min}` : "")
       + (d.lat >= 63 ? ` ${t.buried}` : "");
+    // The result is a live region: written once the slider rests, not on every step.
+    clearTimeout(resultTimer);
+    resultTimer = setTimeout(() => { q('[data-out="result"]').textContent = text; }, 400);
   };
+  let resultTimer;
 
   panel.addEventListener("input", () => { st.lock = "panel"; update(); });
   cells.addEventListener("input", () => { st.lock = "cells"; update(); });

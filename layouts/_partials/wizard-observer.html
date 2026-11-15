@@ -23,13 +23,13 @@
   <label class="wz-check"><input type="checkbox" data-obs-on> {{ T "wz_obs_on" }}</label>
   <div class="wz-obs-fields" data-obs-fields hidden>
     <label for="{{ $id }}-ssid">{{ T "wz_obs_ssid" }}</label>
-    <input id="{{ $id }}-ssid" data-obs-ssid type="text" autocomplete="off" spellcheck="false" maxlength="31">
+    <input id="{{ $id }}-ssid" data-obs-ssid type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" maxlength="31">
     <label for="{{ $id }}-wpwd">{{ T "wz_obs_pwd" }}</label>
-    <input id="{{ $id }}-wpwd" data-obs-pwd type="text" autocomplete="off" spellcheck="false" maxlength="63">
-    <p class="muted">{{ T "wz_obs_pwd_help" }}</p>
+    <input id="{{ $id }}-wpwd" data-obs-pwd type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" maxlength="63" aria-describedby="{{ $id }}-wpwd-help">
+    <p class="muted" id="{{ $id }}-wpwd-help">{{ T "wz_obs_pwd_help" }}</p>
     <label for="{{ $id }}-iata">{{ T "wz_obs_iata" }}</label>
-    <input id="{{ $id }}-iata" data-obs-iata type="text" autocomplete="off" spellcheck="false" maxlength="7" value="{{ $ownCode }}">
-    <p class="wz-status" data-obs-iata-why aria-live="polite">{{ T "wz_obs_iata_none" }}</p>
+    <input id="{{ $id }}-iata" data-obs-iata type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" autocorrect="off" maxlength="7" value="{{ $ownCode }}" aria-describedby="{{ $id }}-iata-why">
+    <p class="wz-status" id="{{ $id }}-iata-why" data-obs-iata-why aria-live="polite">{{ T "wz_obs_iata_none" }}</p>
     {{ partial "wizard-mqtt.html" $page }}
   </div>
 </div>

@@ -22,6 +22,8 @@ function init(form) {
   const state = { pos: null, publicKey: null, link: null };
   const bytes = (s) => new TextEncoder().encode(s).length;
   $("wz-prefix").textContent = namePrefix(ds.pattern);
+  // Nothing is submitted; Enter in a field must not reload the page.
+  form.addEventListener("submit", (e) => e.preventDefault());
 
   const nb = initNeighbours(form.querySelector(".wz-neighbours"), () => update());
   const mqtt = initMqtt(form.querySelector(".wz-mqtt"), () => update());
@@ -51,7 +53,7 @@ function init(form) {
     }));
     const { commands, errors } = repeaterCommands(s);
     $("wz-cmds").textContent = errors.length ? `${t.fix}: ${[...new Set(errors.map((e) => t.fields?.[e.field] || e.field))].join(", ")}` : commands.join("\n");
-    $("wz-send").disabled = !state.link || errors.length > 0;
+    $("wz-send").disabled = !state.link;
     return { commands, errors };
   };
 
@@ -85,7 +87,15 @@ function init(form) {
 
   $("wz-send").addEventListener("click", async () => {
     const { commands, errors } = update();
-    if (errors.length || !state.link) return;
+    if (!state.link) return;
+    if (errors.length) {
+      // Say what to fix and go to the first field that has it; nothing is sent.
+      $("wz-device").textContent = $("wz-cmds").textContent;
+      const el = { name: $("wz-place"), password: $("wz-pass"),
+        wifi: form.querySelector("[data-obs-ssid]"), wifiPwd: form.querySelector("[data-obs-pwd]"), iata: form.querySelector("[data-obs-iata]") }[errors[0].field];
+      el?.focus();
+      return;
+    }
     const log = $("wz-log");
     log.textContent = "";
     $("wz-send").disabled = true;
