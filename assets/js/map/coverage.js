@@ -42,7 +42,7 @@ export function toGeoJSON(data) {
 // muted-red diagonal hatch with no fill, told apart by shape as well as colour.
 export const RAMP = {
   light: ["#a78bfa", "#7c3aed", "#5b21b6", "#2e1065"],
-  dark: ["#5b21b6", "#7c3aed", "#a78bfa", "#ddd6fe"],
+  dark: ["#7c3aed", "#a78bfa", "#c4b5fd", "#ede9fe"],
 };
 export const HATCH = { light: [168, 72, 64], dark: [214, 120, 110] }; // muted red, RGB
 export const OPACITY = { recent: 0.55, old: 0.2 };

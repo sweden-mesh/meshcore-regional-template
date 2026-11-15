@@ -175,6 +175,8 @@ a { color: var(--accent); }
 .site-header nav a:hover { color: var(--fg); }
 .map-panel { display: flex; flex-direction: column; gap: .4rem; font-family: var(--font-body); }
 .map-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+/* The pills wrap before they reach the zoom buttons in the opposite corner. */
+.map .maplibregl-ctrl-top-left { right: 3.75rem; }
 .map-pill { min-height: 36px; padding: 0 .9rem; border-radius: 999px; background: transparent; font: 600 .82rem var(--font-body); cursor: pointer; box-shadow: 0 2px 8px rgba(15, 29, 38, .12); }
 /* Off: transparent with dimmed text, readable on the map's tiles: white on the dark map, ink on the light one. */
 .map-pill[aria-pressed="false"] { border: 1px solid rgba(255, 255, 255, .45); color: rgba(255, 255, 255, .72); text-shadow: 0 0 3px #000, 0 0 3px #000; }
@@ -196,7 +198,7 @@ a { color: var(--accent); }
 .swatch-link-strong { width: 1.6rem; height: 3px; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); }
 .swatch-flow { width: .7rem; height: .7rem; border-radius: 50%; background: #f97316; border: 1.5px solid #fff; box-shadow: 0 0 0 1px #f97316; }
 /* MeshMapper coverage (assets/js/map/coverage.js RAMP and HATCH): the same colours as on the map, per basemap. */
-.map-legend { --cov-0: #5b21b6; --cov-1: #7c3aed; --cov-2: #a78bfa; --cov-3: #ddd6fe; --cov-dead: rgb(214, 120, 110); }
+.map-legend { --cov-0: #7c3aed; --cov-1: #a78bfa; --cov-2: #c4b5fd; --cov-3: #ede9fe; --cov-dead: rgb(214, 120, 110); }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; --cov-dead: rgb(168, 72, 64); }
 }
