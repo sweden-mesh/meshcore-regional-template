@@ -1,7 +1,7 @@
 // Map island entry point. Settings come from #map's data attributes, written
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
-import { nodesBounds, frameNodes } from "./camera.js";
+import { nodesBounds, frameNodes, nodePoints, pointsBounds, expandBounds, widenToFit } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom, withSeeded } from "./nodes.js";
 import { attachPopups } from "./popup.js";
@@ -14,7 +14,7 @@ import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
 import { setTexts, t } from "./texts.js";
 import { coverageControl, coverageLegend } from "./coverage.js";
-import { wantedControl, wantedLegend } from "./wanted.js";
+import { wantedControl, wantedLegend, wantedBounds } from "./wanted.js";
 
 const el = document.getElementById("map");
 
@@ -44,9 +44,18 @@ async function start() {
   const extraToggles = [...covToggles, ...(want ? [{ key: "want", label: ds.wantedLabel || "Önskade platser", on: want.on }] : [])];
   const extraLegend = [...covLegend, ...(want ? wantedLegend() : [])];
   const extraToggle = (key, on) => { covToggle(key, on); if (key === "want") want.set(on); };
+  // Switching on "Önskade platser" or "Utanför regionen" widens the view once, so everything
+  // shown fits; switching off leaves the view alone. So does opening with want=1 or foreign=1,
+  // unless the URL also gives a view.
+  const wantBox = want ? wantedBounds(places) : null;
   if (!ds.beacon) {
+    if (url.want && want && !url.view) {
+      const fit = () => widenToFit(map, wantBox, { animate: false });
+      if (map.loaded()) fit(); else map.once("load", fit);
+    }
     if (extraToggles.length) map.addControl(new MapPanel({ toggles: extraToggles, legend: extraLegend, onToggle: (key, on) => {
       extraToggle(key, on);
+      if (key === "want" && on) widenToFit(map, wantBox);
       history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov?.on, dead: cov?.dead, want: want?.on }) + location.hash);
     } }), "top-left");
     return;
@@ -98,9 +107,13 @@ async function start() {
       if (key === "live") { state.live = on; state.onLive?.(on); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); }
       extraToggle(key, on);
+      if ((key === "foreign" || key === "want") && on) widenToFit(map, shown());
       saveUrl();
     },
   }), "top-left");
+  // Everything on the map: the nodes shown, the region's border, the wanted places while on.
+  const shown = () => expandBounds(pointsBounds(nodePoints(state.nodes, state.showForeign)), unionBbox(state.borders),
+    want?.on ? wantBox : null);
   const draw = () => {
     addNodeLayers(map, nodesToGeoJSON(state.nodes, state.relays));
     addBorderLayers(map, state.borders);
@@ -140,7 +153,11 @@ async function start() {
       : (ds.offlineNote || "Beacon kan inte nås just nu."));
     console.warn("Beacon unreachable, using the snapshot", err);
   }
-  const ready = () => { draw(); if (!frameNodes(map, nodesBounds(state.nodes))) frameBorders(map, state.borders); };
+  const ready = () => {
+    draw();
+    if (!frameNodes(map, nodesBounds(state.nodes))) frameBorders(map, state.borders);
+    if (!url.view && ((url.want && want?.on) || url.foreign === true)) widenToFit(map, shown(), { animate: false });
+  };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
   if (live) startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };

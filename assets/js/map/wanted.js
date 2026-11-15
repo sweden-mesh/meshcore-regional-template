@@ -1,6 +1,7 @@
 import { effectiveTheme } from "../theme.js";
 import { t } from "./texts.js";
 import { escapeHtml } from "./popup.js";
+import { pointsBounds } from "./camera.js";
 
 // Places wanted for new repeaters (params.wanted, backlog B-285): a circle of about 1 km
 // across, in real metres so it grows with the zoom, and a small star at its centre. The list
@@ -159,4 +160,9 @@ export function wantedControl(map, maplibregl, list, { on = false, popups = true
   map.on("style.load", draw);
   draw();
   return ctl;
+}
+
+// Bounds of the places' circles (not only their centres), for widening the view to them.
+export function wantedBounds(list, m = RADIUS_M) {
+  return pointsBounds(wantedGeoJSON(list, m).areas.features.flatMap((f) => f.geometry.coordinates[0]));
 }

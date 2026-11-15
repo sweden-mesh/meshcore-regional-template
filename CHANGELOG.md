@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.34.0 — 2026-11-15
+
+- **The home map widens to what a toggle switches on**: switching on "Önskade platser" or
+  "Utanför regionen" zooms out and/or pans, once, so that everything shown fits (the nodes shown,
+  the wanted places' circles while on, the region's border), padded as the first framing. If it
+  all fits already the map stays put; it never zooms in, and switching off leaves the view as it
+  is. Short animation, none with reduced motion. Opening with `want=1` (or `foreign=1`) frames
+  everything too, unless the URL also gives a view (`z`, `ll`). Works without Beacon (wanted
+  places only). Data refreshes never re-fit. New pure helpers in `camera.js` (`nodePoints`,
+  `pointsBounds`, `expandBounds`, `needsWiden`, `widenToFit`) and `wantedBounds` in `wanted.js`.
+
 ## v0.33.0 — 2026-11-15
 
 - **Places wanted for new repeaters**: new optional `[[params.wanted]]` with `name`, `lat`, `lon`

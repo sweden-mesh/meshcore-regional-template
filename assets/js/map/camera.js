@@ -46,3 +46,54 @@ export function frameNodes(map, bounds) {
   map.fitBounds(bounds, { padding: 48, maxZoom: 12, duration: 0 });
   return true;
 }
+
+// Widening the view to what a toggle switches on (operator 2026-11-15): switching on
+// "Utanför regionen" or "Önskade platser" can show items past the map's edge. The view only
+// ever grows to take them in; switching off does not zoom back. Bounds are [[w, s], [e, n]].
+export const FIT_PADDING = 48; // as frameNodes
+
+// [lng, lat] of the nodes on the map: positioned, and possiblyForeign only while shown.
+export function nodePoints(nodes, foreign) {
+  return (nodes || []).filter((n) => (foreign || !n.possiblyForeign) && Number.isFinite(n.lat) && Number.isFinite(n.lng)
+    && !(n.lat === 0 && n.lng === 0)).map((n) => [n.lng, n.lat]);
+}
+
+// Bounds of [lng, lat] points, or null when there are none.
+export function pointsBounds(points) {
+  const ps = (points || []).filter((p) => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]));
+  if (!ps.length) return null;
+  const lngs = ps.map((p) => p[0]), lats = ps.map((p) => p[1]);
+  return [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]];
+}
+
+// The smallest bounds holding all the given ones; nulls are skipped, null when none is left.
+export function expandBounds(...list) {
+  const bs = list.filter(Boolean);
+  if (!bs.length) return null;
+  return pointsBounds(bs.flatMap((b) => [b[0], b[1]]));
+}
+
+// True when `items` reach outside `view`; nothing to show never needs a wider view.
+export function needsWiden(view, items) {
+  if (!items) return false;
+  if (!view) return true;
+  return items[0][0] < view[0][0] || items[0][1] < view[0][1] || items[1][0] > view[1][0] || items[1][1] > view[1][1];
+}
+
+// Widen the map, once, so `items` fit inside the padding: from the current view, so it only
+// zooms out or pans, never in. Animated briefly unless the visitor asks for reduced motion.
+export function widenToFit(map, items, { padding = FIT_PADDING, animate = true } = {}) {
+  if (!items) return false;
+  const c = map.getContainer();
+  const pad = Math.min(padding, c.clientWidth / 4, c.clientHeight / 4);
+  // The view inside the padding; 2 px of slack, so a view this function fitted fits again.
+  const inner = (k) => {
+    const sw = map.unproject([k, c.clientHeight - k]), ne = map.unproject([c.clientWidth - k, k]);
+    return [[sw.lng, sw.lat], [ne.lng, ne.lat]];
+  };
+  if (!needsWiden(inner(Math.max(0, pad - 2)), items)) return false;
+  const calm = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  map.fitBounds(expandBounds(inner(pad), items),
+    { padding: pad, maxZoom: map.getZoom(), duration: animate && !calm ? 500 : 0 });
+  return true;
+}
