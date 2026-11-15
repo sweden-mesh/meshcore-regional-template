@@ -4,6 +4,29 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.36.0 — 2026-11-15
+
+- **"Döda zoner" is gone from the home map** (B-290, operator: not useful right now): the toggle,
+  its legend entry and the muted-red hatch layer (and its colour-blind orange) are removed.
+  **The `dead` URL key is gone**: `?dead=1` in an old link is ignored. The **Täckning** layer is
+  unchanged; a square where nothing got through is now left empty, and the map guide
+  (`mm_layer`) and the hint under the map (`map_coverage_hint`) say so. Removed i18n keys:
+  `map_dead`, `mt_lg_cov_dead`, `mt_cov_dead_heading`, `mt_cov_DEAD`, `mt_cov_DROP`. A region
+  that overrides `map.html`, `main.css`, `mm_layer` or `map_coverage_hint` drops the same parts.
+- **The region's command broker is a setting** (RB-3): `[params.backend] host`, default
+  `mqtt-meshcore.louie.se`, the shared broker every region uses unless it runs its own. The
+  repeater wizards' Observer section gets a **Fjärrstyrning** option (lou `rc` builds) with an
+  optional field for the owner's public key: for the shared broker it sends the bare
+  `set mqtt.cmd on` (lou-17's `mccontrol` preset names that host); for a region's own broker a
+  custom slot `backend.slot` (default 3) with server `mqtts://<host>:8883`, audience `<host>` and
+  `filter all`, then `set mqtt.cmd.slot`. The firmware guide names the broker and shows the same
+  lines (shortcode `{{</* region-control */>}}`). New i18n keys: `wz_ctl_label`, `wz_ctl_help`,
+  `wz_ctl_key`, `wz_ctl_key_help`, `wz_f_control`, `wz_rv_control`, `rc_key`, `rc_cmds`.
+- **Fix: the regional MQTT slot no longer defaults to 3** (`observer.mqtt.slot`, now 6): on a
+  board with PSRAM `set mqtt.cmd on` takes slot 3 first, so the two collided. A board without
+  PSRAM has only slots 1–3; `wz_mqtt_help` and `rm_note` now say so.
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.35.0 — 2026-11-15
 
 - **Fit button on the home map**: a button directly under + / − (MapLibre's own control style, a

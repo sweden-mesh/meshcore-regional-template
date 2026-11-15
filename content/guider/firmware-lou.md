@@ -24,8 +24,8 @@ Observer
   kan uppdatera sig själv över nätet (OTA), med uppdateringar signerade av sweden-mesh.
 
 Fjärrstyrning (`rc`)
-: Ägaren kan skicka inställningskommandon till sin repeater via MQTT, signerade med ägarens
-  egen nyckel. Repeatern kontrollerar signaturen innan den gör något, och vissa kommandon (till
+: Ägaren kan skicka inställningskommandon till sin repeater via MQTT, genom regionens
+  kommandoserver `{{< param "backend.host" >}}`, signerade med ägarens egen nyckel. Repeatern kontrollerar signaturen innan den gör något, och vissa kommandon (till
   exempel nycklar och radering) går aldrig att skicka på distans.
 
 | Variant | Innehåll |
@@ -49,6 +49,11 @@ set autoreply on
 ```
 
 Auto-svaret använder nodens region, så ställ in den först (se [Regioner](../regioner/)).
+
+Fjärrstyrningen slås på från USB-konsolen, eftersom nyckeln bara kan sättas där. Raderna nedan
+gäller lou-17 och senare. Repeaterguiderna under [Wizards](../../wizard/) kan skicka dem åt dig.
+
+{{< region-control >}}
 
 ## Bra att veta
 

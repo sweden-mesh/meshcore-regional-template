@@ -90,7 +90,6 @@ enableRobotsTXT = true
 [params.observer.mqtt]
   server = "wss://mqtt.example.org"
   audience = "mqtt.example.org"
-  slot = 3
 
 # Contributors list ({{< contributors >}}). The example site reads a fixed list instead of GitHub,
 # so the bot/LLM filter can be tested offline: dependabot[bot], claude and copilot-swe-agent must

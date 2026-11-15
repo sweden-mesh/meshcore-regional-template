@@ -89,6 +89,40 @@ export function mqttCommands(m) {
   return c;
 }
 
+// Remote control (lou `rc` builds): the repeater takes commands signed by the owner's key
+// over MQTT, from the region's command broker (params.backend.host, RB-3). Commands from
+// the Observer fork (MqttControl.cpp, MqttCommandHooks.cpp): `set mqtt.cmd.pubkey` (64 hex,
+// the PUBLIC key; serial only), `set mqtt.cmd on`. With no slot set, `set mqtt.cmd on` picks a
+// free one itself and gives it the compiled `mccontrol` preset (host `preset`, lou-17 on), with
+// every packet type on, so for that host the bare line is all. Any other host is a custom slot
+// set by hand: server, audience (JWT signed by the node's key), packets on, then the plane's slot.
+export const CONTROL_PORT = 8883;
+
+export function validateControl(c) {
+  const errors = [];
+  if (!c) return errors;
+  const host = c.host || "";
+  const label = "[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?";
+  if (!new RegExp(`^${label}(\\.${label})+$`, "i").test(host) || `mqtts://${host}:${CONTROL_PORT}`.length > MQTT_LIMITS.server) {
+    errors.push({ field: "control", code: "host" });
+  }
+  const slot = Number(c.slot);
+  if (host !== c.preset && (!Number.isInteger(slot) || slot < 2 || slot > MQTT_LIMITS.slots)) errors.push({ field: "control", code: "slot" });
+  if (c.key && !/^[0-9a-f]{64}$/i.test(c.key)) errors.push({ field: "control", code: "key" });
+  return errors;
+}
+
+export function controlCommands(c) {
+  const out = c.key ? [`set mqtt.cmd.pubkey ${c.key.toLowerCase()}`] : [];
+  if (c.host !== c.preset) {
+    const n = Number(c.slot);
+    out.push(`set mqtt${n}.preset custom`, `set mqtt${n}.server mqtts://${c.host}:${CONTROL_PORT}`,
+      `set mqtt${n}.audience ${c.host}`, `set mqtt${n}.filter all`, `set mqtt.cmd.slot ${n}`);
+  }
+  out.push("set mqtt.cmd on");
+  return out;
+}
+
 // An Observer build reports what it hears to the map over wifi (operator 2026-11-14).
 // Commands from the Observer firmware (CommonCLI_Observer.cpp): wifi.ssid (up to 31
 // bytes) and wifi.pwd (up to 63) take the rest of the line, so spaces are fine; mqtt.iata
@@ -119,6 +153,9 @@ export function repeaterCommands(s) {
   const { errors, warnings } = validateRepeater(s);
   errors.push(...validateObserver(s.observer));
   errors.push(...validateMqtt(s.mqtt));
+  errors.push(...validateControl(s.control));
+  // An own broker's command slot must not be the regional slot the same run sets up.
+  if (s.mqtt && s.control && s.control.host !== s.control.preset && Number(s.mqtt.slot) === Number(s.control.slot)) errors.push({ field: "control", code: "slot" });
   if (errors.length) return { commands: [], errors, warnings };
   const r = s.radio;
   const c = [];
@@ -147,6 +184,7 @@ export function repeaterCommands(s) {
   if (s.observer) c.push(...observerCommands(s.observer));
   // The regional slot repeats mqtt.iata; the Observer section has already set it.
   if (s.mqtt) c.push(...mqttCommands(s.mqtt).filter((x) => !(s.observer && x.startsWith("set mqtt.iata "))));
+  if (s.control) c.push(...controlCommands(s.control));
   c.push("advert");
   c.push("reboot");
   return { commands: c, errors, warnings };
@@ -168,6 +206,7 @@ export function repeaterReview(s) {
     { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
     ...(s.observer ? [{ key: "observer", value: `${s.observer.iata} · wifi ${s.observer.ssid}` }] : []),
     ...(s.mqtt ? [{ key: "mqtt", value: `${s.mqtt.server} (${s.mqtt.slot})` }] : []),
+    ...(s.control ? [{ key: "control", value: s.control.host }] : []),
   ];
 }
 

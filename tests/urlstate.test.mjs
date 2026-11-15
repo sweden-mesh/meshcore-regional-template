@@ -28,8 +28,6 @@ test("coverage is off by default and written only when on", () => {
   assert.deepEqual(parseState(writeState("?live=0", { cov: true })), { live: false, cov: true });
 });
 
-test("dead zones, like coverage, are written only when on", () => {
-  assert.equal(writeState("", { cov: true, dead: true }), "?cov=1&dead=1");
-  assert.equal(writeState("?cov=1&dead=1", { dead: false }), "?cov=1");
-  assert.deepEqual(parseState("?dead=1"), { dead: true });
+test("the removed dead-zone key is not read (B-290)", () => {
+  assert.deepEqual(parseState("?dead=1"), {});
 });

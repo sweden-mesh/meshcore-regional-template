@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { band, toGeoJSON, hatchImage, RAMP, coveragePopupHtml, coverageLegend, creditHtml } from "../assets/js/map/coverage.js";
+import { band, toGeoJSON, RAMP, coveragePopupHtml, coverageLegend, creditHtml } from "../assets/js/map/coverage.js";
 
 // The example site's fixture: a real MeshMapper answer (32 squares). The compact rows are built
 // here the way the Hugo partial builds them.
@@ -44,20 +44,6 @@ test("no grid, no squares", () => {
   assert.equal(toGeoJSON({ grid: [0, 0], squares: [[1, 1, "w", 10, 0, 0, 1]] }).features.length, 0);
 });
 
-test("the dead-zone hatch tile repeats seamlessly and is mostly transparent", () => {
-  for (const ratio of [1, 2]) {
-    const { width, height, data } = hatchImage([168, 72, 64], ratio);
-    assert.equal(width, 8 * ratio); assert.equal(data.length, width * height * 4);
-    const on = (x, y) => data[((y % height) * width + (x % width)) * 4 + 3] > 0;
-    let n = 0;
-    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-      if (on(x, y)) n++;
-      assert.equal(on(x, y), on(x + 1, y + height - 1)); // "/" diagonal continues across the tile edge
-    }
-    assert.equal(n, 2 * ratio * width);
-  }
-});
-
 test("each theme's ramp gets lighter or darker in one direction", () => {
   const lum = (h) => h.match(/\w\w/g).map((x) => parseInt(x, 16)).reduce((a, b) => a + b);
   const l = RAMP.light.map(lum), d = RAMP.dark.map(lum);
@@ -70,15 +56,13 @@ test("the popup names quality, best type, pings and the date of the newest ping"
   raw.grid_squares.forEach((s, i) => assert.equal(fc.features[i].properties.date, new Date(s.timestamp * 1000).toISOString().slice(0, 10)));
   const p = fc.features[raw.grid_squares.findIndex((s) => s.grid_id === "21400_3688")].properties;
   assert.equal(coveragePopupHtml(p), '<div class="node-popup"><h3>Täckning</h3><p>Kvalitet: god</p><p>Bästa kontakt: tvåvägs</p><p>Pingar: 294</p><p>Senast uppmätt: 2026-11-11</p></div>');
-  const d = fc.features[raw.grid_squares.findIndex((s) => s.grid_id === "21404_3680")].properties; // DROP
-  assert.match(coveragePopupHtml(d), /<h3>Död zon<\/h3><p>Bästa kontakt: ingen kontakt<\/p>/);
 });
 
-test("legend: four bands and the fade with the layer, dead zones only with their toggle", () => {
+test("legend: four bands and the fade, all with the layer", () => {
   const l = coverageLegend();
-  assert.deepEqual(l.map((x) => x.swatch), ["cov-0", "cov-1", "cov-2", "cov-3", "cov-old", "cov-dead"]);
+  assert.deepEqual(l.map((x) => x.swatch), ["cov-0", "cov-1", "cov-2", "cov-3", "cov-old"]);
   assert.equal(l[3].label, "täckning: stabil");
-  assert.deepEqual(l.at(-1).when, ["cov", "dead"]);
+  assert.ok(l.every((x) => x.when.length === 1 && x.when[0] === "cov"));
 });
 
 test("the credit links the region's MeshMapper map, or is plain text without one", () => {

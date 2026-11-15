@@ -28,13 +28,12 @@ async function start() {
   // without Beacon too, with a panel of its own.
   // The line "measured up to and including …" under the map shows while the layer is on.
   const covAt = el.parentElement.querySelector(".map-cov-at");
-  const cov = ds.coverage ? coverageControl(map, maplibregl, ds.coverage, { on: url.cov ?? false, dead: url.dead ?? false,
+  const cov = ds.coverage ? coverageControl(map, maplibregl, ds.coverage, { on: url.cov ?? false,
     link: ds.meshmapperUrl, onChange: (c) => { if (covAt) covAt.hidden = !c.on; } }) : null;
   el.coverage = cov; // for browser tests
-  const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on },
-    { key: "dead", label: ds.deadLabel || "Döda zoner", on: cov.dead, showWhen: "cov" }] : [];
+  const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on }] : [];
   const covLegend = cov ? coverageLegend() : [];
-  const covToggle = (key, on) => { if (key === "cov" || key === "dead") cov.set(key, on); };
+  const covToggle = (key, on) => { if (key === "cov") cov.set(on); };
   // Places wanted for new repeaters (data-wanted, params.wanted): off by default, with or
   // without Beacon. No places, no toggle.
   let places = [];
@@ -57,7 +56,7 @@ async function start() {
     if (extraToggles.length) map.addControl(new MapPanel({ toggles: extraToggles, legend: extraLegend, onToggle: (key, on) => {
       extraToggle(key, on);
       if (key === "want" && on) widenToFit(map, wantBox);
-      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov?.on, dead: cov?.dead, want: want?.on }) + location.hash);
+      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov?.on, want: want?.on }) + location.hash);
     } }), "top-left");
     return;
   }
@@ -67,7 +66,7 @@ async function start() {
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   let live = true; // false once Beacon is unreachable and the map shows the snapshot
   const saveUrl = (extra = {}) => {
-    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, dead: cov?.dead, want: want?.on, ...extra });
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, want: want?.on, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }

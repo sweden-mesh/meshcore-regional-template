@@ -67,6 +67,8 @@ this repository's `hugo.toml`.
 | `naming.place` | a well-known place in the region, the example in the wizards' place field ("en välkänd plats, till exempel Taberg"); empty = no example |
 | `naming.place_accented`, `naming.place_ascii` | a local place name with å, ä or ö and the same without (`"Bråneryd"`, `"Braneryd"`), the example in the naming guide's tip on leaving them out; either empty = no example |
 | `observer.preset` | the Observer firmware's MQTT preset that feeds this region's Beacon (default `meshat.se`), used by the map guide |
+| `backend.host`, `backend.slot` | the region's command broker for remote control (lou `rc` builds), offered in the repeater wizards' Observer section and shown in the firmware guide. Default `mqtt-meshcore.louie.se`, the shared broker every region uses unless it runs its own: for it the wizards send the bare `set mqtt.cmd on`, and the firmware's `mccontrol` preset picks the slot. A region with its own broker sets `host` (e.g. `"mqtt.meshcore-vgr.se"`); the wizards then set up a custom slot `backend.slot` (default 3) with server `mqtts://<host>:8883`, audience `<host>` and every packet type. `backend.preset` is the host lou firmware's preset names, not a setting |
+| `observer.mqtt.*` | the region's own MQTT broker for observers' packets (`server`, `port`, `audience`, or `username` and `password`, `slot`); empty `server` = not offered. Default slot 6, clear of the command slot |
 | `radio.preset`, `radio.freq`, `radio.bw`, `radio.sf`, `radio.cr` | the region's radio preset (default EU/UK Narrow, 869.618 MHz, BW 62.5, SF8, CR8), shown by `{{</* settings */>}}` and on the landing page |
 | `map.style_light`, `map.style_dark` | basemap style URLs; default OpenFreeMap `liberty` and `dark` (no key, attribution shown by the map) |
 | `map.companions` | `false` (default): companion nodes (people's handsets) are left off the map, the snapshot and the packet routes, because their position can be a home |
@@ -174,7 +176,7 @@ A header button next to the light/dark one (an eye, `cvd_toggle`) switches the s
 colour-blind-safe scheme: `html[data-cvd="1"]`, remembered in the visitor's browser and set before
 the first paint by the inline motion script in `head.html`. Every red/green signal moves to
 Okabe–Ito colours: "good", "heard" and "OK" blue, warnings orange, caution yellow, danger purple,
-the links' traffic ramp blue → purple → orange, dead zones orange, the observer ring purple. The
+the links' traffic ramp blue → purple → orange, the observer ring purple. The
 page colours are token overrides at the end of `assets/css/main.css`; the maps take theirs from
 `assets/js/map/palette.js` and redraw when the mode changes. A region that overrides `main.css`
 or `header.html` copies the new parts to get the feature. **A site with a CSP** puts the inline
@@ -215,7 +217,7 @@ Beacon proxy must let `/api/v1/nodes/{id}/neighbors` through.
 [MeshMapper](https://meshmapper.net/) collects measurements from people who drive or walk around
 with its app (wardriving). The template can show a region's measurements as a **Täckning**
 (coverage) toggle on the front-page map: ~300 m squares coloured by how reliably contact worked,
-older squares fainter, a second toggle for dead zones, a popup per square, a legend and credit
+older squares fainter (squares where nothing got through are left empty), a popup per square, a legend and credit
 while it is on, and a section in the guide "Visa på kartan". It is off by default and loads
 only when a visitor switches it on (`?cov=1` opens with it on).
 

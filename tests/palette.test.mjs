@@ -25,8 +25,6 @@ test("default mode keeps the map's colours, in both themes", () => {
     assert.equal(p.nodeActive, "#2f8a5f");
     assert.equal(p.observer, "#1f5d82");
   }
-  assert.deepEqual(palette("light", false).hatch, [168, 72, 64]);
-  assert.deepEqual(palette("dark", false).hatch, [214, 120, 110]);
 });
 test("colour-blind mode has no red or green signal colour", () => {
   for (const th of ["light", "dark"]) {
@@ -35,8 +33,6 @@ test("colour-blind mode has no red or green signal colour", () => {
       assert.ok(!(s > 0.4 && (h < 15 || h > 345)), `${th} ${c} is red`);
       assert.ok(!(s > 0.3 && h > 75 && h < 165), `${th} ${c} is green`);
     }
-    const [h] = hsl("#" + palette(th, true).hatch.map((v) => v.toString(16).padStart(2, "0")).join(""));
-    assert.ok(h >= 15 && h <= 60, `${th} dead-zone hatch is orange, not red`);
   }
 });
 test("colour-blind link ramp: rare and often stay apart under deuteranopia, unlike red/green", () => {

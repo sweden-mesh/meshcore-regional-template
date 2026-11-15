@@ -447,17 +447,33 @@ other = "vägen okänd"
 [wz_mqtt_label]
 other = "Rapportera också till regionens MQTT-server (bara Observer-firmware)"
 [wz_mqtt_help]
-other = "Repeatern skickar då det den hör till `{{ .Server }}` också, via MQTT-plats {{ .Slot }}, signerat med sin egen nyckel. Kort utan PSRAM håller bara två MQTT-anslutningar uppe samtidigt, så platsen kan tränga undan en annan."
+other = "Repeatern skickar då det den hör till `{{ .Server }}` också, via MQTT-plats {{ .Slot }}, signerat med sin egen nyckel. Kort utan PSRAM har bara plats 1–3 och håller två av dem uppe samtidigt."
 [wz_rv_mqtt]
 other = "MQTT"
+[wz_ctl_label]
+other = "Fjärrstyrning: ta emot signerade kommandon (bara lou-firmware med fjärrstyrning)"
+[wz_ctl_help]
+other = "Repeatern tar då emot inställningskommandon via regionens kommandoserver `{{ .Host }}`, men bara de som är signerade med ägarens nyckel. Den skickar också det den hör dit. Kräver lou-17 eller senare."
+[wz_ctl_key]
+other = "Ägarens publika nyckel (64 hextecken, valfri)"
+[wz_ctl_key_help]
+other = "Den publika nyckeln som kommandona signeras med. Utan den vägrar repeatern alla kommandon tills nyckeln är satt."
+[wz_f_control]
+other = "Fjärrstyrning"
+[wz_rv_control]
+other = "Fjärrstyrning"
 [rm_title]
 other = "Regionens egen MQTT-server"
 [rm_text]
 other = "Regionen har en egen MQTT-server, `{{ .Server }}`. En observatör kan rapportera dit också, utöver kartan ovan, genom att en av dess MQTT-platser (här plats {{ .Slot }}) pekas dit. Paketen signeras med repeaterns egen nyckel, precis som till de stora servrarna. Guiderna under [Wizards](/wizard/) kan skicka inställningarna åt dig."
+[rc_key]
+other = "<ägarens publika nyckel>"
+[rc_cmds]
+other = "Slå på fjärrstyrning"
 [rm_cmds]
 other = "Kommandon för regionens MQTT-server"
 [rm_note]
-other = "Kort utan PSRAM håller bara två MQTT-anslutningar uppe samtidigt. Har din repeater redan två platser i bruk, välj vilken den ska ersätta."
+other = "Kort utan PSRAM har bara plats 1–3 och håller två av dem uppe samtidigt. Har din repeater ett sådant kort, välj plats 2 eller 3 i stället, och vilken anslutning den ska ersätta."
 [or]
 other = "eller"
 [ts_filter]
@@ -770,12 +786,8 @@ other = "Täckning"
 other = "täckning: {q}"
 [mt_lg_cov_old]
 other = "blekare: senast uppmätt för över 90 dagar sedan"
-[mt_lg_cov_dead]
-other = "död zon: uppmätt, inget kom fram"
 [mt_cov_heading]
 other = "Täckning"
-[mt_cov_dead_heading]
-other = "Död zon"
 [mt_cov_quality]
 other = "Kvalitet"
 [mt_cov_q_0]
@@ -800,12 +812,6 @@ other = "svar på förfrågan"
 other = "sändning nådde nätet"
 [mt_cov_RX]
 other = "hörde nätet"
-[mt_cov_DEAD]
-other = "repeater utan vidare"
-[mt_cov_DROP]
-other = "ingen kontakt"
-[map_dead]
-other = "Döda zoner"
 [mm_title]
 other = "Täckning, uppmätt"
 [map_meshmapper_note]
@@ -820,14 +826,13 @@ other = "Alla mätningar för regionen finns på [regionens karta hos MeshMapper
 other = '''Valet **Täckning** på kartan på [startsidan](/) visar mätningarna. Kartan är indelad i rutor om ungefär 300 × 300 meter. I varje ruta gäller det bästa som någon ping där lyckades med, till exempel kontakt åt båda hållen eller att bara en repeater hörde den; klicka på en ruta så står det. Färgen visar hur pålitligt det fungerade i snitt, från svag till stabil (se teckenförklaringen).
 
 - **Blekare rutor** är inte uppmätta på {{ .Old }} dagar. Där kan läget ha ändrats.
-- **En tom ruta** är inte uppmätt alls. Den säger ingenting om täckningen där.
-- **Döda zoner** (randiga, ett eget val) är uppmätta: någon pingade där och inget kom fram.
+- **En tom ruta** är inte uppmätt, eller så pingade någon där utan att något kom fram. Kartan visar ingen täckning där i något av fallen.
 
 Bara mätningar från de senaste {{ .Days }} dagarna och med regionens radioinställning ({{ .Radio }}) räknas.'''
 [mm_contribute]
 other = "Vill du bidra? Appen kopplas till din companion och pingar medan du rör dig. MeshMapper förklarar hur du kommer igång i [Getting started](https://wiki.meshmapper.net/app_getting_started/) (på engelska)."
 [map_coverage_hint]
-other = "Färgen visar hur pålitligt kontakten fungerade per ruta om cirka 300 m, blekt är inte uppmätt på {{ .Old }} dagar och tomt inte uppmätt alls. [Så läser du täckningen]({{ .URL }})."
+other = "Färgen visar hur pålitligt kontakten fungerade per ruta om cirka 300 m, blekt är inte uppmätt på {{ .Old }} dagar och tomt inte uppmätt eller utan kontakt. [Så läser du täckningen]({{ .URL }})."
 [map_wanted]
 other = "Önskade platser"
 [mt_lg_wanted]

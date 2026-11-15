@@ -1,15 +1,14 @@
 // One floating panel for the map: pill toggles (aria-pressed buttons) and a
 // small legend, styled after the design direction (swe.meshmapper.net-like
 // pills). Replaces MapLibre's stock checkbox boxes.
-// A toggle with showWhen: "<key>" is shown only while that toggle is on; a legend
-// item with when: ["<key>", …] only while all those toggles are on. The legend
+// A legend item with when: ["<key>", …] is shown only while all those toggles are on. The legend
 // hides itself when nothing in it is shown.
 import { t } from "./texts.js";
 
 export class MapPanel {
   constructor({ toggles, legend, onToggle }) {
-    this.toggles = toggles; // [{ key, label, on, showWhen? }]
-    this.legend = legend;   // [{ labelCvd?, text?, swatch: "pill-active"|"pill-stale"|"pill-observer"|"link"|"link-strong"|"flow"|"cov-0".."cov-3"|"cov-old"|"cov-dead", label, when? }]
+    this.toggles = toggles; // [{ key, label, on }]
+    this.legend = legend;   // [{ labelCvd?, text?, swatch: "pill-active"|"pill-stale"|"pill-observer"|"link"|"link-strong"|"flow"|"cov-0".."cov-3"|"cov-old", label, when? }]
     this.onToggle = onToggle;
   }
 
@@ -72,7 +71,6 @@ export class MapPanel {
   isOn(key) { return this.buttons.get(key)?.getAttribute("aria-pressed") === "true"; }
 
   refresh() {
-    for (const t of this.toggles) if (t.showWhen) this.buttons.get(t.key).hidden = !this.isOn(t.showWhen);
     for (const [li, when] of this.items) li.hidden = !when.every((k) => this.isOn(k));
     if (this.details) this.details.hidden = this.items.every(([li]) => li.hidden);
   }

@@ -1,5 +1,4 @@
 import { effectiveTheme } from "../theme.js";
-import { palette } from "./palette.js";
 import { t } from "./texts.js";
 import { escapeHtml } from "./popup.js";
 
@@ -39,24 +38,13 @@ export function toGeoJSON(data) {
 // Colours (Sprint 15, MMAP-7b): one violet ramp, light to dark on the light basemap and dark
 // to light on the dark one, so the most reliable band always stands out most. Violet is free on
 // the map: water is blue, woods green, roads and live traffic orange, links red-yellow-green.
-// Squares whose newest ping is over 90 days old are drawn fainter. Dead zones (MMAP-D3) are a
-// muted-red diagonal hatch with no fill, told apart by shape as well as colour; orange in
-// colour-blind mode (palette.js). The violet ramp stays: it differs in lightness, not hue.
+// Squares whose newest ping is over 90 days old are drawn fainter. Dead squares (kind "d") are
+// not drawn (B-290). The violet ramp stays in colour-blind mode: it differs in lightness, not hue.
 export const RAMP = {
   light: ["#a78bfa", "#7c3aed", "#5b21b6", "#2e1065"],
   dark: ["#7c3aed", "#a78bfa", "#c4b5fd", "#ede9fe"],
 };
 export const OPACITY = { recent: 0.55, old: 0.2 };
-
-// The hatch tile as raw RGBA: "/" lines every 8 px, 2 px wide, seamless when repeated.
-export function hatchImage(rgb, ratio = 1) {
-  const n = 8 * ratio, data = new Uint8Array(n * n * 4);
-  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
-    if ((x + y) % n >= 2 * ratio) continue;
-    data.set([...rgb, 230], (y * n + x) * 4);
-  }
-  return { width: n, height: n, data };
-}
 
 // "Täckning: MeshMapper", linking the region's MeshMapper map when there is one.
 export function creditHtml(url) {
@@ -64,29 +52,25 @@ export function creditHtml(url) {
   return url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener">${text}</a>` : text;
 }
 
-// The square's popup: quality band (or dead zone), best type, pings, last measured date.
+// The square's popup: quality band, best type, pings, last measured date.
 export function coveragePopupHtml(p) {
-  const dead = p.kind === "d";
-  const rows = [];
-  if (!dead) rows.push(`${t("cov_quality")}: ${t(`cov_q_${p.band}`)}`);
-  rows.push(`${t("cov_best")}: ${t(`cov_${p.type}`)}`, `${t("cov_pings")}: ${p.pings}`, `${t("cov_last")}: ${p.date}`);
-  return `<div class="node-popup"><h3>${escapeHtml(t(dead ? "cov_dead_heading" : "cov_heading"))}</h3>${rows.map((r) => `<p>${escapeHtml(r)}</p>`).join("")}</div>`;
+  const rows = [`${t("cov_quality")}: ${t(`cov_q_${p.band}`)}`,
+    `${t("cov_best")}: ${t(`cov_${p.type}`)}`, `${t("cov_pings")}: ${p.pings}`, `${t("cov_last")}: ${p.date}`];
+  return `<div class="node-popup"><h3>${escapeHtml(t("cov_heading"))}</h3>${rows.map((r) => `<p>${escapeHtml(r)}</p>`).join("")}</div>`;
 }
 
 // The legend entries; each is shown only while its layer is on (MapPanel's when).
 export function coverageLegend() {
   return [0, 1, 2, 3].map((b) => ({ swatch: `cov-${b}`, label: t("lg_cov", { q: t(`cov_q_${b}`) }), when: ["cov"] }))
-    .concat([{ swatch: "cov-old", label: t("lg_cov_old"), when: ["cov"] }, { swatch: "cov-dead", label: t("lg_cov_dead"), when: ["cov", "dead"] }]);
+    .concat([{ swatch: "cov-old", label: t("lg_cov_old"), when: ["cov"] }]);
 }
 
 // The layers sit under the region line, the links and the nodes, so the network stays on top.
 // Re-run after a style switch (setStyle drops every layer and image).
 const ABOVE = ["region-line", "wanted-area", "links", "links-selected", "packet-path", "flow-glow", "node-points"];
 
-export function addCoverageLayers(map, data, { visible = false, dead = false, theme = effectiveTheme(), credit = "" } = {}) {
+export function addCoverageLayers(map, data, { visible = false, theme = effectiveTheme(), credit = "" } = {}) {
   const ramp = RAMP[theme] || RAMP.light;
-  const ratio = Math.max(1, Math.round(globalThis.devicePixelRatio || 1));
-  if (!map.hasImage("coverage-hatch")) map.addImage("coverage-hatch", hatchImage(palette(theme).hatch, ratio), { pixelRatio: ratio });
   // The credit rides on the source: MapLibre lists a source's attribution only while a visible
   // layer uses it, so it shows while the layer is on.
   if (!map.getSource("coverage")) map.addSource("coverage", { type: "geojson", data, attribution: credit });
@@ -96,12 +80,7 @@ export function addCoverageLayers(map, data, { visible = false, dead = false, th
       paint: { "fill-color": ["match", ["get", "band"], 0, ramp[0], 1, ramp[1], 2, ramp[2], ramp[3]],
         "fill-opacity": ["case", ["get", "old"], OPACITY.old, OPACITY.recent], "fill-antialias": false } }, before);
   }
-  if (!map.getLayer("coverage-dead")) {
-    map.addLayer({ id: "coverage-dead", type: "fill", source: "coverage", filter: ["==", ["get", "kind"], "d"],
-      paint: { "fill-pattern": "coverage-hatch", "fill-opacity": ["case", ["get", "old"], 0.4, 1] } }, before);
-  }
   map.setLayoutProperty("coverage-fill", "visibility", visible ? "visible" : "none");
-  map.setLayoutProperty("coverage-dead", "visibility", visible && dead ? "visible" : "none");
 }
 
 // Loads the data the first time the layer is switched on, keeps it, and puts the layer back
@@ -110,15 +89,15 @@ export function addCoverageLayers(map, data, { visible = false, dead = false, th
 // pointer (the node's own popup wins) or a wanted place (wanted.js).
 const NODE_LAYERS = ["node-points", "node-pills", "wanted-star", "wanted-area"];
 
-export function coverageControl(map, maplibregl, url, { on = false, dead = false, link = "", onChange = () => {} } = {}) {
+export function coverageControl(map, maplibregl, url, { on = false, link = "", onChange = () => {} } = {}) {
   let fc = null, loading = null;
-  const ctl = { on, dead };
+  const ctl = { on };
   const draw = () => {
     if (!fc || !map.getStyle()) return;
-    try { addCoverageLayers(map, fc, { visible: ctl.on, dead: ctl.dead, credit: creditHtml(link) }); } catch { map.once("idle", draw); }
+    try { addCoverageLayers(map, fc, { visible: ctl.on, credit: creditHtml(link) }); } catch { map.once("idle", draw); }
   };
-  ctl.set = async (key, value) => {
-    ctl[key === "dead" ? "dead" : "on"] = value;
+  ctl.set = async (value) => {
+    ctl.on = value;
     onChange(ctl);
     if (ctl.on && !fc) {
       loading ??= fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))));
@@ -129,18 +108,16 @@ export function coverageControl(map, maplibregl, url, { on = false, dead = false
   // A new popup per click: a popup's own close-on-click runs after this handler and would
   // close a reused one straight away.
   let popup = null;
-  for (const id of ["coverage-fill", "coverage-dead"]) {
-    map.on("click", id, (e) => {
-      const layers = NODE_LAYERS.filter((l) => map.getLayer(l));
-      if (layers.length && map.queryRenderedFeatures(e.point, { layers }).length) return;
-      popup?.remove();
-      popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true })
-        .setLngLat(e.lngLat).setHTML(coveragePopupHtml(e.features[0].properties)).addTo(map);
-    });
-    map.on("mouseenter", id, () => { map.getCanvas().style.cursor = "pointer"; });
-    map.on("mouseleave", id, () => { map.getCanvas().style.cursor = ""; });
-  }
+  map.on("click", "coverage-fill", (e) => {
+    const layers = NODE_LAYERS.filter((l) => map.getLayer(l));
+    if (layers.length && map.queryRenderedFeatures(e.point, { layers }).length) return;
+    popup?.remove();
+    popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true })
+      .setLngLat(e.lngLat).setHTML(coveragePopupHtml(e.features[0].properties)).addTo(map);
+  });
+  map.on("mouseenter", "coverage-fill", () => { map.getCanvas().style.cursor = "pointer"; });
+  map.on("mouseleave", "coverage-fill", () => { map.getCanvas().style.cursor = ""; });
   map.on("style.load", draw);
-  if (on) ctl.set("cov", true);
+  if (on) ctl.set(true);
   return ctl;
 }

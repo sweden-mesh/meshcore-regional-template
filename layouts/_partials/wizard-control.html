@@ -1,0 +1,16 @@
+{{- /* Optional: remote control (lou `rc` builds) through the region's command broker,
+  params.backend (RB-3). Sits in the Observer section: only an Observer build has MQTT. The
+  commands are built in assets/js/wizard/commands.js (controlCommands). */ -}}
+{{- with site.Params.backend -}}{{- if .host -}}
+{{- $cfg := dict "host" .host "preset" (.preset | default "") "slot" (.slot | default 3) -}}
+{{- $id := printf "%s-ctl" ($.id | default "wz") -}}
+<div class="wz-control" data-control="{{ $cfg | jsonify }}">
+  <label class="wz-check"><input type="checkbox" data-ctl-on> {{ T "wz_ctl_label" }}</label>
+  <p class="muted">{{ T "wz_ctl_help" (dict "Host" .host) | markdownify }}</p>
+  <div data-ctl-fields hidden>
+    <label for="{{ $id }}-key">{{ T "wz_ctl_key" }}</label>
+    <input id="{{ $id }}-key" data-ctl-key type="text" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off" maxlength="64" aria-describedby="{{ $id }}-key-help">
+    <p class="muted" id="{{ $id }}-key-help">{{ T "wz_ctl_key_help" }}</p>
+  </div>
+</div>
+{{- end -}}{{- end -}}

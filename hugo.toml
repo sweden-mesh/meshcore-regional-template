@@ -59,7 +59,14 @@
   audience = ""              # JWT audience, usually the host; empty = username/password below
   username = ""              # only a public login: it is printed in the page
   password = ""
-  slot = 3                   # which of the Observer's 6 MQTT slots (1-6) the wizard sets
+  slot = 6                   # which of the Observer's 6 MQTT slots (1-6) the wizard sets; not 3, which
+                             # `set mqtt.cmd on` takes first on a board with PSRAM (2 without)
+
+[params.backend]             # the region's command broker: signed remote commands (lou `rc` builds), packets on
+  host = "mqtt-meshcore.louie.se"   # the shared broker every region uses by default; a region with its own sets its host
+  preset = "mqtt-meshcore.louie.se" # the host lou firmware's compiled `mccontrol` preset names (lou-17 on): a fact
+                             # about the firmware, not a setting. host == preset gives the bare `set mqtt.cmd on`
+  slot = 3                   # an own broker's command slot (2-6), set by hand; the shared one's slot the firmware picks
 
 [params.naming]
   pattern = ""               # the region's suggested repeater name, e.g. "SE-JKP-Plats"; empty = general advice only

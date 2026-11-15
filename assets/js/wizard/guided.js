@@ -5,6 +5,7 @@ import { createPicker } from "./mappick.js";
 import { repeaterCommands } from "./commands.js";
 import { initNeighbours } from "./neighbours.js";
 import { initMqtt } from "./mqtt.js";
+import { initControl } from "./control.js";
 import { initObserver } from "./observer.js";
 import { buildName, namePrefix, wantsKeySuffix } from "./naming.js";
 import { SerialLink } from "./serial.js";
@@ -65,13 +66,14 @@ function init(form) {
 
   const nb = initNeighbours(q(".wz-neighbours"), () => update());
   const mqtt = initMqtt(q(".wz-mqtt"), () => update());
+  const control = initControl(q(".wz-control"), () => update());
   const obs = initObserver(q(".wz-observer"), () => update());
   // The regional slot is an Observer's; it reports under the Observer's map code.
   const regional = (o) => { const m = o && mqtt(); return m && { ...m, iata: o.iata || m.iata }; };
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, q("#wzg-place").value, state.publicKey, q("#wzg-key").checked), lat: state.pos?.lat, lon: state.pos?.lon,
-      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, guest: q("#wzg-guest").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()) };
+      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, guest: q("#wzg-guest").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()), control: obs.get() && control() };
   };
 
   const update = () => {

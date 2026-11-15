@@ -201,17 +201,16 @@ a { color: var(--accent); }
 /* The links not touching a selected node (neighbours.js linkStyle): faint grey. */
 .swatch-link-bg { width: 1.6rem; height: 1px; background: #64748b; opacity: .5; }
 .swatch-flow { width: .7rem; height: .7rem; border-radius: 50%; background: #f97316; border: 1.5px solid #fff; box-shadow: 0 0 0 1px #f97316; }
-/* MeshMapper coverage (assets/js/map/coverage.js RAMP and HATCH): the same colours as on the map, per basemap. */
-.map-legend { --cov-0: #7c3aed; --cov-1: #a78bfa; --cov-2: #c4b5fd; --cov-3: #ede9fe; --cov-dead: rgb(214, 120, 110); }
+/* MeshMapper coverage (assets/js/map/coverage.js RAMP): the same colours as on the map, per basemap. */
+.map-legend { --cov-0: #7c3aed; --cov-1: #a78bfa; --cov-2: #c4b5fd; --cov-3: #ede9fe; }
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; --cov-dead: rgb(168, 72, 64); }
+  :root:not([data-theme="dark"]) body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; }
 }
-:root[data-theme="light"] body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; --cov-dead: rgb(168, 72, 64); }
+:root[data-theme="light"] body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; }
 [class^="swatch-cov-"] { width: 1rem; height: 1rem; border-radius: 2px; }
 .swatch-cov-0 { background: var(--cov-0); } .swatch-cov-1 { background: var(--cov-1); }
 .swatch-cov-2 { background: var(--cov-2); } .swatch-cov-3 { background: var(--cov-3); }
 .swatch-cov-old { background: var(--cov-2); opacity: .4; }
-.swatch-cov-dead { background: repeating-linear-gradient(-45deg, var(--cov-dead) 0 2px, transparent 2px 5.6px); outline: 1px solid var(--line); }
 /* Wanted places (assets/js/map/wanted.js COLORS and STAR): an amber ring with the gold star. */
 .swatch-wanted { width: 1rem; height: 1rem; border-radius: 50%; border: 1.5px solid #b45309; background: rgba(217, 119, 6, .16); display: inline-grid; place-items: center; }
 .swatch-wanted::after { content: "★"; color: #fbbf24; font-size: .7rem; line-height: 1; -webkit-text-stroke: .5px #5c3300; }
@@ -560,10 +559,7 @@ body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin
 :root[data-cvd="1"] .swatch-pill-active { border-color: #0072b2; }
 :root[data-cvd="1"] .swatch-pill-observer { border-color: #cc79a7; }
 :root[data-cvd="1"] .swatch-link-strong { background: linear-gradient(90deg, #56b4e9, #cc79a7, #e69f00); }
-:root[data-cvd="1"] .map-legend { --cov-dead: rgb(230, 159, 0); }
 @media (prefers-color-scheme: light) {
   :root[data-cvd="1"]:not([data-theme="dark"]) body:not(.style-console) .swatch-link-strong { background: linear-gradient(90deg, #0072b2, #cc79a7, #d55e00); }
-  :root[data-cvd="1"]:not([data-theme="dark"]) body:not(.style-console) .map-legend { --cov-dead: rgb(213, 94, 0); }
 }
 :root[data-cvd="1"][data-theme="light"] body:not(.style-console) .swatch-link-strong { background: linear-gradient(90deg, #0072b2, #cc79a7, #d55e00); }
-:root[data-cvd="1"][data-theme="light"] body:not(.style-console) .map-legend { --cov-dead: rgb(213, 94, 0); }

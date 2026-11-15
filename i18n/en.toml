@@ -451,17 +451,33 @@ other = "route unknown"
 [wz_mqtt_label]
 other = "Also report to the region's MQTT broker (Observer firmware only)"
 [wz_mqtt_help]
-other = "The repeater then also sends what it hears to `{{ .Server }}`, through MQTT slot {{ .Slot }}, signed with its own key. Boards without PSRAM keep only two MQTT connections up at once, so the slot can push out another one."
+other = "The repeater then also sends what it hears to `{{ .Server }}`, through MQTT slot {{ .Slot }}, signed with its own key. Boards without PSRAM have only slots 1–3 and keep two of them up at once."
 [wz_rv_mqtt]
 other = "MQTT"
+[wz_ctl_label]
+other = "Remote control: accept signed commands (lou firmware with remote control only)"
+[wz_ctl_help]
+other = "The repeater then takes settings commands through the region's command broker `{{ .Host }}`, but only those signed with the owner's key. It also sends what it hears there. Needs lou-17 or later."
+[wz_ctl_key]
+other = "The owner's public key (64 hex characters, optional)"
+[wz_ctl_key_help]
+other = "The public key the commands are signed with. Without it the repeater refuses every command until the key is set."
+[wz_f_control]
+other = "Remote control"
+[wz_rv_control]
+other = "Remote control"
 [rm_title]
 other = "The region's own MQTT broker"
 [rm_text]
 other = "The region has its own MQTT broker, `{{ .Server }}`. An observer can report there as well as to the map above, by pointing one of its MQTT slots (here slot {{ .Slot }}) at it. Packets are signed with the repeater's own key, just as for the big brokers. The wizards under [Wizards](/wizard/) can send the settings for you."
+[rc_key]
+other = "<the owner's public key>"
+[rc_cmds]
+other = "Turn on remote control"
 [rm_cmds]
 other = "Commands for the region's MQTT broker"
 [rm_note]
-other = "Boards without PSRAM keep only two MQTT connections up at once. If your repeater already uses two slots, choose which one to replace."
+other = "Boards without PSRAM have only slots 1–3 and keep two of them up at once. If your repeater has such a board, use slot 2 or 3 instead, and choose which connection it replaces."
 [or]
 other = "or"
 [ts_filter]
@@ -774,12 +790,8 @@ other = "Coverage"
 other = "coverage: {q}"
 [mt_lg_cov_old]
 other = "fainter: last measured over 90 days ago"
-[mt_lg_cov_dead]
-other = "dead zone: measured, nothing got through"
 [mt_cov_heading]
 other = "Coverage"
-[mt_cov_dead_heading]
-other = "Dead zone"
 [mt_cov_quality]
 other = "Quality"
 [mt_cov_q_0]
@@ -804,12 +816,6 @@ other = "answer to a request"
 other = "sending reached the mesh"
 [mt_cov_RX]
 other = "heard the mesh"
-[mt_cov_DEAD]
-other = "a repeater, nothing further"
-[mt_cov_DROP]
-other = "no contact"
-[map_dead]
-other = "Dead zones"
 [mm_title]
 other = "Coverage, measured"
 [map_meshmapper_note]
@@ -824,14 +830,13 @@ other = "All of the region's measurements are on [the region's map at MeshMapper
 other = '''The **Coverage** toggle on the map on the [front page](/) shows the measurements. The map is divided into squares of about 300 × 300 metres. Each square shows the best any ping there achieved, for example contact both ways or only a repeater hearing it; click a square to see which. The colour shows how reliably it worked on average, from weak to steady (see the legend).
 
 - **Fainter squares** have not been measured for {{ .Old }} days. Things may have changed there.
-- **An empty square** has not been measured at all. It says nothing about the coverage there.
-- **Dead zones** (hatched, a toggle of their own) were measured: someone pinged there and nothing got through.
+- **An empty square** has not been measured, or someone pinged there and nothing got through. Either way the map shows no coverage there.
 
 Only measurements from the last {{ .Days }} days and with the region's radio setting ({{ .Radio }}) count.'''
 [mm_contribute]
 other = "Want to help? The app connects to your companion and pings as you move. MeshMapper explains how to start in [Getting started](https://wiki.meshmapper.net/app_getting_started/)."
 [map_coverage_hint]
-other = "The colour shows how reliably contact worked per square of about 300 m; faint is not measured for {{ .Old }} days, empty not measured at all. [How to read the coverage]({{ .URL }})."
+other = "The colour shows how reliably contact worked per square of about 300 m; faint is not measured for {{ .Old }} days, empty not measured or nothing got through. [How to read the coverage]({{ .URL }})."
 [map_wanted]
 other = "Wanted sites"
 [mt_lg_wanted]
