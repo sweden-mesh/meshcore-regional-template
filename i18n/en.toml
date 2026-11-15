@@ -794,3 +794,9 @@ other = "a repeater, nothing further"
 other = "no contact"
 [map_dead]
 other = "Dead zones"
+[mm_title]
+other = "Coverage, measured"
+[mm_text]
+other = "Where the mesh really reaches is measured by people driving or walking around with the MeshMapper app. The region's measurements are on [the region's map at MeshMapper]({{ .URL }})."
+[map_meshmapper_note]
+other = "Measured coverage: [the region's map at MeshMapper]({{ .URL }})."

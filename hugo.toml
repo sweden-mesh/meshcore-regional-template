@@ -85,6 +85,7 @@
 
 # MeshMapper coverage, fetched at build time when HUGO_MESHMAPPER_KEY is set (the key decides the region).
 [params.meshmapper]
+  url = ""                   # the region's MeshMapper map, e.g. https://jkg.meshmapper.net/; empty = no link
   days = 180                 # only pings from the last N days
   fixture = ""               # a saved coverage response under the site's assets, read instead of the API (tests)
 

@@ -55,6 +55,8 @@ servern och påverkar inte vilken trafik repeatern för vidare.
 Efter några minuter ska repeatern ha en blå ring (observatör) på kartan på [startsidan](/), och
 siffran för observatörer öka. Utan ring syns den redan, om en annan observatör hör den.
 
+{{< meshmapper >}}
+
 > [!NOTE]- Andra sätt att rapportera
 > Det går också att rapportera från en dator eller en Raspberry Pi som är ansluten till en
 > radio. meshat.se:s guide [MeshCore till MQTT](https://meshat.se/mqtt/meshcore-till-mqtt/)

@@ -790,3 +790,9 @@ other = "repeater utan vidare"
 other = "ingen kontakt"
 [map_dead]
 other = "Döda zoner"
+[mm_title]
+other = "Täckning, uppmätt"
+[mm_text]
+other = "Var nätet faktiskt når mäts av folk som kör eller går runt med appen MeshMapper. Mätningarna för regionen finns på [regionens karta hos MeshMapper]({{ .URL }})."
+[map_meshmapper_note]
+other = "Uppmätt täckning: [regionens karta hos MeshMapper]({{ .URL }})."

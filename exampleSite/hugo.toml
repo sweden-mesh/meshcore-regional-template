@@ -87,4 +87,5 @@ enableRobotsTXT = true
 # (32 squares around Jönköping, every coverage type, recent and older than 90 days) instead of
 # the API, so it builds and tests without a key.
 [params.meshmapper]
+  url = "https://meshmapper.net/"
   fixture = "meshmapper-fixture.json"

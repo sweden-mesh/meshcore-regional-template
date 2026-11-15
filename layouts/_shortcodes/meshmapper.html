@@ -1,0 +1,5 @@
+{{- /* {{< meshmapper >}}: a section on measured coverage with a link to the region's
+  MeshMapper map (params.meshmapper.url); nothing when it is empty. */ -}}
+{{- with site.Params.meshmapper.url -}}
+{{ $.Page.RenderString (printf "## %s\n\n%s\n" (T "mm_title") (T "mm_text" (dict "URL" .))) }}
+{{- end -}}

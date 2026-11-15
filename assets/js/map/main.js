@@ -144,7 +144,7 @@ function formatAt(iso) {
 }
 
 function note(el, text) {
-  let p = el.parentElement.querySelector(".map-note");
+  let p = el.parentElement.querySelector(".map-note:not(.map-mm)");
   if (!p) { p = document.createElement("p"); p.className = "map-note"; el.after(p); }
   p.textContent = text;
 }

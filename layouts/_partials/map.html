@@ -36,6 +36,7 @@
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
+  {{ with site.Params.meshmapper.url }}<p class="map-note map-mm">{{ T "map_meshmapper_note" (dict "URL" .) | $.Page.RenderString }}</p>{{ end }}
   {{- /* A text alternative for the map: the repeaters from the build-time snapshot,
          readable without JavaScript and by screen readers. */ -}}
   {{- $list := slice -}}{{- range $snap.nodes }}{{ if and (ne .nodeType 1) (not .possiblyForeign) (not .seeded) }}{{ $list = $list | append . }}{{ end }}{{ end -}}
