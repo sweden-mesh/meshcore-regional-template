@@ -26,6 +26,7 @@ async function start() {
   // MeshMapper coverage (data-coverage): off by default, loaded on first switch-on. Works
   // without Beacon too, with a panel of its own.
   const cov = ds.coverage ? coverageControl(map, ds.coverage, url.cov ?? false) : null;
+  el.coverage = cov; // for browser tests
   const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on }] : [];
   const covToggle = (key, on) => { if (key === "cov") cov.set(on); };
   if (!ds.beacon) {

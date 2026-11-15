@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { band, toGeoJSON } from "../assets/js/map/coverage.js";
+import { band, toGeoJSON, hatchImage, RAMP } from "../assets/js/map/coverage.js";
 
 // The example site's fixture: a real MeshMapper answer (32 squares). The compact rows are built
 // here the way the Hugo partial builds them.
@@ -42,4 +42,25 @@ test("bands follow the quartile cuts, dead and old squares are flagged", () => {
 test("no grid, no squares", () => {
   assert.equal(toGeoJSON(null).features.length, 0);
   assert.equal(toGeoJSON({ grid: [0, 0], squares: [[1, 1, "w", 10, 0, 0, 1]] }).features.length, 0);
+});
+
+test("the dead-zone hatch tile repeats seamlessly and is mostly transparent", () => {
+  for (const ratio of [1, 2]) {
+    const { width, height, data } = hatchImage([168, 72, 64], ratio);
+    assert.equal(width, 8 * ratio); assert.equal(data.length, width * height * 4);
+    const on = (x, y) => data[((y % height) * width + (x % width)) * 4 + 3] > 0;
+    let n = 0;
+    for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+      if (on(x, y)) n++;
+      assert.equal(on(x, y), on(x + 1, y + height - 1)); // "/" diagonal continues across the tile edge
+    }
+    assert.equal(n, 2 * ratio * width);
+  }
+});
+
+test("each theme's ramp gets lighter or darker in one direction", () => {
+  const lum = (h) => h.match(/\w\w/g).map((x) => parseInt(x, 16)).reduce((a, b) => a + b);
+  const l = RAMP.light.map(lum), d = RAMP.dark.map(lum);
+  assert.ok(l.every((v, i) => i === 0 || v < l[i - 1]), "light: light to dark");
+  assert.ok(d.every((v, i) => i === 0 || v > d[i - 1]), "dark: dark to light");
 });
