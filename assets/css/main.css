@@ -196,6 +196,8 @@ a { color: var(--accent); }
 .swatch-pill-observer { border-color: #1f5d82; }
 .swatch-link { width: 1.6rem; height: 2px; background: #64748b; }
 .swatch-link-strong { width: 1.6rem; height: 3px; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); }
+/* The links not touching a selected node (neighbours.js linkStyle): faint grey. */
+.swatch-link-bg { width: 1.6rem; height: 1px; background: #64748b; opacity: .5; }
 .swatch-flow { width: .7rem; height: .7rem; border-radius: 50%; background: #f97316; border: 1.5px solid #fff; box-shadow: 0 0 0 1px #f97316; }
 /* MeshMapper coverage (assets/js/map/coverage.js RAMP and HATCH): the same colours as on the map, per basemap. */
 .map-legend { --cov-0: #7c3aed; --cov-1: #a78bfa; --cov-2: #c4b5fd; --cov-3: #ede9fe; --cov-dead: rgb(214, 120, 110); }
@@ -514,3 +516,41 @@ h1, h2, h3, .brand span, .guide-grid strong, .pager a { overflow-wrap: anywhere;
   .wz-progress li[aria-current], .map-pill[aria-pressed="true"] { outline: 2px solid Highlight; outline-offset: 1px; }
   [class^="swatch-"], .swatch { forced-color-adjust: none; }
 }
+
+/* Colour-blind mode (header button, js/cvd-toggle.js, html[data-cvd="1"]; operator 2026-11-15).
+   Every red/green signal moves to Okabe–Ito colours that differ in hue and lightness for every
+   kind of colour-blindness: good/heard blue, warning orange, caution yellow, danger purple. Text
+   colours keep 4.5:1 on --bg and --surface. The map's own colours are in js/map/palette.js. */
+.cvd-toggle { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); cursor: pointer; }
+.cvd-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.cvd-toggle:active { scale: .97; }
+.cvd-toggle[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); }
+/* Right after the theme button, closer than the header's gap; at the right end where the console
+   style hides the theme button. */
+.site-header .cvd-toggle { margin-left: auto; }
+.site-header .theme-toggle:not([hidden]) ~ .cvd-toggle { margin-left: -1rem; }
+body.style-console .site-header .theme-toggle ~ .cvd-toggle { margin-left: auto; }
+body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin-left: 0; }
+.cvd-on { display: none; }
+:root[data-cvd="1"] .cvd-on { display: inline; }
+:root[data-cvd="1"] .cvd-off { display: none; }
+:root[data-cvd="1"] {
+  --accent-2: #56b4e9; --online: #56b4e9; --warn: #e69f00; --caution: #f0e442; --danger: #e48fc0;
+}
+@media (prefers-color-scheme: light) {
+  :root[data-cvd="1"]:not([data-theme="dark"]) { --accent-2: #0072b2; --online: #0072b2; --warn: #a35a00; --caution: #7a6a00; --danger: #a3446f; }
+}
+:root[data-cvd="1"][data-theme="light"] { --accent-2: #0072b2; --online: #0072b2; --warn: #a35a00; --caution: #7a6a00; --danger: #a3446f; }
+:root[data-cvd="1"] body.style-console { --accent-2: #56b4e9; --online: #56b4e9; --warn: #e69f00; --caution: #f0e442; --danger: #e48fc0; }
+:root[data-cvd="1"] .alert-tip { border-color: #0072b2; background: color-mix(in srgb, #0072b2 9%, var(--bg)); }
+:root[data-cvd="1"] .alert-warning { border-color: #e69f00; background: color-mix(in srgb, #e69f00 10%, var(--bg)); }
+:root[data-cvd="1"] .swatch-pill-active { border-color: #0072b2; }
+:root[data-cvd="1"] .swatch-pill-observer { border-color: #cc79a7; }
+:root[data-cvd="1"] .swatch-link-strong { background: linear-gradient(90deg, #56b4e9, #cc79a7, #e69f00); }
+:root[data-cvd="1"] .map-legend { --cov-dead: rgb(230, 159, 0); }
+@media (prefers-color-scheme: light) {
+  :root[data-cvd="1"]:not([data-theme="dark"]) body:not(.style-console) .swatch-link-strong { background: linear-gradient(90deg, #0072b2, #cc79a7, #d55e00); }
+  :root[data-cvd="1"]:not([data-theme="dark"]) body:not(.style-console) .map-legend { --cov-dead: rgb(213, 94, 0); }
+}
+:root[data-cvd="1"][data-theme="light"] body:not(.style-console) .swatch-link-strong { background: linear-gradient(90deg, #0072b2, #cc79a7, #d55e00); }
+:root[data-cvd="1"][data-theme="light"] body:not(.style-console) .map-legend { --cov-dead: rgb(213, 94, 0); }

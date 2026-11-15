@@ -4,8 +4,9 @@
 import { chainFromObservation, runs } from "./flow.js";
 import { escapeHtml } from "./popup.js";
 import { t } from "./texts.js";
+import { palette } from "./palette.js";
 
-const PALETTE = ["#16a34a", "#0ea5e9", "#a855f7", "#f59e0b", "#ef4444", "#14b8a6", "#64748b"];
+const colourAt = (i) => { const c = palette().routes; return c[Math.min(i, c.length - 1)]; };
 
 // One entry per observation: who heard it, when (ms after the first), and the
 // drawable runs of its route. Fastest first.
@@ -24,7 +25,7 @@ export function routesToGeoJSON(routes) {
   const features = [];
   routes.forEach((r, i) => {
     for (const run of r.runs) {
-      features.push({ type: "Feature", properties: { colour: PALETTE[Math.min(i, PALETTE.length - 1)], rank: i },
+      features.push({ type: "Feature", properties: { colour: colourAt(i), rank: i },
         geometry: { type: "LineString", coordinates: run.map((p) => [p.lng, p.lat]) } });
     }
   });
@@ -55,7 +56,7 @@ export function recentListHtml(items) {
 }
 
 export function routesListHtml(routes) {
-  return routes.map((r, i) => `<li><span class="swatch" style="background:${PALETTE[Math.min(i, PALETTE.length - 1)]}"></span>` +
+  return routes.map((r, i) => `<li><span class="swatch" style="background:${colourAt(i)}"></span>` +
     `${escapeHtml(r.observerName)} <span class="muted">+${r.ms} ms · ${escapeHtml(t("hops", { n: r.hops }))}` +
     `${r.runs.length ? "" : ` · ${escapeHtml(t("route_unknown"))}`}</span></li>`).join("");
 }

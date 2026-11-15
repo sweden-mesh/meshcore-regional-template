@@ -359,6 +359,8 @@ Nätet byggs av de som använder det. Någon sätter upp en repeater på taket e
 Det enda du behöver för att börja är en radio och appen. [Läs mer om MeshCore]({{ .Guide }})."""
 [theme_toggle]
 other = "Byt mellan ljust och mörkt"
+[cvd_toggle]
+other = "Färgblindsläge"
 # The map scripts' own texts (assets/js/map/texts.js), passed in through #map's data-texts.
 [mt_legend]
 other = "Teckenförklaring"
@@ -369,9 +371,13 @@ other = "repeater, inte hörd på länge"
 [mt_lg_observer]
 other = "◉ observatör (rapporterar till kartan)"
 [mt_lg_link]
-other = "grannlänk"
+other = "länk, antal inte känt än"
 [mt_lg_link_strong]
-other = "vald nods länkar: röd sällan, grön ofta"
+other = "länk: röd sällan, grön ofta"
+[mt_lg_link_strong_cvd]
+other = "länk: blå sällan, orange ofta"
+[mt_lg_link_bg]
+other = "övriga länkar när en nod är vald"
 [mt_lg_flow]
 other = "paket i rörelse"
 [mt_type_1]
@@ -540,6 +546,8 @@ other = "Alla repeatrar hjälper nätet. Några platser hjälper mer än andra: 
 other = "Var är platsen?"
 [hp_where_help]
 other = "Klicka på kartan där repeatern skulle stå. Det gröna fältet är ungefär {{ .Km }} km runt varje repeater i dag; utanför det är nätets kant, där en ny repeater gör mest nytta."
+[hp_where_help_cvd]
+other = "Klicka på kartan där repeatern skulle stå. Det blå fältet är ungefär {{ .Km }} km runt varje repeater i dag; utanför det är nätets kant, där en ny repeater gör mest nytta."
 [hp_shadow]
 other = "Ligger platsen i en dalgång eller bakom en höjd, sett från närmaste ort?"
 [hp_s_yes]

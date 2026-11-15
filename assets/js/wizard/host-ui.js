@@ -1,5 +1,6 @@
 // The host wizard page (wizard-host.html). DOM only; the logic is in host.js.
 import { createPicker } from "./mappick.js";
+import { palette } from "../map/palette.js";
 import { assess, placeKind, nearestKm, coverageGeoJSON, borderPolygons, coarse, DEFAULT_EDGE_KM } from "./host.js";
 
 const form = document.getElementById("host-wizard");
@@ -66,7 +67,7 @@ function init(form) {
       const before = ["wanted-area", "pick-nodes"].find((id) => map.getLayer(id));
       map.addSource("hp-cover", { type: "geojson", data: coverageGeoJSON(st.repeaters, km) });
       map.addLayer({ id: "hp-cover", type: "fill", source: "hp-cover",
-        paint: { "fill-color": "#2f8a5f", "fill-opacity": 0.18 } }, before);
+        paint: { "fill-color": palette().hostCover, "fill-opacity": 0.18 } }, before);
       update();
     },
   }).then((p) => { picker = p; }).catch(() => {});

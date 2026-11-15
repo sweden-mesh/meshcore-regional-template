@@ -363,6 +363,8 @@ The mesh is built by the people who use it. Someone puts a repeater on a roof or
 All you need to start is a radio and the app. [Read more about MeshCore]({{ .Guide }})."""
 [theme_toggle]
 other = "Switch between light and dark"
+[cvd_toggle]
+other = "Colour-blind mode"
 # The map scripts' own texts (assets/js/map/texts.js), passed in through #map's data-texts.
 [mt_legend]
 other = "Legend"
@@ -373,9 +375,13 @@ other = "repeater, not heard for a long time"
 [mt_lg_observer]
 other = "◉ observer (reports to the map)"
 [mt_lg_link]
-other = "neighbour link"
+other = "link, count not known yet"
 [mt_lg_link_strong]
-other = "selected node's links: red rarely, green often"
+other = "link: red rarely, green often"
+[mt_lg_link_strong_cvd]
+other = "link: blue rarely, orange often"
+[mt_lg_link_bg]
+other = "other links while a node is selected"
 [mt_lg_flow]
 other = "packet on the move"
 [mt_type_1]
@@ -544,6 +550,8 @@ other = "Every repeater helps the mesh. Some sites help more than others: high u
 other = "Where is the site?"
 [hp_where_help]
 other = "Click the map where the repeater would stand. The green area is about {{ .Km }} km around every repeater today; outside it is the edge of the mesh, where a new repeater helps most."
+[hp_where_help_cvd]
+other = "Click the map where the repeater would stand. The blue area is about {{ .Km }} km around every repeater today; outside it is the edge of the mesh, where a new repeater helps most."
 [hp_shadow]
 other = "Is the site in a valley or behind a hill, seen from the nearest town?"
 [hp_s_yes]

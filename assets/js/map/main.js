@@ -8,7 +8,7 @@ import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
-import { allLinks, selectedLinks, addLinkLayer } from "./neighbours.js";
+import { allLinks, addLinkLayer, linkCountLoader } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
@@ -64,6 +64,7 @@ async function start() {
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
+  let live = true; // false once Beacon is unreachable and the map shows the snapshot
   const saveUrl = (extra = {}) => {
     const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, dead: cov?.dead, want: want?.on, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
@@ -72,18 +73,16 @@ async function start() {
   map.on("moveend", (e) => { if (e.originalEvent) saveUrl({ view: { zoom: map.getZoom(), center: map.getCenter().toArray() } }); });
   const popup = attachPopups(map, maplibregl, client);
   const empty = { type: "FeatureCollection", features: [] };
-  // All known links in grey (toggle), plus the clicked node's links coloured by
-  // how often they are heard (always, while its popup is open).
-  const drawLinks = () => addLinkLayer(map, state.showLinks ? allLinks(state.nodes) : empty);
-  const drawSelected = async () => {
-    if (!state.selected) return addLinkLayer(map, empty, "links-selected");
-    const node = state.nodes.find((n) => n.id === state.selected);
-    try {
-      addLinkLayer(map, selectedLinks(node, await client.get(`/nodes/${encodeURIComponent(state.selected)}/neighbors`)), "links-selected");
-    } catch { addLinkLayer(map, empty, "links-selected"); }
-  };
-  for (const id of ["node-points", "node-pills"]) map.on("click", id, (e) => { state.selected = e.features[0].properties.id; drawSelected(); });
-  popup.on("close", () => { state.selected = null; drawSelected(); });
+  // Every link coloured by how often it is heard (toggle); with a node clicked (its popup open)
+  // the other links turn faint grey. The counts arrive one node at a time after the first draw,
+  // at most every 10 minutes per node (neighbours.js).
+  const drawLinks = () => addLinkLayer(map, state.showLinks
+    ? allLinks(state.nodes, linkCounts.counts(), { selected: state.selected, focus: state.focus }) : empty);
+  let linkTimer = 0;
+  const linkCounts = linkCountLoader(client, { onUpdate: () => { if (!linkTimer) linkTimer = setTimeout(() => { linkTimer = 0; drawLinks(); }, 400); } });
+  el.linkCounts = linkCounts; // for browser tests
+  for (const id of ["node-points", "node-pills"]) map.on("click", id, (e) => { state.selected = e.features[0].properties.id; drawLinks(); });
+  popup.on("close", () => { state.selected = null; drawLinks(); });
   map.addControl(new MapPanel({
     toggles: [
       { key: "live", label: ds.liveLabel || "Live-trafik", on: state.live },
@@ -96,8 +95,9 @@ async function start() {
       { swatch: "pill-active", label: t("lg_active") },
       { swatch: "pill-stale", label: t("lg_stale") },
       { swatch: "pill-observer", label: t("lg_observer") },
+      { swatch: "link-strong", label: t("lg_link_strong"), labelCvd: t("lg_link_strong_cvd") },
       { swatch: "link", label: t("lg_link") },
-      { swatch: "link-strong", label: t("lg_link_strong") },
+      { swatch: "link-bg", label: t("lg_link_bg") },
       { swatch: "flow", label: t("lg_flow") },
       ...extraLegend,
     ],
@@ -105,7 +105,7 @@ async function start() {
       if (key === "links") { state.showLinks = on; drawLinks(); }
       if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
       if (key === "live") { state.live = on; state.onLive?.(on); }
-      if (key === "focus") { state.focus = on; applyFocus(map, state); }
+      if (key === "focus") { state.focus = on; applyFocus(map, state); drawLinks(); }
       extraToggle(key, on);
       if ((key === "foreign" || key === "want") && on) widenToFit(map, shown());
       saveUrl();
@@ -119,7 +119,7 @@ async function start() {
     addBorderLayers(map, state.borders);
     setForeignVisible(map, state.showForeign);
     drawLinks();
-    drawSelected();
+    if (live) linkCounts.sweep(state.nodes);
     state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
     applyFocus(map, state);
   };
@@ -135,7 +135,6 @@ async function start() {
   });
   // A style switch (dark mode) drops every layer; put them back.
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
-  let live = true;
   try {
     const [nodes, borders, snap] = await Promise.all([
       client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
@@ -191,11 +190,6 @@ function applyFocus(map, state) {
   } else if (state.miniZoom) {
     map.setPaintProperty("node-points", "circle-radius", ["step", ["zoom"], 6, state.miniZoom, 3.5]);
     map.setPaintProperty("node-obs-dot", "circle-radius", ["step", ["zoom"], 2.2, state.miniZoom, 1.2]);
-  }
-  if (map.getLayer("links")) {
-    map.setPaintProperty("links", "line-width", on ? 2.2 : ["case", ["==", ["get", "count"], 0], 1.2, 2.5]);
-    map.setPaintProperty("links", "line-color", on ? "#38bdf8" : ["case", ["==", ["get", "count"], 0], "#64748b",
-      ["interpolate", ["linear"], ["log10", ["max", ["get", "count"], 1]], 0, "#dc2626", 1.3, "#eab308", 2.2, "#16a34a"]]);
   }
   if (on && !map.getLayer("focus-dim")) {
     // Under the lowest of our layers, whichever order they were added in.

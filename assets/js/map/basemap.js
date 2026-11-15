@@ -29,5 +29,8 @@ export async function createMap(el) {
   trackUserMoves(map);
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
   document.addEventListener("themechange", (e) => map.setStyle(styleUrl(ds, e.detail === "dark")));
+  // Colour-blind mode (cvd-toggle.js): the same style again, reloaded in full, so every layer is
+  // re-added on style.load with the mode's colours (palette.js).
+  document.addEventListener("cvdchange", () => map.setStyle(styleUrl(ds), { diff: false }));
   return { map, maplibregl };
 }

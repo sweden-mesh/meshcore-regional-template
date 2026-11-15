@@ -17,7 +17,7 @@
 
   <fieldset class="wz-step">
     <legend><span class="wz-num">1</span> {{ T "hp_where" }}</legend>
-    <p class="muted">{{ T "hp_where_help" (dict "Km" (lang.FormatNumberCustom 0 $km)) }}</p>
+    <p class="muted"><span class="cvd-off">{{ T "hp_where_help" (dict "Km" (lang.FormatNumberCustom 0 $km)) }}</span><span class="cvd-on">{{ T "hp_where_help_cvd" (dict "Km" (lang.FormatNumberCustom 0 $km)) }}</span></p>
     {{- with $wanted }}
     <p class="sol-label" id="hp-wanted">{{ T "hp_wanted" }}</p>
     <ul class="hp-wanted" aria-labelledby="hp-wanted">

@@ -14,6 +14,35 @@ params with safe defaults. **Patch** = fixes and text.
   everything too, unless the URL also gives a view (`z`, `ll`). Works without Beacon (wanted
   places only). Data refreshes never re-fit. New pure helpers in `camera.js` (`nodePoints`,
   `pointsBounds`, `expandBounds`, `needsWiden`, `widenToFit`) and `wantedBounds` in `wanted.js`.
+- **Every link coloured by traffic**: with no node selected, all neighbour links now use the
+  red → yellow → green ramp the selected node's links had, from `observationCount` in
+  `/nodes/{id}/neighbors`, fetched once per node with neighbours after the map is drawn (three at
+  a time, 150 ms apart; 34 requests on Jönköping's map), kept for the session and fetched again at
+  most every 10 minutes. A link's two directions are summed (separate receptions: A hearing B and
+  B hearing A). The scale stays absolute (log10, as before), so a link has the same colour with
+  and without a selection. A link without a count yet, or whose requests failed, stays neutral
+  grey. **With a node selected**, its links keep their colours and all others turn faint grey.
+  Traffic focus keeps the colours, a little thinner. The separate `links-selected` layer is gone.
+  Legend: `mt_lg_link_strong` is now "länk: röd sällan, grön ofta", `mt_lg_link` "länk, antal
+  inte känt än", new `mt_lg_link_bg`. **A region behind a Beacon proxy must allow
+  `/api/v1/nodes/{id}/neighbors`.**
+- **Colour-blind mode**: an eye button in the header next to the light/dark one ("Färgblindsläge",
+  new i18n key `cvd_toggle`) switches the site to Okabe–Ito colours, remembered per visitor
+  (`localStorage` "cvd", `html[data-cvd="1"]`) and applied before the first paint. In both themes:
+  OK/heard/online blue instead of green, warnings orange, caution yellow, danger purple instead of
+  red (text at least 4.5:1 on the page and surface colours); tip and warning boxes; on the maps the
+  link ramp blue → purple → orange, active nodes blue, the observer ring purple, the dead-zone
+  hatch orange, route colours without red and green, and the host wizard's field and pin blue
+  (its help text then says "Det blå fältet", new key `hp_where_help_cvd`). The coverage ramp stays
+  violet: it differs in lightness. The maps redraw when the mode changes, like a theme switch;
+  the legend's colour words follow (`mt_lg_link_strong_cvd`). New `assets/js/cvd-toggle.js`,
+  `assets/js/map/palette.js` (`palette(theme, cvd)`), the CSS at the end of `main.css`. The
+  wizard pickers now also redraw their repeaters, border and field after a theme switch.
+- **For sites with a CSP: the motion inline script in `head.html` changed** (it now also sets
+  colour-blind mode, in every style). In `static/_headers` replace
+  `'sha256-TqMKj+v8C5EDDfQu3sqNM75+V004RIrc0fWJ7sfhpqw='` with
+  `'sha256-baA9qojJ3UDpPMd2+kFcIgQNuTH5DT4LpY+8TMIdh40='` (minified build). The theme script's hash
+  is unchanged.
 
 ## v0.33.0 — 2026-11-15
 

@@ -168,6 +168,27 @@ The map talks to a [Beacon](https://github.com/MeshCore-Beacon) backend over its
 API and WebSocket. **No Beacon code is part of this repository**; it is a separate service
 under its own licence.
 
+## Colour-blind mode
+
+A header button next to the light/dark one (an eye, `cvd_toggle`) switches the site to a
+colour-blind-safe scheme: `html[data-cvd="1"]`, remembered in the visitor's browser and set before
+the first paint by the inline motion script in `head.html`. Every red/green signal moves to
+Okabe–Ito colours: "good", "heard" and "OK" blue, warnings orange, caution yellow, danger purple,
+the links' traffic ramp blue → purple → orange, dead zones orange, the observer ring purple. The
+page colours are token overrides at the end of `assets/css/main.css`; the maps take theirs from
+`assets/js/map/palette.js` and redraw when the mode changes. A region that overrides `main.css`
+or `header.html` copies the new parts to get the feature. **A site with a CSP** puts the inline
+script's new hash in its `_headers` (see the CHANGELOG).
+
+## Links on the map
+
+Every neighbour link is coloured by how often it is heard (`observationCount` from
+`/nodes/{id}/neighbors`, one request per node with neighbours, three at a time, after the map is
+drawn; each node again at most every 10 minutes). The two directions of a link are summed; the
+scale is absolute (log10: about 1 red, 20 yellow, 160 and more green), so a link keeps its colour
+when a node is selected, and the links that do not touch the selected node turn faint grey. A
+Beacon proxy must let `/api/v1/nodes/{id}/neighbors` through.
+
 ## MeshMapper coverage
 
 [MeshMapper](https://meshmapper.net/) collects measurements from people who drive or walk around

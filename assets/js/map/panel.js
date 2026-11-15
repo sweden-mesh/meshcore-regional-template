@@ -9,7 +9,7 @@ import { t } from "./texts.js";
 export class MapPanel {
   constructor({ toggles, legend, onToggle }) {
     this.toggles = toggles; // [{ key, label, on, showWhen? }]
-    this.legend = legend;   // [{ swatch: "pill-active"|"pill-stale"|"pill-observer"|"link"|"link-strong"|"flow"|"cov-0".."cov-3"|"cov-old"|"cov-dead", label, when? }]
+    this.legend = legend;   // [{ labelCvd?, swatch: "pill-active"|"pill-stale"|"pill-observer"|"link"|"link-strong"|"flow"|"cov-0".."cov-3"|"cov-old"|"cov-dead", label, when? }]
     this.onToggle = onToggle;
   }
 
@@ -50,7 +50,12 @@ export class MapPanel {
         const sw = document.createElement("span");
         sw.className = `swatch-${item.swatch}`;
         sw.setAttribute("aria-hidden", "true");
-        li.append(sw, " ", item.label);
+        // labelCvd: the words for colour-blind mode; CSS shows one of the two (html[data-cvd]).
+        if (item.labelCvd) {
+          const off = Object.assign(document.createElement("span"), { className: "cvd-off", textContent: item.label });
+          const on = Object.assign(document.createElement("span"), { className: "cvd-on", textContent: item.labelCvd });
+          li.append(sw, " ", off, on);
+        } else li.append(sw, " ", item.label);
         ul.append(li);
         this.items.push([li, item.when || []]);
       }

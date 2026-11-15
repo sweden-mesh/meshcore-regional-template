@@ -8,6 +8,7 @@ import { nodesToGeoJSON, publicNodes } from "../map/nodes.js";
 import { loadBorders, unionBbox, addBorderLayers } from "../map/region.js";
 import { nodesBounds } from "../map/camera.js";
 import { wantedControl } from "../map/wanted.js";
+import { palette } from "../map/palette.js";
 
 export const round4 = (x) => Math.round(x * 1e4) / 1e4;
 
@@ -27,7 +28,14 @@ export function lockToRegion(map, bounds, slack = 0.15) {
 export async function createPicker(el, { onChange = () => {}, initial, onNodes } = {}) {
   const { map, maplibregl } = await createMap(el);
   el.mapInstance = map;
-  const marker = new maplibregl.Marker({ draggable: true, color: "#2f8a5f" });
+  let pinColour = palette().pick;
+  const marker = new maplibregl.Marker({ draggable: true, color: pinColour });
+  // Colour-blind mode switched: recolour the pin (its SVG fill) in place.
+  document.addEventListener("cvdchange", () => {
+    const next = palette().pick;
+    for (const g of marker.getElement().querySelectorAll(`[fill="${pinColour}"]`)) g.setAttribute("fill", next);
+    pinColour = next;
+  });
   const set = (lngLat, notify = true) => {
     marker.setLngLat(lngLat).addTo(map);
     const pos = { lat: round4(lngLat.lat ?? lngLat[1]), lon: round4(lngLat.lng ?? lngLat[0]) };
@@ -60,15 +68,19 @@ export async function createPicker(el, { onChange = () => {}, initial, onNodes }
     try {
       const { all, borders } = await load();
       const nodes = publicNodes(all).filter((n) => n.nodeType === 2);
+      let first = true;
       const add = () => {
         addBorderLayers(map, borders);
         map.addSource("nodes", { type: "geojson", data: nodesToGeoJSON(nodes) });
         map.addLayer({ id: "pick-nodes", type: "circle", source: "nodes",
-          paint: { "circle-radius": 4, "circle-color": "#2f8a5f", "circle-stroke-color": "#fff", "circle-stroke-width": 1.5, "circle-opacity": 0.8 } });
-        lockToRegion(map, unionBbox(borders) || nodesBounds(nodes));
+          paint: { "circle-radius": 4, "circle-color": palette().pick, "circle-stroke-color": "#fff", "circle-stroke-width": 1.5, "circle-opacity": 0.8 } });
+        if (first) lockToRegion(map, unionBbox(borders) || nodesBounds(nodes));
         if (onNodes) onNodes(map, nodes, borders);
+        first = false;
       };
       if (map.isStyleLoaded()) add(); else map.once("load", add);
+      // A style switch (dark mode, colour-blind mode) drops every layer: put them back.
+      map.on("style.load", () => { if (!first && !map.getSource("nodes")) add(); });
     } catch { /* the picker works without the repeaters */ }
   }
   return { map, set: (lat, lon) => set([lon, lat]), get: () => { const p = marker.getLngLat(); return p ? { lat: round4(p.lat), lon: round4(p.lng) } : null; } };

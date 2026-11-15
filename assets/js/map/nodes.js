@@ -3,6 +3,7 @@
 // labelled from zoom 12. Pure parts are exported for tests.
 import { distanceKm } from "../wizard/neighbours.js";
 import { effectiveTheme } from "../theme.js";
+import { palette } from "./palette.js";
 
 export const NODE_TYPES = { 1: "companion", 2: "repeater", 3: "room", 4: "sensor" };
 
@@ -97,15 +98,15 @@ function pillImage(fill, stroke, ratio) {
   return { width: c.width, height: c.height, data: g.getImageData(0, 0, c.width, c.height).data };
 }
 
-const PILLS = {
-  "pill-active": ["#ffffff", "#2f8a5f"],
-  "pill-stale": ["#eef1f3", "#9aa7b0"],
-  "pill-observer": ["#ffffff", "#1f5d82"],
-};
+const pills = (p) => ({
+  "pill-active": ["#ffffff", p.nodeActive],
+  "pill-stale": ["#eef1f3", p.nodeStale],
+  "pill-observer": ["#ffffff", p.observer],
+});
 
 function addPillImages(map) {
   const ratio = Math.max(1, Math.round(window.devicePixelRatio || 1));
-  for (const [name, [fill, stroke]] of Object.entries(PILLS)) {
+  for (const [name, [fill, stroke]] of Object.entries(pills(palette()))) {
     if (map.hasImage(name)) continue;
     const img = pillImage(fill, stroke, ratio);
     map.addImage(name, img, { pixelRatio: ratio, stretchX: [[10 * ratio, 14 * ratio]], stretchY: [[9 * ratio, 11 * ratio]],
@@ -122,7 +123,6 @@ function addPillImages(map) {
 //   up. Pills are nudged to a free spot around their dot (variable anchors);
 //   one that cannot be placed without overlapping is left out, the dot stays.
 export const NODE_LAYERS = ["node-points", "node-obs-dot", "node-pills", "node-labels"];
-const COLOR = ["case", ["get", "stale"], "#9aa7b0", "#2f8a5f"];
 
 // The full names under the nodes (zoom 12 and in): dark ink with a white halo on the light map,
 // white with a black halo on the dark one. The layers are re-added after a theme's setStyle.
@@ -137,9 +137,10 @@ export function addNodeLayers(map, data) {
   if (map.getSource("nodes")) { map.getSource("nodes").setData(data); return; }
   map.addSource("nodes", { type: "geojson", data });
   const base = ["!", ["has", "point_count"]];
+  const p = palette();
   map.addLayer({ id: "node-points", type: "circle", source: "nodes", filter: base,
-    paint: { "circle-radius": 6, "circle-color": COLOR,
-      "circle-stroke-color": ["case", ["get", "observer"], "#1f5d82", "#ffffff"],
+    paint: { "circle-radius": 6, "circle-color": ["case", ["get", "stale"], p.nodeStale, p.nodeActive],
+      "circle-stroke-color": ["case", ["get", "observer"], p.observer, "#ffffff"],
       "circle-stroke-width": ["case", ["get", "observer"], 2.5, 1.5],
       "circle-opacity": ["case", ["get", "foreign"], 0.4, 1], "circle-stroke-opacity": ["case", ["get", "foreign"], 0.4, 1] } });
   map.addLayer({ id: "node-obs-dot", type: "circle", source: "nodes", filter: ["all", base, ["get", "observer"]],

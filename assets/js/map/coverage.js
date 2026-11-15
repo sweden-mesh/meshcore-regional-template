@@ -1,4 +1,5 @@
 import { effectiveTheme } from "../theme.js";
+import { palette } from "./palette.js";
 import { t } from "./texts.js";
 import { escapeHtml } from "./popup.js";
 
@@ -39,12 +40,12 @@ export function toGeoJSON(data) {
 // to light on the dark one, so the most reliable band always stands out most. Violet is free on
 // the map: water is blue, woods green, roads and live traffic orange, links red-yellow-green.
 // Squares whose newest ping is over 90 days old are drawn fainter. Dead zones (MMAP-D3) are a
-// muted-red diagonal hatch with no fill, told apart by shape as well as colour.
+// muted-red diagonal hatch with no fill, told apart by shape as well as colour; orange in
+// colour-blind mode (palette.js). The violet ramp stays: it differs in lightness, not hue.
 export const RAMP = {
   light: ["#a78bfa", "#7c3aed", "#5b21b6", "#2e1065"],
   dark: ["#7c3aed", "#a78bfa", "#c4b5fd", "#ede9fe"],
 };
-export const HATCH = { light: [168, 72, 64], dark: [214, 120, 110] }; // muted red, RGB
 export const OPACITY = { recent: 0.55, old: 0.2 };
 
 // The hatch tile as raw RGBA: "/" lines every 8 px, 2 px wide, seamless when repeated.
@@ -85,7 +86,7 @@ const ABOVE = ["region-line", "wanted-area", "links", "links-selected", "packet-
 export function addCoverageLayers(map, data, { visible = false, dead = false, theme = effectiveTheme(), credit = "" } = {}) {
   const ramp = RAMP[theme] || RAMP.light;
   const ratio = Math.max(1, Math.round(globalThis.devicePixelRatio || 1));
-  if (!map.hasImage("coverage-hatch")) map.addImage("coverage-hatch", hatchImage(HATCH[theme] || HATCH.light, ratio), { pixelRatio: ratio });
+  if (!map.hasImage("coverage-hatch")) map.addImage("coverage-hatch", hatchImage(palette(theme).hatch, ratio), { pixelRatio: ratio });
   // The credit rides on the source: MapLibre lists a source's attribution only while a visible
   // layer uses it, so it shows while the layer is on.
   if (!map.getSource("coverage")) map.addSource("coverage", { type: "geojson", data, attribution: credit });
