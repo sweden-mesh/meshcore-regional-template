@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.34.1 — 2026-11-15
+
+- Solar method page: "who did the checks" no longer names the AI product ("separata sessioner mellan
+  september och november 2026").
+- README: a region with MeshMapper coverage should set `timeout = "40s"`, so a refused call (429) is
+  retried at most 9 times instead of about 14.
+
 ## v0.34.0 — 2026-11-15
 
 - **The home map widens to what a toggle switches on**: switching on "Önskade platser" or

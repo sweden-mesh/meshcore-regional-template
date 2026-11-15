@@ -225,7 +225,8 @@ only when a visitor switches it on (`?cov=1` opens with it on).
 makes one (filtered to the region's radio setting, `params.radio`, any coding rate); a local
 build reuses its download within the same 6-hour slot. Four scheduled builds a day plus pushes
 stay well under it. A refused call (e.g. 429) gives a warning (`warning-meshmapper`) and a build
-without the layer; Hugo retries a 429 for up to a minute first. Nothing is kept between builds,
+without the layer; Hugo retries a 429 until the build's `timeout` (default 60 s: about 14 calls). Set
+`timeout = "40s"` in the site's `hugo.toml` to cap it at 9 calls (measured 2026-11-15; 45 s gives 10). Nothing is kept between builds,
 so a revoked key means no layer from the next build on, as MeshMapper asks.
 
 Without the key or `coverage = true` nothing is fetched and the map is as before; `url` alone

@@ -526,7 +526,7 @@ jämfördes vinterns eget behov plus 2 snödagar med batteriet.
 ## B.9 Hur modellen kontrollerades {#b9}
 
 **Vem som gjorde kontrollerna.** Alla kontroller utom fälttestet gjordes av AI-agenter: separata
-sessioner av Anthropics Claude, september–november 2026. "Oberoende" betyder att en agent byggde om
+sessioner mellan september och november 2026. "Oberoende" betyder att en agent byggde om
 modellen från en skriftlig beskrivning utan att få modellens kod. Beskrivningarna skrevs av sessionen
 som byggde modellen. **Ingen oberoende mänsklig expert har granskat modellen.** Fälttestet (B.11) är
 det enda underlaget gjort av människor.
