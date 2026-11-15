@@ -369,7 +369,7 @@ other = "repeater, hörd nyligen (prick = exakt plats)"
 [mt_lg_stale]
 other = "repeater, inte hörd på länge"
 [mt_lg_observer]
-other = "◉ observatör (rapporterar till kartan)"
+other = "observatör (rapporterar till kartan)"
 [mt_lg_link]
 other = "länk, antal inte känt än"
 [mt_lg_link_strong]
@@ -834,6 +834,9 @@ other = "Önskade platser"
 other = "önskad plats för en ny repeater (cirka 1 km)"
 [mt_want_popup]
 other = "Här vill regionen gärna ha en ny repeater."
+# The map's fit button under + / − (tooltip and aria-label).
+[mt_fit_all]
+other = "Visa allt"
 [hp_wanted]
 other = "Här vill regionen gärna ha nya repeatrar"
 [hp_wanted_help]

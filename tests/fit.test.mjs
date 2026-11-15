@@ -70,3 +70,54 @@ test("widenToFit counts the padding as outside", () => {
   const m = fakeMap(14.0, 57.6);
   assert.equal(widenToFit(m, [[14.01, 57.7], [14.2, 57.8]]), true); // 10 px from the west edge
 });
+
+// The fit button (B-286): the nodes shown and the wanted places while on, never the border.
+import { fitItems, fitTo, expandBounds as union } from "../assets/js/map/camera.js";
+import { unionBbox } from "../assets/js/map/region.js";
+const nodes = [{ lat: 57.70, lng: 14.10 }, { lat: 57.85, lng: 14.30 }, { lat: 59.3, lng: 18.0, possiblyForeign: true }, { lat: 0, lng: 0 }];
+const border = [{ bbox: [13.0, 57.1, 15.6, 58.2] }]; // Jönköping county, far wider than the nodes
+const want = [[14.45, 58.01], [14.47, 58.03]];
+test("fitItems frames the nodes shown, not the region's border", () => {
+  const b = fitItems(nodes, false, null);
+  assert.deepEqual(b, [[14.10, 57.70], [14.30, 57.85]]);
+  assert.notDeepEqual(b, union(b, unionBbox(border))); // the border would have widened it
+});
+test("fitItems takes in foreign nodes only while shown", () => {
+  assert.deepEqual(fitItems(nodes, true, null), [[14.10, 57.70], [18.0, 59.3]]);
+});
+test("fitItems takes in the wanted places while on, and works without nodes (no Beacon)", () => {
+  assert.deepEqual(fitItems(nodes, false, want), [[14.10, 57.70], [14.47, 58.03]]);
+  assert.deepEqual(fitItems([], false, want), want);
+  assert.equal(fitItems([], false, null), null);
+  assert.equal(fitItems(undefined, true, null), null);
+});
+test("fitTo frames the items themselves, so it can zoom in", () => {
+  const m = fakeMap(13.0, 57.0, 8); // zoomed far out
+  assert.equal(fitTo(m, [[14.1, 57.7], [14.3, 57.85]], { animate: false }), true);
+  const [b, o] = m.calls[0];
+  assert.deepEqual(b, [[14.1, 57.7], [14.3, 57.85]]); // not widened from the current view
+  assert.equal(o.maxZoom, 12);                         // above the current zoom 8
+  assert.equal(o.padding, 48);
+  assert.equal(o.duration, 0);
+});
+test("fitTo does nothing when nothing is shown", () => {
+  const m = fakeMap(13.0, 57.0);
+  assert.equal(fitTo(m, null), false);
+  assert.equal(m.calls.length, 0);
+});
+
+// B-289: zoomed in, switching "Önskade platser" on widens to the objects (nodes, circles), not the
+// border; and only ever widens.
+test("the toggle widening takes in the objects shown, not the region's border", () => {
+  const m = fakeMap(14.0, 57.6); // 400 × 300 px over [14.0, 57.6]–[14.4, 57.9]
+  assert.equal(widenToFit(m, fitItems(nodes, false, want), { animate: false }), true);
+  const [b, o] = m.calls[0];
+  assert.ok(b[1][1] >= 58.03 && b[1][0] >= 14.47);           // the circles fit
+  assert.ok(b[0][0] > 13.5 && b[0][1] > 57.5 && b[1][1] < 58.1); // the border (13.0–15.6, 57.1–58.2) does not
+  assert.equal(o.maxZoom, 11);                                // never zooms in
+});
+test("the toggle widening does nothing when the objects already fit", () => {
+  const m = fakeMap(14.0, 57.6);
+  assert.equal(widenToFit(m, fitItems(nodes, false, null)), false);
+  assert.equal(m.calls.length, 0);
+});

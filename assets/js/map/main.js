@@ -1,7 +1,7 @@
 // Map island entry point. Settings come from #map's data attributes, written
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
-import { nodesBounds, frameNodes, nodePoints, pointsBounds, expandBounds, widenToFit } from "./camera.js";
+import { nodesBounds, frameNodes, widenToFit, fitItems, fitTo } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom, withSeeded } from "./nodes.js";
 import { attachPopups } from "./popup.js";
@@ -44,11 +44,12 @@ async function start() {
   const extraToggles = [...covToggles, ...(want ? [{ key: "want", label: ds.wantedLabel || "Önskade platser", on: want.on }] : [])];
   const extraLegend = [...covLegend, ...(want ? wantedLegend() : [])];
   const extraToggle = (key, on) => { covToggle(key, on); if (key === "want") want.set(on); };
-  // Switching on "Önskade platser" or "Utanför regionen" widens the view once, so everything
-  // shown fits; switching off leaves the view alone. So does opening with want=1 or foreign=1,
-  // unless the URL also gives a view.
+  // Switching on "Önskade platser" or "Utanför regionen" widens the view once, so every object
+  // shown (nodes, wanted places; not the border) fits; switching off leaves the view alone. So
+  // does opening with want=1 or foreign=1, unless the URL also gives a view.
   const wantBox = want ? wantedBounds(places) : null;
   if (!ds.beacon) {
+    if (want) map.addControl(fitControl(() => fitItems([], false, want.on ? wantBox : null)), "top-right");
     if (url.want && want && !url.view) {
       const fit = () => widenToFit(map, wantBox, { animate: false });
       if (map.loaded()) fit(); else map.once("load", fit);
@@ -92,9 +93,10 @@ async function start() {
       ...extraToggles,
     ],
     legend: [
-      { swatch: "pill-active", label: t("lg_active") },
-      { swatch: "pill-stale", label: t("lg_stale") },
-      { swatch: "pill-observer", label: t("lg_observer") },
+      // A miniature of the map's pill, with a sample id: the ◉ goes inside, as on the map.
+      { swatch: "pill-active", text: "AB12", label: t("lg_active") },
+      { swatch: "pill-stale", text: "AB12", label: t("lg_stale") },
+      { swatch: "pill-observer", text: "◉ AB12", label: t("lg_observer") },
       { swatch: "link-strong", label: t("lg_link_strong"), labelCvd: t("lg_link_strong_cvd") },
       { swatch: "link", label: t("lg_link") },
       { swatch: "link-bg", label: t("lg_link_bg") },
@@ -111,9 +113,10 @@ async function start() {
       saveUrl();
     },
   }), "top-left");
-  // Everything on the map: the nodes shown, the region's border, the wanted places while on.
-  const shown = () => expandBounds(pointsBounds(nodePoints(state.nodes, state.showForeign)), unionBbox(state.borders),
-    want?.on ? wantBox : null);
+  // The objects shown: the nodes (foreign ones while on) and the wanted places while on, never the
+  // region's border (B-289). The fit button frames them; a toggle's widening takes them in.
+  const shown = () => fitItems(state.nodes, state.showForeign, want?.on ? wantBox : null);
+  map.addControl(fitControl(shown), "top-right");
   const draw = () => {
     addNodeLayers(map, nodesToGeoJSON(state.nodes, state.relays));
     addBorderLayers(map, state.borders);
@@ -160,6 +163,28 @@ async function start() {
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
   if (live) startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };
+}
+
+// The fit button (B-286): a control group of its own, right under MapLibre's zoom buttons and
+// styled like them. A click frames what `items()` returns; nothing shown, nothing happens.
+function fitControl(items) {
+  let box;
+  return {
+    onAdd(map) {
+      box = document.createElement("div");
+      box.className = "maplibregl-ctrl maplibregl-ctrl-group map-fit";
+      const b = document.createElement("button");
+      b.type = "button";
+      b.title = t("fit_all");
+      b.setAttribute("aria-label", t("fit_all"));
+      // A dashed square: "the frame around everything".
+      b.innerHTML = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3.5" y="3.5" width="13" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3.2 2.3"/></svg>';
+      b.addEventListener("click", () => fitTo(map, items()));
+      box.append(b);
+      return box;
+    },
+    onRemove() { box.remove(); },
+  };
 }
 
 async function loadSnapshot(url) {

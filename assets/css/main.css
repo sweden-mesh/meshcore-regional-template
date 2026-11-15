@@ -191,8 +191,10 @@ a { color: var(--accent); }
 .map-legend ul { list-style: none; margin: .4rem 0 .2rem; padding: 0; display: grid; gap: .3rem; }
 .map-legend li { display: flex; align-items: center; gap: .45rem; }
 [class^="swatch-"] { display: inline-block; flex: none; }
-.swatch-pill-active, .swatch-pill-stale, .swatch-pill-observer { width: 1.6rem; height: .9rem; border-radius: 999px; background: #fff; border: 1.5px solid #2f8a5f; }
-.swatch-pill-stale { background: #eef1f3; border-color: #9aa7b0; }
+/* The node pills as on the map (nodes.js pills, node-pills layer): a sample id inside, the map's
+   fill, border and text in either theme; the observer's ◉ inside the pill. */
+.swatch-pill-active, .swatch-pill-stale, .swatch-pill-observer { padding: 2px 6px; border-radius: 9px; background: #fff; border: 1.5px solid #2f8a5f; color: #0f1d26; font-size: 11px; font-weight: 700; line-height: 15px; white-space: nowrap; font-size-adjust: none; }
+.swatch-pill-stale { background: #eef1f3; border-color: #9aa7b0; color: #5b6a74; }
 .swatch-pill-observer { border-color: #1f5d82; }
 .swatch-link { width: 1.6rem; height: 2px; background: #64748b; }
 .swatch-link-strong { width: 1.6rem; height: 3px; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); }
@@ -213,6 +215,8 @@ a { color: var(--accent); }
 /* Wanted places (assets/js/map/wanted.js COLORS and STAR): an amber ring with the gold star. */
 .swatch-wanted { width: 1rem; height: 1rem; border-radius: 50%; border: 1.5px solid #b45309; background: rgba(217, 119, 6, .16); display: inline-grid; place-items: center; }
 .swatch-wanted::after { content: "★"; color: #fbbf24; font-size: .7rem; line-height: 1; -webkit-text-stroke: .5px #5c3300; }
+/* The fit button (B-286): MapLibre's own control group under + / −, its icon in the same ink. */
+.map-fit button { display: grid; place-items: center; color: #333; }
 .maplibregl-popup-content { border-radius: var(--radius-sm); padding: .75rem 1rem; box-shadow: 0 8px 24px rgba(15, 29, 38, .2); font-family: var(--font-body); }
 .node-popup h3 { font-family: var(--font-head); }
 .packets { background: var(--surface); border-radius: var(--radius); padding: 1rem 1.25rem; }
@@ -294,8 +298,8 @@ td, th { vertical-align: top; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
 .site-footer a { color: var(--muted); }
 .site-footer a:hover { color: var(--fg); }
-.motion-toggle { min-block-size: 24px; padding: 0; border: 0; background: none; font: inherit; color: var(--muted); text-decoration: underline; cursor: pointer; text-align: start; }
-.motion-toggle:hover { color: var(--fg); }
+.motion-link { min-block-size: 24px; padding: 0; border: 0; background: none; font: inherit; color: var(--muted); text-decoration: underline; cursor: pointer; text-align: start; }
+.motion-link:hover { color: var(--fg); }
 .settings { margin: .75rem 0 0; padding-top: .75rem; border-top: 1px solid var(--line); display: grid; gap: .65rem; font-size: .92rem; }
 .settings div { display: grid; grid-template-columns: minmax(min(8rem, 50%), 40%) minmax(0, 1fr); gap: .5rem; }
 .settings dt { color: var(--muted); margin: 0; font-weight: 400; }
@@ -341,7 +345,7 @@ a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font
    codepen P1N2O/pyBNzX at 1/10 speed: 150 s a cycle) with soft blurred blobs
    lighter than it drifting on top (after shrinathprabhu/dyvOWma). Kept pale so
    text contrast holds. Moves only for prefers-reduced-motion: no-preference (below), and the
-   footer button (js/motion-toggle.js, html[data-motion="off"]) pauses it. */
+   header button (js/motion-toggle.js, html[data-motion="off"]) pauses it. */
 body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; }
 @keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 /* Parallax (operator 2026-11-13): the blob layer moves up at 20 % of the scroll speed; it is
@@ -521,10 +525,19 @@ h1, h2, h3, .brand span, .guide-grid strong, .pager a { overflow-wrap: anywhere;
    Every red/green signal moves to Okabe–Ito colours that differ in hue and lightness for every
    kind of colour-blindness: good/heard blue, warning orange, caution yellow, danger purple. Text
    colours keep 4.5:1 on --bg and --surface. The map's own colours are in js/map/palette.js. */
-.cvd-toggle { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); cursor: pointer; }
-.cvd-toggle:hover { border-color: var(--accent); color: var(--accent); }
-.cvd-toggle:active { scale: .97; }
-.cvd-toggle[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); }
+.cvd-toggle, .motion-toggle { min-width: 44px; min-height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); cursor: pointer; }
+:is(.cvd-toggle, .motion-toggle):hover { border-color: var(--accent); color: var(--accent); }
+:is(.cvd-toggle, .motion-toggle):active { scale: .97; }
+:is(.cvd-toggle, .motion-toggle)[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); }
+/* The background-motion button (B-288, js/motion-toggle.js) right after the colour-blind one: a
+   wave, with a pause bar while the motion is stopped. */
+.site-header .motion-toggle { margin-left: -1rem; }
+/* Below 27em a fourth header button squeezes the site's name until it breaks mid-word (390 px,
+   Jönköping): the footer's link takes over there. */
+@media (max-width: 27em) { .site-header .motion-toggle { display: none; } }
+@media (min-width: 27.01em) { .motion-foot { display: none; } }
+.motion-toggle .pause, .motion-toggle[aria-pressed="true"] .wave { display: none; }
+.motion-toggle[aria-pressed="true"] .pause { display: inline; }
 /* Right after the theme button, closer than the header's gap; at the right end where the console
    style hides the theme button. */
 .site-header .cvd-toggle { margin-left: auto; }

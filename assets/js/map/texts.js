@@ -5,7 +5,7 @@ const SV = {
   legend: "Teckenförklaring",
   lg_active: "repeater, hörd nyligen (prick = exakt plats)",
   lg_stale: "repeater, inte hörd på länge",
-  lg_observer: "◉ observatör (rapporterar till kartan)",
+  lg_observer: "observatör (rapporterar till kartan)",
   lg_link: "länk, antal inte känt än",
   lg_link_strong: "länk: röd sällan, grön ofta",
   lg_link_strong_cvd: "länk: blå sällan, orange ofta",
@@ -42,6 +42,7 @@ const SV = {
   cov_DROP: "ingen kontakt",
   lg_wanted: "önskad plats för en ny repeater (cirka 1 km)",
   want_popup: "Här vill regionen gärna ha en ny repeater.",
+  fit_all: "Visa allt",
 };
 let texts = { ...SV };
 

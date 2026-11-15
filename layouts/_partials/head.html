@@ -8,7 +8,7 @@
 {{- if not $console }}
 <script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;document.querySelector('meta[name="color-scheme"]').content=t}}catch(e){}</script>
 {{- end }}
-{{- /* The visitor's "stop background motion" choice (footer button, motion-toggle.js) and colour-blind
+{{- /* The visitor's "stop background motion" choice (header button, motion-toggle.js) and colour-blind
   mode (header button, cvd-toggle.js), before paint. One script for both, in every style. */}}
 <script>try{var s=localStorage,r=document.documentElement;if(s.getItem("motion")==="off")r.dataset.motion="off";if(s.getItem("cvd")==="1")r.dataset.cvd="1"}catch(e){}</script>
 {{- with site.Params.beacon.url }}

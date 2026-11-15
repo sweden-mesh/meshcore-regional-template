@@ -180,6 +180,27 @@ page colours are token overrides at the end of `assets/css/main.css`; the maps t
 or `header.html` copies the new parts to get the feature. **A site with a CSP** puts the inline
 script's new hash in its `_headers` (see the CHANGELOG).
 
+## Background motion
+
+A header button next to the colour-blind one (a wave, `motion_stop` / `motion_start`) stops the
+drifting background and the parallax (WCAG 2.2.2). It is a toggle (`aria-pressed="true"` while
+stopped) under the name `motion_stop`; its tooltip says what a press does. The choice is remembered
+in the visitor's browser (`localStorage` "motion") and set before the first paint by the inline
+motion script in `head.html` (`html[data-motion="off"]`). With `prefers-reduced-motion: reduce`
+nothing moves in the first place. Below 27em (432 px) the header has no room for a fourth button,
+so there it is left out and a link at the end of the footer's "Om" column stands in. A region that
+overrides `header.html` or `footer.html` copies both in (it used to be a footer link only).
+
+## Fit button on the map
+
+A button under the map's + / − (a dashed square, `mt_fit_all`: "Visa allt") frames everything
+shown: the nodes, the foreign ones while "Utanför regionen" is on, and the wanted places' circles
+while "Önskade platser" is on. Not the region's border, and coverage squares do not count. It
+zooms in as well as out (to zoom 12 at most), padded as the first framing, animated unless the
+visitor asks for reduced motion. Without Beacon it is there when the region has wanted places. Switching on
+"Önskade platser" or "Utanför regionen" widens the view to the same objects when they reach past
+its edge, but never zooms in.
+
 ## Links on the map
 
 Every neighbour link is coloured by how often it is heard (`observationCount` from

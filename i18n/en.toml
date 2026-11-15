@@ -373,7 +373,7 @@ other = "repeater, heard recently (dot = exact position)"
 [mt_lg_stale]
 other = "repeater, not heard for a long time"
 [mt_lg_observer]
-other = "◉ observer (reports to the map)"
+other = "observer (reports to the map)"
 [mt_lg_link]
 other = "link, count not known yet"
 [mt_lg_link_strong]
@@ -838,6 +838,9 @@ other = "Wanted sites"
 other = "wanted site for a new repeater (about 1 km)"
 [mt_want_popup]
 other = "The region would like a new repeater here."
+# The map's fit button under + / − (tooltip and aria-label).
+[mt_fit_all]
+other = "Fit all"
 [hp_wanted]
 other = "Where the region would like new repeaters"
 [hp_wanted_help]

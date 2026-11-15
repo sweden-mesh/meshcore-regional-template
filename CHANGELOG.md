@@ -4,6 +4,38 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.35.0 — 2026-11-15
+
+- **Fit button on the home map**: a button directly under + / − (MapLibre's own control style, a
+  dashed square; new i18n key `mt_fit_all`, "Visa allt" / "Fit all", as tooltip and
+  `aria-label`) frames everything shown: the nodes, the foreign ones while "Utanför regionen" is
+  on, the wanted places' circles while "Önskade platser" is on. Not the region's border. Unlike
+  the toggles' widening it zooms in as well as out (to zoom 12 at most, as the first framing),
+  with the same padding; short animation, none with reduced motion. Works without Beacon (wanted
+  places only). New pure helpers in `camera.js`: `fitItems`, `fitTo`, `FIT_MAX_ZOOM`.
+- **Fix: a toggle no longer zooms out to the whole region** (B-289): switching on "Önskade
+  platser" or "Utanför regionen" (and opening with `want=1` / `foreign=1`) widened the view to
+  take in the region's border too, so a zoomed-in map jumped out to the whole county. It now
+  takes in only the objects shown, the same ones the fit button frames: the nodes, the foreign
+  ones while on, the wanted places' circles while on. Still widen-only: it never zooms in and
+  leaves the view alone when everything fits.
+- **Legend pills look like the map's**: "repeater, hörd nyligen", "repeater, inte hörd på länge"
+  and "observatör" each show a miniature of the map's label: a sample id ("AB12") in the pill,
+  with the map's fill, border and text colour per state (the stale pill grey on grey), in both
+  themes and in colour-blind mode. The observer's ◉ now sits inside its pill, so
+  **`mt_lg_observer` loses its leading "◉ "** ("observatör (rapporterar till kartan)"); a region
+  that overrides that key drops it too.
+- **"Stoppa bakgrundsrörelse" is a header button**: an icon button next to the light/dark and
+  colour-blind ones, same size and style (a wave; a pause sign while stopped), a toggle with
+  `aria-pressed` under the name `motion_stop`, the tooltip following the state (`motion_stop` /
+  `motion_start`). Below 27em (432 px) a fourth header button squeezed the site's name until it
+  broke mid-word ("Jönköpin g" at 390 px), so there the header leaves it out and the footer keeps a
+  link (`motion-link`, text following the state); from 27em up the footer link is gone. Same
+  behaviour: remembered per visitor, applied before the first paint by the unchanged inline motion
+  script, so **no CSP hash changes**. A region that overrides `header.html` copies the button and
+  its script in; one that overrides `footer.html` replaces the old `motion-toggle` list item and
+  script with the new `motion-foot` item.
+
 ## v0.34.1 — 2026-11-15
 
 - Solar method page: "who did the checks" no longer names the AI product ("separata sessioner mellan

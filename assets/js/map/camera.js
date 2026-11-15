@@ -41,9 +41,10 @@ export function nodesBounds(nodes) {
   return [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]];
 }
 
+export const FIT_MAX_ZOOM = 12;
 export function frameNodes(map, bounds) {
   if (!bounds || map.__userMoved) return false;
-  map.fitBounds(bounds, { padding: 48, maxZoom: 12, duration: 0 });
+  map.fitBounds(bounds, { padding: 48, maxZoom: FIT_MAX_ZOOM, duration: 0 });
   return true;
 }
 
@@ -82,18 +83,39 @@ export function needsWiden(view, items) {
 
 // Widen the map, once, so `items` fit inside the padding: from the current view, so it only
 // zooms out or pans, never in. Animated briefly unless the visitor asks for reduced motion.
+// The padding, at most a quarter of a small map's width or height.
+function fitPad(map, padding) {
+  const c = map.getContainer();
+  return Math.min(padding, c.clientWidth / 4, c.clientHeight / 4);
+}
+const calm = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export function widenToFit(map, items, { padding = FIT_PADDING, animate = true } = {}) {
   if (!items) return false;
   const c = map.getContainer();
-  const pad = Math.min(padding, c.clientWidth / 4, c.clientHeight / 4);
+  const pad = fitPad(map, padding);
   // The view inside the padding; 2 px of slack, so a view this function fitted fits again.
   const inner = (k) => {
     const sw = map.unproject([k, c.clientHeight - k]), ne = map.unproject([c.clientWidth - k, k]);
     return [[sw.lng, sw.lat], [ne.lng, ne.lat]];
   };
   if (!needsWiden(inner(Math.max(0, pad - 2)), items)) return false;
-  const calm = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
   map.fitBounds(expandBounds(inner(pad), items),
-    { padding: pad, maxZoom: map.getZoom(), duration: animate && !calm ? 500 : 0 });
+    { padding: pad, maxZoom: map.getZoom(), duration: animate && !calm() ? 500 : 0 });
+  return true;
+}
+
+// The fit button under the zoom buttons (B-286): what it frames is what is shown, the nodes
+// (foreign ones while "Utanför regionen" is on) and the wanted places' circles while on; never the
+// region's border. Null when nothing is shown.
+export function fitItems(nodes, foreign, wantBox) {
+  return expandBounds(pointsBounds(nodePoints(nodes, foreign)), wantBox);
+}
+
+// Frame `items` exactly, padded as widenToFit: unlike it, this zooms in as well as out (up to the
+// zoom the first framing stops at).
+export function fitTo(map, items, { padding = FIT_PADDING, animate = true } = {}) {
+  if (!items) return false;
+  map.fitBounds(items, { padding: fitPad(map, padding), maxZoom: FIT_MAX_ZOOM, duration: animate && !calm() ? 500 : 0 });
   return true;
 }
