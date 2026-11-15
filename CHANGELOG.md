@@ -4,6 +4,30 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.28.0 — 2026-11-15
+
+A modern-web-guidance pass (Google Chrome's guides for coding agents) over the whole template;
+`legacy-scan` goes from 2 findings to 0. Nothing changes what the wizards produce.
+
+- **Theme and type:** contrast fixes for text on the accent colour, error text, light-mode
+  warnings and text-field borders (new `--field-border` token); `<meta name="color-scheme">`
+  kept in step with the toggle, which can now return to following the system; body text in
+  rem; em breakpoints; text-wrap balance/pretty; accent-color; forced-colours support.
+- **Wizards:** Enter no longer reloads the solar calculator; steps, sliders and radio
+  questions are announced properly; quieter live regions; Send shows what to fix instead of
+  being greyed out; no autocorrect on passwords and codes.
+- **Navigation and components:** the menu folds into ☰ when it no longer fits (measured);
+  the phone menu is a native popover (`@oddbird/popover-polyfill` 0.7.3 where missing);
+  focus no longer changes corners; breadcrumbs as a list; Markdown tables in a focusable,
+  named scroll box (render hook, new i18n key `table`); a loading ring for the map; no
+  sideways scroll at 200 % text.
+- **Motion and loading:** reduced motion honoured on the live map and the background; a
+  footer button pauses the background motion (new i18n keys `motion_stop`, `motion_start`);
+  MapLibre's stylesheet loads with the map; scroll-driven parallax; lower priority for
+  analytics and background fetches; preconnect to Beacon.
+- **For sites with a CSP:** the inline scripts in `head.html` changed (theme script, new
+  motion script); update their sha256 hashes.
+
 ## v0.27.2 — 2026-11-15
 
 - Regions guide links to meshcore-se-regioner (contributed by Fredrik Melén, PR #1). v0.27.1 was
