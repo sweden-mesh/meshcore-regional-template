@@ -4,6 +4,44 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.32.0 — 2026-11-15
+
+- **Region borders on the wizard maps without a live Beacon**: new optional `params.region.borders`
+  (a Beacon base URL, e.g. `"https://beacon.meshat.se"`). With it and no `params.beacon.url`, the
+  build fetches the borders of `region.iatas` and the repeaters' positions (`beacon-snapshot.html`)
+  and the position picker (quick, guided and host wizards) reads them from one small fingerprinted
+  file, `region/pick.json` (`data-pick`): the dashed border, the repeaters as dots, the map locked to
+  the region, and the host wizard's inside/edge/outside verdict. A failed fetch warns once and the
+  wizards work as before. Unset: nothing is fetched. A site with `beacon.url` is unchanged.
+- `params.naming.place`: the example in the wizards' place field. The Swedish placeholder no longer
+  names Taberg for every region: "en välkänd plats, till exempel {place}", or "en välkänd plats"
+  without one (`wz_place_ph` takes `.Place`, sv and en). **Jönköping: add `place = "Taberg"` to
+  `[params.naming]` to keep the text.**
+- **No Jönköping examples where the region's own belong.** The firmware guide's test channel
+  example is the region's (`#test-{{</* region "scope" */>}}`). The naming guide's "skip å, ä and ö"
+  tip takes its example from `params.naming.place_accented` and `place_ascii` (new shortcode
+  `{{</* naming-ascii */>}}`, i18n `naming_ascii_example`), and gives none without them
+  (**Jönköping: `place_accented = "Bråneryd"`, `place_ascii = "Braneryd"`**). The solar guide's
+  method names the region's own calculation point (`{{%/* solar "point" */%}}`), and the numbers
+  that really are Jönköping's (the December bullets, the cold-panel table, the 47 days) say
+  "referensfallet Jönköping".
+- **The old IATA test channel (`#test-<iata>`) is named only where it is used.** The troubleshooting
+  entry on auto-replies outside the county's test channel (now titled "Auto-svaret svarar inte i
+  länets testkanal") names it through the new shortcode `{{</* legacy-test */>}}` only when
+  `params.channels` lists `#test-<first iata>` (Jönköping's `#test-jkg`: no change needed); other
+  regions read "i en äldre kanal som ingen här lyssnar på". New i18n keys `legacy_test_named`,
+  `legacy_test_unnamed`.
+- The wizards' name prefix falls back to the region's scope when `params.naming.pattern` is unset
+  (`se-vgr` → `SE-VGR-`, `se05` → `SE05-`; not for the bare `se`). New partial `name-pattern.html`.
+- The channel lists (landing page and `{{</* channels */>}}`) no longer put a `*` after a channel with
+  `autoreply = true`; newcomers read it as part of the name. Only the footnote line "* Kräver
+  auto-reply firmware ↗" stays. The `.ch-ar-mark` rule is gone: **a region whose `home.html`
+  override copied the `<span class="ch-ar-mark">` from v0.31.0 removes it.**
+- The guided wizard's nine steps stay on one line at every width: when the labels do not fit, only the
+  step numbers show, evenly spread, with each label kept for screen readers and as a tooltip; a wide one
+  shows number and label, tighter than before. Which one is measured (`.wz-compact`), so it holds for
+  any language.
+
 ## v0.31.0 — 2026-11-15
 
 - The auto-reply notice is now **one line under the channel list** (landing page box and

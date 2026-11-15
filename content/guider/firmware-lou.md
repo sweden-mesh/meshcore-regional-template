@@ -16,7 +16,7 @@ Den senaste versionen är `v1.18.0-lou-16`, byggd på MeshCore 1.18.0.
 Auto-svar (`ar`)
 : Repeatern svarar på `test` i länets testkanal med en signalrapport: vem som hörde, hur starkt
   och vägen dit. Svaren kommer med fördröjning, så att de inte krockar. Det är så nätet kan mäta
-  vilka delar som når varandra. Kanalen följer nodens region, till exempel `#test-se-jkp`.
+  vilka delar som når varandra. Kanalen följer nodens region, till exempel `#test-{{< region "scope" >}}`.
 
 Observer
 : Repeatern rapporterar vad den hör till kartan via wifi (se

@@ -2,7 +2,7 @@
        the reason for each value. Without JavaScript all steps show at once. */ -}}
 {{- $r := partialCached "region.html" .Page "region" -}}{{- $radio := site.Params.radio -}}
 <form class="wizard wizard-guided" id="wizard-guided" novalidate
-      data-pattern="{{ site.Params.naming.pattern }}" data-scope="{{ $r.scope }}" data-radio="{{ $radio | jsonify }}">
+      data-pattern="{{ partial "name-pattern.html" $r }}" data-scope="{{ $r.scope }}" data-radio="{{ $radio | jsonify }}">
   <ol class="wz-progress" aria-label="{{ T "wz_steps" }}"></ol>
 
   <fieldset class="wz-step" data-step="name">
@@ -10,7 +10,7 @@
     <p>{{ T "wzg_name_why" }}</p>
     {{ with site.Params.naming.pattern }}<p class="muted">{{ T "wz_name_rule" }} <code>{{ . }}</code>{{ with site.Params.naming.explain }} {{ partial "scopes.html" (. | markdownify) }}{{ end }}</p>{{ end }}
     <label for="wzg-place">{{ T "wz_place_name" }}</label>
-    <div class="wz-name-row"><span class="wz-prefix" data-prefix></span><input id="wzg-place" type="text" autocomplete="off" spellcheck="false" autocorrect="off" placeholder="{{ T "wz_place_ph" }}" aria-describedby="wzg-name-out"></div>
+    <div class="wz-name-row"><span class="wz-prefix" data-prefix></span><input id="wzg-place" type="text" autocomplete="off" spellcheck="false" autocorrect="off" placeholder="{{ T "wz_place_ph" (dict "Place" site.Params.naming.place) }}" aria-describedby="wzg-name-out"></div>
     <label class="wz-check"><input type="checkbox" id="wzg-key"> {{ T "wz_key_suffix" }}</label>
     <p class="wz-status" data-out="name" id="wzg-name-out"></p>
   </fieldset>

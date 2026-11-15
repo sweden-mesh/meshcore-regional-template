@@ -1,0 +1,6 @@
+{{- /* The repeater name pattern for the wizards: params.naming.pattern, or one derived from the
+       region's scope when it is unset ("se-vgr" → "SE-VGR-Plats", "se05" → "SE05-Plats").
+       The bare national scope "se" gives no pattern. Call with the region (region.html). */ -}}
+{{- $p := site.Params.naming.pattern | default "" -}}
+{{- if and (not $p) .scope (ne .scope "se") -}}{{- $p = printf "%s-Plats" (upper .scope) -}}{{- end -}}
+{{- return $p -}}

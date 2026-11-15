@@ -1,17 +1,17 @@
 ---
-title: "Auto-svaret svarar i #test-<iata> i stället för länets testkanal"
-description: "get autoreply visar legacy #test-… och inte länets kanal."
+title: "Auto-svaret svarar inte i länets testkanal"
+description: "get autoreply visar en äldre kanal och inte länets."
 category: regioner
 weight: 40
 ---
 
 Gäller repeatrar med auto-svar (firmwaren *lou*). Auto-svaret tar länet från `region home` och
-svarar i `#test-<län>`. Saknas länet svarar det i den gamla kanalen `#test-<iata>`.
+svarar i `#test-<län>`. Saknas länet svarar det {{< legacy-test >}}.
 
 ## Troliga orsaker
 
 1. **Firmwaren är äldre än lou-16.** Äldre versioner tittar bara på `region default`, och med
-   `se` där blir det den gamla kanalen.
+   `se` där blir det den äldre kanalen.
 2. **`region home` är inte satt**, eller sparades inte (`region save`).
 
 ## Kontrollera

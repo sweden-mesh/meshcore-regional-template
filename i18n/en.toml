@@ -173,8 +173,14 @@ other = "Name"
 other = "Suggested repeater names in the region:"
 [wz_place_name]
 other = "Name of the place"
+[naming_ascii_example]
+other = " (<code>{{ .Ascii }}</code> instead of <code>{{ .Accented }}</code>)"
+[legacy_test_named]
+other = "in the old channel <code>{{ .Channel }}</code>"
+[legacy_test_unnamed]
+other = "in an older channel nobody here listens to"
 [wz_place_ph]
-other = "a well-known place, for example Hilltop"
+other = "a well-known place{{ with .Place }}, for example {{ . }}{{ end }}"
 [wz_bytes]
 other = "bytes"
 [wz_too_long]

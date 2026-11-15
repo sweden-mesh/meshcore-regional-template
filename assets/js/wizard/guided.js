@@ -30,10 +30,24 @@ function init(form) {
   const progress = q(".wz-progress");
   steps.forEach((s, i) => {
     const li = document.createElement("li");
-    li.textContent = s.querySelector("legend").textContent.replace(/^\s*\d+\s*/, "");
+    // The number comes from CSS; when the labels do not fit, only the numbers show and the
+    // label stays for screen readers (and as a tooltip), so all steps fit on one line.
+    const label = s.querySelector("legend").textContent.replace(/^\s*\d+\s*/, "");
+    const span = document.createElement("span");
+    span.className = "wz-step-label";
+    span.textContent = label;
+    li.title = label;
+    li.append(span);
     li.addEventListener("click", () => show(i));
     progress.append(li);
   });
+  // All labels on one line if they fit, else numbers only (the CSS's .wz-compact); measured, so
+  // it holds for any language and font.
+  const fit = () => {
+    progress.classList.remove("wz-compact");
+    progress.classList.toggle("wz-compact", progress.scrollWidth > progress.clientWidth);
+  };
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe(progress); else fit();
   const nav = q(".wz-nav");
   nav.hidden = false;
   const show = (i) => {

@@ -6,8 +6,10 @@
   one, else to nothing. Returns a dict: nodes, borders, at (RFC 3339), source.
   The cache key changes every hour, so a rebuild within the hour reuses the
   download and a scheduled rebuild gets fresh data.
+  Without params.beacon.url, params.region.borders (a Beacon base URL) is used: no live
+  data in the browser, but the borders and repeaters as of the build, for the wizard maps.
 */ -}}
-{{- $base := strings.TrimSuffix "/" (site.Params.beacon.url | default "") -}}
+{{- $base := strings.TrimSuffix "/" (site.Params.beacon.url | default site.Params.region.borders | default "") -}}
 {{- $iatas := site.Params.region.iatas | default slice -}}
 {{- $key := now.UTC.Format "2006010215" -}}
 {{- $nodes := slice -}}
@@ -27,7 +29,9 @@
   {{- range $iatas -}}
     {{- $u := printf "%s/api/v1/iatas/%s/border" $base . -}}
     {{- with try (resources.GetRemote $u (dict "key" (printf "border-%s-%s" (md5 $u) $key))) -}}
-      {{- with .Value -}}{{- with (.Content | transform.Unmarshal) -}}{{- $borders = $borders | append . -}}{{- end -}}{{- end -}}
+      {{- with .Err -}}
+        {{- if and (eq $source "beacon") (not site.Params.beacon.url) }}{{ warnidf "region-borders" "Region borders: border not fetched (%s)" . }}{{ end -}}
+      {{- else with .Value -}}{{- with (.Content | transform.Unmarshal) -}}{{- $borders = $borders | append . -}}{{- end -}}{{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

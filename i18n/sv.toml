@@ -169,8 +169,14 @@ other = "Namn"
 other = "Namnförslag för repeatrar i regionen:"
 [wz_place_name]
 other = "Platsens namn"
+[naming_ascii_example]
+other = " (<code>{{ .Ascii }}</code> i stället för <code>{{ .Accented }}</code>)"
+[legacy_test_named]
+other = "i den gamla kanalen <code>{{ .Channel }}</code>"
+[legacy_test_unnamed]
+other = "i en äldre kanal som ingen här lyssnar på"
 [wz_place_ph]
-other = "en välkänd plats, till exempel Taberg"
+other = "en välkänd plats{{ with .Place }}, till exempel {{ . }}{{ end }}"
 [wz_bytes]
 other = "byte"
 [wz_too_long]

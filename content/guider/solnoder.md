@@ -39,7 +39,7 @@ Instrålning mot en lodrät panel mot söder, kWh/m² per dag, medel per månad 
 
 {{% solar "irradiation" %}}
 
-Exemplet nedan gäller Jönköping (57,8° N). Längre norrut är vintern mörkare och solen lägre; längre söderut tvärtom.
+Punkterna nedan gäller referensfallet Jönköping (57,8° N). Längre norrut är vintern mörkare och solen lägre; längre söderut tvärtom.
 
 - December ger 19 procent av junis ljus. En vanlig decemberdag ger 0,31 kWh/m², och varje
   vinter har en period på fem, sex dagar under 0,1.
@@ -58,7 +58,7 @@ nås från [kalkylatorn](/wizard/solcell/), räknar igenom ett exempel.
 
 ## Hjälper det att panelerna är kalla?
 
-Det stämmer att en solcell ger mer i kyla, men för vintern spelar det nästan ingen roll. Siffrorna gäller Jönköping.
+Det stämmer att en solcell ger mer i kyla, men för vintern spelar det nästan ingen roll. Siffrorna gäller referensfallet Jönköping.
 
 | | Värde |
 |---|---|
@@ -150,7 +150,7 @@ norrut skymmer den ensam en stor del av vintersolen.
 
 {{% solar "capacity" %}}
 
-I Jönköping är 47 dagar (9 000 mAh) fler än den längsta solfria period som uppmätts. De
+47 dagar (9 000 mAh) är fler än den längsta solfria period som uppmätts i referensfallet Jönköping. De
 långa underskottsperioderna bakom träd är dunkla, inte mörka: panelen ger lite varje dag.
 
 ### Efter trädlinje och panelvinkel
@@ -300,7 +300,7 @@ med i siffrorna. [Solcellskalkylatorn](/wizard/solcell/) lägger till snödagarn
 ## Så togs siffrorna fram
 
 En simulering timme för timme över de 18 vintrarna 2005–2023, med PVGIS satellitdata för
-instrålning och temperatur för regionens plats (Jönköping: 57,78° N, 14,16° Ö). Trädlinjen stänger ute den direkta solen och
+instrålning och temperatur för regionens plats ({{% solar "point" %}}). Trädlinjen stänger ute den direkta solen och
 en del av himlen. Modellen räknar med panelens sämre verkningsgrad i svagt ljus, laddarens egna
 förluster och repeaterns förbrukning. Varje vinter ger det största underskott batteriet måste
 överbrygga. Tabellerna använder den sämsta vintern på fem år och lägger till 50 procent,

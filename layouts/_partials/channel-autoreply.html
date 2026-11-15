@@ -1,6 +1,7 @@
 {{- /* The region's channel list (params.channels): when any channel has `autoreply = true`, one
      line under the list saying their replies need auto-reply firmware, linked to the firmware
-     picker's auto-reply update. The channels themselves carry a `*`. */ -}}
+     picker's auto-reply update. The channels themselves carry no mark (v0.32.0): a `*` after a
+     name read as part of it. */ -}}
 {{- if where . "autoreply" true -}}
 {{- $picker := site.Params.firmware.picker | default "https://sweden-mesh.github.io/firmware/" -}}
 <p class="ch-ar"><a href="{{ $picker }}#f=ar&amp;install=update" target="_blank" rel="noopener">* {{ T "ch_requires_ar" }}&nbsp;<span aria-hidden="true">↗</span></a></p>

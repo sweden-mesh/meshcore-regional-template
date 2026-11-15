@@ -1,5 +1,5 @@
 // Position picker for the wizards: the site's map in "pick" mode. Click or drag
-// the pin; nearby repeaters from Beacon are shown so people see where coverage
+// the pin; nearby repeaters from Beacon (live, or as of the build) are shown so people see where coverage
 // already is. Reads the same data attributes as the main map (layouts/_partials/
 // mappick.html), and reports lat/lon rounded to 4 decimals (about 10 m).
 import { createMap } from "../map/basemap.js";
@@ -37,11 +37,25 @@ export async function createPicker(el, { onChange = () => {}, initial, onNodes }
   map.on("click", (e) => set(e.lngLat));
   marker.on("dragend", () => set(marker.getLngLat()));
   const ds = el.dataset;
-  if (ds.beacon) {
-    try {
+  // Live Beacon first; without one, the borders and repeaters the build fetched (data-pick).
+  const load = ds.beacon
+    ? async () => {
       const client = createClient(ds.beacon);
       const iatas = JSON.parse(ds.iatas || "[]");
       const [all, borders] = await Promise.all([client.getAll("/nodes", { iatas, limit: 2000 }), loadBorders(client, iatas)]);
+      return { all, borders };
+    }
+    : ds.pick
+      ? async () => {
+        const res = await fetch(ds.pick);
+        if (!res.ok) throw new Error(res.status);
+        const j = await res.json();
+        return { all: j.nodes || [], borders: (j.borders || []).filter((f) => f?.geometry) };
+      }
+      : null;
+  if (load) {
+    try {
+      const { all, borders } = await load();
       const nodes = publicNodes(all).filter((n) => n.nodeType === 2);
       const add = () => {
         addBorderLayers(map, borders);

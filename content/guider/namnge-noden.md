@@ -25,7 +25,7 @@ utan position.
 
 - Använd en välkänd plats som de flesta i trakten känner igen, inte ditt namn: andra ska förstå
   var repeatern står, inte vem som äger den.
-- Hoppa över `å`, `ä` och `ö` om namnet blir för långt (`Braneryd` i stället för `Bråneryd`).
+- Hoppa över `å`, `ä` och `ö` om namnet blir för långt{{< naming-ascii >}}.
 - Står flera repeatrar på samma plats? Lägg då till de fyra första tecknen av nodens publika
   nyckel (som `-FD70`), så krockar inte namnen. Står den ensam behövs de inte.
 

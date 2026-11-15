@@ -1,7 +1,7 @@
 {{- /* {{< solar "<part>" >}}: the solar-node page's region-specific numbers, from data/solar.toml
   keyed by the region's first map code (params.region.iatas). A region without its own entry
   gets Jönköping's (JKG), and the "where" part says so. Never scaled here.
-  Parts: where, short, irradiation, trees, capacity. */ -}}
+  Parts: where, point, short, irradiation, trees, capacity. */ -}}
 {{- $code := index (site.Params.region.iatas | default slice) 0 | default "" -}}
 {{- $d := index hugo.Data.solar $code -}}
 {{- $own := ne $d nil -}}
@@ -21,6 +21,8 @@
 > tabellerna visar siffrorna för Jönköping ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N). Längre
 > norrut behövs mer batteri, längre söderut mindre, och skillnaden växer med trädlinjen.
   {{- end -}}
+{{- else if eq $part "point" -}}
+  {{- $d.place }}: {{ lang.FormatNumberCustom 2 $d.lat $fmt "|" }}° N, {{ lang.FormatNumberCustom 2 $d.lon $fmt "|" }}° Ö
 {{- else if eq $part "short" -}}
   {{- $need := dict -}}{{- range $d.trees }}{{ if eq .deg 20 }}{{ $need = . }}{{ end }}{{ end -}}
   {{- $rec20 := 0 }}{{ $rec30 := 0 }}{{ $off20 := 0 -}}

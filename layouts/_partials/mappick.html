@@ -1,8 +1,20 @@
-{{- /* A map for picking a position (the wizards). Same settings as the main map. */ -}}
+{{- /* A map for picking a position (the wizards). Same settings as the main map. Without a live
+       Beacon, the borders and repeaters from the build (params.region.borders, see
+       beacon-snapshot.html) travel as one small fingerprinted file in data-pick. */ -}}
 {{- $r := site.Params.region -}}{{- $m := site.Params.map -}}
 {{- $ml := printf "lib/maplibre-gl/%s/" $m.maplibre -}}
+{{- $pick := dict -}}
+{{- if not site.Params.beacon.url -}}
+  {{- $snap := partialCached "beacon-snapshot.html" . "snapshot" -}}
+  {{- $nodes := slice -}}
+  {{- range $snap.nodes }}{{ if and (eq .nodeType 2) .lat .lng }}{{ $nodes = $nodes | append (dict "publicKey" .publicKey "name" .name "nodeType" 2 "lat" .lat "lng" .lng) }}{{ end }}{{ end -}}
+  {{- if or $snap.borders $nodes -}}
+    {{- $pick = resources.FromString "region/pick.json" (dict "borders" $snap.borders "nodes" $nodes | jsonify) | minify | fingerprint -}}
+  {{- end -}}
+{{- end -}}
 <div class="map map-pick" role="application" aria-label="{{ T "pick_label" }}"
      data-maplibre="{{ printf "%smaplibre-gl.mjs" $ml | relURL }}" data-maplibre-css="{{ printf "%smaplibre-gl.css" $ml | relURL }}"
      data-style-light="{{ $m.style_light }}" data-style-dark="{{ $m.style_dark }}"
      data-beacon="{{ site.Params.beacon.url }}" data-iatas="{{ $r.iatas | jsonify }}"
+     {{- with $pick }} data-pick="{{ .RelPermalink }}"{{ end }}
      data-center="{{ $r.center | jsonify }}" data-zoom="{{ $r.zoom }}"></div>

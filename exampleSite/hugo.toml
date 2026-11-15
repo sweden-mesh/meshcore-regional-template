@@ -20,10 +20,16 @@ enableRobotsTXT = true
   scope = "se-xxx"
   center = [57.78, 14.16]
   zoom = 9
+  # Without a live Beacon (params.beacon.url): the wizard maps' borders and repeaters, fetched
+  # from a Beacon while the site builds. Example: borders = "https://beacon.meshat.se"
+  # borders = ""
 
 [params.naming]
   pattern = "SE-XXX-Plats"
   example = "SE-XXX-Utsikten"
+  place = "Utsikten"
+  place_accented = "Älvängen"
+  place_ascii = "Alvangen"
   companion_example = "Kim"
   explain = "SE för Sverige, regionens kod och en välkänd plats. Står flera repeatrar på samma plats läggs de fyra första tecknen i nodens nyckel till, så att namnen inte krockar."
 

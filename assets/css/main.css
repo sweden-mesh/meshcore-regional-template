@@ -307,7 +307,6 @@ td, th { vertical-align: top; }
 .ch-ar { margin: .9rem 0 0; font-size: .75rem; font-style: italic; }
 .ch-ar a { color: var(--fg); text-decoration: none; }
 .ch-ar a:hover, .ch-ar a:focus-visible { text-decoration: underline; }
-.ch-ar-mark { margin-left: .15em; font-weight: 700; color: var(--accent-2); }
 .firmware-link { margin: .75rem 0 0; font-size: .9rem; }
 .namecheck { display: grid; grid-template-columns: minmax(0, 1fr); gap: .35rem; margin: 1rem 0; padding: .9rem 1.1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); }
 .namecheck label { font-weight: 600; font-size: .95rem; }
@@ -383,9 +382,14 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .wz-log { font: .85rem var(--font-mono); padding-left: 1.2rem; }
 .wz-log .error { color: var(--danger); }
 .wz-commands pre { background: var(--surface); padding: .75rem; border-radius: var(--radius-sm); overflow-x: auto; }
-.wz-progress { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; counter-reset: wz; }
-.wz-progress li { counter-increment: wz; padding: .3rem .7rem; border-radius: 999px; border: 1px solid var(--line); font-size: .85rem; cursor: pointer; background: var(--bg); }
-.wz-progress li::before { content: counter(wz) " "; font-weight: 700; color: var(--muted); }
+/* The guided wizard's steps: always one line. Number and label when all labels fit; otherwise
+   (.wz-compact, set by guided.js from the measured widths) only the numbers, evenly spread, with
+   the label kept for screen readers. */
+.wz-progress { list-style: none; display: flex; flex-wrap: nowrap; gap: .25rem; padding: 0; margin: 0; overflow: hidden; counter-reset: wz; }
+.wz-progress li { counter-increment: wz; position: relative; display: flex; align-items: center; gap: .3em; flex: 0 0 auto; white-space: nowrap; padding: .2rem .45rem; border-radius: 999px; border: 1px solid var(--line); font-size: .78rem; line-height: 1.35; cursor: pointer; background: var(--bg); }
+.wz-progress li::before { content: counter(wz); font-weight: 700; color: var(--muted); }
+.wz-progress.wz-compact li { flex: 1 1 0; min-width: 0; justify-content: center; padding: .3rem 0; font-size: .85rem; }
+.wz-progress.wz-compact .wz-step-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 .wz-progress li[aria-current] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .wz-progress li[aria-current]::before { color: inherit; }
 .wz-nav { display: flex; justify-content: space-between; }

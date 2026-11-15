@@ -1,0 +1,6 @@
+{{- /* {{< naming-ascii >}}: the region's example of a place name without å, ä and ö, from
+  params.naming.place_accented and place_ascii (" (`Braneryd` i stället för `Bråneryd`)").
+  Nothing when either is unset. */ -}}
+{{- with site.Params.naming -}}{{- if and .place_accented .place_ascii -}}
+{{- T "naming_ascii_example" (dict "Ascii" .place_ascii "Accented" .place_accented) | safeHTML -}}
+{{- end -}}{{- end -}}

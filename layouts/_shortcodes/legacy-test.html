@@ -1,0 +1,11 @@
+{{- /* {{< legacy-test >}}: where a lou repeater without `region home` sends its auto-replies. A
+  region that still lists the old IATA test channel (`#test-<first iata>`, lower case, in
+  params.channels) gets it named; any other region never sees that channel's name, since it
+  only ever spread in one region. */ -}}
+{{- $iata := lower (index (site.Params.region.iatas | default slice) 0 | default "") -}}
+{{- $ch := printf "#test-%s" $iata -}}
+{{- if and $iata (where (site.Params.channels | default slice) "name" $ch) -}}
+{{- T "legacy_test_named" (dict "Channel" $ch) | safeHTML -}}
+{{- else -}}
+{{- T "legacy_test_unnamed" -}}
+{{- end -}}

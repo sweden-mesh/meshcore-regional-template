@@ -61,8 +61,11 @@ this repository's `hugo.toml`.
 | `region.iatas` | observer IATA codes (MQTT topic) whose traffic the map shows, e.g. `["JKG"]` |
 | `region.scope` | optional: overrides the scope from the list (`se` = take it from the list) |
 | `region.center`, `region.zoom` | where the map starts, `[lat, lng]` and zoom |
+| `region.borders` | optional, for a site without `beacon.url`: a Beacon base URL (e.g. `"https://beacon.meshat.se"`) from which the build fetches the borders of `region.iatas` and the repeaters' positions, for the wizards' maps (one small fingerprinted file, `region/pick.json`). A failed fetch warns once and the maps show no border. With `beacon.url` set, the wizards use the live Beacon and this is not used |
 | `firmware.picker`, `firmware.flasher` | where to get firmware (default the sweden-mesh firmware picker) and the web flasher (default meshcore.io/flasher); used by the landing page and the firmware guide |
-| `naming.pattern`, `naming.example`, `naming.explain` | the region's suggested node names, shown in the naming guide; empty = general advice |
+| `naming.pattern`, `naming.example`, `naming.explain` | the region's suggested node names, shown in the naming guide; empty = general advice. The wizards take the name prefix from `pattern` (the part before `Plats`); without it, from the region's scope (`se-vgr` → `SE-VGR-`, `se05` → `SE05-`) |
+| `naming.place` | a well-known place in the region, the example in the wizards' place field ("en välkänd plats, till exempel Taberg"); empty = no example |
+| `naming.place_accented`, `naming.place_ascii` | a local place name with å, ä or ö and the same without (`"Bråneryd"`, `"Braneryd"`), the example in the naming guide's tip on leaving them out; either empty = no example |
 | `observer.preset` | the Observer firmware's MQTT preset that feeds this region's Beacon (default `meshat.se`), used by the map guide |
 | `radio.preset`, `radio.freq`, `radio.bw`, `radio.sf`, `radio.cr` | the region's radio preset (default EU/UK Narrow, 869.618 MHz, BW 62.5, SF8, CR8), shown by `{{</* settings */>}}` and on the landing page |
 | `map.style_light`, `map.style_dark` | basemap style URLs; default OpenFreeMap `liberty` and `dark` (no key, attribution shown by the map) |
@@ -75,7 +78,7 @@ this repository's `hugo.toml`.
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
 | `chats` | more named chat links, a list of `{name, url}` (e.g. the local and the national Discord) |
-| `channels` | a list of `{name, scope, purpose, note, autoreply}` (purpose and note take inline Markdown, e.g. `` `test` ``): the region's channels, shown on the landing page and by `{{</* channels */>}}`. `autoreply = true` adds a small line "Kräver auto-reply firmware" linking the firmware picker's auto-reply update (`params.firmware.picker`), for test channels in a region where few repeaters may run it yet |
+| `channels` | a list of `{name, scope, purpose, note, autoreply}` (purpose and note take inline Markdown, e.g. `` `test` ``): the region's channels, shown on the landing page and by `{{</* channels */>}}`. `autoreply = true` adds a small line "Kräver auto-reply firmware" linking the firmware picker's auto-reply update (`params.firmware.picker`), for test channels in a region where few repeaters may run it yet. The old IATA test channel (`#test-<first iata>`) is named in the guides only when it is in this list |
 | `analytics.plausible`, `analytics.script`, `analytics.api` | optional cookieless Plausible: the site's `pa-<id>.js` script and the event endpoint, both served from the site's own origin through a proxy; never loaded on a `noindex` build |
 
 ## Start a region site
