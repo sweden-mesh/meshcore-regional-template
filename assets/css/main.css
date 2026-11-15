@@ -195,6 +195,17 @@ a { color: var(--accent); }
 .swatch-link { width: 1.6rem; height: 2px; background: #64748b; }
 .swatch-link-strong { width: 1.6rem; height: 3px; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); }
 .swatch-flow { width: .7rem; height: .7rem; border-radius: 50%; background: #f97316; border: 1.5px solid #fff; box-shadow: 0 0 0 1px #f97316; }
+/* MeshMapper coverage (assets/js/map/coverage.js RAMP and HATCH): the same colours as on the map, per basemap. */
+.map-legend { --cov-0: #5b21b6; --cov-1: #7c3aed; --cov-2: #a78bfa; --cov-3: #ddd6fe; --cov-dead: rgb(214, 120, 110); }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; --cov-dead: rgb(168, 72, 64); }
+}
+:root[data-theme="light"] body:not(.style-console) .map-legend { --cov-0: #a78bfa; --cov-1: #7c3aed; --cov-2: #5b21b6; --cov-3: #2e1065; --cov-dead: rgb(168, 72, 64); }
+[class^="swatch-cov-"] { width: 1rem; height: 1rem; border-radius: 2px; }
+.swatch-cov-0 { background: var(--cov-0); } .swatch-cov-1 { background: var(--cov-1); }
+.swatch-cov-2 { background: var(--cov-2); } .swatch-cov-3 { background: var(--cov-3); }
+.swatch-cov-old { background: var(--cov-2); opacity: .4; }
+.swatch-cov-dead { background: repeating-linear-gradient(-45deg, var(--cov-dead) 0 2px, transparent 2px 5.6px); outline: 1px solid var(--line); }
 .maplibregl-popup-content { border-radius: var(--radius-sm); padding: .75rem 1rem; box-shadow: 0 8px 24px rgba(15, 29, 38, .2); font-family: var(--font-body); }
 .node-popup h3 { font-family: var(--font-head); }
 .packets { background: var(--surface); border-radius: var(--radius); padding: 1rem 1.25rem; }

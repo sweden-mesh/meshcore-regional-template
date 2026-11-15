@@ -1,4 +1,6 @@
 import { effectiveTheme } from "../theme.js";
+import { t } from "./texts.js";
+import { escapeHtml } from "./popup.js";
 
 // MeshMapper coverage: the compact file written at build time
 // (layouts/_partials/meshmapper-coverage.html) turned into map polygons.
@@ -20,11 +22,13 @@ export function toGeoJSON(data) {
   const [dLat, dLon] = data?.grid || [];
   const features = [];
   if (!(dLat > 0 && dLon > 0)) return { type: "FeatureCollection", features };
+  const atDay = Math.floor((data.at || 0) / 86400);
   for (const [li, lo, kind, eff10, ageDays, type, pings] of data.squares || []) {
     const s = r6(li * dLat), n = r6((li + 1) * dLat), w = r6(lo * dLon), e = r6((lo + 1) * dLon);
     features.push({
       type: "Feature",
-      properties: { kind, band: band(eff10), eff10, old: ageDays > OLD_DAYS, ageDays, type: data.types?.[type] ?? "", pings },
+      properties: { kind, band: band(eff10), eff10, old: ageDays > OLD_DAYS, ageDays, type: data.types?.[type] ?? "", pings,
+        date: new Date((atDay - ageDays) * 864e5).toISOString().slice(0, 10) },
       geometry: { type: "Polygon", coordinates: [[[w, s], [e, s], [e, n], [w, n], [w, s]]] },
     });
   }
@@ -53,6 +57,21 @@ export function hatchImage(rgb, ratio = 1) {
   return { width: n, height: n, data };
 }
 
+// The square's popup: quality band (or dead zone), best type, pings, last measured date.
+export function coveragePopupHtml(p) {
+  const dead = p.kind === "d";
+  const rows = [];
+  if (!dead) rows.push(`${t("cov_quality")}: ${t(`cov_q_${p.band}`)}`);
+  rows.push(`${t("cov_best")}: ${t(`cov_${p.type}`)}`, `${t("cov_pings")}: ${p.pings}`, `${t("cov_last")}: ${p.date}`);
+  return `<div class="node-popup"><h3>${escapeHtml(t(dead ? "cov_dead_heading" : "cov_heading"))}</h3>${rows.map((r) => `<p>${escapeHtml(r)}</p>`).join("")}</div>`;
+}
+
+// The legend entries; each is shown only while its layer is on (MapPanel's when).
+export function coverageLegend() {
+  return [0, 1, 2, 3].map((b) => ({ swatch: `cov-${b}`, label: t("lg_cov", { q: t(`cov_q_${b}`) }), when: ["cov"] }))
+    .concat([{ swatch: "cov-old", label: t("lg_cov_old"), when: ["cov"] }, { swatch: "cov-dead", label: t("lg_cov_dead"), when: ["cov", "dead"] }]);
+}
+
 // The layers sit under the region line, the links and the nodes, so the network stays on top.
 // Re-run after a style switch (setStyle drops every layer and image).
 const ABOVE = ["region-line", "links", "links-selected", "packet-path", "flow-glow", "node-points"];
@@ -78,23 +97,40 @@ export function addCoverageLayers(map, data, { visible = false, dead = false, th
 
 // Loads the data the first time the layer is switched on, keeps it, and puts the layer back
 // after a style switch. A failed load leaves the toggle on with nothing drawn and is retried
-// on the next switch-on.
-export function coverageControl(map, url, on) {
+// on the next switch-on. A click on a square opens its popup, unless a node is under the
+// pointer (the node's own popup wins).
+const NODE_LAYERS = ["node-points", "node-pills"];
+
+export function coverageControl(map, maplibregl, url, { on = false, dead = false } = {}) {
   let fc = null, loading = null;
-  const ctl = { on, dead: false };
+  const ctl = { on, dead };
   const draw = () => {
     if (!fc || !map.getStyle()) return;
     try { addCoverageLayers(map, fc, { visible: ctl.on, dead: ctl.dead }); } catch { map.once("idle", draw); }
   };
-  ctl.set = async (value) => {
-    ctl.on = value;
-    if (value && !fc) {
+  ctl.set = async (key, value) => {
+    ctl[key === "dead" ? "dead" : "on"] = value;
+    if (ctl.on && !fc) {
       loading ??= fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))));
       try { fc = toGeoJSON(await loading); } catch (err) { loading = null; console.warn("Coverage not loaded", err); return; }
     }
     draw();
   };
+  // A new popup per click: a popup's own close-on-click runs after this handler and would
+  // close a reused one straight away.
+  let popup = null;
+  for (const id of ["coverage-fill", "coverage-dead"]) {
+    map.on("click", id, (e) => {
+      const layers = NODE_LAYERS.filter((l) => map.getLayer(l));
+      if (layers.length && map.queryRenderedFeatures(e.point, { layers }).length) return;
+      popup?.remove();
+      popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true })
+        .setLngLat(e.lngLat).setHTML(coveragePopupHtml(e.features[0].properties)).addTo(map);
+    });
+    map.on("mouseenter", id, () => { map.getCanvas().style.cursor = "pointer"; });
+    map.on("mouseleave", id, () => { map.getCanvas().style.cursor = ""; });
+  }
   map.on("style.load", draw);
-  if (on) ctl.set(true);
+  if (on) ctl.set("cov", true);
   return ctl;
 }

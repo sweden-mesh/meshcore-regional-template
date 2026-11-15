@@ -750,3 +750,43 @@ other = "Gäller en 6 V-panel (tomgångsspänning cirka 6–6,6 V i full sol) me
 other = "Täckning från MeshMapper, uppmätt till och med {{ .Date }}."
 [map_coverage]
 other = "Täckning"
+[mt_lg_cov]
+other = "täckning: {q}"
+[mt_lg_cov_old]
+other = "blekare: senast uppmätt för över 90 dagar sedan"
+[mt_lg_cov_dead]
+other = "död zon: uppmätt, inget kom fram"
+[mt_cov_heading]
+other = "Täckning"
+[mt_cov_dead_heading]
+other = "Död zon"
+[mt_cov_quality]
+other = "Kvalitet"
+[mt_cov_q_0]
+other = "svag"
+[mt_cov_q_1]
+other = "ojämn"
+[mt_cov_q_2]
+other = "god"
+[mt_cov_q_3]
+other = "stabil"
+[mt_cov_best]
+other = "Bästa kontakt"
+[mt_cov_pings]
+other = "Pingar"
+[mt_cov_last]
+other = "Senast uppmätt"
+[mt_cov_BIDIR]
+other = "tvåvägs"
+[mt_cov_DISC]
+other = "svar på förfrågan"
+[mt_cov_TX]
+other = "sändning nådde nätet"
+[mt_cov_RX]
+other = "hörde nätet"
+[mt_cov_DEAD]
+other = "repeater utan vidare"
+[mt_cov_DROP]
+other = "ingen kontakt"
+[map_dead]
+other = "Döda zoner"

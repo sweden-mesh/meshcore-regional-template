@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { band, toGeoJSON, hatchImage, RAMP } from "../assets/js/map/coverage.js";
+import { band, toGeoJSON, hatchImage, RAMP, coveragePopupHtml, coverageLegend } from "../assets/js/map/coverage.js";
 
 // The example site's fixture: a real MeshMapper answer (32 squares). The compact rows are built
 // here the way the Hugo partial builds them.
@@ -30,7 +30,7 @@ test("bands follow the quartile cuts, dead and old squares are flagged", () => {
   assert.deepEqual([0, 9, 10, 17, 18, 22, 23, 30].map(band), [0, 0, 1, 1, 2, 2, 3, 3]);
   const fc = toGeoJSON(data);
   const at = (id) => fc.features[raw.grid_squares.findIndex((s) => s.grid_id === id)].properties;
-  assert.deepEqual(at("21400_3688"), { kind: "w", band: 2, eff10: 19, old: false, ageDays: 4, type: "BIDIR", pings: 294 }); // 1.93, 4 days
+  assert.deepEqual(at("21400_3688"), { kind: "w", band: 2, eff10: 19, old: false, ageDays: 4, type: "BIDIR", pings: 294, date: "2026-11-11" }); // 1.93, 4 days
   assert.equal(at("21397_3681").band, 3);  // effective 3
   assert.equal(at("21397_3681").old, true); // 98 days
   assert.equal(at("21400_3685").band, 0);   // 0.86
@@ -63,4 +63,20 @@ test("each theme's ramp gets lighter or darker in one direction", () => {
   const l = RAMP.light.map(lum), d = RAMP.dark.map(lum);
   assert.ok(l.every((v, i) => i === 0 || v < l[i - 1]), "light: light to dark");
   assert.ok(d.every((v, i) => i === 0 || v > d[i - 1]), "dark: dark to light");
+});
+
+test("the popup names quality, best type, pings and the date of the newest ping", () => {
+  const fc = toGeoJSON(data);
+  raw.grid_squares.forEach((s, i) => assert.equal(fc.features[i].properties.date, new Date(s.timestamp * 1000).toISOString().slice(0, 10)));
+  const p = fc.features[raw.grid_squares.findIndex((s) => s.grid_id === "21400_3688")].properties;
+  assert.equal(coveragePopupHtml(p), '<div class="node-popup"><h3>Täckning</h3><p>Kvalitet: god</p><p>Bästa kontakt: tvåvägs</p><p>Pingar: 294</p><p>Senast uppmätt: 2026-11-11</p></div>');
+  const d = fc.features[raw.grid_squares.findIndex((s) => s.grid_id === "21404_3680")].properties; // DROP
+  assert.match(coveragePopupHtml(d), /<h3>Död zon<\/h3><p>Bästa kontakt: ingen kontakt<\/p>/);
+});
+
+test("legend: four bands and the fade with the layer, dead zones only with their toggle", () => {
+  const l = coverageLegend();
+  assert.deepEqual(l.map((x) => x.swatch), ["cov-0", "cov-1", "cov-2", "cov-3", "cov-old", "cov-dead"]);
+  assert.equal(l[3].label, "täckning: stabil");
+  assert.deepEqual(l.at(-1).when, ["cov", "dead"]);
 });

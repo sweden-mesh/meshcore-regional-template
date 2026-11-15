@@ -13,7 +13,7 @@ import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbo
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
 import { setTexts, t } from "./texts.js";
-import { coverageControl } from "./coverage.js";
+import { coverageControl, coverageLegend } from "./coverage.js";
 
 const el = document.getElementById("map");
 
@@ -25,14 +25,16 @@ async function start() {
   const url = parseState(location.search);
   // MeshMapper coverage (data-coverage): off by default, loaded on first switch-on. Works
   // without Beacon too, with a panel of its own.
-  const cov = ds.coverage ? coverageControl(map, ds.coverage, url.cov ?? false) : null;
+  const cov = ds.coverage ? coverageControl(map, maplibregl, ds.coverage, { on: url.cov ?? false, dead: url.dead ?? false }) : null;
   el.coverage = cov; // for browser tests
-  const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on }] : [];
-  const covToggle = (key, on) => { if (key === "cov") cov.set(on); };
+  const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on },
+    { key: "dead", label: ds.deadLabel || "Döda zoner", on: cov.dead, showWhen: "cov" }] : [];
+  const covLegend = cov ? coverageLegend() : [];
+  const covToggle = (key, on) => { if (key === "cov" || key === "dead") cov.set(key, on); };
   if (!ds.beacon) {
-    if (cov) map.addControl(new MapPanel({ toggles: covToggles, legend: [], onToggle: (key, on) => {
+    if (cov) map.addControl(new MapPanel({ toggles: covToggles, legend: covLegend, onToggle: (key, on) => {
       covToggle(key, on);
-      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov.on }) + location.hash);
+      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov.on, dead: cov.dead }) + location.hash);
     } }), "top-left");
     return;
   }
@@ -41,7 +43,7 @@ async function start() {
   const opts = { companions: ds.companions === "true" };
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   const saveUrl = (extra = {}) => {
-    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, ...extra });
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, dead: cov?.dead, ...extra });
     history.replaceState(null, "", location.pathname + q + location.hash);
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
@@ -75,6 +77,7 @@ async function start() {
       { swatch: "link", label: t("lg_link") },
       { swatch: "link-strong", label: t("lg_link_strong") },
       { swatch: "flow", label: t("lg_flow") },
+      ...covLegend,
     ],
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); }

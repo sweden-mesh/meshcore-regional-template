@@ -754,3 +754,43 @@ other = "For a 6 V panel (open-circuit about 6–6.6 V in full sun) with the cha
 other = "Coverage from MeshMapper, measured up to and including {{ .Date }}."
 [map_coverage]
 other = "Coverage"
+[mt_lg_cov]
+other = "coverage: {q}"
+[mt_lg_cov_old]
+other = "fainter: last measured over 90 days ago"
+[mt_lg_cov_dead]
+other = "dead zone: measured, nothing got through"
+[mt_cov_heading]
+other = "Coverage"
+[mt_cov_dead_heading]
+other = "Dead zone"
+[mt_cov_quality]
+other = "Quality"
+[mt_cov_q_0]
+other = "weak"
+[mt_cov_q_1]
+other = "patchy"
+[mt_cov_q_2]
+other = "good"
+[mt_cov_q_3]
+other = "steady"
+[mt_cov_best]
+other = "Best contact"
+[mt_cov_pings]
+other = "Pings"
+[mt_cov_last]
+other = "Last measured"
+[mt_cov_BIDIR]
+other = "two-way"
+[mt_cov_DISC]
+other = "answer to a request"
+[mt_cov_TX]
+other = "sending reached the mesh"
+[mt_cov_RX]
+other = "heard the mesh"
+[mt_cov_DEAD]
+other = "a repeater, nothing further"
+[mt_cov_DROP]
+other = "no contact"
+[map_dead]
+other = "Dead zones"
