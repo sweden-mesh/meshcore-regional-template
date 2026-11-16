@@ -908,3 +908,23 @@ other = "No replies to test in {{ .Test }}? Usually you have not waited two minu
 other = "Questions about MeshCore in {{ .Name }}"
 [lan_faq_desc]
 other = "Where to get help with MeshCore in {{ .Name }} and which channels the county uses."
+[lan_list_title]
+other = "Choose a county"
+[lan_list_desc]
+other = "MeshCore in Sweden's 21 counties: choose yours for its region, channels and map. Counties with a MeshCore site of their own are linked there."
+[lan_own_mark]
+other = "own site"
+[lan_region]
+other = "region"
+[lan_sweden]
+other = "Sweden (the whole country)"
+[lan_own_title]
+other = "{{ .Name }} has its own site"
+[lan_own_desc]
+other = "MeshCore in {{ .Name }} has its own site, with the county's map, channels and guides."
+[lan_own_text]
+other = "MeshCore in {{ .Name }} has its own site, which shows the county's map, channels and settings. This site does not show the county, so its details live in one place."
+[lan_own_go]
+other = "Go to {{ .Site }}"
+[lan_own_other]
+other = "Choose another county"

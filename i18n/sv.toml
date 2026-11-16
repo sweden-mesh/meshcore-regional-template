@@ -904,3 +904,23 @@ other = "Inga svar på test i {{ .Test }}? Oftast har du inte väntat två minut
 other = "Frågor om MeshCore i {{ .Name }}"
 [lan_faq_desc]
 other = "Var du får hjälp med MeshCore i {{ .Name }} och vilka kanaler som används i länet."
+[lan_list_title]
+other = "Välj län"
+[lan_list_desc]
+other = "MeshCore i Sveriges 21 län: välj ditt län för länets region, kanaler och karta. Län med en egen MeshCore-sida länkas dit."
+[lan_own_mark]
+other = "egen sida"
+[lan_region]
+other = "region"
+[lan_sweden]
+other = "Sverige (hela landet)"
+[lan_own_title]
+other = "{{ .Name }} har en egen sida"
+[lan_own_desc]
+other = "MeshCore i {{ .Name }} har en egen sida, med länets karta, kanaler och guider."
+[lan_own_text]
+other = "MeshCore i {{ .Name }} har en egen sida, som visar länets karta, kanaler och inställningar. Den här sidan visar inte länet, så att uppgifterna bara finns på ett ställe."
+[lan_own_go]
+other = "Gå till {{ .Site }}"
+[lan_own_other]
+other = "Välj ett annat län"
