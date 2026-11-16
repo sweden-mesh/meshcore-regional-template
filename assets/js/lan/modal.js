@@ -3,7 +3,7 @@
 // a county (no county address, no ?lan=, nothing stored) unless storage is blocked; otherwise
 // opened by the header's county button. A county with its own site is never saved: picking it
 // shows a choice between going there and picking another county.
-import { modalModel, fillTemplate } from "./lan.js";
+import { modalModel, fillTemplate, geoToPaths } from "./lan.js";
 
 const lan = window.meshcoreLan;
 const root = document.documentElement;
@@ -47,8 +47,34 @@ function showList(forced) {
     body.unshift(close);
   }
   dialog.replaceChildren(...body);
+  drawMap(dialog.querySelector("[data-lan-map]"), model);
   dialog.dispatchEvent(new CustomEvent("lan:list", { bubbles: true, detail: { pick: (v) => { const it = model.items.find((i) => i.v === v); if (it) pick(it); } } }));
   return head;
+}
+
+// The county map beside the list: fetched when the modal first opens. The shapes are clickable but
+// not tab stops and hidden from screen readers; the list is the keyboard and screen-reader path.
+let geoPromise = null;
+const SVG = "http://www.w3.org/2000/svg";
+function drawMap(slot, model) {
+  if (!lan.data.geo || !slot) return;
+  geoPromise ||= fetch(lan.data.geo).then((r) => r.json()).then((g) => geoToPaths(g, 300)).catch(() => null);
+  geoPromise.then((m) => {
+    if (!m || !slot.isConnected) return;
+    const svg = document.createElementNS(SVG, "svg");
+    svg.setAttribute("viewBox", m.viewBox); svg.setAttribute("aria-hidden", "true"); svg.setAttribute("class", "lan-map");
+    for (const p of m.paths) {
+      const item = model.items.find((i) => i.v === p.scb);
+      const path = document.createElementNS(SVG, "path");
+      path.setAttribute("d", p.d);
+      path.setAttribute("class", [item && item.own ? "own" : "", item && item.current ? "current" : ""].join(" ").trim());
+      const t = document.createElementNS(SVG, "title"); t.textContent = item ? item.name : p.name; path.append(t);
+      if (item) path.addEventListener("click", () => pick(item));
+      svg.append(path);
+    }
+    const cur = svg.querySelector(".current"); if (cur) svg.append(cur); // drawn last, so its outline is whole
+    slot.replaceChildren(svg);
+  });
 }
 
 function showOwn(item) {

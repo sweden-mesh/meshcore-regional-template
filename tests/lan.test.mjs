@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { countyFor, valuesFor, titleFor, cookieLine, VALID, groupsFor, channelRows, modalModel, fillTemplate } from "../assets/js/lan/lan.js";
+import { countyFor, valuesFor, titleFor, cookieLine, VALID, groupsFor, channelRows, modalModel, fillTemplate, geoToPaths } from "../assets/js/lan/lan.js";
 
 const data = {
   sweden: { name: "Sverige", short: "Sverige" },
@@ -53,4 +53,19 @@ test("the modal lists every county and Sverige, an own site marked by its domain
   assert.equal(m.items.find((i) => i.v === "09").current, true);
   assert.equal(m.items.at(-1).name, "Sverige (hela landet)");
   assert.equal(fillTemplate("{name} har en egen sida ({x})", { name: "Jönköpings län" }), "Jönköpings län har en egen sida ({x})");
+});
+test("the modal map: one path per county, inside the view box", async () => {
+  const { readFileSync } = await import("node:fs");
+  const geo = JSON.parse(readFileSync(new URL("../assets/se-lan.geojson", import.meta.url), "utf8"));
+  const m = geoToPaths(geo, 300);
+  assert.equal(m.paths.length, 21);
+  const [, , vw, vh] = m.viewBox.split(" ").map(Number);
+  assert.equal(vw, 300); assert.ok(vh > 500 && vh < 900, `height ${vh}`);
+  for (const p of m.paths) {
+    assert.match(p.d, /^M[\d.,LMZ]+Z$/);
+    for (const [x, y] of p.d.match(/[\d.]+,[\d.]+/g).map((c) => c.split(",").map(Number))) assert.ok(x >= 0 && x <= vw + 0.01 && y >= 0 && y <= vh + 0.5);
+  }
+  const skane = m.paths.find((p) => p.scb === "12"), norrbotten = m.paths.find((p) => p.scb === "25");
+  const maxY = (d) => Math.max(...d.match(/,[\d.]+/g).map((c) => +c.slice(1)));
+  assert.ok(maxY(skane.d) > maxY(norrbotten.d), "Skåne is south of Norrbotten");
 });

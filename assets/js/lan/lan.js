@@ -67,3 +67,23 @@ export function modalModel(data, current) {
   items.push({ v: "se", name: data.texts.sweden, own: false, site: "", domain: "", current: current === "se" });
   return { items };
 }
+
+// The county map for the modal: one SVG path per county from se-lan.geojson ([lon, lat]
+// rings), in a plain equirectangular projection squeezed by cos(62°) so Sweden keeps its shape.
+// Returns { viewBox, paths: [{ scb, name, d }] }, coordinates rounded to 0.01.
+export function geoToPaths(geo, width = 300) {
+  const k = Math.cos((62 * Math.PI) / 180);
+  let w = 180, e = -180, s = 90, n = -90;
+  const polys = (g) => (g.type === "Polygon" ? [g.coordinates] : g.coordinates);
+  for (const f of geo.features) for (const poly of polys(f.geometry)) for (const ring of poly) for (const [x, y] of ring) {
+    if (x < w) w = x; if (x > e) e = x; if (y < s) s = y; if (y > n) n = y;
+  }
+  const scale = width / ((e - w) * k);
+  const height = Math.round((n - s) * scale);
+  const r = (v) => Math.round(v * 100) / 100;
+  const paths = geo.features.map((f) => ({
+    scb: f.properties.scb, name: f.properties.name,
+    d: polys(f.geometry).map((poly) => poly.map((ring) => "M" + ring.map(([x, y]) => `${r((x - w) * k * scale)},${r((n - y) * scale)}`).join("L") + "Z").join("")).join(""),
+  }));
+  return { viewBox: `0 0 ${width} ${height}`, paths };
+}

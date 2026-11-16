@@ -60,3 +60,11 @@ dialog.lan-modal:modal { overscroll-behavior: contain; }
 .lan-modal-list button:hover, .lan-modal-list button:focus-visible { border-color: var(--accent); color: var(--accent); }
 .lan-modal-list button[aria-current="true"] { border-color: var(--accent); border-width: 2px; }
 .lan-modal-own { display: block; font-size: 0.85em; color: var(--muted); }
+
+/* The modal's county map: outlines, the chosen county by a thick outline as well as its fill. */
+.lan-map { width: 100%; max-height: 60dvh; display: block; }
+.lan-map path { fill: var(--surface, transparent); stroke: var(--muted); stroke-width: 0.6; stroke-linejoin: round; cursor: pointer; }
+.lan-map path:hover { fill: color-mix(in srgb, var(--accent) 30%, transparent); stroke: var(--accent); }
+.lan-map path.own { fill: color-mix(in srgb, var(--muted) 18%, transparent); }
+.lan-map path.current { fill: color-mix(in srgb, var(--accent) 45%, transparent); stroke: var(--fg); stroke-width: 2; }
+@media (max-width: 47.99em) { .lan-modal-map { display: none; } }
