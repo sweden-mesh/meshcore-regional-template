@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.40.1 — 2026-11-16
+
+National mode only (anti-AI-design review, iteration 14): the välj län note loses its coloured left
+stripe (a plain muted line); Kom igång says "kanalen … för den" when a county has only its test
+channel. Regional output unchanged.
+
 ## v0.40.0 — 2026-11-16
 
 National mode, phases 1–2 (NATIONAL-7, the national site meshcore-swe.se). Everything sits behind

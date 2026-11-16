@@ -39,7 +39,7 @@ en chattkanal: varje test kostar sändningstid för alla inom räckhåll. Mer om
 3. **Ställ in radion i appen.** [Wizarden för companion](/wizard/companion/) visar värdena i den
    ordning appen frågar efter dem, och [Kom igång med en companion](/guider/companion/) förklarar
    varje steg.
-4. **Lägg till kanalerna** {{ range $i, $c := .Channels }}{{ if $i }} och {{ end }}`{{ $c }}`{{ end }}, och välj regionen `{{ .Scope }}` för dem.
+4. **Lägg till {{ if gt (len .Channels) 1 }}kanalerna{{ else }}kanalen{{ end }}** {{ range $i, $c := .Channels }}{{ if $i }} och {{ end }}`{{ $c }}`{{ end }}, och välj regionen `{{ .Scope }}` för {{ if gt (len .Channels) 1 }}dem{{ else }}den{{ end }}.
 5. **Skicka en advert,** så att de andra ser din radio.
 6. **Skriv `test` i `{{ .Test }}`.** Repeatrar med auto-svar svarar med en kort rapport om vem som
    hörde dig och hur starkt. Svaren kommer utspridda under ungefär två minuter, så vänta innan du
