@@ -33,7 +33,12 @@
         <li><a href="https://github.com/sweden-mesh/meshcore-regional-template" class="ext" target="_blank" rel="noopener">{{ T "footer_template" }}</a></li>
         {{ with site.Params.beacon.url }}<li><a href="{{ . }}/swagger/index.html" class="ext" target="_blank" rel="noopener">{{ T "footer_beacon" }}</a></li>{{ end }}
         {{ with site.GetPage "/bli-nodvard" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+        {{- if site.Params.national }}
+        {{- /* National (G25): the county-data guide in place of "start a site for your region". */}}
+        {{ with site.Params.lanData }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "lan_footer_data" }}</a></li>{{ end }}
+        {{- else }}
         {{ with site.GetPage "/egen-regional-sida" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+        {{- end }}
         {{ with site.Params.contact.email }}<li><a href="mailto:{{ . }}">{{ T "footer_contact" }}: {{ . }}</a></li>{{ end }}
         {{ with site.GetPage "/integritet" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         <li>{{ T "footer_license" }}</li>

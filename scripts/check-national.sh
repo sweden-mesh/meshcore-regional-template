@@ -111,4 +111,7 @@ check lan/index.html '<meta name=description content="MeshCore i Sveriges 21 lä
 check index.html '"@type":"Organization"[^}]*"name":"MeshCore Exempellandet"' "seo: the Organization is the site"
 # Plausible (G23, Q6.5): the chosen county travels as the custom property lan.
 check index.html 'plausible.init({endpoint:"/p/event",customProperties:function(){return{lan:document.documentElement.getAttribute("data-lan")||"se"}}})' "analytics: every event carries the county as lan"
+# The footer's link (G25): the county-data guide instead of "start a site for your region".
+check index.html '<a href=https://example.org/county-data class=ext target=_blank rel=noopener>Rätta ditt läns uppgifter</a>' "footer: the county-data guide is linked"
+if sed -n '/<footer/,/<\/footer>/p' "$P/index.html" | grep -q 'egen-regional-sida'; then echo "FAIL footer: still invites a site of one's own"; fail=1; else echo "ok   footer: no start-a-site link"; fi
 exit $fail

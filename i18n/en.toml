@@ -976,3 +976,5 @@ other = "The place is in {name}, not in {chosen}. The settings are for {chosen}.
 other = "The place is in {name}."
 [lan_wz_switch]
 other = "Switch to {short}"
+[lan_footer_data]
+other = "Correct your county's details"

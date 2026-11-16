@@ -972,3 +972,5 @@ other = "Platsen ligger i {name}, inte i {chosen}. Inställningarna gäller {cho
 other = "Platsen ligger i {name}."
 [lan_wz_switch]
 other = "Byt till {short}"
+[lan_footer_data]
+other = "Rätta ditt läns uppgifter"
