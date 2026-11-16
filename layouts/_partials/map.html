@@ -40,6 +40,15 @@
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
+  {{- /* National mode, a county's page (Q6.7, Q7.9): no observer in its map area has reported in the last
+         7 days, so the map can look empty where nodes exist. Counted from the build's snapshot. map-mm keeps the map's own fallback note (main.js) off it. */}}
+  {{- if site.Params.national }}{{ if and (partial "lan-page.html" .) (eq $snap.source "beacon") }}
+    {{- $since := mul (sub now.Unix 604800) 1000 }}{{ $obs := 0 }}
+    {{- range $snap.nodes }}{{ if and .isObserver (gt (float (.lastSeen | default 0)) (float $since)) }}{{ $obs = add $obs 1 }}{{ end }}{{ end }}
+    {{- if eq $obs 0 }}
+  <p class="map-note map-mm lan-no-observers">{{ T "lan_no_observers" (dict "URL" ((site.GetPage "/guider/visa-pa-kartan").RelPermalink | default "/guider/visa-pa-kartan/")) | safeHTML }}</p>
+    {{- end }}
+  {{- end }}{{ end }}
   {{ with $cov }}<p class="map-note map-mm map-cov-at" hidden>{{ T "map_coverage_measured" (dict "Date" (time.Format "2006-01-02" (time.AsTime .newest))) }}
     {{- with site.GetPage "/guider/visa-pa-kartan" }} {{ T "map_coverage_hint" (dict "Old" 90 "URL" (printf "%s#%s" .RelPermalink (anchorize (T "mm_title")))) | $.Page.RenderString }}{{ end }}</p>{{ end }}
   {{ with site.Params.meshmapper.url }}<p class="map-note map-mm">{{ T "map_meshmapper_note" (dict "URL" .) | $.Page.RenderString }}</p>{{ end }}

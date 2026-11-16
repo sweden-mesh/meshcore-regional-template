@@ -958,3 +958,5 @@ other = "The county decides the region (scope) your radios use, the county's cha
 other = "Counties"
 [lan_modal_current]
 other = "chosen now"
+[lan_no_observers]
+other = "No observers report here yet: <a href=\"{{ .URL }}\">how to add one</a>. The map shows only what observers hear, so there may be more nodes here than it shows."

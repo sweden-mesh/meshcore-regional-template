@@ -954,3 +954,5 @@ other = "Länet bestämmer regionen (scope) dina radior ska använda, länets ka
 other = "Län"
 [lan_modal_current]
 other = "valt nu"
+[lan_no_observers]
+other = "Inga observatörer rapporterar här än: <a href=\"{{ .URL }}\">så bidrar du</a>. Kartan visar bara det som observatörer hör, så det kan finnas fler noder här än den visar."
