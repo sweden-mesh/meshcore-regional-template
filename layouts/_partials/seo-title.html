@@ -4,7 +4,8 @@
        its title here only (SEO-T6), kept short so the result is at most 60
        characters; a seoTitle that already names MeshCore ends in "– <short>". */ -}}
 {{- $short := (partialCached "region.html" . "region").short -}}
-{{- if .IsHome -}}
+{{- $lan := partial "lan-page.html" . -}}{{- with $lan }}{{ $short = .short }}{{ end -}}
+{{- if or .IsHome (and $lan .Params.lanHome) -}}
   {{- T "seo_home_title" (dict "Short" $short) -}}
 {{- else if eq .Kind "404" -}}
   {{- printf "%s – MeshCore %s" (T "nf_title") $short -}}

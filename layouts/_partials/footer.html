@@ -2,7 +2,13 @@
   <div class="footer-grid">
     <div>
       <p class="footer-title">{{ site.Title }}</p>
+      {{- if site.Params.national }}
+      {{- /* National: the page's county, or "Sverige" and se; the apply script fills the chosen county. */}}
+      {{- $r := partialCached "region.html" . "region" }}{{ with partial "lan-page.html" . }}{{ $r = . }}{{ end }}
+      <p class="muted"><span data-r="name">{{ $r.name }}</span> · {{ T "network_scope" }} <code class="scope" data-r="scope">{{ $r.scope }}</code></p>
+      {{- else }}
       <p class="muted">{{ with partialCached "region.html" . "region" }}{{ .name }} · {{ T "network_scope" }} <code class="scope">{{ .scope }}</code>{{ end }}</p>
+      {{- end }}
     </div>
     <div>
       <p class="footer-title">{{ T "section_community" }}</p>
