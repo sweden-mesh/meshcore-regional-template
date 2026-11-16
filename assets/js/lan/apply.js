@@ -13,6 +13,7 @@ const baseTitle = document.title;
 function fill(v) {
   const c = countyFor(data, v);
   const values = valuesFor(data, c);
+  if (c) values.label = c.short; else if (v === "se") values.label = data.sweden.short;
   for (const el of document.querySelectorAll("[data-r]")) {
     if (!("rNeutral" in el.dataset)) el.dataset.rNeutral = el.textContent;
     const val = values[el.dataset.r];
@@ -21,6 +22,7 @@ function fill(v) {
   renderLists(c);
   for (const el of document.querySelectorAll("[data-r-proposal]")) el.hidden = !(c && c.decision === "forslag");
   document.title = titleFor(baseTitle, data.sweden.short, c);
+  for (const a of document.querySelectorAll(".lan-toggle")) a.setAttribute("aria-label", `${a.title}: ${values.label || a.querySelector("[data-r=label]").textContent}`);
   if (v) root.setAttribute("data-lan", v); else root.removeAttribute("data-lan");
   document.dispatchEvent(new CustomEvent("lan:change", { detail: { lan: v || null, county: c } }));
 }
@@ -91,6 +93,6 @@ if (data) {
     },
   };
   const v = root.getAttribute("data-lan");
-  if (v && v !== "se") fill(v);
+  if (v) fill(v);
   else document.dispatchEvent(new CustomEvent("lan:change", { detail: { lan: v || null, county: null } }));
 }

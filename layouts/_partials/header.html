@@ -13,6 +13,12 @@
     {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
     {{ with site.GetPage "/sok" }}<a class="nav-search" href="{{ .RelPermalink }}" >{{ .Title }}</a>{{ end }}
   </nav>
+  {{- if site.Params.national }}
+  {{- /* National mode: the county choice. A link to /lan/ without JavaScript; with it, it opens the
+         county modal (lan-modal.js). Its label is the chosen county's short name. */}}
+  {{- $label := T "lan_pick" }}{{ with partial "lan-page.html" . }}{{ $label = .short }}{{ end }}
+  {{ with site.GetPage "/lan" }}<a class="lan-toggle" href="{{ .RelPermalink }}" data-lan-open aria-label="{{ T "lan_toggle" }}: {{ $label }}" title="{{ T "lan_toggle" }}"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><span data-r="label">{{ $label }}</span></a>{{ end }}
+  {{- end }}
   <button type="button" class="theme-toggle" hidden aria-label="{{ T "theme_toggle" }}" title="{{ T "theme_toggle" }}"><svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
   {{- /* Colour-blind mode: an eye, its iris yellow and blue (the two colours the scheme keeps apart). */}}
   <button type="button" class="cvd-toggle" hidden aria-pressed="false" aria-label="{{ T "cvd_toggle" }}" title="{{ T "cvd_toggle" }}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 7.6a4.4 4.4 0 0 0 0 8.8z" fill="#f0c419"/><path d="M12 7.6a4.4 4.4 0 0 1 0 8.8z" fill="#0072b2"/><circle cx="12" cy="12" r="1.6" fill="#0b141b"/></svg></button>

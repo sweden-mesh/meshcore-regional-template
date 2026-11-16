@@ -14,3 +14,22 @@ html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
 
 /* A proposed county scope (P2): one line under the note, shown by the apply script. */
 .lan-proposal { margin: 0 0 1.25rem; font-size: 0.95em; }
+
+/* The header's county button: a labelled link, the same height as the toggles beside it. */
+.lan-toggle {
+  margin-left: auto; min-height: 44px; display: inline-flex; align-items: center; gap: 0.375rem;
+  padding: 0 0.75rem; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  color: var(--fg); text-decoration: none; font-weight: 500; white-space: nowrap;
+}
+.lan-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.lan-toggle ~ .theme-toggle { margin-left: 0; }
+.lan-toggle span { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; }
+/* On a phone the brand keeps its logo only and the row tightens, so the county fits beside the
+   toggles and the menu button. */
+@media (max-width: 40em) {
+  .site-header { gap: 0.5rem; }
+  .site-header .theme-toggle:not([hidden]) ~ .cvd-toggle, .site-header .motion-toggle { margin-left: 0; }
+  .site-header .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .lan-toggle { padding: 0 0.5rem; }
+  .lan-toggle span { max-width: 7.5rem; }
+}

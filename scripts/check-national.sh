@@ -76,4 +76,7 @@ check bli-nodvard/index.html '<span data-r-groups=inline><a href=https://example
 check guider/regioner/index.html '<p class=lan-proposal data-r-proposal hidden>Regionen <code><span data-r=scope>' "proposal: the page has the hidden proposal line"
 check guider/solnoder/index.html 'Jönköping som referens' "solar: the tables are labelled as the Jönköping reference"
 check guider/solnoder/index.html 'href=/wizard/solcell/>Solcells' "solar: and point to the calculator"
+# The header's county button (M5): a link to /lan/ without JavaScript, labelled with the county.
+if sed -n '/<header/,/<\/header>/p' "$P/index.html" | grep -q '<a class=lan-toggle href=/lan/ data-lan-open aria-label="Län: Välj län"'; then echo "ok   header: the county button links /lan/"; else echo "FAIL header: no county button"; fail=1; fi
+check kalmar/index.html '<span data-r=label>Kalmar</span>' "header: a county page's button names the county"
 exit $fail
