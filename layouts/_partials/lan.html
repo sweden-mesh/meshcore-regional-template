@@ -1,0 +1,78 @@
+{{- /*
+  National mode only (params.national): every county, in SCB order, from the site's county files
+  (data/lan/<scb>.toml) merged with what can be derived:
+    scb, name, scope, decision    from meshcore-se-regioner (regioner.csv; lokalt / uppmatt / forslag)
+    neighbours                    [{scb, lan, scope, via}] from its grannlan.csv
+    bbox [w, s, e, n], center, zoom   from assets/se-lan.geojson, unless the file sets center/zoom
+    iata                          the file's iata, else params.observer.iatas
+    test                          "#test-<scope>"
+    prefix                        "SE-<SCOPE without se/se->", e.g. SE-KAL, SE08
+    url                           the county's front page (/<slug>/), or "" when it has its own site
+  plus the file's own keys (slug, short, site, checked, place, meshmapper, text, text_by,
+  channels, groups, wanted). Returns an empty slice on a regional site: nothing reads data/lan.
+  Call it with partialCached "lan.html" . "lan".
+*/ -}}
+{{- $out := slice -}}
+{{- if site.Params.national -}}
+  {{- $base := "https://raw.githubusercontent.com/zombiefredrik/meshcore-se-regioner/main/data/" -}}
+  {{- $key := now.UTC.Format "20060102" -}}
+  {{- $rows := slice -}}{{- $nrows := slice -}}
+  {{- with try (resources.GetRemote (print $base "regioner.csv") (dict "key" (print "regioner-" $key))) -}}
+    {{- with .Value -}}{{- $rows = after 1 (.Content | transform.Unmarshal) -}}{{- end -}}
+  {{- end -}}
+  {{- with try (resources.GetRemote (print $base "grannlan.csv") (dict "key" (print "grannlan-" $key))) -}}
+    {{- with .Value -}}{{- $nrows = after 1 (.Content | transform.Unmarshal) -}}{{- end -}}
+  {{- end -}}
+  {{- if not $rows -}}
+    {{- with resources.Get "meshcore-se-regioner/regioner.csv" -}}{{- $rows = after 1 (.Content | transform.Unmarshal) -}}{{- end -}}
+    {{- with resources.Get "meshcore-se-regioner/grannlan.csv" -}}{{- $nrows = after 1 (.Content | transform.Unmarshal) -}}{{- end -}}
+  {{- end -}}
+  {{- $list := dict -}}
+  {{- range $rows -}}{{- $list = merge $list (dict (index . 0) (dict "name" (index . 1) "scope" (index . 2) "decision" (index . 3))) -}}{{- end -}}
+  {{- /* Each county's bounding box from its polygons. */ -}}
+  {{- $boxes := dict -}}
+  {{- with resources.Get "se-lan.geojson" -}}
+    {{- range (.Content | transform.Unmarshal).features -}}
+      {{- $w := 180.0 }}{{ $s := 90.0 }}{{ $e := -180.0 }}{{ $n := -90.0 -}}
+      {{- $polys := cond (eq .geometry.type "Polygon") (slice .geometry.coordinates) .geometry.coordinates -}}
+      {{- range $polys }}{{ range . }}{{ range . -}}
+        {{- $x := float (index . 0) }}{{ $y := float (index . 1) -}}
+        {{- if lt $x $w }}{{ $w = $x }}{{ end }}{{ if gt $x $e }}{{ $e = $x }}{{ end -}}
+        {{- if lt $y $s }}{{ $s = $y }}{{ end }}{{ if gt $y $n }}{{ $n = $y }}{{ end -}}
+      {{- end }}{{ end }}{{ end -}}
+      {{- $boxes = merge $boxes (dict .properties.scb (slice $w $s $e $n)) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $iatas := site.Params.observer.iatas | default dict -}}
+  {{- range $scb, $f := site.Data.lan -}}
+    {{- $scb = printf "%02s" (string ($f.scb | default $scb)) -}}
+    {{- with index $list $scb -}}
+      {{- $row := . -}}
+      {{- $box := index $boxes $scb | default (slice 10.9 55.3 24.2 69.1) -}}
+      {{- $center := $f.center | default (slice (div (math.Round (mul 500 (add (index $box 1) (index $box 3)))) 1000.0) (div (math.Round (mul 500 (add (index $box 0) (index $box 2)))) 1000.0)) -}}
+      {{- /* Fit the box into a map about 640 × 480 px: one zoom level halves the span shown. */ -}}
+      {{- $dlon := math.Max 0.05 (sub (index $box 2) (index $box 0)) -}}
+      {{- $dlat := math.Max 0.05 (mul (sub (index $box 3) (index $box 1)) 2.0) -}}
+      {{- $zoom := $f.zoom | default (div (math.Round (mul 10 (math.Min (math.Log (div 900.0 $dlon)) (math.Log (div 675.0 $dlat))) 1.4427)) 10.0) -}}
+      {{- $neighbours := slice -}}
+      {{- range $nr := $nrows -}}{{- if eq (index $nr 0) $scb -}}{{- with index $list (index $nr 2) -}}
+        {{- $neighbours = $neighbours | append (dict "scb" (index $nr 2) "lan" .name "scope" .scope "via" (index $nr 4)) -}}
+      {{- end -}}{{- end -}}{{- end -}}
+      {{- $code := upper (replaceRE `^se-?` "" $row.scope) -}}
+      {{- $prefix := cond (findRE `^se-` $row.scope) (printf "SE-%s" $code) (upper $row.scope) -}}
+      {{- $slug := $f.slug | default (lower $row.name) -}}
+      {{- $out = $out | append (merge $f (dict
+          "scb" $scb "name" $row.name "scope" $row.scope "decision" $row.decision
+          "short" ($f.short | default $row.name) "slug" $slug
+          "site" ($f.site | default "") "url" (cond (eq ($f.site | default "") "") (printf "/%s/" $slug) "")
+          "iata" ($f.iata | default (index $iatas $scb) | default "")
+          "bbox" $box "center" $center "zoom" $zoom
+          "neighbours" $neighbours "test" (printf "#test-%s" $row.scope) "prefix" $prefix
+          "channels" ($f.channels | default slice) "groups" ($f.groups | default slice) "wanted" ($f.wanted | default slice))) -}}
+    {{- else -}}
+      {{- warnf "data/lan: no county with SCB code %q in the region list" $scb -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $out = sort $out "scb" -}}
+{{- end -}}
+{{- return $out -}}

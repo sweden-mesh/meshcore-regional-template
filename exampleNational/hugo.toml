@@ -1,0 +1,34 @@
+# The template in national mode (params.national), for the checks in scripts/check-national.sh:
+# three counties, one of them with its own site. The national site meshcore-swe.se is the real one.
+baseURL = "https://national.example.org/"
+title = "MeshCore Exempellandet"
+locale = "sv"
+defaultContentLanguage = "sv"
+disableKinds = ["taxonomy", "term", "rss"]
+enableRobotsTXT = true
+
+[module]
+  replacements = "github.com/sweden-mesh/meshcore-regional-template -> ../.."
+  [[module.imports]]
+    path = "github.com/sweden-mesh/meshcore-regional-template"
+
+[params]
+  national = true
+
+[params.region]
+  scb = ""
+  name = "Sverige"
+  short = "Sverige"
+  iatas = ["KLR", "MMX", "JKG"]
+  scope = "se"
+  center = [62.5, 16.5]
+  zoom = 4.3
+
+[[params.chats]]
+  name = "Rikschatten"
+  url = "https://example.org/chat"
+
+[[menus.main]]
+  name = "Guider"
+  pageRef = "/guider"
+  weight = 10

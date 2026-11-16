@@ -11,3 +11,4 @@ pagefind --site public --quiet
 cd ..
 htmltest --conf .htmltest.yml
 scripts/check-overrides.sh
+scripts/check-national.sh

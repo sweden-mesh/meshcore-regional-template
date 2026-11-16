@@ -1,0 +1,22 @@
+scb     = "08"
+slug    = "kalmar"
+short   = "Kalmar"
+site    = ""
+checked = 2026-11-16
+place   = "Exempelberget"
+text    = "Nätet i länet växer längs kusten."
+text_by = "Exempelgruppen"
+
+[[channels]]
+  name = "#kalmar-exempel"
+  purpose = "Länets chattkanal"
+
+[[groups]]
+  name = "Exempelgruppen"
+  url  = "https://example.org/grupp"
+
+[[wanted]]
+  name = "Exempelberget"
+  lat  = 57.1
+  lon  = 16.2
+  note = "högt läge mot havet"
