@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.41.2 — 2026-11-16
+
+National mode only (anti-AI-design review, iteration 15): the wizards' position picker opens on the
+chosen county (it opened on the whole country's map areas); the county selector is styled as a
+field; the välj län note hides while the wizard's own selector is shown. Regional output unchanged.
+
 ## v0.41.1 — 2026-11-16
 
 The wizards' dates back to their last real change: v0.41.0's release step moved them because the

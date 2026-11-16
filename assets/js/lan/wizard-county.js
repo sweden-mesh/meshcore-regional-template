@@ -42,6 +42,12 @@ function applyCounty(c) {
     form.dataset.scope = v.scope;
     form.dataset.pattern = v.pattern;
   }
+  // The position picker opens on the county and reads its map area.
+  for (const m of document.querySelectorAll(".map-pick")) {
+    if (v.iata) m.dataset.iatas = JSON.stringify([v.iata]);
+    if (Array.isArray(c.center)) m.dataset.center = JSON.stringify(c.center);
+    if (c.zoom) m.dataset.zoom = String(c.zoom);
+  }
   const solar = document.getElementById("solar-calc");
   if (solar && v.iata) solar.dataset.own = v.iata;
   for (const o of document.querySelectorAll(".wz-observer")) {

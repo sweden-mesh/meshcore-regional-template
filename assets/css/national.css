@@ -64,3 +64,16 @@ dialog.lan-modal:modal { overscroll-behavior: contain; }
 .lan-map path.own { fill: color-mix(in srgb, var(--muted) 18%, transparent); }
 .lan-map path.current { fill: color-mix(in srgb, var(--accent) 45%, transparent); stroke: var(--fg); stroke-width: 2; }
 @media (max-width: 47.99em) { .lan-modal-map { display: none; } }
+
+/* The wizards' county selector (lan/wizard-county.js) and the position warning. */
+.lan-wizard { margin: 0 0 1.5rem; }
+.lan-wizard label { display: block; font-weight: 600; margin-bottom: 0.375rem; }
+.lan-wizard select {
+  width: 100%; max-width: 22rem; min-height: 44px; padding: 0 0.75rem; font: inherit;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface, transparent); color: var(--fg);
+}
+.lan-wizard .muted { margin: 0.5rem 0 0; }
+.lan-wizard-warn { margin: 0.75rem 0 0; }
+.lan-wizard-warn p { margin: 0 0 0.5rem; }
+/* With the wizard's own selector on screen, the page's välj län note would say the same twice. */
+main:has([data-lan-wizard]:not([hidden])) .lan-note { display: none; }
