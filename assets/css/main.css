@@ -355,9 +355,15 @@ a.ext::after { content: "\2197"; display: inline-block; margin-left: .15em; font
    codepen P1N2O/pyBNzX at 1/10 speed: 150 s a cycle) with soft blurred blobs
    lighter than it drifting on top (after shrinathprabhu/dyvOWma). Kept pale so
    text contrast holds. Moves only for prefers-reduced-motion: no-preference (below), and the
-   header button (js/motion-toggle.js, html[data-motion="off"]) pauses it. */
-body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); background-size: 400% 400%; background-attachment: fixed; }
-@keyframes bg-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+   header button (js/motion-toggle.js, html[data-motion="off"]) pauses it.
+   The gradient is a fixed layer four viewports wide and tall, moved by a transform (B-282, measured
+   2026-11-16: animating background-position repainted the viewport every frame, ~300 paints and
+   300 ms of main thread per 5 s on a desktop, 870 ms on a 4x-throttled phone; the transform needs no
+   paint, and Chrome rasters only the visible tiles, so tile memory did not grow). The translate
+   values are what background-position 0-100 % 50 % gave on a 400 % background. */
+body { background: var(--bg-a); }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 400vw; height: 400vh; z-index: -2; pointer-events: none; background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), var(--bg-d)); transform: translate(0, -37.5%); }
+@keyframes bg-shift { 0% { transform: translate(0, -37.5%); } 50% { transform: translate(-75%, -37.5%); } 100% { transform: translate(0, -37.5%); } }
 /* Parallax (operator 2026-11-13): the blob layer moves up at 20 % of the scroll speed; it is
    made 20 % of the scroll range taller so blobs keep covering the bottom (js/parallax.js sets
    --extra, and --sy where scroll-driven animations are missing). */
@@ -372,7 +378,7 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
 .bg-blobs span:nth-child(4) { top: 55vh; translate: 0 calc(var(--extra, 0px) * .55); left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 40s; animation-delay: -6s; }
 @keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(12vw, 8vh) scale(1.12); } 66% { transform: translate(-6vw, 14vh) scale(.92); } 100% { transform: translate(8vw, -6vh) scale(1.05); } }
 @media (prefers-reduced-motion: no-preference) {
-  body { animation: bg-shift 150s ease infinite; }
+  body::before { animation: bg-shift 150s ease infinite; will-change: transform; }
   .bg-blobs span { animation: blob-drift 36s ease-in-out infinite alternate; }
   /* Scroll-driven parallax: the end offset is the layer's extra height, i.e. 20 % of the scroll. */
   @supports ((animation-timeline: view()) and (animation-range: entry)) {
@@ -380,7 +386,7 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
   }
 }
 @keyframes bg-parallax { to { translate: 0 calc(100vh - 100%); } }
-:root[data-motion="off"] body, :root[data-motion="off"] .bg-blobs span { animation-play-state: paused; }
+:root[data-motion="off"] body::before, :root[data-motion="off"] .bg-blobs span { animation-play-state: paused; }
 :root[data-motion="off"] .bg-blobs { animation: none; transform: none; }
 /* Surfaces stay readable over the moving background. */
 /* Solid, not frosted glass (AI-design review 2026-11-13). */
