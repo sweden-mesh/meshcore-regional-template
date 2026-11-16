@@ -11,9 +11,9 @@
 */ -}}
 {{- $base := strings.TrimSuffix "/" (site.Params.beacon.url | default site.Params.region.borders | default "") -}}
 {{- $iatas := site.Params.region.iatas | default slice -}}
-{{- /* National mode: no site-wide snapshot (every map area would be about 6 MB); the county pages get
-       their own (plan Q7.9). */ -}}
-{{- if site.Params.national }}{{ $iatas = slice }}{{ end -}}
+{{- /* National mode: no site-wide snapshot (every map area together is about 6 MB); a county's front
+       page gets its own map area's (plan Q7.9), cached per county by map.html. */ -}}
+{{- if site.Params.national }}{{ $iatas = slice }}{{ with partial "lan-page.html" . }}{{ with .iata }}{{ $iatas = slice . }}{{ end }}{{ end }}{{ end -}}
 {{- $key := now.UTC.Format "2006010215" -}}
 {{- $nodes := slice -}}
 {{- $borders := slice -}}
