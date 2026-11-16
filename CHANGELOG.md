@@ -4,7 +4,7 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
-## Unreleased
+## v0.41.0 — 2026-11-16
 
 National mode, phases 3–4 (NATIONAL-7). Regional output unchanged.
 

@@ -1,7 +1,7 @@
 # Written by scripts/lastmod.mjs at each release: the day each wizard page last changed (SEO-T1).
 [wizard]
 repeater-snabb = "2026-11-16"
-repeater-guidad = "2026-11-15"
-companion = "2026-11-15"
-solcell = "2026-11-15"
-nodvard = "2026-11-15"
+repeater-guidad = "2026-11-16"
+companion = "2026-11-16"
+solcell = "2026-11-16"
+nodvard = "2026-11-16"
