@@ -82,4 +82,5 @@ check kalmar/index.html '<span data-r=label>Kalmar</span>' "header: a county pag
 # The county modal (M6) is drawn by script only: no dialog in the HTML; its behaviour is checked in a browser.
 if grep -q '<dialog' "$P/guider/regioner/index.html"; then echo "FAIL modal: a dialog is in the HTML"; fail=1; else echo "ok   modal: not in the HTML (crawlers and no-JS never see it)"; fi
 check guider/regioner/index.html 'src=/js/lan/modal' "modal: the script is loaded"
+check lan/pages.json '{"08":"/kalmar/","12":"/sk%C3%A5ne/"}' "function: /lan/pages.json maps each county with a page (not an own-site one)"
 exit $fail

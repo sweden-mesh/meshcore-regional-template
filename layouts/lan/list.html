@@ -19,5 +19,8 @@
       {{- $lines = $lines | append (printf "/%s/ %s 301" $ascii .RelPermalink) (printf "/%s/* %s:splat 301" $ascii .RelPermalink) -}}
     {{- end -}}{{- end -}}
   {{- end -}}
+  {{- /* /lan/pages.json: SCB code → county page, for the site's / function (plan §6.8, Q7.4). */ -}}
+  {{- $pages := dict }}{{ range $c := $all }}{{ if $c.url }}{{ with site.GetPage (printf "/%s" $c.slug) }}{{ $pages = merge $pages (dict $c.scb .RelPermalink) }}{{ end }}{{ end }}{{ end -}}
+  {{- (resources.FromString "lan/pages.json" ($pages | jsonify)).Publish -}}
   {{- with $lines }}{{ $r := resources.FromString "_redirects" (printf "# Made by the template (national mode): addresses without åäö.\n%s\n" (delimit . "\n")) }}{{ $r.Publish }}{{ end -}}
 {{ end }}
