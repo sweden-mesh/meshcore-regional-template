@@ -950,3 +950,11 @@ other = "The region <code>{{ .Scope }}</code> for {{ .Name }} is a proposal in <
 other = "Choose county"
 [lan_toggle]
 other = "County"
+[lan_modal_title]
+other = "Choose your county"
+[lan_modal_intro]
+other = "The county decides the region (scope) your radios use, the county's channels and test channel, and what the map shows. The choice is saved in the browser and can be changed at any time with the button at the top."
+[lan_modal_list]
+other = "Counties"
+[lan_modal_current]
+other = "chosen now"

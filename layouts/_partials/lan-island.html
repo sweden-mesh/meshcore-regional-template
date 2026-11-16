@@ -10,8 +10,15 @@
         "site" .site "channels" $ch "groups" $gr "neighbours" $nb "bbox" .bbox) -}}
 {{- end -}}
 {{- $r := partialCached "region.html" . "region" -}}
-{{- $d := dict "sweden" (dict "name" $r.name "short" $r.short) "texts" (dict "proposal" (T "lan_proposal") "or" (T "or")) "counties" $cs -}}
+{{- $d := dict "sweden" (dict "name" $r.name "short" $r.short) "texts" (dict "proposal" (T "lan_proposal") "or" (T "or")
+      "title" (T "lan_modal_title") "intro" (T "lan_modal_intro") "sweden" (T "lan_sweden") "own" (T "lan_own_mark")
+      "ownTitle" (T "lan_own_title" (dict "Name" "{name}")) "ownText" (T "lan_own_text" (dict "Name" "{name}"))
+      "ownGo" (T "lan_own_go" (dict "Site" "{site}")) "ownOther" (T "lan_own_other") "close" (T "close") "list" (T "lan_modal_list")
+      "current" (T "lan_modal_current")) "counties" $cs -}}
 <script type="application/json" id="lan-data">{{ $d | jsonify | safeJS }}</script>
 {{- with resources.Get "js/lan/apply.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}
+{{- with resources.Get "js/lan/modal.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

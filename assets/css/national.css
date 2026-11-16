@@ -33,3 +33,30 @@ html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
   .lan-toggle { padding: 0 0.5rem; }
   .lan-toggle span { max-width: 7.5rem; }
 }
+
+/* The county modal (lan/modal.js): a native modal dialog; the page behind is inert. */
+.lan-modal {
+  width: min(56rem, calc(100vw - 1.5rem)); max-height: calc(100dvh - 1.5rem);
+  padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--line); border-radius: var(--radius, 0.75rem);
+  background: var(--bg); color: var(--fg);
+}
+dialog.lan-modal:modal { overscroll-behavior: contain; }
+.lan-modal::backdrop { background: rgb(0 0 0 / 0.55); overflow: hidden; overscroll-behavior: contain; }
+.lan-modal h2 { margin-top: 0; }
+.lan-modal h2:focus { outline: none; }
+.lan-modal-close {
+  float: right; min-width: 44px; min-height: 44px; margin: -0.5rem -0.5rem 0 0.5rem;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg);
+  font-size: 1.4rem; line-height: 1; cursor: pointer;
+}
+.lan-modal-body { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+.lan-modal-map:empty { display: none; }
+@media (min-width: 48em) { .lan-modal-body:has(.lan-modal-map:not(:empty)) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
+.lan-modal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.375rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
+.lan-modal-list button {
+  width: 100%; min-height: 44px; padding: 0.375rem 0.75rem; text-align: left; cursor: pointer;
+  border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); font: inherit;
+}
+.lan-modal-list button:hover, .lan-modal-list button:focus-visible { border-color: var(--accent); color: var(--accent); }
+.lan-modal-list button[aria-current="true"] { border-color: var(--accent); border-width: 2px; }
+.lan-modal-own { display: block; font-size: 0.85em; color: var(--muted); }

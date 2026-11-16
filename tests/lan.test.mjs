@@ -1,10 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { countyFor, valuesFor, titleFor, cookieLine, VALID, groupsFor, channelRows } from "../assets/js/lan/lan.js";
+import { countyFor, valuesFor, titleFor, cookieLine, VALID, groupsFor, channelRows, modalModel, fillTemplate } from "../assets/js/lan/lan.js";
 
 const data = {
   sweden: { name: "Sverige", short: "Sverige" },
-  texts: { proposal: "förslag" },
+  texts: { proposal: "förslag", sweden: "Sverige (hela landet)" },
   counties: [
     { scb: "08", name: "Kalmar län", short: "Kalmar", scope: "se08", decision: "uppmatt", test: "#test-se08", prefix: "SE08", iata: "KLR", channels: [{ name: "#kalmar", purpose: "Chatt" }], groups: [{ name: "Grupp", url: "https://g.example/" }, { name: "Dålig", url: "javascript:alert(1)" }], place: "Berget", url: "/kalmar/", site: "" },
     { scb: "09", name: "Gotlands län", short: "Gotland", scope: "se-gtl", decision: "forslag", test: "#test-se-gtl", prefix: "SE-GTL", iata: "VBY", channels: [], url: "/gotland/", site: "" },
@@ -44,4 +44,13 @@ test("groups are https links only; channel rows carry the county's scope", () =>
   assert.deepEqual(groupsFor(null), []);
   assert.deepEqual(channelRows(c), [{ name: "#kalmar", scope: "se08", purpose: "Chatt" }]);
   assert.deepEqual(channelRows(countyFor(data, "09")), []);
+});
+test("the modal lists every county and Sverige, an own site marked by its domain", () => {
+  const d = { ...data, counties: [...data.counties, { scb: "06", name: "Jönköpings län", site: "https://meshcore-jkp.se/" }] };
+  const m = modalModel(d, "09");
+  assert.deepEqual(m.items.map((i) => i.v), ["08", "09", "06", "se"]);
+  assert.deepEqual(m.items.find((i) => i.v === "06"), { v: "06", name: "Jönköpings län", own: true, site: "https://meshcore-jkp.se/", domain: "meshcore-jkp.se", current: false });
+  assert.equal(m.items.find((i) => i.v === "09").current, true);
+  assert.equal(m.items.at(-1).name, "Sverige (hela landet)");
+  assert.equal(fillTemplate("{name} har en egen sida ({x})", { name: "Jönköpings län" }), "Jönköpings län har en egen sida ({x})");
 });

@@ -946,3 +946,11 @@ other = "Regionen <code>{{ .Scope }}</code> för {{ .Name }} är ett förslag i 
 other = "Välj län"
 [lan_toggle]
 other = "Län"
+[lan_modal_title]
+other = "Välj ditt län"
+[lan_modal_intro]
+other = "Länet bestämmer regionen (scope) dina radior ska använda, länets kanaler och testkanal, och vad kartan visar. Valet sparas i webbläsaren och kan ändras när som helst med knappen högst upp."
+[lan_modal_list]
+other = "Län"
+[lan_modal_current]
+other = "valt nu"

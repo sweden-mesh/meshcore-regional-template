@@ -79,4 +79,7 @@ check guider/solnoder/index.html 'href=/wizard/solcell/>Solcells' "solar: and po
 # The header's county button (M5): a link to /lan/ without JavaScript, labelled with the county.
 if sed -n '/<header/,/<\/header>/p' "$P/index.html" | grep -q '<a class=lan-toggle href=/lan/ data-lan-open aria-label="Län: Välj län"'; then echo "ok   header: the county button links /lan/"; else echo "FAIL header: no county button"; fail=1; fi
 check kalmar/index.html '<span data-r=label>Kalmar</span>' "header: a county page's button names the county"
+# The county modal (M6) is drawn by script only: no dialog in the HTML; its behaviour is checked in a browser.
+if grep -q '<dialog' "$P/guider/regioner/index.html"; then echo "FAIL modal: a dialog is in the HTML"; fail=1; else echo "ok   modal: not in the HTML (crawlers and no-JS never see it)"; fi
+check guider/regioner/index.html 'src=/js/lan/modal' "modal: the script is loaded"
 exit $fail

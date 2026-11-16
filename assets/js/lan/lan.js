@@ -50,3 +50,20 @@ export function channelRows(c) {
   if (!c) return [];
   return (c.channels || []).map((ch) => ({ name: ch.name, scope: c.scope, purpose: ch.purpose || "" }));
 }
+
+// "{name} har en egen sida" with values; unknown keys stay as written.
+export function fillTemplate(s, values) {
+  return s.replace(/\{(\w+)\}/g, (m, k) => (k in values ? values[k] : m));
+}
+
+// The modal's list: the 21 counties in SCB order, then Sverige. A county with its own site is
+// marked with its domain and is never a saved choice.
+export function modalModel(data, current) {
+  const items = data.counties.map((c) => ({
+    v: c.scb, name: c.name, own: !!c.site, site: c.site || "",
+    domain: c.site ? c.site.replace(/^https?:\/\/([^/]+).*$/, "$1") : "",
+    current: c.scb === current,
+  }));
+  items.push({ v: "se", name: data.texts.sweden, own: false, site: "", domain: "", current: current === "se" });
+  return { items };
+}
