@@ -27,6 +27,12 @@ jobs:
           tar -xzf pagefind.tar.gz pagefind && sudo install pagefind /usr/local/bin/pagefind
       - name: Build and check the example site
         run: scripts/check.sh
+      # National mode in Chrome (the runner has it): switch county on every shared page of the
+      # exampleNational site that check.sh built, and look for leftovers.
+      - name: National mode in a browser
+        run: |
+          npm i --no-save --no-package-lock puppeteer-core@24
+          PUPPETEER=puppeteer-core CHROME="$(command -v google-chrome)" node scripts/check-national-browser.mjs
 
   # National mode (params.national) must leave every regional site's output unchanged: build the
   # example site and meshcore-jkp.se with COMPARE_BASE and with this commit, and compare public/.

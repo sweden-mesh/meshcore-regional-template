@@ -26,7 +26,11 @@ function el(tag, attrs = {}, ...kids) {
 function choose(v) {
   if (window.meshcoreLan) window.meshcoreLan.set(v);
   else { try { localStorage.setItem("lan", v); } catch (e) { /* blocked */ } document.cookie = `lan=${v}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`; }
-  // Reload without a ?lan= that would win over the new choice.
+  reloadClean();
+}
+
+// Reload without a ?lan= that would win over the new choice.
+function reloadClean() {
   const u = new URL(location.href);
   u.searchParams.delete("lan");
   if (u.href === location.href) location.reload(); else location.assign(u.href);
@@ -103,5 +107,5 @@ if (data && box) {
   if (county) applyCounty(county); else selector();
   watchPosition(box.dataset.geo);
   // A county chosen later (the header's button): the wizard reads its values once, so reload.
-  document.addEventListener("lan:change", (e) => { if ((e.detail.lan || "se") !== (chosen || "se")) location.reload(); });
+  document.addEventListener("lan:change", (e) => { if ((e.detail.lan || "se") !== (chosen || "se")) reloadClean(); });
 }
