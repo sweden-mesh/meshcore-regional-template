@@ -894,3 +894,17 @@ other = "No group for the county is listed here yet. Questions about MeshCore in
 other = "Something missing about the county? [Correct the county's details]({{ .URL }})."
 [lan_home_desc]
 other = "MeshCore in {{ .Name }}: the county's region {{ .Scope }}, test channel, map and where the network needs repeaters, with guides and wizards to get started."
+[lan_place_example]
+other = "Lookout"
+[lan_start_title]
+other = "Getting started with MeshCore in {{ .Short }}"
+[lan_start_desc]
+other = "Getting started with MeshCore in {{ .Name }}: radio settings, region {{ .Scope }}, channels and where the network needs repeaters, step by step."
+[lan_test_title]
+other = "No reply to test in {{ .Test }}"
+[lan_test_desc]
+other = "No replies to test in {{ .Test }}? Usually you have not waited two minutes, the channel name or region is wrong, or no repeater with auto-reply reaches you."
+[lan_faq_title]
+other = "Questions about MeshCore in {{ .Name }}"
+[lan_faq_desc]
+other = "Where to get help with MeshCore in {{ .Name }} and which channels the county uses."

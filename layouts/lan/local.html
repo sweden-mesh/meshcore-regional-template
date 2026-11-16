@@ -1,0 +1,10 @@
+{{- /* National mode: a county's local pages (Kom igång, the test-channel troubleshooting, its
+     questions; content/_content.gotmpl), with a crumb back to the county's front page. */ -}}
+{{ define "main" }}
+  <article class="content page">
+    {{ with site.GetPage (printf "/%s" (partial "lan-page.html" .).slug) }}<nav class="crumbs" aria-label="{{ T "breadcrumb" }}"><ol><li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li></ol></nav>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
+    <div class="prose">{{ partial "scopes.html" .Content }}</div>
+  </article>
+{{ end }}

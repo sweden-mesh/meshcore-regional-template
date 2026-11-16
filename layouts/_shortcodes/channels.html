@@ -1,5 +1,5 @@
-{{- /* {{< channels >}}: the region's channels from params.channels as a table. */ -}}
-{{- with site.Params.channels -}}
+{{- /* {{< channels >}}: the region's channels (params.channels; in national mode the county's) as a table. */ -}}
+{{- with partial "channels-of.html" .Page -}}
 <table class="channels-table">
   <thead><tr><th>{{ T "ch_name" }}</th><th>{{ T "ch_scope" }}</th><th>{{ T "ch_purpose" }}</th></tr></thead>
   <tbody>

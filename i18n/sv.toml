@@ -890,3 +890,17 @@ other = "Ingen grupp för länet finns med här än. Frågor om MeshCore i hela 
 other = "Saknas något om länet? [Rätta länets uppgifter]({{ .URL }})."
 [lan_home_desc]
 other = "MeshCore i {{ .Name }}: länets region {{ .Scope }}, testkanal, karta och var nätet behöver repeatrar, med guider och wizards för att komma igång."
+[lan_place_example]
+other = "Utsikten"
+[lan_start_title]
+other = "Kom igång med MeshCore i {{ .Short }}"
+[lan_start_desc]
+other = "Kom igång med MeshCore i {{ .Name }}: radioinställningar, region {{ .Scope }}, kanaler och var nätet behöver repeatrar, steg för steg."
+[lan_test_title]
+other = "Ingen svarar på test i {{ .Test }}"
+[lan_test_desc]
+other = "Inga svar på test i {{ .Test }}? Oftast har du inte väntat två minuter, kanalnamnet eller regionen är fel, eller ingen repeater med auto-svar når dig."
+[lan_faq_title]
+other = "Frågor om MeshCore i {{ .Name }}"
+[lan_faq_desc]
+other = "Var du får hjälp med MeshCore i {{ .Name }} och vilka kanaler som används i länet."
