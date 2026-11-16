@@ -59,6 +59,17 @@ check wizard/repeater-snabb/index.html 'data-mqtt=.*"slot":6' "observer.mqtt: th
 check wizard/repeater-snabb/index.html 'data-control=.{"host":"mqtt-meshcore\.louie\.se"' "backend: the quick wizard offers remote control through the shared broker"
 check guider/firmware-lou/index.html 'set mqtt.cmd on' "backend: the firmware guide shows the command lines"
 if grep -q 'mqtt.cmd.slot' "$P/guider/firmware-lou/index.html"; then echo "FAIL backend: the shared broker got the custom-slot lines"; fail=1; else echo "ok   backend: the shared broker gets the bare line"; fi
+# SEO (v0.37.0): the per-page noindex switch, real dates only, the search page out of the sitemap.
+check guider/etikett/index.html 'name=robots content="noindex, follow"' "noindex: a page marked by the site's cascade gets noindex, follow"
+if grep -q 'name=robots' "$P/guider/regioner/index.html"; then echo "FAIL noindex: an unmarked page got a robots tag"; fail=1; else echo "ok   noindex: an unmarked page stays indexable"; fi
+if grep -q '/guider/etikett/' "$P/sitemap.xml"; then echo "FAIL noindex: a noindex page is in the sitemap"; fail=1; else echo "ok   noindex: a noindex page is left out of the sitemap"; fi
+check sok/index.html 'name=robots content="noindex, follow"' "noindex: the search page is noindex"
+if grep -q '/sok/' "$P/sitemap.xml"; then echo "FAIL sitemap: /sok/ is in the sitemap"; fail=1; else echo "ok   sitemap: /sok/ is left out"; fi
+check sitemap.xml '/wizard/solcell/metod/' "sitemap: the solar method page is in it"
+if grep -rqs '0001-01-01' "$P"; then echo "FAIL dates: 0001-01-01 is in the output"; fail=1; else echo "ok   dates: no 0001-01-01 anywhere"; fi
+check guider/flasha-firmware/index.html '"dateModified":"20[0-9][0-9]-' "dates: a template guide has a real dateModified"
+check sitemap.xml '/guider/flasha-firmware/</loc><lastmod>20' "dates: the sitemap has lastmod for a template guide"
+check guider/index.html '<h2 class=guide-group>Kom igång' "guides: the hub groups its guides under H2s"
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

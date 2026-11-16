@@ -2,6 +2,9 @@
 title: "Firmwarevarianterna av Louie"
 description: "Vad sweden-mesh:s lou-firmware är, vilka varianter som finns (auto-svar, Observer, fjärrstyrning) och hur du väljer rätt."
 weight: 45
+group: repeater
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 Utöver MeshCore-projektets egen firmware finns modifierade varianter av Louie: repeaterfirmware som byggs av
@@ -64,3 +67,4 @@ gäller lou-17 och senare. Repeaterguiderna under [Wizards](../../wizard/) kan s
 - **Källkod och versioner** finns på
   [github.com/sweden-mesh/MeshCore-lou](https://github.com/sweden-mesh/MeshCore-lou/releases),
   med en lista över varje fil och vad den innehåller.
+- **Om något krånglar:** [Auto-svaret svarar inte i länets testkanal](../../felsokning/auto-svar-legacy/) och [Firmwareväljaren erbjuder inte den senaste versionen](../../felsokning/firmwarevaljaren-gammal-version/).

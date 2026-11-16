@@ -2,6 +2,8 @@
 title: "Vad kostar det att komma igång?"
 category: utrustning
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 En radio kostar från ett par hundra kronor för ett enkelt kort med antenn, upp till ungefär

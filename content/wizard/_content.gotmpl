@@ -10,13 +10,17 @@
   (dict "path" "solcell" "weight" 40 "title" (T "sol_title") "description" (T "sol_desc") "intro" (T "sol_intro") "shortcode" "wizard-solar")
   (dict "path" "nodvard" "weight" 50 "title" (T "hp_title") "description" (T "hp_desc") "intro" (T "hp_intro") "shortcode" "wizard-host")
 -}}
+{{- $dates := (hugo.Data.lastmod | default dict).wizard | default dict -}}
 {{- range $pages -}}
-  {{- $.AddPage (dict
+  {{- $page := dict
     "path" .path
     "title" .title
     "params" (dict "description" .description "lead" false)
     "description" .description
     "weight" .weight
     "content" (dict "mediaType" "text/markdown" "value" (printf "%s\n\n{{< %s >}}\n" .intro .shortcode))
-  ) -}}
+  -}}
+  {{- /* The day the wizard last changed, from scripts/lastmod.mjs (SEO-T1). */ -}}
+  {{- with index $dates .path }}{{ $page = merge $page (dict "dates" (dict "lastmod" (time.AsTime .))) }}{{ end -}}
+  {{- $.AddPage $page -}}
 {{- end -}}

@@ -21,7 +21,7 @@ the region site wins.** That works for every kind of file:
 | the logo (header) | `assets/images/logo.svg` (square, shown at 32 px) |
 | extra tags in `<head>` / before `</body>` | `layouts/_partials/hooks/head-end.html`, `hooks/body-end.html` (empty in the template) |
 | the favicon | `static/favicon.svg` |
-| the social-card image (1200×630) | `static/images/og.png`, or `image:` in a page's front matter |
+| the social-card image (1200×630) | `static/images/og.png`, `params.ogImage`, or `image:` in a page's front matter |
 
 ### Troubleshooting: add, replace or hide entries
 
@@ -54,7 +54,9 @@ this repository's `hugo.toml`.
 | Key | Meaning |
 |---|---|
 | `style` | `product` (default: light, follows the OS dark mode) or `console` (dark, technical); a region can still override tokens in its own CSS |
-| `noindex` | `true` on staging: a robots `noindex` meta tag and a `robots.txt` that disallows everything. Set it in CI with `HUGO_PARAMS_NOINDEX=true`; the site's config needs `enableRobotsTXT = true` |
+| `noindex` | `true` on staging: a robots `noindex, nofollow` meta tag and a `robots.txt` that disallows everything. Set it in CI with `HUGO_PARAMS_NOINDEX=true`; the site's config needs `enableRobotsTXT = true`. For single pages or whole sections, see [Search engines](#search-engines) |
+| `sameAs` | optional list of profile URLs the site itself owns (e.g. its own Mastodon or GitHub account), emitted as the home page Organization's `sameAs`. Empty = none. The community's site and chat invites are other entities and are never put there |
+| `ogImage`, `ogImageAlt` | the default social-card image (path under `static/`, default `images/og.png`, 1200×630) and its alt text (default the site title). `og:image:width`/`height` are written only for the template's own image |
 | `region.scb` | **the county's SCB code, e.g. `"06"`**: the template fetches the county's name, its region (scope) and its neighbours' regions from [zombiefredrik/meshcore-se-regioner](https://github.com/zombiefredrik/meshcore-se-regioner) at build time (a copy in `assets/meshcore-se-regioner/` is the fallback) |
 | `region.name` | optional: overrides the county name from the list |
 | `region.short` | a short place name for page titles ("MeshCore i Jönköping"); empty = `region.name` |
@@ -83,6 +85,47 @@ this repository's `hugo.toml`.
 | `chats` | more named chat links, a list of `{name, url}` (e.g. the local and the national Discord) |
 | `channels` | a list of `{name, scope, purpose, note, autoreply}` (purpose and note take inline Markdown, e.g. `` `test` ``): the region's channels, shown on the landing page and by `{{</* channels */>}}`. `autoreply = true` adds a small line "Kräver auto-reply firmware" linking the firmware picker's auto-reply update (`params.firmware.picker`), for test channels in a region where few repeaters may run it yet. The old IATA test channel (`#test-<first iata>`) is named in the guides only when it is in this list |
 | `analytics.plausible`, `analytics.script`, `analytics.api` | optional cookieless Plausible: the site's `pa-<id>.js` script and the event endpoint, both served from the site's own origin through a proxy; never loaded on a `noindex` build |
+
+## Search engines
+
+Per page, in front matter (or for many pages at once through a `[[cascade]]` in `hugo.toml`):
+
+| Key | Meaning |
+|---|---|
+| `seoTitle` | replaces the title in `<title>` and `og:title` only (the H1 and lists keep `title`). Keep it to 40 characters or less, so that with the suffix it stays within 60. A `seoTitle` that names MeshCore ends in "– <short>", any other in "– MeshCore <short>" |
+| `noindex` | `true` = robots `noindex, follow` (out of search, links still followed) and left out of the sitemap |
+| `image`, `imageAlt` | the page's own social-card image and its alt text |
+| `group` | on a guide: the H2 group it is listed under on `/guider/` (`start`, `repeater`, `regioner`, `sol`; the groups are in `content/guider/_index.md`). A guide without a known group is listed last, under "Fler guider" |
+
+**Opting out of the shared guides.** Every site built from the template publishes the same guides,
+and search engines rank only one copy. A site that does not want to compete for them marks them
+`noindex` with a cascade, and its own pages (home, its own pages, the section hubs) stay indexed:
+
+```toml
+[[cascade]]
+  [cascade.params]
+    noindex = true
+  [cascade.target]
+    path = "{/guider/**,/felsokning/**,/fragor/**,/wizard/**,/solcell-metod}"
+```
+
+No `[cascade.sitemap]` is needed: the template's `layouts/sitemap.xml` leaves out every page with
+`noindex`. `exampleSite/hugo.toml` marks one guide this way, and `scripts/check-overrides.sh` tests it.
+
+**Dates.** The template's pages carry `date` and `lastmod`, written at each release by
+`scripts/lastmod.mjs` from git (a region gets the content from the module cache, where Hugo's git
+dates do not reach). They give the guides' `dateModified`/`datePublished` and the sitemap's
+`<lastmod>`. A page without a date gets neither, never year 1. A region's own pages can get theirs
+from git with `enableGitInfo = true` in its `hugo.toml`; the template's pages keep their front-matter
+dates.
+
+**No RSS.** The sections switch their feeds off; the home page's feed is the region's to switch
+off, because a module cannot change the site's outputs: add `"rss"` to `disableKinds` in
+`hugo.toml`, as `exampleSite/hugo.toml` does. Nothing in the template reads `index.xml`.
+
+**Old URLs.** `/guider/fragor-och-ord/` answers with a meta refresh to `/fragor/`. A site on
+Cloudflare or Netlify can make it a real 301 with `/guider/fragor-och-ord/ /fragor/ 301` in its own
+`static/_redirects`; the template ships none, because a site's own file would replace it.
 
 ## Start a region site
 
@@ -121,7 +164,8 @@ are fixed promptly, since CI builds with `--panicOnWarning`.
 The criteria for 1.0 are in `V1.md`.
 
 Tags `vX.Y.Z` on `main`, described in `CHANGELOG.md`; the version rules are at the top of that
-file. To release: update `CHANGELOG.md`, commit, `git tag -a vX.Y.Z -m "…"`, push the tag.
+file. To release: run `node scripts/lastmod.mjs` (the pages' dates, see [Search engines](#search-engines)),
+update `CHANGELOG.md`, commit, `git tag -a vX.Y.Z -m "…"`, push the tag.
 
 ## Develop the template
 

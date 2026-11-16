@@ -2,6 +2,9 @@
 title: "Etikett: sändningstid är gemensam"
 description: "Alla delar på samma radiofrekvens. Några enkla vanor som gör att nätet fungerar för alla."
 weight: 90
+group: regioner
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 LoRa-nätet är en gemensam resurs. Bara en radio i taget kan sända på frekvensen inom hörhåll,
@@ -33,3 +36,5 @@ vara companions.
 
 Public och hashtag-kanalerna kan alla läsa, och observatörer kan spela in dem. Skriv inget där
 som du inte vill ska vara känt, och dela inte andras uppgifter. Se [Kanaler](../kanaler/).
+
+Slutar radion sända en stund? Då har den nått sändtidsgränsen: se [Radion slutar sända en stund](../../felsokning/duty-cycle/).

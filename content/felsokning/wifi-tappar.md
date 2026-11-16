@@ -3,6 +3,8 @@ title: "Observatören tappar Wi-Fi gång på gång"
 description: "Den ansluter, försvinner och kommer tillbaka; luckor i det den rapporterar."
 category: mqtt
 weight: 30
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 ## Troliga orsaker

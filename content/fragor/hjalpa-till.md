@@ -2,6 +2,8 @@
 title: "Hur kan jag hjälpa till?"
 category: bidra
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 - **Använd nätet.** Fler som skriver gör det värt att bygga ut.

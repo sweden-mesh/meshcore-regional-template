@@ -1,8 +1,11 @@
 ---
 title: "Radion startar om hela tiden efter flashningen"
+seoTitle: "Radion startar om efter flashningen"
 description: "ESP32: fel fil på fel adress. Går att rädda, och inställningarna finns kvar."
 category: flasha
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 I [USB-konsolen](../../guider/usb-konsol/) syns samma rader om och om igen, ungefär så här:

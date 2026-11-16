@@ -1,8 +1,10 @@
 ---
 title: "Solnoden dör på vintern"
-description: "Fungerar hela sommaren, tystnar i november eller december."
+description: "Fungerar solnoden på sommaren men tystnar i november? Oftast är panelen eller batteriet för litet för vintern, eller så stoppar kylan laddningen."
 category: strom
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

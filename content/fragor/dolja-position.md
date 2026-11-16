@@ -2,6 +2,8 @@
 title: "Måste min position synas?"
 category: integritet
 weight: 40
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Nej. En companion skickar bara position om du slår på det i appen. Vill du inte att den syns:

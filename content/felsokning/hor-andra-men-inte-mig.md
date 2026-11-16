@@ -1,8 +1,10 @@
 ---
 title: "Jag hör andra, men de hör inte mig"
-description: "Meddelanden från andra kommer in, men ingen svarar på dina."
+description: "Hör du andra men ingen svarar dig? Oftast når repeatern dig men inte du den: höjd, antenn eller sändeffekt. Så testar och rättar du det."
 category: radio
 weight: 15
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

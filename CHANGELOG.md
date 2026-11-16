@@ -4,6 +4,60 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.37.0 — 2026-11-16
+
+Search engines (the SEO review of 2026-11-15, items SEO-T1 to SEO-T25).
+
+- **A per-page `noindex`** (SEO-T2, SEO-T15): `noindex: true` in front matter, or for many pages
+  through a `[[cascade]]` in `hugo.toml`, writes robots `noindex, follow` and leaves the page out
+  of the sitemap. The site-wide `params.noindex` (staging) still writes `noindex, nofollow`. README
+  "Search engines" shows the cascade a site uses to opt out of the shared guides. `/sok/` is now
+  `noindex` and out of the sitemap. New `layouts/sitemap.xml`: a region that has its own replaces
+  the noindex filter and the date guard too.
+- **Real dates, never year 1** (SEO-T1, SEO-T4): `scripts/lastmod.mjs`, run at each release,
+  writes each template page's `date` (first commit) and `lastmod` (last change to its text) from
+  git, and the wizard pages' dates to `data/lastmod.toml`. JSON-LD gets `dateModified` and
+  `datePublished`, and the sitemap `<lastmod>`, only where the page has a date. Before, 47 of 59
+  pages said `"dateModified":"0001-01-01"`.
+- **Structured data** (SEO-T3, SEO-T13, SEO-T14, SEO-T25): `sameAs` only from the new
+  `params.sameAs` (profiles the site owns); **`community.url` and chat invites are no longer put
+  in `sameAs`**. Every page but the 404 gets a BreadcrumbList and its type: TechArticle (now with
+  author, image and publisher with url and logo) on guides, CollectionPage on sections, WebPage on
+  the rest. WebSite gets `alternateName` (the host).
+- **Layout shift on desktop** (SEO-T5): the background blobs no longer move in layout when
+  `parallax.js` sets `--extra` (they sit in `vh` and follow it with `translate`), the header
+  reserves the toggles' 44 px, and the two body weights of IBM Plex Sans are preloaded with a
+  metric-matched Arial fallback (`"Plex Fallback"`). CLS measured on the example site (Chrome,
+  cold cache, CPU 4×, Slow 4G): / 0.116 → 0.000 at 1366 px and 0.163 → 0.001 at 1024 px;
+  /guider/flasha-firmware/ 0.324 → 0.002 and 0.468 → 0.002; at 390 px 0.538 → 0.216 and
+  0.615 → 0.217 (what is left is the example's long site name re-wrapping when the toggles appear).
+- **Titles and descriptions** (SEO-T6 to SEO-T9, SEO-T24): a new `seoTitle` front-matter key
+  replaces the title in `<title>` and `og:title` only; one that names MeshCore ends in
+  "– <short>". Shorter titles for 10 troubleshooting pages, "guide" in the titles of the guide hub
+  and the three entry guides, descriptive ones for Kanaler, Ordlista and Solnoder, and Swedish ones
+  for the wizard and troubleshooting hubs. 19 descriptions rewritten to 120–155 characters.
+- **The guide hub groups its guides** under H2s (SEO-T9): Kom igång, Repeater, Regioner och
+  kanaler, Sol och ström, from `groups` in `content/guider/_index.md` and `group` on each guide
+  (`layouts/section.html`). A region's own guide without a group is listed last under "Fler
+  guider" (new i18n key `guide_group_more`).
+- **New guide "MeshCore eller Meshtastic?"** (SEO-T10), linked from "Vad är MeshCore?" and the
+  Meshtastic question. "Vad är MeshCore?" gets a section on MeshCore in Sweden: the band and the
+  region's preset, the rules and the cost (SEO-T19).
+- **Content** (SEO-T11, SEO-T12, SEO-T16): five short troubleshooting pages get check commands
+  with the expected reply and a "Fungerade inte?" step; every guide but the glossary, naming and
+  the new comparison links its likely problems; companion, repeater and Skaffa hårdvara link "Vad
+  är MeshCore?" and the glossary in the first paragraph; the solar method page is in the sitemap
+  and linked from Solnoder.
+- **Smaller fixes**: the 404 is titled in Swedish and has no canonical or Open Graph tags
+  (SEO-T21); sections and the home page declare `og:type` `website`, `og:image:width`/`height` only
+  for the template's own image, and a new `og:image:alt` from `imageAlt` or `params.ogImageAlt`
+  (SEO-T17); the quick repeater wizard's review heading is an H2 (SEO-T18); the sections' RSS
+  feeds are off, and a region switches off the home page's with `"rss"` in `disableKinds`
+  (SEO-T22).
+- A region that overrides `head.html`, `jsonld.html`, `seo-title.html`, `section.html`,
+  `wizard-quick.html` or `main.css` takes the same changes.
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.36.0 — 2026-11-15
 
 - **"Döda zoner" is gone from the home map** (B-290, operator: not useful right now): the toggle,

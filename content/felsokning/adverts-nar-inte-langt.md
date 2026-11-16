@@ -1,8 +1,11 @@
 ---
 title: "Repeaterns adverts når inte ut i regionen"
+seoTitle: "Repeaterns adverts når inte långt"
 description: "Grannarna känner till repeatern, men längre bort vet ingen att den finns."
 category: repeater
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

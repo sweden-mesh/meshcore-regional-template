@@ -1,8 +1,11 @@
 ---
 title: "Meddelanden skickas men kommer aldrig fram"
-description: "Inget svar, ingen bock, eller bara ibland."
+seoTitle: "Meddelanden kommer inte fram"
+description: "Kommer meddelanden inte fram, eller bara ibland? Oftast hör ingen repeater dig, kanalen har fel region eller vägen är gammal. Så rättar du det."
 category: companion
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

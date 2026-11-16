@@ -4,7 +4,7 @@ baseURL = "https://example.org/"
 title = "MeshCore Exempelregionen"
 locale = "sv"
 defaultContentLanguage = "sv"
-disableKinds = ["taxonomy", "term"]
+disableKinds = ["taxonomy", "term", "rss"]   # no RSS feeds: nothing links them and the site has no news (template SEO-T22)
 enableRobotsTXT = true
 
 [module]
@@ -109,3 +109,12 @@ enableRobotsTXT = true
   coverage = true
   url = "https://meshmapper.net/"
   fixture = "meshmapper-fixture.json"
+
+# A page-level noindex through a cascade (SEO-T2): this one guide is kept out of search and out
+# of the sitemap, and its links still count. A region that does not want to rank for the shared
+# guides at all uses the glob in the template's README instead.
+[[cascade]]
+  [cascade.params]
+    noindex = true
+  [cascade.target]
+    path = "/guider/etikett"

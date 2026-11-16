@@ -2,6 +2,8 @@
 title: "Vad är en region, och varför ska jag bry mig?"
 category: regioner
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 En region (i appen ibland *scope*) är en etikett på ett meddelande som talar om hur långt det ska

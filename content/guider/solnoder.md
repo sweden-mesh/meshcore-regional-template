@@ -1,8 +1,12 @@
 ---
 title: "Solnoder"
+seoTitle: "Solcellsdriven MeshCore-nod"
 linkTitle: "Solnoder"
-description: "Varför en repeater på solcell, vad som gör vintern svår så här långt norrut, och vad som krävs: panel, batteri, laddare och firmware. Med batteritabeller och ett fälttest från hösten 2026."
+description: "Så fungerar en solcellsdriven MeshCore-repeater i Sverige: varför vintern är svår, vilken panel, vilket batteri och vilken laddare den behöver."
 weight: 40
+group: sol
+date: 2026-11-14
+lastmod: 2026-11-16
 ---
 
 ## Räkna på din egen plats
@@ -298,6 +302,9 @@ Norr om ungefär 63° N kan en lodrät panel vara begravd i 2–3 veckor mitt i 
 med i siffrorna. [Solcellskalkylatorn](/wizard/solcell/) lägger till snödagarna åt dig.
 
 ## Så togs siffrorna fram
+
+Hela metoden, med antaganden, data och kontroller, finns i
+[Solcellskalkylatorns metod](/wizard/solcell/metod/). Kort:
 
 En simulering timme för timme över de 18 vintrarna 2005–2023, med PVGIS satellitdata för
 instrålning och temperatur för regionens plats ({{% solar "point" %}}). Trädlinjen stänger ute den direkta solen och

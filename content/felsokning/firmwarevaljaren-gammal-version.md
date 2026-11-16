@@ -1,8 +1,11 @@
 ---
 title: "Firmwareväljaren erbjuder inte den senaste versionen"
-description: "En ny version är släppt, men sidan visar fortfarande den förra."
+seoTitle: "Firmwareväljaren visar gammal version"
+description: "Visar firmwareväljaren inte den senaste versionen? Fillistan har inte byggts om än, eller så visar webbläsaren en sparad kopia. Så rättar du det."
 category: flasha
 weight: 25
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

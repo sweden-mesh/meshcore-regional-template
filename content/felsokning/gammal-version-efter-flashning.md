@@ -1,8 +1,11 @@
 ---
 title: "Radion visar fortfarande den gamla versionen efter flashningen"
+seoTitle: "Gamla versionen kvar efter flashning"
 description: "Flashningen gick bra, men ver säger samma version som förut."
 category: flasha
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

@@ -2,6 +2,8 @@
 title: "Behöver jag internet eller mobilnät?"
 category: grunder
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Nej. Meddelanden går radio till radio, via repeatrar, utan internet och utan mobilnät. Telefonen

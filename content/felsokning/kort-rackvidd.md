@@ -1,8 +1,10 @@
 ---
 title: "Räckvidden är mycket kortare än väntat"
-description: "Några hundra meter i stället för kilometer."
+description: "Når radion bara några hundra meter? Oftast är det placeringen, antennen eller kroppen runt radion. Så kontrollerar och förbättrar du räckvidden."
 category: radio
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

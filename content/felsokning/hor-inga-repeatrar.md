@@ -3,6 +3,8 @@ title: "Radion hör inga repeatrar"
 description: "Inga grannar, inga adverts, tomt i appen trots att det finns repeatrar i närheten."
 category: radio
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 ## Troliga orsaker

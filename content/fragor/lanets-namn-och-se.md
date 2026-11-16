@@ -2,6 +2,8 @@
 title: "Varför bär repeatrarna både länets namn och se?"
 category: regioner
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Repeatrarna bär en kedja av regioner, från störst till minst: `eu`, `europe`, `se` och länet.

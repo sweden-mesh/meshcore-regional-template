@@ -15,6 +15,9 @@
 <link rel="preconnect" href="{{ . }}" crossorigin>
 {{- end }}
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+{{- /* The two body weights load with the CSS, not after it, so the swap comes early (SEO-T5). */}}
+<link rel="preload" href="{{ "fonts/plex-sans-latin-400.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/plex-sans-latin-600.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 {{- partial "seo-title.html" . | printf "<title>%s</title>" | safeHTML }}
 <meta name="description" content="{{ .Description | default site.Params.description | default (T "hero_tagline") }}">
 {{ with resources.Get "css/main.css" | minify | fingerprint }}
@@ -22,8 +25,10 @@
 {{ end }}
 {{- $title := partial "seo-title.html" . -}}
 {{- $desc := .Description | default site.Params.description | default (T "hero_tagline") -}}
+{{- /* The 404 is not a page to share or index: no canonical, no Open Graph (SEO-T21). */}}
+{{- if ne .Kind "404" }}
 <link rel="canonical" href="{{ .Permalink }}">
-<meta property="og:type" content="{{ cond .IsHome "website" "article" }}">
+<meta property="og:type" content="{{ cond (or .IsHome .IsSection) "website" "article" }}">
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:locale" content="sv_SE">
 <meta property="og:title" content="{{ $title }}">
@@ -31,10 +36,18 @@
 <meta property="og:url" content="{{ .Permalink }}">
 {{- $img := .Params.image | default site.Params.ogImage | default "images/og.png" }}
 <meta property="og:image" content="{{ $img | absURL }}">
+{{- /* The size is known only for the template's own image (SEO-T17). */}}
+{{- if eq $img "images/og.png" }}
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+{{- end }}
+<meta property="og:image:alt" content="{{ .Params.imageAlt | default site.Params.ogImageAlt | default site.Title }}">
 <meta name="twitter:card" content="summary_large_image">
-{{ if site.Params.noindex }}<meta name="robots" content="noindex, nofollow">{{ end }}
+{{- end }}
+{{- /* Site-wide noindex (staging) also stops link-following; a page's own noindex (front matter
+       or a cascade, SEO-T2) keeps it out of the index but lets its links count. layouts/sitemap.xml
+       leaves both out. */}}
+{{ if site.Params.noindex }}<meta name="robots" content="noindex, nofollow">{{ else if .Params.noindex }}<meta name="robots" content="noindex, follow">{{ end }}
 {{ partial "analytics.html" . }}
 {{ partial "hooks/head-end.html" . }}
 {{ partial "jsonld.html" . }}

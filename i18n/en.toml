@@ -850,3 +850,5 @@ other = "Fit all"
 other = "Where the region would like new repeaters"
 [hp_wanted_help]
 other = "The stars on the map mark the places, with a ring of about 1 km around each. Choose a name to show the place on the map."
+[guide_group_more]
+other = "More guides"

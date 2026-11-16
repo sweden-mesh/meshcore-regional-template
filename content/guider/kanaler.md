@@ -1,7 +1,11 @@
 ---
 title: "Kanaler"
+seoTitle: "Kanaler i MeshCore"
 description: "Public, hashtag-kanaler och privata kanaler: vem som kan läsa vad, vilka kanaler som används här och vilken region de ska ha."
 weight: 80
+group: regioner
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 En **kanal** är ett gemensamt rum: alla som har kanalens nyckel kan läsa och skriva där. Utöver
@@ -45,3 +49,5 @@ området. Välj den minsta region som når dem kanalen är till för:
 Testmeddelanden kostar sändningstid för alla inom räckhåll. Testa i testkanalen, inte i
 chattkanalerna, och skicka inte fler test än du behöver. Repeatrar med auto-svar svarar på `test`
 i testkanalen, med en fördröjning, så att svaren inte krockar.
+
+Kommer inget svar? Se [Meddelanden kommer inte fram](../../felsokning/meddelanden-kommer-inte-fram/) och [Auto-svaret svarar inte i länets testkanal](../../felsokning/auto-svar-legacy/).

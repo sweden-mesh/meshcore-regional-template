@@ -2,6 +2,8 @@
 title: "Vad kan andra se om mig?"
 category: integritet
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Allt som sänds i nätet kan höras av alla inom räckhåll och spelas in av observatörer:

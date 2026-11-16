@@ -1,8 +1,10 @@
 ---
 title: "Batteriet tar slut fort"
-description: "En repeater på batteri eller sol klarar bara några dygn."
+description: "Räcker repeaterns batteri bara några dygn? Oftast är strömsparläget av eller Wi-Fi på. Så kontrollerar du förbrukningen och rättar det."
 category: strom
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

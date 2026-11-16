@@ -2,6 +2,8 @@
 title: "Vad är skillnaden mellan companion och repeater?"
 category: grunder
 weight: 15
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 En **companion** är din egen radio. Du skickar och tar emot meddelanden med den, men den för inte

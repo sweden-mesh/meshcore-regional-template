@@ -2,11 +2,14 @@
 title: "Skicka kommandon via USB"
 description: "Repeatrar och room servers ställs in med textkommandon. Så öppnar du konsolen i webbläsaren och skickar dem."
 weight: 60
+group: repeater
 source:
   title: "Vad är MeshCore? (avsnittet Skriv kommandon i Console)"
   url: "https://meshat.se/meshcore/meshcore-info/#skriv-kommandon-i-console"
   license: "CC BY 4.0"
   changes: "Utbyggt till en egen guide med vanliga kommandon och felsökning."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 Repeatrar och room servers har ingen app för alla inställningar. De ställs in med korta
@@ -64,3 +67,5 @@ når den igen utan att klättra upp.
 > [!NOTE]- Inget svar på kommandon
 > Kontrollera att radion har repeater- eller room server-firmware; en companion svarar inte på
 > konsolkommandon på samma sätt. Vänta några sekunder efter anslutningen innan första kommandot.
+
+Fler svar i Felsökning: [nRF52-radion syns inte som en USB-enhet](../../felsokning/nrf52-ingen-enhet/), [Webbläsaren hittar ingen port](../../felsokning/ingen-port/) och [Jag har glömt repeaterns adminlösenord](../../felsokning/glomt-adminlosenord/).

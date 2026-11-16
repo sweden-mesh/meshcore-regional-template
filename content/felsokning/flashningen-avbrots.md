@@ -1,8 +1,11 @@
 ---
 title: "Flashningen avbröts, och radion verkar död"
+seoTitle: "Flashningen avbröts och radion är död"
 description: "Kabeln lossnade eller datorn somnade mitt i. Skärmen är svart och inget händer."
 category: flasha
 weight: 15
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

@@ -2,11 +2,14 @@
 title: "Namnge din repeater"
 description: "Regionens namnförslag för repeatrar, hur långt ett namn får vara, och hur du namnger en companion."
 weight: 70
+group: repeater
 source:
   title: "Vad är MeshCore? (avsnittet Namnge din enhet)"
   url: "https://meshat.se/meshcore/meshcore-info/#namnge-din-enhet"
   license: "CC BY 4.0"
   changes: "Egen guide; regionens namnförslag från sidans parametrar; namnlängden räknas av ett eget verktyg."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 En repeaters namn syns för alla i listor och på kartan, så det ska tala om **var den står**.

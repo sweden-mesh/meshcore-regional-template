@@ -1,8 +1,11 @@
 ---
 title: "Auto-svaret svarar inte i länets testkanal"
-description: "get autoreply visar en äldre kanal och inte länets."
+seoTitle: "Auto-svaret svarar inte i testkanalen"
+description: "Svarar auto-svaret i en äldre testkanal i stället för länets? Oftast är firmwaren äldre än lou-16 eller region home inte sparad. Så rättar du det."
 category: regioner
 weight: 40
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 Gäller repeatrar med auto-svar (firmwaren *lou*). Auto-svaret tar länet från `region home` och

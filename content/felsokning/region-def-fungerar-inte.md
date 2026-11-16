@@ -1,8 +1,10 @@
 ---
 title: "Kommandot region def ger fel"
-description: "Repeatern svarar med ett fel eller känner inte igen kommandot."
+description: "Ger region def ett fel på repeatern? Oftast är firmwaren äldre än 1.16 eller kedjan felstavad. Så kontrollerar du versionen och rättar kommandot."
 category: regioner
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

@@ -2,6 +2,8 @@
 title: "Hur många repeatrar behövs?"
 category: natet
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Det finns inget fast antal; det avgör terrängen. En repeater högt upp med fri sikt kan täcka en

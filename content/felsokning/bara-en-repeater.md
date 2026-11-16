@@ -1,8 +1,10 @@
 ---
 title: "Jag hör bara en repeater"
-description: "Appen visar en enda granne. Är något fel?"
+description: "Hör radion bara en repeater? Det är oftast normalt, en räcker för att nå nätet. Så ser du när signalen är för svag och hur du får mer marginal."
 category: radio
 weight: 30
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 **Oftast inte.** Många companion-radior hör exakt en repeater, och det räcker: den repeatern för

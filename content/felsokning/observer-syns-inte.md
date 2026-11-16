@@ -1,8 +1,11 @@
 ---
 title: "Observatören rapporterar inte till kartan"
+seoTitle: "Observatören syns inte på kartan"
 description: "Repeatern med Observer-firmware är igång, men inget av det den hör syns på kartan eller i analysverktygen."
 category: mqtt
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

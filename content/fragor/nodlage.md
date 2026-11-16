@@ -2,6 +2,8 @@
 title: "Fungerar nätet om el och mobilnät går ner?"
 category: natet
 weight: 50
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Delvis. Radior på batteri och repeatrar med sol eller batteri fortsätter att fungera utan el och

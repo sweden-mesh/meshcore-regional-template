@@ -2,11 +2,15 @@
 title: "Skaffa hårdvara"
 description: "Vilken radio, antenn och strömförsörjning du behöver för en companion eller en repeater, och vad du ska tänka på."
 weight: 35
+group: start
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 MeshCore körs på billiga LoRa-kort. Samma kort kan oftast bli companion eller repeater beroende på
 vilken firmware du flashar. Den här sidan säger vad som spelar roll; vilka exakta modeller som
-stöds står i [firmwareväljaren]({{< param "firmware.picker" >}}).
+stöds står i [firmwareväljaren]({{< param "firmware.picker" >}}). Vad en companion och en repeater
+är förklarar [Vad är MeshCore?](../vad-ar-meshcore/), och [ordlistan](../ordlista/) de andra orden.
 
 ## Radion
 
@@ -59,3 +63,5 @@ fäste som tål vind. Låt ett litet dräneringshål vara öppet i botten så at
 
 - [Flasha firmware](../flasha-firmware/) på kortet.
 - [Kom igång med en companion](../companion/) eller [Sätt upp en repeater](../repeater/).
+
+När radion är igång: [Räckvidden är mycket kortare än väntat](../../felsokning/kort-rackvidd/) och [Batteriet tar slut fort](../../felsokning/batteriet-tar-slut/).

@@ -3,6 +3,8 @@ title: "nRF52-radion syns inte som en USB-enhet"
 description: "RAK4631, T1000-E och andra nRF52-kort: ingen enhet att dra firmwarefilen till."
 category: flasha
 weight: 35
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 nRF52-kort uppdateras ofta genom att man drar en `.uf2`-fil till en enhet som radion visar när

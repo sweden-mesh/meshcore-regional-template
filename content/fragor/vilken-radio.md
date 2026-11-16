@@ -2,6 +2,8 @@
 title: "Vilken radio ska jag köpa?"
 category: utrustning
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Det beror på hur du vill använda den:

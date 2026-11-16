@@ -3,14 +3,18 @@
 @font-face { font-family: "IBM Plex Sans"; src: url("../fonts/plex-sans-latin-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "IBM Plex Sans"; src: url("../fonts/plex-sans-latin-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
 @font-face { font-family: "IBM Plex Sans"; src: url("../fonts/plex-sans-latin-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+/* Metric-matched fallbacks (SEO-T5): Arial (Liberation Sans on Linux) scaled to Plex's average
+   width and line metrics, so the swap to Plex moves the text as little as possible. */
+@font-face { font-family: "Plex Fallback"; src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("LiberationSans"); font-weight: 400 500; size-adjust: 101.55%; ascent-override: 100.93%; descent-override: 27.08%; line-gap-override: 0%; }
+@font-face { font-family: "Plex Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"); font-weight: 600 700; size-adjust: 97.3%; ascent-override: 105.34%; descent-override: 28.26%; line-gap-override: 0%; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../fonts/plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../fonts/plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 
 /* Design tokens (planning: design-direction.md, direction D). A region overrides
    the accent tokens (and its logo) in its own assets/css/region.css, if any. */
 :root {
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
-  --font-head: "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Plex Fallback", system-ui, sans-serif;
+  --font-head: "IBM Plex Sans", "Plex Fallback", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --radius: 10px;
   --radius-sm: 6px;
@@ -170,7 +174,7 @@ a { color: var(--accent); }
 /* The boxes and the map share one width, wider than the text column (operator 2026-11-13). */
 @media (min-width: 40em) { .map-section, .sections, .about { max-width: none; width: min(100rem, 94vw); padding-left: 0; padding-right: 0; } }
 /* The text columns share the boxes' and the map's width (operator 2026-11-14). */
-.site-header { border-bottom: 0; padding-top: 1.25rem; padding-bottom: 1.25rem; }
+.site-header { border-bottom: 0; padding-top: 1.25rem; padding-bottom: 1.25rem; min-height: calc(2.5rem + 44px); } /* the toggles' 44 px, reserved before JS shows them (SEO-T5) */
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .site-header nav a:hover { color: var(--fg); }
 .map-panel { display: flex; flex-direction: column; gap: .4rem; font-family: var(--font-body); }
@@ -266,6 +270,8 @@ td, th { vertical-align: top; }
 .pager a:hover { border-color: var(--accent); }
 .pager span { display: block; font-size: .8rem; color: var(--muted); font-weight: 500; }
 .pager-next { text-align: right; grid-column: 2; }
+.guide-group { margin: 2.5rem 0 0; }
+.guide-group + .guide-grid { margin-top: 1rem; }
 .guide-grid { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
 .guide-grid a { display: flex; flex-direction: column; gap: .3rem; height: 100%; padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--fg); }
 .guide-grid a:hover { border-color: var(--accent); }
@@ -309,6 +315,7 @@ td, th { vertical-align: top; }
 .settings dd.muted { color: var(--muted); font-weight: 400; font-style: italic; }
 .settings-box summary { cursor: pointer; font-weight: 600; font-size: .95rem; }
 .wz-review-head { font-size: 1rem; margin: .25rem 0 0; }
+.prose h2.wz-review-head { font-size: 1.15rem; margin: 1.75rem 0 .4rem; } /* an H2 since SEO-T18, sized as the H3 it was */
 .wz-review { margin-bottom: 1.25rem; }
 .prose .settings { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1.1rem; background: var(--surface); }
 .channels-table small { display: inline-block; margin-top: .2rem; }
@@ -351,11 +358,14 @@ body { background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c)
    made 20 % of the scroll range taller so blobs keep covering the bottom (js/parallax.js sets
    --extra, and --sy where scroll-driven animations are missing). */
 .bg-blobs { position: fixed; top: 0; left: 0; right: 0; height: calc(100vh + var(--extra, 0px)); z-index: -1; overflow: hidden; pointer-events: none; transform: translate3d(0, calc(var(--sy, 0) * -0.2px), 0); will-change: transform; }
+/* Spans 2-4 sit where 30 %, 55 % and the bottom of the layer would put them, but in vh plus a
+   translate of the layer's extra height: a transform, so --extra arriving after the first paint
+   moves nothing in layout (SEO-T5, the CLS). */
 .bg-blobs span { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: var(--blob); filter: blur(70px); opacity: .9; }
 .bg-blobs span:nth-child(1) { top: -12vmax; left: -8vmax; }
-.bg-blobs span:nth-child(2) { top: 30%; right: -14vmax; width: 36vmax; height: 36vmax; animation-duration: 44s; animation-delay: -12s; }
-.bg-blobs span:nth-child(3) { bottom: -16vmax; left: 20vw; width: 48vmax; height: 48vmax; animation-duration: 52s; animation-delay: -24s; }
-.bg-blobs span:nth-child(4) { top: 55%; left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 40s; animation-delay: -6s; }
+.bg-blobs span:nth-child(2) { top: 30vh; translate: 0 calc(var(--extra, 0px) * .3); right: -14vmax; width: 36vmax; height: 36vmax; animation-duration: 44s; animation-delay: -12s; }
+.bg-blobs span:nth-child(3) { top: calc(100vh - 32vmax); translate: 0 var(--extra, 0px); left: 20vw; width: 48vmax; height: 48vmax; animation-duration: 52s; animation-delay: -24s; }
+.bg-blobs span:nth-child(4) { top: 55vh; translate: 0 calc(var(--extra, 0px) * .55); left: -10vmax; width: 30vmax; height: 30vmax; animation-duration: 40s; animation-delay: -6s; }
 @keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(12vw, 8vh) scale(1.12); } 66% { transform: translate(-6vw, 14vh) scale(.92); } 100% { transform: translate(8vw, -6vh) scale(1.05); } }
 @media (prefers-reduced-motion: no-preference) {
   body { animation: bg-shift 150s ease infinite; }

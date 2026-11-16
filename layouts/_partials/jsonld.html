@@ -1,21 +1,33 @@
 {{- /* Structured data (schema.org JSON-LD), what Google still uses for rich
-       results: WebSite + Organization on the home page, BreadcrumbList and
-       TechArticle on guides. No HowTo/FAQ (planning: seo.md). */ -}}
-{{- $logo := (resources.Get "images/logo.svg") -}}
-{{- $sameAs := slice -}}
-{{- with site.Params.community.url }}{{ $sameAs = $sameAs | append . }}{{ end -}}
-{{- with site.Params.chat.discord }}{{ $sameAs = $sameAs | append . }}{{ end -}}
-{{- range site.Params.chats }}{{ $sameAs = $sameAs | append .url }}{{ end -}}
-{{- if .IsHome -}}
+       results: WebSite + Organization on the home page; on every other page a
+       BreadcrumbList and the page's type: TechArticle on guides and other pages in a
+       section, CollectionPage on the sections themselves, WebPage on the rest (SEO-T14).
+       Nothing on the 404. No HowTo/FAQ/SearchAction (planning: seo.md). */ -}}
+{{- if ne .Kind "404" -}}
 {{- $org := dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink -}}
-{{- with $logo }}{{ $org = merge $org (dict "logo" (. | fingerprint).Permalink) }}{{ end -}}
-{{- with $sameAs }}{{ $org = merge $org (dict "sameAs" .) }}{{ end -}}
-{{- $site := dict "@context" "https://schema.org" "@graph" (slice (dict "@type" "WebSite" "name" site.Title "url" site.Home.Permalink "inLanguage" "sv") $org) -}}
+{{- with resources.Get "images/logo.svg" }}{{ $org = merge $org (dict "logo" (. | fingerprint).Permalink) }}{{ end -}}
+{{- if .IsHome -}}
+{{- /* sameAs only for profiles the site itself owns (params.sameAs), never the community's
+       site or shared chat invites: those are other entities (SEO-T3). */ -}}
+{{- with site.Params.sameAs }}{{ $org = merge $org (dict "sameAs" .) }}{{ end -}}
+{{- $website := dict "@type" "WebSite" "name" site.Title "alternateName" (urls.Parse site.Home.Permalink).Host "url" site.Home.Permalink "inLanguage" "sv" -}}
+{{- $site := dict "@context" "https://schema.org" "@graph" (slice $website $org) -}}
 <script type="application/ld+json">{{ $site | jsonify | safeJS }}</script>
-{{- else if and .IsPage .Parent (not .Parent.IsHome) -}}
-{{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" site.Title "item" site.Home.Permalink) (dict "@type" "ListItem" "position" 2 "name" .Parent.Title "item" .Parent.Permalink) (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink) -}}
-{{- $article := dict "@type" "TechArticle" "headline" .Title "description" (.Description | default "") "inLanguage" "sv" "url" .Permalink "dateModified" (.Lastmod.Format "2006-01-02") "publisher" (dict "@type" "Organization" "name" site.Title) -}}
-{{- with .Params.source }}{{ $article = merge $article (dict "isBasedOn" .url) }}{{ end -}}
-{{- $doc := dict "@context" "https://schema.org" "@graph" (slice (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) $article) -}}
+{{- else -}}
+{{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" site.Title "item" site.Home.Permalink) -}}
+{{- with .Parent }}{{ if not .IsHome }}{{ $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink) }}{{ end }}{{ end -}}
+{{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" .Title "item" .Permalink) -}}
+{{- $type := "WebPage" -}}
+{{- if .IsSection }}{{ $type = "CollectionPage" }}{{ else if and .IsPage .Parent (not .Parent.IsHome) }}{{ $type = "TechArticle" }}{{ end -}}
+{{- $node := dict "@type" $type "name" .Title "description" (.Description | default "") "inLanguage" "sv" "url" .Permalink -}}
+{{- /* Dates only when the page has them: never year 1 (SEO-T1). */ -}}
+{{- if not .Lastmod.IsZero }}{{ $node = merge $node (dict "dateModified" (.Lastmod.Format "2006-01-02")) }}{{ end -}}
+{{- if eq $type "TechArticle" -}}
+{{- $node = merge $node (dict "headline" .Title "author" $org "publisher" $org "image" ((.Params.image | default site.Params.ogImage | default "images/og.png") | absURL)) -}}
+{{- if not .Date.IsZero }}{{ $node = merge $node (dict "datePublished" (.Date.Format "2006-01-02")) }}{{ end -}}
+{{- with .Params.source }}{{ $node = merge $node (dict "isBasedOn" .url) }}{{ end -}}
+{{- end -}}
+{{- $doc := dict "@context" "https://schema.org" "@graph" (slice (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) $node) -}}
 <script type="application/ld+json">{{ $doc | jsonify | safeJS }}</script>
+{{- end -}}
 {{- end -}}

@@ -1,12 +1,13 @@
 ---
 title: "Solcellskalkylatorn: metod och verifiering"
-description: "Hur batteribehovet för en solcellsdriven MeshCore-repeater räknas fram: modell, antaganden, data, kontroller, kända svagheter och hur du räknar om siffrorna själv."
+seoTitle: "Solcellskalkylatorns metod"
+description: "Så räknar solcellskalkylatorn fram batteribehovet för en solcellsdriven MeshCore-repeater: modell, antaganden, data, kontroller och kända svagheter."
 url: "/wizard/solcell/metod/"
 lead: false
 build:
   list: never
-sitemap:
-  disable: true
+date: 2026-11-14
+lastmod: 2026-11-16
 ---
 
 Den här sidan beskriver metoden bakom [solcellskalkylatorn](/wizard/solcell/). Den är skriven för

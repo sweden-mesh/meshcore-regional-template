@@ -2,6 +2,8 @@
 title: "Hur länge räcker batteriet?"
 category: utrustning
 weight: 30
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 En companion med strömsparläge räcker ofta flera dagar på ett vanligt batteri; med skärm och GPS

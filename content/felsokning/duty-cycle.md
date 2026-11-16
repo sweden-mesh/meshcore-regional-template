@@ -3,6 +3,8 @@ title: "Radion slutar sända en stund"
 description: "Allt fungerar, sedan kommer inget ut på ett tag, sedan fungerar det igen."
 category: radio
 weight: 40
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker
@@ -18,6 +20,10 @@ get dutycycle
 get af
 ```
 
+`get dutycycle` visar gränsen i procent, till exempel `> 10.0%` på en repeater som ställts in
+enligt [guiden](../../guider/repeater/) (`set dutycycle 10`). `get af` visar samma gräns som en
+faktor (*airtime factor*): 9 betyder 10 procent, eftersom gränsen är 100 / (af + 1) procent.
+
 ## Åtgärda
 
 Skicka färre och kortare meddelanden, och låt adverts gå med standardintervallet. Höj inte
@@ -26,3 +32,9 @@ gränsen: den finns för att alla ska få plats i bandet.
 ## Så vet du att det fungerar
 
 Radion sänder igen efter en stund, utan att du gör något.
+
+## Fungerade inte?
+
+- **Radion sänder inte alls, inte ens efter en kvart:** då är det inte sändtidsgränsen. Se
+  [Jag hör andra, men de hör inte mig](../hor-andra-men-inte-mig/).
+- **Bara långt bort når den inte:** se [Räckvidden är mycket kortare än väntat](../kort-rackvidd/).

@@ -2,11 +2,14 @@
 title: "Flasha firmware"
 description: "Välj rätt firmware för din radio och roll, installera den från webbläsaren och vet vad du ska göra om något krånglar."
 weight: 40
+group: repeater
 source:
   title: "Sätt upp en egen MeshCore Companion"
   url: "https://meshat.se/meshcore/satt-upp-egen-companion/"
   license: "CC BY 4.0"
   changes: "Flashningsdelen omskriven som egen guide; val av firmware via firmwareväljaren; filer och adresser för ESP32; felsökning tillagd."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 Att *flasha* är att installera programvaran (firmware) i radion. Samma radio kan bli companion,
@@ -108,3 +111,5 @@ längre in i flashen och skrivs inte över.
 > [!NOTE]- Radion startar men syns inte i nätet
 > Kontrollera att radioinställningarna ovan stämmer och att regionen är rätt. En repeater syns på
 > kartan först när den skickat en *advert* och en observatör har hört den.
+
+Fler svar i Felsökning: [Flashningen avbröts, och radion verkar död](../../felsokning/flashningen-avbrots/), [Radion startar om hela tiden](../../felsokning/startar-om-efter-flashning/) och [Inställningarna är borta efter flashningen](../../felsokning/installningar-borta/).

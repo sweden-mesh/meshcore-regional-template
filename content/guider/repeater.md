@@ -1,16 +1,22 @@
 ---
 title: "Sätt upp en repeater"
+seoTitle: "Sätt upp en MeshCore-repeater: guide"
 description: "En repeater gör nätet större. Så väljer du plats, flashar, ställer in radio, namn, position och region, och kontrollerar att den hörs."
 weight: 50
+group: repeater
 source:
   title: "Sätt upp en egen MeshCore-repeater"
   url: "https://meshat.se/meshcore/satt-upp-egen-repeater/"
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad; radio och region från sidans inställningar; finjusteringen av fördröjningar länkad i stället för återgiven."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 En **repeater** tar emot trafik och sänder den vidare. Varje välplacerad repeater gör att fler
-når varandra, och det är så nätet i {{< region "name" >}} växer.
+når varandra, och det är så nätet i {{< region "name" >}} växer. Hur repeatrar, companions och
+observatörer hänger ihop står i [Vad är MeshCore?](../vad-ar-meshcore/), och orden i
+[ordlistan för MeshCore](../ordlista/).
 
 > [!CAUTION] Antennen först
 > Skruva fast antennen innan radion får ström. En LoRa-radio som sänder utan antenn kan gå sönder.
@@ -134,6 +140,10 @@ reboot
 > När flera repeatrar hör samma paket kan små sändfördröjningar (`txdelay`, `direct.txdelay`)
 > minska krockarna. Värdena beror på hur många grannar repeatern har; meshat.se:s
 > [repeaterguide](https://meshat.se/meshcore/satt-upp-egen-repeater/) går igenom dem.
+
+## Om något krånglar
+
+[Radion hör inga repeatrar](../../felsokning/hor-inga-repeatrar/), [Repeatern syns inte på kartan](../../felsokning/repeater-syns-inte-pa-kartan/) och [Kommandot region def ger fel](../../felsokning/region-def-fungerar-inte/). Fler problem och lösningar finns i [Felsökning](../../felsokning/).
 
 ## Nästa steg
 

@@ -3,6 +3,8 @@ title: "Webbläsaren hittar ingen port"
 description: "Listan med enheter är tom, eller radion syns inte i den."
 category: flasha
 weight: 30
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 ## Troliga orsaker

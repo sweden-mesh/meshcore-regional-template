@@ -2,6 +2,8 @@
 title: "Vad visar kartan, och var kommer det ifrån?"
 category: natet
 weight: 60
+date: 2026-11-13
+lastmod: 2026-11-14
 ---
 
 Kartan visar repeatrar och trafik som **observatörer** har hört: repeatrar som också rapporterar

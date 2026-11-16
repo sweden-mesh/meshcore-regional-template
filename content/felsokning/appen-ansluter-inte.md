@@ -3,6 +3,8 @@ title: "Appen kan inte ansluta till radion"
 description: "Bluetooth eller USB: radion syns inte, eller anslutningen bryts direkt."
 category: companion
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 ## Troliga orsaker

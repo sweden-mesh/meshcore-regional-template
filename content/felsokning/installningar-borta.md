@@ -1,8 +1,11 @@
 ---
 title: "Inställningarna är borta efter flashningen"
+seoTitle: "Inställningar borta efter flashning"
 description: "Namn, lösenord och regioner är tillbaka på standard, och noden syns som en ny nod."
 category: flasha
 weight: 40
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

@@ -1,16 +1,21 @@
 ---
 title: "Kom igång med en companion"
+seoTitle: "Kom igång med MeshCore: companion-guide"
 description: "Din egen radio i nätet: flasha, anslut appen, ställ in radion och skicka ditt första meddelande."
 weight: 20
+group: start
 source:
   title: "Sätt upp en egen MeshCore Companion"
   url: "https://meshat.se/meshcore/satt-upp-egen-companion/"
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad; flashningen i en egen guide; regionens inställningar från sidans parametrar; integritetsråd om position tillagt."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 En **companion** är din personliga radio. Du skriver i MeshCore-appen, och radion skickar och
-tar emot över LoRa. Den för inte vidare andras trafik; det gör repeatrarna.
+tar emot över LoRa. Den för inte vidare andras trafik; det gör repeatrarna. Ny med MeshCore? Läs
+[Vad är MeshCore?](../vad-ar-meshcore/) först, och slå upp orden i [ordlistan](../ordlista/).
 
 ## 1. Flasha companion-firmware
 
@@ -72,6 +77,8 @@ Dela den bara om du vill, och gärna avrundad.
 
 > [!NOTE]- Det fungerar nära men inte långt bort
 > Räckvidd handlar om höjd och fri sikt. Prova utomhus, högre upp och borta från metall.
+
+Fler svar i Felsökning: [Appen kan inte ansluta till radion](../../felsokning/appen-ansluter-inte/), [Meddelanden kommer inte fram](../../felsokning/meddelanden-kommer-inte-fram/) och [Jag hör andra, men de hör inte mig](../../felsokning/hor-andra-men-inte-mig/).
 
 ## Nästa steg
 

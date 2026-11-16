@@ -1,8 +1,10 @@
 ---
 title: "Trafiken går inte över länsgränsen"
-description: "Meddelanden i länets kanal når inte grannlänet, eller tvärtom."
+description: "Når meddelanden i länets kanal inte grannlänet? Det är oftast avsiktligt: regionen håller trafiken i länet. Så når du över gränsen när du vill."
 category: regioner
 weight: 30
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

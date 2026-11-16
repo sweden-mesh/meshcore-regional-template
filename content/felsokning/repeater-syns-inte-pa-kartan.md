@@ -1,8 +1,10 @@
 ---
 title: "Repeatern syns inte på kartan"
-description: "Den är igång och hör grannar, men finns inte på regionens karta."
+description: "Är repeatern igång men syns inte på kartan? Oftast har ingen observatör hört dess advert, eller så saknas positionen. Så rättar du det."
 category: repeater
 weight: 10
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker

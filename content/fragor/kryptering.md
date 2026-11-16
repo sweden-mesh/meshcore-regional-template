@@ -2,6 +2,8 @@
 title: "Är MeshCore krypterat?"
 category: integritet
 weight: 30
+date: 2026-11-13
+lastmod: 2026-11-13
 ---
 
 Ja, för det som ska vara privat. Direktmeddelanden krypteras med nycklar som bara du och

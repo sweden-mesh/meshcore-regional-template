@@ -1,9 +1,14 @@
 {{- /* Titles for search (planning: seo.md): the home page names MeshCore and the
        place; other pages end in "MeshCore <short>". params.region.short is the
-       short place name (default: the region name). */ -}}
+       short place name (default: the region name). A page's `seoTitle` replaces
+       its title here only (SEO-T6), kept short so the result is at most 60
+       characters; a seoTitle that already names MeshCore ends in "– <short>". */ -}}
 {{- $short := (partialCached "region.html" . "region").short -}}
 {{- if .IsHome -}}
   {{- T "seo_home_title" (dict "Short" $short) -}}
+{{- else if eq .Kind "404" -}}
+  {{- printf "%s – MeshCore %s" (T "nf_title") $short -}}
 {{- else -}}
-  {{- printf "%s – MeshCore %s" .Title $short -}}
+  {{- $t := .Params.seoTitle | default .Title -}}
+  {{- if and .Params.seoTitle (strings.Contains $t "MeshCore") }}{{ printf "%s – %s" $t $short }}{{ else }}{{ printf "%s – MeshCore %s" $t $short }}{{ end -}}
 {{- end -}}

@@ -2,11 +2,14 @@
 title: "Regioner (scope)"
 description: "Vad en region är i MeshCore, vilken region som gäller här och hur du ställer in den på en repeater."
 weight: 30
+group: regioner
 source:
   title: "MeshCore-regioner"
   url: "https://meshat.se/meshcore/regioner/"
   license: "CC BY 4.0"
   changes: "Omskriven efter den svenska tvånivåmodellen (se + länets namn, inga kommunkoder); regionsvärden från sidans inställningar; verktyget ersatt av färdiga kommandon."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 En **region** (i appen ibland *scope*) är en etikett på ett paket. Den talar om för repeatrarna
@@ -122,5 +125,6 @@ Välj den minsta region som når dem kanalen är till för.
 
 ## Läs mer
 
+- Felsökning: [Trafiken går inte över länsgränsen](../../felsokning/trafik-gar-inte-over-lansgransen/), [Hemregionen är borta efter en omstart](../../felsokning/region-home-forsvinner/) och [Kommandot region def ger fel](../../felsokning/region-def-fungerar-inte/)
 - [MeshCore CLI: Region Management](https://docs.meshcore.io/cli_commands/#region-management-v110)
 - [Vad är MeshCore?](../vad-ar-meshcore/)

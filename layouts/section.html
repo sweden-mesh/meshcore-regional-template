@@ -3,10 +3,30 @@
     <h1>{{ .Title }}</h1>
     {{ with and (ne .Params.lead false) .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
     {{ with .Content }}<div class="prose">{{ partial "scopes.html" . }}</div>{{ end }}
+    {{- /* A section with `groups` in its front matter (a list of {key, title}) lists its pages
+           under one H2 per group, by each page's `group`; pages without a listed group come
+           last, under "Fler guider" (SEO-T9). Without `groups`, one list as before. */}}
+    {{- $pages := .Pages.ByWeight }}
+    {{- $lists := slice }}
+    {{- with .Params.groups }}
+      {{- $keys := slice }}
+      {{- range . }}
+        {{- $keys = $keys | append .key }}
+        {{- $title := .title }}
+        {{- with where $pages "Params.group" .key }}{{ $lists = $lists | append (dict "title" $title "pages" .) }}{{ end }}
+      {{- end }}
+      {{- with where $pages "Params.group" "not in" $keys }}{{ $lists = $lists | append (dict "title" (T "guide_group_more") "pages" .) }}{{ end }}
+    {{- else }}
+      {{- $lists = slice (dict "title" "" "pages" $pages) }}
+    {{- end }}
+    {{- $n := 0 }}
+    {{- range $lists }}
+    {{ with .title }}<h2 class="guide-group">{{ . }}</h2>{{ end }}
     <ol class="guide-grid">
-      {{ range $i, $p := .Pages.ByWeight }}
-        <li><a href="{{ .RelPermalink }}"><span class="guide-head"><span class="eyebrow">{{ printf "%02d" (add $i 1) }}</span> <strong>{{ .Title }}</strong></span>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
+      {{ range .pages }}{{ $n = add $n 1 }}
+        <li><a href="{{ .RelPermalink }}"><span class="guide-head"><span class="eyebrow">{{ printf "%02d" $n }}</span> <strong>{{ .Title }}</strong></span>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
       {{ end }}
     </ol>
+    {{- end }}
   </article>
 {{ end }}

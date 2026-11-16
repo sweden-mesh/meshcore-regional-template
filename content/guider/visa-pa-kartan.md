@@ -1,12 +1,16 @@
 ---
 title: "Din repeater på kartan, och som observatör"
+seoTitle: "Repeatern på kartan, och som observatör"
 description: "Din repeater syns på kartan när en observatör hör den; den behöver inte vara observatör själv. Så gör du den till en ändå, så att kartan också ser vad den hör."
 weight: 100
+group: repeater
 source:
   title: "MeshCore till MQTT"
   url: "https://meshat.se/mqtt/meshcore-till-mqtt/"
   license: "CC BY 4.0"
   changes: "Bara observer-firmware-vägen, omskriven; regionens IATA och förinställning från sidans parametrar; övriga metoder länkade."
+date: 2026-11-12
+lastmod: 2026-11-16
 ---
 
 **Din repeater behöver inte vara observatör för att synas på kartan.** Den syns så fort en
@@ -56,6 +60,8 @@ Efter några minuter ska repeatern ha en blå ring (observatör) på kartan på 
 siffran för observatörer öka. Utan ring syns den redan, om en annan observatör hör den.
 
 {{< meshmapper >}}
+
+Syns den inte? Se [Repeatern syns inte på kartan](../../felsokning/repeater-syns-inte-pa-kartan/), [Observatören rapporterar inte till kartan](../../felsokning/observer-syns-inte/) och [Observatören tappar Wi-Fi gång på gång](../../felsokning/wifi-tappar/).
 
 > [!NOTE]- Andra sätt att rapportera
 > Det går också att rapportera från en dator eller en Raspberry Pi som är ansluten till en

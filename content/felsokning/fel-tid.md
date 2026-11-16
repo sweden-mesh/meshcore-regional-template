@@ -1,8 +1,10 @@
 ---
 title: "Tiderna är fel, en eller två timmar"
-description: "Paket och loggar har tider som inte stämmer med klockan."
+description: "Är tiderna i paket och loggar en eller två timmar fel? Oftast saknas tidszonen på observatören. Så kontrollerar du klockan och rättar det."
 category: mqtt
 weight: 20
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 ## Troliga orsaker
@@ -29,3 +31,10 @@ Sommartid och vintertid sköts då av sig själv.
 ## Så vet du att det fungerar
 
 `clock` visar samma tid som din telefon.
+
+## Fungerade inte?
+
+- **Klockan går inte alls, eller står kvar:** observatören har ingen kontakt med nätet och kan inte
+  hämta tiden. Se [Observatören tappar Wi-Fi gång på gång](../wifi-tappar/).
+- **Tiden är rätt men inget syns på kartan:** se
+  [Observatören rapporterar inte till kartan](../observer-syns-inte/).

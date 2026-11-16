@@ -1,7 +1,11 @@
 ---
 title: "Ordlista"
-description: "Vad orden kring MeshCore betyder, kort."
+seoTitle: "Ordlista för MeshCore"
+description: "Ordlista för MeshCore på svenska: advert, flood, region, repeater, companion, observatör och fler ord som guiderna använder, kort förklarade."
 weight: 110
+group: start
+date: 2026-11-13
+lastmod: 2026-11-16
 ---
 
 Vanliga frågor finns under [Frågor](../../fragor/).

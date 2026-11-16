@@ -846,3 +846,5 @@ other = "Visa allt"
 other = "Här vill regionen gärna ha nya repeatrar"
 [hp_wanted_help]
 other = "Stjärnorna på kartan visar platserna, med en ring på cirka 1 km runt. Välj ett namn för att visa platsen på kartan."
+[guide_group_more]
+other = "Fler guider"
