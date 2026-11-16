@@ -6,7 +6,7 @@
   {{- $all := partial "lan.html" . -}}
   {{- /* /lan/: every county, linking to its page or its own site; the no-JS target of the header's
          county button and the crawl path to every county page (§6.2.2). */ -}}
-  {{- $.AddPage (dict "path" "lan" "kind" "page" "type" "lan" "layout" "list" "title" (T "lan_list_title")
+  {{- $.AddPage (dict "path" "lan" "kind" "page" "type" "lan" "layout" "list" "title" (T "lan_list_title") "description" (T "lan_list_desc")
         "params" (dict "description" (T "lan_list_desc")) "content" (dict "mediaType" "text/markdown" "value" "")) -}}
   {{- range $all -}}
     {{- if .site -}}
@@ -14,6 +14,7 @@
              automatic redirect. Not indexed, not in the sitemap. */ -}}
       {{- $.AddPage (dict "path" .slug "kind" "page" "type" "lan" "layout" "elsewhere"
             "title" (T "lan_own_title" (dict "Name" .name))
+            "description" (T "lan_own_desc" (dict "Name" .name))
             "params" (dict "lan" .scb "noindex" true "description" (T "lan_own_desc" (dict "Name" .name)))
             "content" (dict "mediaType" "text/markdown" "value" "")) -}}
     {{- end -}}
@@ -24,6 +25,7 @@
         "type" "lan"
         "layout" "county"
         "title" (T "hero_title" (dict "Region" .name))
+        "description" (T "lan_home_desc" (dict "Name" .name "Scope" .scope))
         "params" (dict "lan" .scb "lanHome" true "lead" false
                   "description" (T "lan_home_desc" (dict "Name" .name "Scope" .scope)))
         "dates" (dict "lastmod" (time.AsTime .checked))
@@ -48,6 +50,7 @@
           "type" "lan"
           "layout" "local"
           "title" $p.title
+          "description" $p.desc
           "params" (dict "lan" $c.scb "description" $p.desc)
           "dates" (dict "lastmod" (time.AsTime $c.checked))
           "content" (dict "mediaType" "text/markdown" "value" $body.Content)) -}}

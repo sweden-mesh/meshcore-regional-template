@@ -104,4 +104,9 @@ check wizard/repeater-snabb/index.html '<div class=wz-neighbours hidden data-are
 check wizard/repeater-guidad/index.html 'js/lan/wizard-county' "wizards: the guided wizard too"
 check wizard/solcell/index.html 'js/lan/wizard-county' "wizards: the solar calculator starts on the county"
 check wizard/companion/index.html '<code class=scope><span data-r=scope>se-&lt;län></span></code>' "wizards: the companion steps name the county's scope"
+# Descriptions and structured data (G22): every national page has its own description.
+check kalmar/index.html '<meta name=description content="MeshCore i Kalmar län: länets region se08' "seo: a county page's own description"
+check kalmar/kom-igang/index.html '<meta name=description content="Kom igång med MeshCore i Kalmar län' "seo: a local page's own description"
+check lan/index.html '<meta name=description content="MeshCore i Sveriges 21 län' "seo: /lan/ has its description"
+check index.html '"@type":"Organization"[^}]*"name":"MeshCore Exempellandet"' "seo: the Organization is the site"
 exit $fail
