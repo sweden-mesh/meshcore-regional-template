@@ -4,6 +4,22 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.42.0 — 2026-11-16
+
+Changes regional output.
+
+- **Map:** repeater site details from MeshMapper (antenna, height above ground, power source) in the
+  node popups, with a credit line. New params `meshmapper.sites` (off by default) and
+  `meshmapper.sites_fixture`; the build keeps only those three fields, never the admins' names or the
+  notes. README: **MeshMapper coverage**.
+- **Background:** the gradient moves by a transform on a fixed layer instead of `background-position`,
+  so it no longer repaints the page every frame (same look, measured in the commit).
+- **Scopes:** numeric scopes (`se08`, `se12`, …) are styled as scopes like `se-<county>`.
+- **Channels guide:** the heading "Kanaler i <region>" has the fixed id `kanaler-i-regionen` (it was
+  numbered per build); a link to the old id needs updating.
+- **Release step:** `scripts/lastmod.mjs` ignores national-only lines, so they no longer move a
+  wizard's date.
+
 ## v0.41.2 — 2026-11-16
 
 National mode only (anti-AI-design review, iteration 15): the wizards' position picker opens on the
