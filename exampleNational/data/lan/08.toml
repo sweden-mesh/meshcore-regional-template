@@ -6,6 +6,7 @@ checked = 2026-11-16
 place   = "Exempelberget"
 text    = "Nätet i länet växer längs kusten."
 text_by = "Exempelgruppen"
+meshmapper = "https://example.org/meshmapper/"
 
 [[channels]]
   name = "#kalmar-exempel"

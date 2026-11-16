@@ -92,4 +92,7 @@ if grep -q 'data-wanted=' "$P/skåne/index.html"; then echo "FAIL wanted: a coun
 check kalmar/index.html 'data-lan-scb=08 data-geo=/se-lan\.' "outside: a county page's map names its county and the polygons"
 check kalmar/index.html 'src=/js/lan/map-county' "outside: and loads the marking script"
 if grep -q 'map-county' "$P/index.html"; then echo "FAIL outside: the Sverige map marks counties"; fail=1; else echo "ok   outside: the Sverige map marks nothing"; fi
+# MeshMapper (G18, Q5.2): a county's own map linked under its map; no coverage layer nationally.
+check kalmar/index.html 'map-mm">[^<]*<a href=https://example.org/meshmapper/' "meshmapper: a county page links the county's MeshMapper map"
+if grep -q 'data-coverage=' "$P/kalmar/index.html" "$P/index.html"; then echo "FAIL meshmapper: a coverage layer nationally"; fail=1; else echo "ok   meshmapper: no coverage layer nationally"; fi
 exit $fail

@@ -51,7 +51,10 @@
   {{- end }}{{ end }}
   {{ with $cov }}<p class="map-note map-mm map-cov-at" hidden>{{ T "map_coverage_measured" (dict "Date" (time.Format "2006-01-02" (time.AsTime .newest))) }}
     {{- with site.GetPage "/guider/visa-pa-kartan" }} {{ T "map_coverage_hint" (dict "Old" 90 "URL" (printf "%s#%s" .RelPermalink (anchorize (T "mm_title")))) | $.Page.RenderString }}{{ end }}</p>{{ end }}
-  {{ with site.Params.meshmapper.url }}<p class="map-note map-mm">{{ T "map_meshmapper_note" (dict "URL" .) | $.Page.RenderString }}</p>{{ end }}
+  {{- $mmUrl := site.Params.meshmapper.url }}
+  {{- /* National mode: the county's own MeshMapper map from its file (G18); no coverage layer. */}}
+  {{- if site.Params.national }}{{ $mmUrl = "" }}{{ with partial "lan-page.html" . }}{{ $mmUrl = .meshmapper | default "" }}{{ end }}{{ end }}
+  {{ with $mmUrl }}<p class="map-note map-mm">{{ T "map_meshmapper_note" (dict "URL" .) | $.Page.RenderString }}</p>{{ end }}
   {{- /* A text alternative for the map: the repeaters from the build-time snapshot,
          readable without JavaScript and by screen readers. */ -}}
   {{- $list := slice -}}{{- range $snap.nodes }}{{ if and (ne .nodeType 1) (not .possiblyForeign) (not .seeded) }}{{ $list = $list | append . }}{{ end }}{{ end -}}
