@@ -3,13 +3,20 @@
   gets Jönköping's (JKG), and the "where" part says so. Never scaled here.
   Parts: where, point, short, irradiation, trees, capacity. */ -}}
 {{- $code := index (site.Params.region.iatas | default slice) 0 | default "" -}}
+{{- /* National mode: the Jönköping reference case, labelled as such (plan Q6.8, G17). */ -}}
+{{- if site.Params.national }}{{ $code = "JKG" }}{{ end -}}
 {{- $d := index hugo.Data.solar $code -}}
 {{- $own := ne $d nil -}}
 {{- if not $own }}{{ $d = hugo.Data.solar.JKG }}{{ end -}}
 {{- $fmt := "-|,| " -}}{{/* minus | decimal comma | non-breaking space grouping, "|" as delimiter */}}
 {{- $part := .Get 0 -}}
 {{- if eq $part "where" -}}
-  {{- if $own -}}
+  {{- if site.Params.national -}}
+> [!NOTE] Jönköping som referens
+> Tabellerna på sidan är räknade för en punkt i {{ $d.place }} ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N), som ett
+> exempel. Längre norrut behövs mer batteri, längre söderut mindre. [Solcellskalkylatorn](/wizard/solcell/)
+> räknar med siffrorna för ditt eget län.
+  {{- else if $own -}}
 *Siffrorna på sidan är räknade för en punkt i {{ $d.place }} ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N){{ with $d.source }}{{ if ne . "PVGIS-SARAH3" }}, med en annan datakälla än övriga län ({{ . }}){{ end }}{{ end }}. Kust och inland, skog och fjäll kan skilja mycket inom samma län.*
 {{ with $d.note }}
 > [!WARNING] Längre norrut

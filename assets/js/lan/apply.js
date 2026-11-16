@@ -19,6 +19,7 @@ function fill(v) {
     el.textContent = val === undefined ? el.dataset.rNeutral : val;
   }
   renderLists(c);
+  for (const el of document.querySelectorAll("[data-r-proposal]")) el.hidden = !(c && c.decision === "forslag");
   document.title = titleFor(baseTitle, data.sweden.short, c);
   if (v) root.setAttribute("data-lan", v); else root.removeAttribute("data-lan");
   document.dispatchEvent(new CustomEvent("lan:change", { detail: { lan: v || null, county: c } }));

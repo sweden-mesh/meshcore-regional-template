@@ -72,4 +72,8 @@ check guider/kanaler/index.html '<tbody data-r-channels><tr><td><code data-r=tes
 check index.html '<ul data-r-groups=list><li><a href=https://example.org/chat' "groups: the footer list takes the county's groups, national chats after"
 check kalmar/index.html '<ul data-r-groups=list><li><a href=https://example.org/grupp class=ext target=_blank rel=noopener>Exempelgruppen</a>' "groups: a county page's footer lists its group"
 check bli-nodvard/index.html '<span data-r-groups=inline><a href=https://example.org/chat' "contact: shared pages name the national chats until a county is chosen"
+# Proposed scopes (P2) and the solar guide's reference (G17).
+check guider/regioner/index.html '<p class=lan-proposal data-r-proposal hidden>Regionen <code><span data-r=scope>' "proposal: the page has the hidden proposal line"
+check guider/solnoder/index.html 'Jönköping som referens' "solar: the tables are labelled as the Jönköping reference"
+check guider/solnoder/index.html 'href=/wizard/solcell/>Solcells' "solar: and point to the calculator"
 exit $fail

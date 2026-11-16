@@ -11,3 +11,6 @@ html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
 /* /lan/: the plain county list. */
 .lan-list { list-style: none; padding: 0; columns: 2 18rem; column-gap: 2rem; }
 .lan-list li { break-inside: avoid; padding: 0.25rem 0; }
+
+/* A proposed county scope (P2): one line under the note, shown by the apply script. */
+.lan-proposal { margin: 0 0 1.25rem; font-size: 0.95em; }

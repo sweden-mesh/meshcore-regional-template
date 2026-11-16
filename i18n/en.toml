@@ -944,3 +944,5 @@ other = "This page shows values that depend on the county, such as the region an
 other = "Choose your county"
 [lan_note_after]
 other = "to see its values."
+[lan_proposal_page]
+other = "The region <code>{{ .Scope }}</code> for {{ .Name }} is a proposal in <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">the list of regions</a>: no group in the county has decided on it yet."

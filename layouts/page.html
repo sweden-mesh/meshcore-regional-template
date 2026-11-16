@@ -5,6 +5,7 @@
     {{ with and (ne .Params.lead false) .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
     {{- if site.Params.national }}{{ if in (string .Content) "data-r=" }}
     <p class="lan-note">{{ T "lan_note" }} {{ with site.GetPage "/lan" }}<a href="{{ .RelPermalink }}" data-lan-open>{{ T "lan_note_pick" }}</a>{{ end }} {{ T "lan_note_after" }}</p>
+    <p class="lan-proposal" data-r-proposal hidden>{{ T "lan_proposal_page" (dict "Name" (partial "r.html" (dict "page" . "key" "name" "value" "")) "Scope" (partial "r.html" (dict "page" . "key" "scope" "value" "")) "URL" "https://github.com/zombiefredrik/meshcore-se-regioner") | safeHTML }}</p>
     {{- end }}{{ end }}
     <div class="prose">{{ partial "scopes.html" .Content }}</div>
     {{ partial "source.html" . }}
