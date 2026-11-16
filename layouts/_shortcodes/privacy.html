@@ -3,7 +3,12 @@
 {{- $b := site.Params.beacon.url -}}
 <h2>Kort sagt</h2>
 <ul>
+  {{- if site.Params.national }}
+  {{- /* National mode (P8, Q4b.4): the chosen county is kept in the browser, in localStorage and a cookie. */}}
+  <li>Sidan använder <strong>en kaka</strong>, <code>lan</code>, och samma värde i webbläsarens lagring (<code>localStorage</code>): länet du har valt, som en kod (som <code>08</code>) eller <code>se</code> för hela landet. Den sparas i ett år, används bara för att visa ditt län, och skickas inte till någon annan{{ if and $a.plausible $a.script }}; besöksstatistiken nedan får länskoden, men inget som pekar ut dig{{ end }}. Ljust eller mörkt läge, stoppad rörelse och färgblindläge sparas också i webbläsaren, om du ändrar dem. Ingen inloggning.</li>
+  {{- else }}
   <li>Sidan använder <strong>inga kakor</strong> och ingen inloggning.</li>
+  {{- end }}
   {{- if and $a.plausible $a.script }}
   <li>Vi räknar besök med <a href="https://plausible.io/privacy-focused-web-analytics" class="ext" target="_blank" rel="noopener">Plausible</a>, utan kakor. Varje dag räknas en slumpad kod fram av din IP-adress och webbläsare så att samma besökare inte räknas två gånger; IP-adressen sparas inte, och koden byts varje dygn. Statistiken ligger på vår egen server, inte hos Plausible eller någon annan.</li>
   {{- else }}

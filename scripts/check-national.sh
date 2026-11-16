@@ -114,4 +114,7 @@ check index.html 'plausible.init({endpoint:"/p/event",customProperties:function(
 # The footer's link (G25): the county-data guide instead of "start a site for your region".
 check index.html '<a href=https://example.org/county-data class=ext target=_blank rel=noopener>Rätta ditt läns uppgifter</a>' "footer: the county-data guide is linked"
 if sed -n '/<footer/,/<\/footer>/p' "$P/index.html" | grep -q 'egen-regional-sida'; then echo "FAIL footer: still invites a site of one's own"; fail=1; else echo "ok   footer: no start-a-site link"; fi
+# Privacy (P8): the stored county is named; "inga kakor" is gone.
+check integritet/index.html 'Sidan använder <strong>en kaka</strong>, <code class=nobreak>lan</code>' "privacy: the county cookie and storage are named"
+if grep -q 'inga kakor</strong>' "$P/integritet/index.html"; then echo "FAIL privacy: still says no cookies"; fail=1; else echo "ok   privacy: no claim of no cookies"; fi
 exit $fail
