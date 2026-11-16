@@ -56,6 +56,27 @@ export function popupHtml(n, now = Date.now(), site = null) {
   return `<div class="node-popup"><h3>${escapeHtml(n.name || t("unnamed"))}</h3>${rows.join("")}</div>`;
 }
 
+// How far the map must move down so an open popup is not under the map's corner controls (the
+// toggles and the legend; on a phone they cover the top of the map). Rects as from
+// getBoundingClientRect; never so far that the popup leaves the map at the bottom. Pure.
+export function revealShift(popup, blockers, map, gap = 8) {
+  let dy = 0;
+  for (const b of blockers) {
+    if (popup.left < b.right && popup.right > b.left && popup.top < b.bottom + gap) dy = Math.max(dy, b.bottom + gap - popup.top);
+  }
+  return Math.max(0, Math.min(dy, map.bottom - gap - popup.bottom));
+}
+
+const reveal = (map, popup) => {
+  const el = popup.getElement();
+  if (!el) return;
+  const box = map.getContainer();
+  const blockers = [...box.querySelectorAll(".maplibregl-ctrl-top-left > *, .maplibregl-ctrl-top-right > *")].map((c) => c.getBoundingClientRect());
+  const dy = revealShift(el.getBoundingClientRect(), blockers, box.getBoundingClientRect());
+  const calm = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (dy > 0) map.panBy([0, -dy], { duration: calm ? 0 : 200 });
+};
+
 // sites: an async function giving the site-details map (or {}), called on the first popup.
 export function attachPopups(map, maplibregl, client, sites = async () => ({})) {
   const popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true });
@@ -70,7 +91,7 @@ export function attachPopups(map, maplibregl, client, sites = async () => ({})) 
     }
     try {
       const [n, s] = await Promise.all([client.get(`/nodes/${encodeURIComponent(f.properties.id)}`), sites().catch(() => ({}))]);
-      if (popup.isOpen()) popup.setHTML(popupHtml(n, Date.now(), (s || {})[String(n.publicKey || "").toUpperCase()]));
+      if (popup.isOpen()) { popup.setHTML(popupHtml(n, Date.now(), (s || {})[String(n.publicKey || "").toUpperCase()])); reveal(map, popup); }
     } catch {
       if (popup.isOpen()) popup.setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>${escapeHtml(t("load_failed"))}</p></div>`);
     }

@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.42.1 — 2026-11-16
+
+Map: a node popup that opens under the corner controls (the toggles and the legend, which cover the
+top of the map on a phone) moves the map down until it is clear (anti-AI-design review, iteration 16).
+
 ## v0.42.0 — 2026-11-16
 
 Changes regional output.

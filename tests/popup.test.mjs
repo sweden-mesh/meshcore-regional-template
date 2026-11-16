@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { popupHtml, siteHtml, escapeHtml, ago, formatRadio } from "../assets/js/map/popup.js";
+import { popupHtml, siteHtml, revealShift, escapeHtml, ago, formatRadio } from "../assets/js/map/popup.js";
 
 const node = JSON.parse(readFileSync(new URL("./data/node-detail.json", import.meta.url)));
 
@@ -41,4 +41,14 @@ test("site details: none, or an entry without fields, add nothing", () => {
   }
   assert.equal(siteHtml({ p: "wind" }).includes("Ström: wind"), true);
   assert.equal(siteHtml({ h: "25" }).includes("Antenn"), false);
+});
+
+test("revealShift: a popup under the corner controls moves down, one beside them does not", () => {
+  const map = { top: 0, bottom: 700, left: 0, right: 390 };
+  const legend = { top: 130, bottom: 170, left: 10, right: 280 };
+  assert.equal(revealShift({ top: 130, bottom: 370, left: 46, right: 316 }, [legend], map), 48);
+  assert.equal(revealShift({ top: 130, bottom: 370, left: 300, right: 380 }, [legend], map), 0);
+  assert.equal(revealShift({ top: 200, bottom: 440, left: 46, right: 316 }, [legend], map), 0);
+  // never past the bottom of the map
+  assert.equal(revealShift({ top: 100, bottom: 680, left: 46, right: 316 }, [legend], map), 12);
 });
