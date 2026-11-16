@@ -29,7 +29,7 @@ Privata kanaler
 > Skriv aldrig något där som du inte vill att vem som helst ska kunna läsa, även långt senare.
 > Meddelanden kan också spelas in av observatörer.
 
-## Kanaler i {{< region "name" >}}
+## Kanaler i {{< region "name" >}} {#kanaler-i-regionen}
 
 {{< channels >}}
 
