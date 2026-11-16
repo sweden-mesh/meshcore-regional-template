@@ -16,6 +16,9 @@
   {{- if in (string .Content) "class=\"codeblock\"" }}
   {{ with resources.Get "js/codecopy.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{ end }}
   {{- end }}
+  {{- if site.Params.national }}
+  {{ partial "lan-island.html" . }}
+  {{- end }}
   {{ partial "hooks/body-end.html" . }}
 </body>
 </html>

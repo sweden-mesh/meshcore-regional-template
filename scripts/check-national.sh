@@ -53,4 +53,9 @@ check index.html 'localStorage.getItem("lan")' "prepaint: the script is in the h
 check index.html '<html [^>]*data-lan-page>' "prepaint: a shared page names no county"
 check kalmar/index.html '<html [^>]*data-lan-page=08>' "prepaint: a county page names its county"
 check jönköping/index.html '<html [^>]*data-lan-page>' "prepaint: an own-site county's page is not saved as the choice"
+# The data island and the apply script (§6.2.2, §6.2.3); behaviour in tests/lan.test.mjs and a browser.
+check guider/regioner/index.html '<script type=application/json id=lan-data>{"counties":\[' "island: every page carries the county data"
+check guider/regioner/index.html 'src=/js/lan/apply' "island: and the apply script"
+size=$(sed -n 's/.*id=lan-data>\([^<]*\)<\/script>.*/\1/p' "$P/index.html" | gzip -c | wc -c)
+if [ "$size" -lt 10240 ]; then echo "ok   island: $size bytes gzipped, under 10 KB"; else echo "FAIL island: $size bytes gzipped, over 10 KB (move it to lan.json)"; fail=1; fi
 exit $fail
