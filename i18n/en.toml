@@ -310,7 +310,7 @@ other = "Set up a companion"
 [wz_comp_desc]
 other = "The values to enter in the MeshCore app for a companion in the region, step by step."
 [wz_comp_intro]
-other = "A companion is set up in the MeshCore app, not over the USB console. Here are the region's values in the order the app asks for them. If you haven't flashed the radio yet, start with [Flash firmware](../../guider/flasha-firmware/) and choose *companion*."
+other = "A companion is set up in the MeshCore app, not over the USB console. Here are the region's values in the order the app asks for them. If you haven't flashed the radio yet, start with [Flash firmware](../../guider/flasha-firmware/#companion): companion firmware comes from the MeshCore project's web flasher."
 [wzc_1]
 other = "Connect the app"
 [wzc_1_text]
@@ -854,3 +854,17 @@ other = "Where the region would like new repeaters"
 other = "The stars on the map mark the places, with a ring of about 1 km around each. Choose a name to show the place on the map."
 [guide_group_more]
 other = "More guides"
+[audience_label]
+other = "Where do you start?"
+[audience_new]
+other = "New here?"
+[audience_new_link]
+other = "A ready-made radio and your first message"
+[audience_ham]
+other = "Radio amateur?"
+[audience_ham_link]
+other = "How the 868 MHz band differs from amateur radio"
+[audience_maker]
+other = "Want to build?"
+[audience_maker_link]
+other = "Build a repeater from a Wio or Heltec board"

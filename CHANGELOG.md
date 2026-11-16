@@ -4,6 +4,40 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.39.0 — 2026-11-16
+
+For people new to MeshCore (NEWCOMER-3 and NEWCOMER-4): the beginner, the radio amateur and the maker.
+
+- **The front page has three ways in** under the hero buttons: *Ny här?* (to Skaffa hårdvara),
+  *Radioamatör?* (to För radioamatörer) and *Vill du bygga?* (to Bygg en repeater). A plain list,
+  one line each; a region that removes a target page loses that line. New i18n keys
+  `audience_label`, `audience_new`, `audience_new_link`, `audience_ham`, `audience_ham_link`,
+  `audience_maker`, `audience_maker_link` (sv and en).
+- **"Skaffa hårdvara" becomes a device ladder**: ready-made companions, devices with screen, GPS or
+  keyboard, and a repeater to build or buy, with named models and prices dated November 2026 (in
+  kronor where a Swedish shop had the model, otherwise as the European source gave it); where to buy
+  (Pileup, Limmared, amazon.se, AliExpress, the makers' own shops); battery life in days per device
+  type, with sources. No affiliate links.
+- **New guides**: *Första meddelandet* (`/guider/forsta-meddelandet/`, Kom igång): adverts,
+  contacts, the test channel, direct message vs channel, receipts, and why silence is usually normal.
+  *Bygg en repeater* (`/guider/bygg-en-repeater/`, Repeater): a Seeed XIAO nRF52840 with
+  Wio-SX1262 for battery and sun, and a Heltec V4 for mains power, including the V4's transmit power
+  against the ERP limit. *För radioamatörer* and *Antenner* in a new hub group **Radio och
+  antenner** (`radio`): the 868 MHz SRD rules, ERP with antenna gain, duty cycle, the LoRa
+  parameters, flooding; antenna types, gain, connectors, cable loss and placement.
+- **Test channels**: the new shortcode `{{< testchannel >}}` prints the region's own
+  `#test-<scope>` (from the region partial). The companion, channel and etiquette guides now say to
+  test there or in the general `#test`.
+- **Companion flashing fixed**: the firmware picker offers only repeaters, so *Flasha firmware*,
+  *Kom igång med en companion* and the companion wizard's intro now send companions to the official
+  web flasher (`params.firmware.flasher`).
+- **The app per platform** (Android, iPhone, Windows, macOS, web) in the companion guide. FAQ:
+  `licens` gets the numbers and "not amateur radio", `batteritid` figures, `vad-kostar-det` and
+  `vilken-radio` point to the ladder.
+- `scripts/check-overrides.sh` checks the audience list, the new hub group and guides, the derived
+  test channel and the companion link to the web flasher.
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.38.0 — 2026-11-16
 
 - New guide **"En egen broker för regionen"** (`/guider/egen-broker/`, group *Regioner och

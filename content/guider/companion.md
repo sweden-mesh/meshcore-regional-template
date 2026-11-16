@@ -1,7 +1,7 @@
 ---
 title: "Kom igång med en companion"
 seoTitle: "Kom igång med MeshCore: companion-guide"
-description: "Din egen radio i nätet: flasha, anslut appen, ställ in radion och skicka ditt första meddelande."
+description: "Din egen radio i nätet: flasha companion-firmware, anslut appen i telefonen eller datorn, ställ in radion och skicka ditt första test i testkanalen."
 weight: 20
 group: start
 source:
@@ -19,10 +19,19 @@ tar emot över LoRa. Den för inte vidare andras trafik; det gör repeatrarna. N
 
 ## 1. Flasha companion-firmware
 
-Följ [Flasha firmware](../flasha-firmware/) och välj typen *companion*. Ska du använda
-telefonen, välj **Bluetooth Companion**; ska radion sitta i datorn, välj **USB Companion**.
+Companion-firmware finns i MeshCore-projektets [webbflasher]({{< param "firmware.flasher" >}}),
+inte i firmwareväljaren. Ska du använda telefonen, välj **Bluetooth Companion**; ska radion sitta
+i datorn, välj **USB Companion**. Steg för steg: [Flasha firmware](../flasha-firmware/#companion).
+Har du ingen radio än: [Skaffa hårdvara](../skaffa-hardvara/).
 
 ## 2. Anslut appen
+
+MeshCore-appen är gratis och finns för:
+
+- **Android** (Google Play) och **iPhone** (App Store),
+- **Windows** och **macOS**, att ladda ned från [meshcore.io](https://meshcore.io),
+- **webbläsaren**: [app.meshcore.nz](https://app.meshcore.nz), i Chrome eller Edge, som kan
+  ansluta till radion via Bluetooth eller USB. Det är också vägen på Linux.
 
 1. Starta radion och slå på Bluetooth i telefonen.
 2. Öppna MeshCore-appen och välj radion i listan.
@@ -60,7 +69,10 @@ Dela den bara om du vill, och gärna avrundad.
 ## 6. Skicka en advert och testa
 
 1. Skicka en advert från appen, så att andra ser att du finns.
-2. Skriv `test` i testkanalen. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig.
+2. Skriv `test` i regionens testkanal {{< testchannel >}}, eller i den allmänna `#test`. Inte i
+   chattkanalerna. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig.
+
+Vad svaren betyder, och varför tystnad oftast är normalt: [Första meddelandet](../forsta-meddelandet/).
 
 {{< channels >}}
 
@@ -82,5 +94,6 @@ Fler svar i Felsökning: [Appen kan inte ansluta till radion](../../felsokning/a
 
 ## Nästa steg
 
+- [Första meddelandet](../forsta-meddelandet/): kontakter, kvittenser och vad du kan vänta dig
 - [Regioner](../regioner/): skicka med rätt region i chattkanalerna
 - [Flasha firmware](../flasha-firmware/): bygg om radion till repeater när du vill hjälpa nätet

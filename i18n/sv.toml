@@ -306,7 +306,7 @@ other = "Ställ in en companion"
 [wz_comp_desc]
 other = "Värdena att fylla i i MeshCore-appen för en companion i regionen, steg för steg."
 [wz_comp_intro]
-other = "En companion ställs in i MeshCore-appen, inte via USB-konsolen. Här är regionens värden i den ordning appen frågar efter dem. Har du inte flashat radion än, börja med [Flasha firmware](../../guider/flasha-firmware/) och välj *companion*."
+other = "En companion ställs in i MeshCore-appen, inte via USB-konsolen. Här är regionens värden i den ordning appen frågar efter dem. Har du inte flashat radion än, börja med [Flasha firmware](../../guider/flasha-firmware/#companion): companion-firmware finns i MeshCore-projektets webbflasher."
 [wzc_1]
 other = "Anslut appen"
 [wzc_1_text]
@@ -850,3 +850,17 @@ other = "Här vill regionen gärna ha nya repeatrar"
 other = "Stjärnorna på kartan visar platserna, med en ring på cirka 1 km runt. Välj ett namn för att visa platsen på kartan."
 [guide_group_more]
 other = "Fler guider"
+[audience_label]
+other = "Var börjar du?"
+[audience_new]
+other = "Ny här?"
+[audience_new_link]
+other = "En färdig radio och första meddelandet"
+[audience_ham]
+other = "Radioamatör?"
+[audience_ham_link]
+other = "Vad som skiljer 868 MHz-bandet från amatörradio"
+[audience_maker]
+other = "Vill du bygga?"
+[audience_maker_link]
+other = "Bygg en repeater av ett Wio- eller Heltec-kort"

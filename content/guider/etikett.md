@@ -1,6 +1,6 @@
 ---
 title: "Etikett: sändningstid är gemensam"
-description: "Alla delar på samma radiofrekvens. Några enkla vanor som gör att nätet fungerar för alla."
+description: "Alla delar på samma radiofrekvens. Enkla vanor som gör att nätet fungerar för alla: var du testar, adverts med måtta och regionen för lokala samtal."
 weight: 90
 group: regioner
 date: 2026-11-12
@@ -13,8 +13,8 @@ kan därför ta flera sekunders sändningstid över hela nätet.
 
 ## Vanor som hjälper
 
-**Testa i testkanalen.** Ett `test` i en chattkanal stör alla som läser den. Testkanalen finns
-just för det, och repeatrar med auto-svar svarar där.
+**Testa i testkanalen.** Ett `test` i en chattkanal stör alla som läser den. Testa i regionens
+testkanal {{< testchannel >}}, där repeatrar med auto-svar svarar, eller i den allmänna `#test`.
 
 **Testa sparsamt.** Ett test räcker oftast. Vänta på svaren (de kommer med fördröjning, ibland
 flera minuter) innan du skickar nästa.

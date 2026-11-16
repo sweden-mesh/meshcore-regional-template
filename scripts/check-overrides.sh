@@ -71,6 +71,19 @@ if grep -rqs '0001-01-01' "$P"; then echo "FAIL dates: 0001-01-01 is in the outp
 check guider/flasha-firmware/index.html '"dateModified":"20[0-9][0-9]-' "dates: a template guide has a real dateModified"
 check sitemap.xml '/guider/flasha-firmware/</loc><lastmod>20' "dates: the sitemap has lastmod for a template guide"
 check guider/index.html '<h2 class=guide-group>Kom igång' "guides: the hub groups its guides under H2s"
+# NEWCOMER-3 (2026-11-16): the three audience ways in on the home page, the new guides in their
+# groups, the region's own test channel derived from the scope, and companions sent to the web flasher.
+check index.html '<nav class=audience aria-label="Var börjar du?">' "newcomer: the home page has the audience list"
+check index.html '<strong>Ny här?</strong> <a href=/guider/skaffa-hardvara/>' "newcomer: Ny här? leads to the device ladder"
+check index.html '<strong>Radioamatör?</strong> <a href=/guider/for-radioamatorer/>' "newcomer: Radioamatör? leads to the radio amateurs' guide"
+check index.html '<strong>Vill du bygga?</strong> <a href=/guider/bygg-en-repeater/>' "newcomer: Vill du bygga? leads to the build guide"
+check guider/index.html '<h2 class=guide-group>Radio och antenner' "newcomer: the hub has the Radio och antenner group"
+for g in forsta-meddelandet for-radioamatorer antenner bygg-en-repeater; do check guider/index.html "href=/guider/$g/" "newcomer: the hub lists $g"; done
+check guider/forsta-meddelandet/index.html '>#test-se-xxx</code>' "newcomer: the test channel is #test-<scope> from the region"
+check guider/companion/index.html '>#test-se-xxx</code>' "newcomer: the companion guide names the region's test channel"
+check guider/flasha-firmware/index.html 'id=companion' "newcomer: the flashing guide has a companion section"
+check guider/companion/index.html 'href=https://meshcore.io/flasher' "newcomer: the companion guide sends companions to the web flasher"
+check guider/skaffa-hardvara/index.html 'november 2026' "newcomer: the device ladder dates its prices"
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

@@ -1,0 +1,6 @@
+{{- /* {{< testchannel >}}: the region's own test channel, `#test-<scope>`, as inline code. The
+  scope comes from the region partial (params.region, or the county's region from
+  meshcore-se-regioner), so every region names its own channel without a param of its own. */ -}}
+{{- $r := partialCached "region.html" .Page "region" -}}
+<code>#test-{{ $r.scope }}</code>
+{{- /**/ -}}

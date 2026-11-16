@@ -9,6 +9,18 @@
       {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
       <a class="button button-secondary" href="#karta" data-ease>{{ T "cta_map" }}</a>
     </p>
+    {{- /* Three ways in, one per newcomer (NEWCOMER-3, operator 2026-11-16): the beginner, the
+           radio amateur and the maker. A plain list under the buttons; a region that removes a
+           target page loses that line. */ -}}
+    {{- $ways := slice -}}
+    {{- range $w := slice (slice "new" "/guider/skaffa-hardvara") (slice "ham" "/guider/for-radioamatorer") (slice "maker" "/guider/bygg-en-repeater") -}}
+      {{- with site.GetPage (index $w 1) -}}{{- $ways = $ways | append (dict "key" (index $w 0) "url" .RelPermalink) -}}{{- end -}}
+    {{- end -}}
+    {{- with $ways }}
+    <nav class="audience" aria-label="{{ T "audience_label" }}">
+      <ul>{{ range . }}<li><strong>{{ T (print "audience_" .key) }}</strong> <a href="{{ .url }}">{{ T (print "audience_" .key "_link") }}</a></li>{{ end }}</ul>
+    </nav>
+    {{- end }}
   </section>
 
 

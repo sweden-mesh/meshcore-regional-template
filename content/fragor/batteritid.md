@@ -3,12 +3,14 @@ title: "Hur länge räcker batteriet?"
 category: utrustning
 weight: 30
 date: 2026-11-13
-lastmod: 2026-11-13
+lastmod: 2026-11-16
 ---
 
-En companion med strömsparläge räcker ofta flera dagar på ett vanligt batteri; med skärm och GPS
-på kortare. En repeater på ett nRF52-kort med strömsparläge drar så lite att en liten solpanel kan
-räcka på sommaren. En ESP32 med Wi-Fi drar betydligt mer och passar bäst på nätström.
+En liten companion räcker från ett par dygn och uppåt; skärm, GPS och Bluetooth tar mest. En
+repeater på ett nRF52-kort drar cirka 7 mA och går ungefär 17 dygn på ett batteri på 3 000 mAh. En
+repeater på ett ESP32-kort drar 50 mA eller mer utan strömsparläge, cirka 2 dygn på samma batteri,
+och passar bäst på nätström. Tabell och källor i [Skaffa
+hårdvara](../guider/skaffa-hardvara/#hur-länge-batteriet-räcker).
 
 Vintern är det svåra för solnoder: se [Felsökning: Solnoden dör på
 vintern](../felsokning/sol-dor-pa-vintern/).
