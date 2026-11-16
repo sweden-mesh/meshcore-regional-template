@@ -4,15 +4,32 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
-## Unreleased
+## v0.40.0 — 2026-11-16
 
-National mode (NATIONAL-7, the national site meshcore-swe.se). Everything sits behind
-`params.national` (default `false`); with it false a regional site's output is byte-identical.
+National mode, phases 1–2 (NATIONAL-7, the national site meshcore-swe.se). Everything sits behind
+`params.national` (default `false`): with it false a regional site's output is byte-identical
+(checked for the example site and meshcore-jkp.se by `scripts/compare-regional.sh`). A regional site
+needs no change.
 
-- **`params.national`**, off by default.
+- **`params.national`**, off by default, and **`params.lanData`** (the county-data guide's URL).
 - **`scripts/compare-regional.sh`** builds the example site (and any site in `COMPARE_SITES`)
-  against a base tag and against the working tree and compares `public/`; CI job
-  `regional-unchanged` runs it for the example site and meshcore-jkp.se.
+  against a base tag and the working tree and compares `public/`; CI job `regional-unchanged`.
+- **`exampleNational/`** and **`scripts/check-national.sh`** (run by `check.sh`): three counties,
+  one with its own site.
+- **The county registry** `lan.html`: the site's `data/lan/<scb>.toml` merged with the region list,
+  the neighbour list and each county's bounding box from `se-lan.geojson`.
+- **County front pages** at `/<slug>/` (content adapter `content/_content.gotmpl`, layout
+  `lan/county.html`, the front page's body moved to `home-main.html`), and **three local pages**
+  per county (`kom-igang`, `ingen-svar-pa-test`, `fragor`; text in `assets/lan/*.md`).
+- **`/lan/`** (the county list), a page for a county with its own site (two choices, no redirect),
+  a published `_redirects` (åäö-free addresses, 301) and `/lan/pages.json`.
+- **The county switch:** a pre-paint inline script (URL, localStorage `lan`, cookie `lan`), the
+  data island and `js/lan/apply.js` (fills `data-r` spans, `lan:change`), region shortcodes as spans
+  on shared pages, the välj län note, the proposal line, the county's channels, groups and contact,
+  the header's county button, and the county modal with its SVG map (`js/lan/modal.js`).
+- **`css/national.css`**, loaded only in national mode.
+- New i18n keys `lan_*` (sv and en). The national pre-paint script is one more inline script: a
+  national site with a script-src CSP lists its hash.
 
 ## v0.39.0 — 2026-11-16
 
