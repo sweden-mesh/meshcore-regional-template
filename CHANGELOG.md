@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.37.2 — 2026-11-16
+
+- `[params.contact] email`: optional; shown in the footer as "Kontakt: <address>" (a `mailto:` link,
+  no new tab). New i18n key `footer_contact`.
+
 ## v0.37.1 — 2026-11-16
 
 - The guide "MeshCore eller Meshtastic?" moves to the end of the guide list (weight 95), so the home

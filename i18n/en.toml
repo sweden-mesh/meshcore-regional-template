@@ -87,6 +87,8 @@ other = "Next"
 other = "Main menu"
 [nav_menu]
 other = "Menu"
+[footer_contact]
+other = "Contact"
 [footer_about]
 other = "About this site"
 [footer_beacon]

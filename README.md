@@ -83,6 +83,7 @@ this repository's `hugo.toml`.
 | `community.name`, `community.url` | the local group |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
 | `chats` | more named chat links, a list of `{name, url}` (e.g. the local and the national Discord) |
+| `contact.email` | optional: an e-mail address shown as "Kontakt" in the footer (a `mailto:` link) |
 | `channels` | a list of `{name, scope, purpose, note, autoreply}` (purpose and note take inline Markdown, e.g. `` `test` ``): the region's channels, shown on the landing page and by `{{</* channels */>}}`. `autoreply = true` adds a small line "Kräver auto-reply firmware" linking the firmware picker's auto-reply update (`params.firmware.picker`), for test channels in a region where few repeaters may run it yet. The old IATA test channel (`#test-<first iata>`) is named in the guides only when it is in this list |
 | `analytics.plausible`, `analytics.script`, `analytics.api` | optional cookieless Plausible: the site's `pa-<id>.js` script and the event endpoint, both served from the site's own origin through a proxy; never loaded on a `noindex` build |
 

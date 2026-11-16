@@ -22,6 +22,7 @@
         {{ with site.Params.beacon.url }}<li><a href="{{ . }}/swagger/index.html" class="ext" target="_blank" rel="noopener">{{ T "footer_beacon" }}</a></li>{{ end }}
         {{ with site.GetPage "/bli-nodvard" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         {{ with site.GetPage "/egen-regional-sida" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+        {{ with site.Params.contact.email }}<li><a href="mailto:{{ . }}">{{ T "footer_contact" }}: {{ . }}</a></li>{{ end }}
         {{ with site.GetPage "/integritet" }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
         <li>{{ T "footer_license" }}</li>
         {{- /* On a phone the header has no room for the motion button (B-288): the link stands in. */}}
