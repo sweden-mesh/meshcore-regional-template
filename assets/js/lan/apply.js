@@ -3,6 +3,7 @@
 // textContent, turns the title suffix and dispatches "lan:change" with the county (or null for
 // Sverige). window.meshcoreLan.set(v) changes the choice in place; the header button and the
 // county modal use it.
+import { markOutside, countyAt } from "./geo.js";
 import { VALID, countyFor, valuesFor, titleFor, cookieLine, groupsFor, channelRows } from "./lan.js";
 
 const root = document.documentElement;
@@ -76,6 +77,7 @@ function store(v) {
 if (data) {
   window.meshcoreLan = {
     data,
+    markOutside, countyAt, // for the map and the wizards, which import nothing national themselves
     get: () => root.getAttribute("data-lan"),
     county: (v) => countyFor(data, v),
     // Choose a county ("se" for Sverige). Saved, then applied in place on a shared page; on a

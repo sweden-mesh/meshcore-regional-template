@@ -87,4 +87,9 @@ check lan/pages.json '{"08":"/kalmar/","12":"/sk%C3%A5ne/"}' "function: /lan/pag
 check kalmar/index.html 'data-wanted=.*"name":"Exempelberget","note":"högt läge mot havet"' "wanted: a county page's map has its places"
 check index.html 'data-wanted=.*"name":"Exempelberget","note":"Kalmar: högt läge mot havet"' "wanted: the Sverige map has every county's, with the county's name"
 if grep -q 'data-wanted=' "$P/skåne/index.html"; then echo "FAIL wanted: a county without places got some"; fail=1; else echo "ok   wanted: a county without places has none"; fi
+# Outside-county marks on a county's map (P3): the map carries the county and the polygon file, and a
+# small national script marks the nodes outside it; the shared map bundle is unchanged.
+check kalmar/index.html 'data-lan-scb=08 data-geo=/se-lan\.' "outside: a county page's map names its county and the polygons"
+check kalmar/index.html 'src=/js/lan/map-county' "outside: and loads the marking script"
+if grep -q 'map-county' "$P/index.html"; then echo "FAIL outside: the Sverige map marks counties"; fail=1; else echo "ok   outside: the Sverige map marks nothing"; fi
 exit $fail
