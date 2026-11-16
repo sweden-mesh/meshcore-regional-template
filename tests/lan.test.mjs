@@ -25,8 +25,8 @@ test("the spans' values for a county, with the proposal mark only for a proposed
   assert.equal(g.proposal, "förslag"); assert.equal(g.channels, "#test-se-gtl");
   assert.ok(!("place" in g), "no place: the page's own example stays");
 });
-test("Sverige gives the national values and no test channel", () => {
-  assert.deepEqual(valuesFor(data, null), { name: "Sverige", short: "Sverige", scope: "se" });
+test("Sverige keeps every neutral text the page was built with", () => {
+  assert.deepEqual(valuesFor(data, null), {});
 });
 test("only the national title suffix turns to the county", () => {
   const c = countyFor(data, "08");

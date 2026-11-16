@@ -58,4 +58,11 @@ check guider/regioner/index.html '<script type=application/json id=lan-data>{"co
 check guider/regioner/index.html 'src=/js/lan/apply' "island: and the apply script"
 size=$(sed -n 's/.*id=lan-data>\([^<]*\)<\/script>.*/\1/p' "$P/index.html" | gzip -c | wc -c)
 if [ "$size" -lt 10240 ]; then echo "ok   island: $size bytes gzipped, under 10 KB"; else echo "FAIL island: $size bytes gzipped, over 10 KB (move it to lan.json)"; fail=1; fi
+# County values in the shared guides (G3): spans with a neutral form, and the "välj län" note.
+check guider/regioner/index.html '<code><span data-r=scope>se-&lt;län></span></code>' "spans: a guide's scope is a span, neutral se-<län>"
+check guider/regioner/index.html 'Trafik inom <span data-r=name>ditt län</span>' "spans: a guide's county name is a span, neutral ditt län"
+check guider/forsta-meddelandet/index.html '<code data-r=test>#test-se-&lt;län></code>' "spans: the test channel is a span"
+check guider/regioner/index.html '<p class=lan-note>.*<a href=/lan/ data-lan-open>Välj ditt län</a>' "spans: the page carries the välj län note"
+if grep -q 'class=lan-note' "$P/guider/antenner/index.html"; then echo "FAIL spans: a page without county values got the note"; fail=1; else echo "ok   spans: no note on a page without county values"; fi
+check guider/namnge-noden/index.html '<code><span data-r=prefix>SE-&lt;LÄN></span>-Plats</code>' "spans: the naming tip from the county's prefix"
 exit $fail

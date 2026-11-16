@@ -1,0 +1,13 @@
+/* National mode only (params.national; loaded by head.html when it is on). */
+
+/* The "välj län" note on pages with county values: hidden once a county is chosen. */
+.lan-note {
+  border-inline-start: 3px solid var(--accent, currentColor);
+  padding: 0.5rem 0.875rem;
+  margin: 0 0 1.25rem;
+}
+html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
+
+/* /lan/: the plain county list. */
+.lan-list { list-style: none; padding: 0; columns: 2 18rem; column-gap: 2rem; }
+.lan-list li { break-inside: avoid; padding: 0.25rem 0; }

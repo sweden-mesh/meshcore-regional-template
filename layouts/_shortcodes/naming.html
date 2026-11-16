@@ -6,3 +6,10 @@
   {{ with .explain }}<p>{{ partial "scopes.html" (. | markdownify) }}</p>{{ end }}
 </div>
 {{- end -}}{{- end -}}
+{{- /* National mode, shared pages: the pattern from the chosen county's prefix (filled by script). */ -}}
+{{- if and site.Params.national (not site.Params.naming.pattern) (not (partial "lan-page.html" .Page)) }}
+<div class="alert alert-tip" role="note">
+  <p class="alert-title">{{ partial "alert-icon.html" "tip" }}{{ T "naming_rule" (dict "Region" (partial "r.html" (dict "page" .Page "key" "name" "value" ""))) | safeHTML }}</p>
+  <p><code>{{ partial "r.html" (dict "page" .Page "key" "prefix" "value" "") }}-Plats</code>, {{ T "naming_example" }} <code>{{ partial "r.html" (dict "page" .Page "key" "prefix" "value" "") }}-{{ partial "r.html" (dict "page" .Page "key" "place" "value" "") }}</code></p>
+</div>
+{{- end -}}

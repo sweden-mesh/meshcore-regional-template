@@ -1,0 +1,10 @@
+{{- /* A region value inside content (the region shortcodes). On a regional site, and on a national
+  county's own pages, the value itself, as before. On the national site's shared pages a span the
+  apply script fills with the chosen county's value (plan §6.2.3), holding a neutral form until
+  then ("ditt län", "se-<län>"). Usage: partial "r.html" (dict "page" .Page "key" "scope" "value" $v) */ -}}
+{{- $out := .value -}}
+{{- if site.Params.national -}}{{- if not (partial "lan-page.html" .page) -}}
+  {{- $neutral := index (dict "name" (T "lan_n_name") "short" (T "lan_n_name") "scope" (T "lan_n_scope") "test" (T "lan_n_test") "iata" (T "lan_n_iata") "prefix" (T "lan_n_prefix") "place" (T "lan_place_example")) .key | default .value -}}
+  {{- $out = printf `<span data-r="%s">%s</span>` .key (htmlEscape $neutral) | safeHTML -}}
+{{- end -}}{{- end -}}
+{{- return $out -}}

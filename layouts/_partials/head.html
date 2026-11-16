@@ -26,6 +26,9 @@
 {{ with resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{ end }}
+{{- if site.Params.national }}{{ with resources.Get "css/national.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}{{ end }}
 {{- $title := partial "seo-title.html" . -}}
 {{- $desc := .Description | default site.Params.description | default (T "hero_tagline") -}}
 {{- /* The 404 is not a page to share or index: no canonical, no Open Graph (SEO-T21). */}}

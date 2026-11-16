@@ -924,3 +924,19 @@ other = "MeshCore i {{ .Name }} har en egen sida, som visar länets karta, kanal
 other = "Gå till {{ .Site }}"
 [lan_own_other]
 other = "Välj ett annat län"
+[lan_n_name]
+other = "ditt län"
+[lan_n_scope]
+other = "se-<län>"
+[lan_n_test]
+other = "#test-se-<län>"
+[lan_n_iata]
+other = "XXX"
+[lan_n_prefix]
+other = "SE-<LÄN>"
+[lan_note]
+other = "Sidan visar värden som beror på länet, som regionen och testkanalen."
+[lan_note_pick]
+other = "Välj ditt län"
+[lan_note_after]
+other = "så visas länets värden."

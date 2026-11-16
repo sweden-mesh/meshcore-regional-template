@@ -2,5 +2,9 @@
   scope comes from the region partial (params.region, or the county's region from
   meshcore-se-regioner), so every region names its own channel without a param of its own. */ -}}
 {{- $r := partialCached "region.html" .Page "region" -}}
+{{- if and site.Params.national (not (partial "lan-page.html" .Page)) -}}
+<code data-r="test">{{ T "lan_n_test" }}</code>
+{{- else -}}
 <code>#test-{{ $r.scope }}</code>
+{{- end -}}
 {{- /**/ -}}

@@ -12,9 +12,10 @@ export function countyFor(data, v) {
 }
 
 // The text for every [data-r] key, for a county or for "Sverige" (null): what the spans show.
-// Keys a county lacks (no place) fall back to the neutral text the page was built with.
+// Keys a county lacks (no place), and every key for Sverige, fall back to the neutral text the
+// page was built with ("ditt län", "se-<län>"; the footer's "Sverige" and "se").
 export function valuesFor(data, c) {
-  if (!c) return { name: data.sweden.name, short: data.sweden.short, scope: "se" };
+  if (!c) return {};
   const v = {
     name: c.name, short: c.short, scope: c.scope, test: c.test, prefix: c.prefix,
     iata: c.iata, proposal: c.decision === "forslag" ? data.texts.proposal : "",

@@ -928,3 +928,19 @@ other = "MeshCore in {{ .Name }} has its own site, which shows the county's map,
 other = "Go to {{ .Site }}"
 [lan_own_other]
 other = "Choose another county"
+[lan_n_name]
+other = "your county"
+[lan_n_scope]
+other = "se-<county>"
+[lan_n_test]
+other = "#test-se-<county>"
+[lan_n_iata]
+other = "XXX"
+[lan_n_prefix]
+other = "SE-<COUNTY>"
+[lan_note]
+other = "This page shows values that depend on the county, such as the region and the test channel."
+[lan_note_pick]
+other = "Choose your county"
+[lan_note_after]
+other = "to see its values."

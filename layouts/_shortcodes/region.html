@@ -1,2 +1,2 @@
-{{- /* {{< region "name" >}} prints a field of params.region inside content. */ -}}
-{{- index (partialCached "region.html" .Page "region") (.Get 0) -}}
+{{- /* {{< region "name" >}} prints a field of params.region inside content (national mode: r.html). */ -}}
+{{- partial "r.html" (dict "page" .Page "key" (.Get 0) "value" (index (partialCached "region.html" .Page "region") (.Get 0))) -}}
