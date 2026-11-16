@@ -3,7 +3,7 @@
 // textContent, turns the title suffix and dispatches "lan:change" with the county (or null for
 // Sverige). window.meshcoreLan.set(v) changes the choice in place; the header button and the
 // county modal use it.
-import { VALID, countyFor, valuesFor, titleFor, cookieLine } from "./lan.js";
+import { VALID, countyFor, valuesFor, titleFor, cookieLine, groupsFor, channelRows } from "./lan.js";
 
 const root = document.documentElement;
 const island = document.getElementById("lan-data");
@@ -18,9 +18,48 @@ function fill(v) {
     const val = values[el.dataset.r];
     el.textContent = val === undefined ? el.dataset.rNeutral : val;
   }
+  renderLists(c);
   document.title = titleFor(baseTitle, data.sweden.short, c);
   if (v) root.setAttribute("data-lan", v); else root.removeAttribute("data-lan");
   document.dispatchEvent(new CustomEvent("lan:change", { detail: { lan: v || null, county: c } }));
+}
+
+function link(g) {
+  const a = document.createElement("a");
+  a.href = g.url; a.textContent = g.name; a.className = "ext"; a.target = "_blank"; a.rel = "noopener";
+  return a;
+}
+
+// The county's groups and channels: [data-r-groups="list"] gets one <li> per group at the top,
+// [data-r-groups="inline"] the groups as "a, b eller c" in place of its neutral links,
+// [data-r-channels] (a tbody) one row per chat channel before the test channel's row.
+function renderLists(c) {
+  const groups = groupsFor(c);
+  for (const ul of document.querySelectorAll('[data-r-groups="list"]')) {
+    ul.querySelectorAll("[data-r-item]").forEach((n) => n.remove());
+    groups.slice().reverse().forEach((g) => { const li = document.createElement("li"); li.dataset.rItem = ""; li.append(link(g)); ul.prepend(li); });
+  }
+  for (const el of document.querySelectorAll('[data-r-groups="inline"]')) {
+    if (!el.rNeutral) el.rNeutral = [...el.childNodes].map((n) => n.cloneNode(true));
+    if (!groups.length) { el.replaceChildren(...el.rNeutral.map((n) => n.cloneNode(true))); continue; }
+    const parts = [];
+    groups.forEach((g, i) => { if (i) parts.push(i === groups.length - 1 ? ` ${data.texts.or} ` : ", "); parts.push(link(g)); });
+    el.replaceChildren(...parts);
+  }
+  const rows = channelRows(c);
+  for (const tb of document.querySelectorAll("[data-r-channels]")) {
+    tb.querySelectorAll("[data-r-item]").forEach((n) => n.remove());
+    const first = tb.firstElementChild;
+    for (const r of rows) {
+      const tr = document.createElement("tr"); tr.dataset.rItem = "";
+      for (const [text, code] of [[r.name, true], [r.scope, true], [r.purpose, false]]) {
+        const td = document.createElement("td");
+        if (code) { const k = document.createElement("code"); k.textContent = text; td.append(k); } else td.textContent = text;
+        tr.append(td);
+      }
+      tb.insertBefore(tr, first);
+    }
+  }
 }
 
 function store(v) {

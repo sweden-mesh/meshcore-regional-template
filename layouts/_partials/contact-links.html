@@ -5,4 +5,10 @@
 {{- with site.Params.chat.discord }}{{ $links = $links | append (dict "name" "Discord" "url" .) }}{{ end -}}
 {{- with site.Params.chat.matrix }}{{ $links = $links | append (dict "name" "Matrix" "url" .) }}{{ end -}}
 {{- range site.Params.chats }}{{ $links = $links | append (dict "name" .name "url" .url) }}{{ end -}}
+{{- $wrap := false -}}
+{{- if site.Params.national -}}
+  {{- with partial "lan-page.html" . -}}{{- with .groups }}{{ $links = . }}{{ end -}}{{- else -}}{{- $wrap = true -}}{{- end -}}
+{{- end -}}
+{{- if $wrap }}<span data-r-groups="inline">{{ end -}}
 {{- range $i, $l := $links }}{{ if $i }}{{ if eq $i (sub (len $links) 1) }} {{ T "or" }} {{ else }}, {{ end }}{{ end }}<a href="{{ $l.url }}" class="ext" target="_blank" rel="noopener">{{ $l.name }}</a>{{ end -}}
+{{- if $wrap }}</span>{{ end -}}

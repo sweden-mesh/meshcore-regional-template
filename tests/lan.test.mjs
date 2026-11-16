@@ -1,12 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { countyFor, valuesFor, titleFor, cookieLine, VALID } from "../assets/js/lan/lan.js";
+import { countyFor, valuesFor, titleFor, cookieLine, VALID, groupsFor, channelRows } from "../assets/js/lan/lan.js";
 
 const data = {
   sweden: { name: "Sverige", short: "Sverige" },
   texts: { proposal: "förslag" },
   counties: [
-    { scb: "08", name: "Kalmar län", short: "Kalmar", scope: "se08", decision: "uppmatt", test: "#test-se08", prefix: "SE08", iata: "KLR", channels: ["#kalmar"], place: "Berget", url: "/kalmar/", site: "" },
+    { scb: "08", name: "Kalmar län", short: "Kalmar", scope: "se08", decision: "uppmatt", test: "#test-se08", prefix: "SE08", iata: "KLR", channels: [{ name: "#kalmar", purpose: "Chatt" }], groups: [{ name: "Grupp", url: "https://g.example/" }, { name: "Dålig", url: "javascript:alert(1)" }], place: "Berget", url: "/kalmar/", site: "" },
     { scb: "09", name: "Gotlands län", short: "Gotland", scope: "se-gtl", decision: "forslag", test: "#test-se-gtl", prefix: "SE-GTL", iata: "VBY", channels: [], url: "/gotland/", site: "" },
   ],
 };
@@ -37,4 +37,11 @@ test("only the national title suffix turns to the county", () => {
 test("the cookie and the accepted codes", () => {
   assert.equal(cookieLine("08"), "lan=08; Path=/; Max-Age=31536000; SameSite=Lax; Secure");
   assert.ok(VALID.test("se") && VALID.test("25") && !VALID.test("xx") && !VALID.test("123"));
+});
+test("groups are https links only; channel rows carry the county's scope", () => {
+  const c = countyFor(data, "08");
+  assert.deepEqual(groupsFor(c), [{ name: "Grupp", url: "https://g.example/" }]);
+  assert.deepEqual(groupsFor(null), []);
+  assert.deepEqual(channelRows(c), [{ name: "#kalmar", scope: "se08", purpose: "Chatt" }]);
+  assert.deepEqual(channelRows(countyFor(data, "09")), []);
 });

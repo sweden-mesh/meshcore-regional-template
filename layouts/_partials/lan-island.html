@@ -2,7 +2,7 @@
   script. Plain JSON in a non-executing script element, so the CSP needs no hash for it. */ -}}
 {{- $cs := slice -}}
 {{- range partialCached "lan.html" . "lan" -}}
-  {{- $ch := slice }}{{ range .channels }}{{ $ch = $ch | append .name }}{{ end -}}
+  {{- $ch := slice }}{{ range .channels }}{{ $ch = $ch | append (dict "name" .name "purpose" (.purpose | default "")) }}{{ end -}}
   {{- $gr := slice }}{{ range .groups }}{{ $gr = $gr | append (dict "name" .name "url" .url) }}{{ end -}}
   {{- $nb := slice }}{{ range .neighbours }}{{ $nb = $nb | append (dict "scb" .scb "scope" .scope "via" .via) }}{{ end -}}
   {{- $cs = $cs | append (dict "scb" .scb "name" .name "short" .short "scope" .scope "decision" .decision
@@ -10,7 +10,7 @@
         "site" .site "channels" $ch "groups" $gr "neighbours" $nb "bbox" .bbox) -}}
 {{- end -}}
 {{- $r := partialCached "region.html" . "region" -}}
-{{- $d := dict "sweden" (dict "name" $r.name "short" $r.short) "texts" (dict "proposal" (T "lan_proposal")) "counties" $cs -}}
+{{- $d := dict "sweden" (dict "name" $r.name "short" $r.short) "texts" (dict "proposal" (T "lan_proposal") "or" (T "or")) "counties" $cs -}}
 <script type="application/json" id="lan-data">{{ $d | jsonify | safeJS }}</script>
 {{- with resources.Get "js/lan/apply.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>

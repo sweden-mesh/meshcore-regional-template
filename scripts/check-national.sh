@@ -67,4 +67,9 @@ if grep -q 'class=lan-note' "$P/guider/antenner/index.html"; then echo "FAIL spa
 check guider/namnge-noden/index.html '<code><span data-r=prefix>SE-&lt;LÄN></span>-Plats</code>' "spans: the naming tip from the county's prefix"
 check guider/companion/index.html '<code class=scope><span data-r=scope>se-&lt;län></span></code></dd></div><div><dt>IATA för observatörer</dt><dd><code><span data-r=iata>XXX</span></code>' "spans: the settings box's scope and map code"
 check kalmar/index.html '<code class=scope>se08</code></dd></div><div><dt>IATA för observatörer</dt><dd><code>KLR</code>' "spans: a county page's settings box has its values in the HTML"
+# Channels, groups and contact from the county (G13, G14).
+check guider/kanaler/index.html '<tbody data-r-channels><tr><td><code data-r=test>#test-se-&lt;län></code>' "channels: a guide's table holds the county's test channel row"
+check index.html '<ul data-r-groups=list><li><a href=https://example.org/chat' "groups: the footer list takes the county's groups, national chats after"
+check kalmar/index.html '<ul data-r-groups=list><li><a href=https://example.org/grupp class=ext target=_blank rel=noopener>Exempelgruppen</a>' "groups: a county page's footer lists its group"
+check bli-nodvard/index.html '<span data-r-groups=inline><a href=https://example.org/chat' "contact: shared pages name the national chats until a county is chosen"
 exit $fail

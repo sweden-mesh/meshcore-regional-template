@@ -12,7 +12,13 @@
     </div>
     <div>
       <p class="footer-title">{{ T "section_community" }}</p>
+      {{- if site.Params.national }}
+      {{- /* National: the county's groups first (on its pages from the HTML, elsewhere by script). */}}
+      <ul data-r-groups="list">
+        {{- with partial "lan-page.html" . }}{{ range .groups }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a></li>{{ end }}{{ end }}
+      {{- else }}
       <ul>
+      {{- end }}
         {{ with site.Params.community }}{{ if .url }}<li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name | default .url }}</a></li>{{ end }}{{ end }}
         {{ with site.Params.chat.discord }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Discord</a></li>{{ end }}
         {{ with site.Params.chat.matrix }}<li><a href="{{ . }}" class="ext" target="_blank" rel="noopener">Matrix</a></li>{{ end }}

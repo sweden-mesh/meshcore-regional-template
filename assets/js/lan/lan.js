@@ -19,7 +19,7 @@ export function valuesFor(data, c) {
   const v = {
     name: c.name, short: c.short, scope: c.scope, test: c.test, prefix: c.prefix,
     iata: c.iata, proposal: c.decision === "forslag" ? data.texts.proposal : "",
-    channels: [...c.channels, c.test].join(", "),
+    channels: [...c.channels.map((ch) => ch.name), c.test].join(", "),
   };
   if (c.place) v.place = c.place;
   return v;
@@ -36,4 +36,17 @@ export function titleFor(title, sweden, c) {
 // The cookie line written for a choice (plan §6.2.5).
 export function cookieLine(v) {
   return `${COOKIE}=${v}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
+}
+
+// The county's groups as links ({name, url}), https only; none for Sverige.
+export function groupsFor(c) {
+  if (!c) return [];
+  return (c.groups || []).filter((g) => g && g.name && /^https:\/\//.test(g.url || ""));
+}
+
+// The county's own chat channels as table rows ({name, scope, purpose}); the test channel is a
+// row the page already has.
+export function channelRows(c) {
+  if (!c) return [];
+  return (c.channels || []).map((ch) => ({ name: ch.name, scope: c.scope, purpose: ch.purpose || "" }));
 }
