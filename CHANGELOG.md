@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.38.0 — 2026-11-16
+
+- New guide **"En egen broker för regionen"** (`/guider/egen-broker/`, group *Regioner och
+  kanaler*, weight 85): a region does not need its own command broker, because the shared one
+  (`params.backend.host`, rendered from the param) serves every region; what a region gets with
+  its own (remote commands in its own hands, its own packet feed for a map) and what it costs (a
+  small VPS, upkeep); links mccontrol. `scripts/check-overrides.sh` checks the host is rendered.
+
 ## v0.37.2 — 2026-11-16
 
 - `[params.contact] email`: optional; shown in the footer as "Kontakt: <address>" (a `mailto:` link,

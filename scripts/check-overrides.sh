@@ -9,6 +9,7 @@ check index.html "Regionens egen ingress" "page: exampleSite/content/_index.md r
 check index.html 'x-override-check' "partial: exampleSite hooks/head-end.html replaces the template's"
 check index.html "Exempelregionens egen slogan" "i18n: exampleSite i18n/sv.toml hero_tagline replaces the template's"
 check guider/regioner/index.html "Regioner (scope)" "a template page the region does not override is still there"
+check guider/egen-broker/index.html "mqtt-meshcore.louie.se" "backend: the broker guide renders params.backend.host"
 # Troubleshooting: a region adds, replaces and hides entries with files of its own.
 check felsokning/index.html "Exempelregionens lokala felsökning" "felsokning: a region's own entry is listed"
 check felsokning/index.html "Regionens egen version: webbläsaren hittar ingen port" "felsokning: a region's file replaces the template's entry"
