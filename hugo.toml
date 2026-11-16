@@ -9,6 +9,9 @@
 [params]
   style = "product"          # "product" (light, design D; follows the OS dark mode) or "console" (dark, technical)
   noindex = false            # true on staging: robots noindex + a disallow-all robots.txt
+  national = false           # true only on the national site (meshcore-swe.se): every county from data/lan/,
+                             # a county switch in the browser, county front pages. False emits nothing of it
+                             # (scripts/compare-regional.sh proves a regional build unchanged)
 
 [params.region]
   scb = ""                   # the county's SCB code, e.g. "06": the template then fetches the county's

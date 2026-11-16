@@ -27,3 +27,29 @@ jobs:
           tar -xzf pagefind.tar.gz pagefind && sudo install pagefind /usr/local/bin/pagefind
       - name: Build and check the example site
         run: scripts/check.sh
+
+  # National mode (params.national) must leave every regional site's output unchanged: build the
+  # example site and meshcore-jkp.se with COMPARE_BASE and with this commit, and compare public/.
+  # Move COMPARE_BASE to a release that changes regional output on purpose.
+  regional-unchanged:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.169.0
+      COMPARE_BASE: v0.39.0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: the-louie/meshcore-jkp
+          path: .compare/meshcore-jkp
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Install Hugo
+        run: |
+          curl -sSLo hugo.tar.gz "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          tar -xzf hugo.tar.gz hugo && sudo install hugo /usr/local/bin/hugo
+      - name: Regional builds unchanged
+        run: COMPARE_SITES=.compare/meshcore-jkp scripts/compare-regional.sh

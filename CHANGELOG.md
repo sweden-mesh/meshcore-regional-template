@@ -4,6 +4,16 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## Unreleased
+
+National mode (NATIONAL-7, the national site meshcore-swe.se). Everything sits behind
+`params.national` (default `false`); with it false a regional site's output is byte-identical.
+
+- **`params.national`**, off by default.
+- **`scripts/compare-regional.sh`** builds the example site (and any site in `COMPARE_SITES`)
+  against a base tag and against the working tree and compares `public/`; CI job
+  `regional-unchanged` runs it for the example site and meshcore-jkp.se.
+
 ## v0.39.0 — 2026-11-16
 
 For people new to MeshCore (NEWCOMER-3 and NEWCOMER-4): the beginner, the radio amateur and the maker.
