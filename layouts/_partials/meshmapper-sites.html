@@ -1,0 +1,47 @@
+{{- /*
+  Repeater site details from MeshMapper (get_repeaters.php on the region's own MeshMapper host,
+  params.meshmapper.url), fetched while the site builds, for the map's node popups (B-181).
+  Off unless params.meshmapper.sites is true. The key is HUGO_MESHMAPPER_KEY, sent only as the
+  X-API-Key header. params.meshmapper.sites_fixture reads a saved response from the site's
+  assets instead (tests). Only three fields per repeater are kept: antenna, height above ground
+  and power source. Everything else in the answer, above all `admins` (people's names) and the
+  free-text notes, is dropped here and never reaches the page. A failed request gives one warning
+  and nothing. Cache key per 6-hour slot, like the coverage. Returns a JSON string
+  {"<PUBKEY>":{"a":"…","h":"…","p":"…"},…} (only non-empty fields, only repeaters with one), or "".
+*/ -}}
+{{- $mm := site.Params.meshmapper | default dict -}}
+{{- $data := slice -}}
+{{- if $mm.sites -}}
+{{- with $mm.sites_fixture -}}
+  {{- with resources.Get . -}}{{- $data = .Content | transform.Unmarshal -}}{{- end -}}
+{{- else with getenv "HUGO_MESHMAPPER_KEY" -}}
+  {{- $key := . -}}
+  {{- with $mm.url -}}
+    {{- $url := printf "%s/get_repeaters.php" (strings.TrimSuffix "/" .) -}}
+    {{- $slot := printf "%s-%d" (now.UTC.Format "20060102") (div now.UTC.Hour 6) -}}
+    {{- $opts := dict "key" (printf "meshmapper-sites-%s-%s-%s" (md5 $key) (md5 $url) $slot) "headers" (dict "X-API-Key" $key "Accept" "application/json") -}}
+    {{- with try (resources.GetRemote $url $opts) -}}
+      {{- with .Err -}}
+        {{- warnidf "meshmapper-sites" "MeshMapper site details not fetched (%s); popups show none" . -}}
+      {{- else with .Value -}}
+        {{- $data = .Content | transform.Unmarshal -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+{{- $out := dict -}}
+{{- if reflect.IsSlice $data -}}
+  {{- range $data -}}
+    {{- if reflect.IsMap . -}}
+      {{- $s := dict -}}
+      {{- with .antenna }}{{ $s = merge $s (dict "a" (string .)) }}{{ end -}}
+      {{- with .height_m }}{{ if ne (string .) "0" }}{{ $s = merge $s (dict "h" (string .)) }}{{ end }}{{ end -}}
+      {{- with .power_source }}{{ $s = merge $s (dict "p" (string .)) }}{{ end -}}
+      {{- if and $s .hex_id }}{{ $out = merge $out (dict (upper .hex_id) $s) }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- else if $data -}}
+  {{- warnidf "meshmapper-sites" "MeshMapper site details unusable (not a list); popups show none" -}}
+{{- end -}}
+{{- return (cond (gt (len $out) 0) ($out | jsonify) "") -}}

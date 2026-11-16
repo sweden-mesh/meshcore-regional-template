@@ -26,7 +26,23 @@ export function formatRadio(radio) {
   return `${sv(f)} MHz · BW ${sv(bw)} kHz · SF${sf}`;
 }
 
-export function popupHtml(n, now = Date.now()) {
+// MeshMapper site details (B-181, layouts/_partials/meshmapper-sites.html): antenna, height above
+// ground and power source, keyed by the full public key. Entered by people: escaped like the name.
+// No entry, or no field in it: no line.
+export function siteHtml(site) {
+  if (!site) return "";
+  const rows = [];
+  if (site.a) rows.push(`<p>${escapeHtml(t("site_antenna"))}: ${escapeHtml(site.a)}</p>`);
+  if (site.h) rows.push(`<p>${escapeHtml(t("site_height"))}: ${escapeHtml(String(site.h).replace(".", t("decimal")))} m</p>`);
+  if (site.p) {
+    const k = `site_power_${String(site.p).toLowerCase()}`;
+    const label = t(k) === k ? site.p : t(k);
+    rows.push(`<p>${escapeHtml(t("site_power"))}: ${escapeHtml(label)}</p>`);
+  }
+  return rows.length ? `<div class="np-site">${rows.join("")}<p class="np-credit">${escapeHtml(t("site_credit"))}</p></div>` : "";
+}
+
+export function popupHtml(n, now = Date.now(), site = null) {
   const rows = [];
   const type = (n.nodeType >= 1 && n.nodeType <= 4 ? t(`type_${n.nodeType}`) : "") || n.nodeTypeName || t("type_node");
   rows.push(`<p class="np-type">${escapeHtml(type)}${n.isObserver ? ` · ${escapeHtml(t("observer"))}` : ""}${n.stale ? ` · ${escapeHtml(t("stale"))}` : ""}${n.possiblyForeign ? ` · ${escapeHtml(t("foreign"))}` : ""}</p>`);
@@ -35,11 +51,13 @@ export function popupHtml(n, now = Date.now()) {
   const radio = formatRadio(n.radio);
   if (radio) rows.push(`<p>${escapeHtml(t("radio"))}: ${escapeHtml(radio)}</p>`);
   if (Number.isFinite(n.knownNeighborCount)) rows.push(`<p>${escapeHtml(t("neighbours"))}: ${n.knownNeighborCount}</p>`);
+  rows.push(siteHtml(site));
   if (n.publicKey) rows.push(`<p class="np-key"><code>${escapeHtml(n.publicKey.slice(0, 8).toUpperCase())}</code></p>`);
   return `<div class="node-popup"><h3>${escapeHtml(n.name || t("unnamed"))}</h3>${rows.join("")}</div>`;
 }
 
-export function attachPopups(map, maplibregl, client) {
+// sites: an async function giving the site-details map (or {}), called on the first popup.
+export function attachPopups(map, maplibregl, client, sites = async () => ({})) {
   const popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true });
   const open = async (e) => {
     const f = e.features[0];
@@ -51,8 +69,8 @@ export function attachPopups(map, maplibregl, client) {
       return;
     }
     try {
-      const n = await client.get(`/nodes/${encodeURIComponent(f.properties.id)}`);
-      if (popup.isOpen()) popup.setHTML(popupHtml(n));
+      const [n, s] = await Promise.all([client.get(`/nodes/${encodeURIComponent(f.properties.id)}`), sites().catch(() => ({}))]);
+      if (popup.isOpen()) popup.setHTML(popupHtml(n, Date.now(), (s || {})[String(n.publicKey || "").toUpperCase()]));
     } catch {
       if (popup.isOpen()) popup.setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>${escapeHtml(t("load_failed"))}</p></div>`);
     }

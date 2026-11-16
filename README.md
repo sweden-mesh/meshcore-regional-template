@@ -76,7 +76,7 @@ this repository's `hugo.toml`.
 | `map.companions` | `false` (default): companion nodes (people's handsets) are left off the map, the snapshot and the packet routes, because their position can be a home |
 | `map.maplibre` | the vendored MapLibre version under `static/lib/maplibre-gl/` |
 | `beacon.url` | base URL of the Beacon backend; empty = no live data |
-| `meshmapper.url`, `meshmapper.coverage`, `meshmapper.days`, `meshmapper.fixture` | MeshMapper: the region's map link, and its measured coverage on the map. See [MeshMapper coverage](#meshmapper-coverage) |
+| `meshmapper.url`, `meshmapper.coverage`, `meshmapper.days`, `meshmapper.fixture`, `meshmapper.sites`, `meshmapper.sites_fixture` | MeshMapper: the region's map link, its measured coverage on the map, and repeater site details in the node popups. See [MeshMapper coverage](#meshmapper-coverage) |
 | `wanted` | places where the region wants a new repeater (`[[params.wanted]]` with `name`, `lat`, `lon` and an optional `note` in inline Markdown): listed on "Bli nodvärd" and drawn as a circle of about 1 km with a star on the maps. See [Wanted places](#wanted-places) |
 | `links` | plain links in the footer's community column (`[[params.links]]` with `name`, `url`), for sites that are not chats |
 | `beacon.seeds` | other Beacons that have heard the region longer (e.g. `["https://beacon.meshat.se"]`); their nodes inside the region's border fill the map until `beacon.url` has heard them |
@@ -345,6 +345,14 @@ so a revoked key means no layer from the next build on, as MeshMapper asks.
 Without the key or `coverage = true` nothing is fetched and the map is as before; `url` alone
 gives only the links. The example site shows the layer from a 32-square fixture of a real
 Jönköping response.
+
+**Site details in the node popups.** With `sites = true` (and the same key, granted the Repeaters
+API) the build also reads `get_repeaters.php` from the region's MeshMapper host (`url`) and keeps,
+per repeater, only its antenna, height above ground and power source, as entered by the region's
+MeshMapper admins. Names of admins and free-text notes are dropped in the build and never reach the
+page. A node popup then shows those lines with a "Platsuppgifter: MeshMapper" credit; a repeater
+without them shows none. One read call per build (reads share 1 000 calls a day), cached per
+6-hour slot like the coverage. `sites_fixture` reads a saved response instead.
 
 ## Licence
 

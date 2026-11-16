@@ -820,6 +820,22 @@ other = "Täckning, uppmätt"
 other = "Uppmätt täckning: [regionens karta hos MeshMapper]({{ .URL }})."
 [mt_cov_credit]
 other = "Täckning: MeshMapper"
+[mt_site_antenna]
+other = "Antenn"
+[mt_site_height]
+other = "Höjd över marken"
+[mt_site_power]
+other = "Ström"
+[mt_site_power_mains]
+other = "elnät"
+[mt_site_power_solar]
+other = "sol"
+[mt_site_power_battery]
+other = "batteri"
+[mt_site_power_poe]
+other = "PoE"
+[mt_site_credit]
+other = "Platsuppgifter: MeshMapper"
 [mm_text]
 other = "Var nätet faktiskt når mäts av folk som kör, cyklar eller går runt med appen MeshMapper och pingar nätet på vägen (wardriving)."
 [mm_link]

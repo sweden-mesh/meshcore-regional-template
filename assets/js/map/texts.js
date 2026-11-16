@@ -39,6 +39,9 @@ const SV = {
   lg_wanted: "önskad plats för en ny repeater (cirka 1 km)",
   want_popup: "Här vill regionen gärna ha en ny repeater.",
   fit_all: "Visa allt",
+  site_antenna: "Antenn", site_height: "Höjd över marken", site_power: "Ström",
+  site_power_mains: "elnät", site_power_solar: "sol", site_power_battery: "batteri", site_power_poe: "PoE",
+  site_credit: "Platsuppgifter: MeshMapper",
 };
 let texts = { ...SV };
 

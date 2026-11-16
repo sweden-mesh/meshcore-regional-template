@@ -824,6 +824,22 @@ other = "Coverage, measured"
 other = "Measured coverage: [the region's map at MeshMapper]({{ .URL }})."
 [mt_cov_credit]
 other = "Coverage: MeshMapper"
+[mt_site_antenna]
+other = "Antenna"
+[mt_site_height]
+other = "Height above ground"
+[mt_site_power]
+other = "Power"
+[mt_site_power_mains]
+other = "mains"
+[mt_site_power_solar]
+other = "solar"
+[mt_site_power_battery]
+other = "battery"
+[mt_site_power_poe]
+other = "PoE"
+[mt_site_credit]
+other = "Site details: MeshMapper"
 [mm_text]
 other = "Where the mesh really reaches is measured by people driving, cycling or walking around with the MeshMapper app, pinging the mesh as they go (wardriving)."
 [mm_link]

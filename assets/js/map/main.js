@@ -71,7 +71,10 @@ async function start() {
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
   map.on("moveend", (e) => { if (e.originalEvent) saveUrl({ view: { zoom: map.getZoom(), center: map.getCenter().toArray() } }); });
-  const popup = attachPopups(map, maplibregl, client);
+  // MeshMapper site details (data-sites): one small file, fetched on the first popup.
+  let sitesP = null;
+  const sites = () => (sitesP ??= ds.sites ? fetch(ds.sites).then((r) => (r.ok ? r.json() : {})).catch(() => ({})) : Promise.resolve({}));
+  const popup = attachPopups(map, maplibregl, client, sites);
   const empty = { type: "FeatureCollection", features: [] };
   // Every link coloured by how often it is heard (toggle); with a node clicked (its popup open)
   // the other links turn faint grey. The counts arrive one node at a time after the first draw,

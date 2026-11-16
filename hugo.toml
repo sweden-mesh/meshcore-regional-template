@@ -101,6 +101,8 @@
   url = ""                   # the region's MeshMapper map, e.g. https://jkg.meshmapper.net/; empty = no link
   days = 180                 # only pings from the last N days
   fixture = ""               # a saved coverage response under the site's assets, read instead of the API (tests)
+  sites = false              # true = antenna, height and power source in the node popups (get_repeaters.php at url; needs the key)
+  sites_fixture = ""         # a saved get_repeaters.php response under the site's assets, read instead of the API (tests)
 
 # The contributors list ({{< contributors >}}, backlog B-258): the GitHub contributors of these repos,
 # read at build time, with bots and AI agents filtered (data/contributor_deny.toml + deny). people
