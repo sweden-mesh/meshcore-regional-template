@@ -65,4 +65,6 @@ check guider/forsta-meddelandet/index.html '<code data-r=test>#test-se-&lt;län>
 check guider/regioner/index.html '<p class=lan-note>.*<a href=/lan/ data-lan-open>Välj ditt län</a>' "spans: the page carries the välj län note"
 if grep -q 'class=lan-note' "$P/guider/antenner/index.html"; then echo "FAIL spans: a page without county values got the note"; fail=1; else echo "ok   spans: no note on a page without county values"; fi
 check guider/namnge-noden/index.html '<code><span data-r=prefix>SE-&lt;LÄN></span>-Plats</code>' "spans: the naming tip from the county's prefix"
+check guider/companion/index.html '<code class=scope><span data-r=scope>se-&lt;län></span></code></dd></div><div><dt>IATA för observatörer</dt><dd><code><span data-r=iata>XXX</span></code>' "spans: the settings box's scope and map code"
+check kalmar/index.html '<code class=scope>se08</code></dd></div><div><dt>IATA för observatörer</dt><dd><code>KLR</code>' "spans: a county page's settings box has its values in the HTML"
 exit $fail
