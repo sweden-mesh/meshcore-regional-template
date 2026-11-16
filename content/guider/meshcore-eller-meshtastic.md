@@ -2,7 +2,7 @@
 title: "MeshCore eller Meshtastic?"
 seoTitle: "MeshCore eller Meshtastic: skillnaden"
 description: "MeshCore eller Meshtastic? Samma radior, men olika sätt att föra trafiken vidare. Så skiljer de sig, och så väljer du efter hur du ska använda nätet."
-weight: 15
+weight: 95
 group: start
 date: 2026-11-16
 lastmod: 2026-11-16
