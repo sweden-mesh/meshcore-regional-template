@@ -9,6 +9,7 @@
 {{- $calc := resources.Get "data/solar-calc.json" | minify | fingerprint -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}
 {{- $method := "" }}{{ with site.GetPage "/solcell-metod" }}{{ $method = .RelPermalink }}{{ end -}}
+{{- if site.Params.national }}{{ partial "lan-wizard.html" (dict "page" .Page "shapes" false) }}{{ end -}}
 <form class="wizard solar-calc" id="solar-calc" novalidate
       data-calc="{{ $calc.RelPermalink }}" data-own="{{ $own }}" data-notes="{{ $notes | jsonify }}">
 

@@ -960,3 +960,19 @@ other = "Counties"
 other = "chosen now"
 [lan_no_observers]
 other = "No observers report here yet: <a href=\"{{ .URL }}\">how to add one</a>. The map shows only what observers hear, so there may be more nodes here than it shows."
+[lan_wz_label]
+other = "County"
+[lan_wz_pick]
+other = "Choose county …"
+[lan_wz_why]
+other = "The county decides the region, the name prefix and the neighbouring counties the wizard sets."
+[lan_wz_own_line]
+other = "The county has its own site, with its own wizard:"
+[lan_wz_own_pos]
+other = "The place is in {name}, which has its own site:"
+[lan_wz_mismatch]
+other = "The place is in {name}, not in {chosen}. The settings are for {chosen}."
+[lan_wz_pos_in]
+other = "The place is in {name}."
+[lan_wz_switch]
+other = "Switch to {short}"

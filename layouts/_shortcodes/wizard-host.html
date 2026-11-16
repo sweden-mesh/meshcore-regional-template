@@ -13,6 +13,7 @@
   "wifi" (slice (slice "yes" (T "hp_w_yes")) (slice "no" (T "hp_w_no")))
   "shadow" (slice (slice "yes" (T "hp_s_yes")) (slice "no" (T "hp_s_no")) (slice "unknown" (T "hp_s_unknown")))
 -}}
+{{- if site.Params.national }}{{ partial "lan-wizard.html" (dict "page" .Page "shapes" false) }}{{ end -}}
 <form class="wizard host-wizard" id="host-wizard" novalidate data-edge-km="{{ $km }}">
 
   <fieldset class="wz-step">

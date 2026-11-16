@@ -1,0 +1,17 @@
+{{- /* National mode, a wizard page: the county selector's slot (filled and shown by script when no
+  county is chosen, Q4.2), all 21 county shapes for the neighbour box (G16), and the script that
+  writes the chosen county into the wizard before the wizard's own script reads it
+  (js/lan/wizard-county.js, placed before it on purpose). Nothing on a regional site.
+  Usage: partial "lan-wizard.html" (dict "page" .Page "shapes" true) */ -}}
+{{- if site.Params.national -}}
+{{- $geo := (resources.Get "se-lan.geojson" | fingerprint).RelPermalink -}}
+<div class="lan-wizard" data-lan-wizard hidden data-geo="{{ $geo }}" data-texts="{{ dict "label" (T "lan_wz_label") "pick" (T "lan_wz_pick") "why" (T "lan_wz_why") "own" (T "lan_own_mark") "ownLine" (T "lan_wz_own_line") "ownPos" (T "lan_wz_own_pos") "mismatch" (T "lan_wz_mismatch") "posIn" (T "lan_wz_pos_in") "switchTo" (T "lan_wz_switch") | jsonify }}"></div>
+{{- if .shapes }}
+{{- $shapes := dict -}}
+{{- with resources.Get "se-lan.geojson" -}}{{- range (.Content | transform.Unmarshal).features -}}{{- $shapes = merge $shapes (dict .properties.scb .geometry.coordinates) -}}{{- end -}}{{- end }}
+<script type="application/json" id="lan-shapes">{{ $shapes | jsonify | safeJS }}</script>
+{{- end }}
+{{- with resources.Get "js/lan/wizard-county.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}
+{{- end -}}

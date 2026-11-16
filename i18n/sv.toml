@@ -956,3 +956,19 @@ other = "Län"
 other = "valt nu"
 [lan_no_observers]
 other = "Inga observatörer rapporterar här än: <a href=\"{{ .URL }}\">så bidrar du</a>. Kartan visar bara det som observatörer hör, så det kan finnas fler noder här än den visar."
+[lan_wz_label]
+other = "Län"
+[lan_wz_pick]
+other = "Välj län …"
+[lan_wz_why]
+other = "Länet bestämmer regionen, namnprefixet och grannlänen som wizarden ställer in."
+[lan_wz_own_line]
+other = "Länet har en egen sida, med en egen wizard:"
+[lan_wz_own_pos]
+other = "Platsen ligger i {name}, som har en egen sida:"
+[lan_wz_mismatch]
+other = "Platsen ligger i {name}, inte i {chosen}. Inställningarna gäller {chosen}."
+[lan_wz_pos_in]
+other = "Platsen ligger i {name}."
+[lan_wz_switch]
+other = "Byt till {short}"
