@@ -14,9 +14,18 @@ import { dirname, join } from "node:path";
 
 const DATE_LINE = /^[+-](lastmod|date):/;
 
-// Does a unified diff change anything but the date lines? Pure, for the tests.
+// National mode (params.national) must not move a regional page's date (B-294). A line that tests
+// site.Params.national is national-only, and wrapping a value in the r.html partial renders the
+// value itself on a regional site; so both are taken out before removed and added lines are compared.
+// A national block spread over several lines is not recognised: keep such blocks in partials.
+const NATIONAL_LINE = /site\.Params\.national/;
+const unwrapR = (l) => l.replace(/\{\{-?\s*partial "r\.html" \(dict "page" \.Page "key" "\w+" "value" ([^)]+?)\)\s*-?\}\}/g, "{{ $1 }}");
+
+// Does a unified diff change anything but the date lines and national-only lines? Pure, for the tests.
 export function changesContent(diff) {
-  return diff.split("\n").some((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)( |$)/.test(l) && !DATE_LINE.test(l));
+  const changed = diff.split("\n").filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)( |$)/.test(l) && !DATE_LINE.test(l) && !NATIONAL_LINE.test(l));
+  const side = (c) => changed.filter((l) => l[0] === c).map((l) => unwrapR(l.slice(1))).join("\n");
+  return side("-") !== side("+");
 }
 
 // `git log -p --format=@@C%cs` output, newest first -> the newest date whose diff changes content.

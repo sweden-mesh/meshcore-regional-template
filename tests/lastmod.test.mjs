@@ -16,6 +16,27 @@ test("changesContent: a Markdown list item starting with --- or +++ text is cont
   assert.equal(changesContent(diff("+--- en avdelare")), true);
 });
 
+test("changesContent: national-only lines do not count (B-294)", () => {
+  assert.equal(changesContent(diff('+{{- if site.Params.national }}{{ partial "lan-wizard.html" (dict "page" .Page "shapes" true) }}{{ end -}}')), false);
+  assert.equal(changesContent(diff(
+    '-<code class="scope">{{ $r.scope }}</code>.</p>',
+    '+<code class="scope">{{ partial "r.html" (dict "page" .Page "key" "scope" "value" $r.scope) }}</code>.</p>')), false);
+});
+test("changesContent: a regional change next to a national line still counts", () => {
+  assert.equal(changesContent(diff("+{{- if site.Params.national }}x{{ end -}}", "-<p>Gammal.</p>", "+<p>Ny.</p>")), true);
+  assert.equal(changesContent(diff(
+    '-<code>{{ $r.scope }}</code>',
+    '+<code>{{ partial "r.html" (dict "page" .Page "key" "scope" "value" $r.prefix) }}</code>')), true);
+});
+// The release step on v0.41.0's history: e7d3c35 added only national lines to the wizards.
+test("lastContentDate skips a national-only commit", () => {
+  const log = [
+    "@@C2026-11-16", "", diff("+{{- if site.Params.national }}{{ partial \"lan-wizard.html\" (dict) }}{{ end -}}"),
+    "@@C2026-11-15", "", diff("-Gammal.", "+Ny."),
+  ].join("\n");
+  assert.equal(lastContentDate(log), "2026-11-15");
+});
+
 test("lastContentDate skips commits that only moved the dates", () => {
   const log = [
     "@@C2026-11-16", "", diff("-lastmod: 2026-10-01", "+lastmod: 2026-11-01"),
