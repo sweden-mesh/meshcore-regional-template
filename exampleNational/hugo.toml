@@ -24,6 +24,11 @@ enableRobotsTXT = true
   center = [62.5, 16.5]
   zoom = 4.3
 
+[params.analytics]
+  plausible = true
+  script = "/p/s.js"
+  api = "/p/event"
+
 [[params.chats]]
   name = "Rikschatten"
   url = "https://example.org/chat"

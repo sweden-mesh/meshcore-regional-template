@@ -9,6 +9,12 @@
 {{- with site.Params.analytics -}}
 {{- if and .plausible .script (not site.Params.noindex) -}}
 <script async fetchpriority="low" src="{{ .script | relURL }}"></script>
+{{- if site.Params.national }}
+{{- /* National mode: every event carries the chosen county as the custom property lan (its SCB code,
+       or se), read when the event is sent (plan Q6.5, Q7.9). */}}
+<script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init({ {{- with .api }}endpoint:{{ . | relURL }},{{ end }}customProperties:function(){return{lan:document.documentElement.getAttribute("data-lan")||"se"}}})</script>
+{{- else }}
 <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init({{ with .api }}{endpoint:{{ . | relURL }}}{{ end }})</script>
+{{- end }}
 {{- end -}}
 {{- end -}}

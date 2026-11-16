@@ -109,4 +109,6 @@ check kalmar/index.html '<meta name=description content="MeshCore i Kalmar län:
 check kalmar/kom-igang/index.html '<meta name=description content="Kom igång med MeshCore i Kalmar län' "seo: a local page's own description"
 check lan/index.html '<meta name=description content="MeshCore i Sveriges 21 län' "seo: /lan/ has its description"
 check index.html '"@type":"Organization"[^}]*"name":"MeshCore Exempellandet"' "seo: the Organization is the site"
+# Plausible (G23, Q6.5): the chosen county travels as the custom property lan.
+check index.html 'plausible.init({endpoint:"/p/event",customProperties:function(){return{lan:document.documentElement.getAttribute("data-lan")||"se"}}})' "analytics: every event carries the county as lan"
 exit $fail
