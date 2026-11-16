@@ -128,6 +128,51 @@ off, because a module cannot change the site's outputs: add `"rss"` to `disableK
 Cloudflare or Netlify can make it a real 301 with `/guider/fragor-och-ord/ /fragor/ 301` in its own
 `static/_redirects`; the template ships none, because a site's own file would replace it.
 
+## National mode
+
+One site for every county (the national site, meshcore-swe.se) instead of one county per site. It
+is switched on by one setting, `params.national = true`, and nothing of it reaches a regional site:
+with the setting off the template emits no new HTML, script or CSS, and
+`scripts/compare-regional.sh` proves the example site and meshcore-jkp.se build byte-identical.
+
+**What the site provides:**
+- `data/lan/<scb>.toml`, one file per county (21). Only what cannot be derived: `slug` (the address,
+  with åäö), `short`, `checked`, and optionally `site` (the county's own site), `iata`, `center`,
+  `zoom`, `place`, `meshmapper`, `text` and `text_by`, and the lists `[[channels]]`, `[[groups]]` and
+  `[[wanted]]`. Name, scope and its decision, neighbours and the county's shape come from the region
+  list and `se-lan.geojson` (`layouts/_partials/lan.html`).
+- `params.region` for the "Sverige" state (name and short "Sverige", scope `se`, every map area in
+  `iatas` for the national map), and `params.lanData`, the county-data guide's URL.
+
+**What the template builds:**
+- A front page at `/<slug>/` for every county without its own site, with its values in the HTML,
+  and three local pages under it (`kom-igang`, `ingen-svar-pa-test`, `fragor`; text in
+  `assets/lan/*.md`). A county with its own site gets a small `noindex` page with two choices:
+  go there, or choose another county. `/lan/` lists every county, `_redirects` sends the address
+  without åäö to the one with it (301), and `/lan/pages.json` maps each county to its page.
+- The guides once, with county values as `data-r` spans holding a neutral form ("ditt län",
+  `se-<län>`), filled in the browser.
+
+**The county in the browser:** a pre-paint script reads the choice (the page's county, then
+`?lan=<scb|se>`, then localStorage `lan`, then the cookie `lan`) and keeps both stores in step;
+`js/lan/apply.js` fills the spans, the footer, the title, the county's channels and groups, and
+sends `lan:change`; `js/lan/modal.js` asks on a first visit with nothing chosen (not for crawlers or
+without JavaScript) and opens from the header's county button; `js/lan/wizard-county.js` writes the
+county into the wizards before their own scripts read it, shows a county selector when none is
+chosen, and warns when the picked position is in another county. The map and the wizards' own code
+is unchanged; national scripts and `css/national.css` load only in national mode.
+
+**A `/` that shows the saved county:** the site serves `/` through a Pages Function that answers
+with the county's page when the `lan` cookie names one (see meshcore-swe.se's `functions/index.js`).
+
+**CSP:** national mode adds one inline script (the pre-paint script) and changes the Plausible init
+script; a site with a script-src policy lists their hashes.
+
+**Checks:** `exampleNational/` (three counties, one with its own site) is built and checked by
+`scripts/check-national.sh` (run by `check.sh`), and `scripts/check-national-browser.mjs` switches
+county on every shared page in Chrome and fails on any value left from the previous county (CI runs
+both).
+
 ## Start a region site
 
 1. Copy `exampleSite/` into a new repository.

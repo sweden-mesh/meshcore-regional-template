@@ -4,6 +4,21 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## Unreleased
+
+National mode, phases 3–4 (NATIONAL-7). Regional output unchanged.
+
+- **Maps:** a Beacon snapshot and wanted places per county front page, every county's wanted places
+  on the Sverige map, nodes outside the county marked as outside the region (`js/lan/map-county.js`,
+  `js/lan/geo.js`), the no-observers note, the county's MeshMapper link; no coverage layer.
+- **Wizards:** the county's scope, prefix, neighbours, Observer fallback and solar starting point
+  (`js/lan/wizard-county.js`), a county selector without a county, a warning when the position is in
+  another county, a line for a county with its own site.
+- **Pages:** own descriptions for county, local and `/lan/` pages; the footer links the county-data
+  guide; the privacy text names the county cookie; Plausible events carry `lan`.
+- **Checks:** `scripts/check-national-browser.mjs` (in CI) and a 21-of-21 wizard test.
+- README: **National mode**.
+
 ## v0.40.1 — 2026-11-16
 
 National mode only (anti-AI-design review, iteration 14): the välj län note loses its coloured left
