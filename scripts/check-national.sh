@@ -28,6 +28,7 @@ if grep -q "id=karta" "$P/jönköping/index.html" || [ -e "$P/jönköping/kom-ig
 # The county's local pages (Q7.7), modelled on meshcore-jkp.se's four.
 check kalmar/kom-igang/index.html "<h1>Kom igång med MeshCore i Kalmar</h1>" "local: Kom igång has the county's title"
 check kalmar/kom-igang/index.html "Lägg till kanalerna</strong> <code class=nobreak>#kalmar-exempel</code> och <code class=nobreak>#test-se08</code>" "local: Kom igång lists the county's channels and test channel"
+check kalmar/kom-igang/index.html "regionen (scope) <code class=scope>se08</code>" "local: a numeric scope (se08) is styled as a scope"
 check kalmar/kom-igang/index.html "<strong>Exempelberget</strong>: högt läge mot havet" "local: Kom igång lists the wanted places"
 check kalmar/kom-igang/index.html "SE08-Exempelberget" "local: the name example uses the prefix and the county's place"
 check kalmar/kom-igang/index.html "<dd><code class=scope>se08</code></dd>" "local: the settings box shows the county's scope"

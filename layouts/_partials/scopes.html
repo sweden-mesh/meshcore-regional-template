@@ -1,11 +1,11 @@
 {{- /* The last pass over rendered HTML, used wherever content is printed:
-  1. Region names (scopes): a <code> holding just se, eu, europe or se-<county> gets class "scope",
+  1. Region names (scopes): a <code> holding just se, eu, europe, se<NN> or se-<county> gets class "scope",
      which sets it off (operator 2026-11-14). Commands that contain a scope are not touched.
   2. Swedish compounds from data/hyphenate.toml get hidden break points (soft hyphens) between
      their parts (operator 2026-11-14, B-262); a word inside <code> or a tag is left alone because
      the match needs a non-letter on both sides and code words are not on the list.
   Usage: partial "scopes.html" .Content */ -}}
-{{- $h := replaceRE `<code>(se|eu|europe|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` (string .) -}}
+{{- $h := replaceRE `<code>(se|eu|europe|se[0-9]{2}|se-[a-z0-9-]+)</code>` `<code class="scope">$1</code>` (string .) -}}
 {{- /* Short code items without spaces (channel names, scopes, single words like `region`) never break
   at their own hyphens (operator 2026-11-14); longer commands with spaces still wrap. */ -}}
 {{- $h = replaceRE `<code>([^<\s]{1,28})</code>` `<code class="nobreak">$1</code>` $h -}}
