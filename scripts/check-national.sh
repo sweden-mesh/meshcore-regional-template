@@ -48,4 +48,9 @@ if grep -q "j%C3%B6nk" "$P/sitemap.xml"; then echo "FAIL own site: in the sitema
 check _redirects '^/skane/ /sk%C3%A5ne/ 301$' "redirects: the address without åäö answers 301"
 check _redirects '^/skane/\* /sk%C3%A5ne/:splat 301$' "redirects: and its local pages"
 if grep -q "^/kalmar/" "$P/_redirects"; then echo "FAIL redirects: a name without åäö redirects to itself"; fail=1; else echo "ok   redirects: none for a name without åäö"; fi
+# The pre-paint county script (§6.2.3, §6.2.5); its behaviour is checked in a browser (Sprint 16 T-11).
+check index.html 'localStorage.getItem("lan")' "prepaint: the script is in the head"
+check index.html '<html [^>]*data-lan-page>' "prepaint: a shared page names no county"
+check kalmar/index.html '<html [^>]*data-lan-page=08>' "prepaint: a county page names its county"
+check jönköping/index.html '<html [^>]*data-lan-page>' "prepaint: an own-site county's page is not saved as the choice"
 exit $fail

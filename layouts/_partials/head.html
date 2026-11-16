@@ -11,6 +11,9 @@
 {{- /* The visitor's "stop background motion" choice (header button, motion-toggle.js) and colour-blind
   mode (header button, cvd-toggle.js), before paint. One script for both, in every style. */}}
 <script>try{var s=localStorage,r=document.documentElement;if(s.getItem("motion")==="off")r.dataset.motion="off";if(s.getItem("cvd")==="1")r.dataset.cvd="1"}catch(e){}</script>
+{{- if site.Params.national }}
+{{ partial "lan-prepaint.html" . }}
+{{- end }}
 {{- with site.Params.beacon.url }}
 <link rel="preconnect" href="{{ . }}" crossorigin>
 {{- end }}

@@ -1,0 +1,20 @@
+{{- /* National mode: the chosen county, before the first paint (plan §6.2.3, §6.2.5). Order: the
+  page's own county (data-lan-page), ?lan=<scb|se>, localStorage "lan", the cookie "lan". A choice
+  from the page or the URL is written to both stores; a store that lost it is restored from the
+  other. Sets <html data-lan="<scb|se>">, or data-lan-store="0" when neither store can be written
+  (the county modal is then not forced, §6.2.4). On / with a saved county that has a page here
+  and no cookie, the cookie is restored and / reloaded once, so the / function can serve the
+  county's front page (§6.8, Q7.4). */ -}}
+{{- $pages := slice -}}{{- range partialCached "lan.html" . "lan" }}{{ if .url }}{{ $pages = $pages | append .scb }}{{ end }}{{ end -}}
+<script>(function(){var d=document,r=d.documentElement,ok=/^(se|\d\d)$/,P={{ delimit $pages " " }}.split(" "),s=null,c=null,L=!0,C=!0;
+try{s=localStorage.getItem("lan")}catch(e){L=!1}
+var m=d.cookie.match(/(?:^|; )lan=([^;]*)/);c=m?m[1]:null;
+var q=null;try{q=new URLSearchParams(location.search).get("lan")}catch(e){}
+var p=r.getAttribute("data-lan-page"),v=p||(ok.test(q||"")?q:null),w=!!v;
+if(!v)v=ok.test(s||"")?s:ok.test(c||"")?c:null;
+if(v){r.setAttribute("data-lan",v);
+if(w||s!==v){try{localStorage.setItem("lan",v)}catch(e){L=!1}}
+var had=c===v;if(w||!had){try{d.cookie="lan="+v+"; Path=/; Max-Age=31536000; SameSite=Lax; Secure";C=d.cookie.indexOf("lan="+v)>=0}catch(e){C=!1}}
+if(!L&&!C)r.setAttribute("data-lan-store","0");
+if(!w&&!had&&C&&location.pathname==="/"&&!q&&P.indexOf(v)>=0){try{if(!sessionStorage.getItem("lan-reload")){sessionStorage.setItem("lan-reload","1");location.reload()}}catch(e){}}}
+else{try{localStorage.setItem("lan-t","1");localStorage.removeItem("lan-t")}catch(e){r.setAttribute("data-lan-store","0")}}})()</script>

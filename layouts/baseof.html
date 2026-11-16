@@ -1,5 +1,10 @@
 <!doctype html>
+{{- $lp := "" }}{{ with partial "lan-page.html" . }}{{ if .url }}{{ $lp = .scb }}{{ end }}{{ end }}
+{{- if site.Params.national }}
+<html lang="{{ site.Language.Locale | default "sv" }}" data-copy-label="{{ T "code_copy" }}" data-copied-label="{{ T "code_copied" }}" data-copy-failed="{{ T "code_copy_failed" }}" data-lan-page="{{ $lp }}">
+{{- else }}
 <html lang="{{ site.Language.Locale | default "sv" }}" data-copy-label="{{ T "code_copy" }}" data-copied-label="{{ T "code_copied" }}" data-copy-failed="{{ T "code_copy_failed" }}">
+{{- end }}
 <head>{{ partial "head.html" . }}</head>
 <body class="style-{{ site.Params.style | default "product" }}">
   <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
