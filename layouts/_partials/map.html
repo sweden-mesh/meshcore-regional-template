@@ -13,7 +13,7 @@
 {{- $cov := partialCached "meshmapper-coverage.html" . "meshmapper" -}}
 {{- $covRes := dict -}}
 {{- with $cov }}{{ $covRes = resources.FromString "meshmapper/coverage.json" .compact | fingerprint }}{{ end -}}
-{{- $wanted := partialCached "wanted.html" . "wanted" -}}
+{{- $wanted := partialCached "wanted.html" . (cond (eq $snapKey "snapshot") "wanted" (printf "wanted-%s" $snapKey)) -}}
 <section class="map-section" id="karta" data-pagefind-ignore="all">
   <h2>{{ T "map_heading" }}</h2>
   <div id="map" class="map" role="region" aria-label="{{ T "map_heading" }}"

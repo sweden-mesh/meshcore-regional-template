@@ -83,4 +83,8 @@ check kalmar/index.html '<span data-r=label>Kalmar</span>' "header: a county pag
 if grep -q '<dialog' "$P/guider/regioner/index.html"; then echo "FAIL modal: a dialog is in the HTML"; fail=1; else echo "ok   modal: not in the HTML (crawlers and no-JS never see it)"; fi
 check guider/regioner/index.html 'src=/js/lan/modal' "modal: the script is loaded"
 check lan/pages.json '{"08":"/kalmar/","12":"/sk%C3%A5ne/"}' "function: /lan/pages.json maps each county with a page (not an own-site one)"
+# Wanted places (Q6.6): a county page shows its own; the Sverige map every county's, named.
+check kalmar/index.html 'data-wanted=.*"name":"Exempelberget","note":"högt läge mot havet"' "wanted: a county page's map has its places"
+check index.html 'data-wanted=.*"name":"Exempelberget","note":"Kalmar: högt läge mot havet"' "wanted: the Sverige map has every county's, with the county's name"
+if grep -q 'data-wanted=' "$P/skåne/index.html"; then echo "FAIL wanted: a county without places got some"; fail=1; else echo "ok   wanted: a county without places has none"; fi
 exit $fail

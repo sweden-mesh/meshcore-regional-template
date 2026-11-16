@@ -3,7 +3,16 @@
        rendered as HTML, for the host wizard's list) and "json" (note as plain text, for the
        maps' data-wanted). No places: an empty list and an empty json string. */ -}}
 {{- $list := slice -}}{{- $plain := slice -}}
-{{- range site.Params.wanted -}}
+{{- $src := site.Params.wanted -}}
+{{- /* National mode (Q6.6): a county's own pages show its places; every other page (the Sverige map,
+       the host wizard) every county's, each note led by the county's short name. */ -}}
+{{- if site.Params.national -}}
+  {{- with partial "lan-page.html" . -}}{{- $src = .wanted -}}{{- else -}}
+    {{- $src = slice -}}
+    {{- range partialCached "lan.html" . "lan" }}{{ $c := . }}{{ range .wanted }}{{ $src = $src | append (merge . (dict "note" (cond (ne (.note | default "") "") (printf "%s: %s" $c.short .note) $c.short))) }}{{ end }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $src -}}
   {{- if and .name (isset . "lat") (isset . "lon") -}}
     {{- $note := .note | default "" -}}
     {{- $list = $list | append (dict "name" .name "lat" (float .lat) "lon" (float .lon) "note" ($note | markdownify)) -}}
