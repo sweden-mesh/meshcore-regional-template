@@ -11,6 +11,9 @@
 */ -}}
 {{- $base := strings.TrimSuffix "/" (site.Params.beacon.url | default site.Params.region.borders | default "") -}}
 {{- $iatas := site.Params.region.iatas | default slice -}}
+{{- /* National mode: no site-wide snapshot (every map area would be about 6 MB); the county pages get
+       their own (plan Q7.9). */ -}}
+{{- if site.Params.national }}{{ $iatas = slice }}{{ end -}}
 {{- $key := now.UTC.Format "2006010215" -}}
 {{- $nodes := slice -}}
 {{- $borders := slice -}}

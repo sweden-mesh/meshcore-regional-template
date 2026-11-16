@@ -868,3 +868,29 @@ other = "How the 868 MHz band differs from amateur radio"
 other = "Want to build?"
 [audience_maker_link]
 other = "Build a repeater from a Wio or Heltec board"
+
+# National mode (params.national): county pages and the county switch.
+[lan_test_purpose]
+other = "Test channel: write `test` and repeaters with auto-reply answer."
+[lan_test_note]
+other = "Test here, not in the chat channels."
+[lan_proposal]
+other = "proposal"
+[lan_proposal_note]
+other = "The region is a proposal in [the list of regions]({{ .URL }}): no group in the county has decided on it yet. If another one is in use here, correct the list."
+[lan_net_title]
+other = "The network in {{ .Name }}"
+[lan_net_text]
+other = "{{ .Name }} uses the region (scope) {{ .Scope }}. Write `test` in {{ .Test }} and repeaters with auto-reply answer. The map below shows the repeaters and observers heard in the county."
+[lan_text_by]
+other = "Written by {{ .By }}"
+[lan_checked]
+other = "The county's details were last checked on {{ .Date }}."
+[lan_local_title]
+other = "In {{ .Short }}"
+[lan_no_groups]
+other = "No group for the county is listed here yet. Questions about MeshCore in the whole country go to {{ .Chats }}."
+[lan_data_link]
+other = "Something missing about the county? [Correct the county's details]({{ .URL }})."
+[lan_home_desc]
+other = "MeshCore in {{ .Name }}: the county's region {{ .Scope }}, test channel, map and where the network needs repeaters, with guides and wizards to get started."

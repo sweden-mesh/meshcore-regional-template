@@ -1,8 +1,9 @@
 {{- /* National mode: the county a page belongs to (its front matter `lan`, an SCB code, set on the
-  county pages the content adapter makes), from lan.html; nil on every other page and on a
-  regional site. Usage: with partial "lan-page.html" . */ -}}
+  county pages the content adapter makes), from lan.html; false on every other page and on a
+  regional site. Takes a page or a shortcode. Usage: with partial "lan-page.html" . */ -}}
 {{- $c := false -}}
-{{- if and site.Params.national .Params.lan -}}
-  {{- range partialCached "lan.html" . "lan" }}{{ if eq .scb $.Params.lan }}{{ $c = . }}{{ end }}{{ end -}}
+{{- if site.Params.national -}}{{- with .Page.Params.lan -}}{{- $scb := . -}}
+  {{- range partialCached "lan.html" $ "lan" }}{{ if eq .scb $scb }}{{ $c = . }}{{ end }}{{ end -}}
+{{- end -}}
 {{- end -}}
 {{- return $c -}}

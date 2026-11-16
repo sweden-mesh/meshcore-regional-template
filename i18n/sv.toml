@@ -864,3 +864,29 @@ other = "Vad som skiljer 868 MHz-bandet från amatörradio"
 other = "Vill du bygga?"
 [audience_maker_link]
 other = "Bygg en repeater av ett Wio- eller Heltec-kort"
+
+# National mode (params.national): county pages and the county switch.
+[lan_test_purpose]
+other = "Testkanal: skriv `test` så svarar repeatrar med auto-svar."
+[lan_test_note]
+other = "Testa här, inte i chattkanalerna."
+[lan_proposal]
+other = "förslag"
+[lan_proposal_note]
+other = "Regionen är ett förslag i [listan över regioner]({{ .URL }}): ingen grupp i länet har bestämt den än. Används en annan i länet, rätta listan."
+[lan_net_title]
+other = "Nätet i {{ .Name }}"
+[lan_net_text]
+other = "I {{ .Name }} används regionen (scope) {{ .Scope }}. Skriv `test` i {{ .Test }} så svarar repeatrar med auto-svar. Kartan nedan visar repeatrarna och observatörerna som hörs i länet."
+[lan_text_by]
+other = "Skrivet av {{ .By }}"
+[lan_checked]
+other = "Länets uppgifter kontrollerades senast {{ .Date }}."
+[lan_local_title]
+other = "I {{ .Short }}"
+[lan_no_groups]
+other = "Ingen grupp för länet finns med här än. Frågor om MeshCore i hela landet tas i {{ .Chats }}."
+[lan_data_link]
+other = "Saknas något om länet? [Rätta länets uppgifter]({{ .URL }})."
+[lan_home_desc]
+other = "MeshCore i {{ .Name }}: länets region {{ .Scope }}, testkanal, karta och var nätet behöver repeatrar, med guider och wizards för att komma igång."

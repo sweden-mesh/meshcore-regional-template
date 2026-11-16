@@ -1,5 +1,5 @@
 {{- /* The region's settings: radio preset, region (scope) and observer IATA codes. */ -}}
-{{- $r := partialCached "region.html" . "region" -}}{{- $radio := site.Params.radio -}}
+{{- $r := partial "region-of.html" . -}}{{- $radio := site.Params.radio -}}
 <dl class="settings">
   <div><dt>{{ T "set_preset" }}</dt><dd>{{ $radio.preset }}</dd></div>
   <div class="settings-part"><dt>{{ T "set_freq" }}</dt><dd>{{ replace (string $radio.freq) "." "," }} MHz</dd></div>

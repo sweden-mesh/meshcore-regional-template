@@ -1,5 +1,5 @@
 {{- /* The map island. Settings travel as data attributes; assets/js/map/ does the rest. */ -}}
-{{- $r := site.Params.region -}}
+{{- $r := partial "region-of.html" . -}}
 {{- $m := site.Params.map -}}
 {{- $ml := printf "lib/maplibre-gl/%s/" $m.maplibre -}}
 {{- $snap := partialCached "beacon-snapshot.html" . "snapshot" -}}

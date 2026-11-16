@@ -1,0 +1,20 @@
+{{- /*
+  National mode only (params.national): a front page for every county without a site of its own,
+  at /<slug>/ (plan §6.2.2, §6.8). Nothing is added on a regional site.
+*/ -}}
+{{- if site.Params.national -}}
+  {{- range partial "lan.html" . -}}
+    {{- if not .site -}}
+      {{- $.AddPage (dict
+        "path" .slug
+        "kind" "page"
+        "type" "lan"
+        "layout" "county"
+        "title" (T "hero_title" (dict "Region" .name))
+        "params" (dict "lan" .scb "lanHome" true "lead" false
+                  "description" (T "lan_home_desc" (dict "Name" .name "Scope" .scope)))
+        "dates" (dict "lastmod" (time.AsTime .checked))
+        "content" (dict "mediaType" "text/markdown" "value" "")) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

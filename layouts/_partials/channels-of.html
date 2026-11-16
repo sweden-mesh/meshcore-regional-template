@@ -1,0 +1,13 @@
+{{- /* The channels a page lists: params.channels, or in national mode the county's: its own chat
+  channels from its file, then its test channel (#test-<scope>), derived for every county.
+  Usage: partial "channels-of.html" . */ -}}
+{{- $ch := site.Params.channels -}}
+{{- if site.Params.national -}}
+  {{- $r := partial "region-of.html" . -}}
+  {{- $ch = slice -}}
+  {{- range $r.channels | default slice }}{{ $ch = $ch | append (merge . (dict "scope" $r.scope)) }}{{ end -}}
+  {{- if ne $r.scope "se" -}}
+    {{- $ch = $ch | append (dict "name" (printf "#test-%s" $r.scope) "scope" $r.scope "purpose" (T "lan_test_purpose") "note" (T "lan_test_note")) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $ch -}}

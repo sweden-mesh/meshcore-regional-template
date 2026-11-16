@@ -1,0 +1,8 @@
+{{- /* The region a page shows: the site's region (region.html), or in national mode on a county's
+  own pages that county from lan.html, in the same shape (name, short, scope, iatas, center, zoom,
+  plus the county's keys). Usage: partial "region-of.html" . */ -}}
+{{- $r := partialCached "region.html" . "region" -}}
+{{- with partial "lan-page.html" . -}}
+  {{- $r = merge $r . (dict "iatas" (cond (ne .iata "") (slice .iata) slice) "county" true) -}}
+{{- end -}}
+{{- return $r -}}

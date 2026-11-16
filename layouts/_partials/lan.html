@@ -44,7 +44,7 @@
     {{- end -}}
   {{- end -}}
   {{- $iatas := site.Params.observer.iatas | default dict -}}
-  {{- range $scb, $f := site.Data.lan -}}
+  {{- range $scb, $f := hugo.Data.lan -}}
     {{- $scb = printf "%02s" (string ($f.scb | default $scb)) -}}
     {{- with index $list $scb -}}
       {{- $row := . -}}
