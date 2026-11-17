@@ -7,7 +7,7 @@ lead: false
 build:
   list: never
 date: 2026-11-14
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 Den här sidan beskriver metoden bakom [solcellskalkylatorn](/wizard/solcell/). Den är skriven för
@@ -88,6 +88,53 @@ Wio-SX1262.
 - **Trafik.** Båda antar ett lugnt nät: 2 minuter sändning per dygn och ingen extra mottagningstid.
   En upptagen repeater drar mer; för upptagna platser är förbrukningen optimistisk.
 - En strömlogg över ett dygn på en riktig nod skulle ersätta båda (B.13).
+
+**Korten (sedan 17 november 2026).** Kalkylatorn låter besökaren välja kort, inte bara firmware.
+Varje kort har en uppmätt eller publicerad medelström vid batteriet per firmware, och avrundas
+**uppåt** till närmaste nivå i ett rutnät av belastningar: 4,5; 5,2; 6; 7,1; 8,6; 9; 10,5; 13; 13,4
+och 190 mA. Modellen räknas bara för de nivåerna, så varje siffra i kalkylatorn går att räkna om med
+referensskriptet, och ett kort får aldrig ett mindre batteri än källan ger stöd för. Ett kort utan
+källa finns inte med; en firmware utan siffra för kortet går inte att välja.
+
+| Kort | EasySkyMesh | Officiell MeshCore | Källa | Säkerhet |
+|---|---|---|---|---|
+| Seeed XIAO nRF52840 + Wio-SX1262 | 4,5 mA (rutnät 4,5) | 7,1 mA (7,1) | [S1], tabellen ovan | hög |
+| RAK4631 | 6,0 mA (6) ¹ | 6,0 mA (6) | [S2], [S3] | medel; EasySkyMesh låg |
+| Heltec T096 | 5,2 mA (5,2) | 8,6 mA (8,6) | [S1] PPK2 | medel–hög |
+| Heltec V3 | 9 mA (9) ² | 10,49 mA (10,5) | [S3], [S4] | medel; EasySkyMesh låg |
+| Heltec V4, förstärkaren (FEM) på | 13,4 mA (13,4) ¹ | 13,29 mA (13,4) | [S2], [S4] | låg |
+| Heltec V4.3, FEM av | 13 mA (13) ² | – | [S3] | låg |
+| Seeed XIAO ESP32-S3 + Wio-SX1262 | 7 mA (7,1) ² | – | [S3], [S5] | låg |
+| Raspberry Pi Zero 2 W + SX1262-HAT | 190 mA (190), ingen firmware att välja | | [S6]–[S14], härlett nedan | medel |
+
+¹ Ingen PPK2-mätning finns; siffran är övre delen av det spann en multimeter visade (operatörens
+beslut 2026-11-17), alltså försiktigt hög. ² Läget `powersaving on` utan mottagningscykling, den
+enda publicerade siffran; försiktig. En multimeter visar ett spann, inte ett medelvärde, och bara
+PPK2-medelvärden borde egentligen mata modellen; de här korten är därför märkta som osäkrare i
+kalkylatorn. Heltec V4 drar olika beroende på kortversion och om förstärkaren (FEM) är på: 13–16 mA
+för nästan samma inställning i olika källor.
+
+**Raspberry Pi Zero 2 W.** Ingen har publicerat strömmen för en Pi Zero som MeshCore-repeater
+(openHop Repeater, tidigare pyMC_Repeater [S9], [S10]). Siffran är härledd: Pi Zero 2 W i vila med
+wifi 80–130 mA vid 5 V, central 120 mA ([S6], [S7], [S8]), plus cirka 4 mA för SX1262-modulen
+([S12]), genom en 5 V-omvandlare med 85–90 % verkningsgrad ([S14]) från en cell på 3,7 V:
+124 × 5 / (0,88 × 3,7) ≈ 190 mA, spann 126–213 mA. Demonens egen processorlast, GPS på modulen och
+skrivningar till minneskortet är inte medräknade och höjer siffran. Raspberry Pis egen dokumentation
+anger högre ström för aktiv användning ([S13]). Den äldre **Pi Zero W** drar något mindre, cirka
+160 mA vid cellen (spann 126–189 mA, [S7], [S11]), men openHops installationsguide nämner den inte och
+den finns därför inte som val. 190 mA är ungefär 42 gånger XIAO-kortet med EasySkyMesh: i Jönköping,
+på en fri södervägg, behövs omkring 100 W panel och 76 celler för den sämsta vintern på fem.
+Modellens laddare (CN3791 vid 5,0 V, högst 2 A) är inte byggd för sådana effekter; siffrorna visar
+hur stort energigapet är, inte en inköpslista.
+
+**En tredje firmware nämns men går inte att välja.** dt267:s strömsnåla bygge av MeshCore ([S4])
+anger lägre vilovärden (Heltec V3 3,82 mA, RAK4631 2,21 mA, T096 3,64 mA, V4.3 4,52 mA med LNA av;
+mätmetoden anges inte). Det ligger utanför kalkylatorns två firmwares.
+
+**Vad som ändrades 17 november 2026.** Tabellerna för 4,5 och 7,1 mA är oförändrade: byggskriptet
+jämförde dem med den publicerade filen för alla 20 punkter och de är lika. Nytt är tabellerna för
+de åtta andra nivåerna i rutnätet, snötillägget per nivå, och att datan ligger i en fil per län
+(B.14).
 
 **Var 10 W kommer ifrån.** Ett planeringsantagande från den första dimensioneringen i september
 2026: ett billigt laminat med skurna celler, sålt som 15 W, antogs ge ungefär två tredjedelar av
@@ -759,13 +806,17 @@ sparar dem.
 
 ```sh {title="Exempel"}
 python reference_solar_need.py JKG --tilt 90 --trees 20 --firmware esm
+python reference_solar_need.py JKG --tilt 90 --trees 0 --firmware 13.4
 python reference_solar_need.py --check
+python build_load_grid.py --cache-dir pvgis_cache
 python reference_solar_need.py --tables
 python reference_solar_need.py --example
 ```
 
 Den första raden skriver behovstripplarna för alla 17 panelstorlekar, före och efter det löpande
-minimumet, plus golvet. `--check` kör testvektorerna nedan, `--tables` skriver R, Voc_stc och
+minimumet, plus golvet. `--firmware` tar `esm`, `official` eller en belastning i mA ur rutnätet.
+`build_load_grid.py` bygger hela datan, en fil per punkt, och avbryter om tabellerna för 4,5 och
+7,1 mA skiljer från den tidigare publicerade filen. `--check` kör testvektorerna nedan, `--tables` skriver R, Voc_stc och
 tabellen över startljus, `--example` skriver exemplet i B.8. Skriptet använder Jönköpings avrundade
 punkt, samma punkt som kalkylatordata v4, och återger dess Jönköpingsvärden exakt.
 
@@ -782,7 +833,7 @@ för varje punkt, vinkel i (90, 60, 40), trädlinje h i (0, 10, 15, 20, 30, 50):
         för var och en av de 17 panelstorlekarna Wp:
             Ah_hour = 0 om f == 0 annars min(2.0, 0.90*max(0, Wp*G/1000*LL(G)*(1 + 0.004*(25 - T2m))*f - 5.0*I_chip/1000) * 0.92/3.9)
             skörd per UTC-datum = summan av Ah_hour
-            för dygnsförbrukning i (0.108, 0.1704) Ah:
+            för dygnsförbrukning i rutnätet (4.5 ... 190 mA × 24 h) i Ah:
                 underskott per dygn -> 18 vintermaxima och D -> nivå för en vinter på fem och D
                 -> null-regel -> behov = nivå/0.7038/(1 - 0.001*D)*1000, avrundat till 0.1 mAh   (B.5)
         golv: skörd per UTC-datum = 2.0 * (antal timmar med f > 0) -> samma steg
@@ -806,13 +857,14 @@ Snötillägget lagras separat och läggs till av kalkylatorn (B.7).
   0,1 mAh. Referensskriptet stämde exakt, men en skillnad på ±0,1 mAh i sista siffran är godtagbar
   för andra implementationer.
 
-**Datafilen.** Ett JSON-objekt med en nyckel per punktkod. Varje punkt har `place`, `lat`, `lon`,
-`source` (PVGIS-dataset) och `panels` (de 17 storlekarna i W); `need[vinkel][firmware][träd]`, en
-lista med 17 tripplar [central, låg, hög] i samma ordning som `panels`, i mAh utan marginal eller
-snödagar, till 0,1 mAh, null betyder att inget batteri räcker (vinkelnycklar `vertical`, `tilt60`,
-`tilt40`; firmware `esm`, `official`; träd `"0"`, `"10"`, `"15"`, `"20"`, `"30"`, `"50"`);
-`floor[vinkel][firmware][träd]`, en trippel; `snow_allowance` med `days` (sheltered, exposed) och
-`per_day_mAh` (esm, official); och `setpoint_V`: 5,0.
+**Datafilerna.** En JSON-fil per punktkod, `<kod>.json`. Varje fil har `place`, `lat`, `lon`,
+`source` (PVGIS-dataset), `panels` (de 17 storlekarna i W) och `loads` (rutnätets nivåer i mA, som
+text); `need[vinkel][belastning][träd]`, en lista med 17 tripplar [central, låg, hög] i samma
+ordning som `panels`, i mAh utan marginal eller snödagar, till 0,1 mAh, null betyder att inget
+batteri räcker (vinkelnycklar `vertical`, `tilt60`, `tilt40`; belastning `"4.5"` … `"190"`; träd
+`"0"`, `"10"`, `"15"`, `"20"`, `"30"`, `"50"`); `floor[vinkel][belastning][träd]`, en trippel;
+`snow_allowance` med `days` (sheltered, exposed) och `per_day_mAh` per belastning; och
+`setpoint_V`: 5,0. Belastningen 4,5 motsvarar den tidigare nyckeln `esm`, 7,1 `official`.
 
 **Testvektorer** (*testvektor*, behov utan marginal i mAh, [central, låg, hög]). Jönköpingsrader
 gäller den avrundade punkten 57,78° N, 14,16° Ö och stämmer exakt med kalkylatordata v4.
@@ -830,6 +882,9 @@ gäller den avrundade punkten 57,78° N, 14,16° Ö och stämmer exakt med kalky
 | MMX | lodrät | EasySkyMesh | 10° | 5 W | 1 195,5; 884,0; 1 697,1 |
 | LLA | lodrät | EasySkyMesh | 20° | 10 W | 16 918,7; 15 061,7; 22 768,4 |
 | OSD | 60° | officiell | 30° | 20 W | 17 420,9; 15 602,4; 23 330,5 |
+| JKG | lodrät | 13,4 mA | 20° | 10 W | 42 286,8; 35 332,8; 56 460,5 |
+| JKG | lodrät | 5,2 mA | 0° | 10 W | 643,3; 461,2; 991,9 |
+| JKG | lodrät | 190 mA | 0° | 10 W | null; 686 851,9; null |
 | GVX | lodrät | EasySkyMesh | 50° | 25 W | högt värde 40 700,2 efter löpande minimum; 40 983,3 före |
 
 | Punkt | Vinkel | Firmware | Träd | Golv [central, låg, hög] |
@@ -895,6 +950,23 @@ den troligen.
 - [kontroll] SMHI öppna data, snödjup (parameter 8), 348 stationer: <https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/8.json>
 - [kontroll] SMHI om den kalla januari 2026 och rekordlåga temperaturer: <https://www.smhi.se/blogg/blogg/2026-02-03-extremt-kall-januari-i-norra-tornedalen> och <https://www.smhi.se/pd/klimat/pdf_stats/year/SMHI_vov_temperature_25.pdf>
 - [bakgrund] SMHI:s solljusmodell STRÅNG: <https://strang.smhi.se/>
+
+**Korten och deras ström (B.2, 17 november 2026)**
+
+- [modell] [S1] IoTThinks/MeshCore pull request 11, mottagningscykling, PPK2 vid 4 V på batterikontakten: <https://github.com/IoTThinks/MeshCore/pull/11> (2026-07-08)
+- [modell] [S2] EasySkyMesh PowerSaving17, testtabell (Uni-T 890C): <https://github.com/IoTThinks/EasySkyMesh/releases/tag/PowerSaving17> (2026-08-02)
+- [modell] [S3] EasySkyMesh PowerSaving16, uppmätt vid batterikabeln: <https://github.com/IoTThinks/EasySkyMesh/releases/tag/PowerSaving16> (2026-06-08)
+- [modell] [S4] dt267, MeshCore Low Power Firmware för Heltec V3/V4, strömprofiler för originalfirmwaren och forken: <https://github.com/dt267/MeshCore-Low-Power-Firmware-For-Heltec-V3-V4> (2026-02-06)
+- [kontroll] [S5] EasySkyMesh PowerSaving13: <https://github.com/IoTThinks/EasySkyMesh/releases/tag/PowerSaving13> (2026-02-21)
+- [modell] [S6] CNX Software, Raspberry Pi Zero 2 W:s strömförbrukning (Otii Arc): <https://www.cnx-software.com/2021/12/09/raspberry-pi-zero-2-w-power-consumption/>
+- [modell] [S7] Pi Dramble, strömförbrukning: <https://www.pidramble.com/wiki/benchmarks/power-consumption>
+- [modell] [S8] Jeff Geerling, Pi Zero 2 W med färre kärnor: <https://www.jeffgeerling.com/blog/2021/disabling-cores-reduce-pi-zero-2-ws-power-consumption-half/>
+- [bakgrund] [S9] openHop Repeater (tidigare pyMC_Repeater): <https://github.com/rightup/pyMC_Repeater>
+- [bakgrund] [S10] openHop Repeaters installationsguide: <https://areyoumeshingwith.us/docs/meshcore/installation/>
+- [modell] [S11] raspi.tv, Pi Zero W:s strömförbrukning: <https://raspi.tv/2017/how-much-power-does-pi-zero-w-use>
+- [modell] [S12] Waveshare SX1262 LoRaWAN/GNSS HAT: <https://www.waveshare.com/sx1262-lorawan-hat.htm>
+- [kontroll] [S13] Raspberry Pis dokumentation, strömförsörjning: <https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply>
+- [modell] [S14] Adafruit PowerBoost 1000C: <https://learn.adafruit.com/adafruit-powerboost-1000c-load-share-usb-charge-boost>
 
 **Panel- och himmelsmodeller**
 

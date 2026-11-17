@@ -1,5 +1,5 @@
 // The solar calculator's arithmetic (operator 2026-11-14, backlog B-259/B-260). Pure: takes one
-// county's entry from assets/data/solar-calc.json (the solar session's model v2, charger at 5.0 V,
+// county's file from assets/data/solar/<IATA>.json (the solar session's model v2, charger at 5.0 V,
 // sha256 f95a993f…6b9a, v3: 17 panel sizes) and
 // the visitor's settings. Never scales across counties and never extrapolates past the model's
 // panel sizes. Battery needs are mAh WITHOUT margin as [value, low, high]; null = no battery is
