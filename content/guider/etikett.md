@@ -1,10 +1,10 @@
 ---
-title: "Etikett: sändningstid är gemensam"
+title: "Sändningstid är gemensam"
 description: "Alla delar på samma radiofrekvens. Enkla vanor som gör att nätet fungerar för alla: var du testar, adverts med måtta och regionen för lokala samtal."
 weight: 90
 group: regioner
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 LoRa-nätet är en gemensam resurs. Bara en radio i taget kan sända på frekvensen inom hörhåll,

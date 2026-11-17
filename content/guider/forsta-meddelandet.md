@@ -79,7 +79,7 @@ kommit tillbaka till dig.
 
 ## Nästa steg
 
-- [Etikett: sändningstid är gemensam](../etikett/): vanor som gör att nätet fungerar för alla
+- [Sändningstid är gemensam](../etikett/): vanor som gör att nätet fungerar för alla
 - [Kanaler i MeshCore](../kanaler/): publika, hashtag- och privata kanaler
 - [Meddelanden kommer inte fram](../../felsokning/meddelanden-kommer-inte-fram/): när det inte
   fungerar

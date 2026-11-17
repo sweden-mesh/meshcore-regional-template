@@ -99,7 +99,7 @@ Det liknar digipeatrar i APRS, men med skillnader:
 
 Eftersom alla delar en frekvens är sändningstid nätets knappaste resurs. En repeater som sänder
 krockar med grannarna som också vill sända, och flera repeatrar inom hörhåll för varandra kostar
-mer än de ger. Se [Etikett: sändningstid är gemensam](../etikett/).
+mer än de ger. Se [Sändningstid är gemensam](../etikett/).
 
 ## Vad du kan bidra med
 
