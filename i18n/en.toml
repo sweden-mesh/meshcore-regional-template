@@ -1152,3 +1152,5 @@ other = "The V4.2 and most V4 boards have the amplifier (FEM) on. If the board s
 other = "V4.3 with the amplifier off."
 [sol_hint_pi-zero-2w]
 other = "Linux with openHop Repeater. No firmware to choose."
+[sol_chem]
+other = "The calculator assumes Li-ion (18650 or LiPo). [Why not LiFePO4 or lead-acid]({{ .Method }}#litiumjon)."

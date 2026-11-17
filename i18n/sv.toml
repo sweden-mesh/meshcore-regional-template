@@ -1148,3 +1148,5 @@ other = "V4.2 och de flesta V4 har förstärkaren (FEM) på. Står det V4.3 på 
 other = "V4.3 med förstärkaren avslagen."
 [sol_hint_pi-zero-2w]
 other = "Linux med openHop Repeater. Ingen firmware att välja."
+[sol_chem]
+other = "Kalkylatorn räknar på litiumjon (18650 eller LiPo). [Varför inte LiFePO4 eller blysyra]({{ .Method }}#litiumjon)."

@@ -78,6 +78,9 @@
     <label for="sol-cap">{{ T "sol_cap" }}</label>
     <input type="text" id="sol-cap" inputmode="numeric" value="3000" maxlength="5" class="sol-cap" aria-describedby="sol-cap-help">
     <p class="muted" id="sol-cap-help">{{ T "sol_cap_help" | markdownify }}</p>
+    {{- with $method }}
+    <p class="muted">{{ T "sol_chem" (dict "Method" .) | markdownify }}</p>
+    {{- end }}
     <p class="sol-result" data-out="result" aria-live="polite"></p>
   </fieldset>
 

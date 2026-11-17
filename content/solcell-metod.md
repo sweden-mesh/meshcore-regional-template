@@ -771,6 +771,38 @@ optimistiska. De två största posterna, horisonten och panelen, kan gå åt bå
     *Kontrollresultat:* antalet dygn med snötäcke i Götaland har minskat med cirka 40 % sedan 1960
     (SMHI faktablad 23, 2005), så 2005–2023 behöver inte representera framtida vintrar.
 
+### Varför bara litiumjon {#litiumjon}
+
+Kalkylatorn räknar bara på litiumjon (18650-celler eller LiPo med samma kemi). Det är den enda
+kemin som fungerar med guidens laddare (CN3791, 4,2 V), panel och firmware utan ändringar, och den
+har mest energi per kilo. Beslutat 2026-11-17 (B-295); ingen tabell ändrades av det.
+
+| Egenskap | Litiumjon 18650 | LiFePO4 | Blysyra, sluten (AGM, 12 V) |
+|---|---|---|---|
+| Nominell spänning | 3,6 V [MJ1], [S35E] | 3,2 V [PSL], [EVE] | 12 V [NP7] |
+| Laddspänning | 4,2 V | 3,65 V, högst 3,7 V [PSL] | 14,5 V cykliskt, 13,65 V underhåll [NP7] |
+| Kapacitet vid −20 °C | 0,92 vid C/1000 (B.5); urladdning specad till −10 °C [S35E] | minst 70 % vid 0,2C [EVE] | cirka 63–67 % vid C/20 [YUA-M], [DISC] |
+| Självurladdning per månad | 1–2 % plus skyddskortet [BU-802b] | högst 5–10 % enligt specifikationen [PSL], [EVE] | 3 % vid 20 °C, mindre i kyla [NP7], [YUA-M] |
+| Laddning under 0 °C | inte tillåten [MJ1] | inte tillåten [EVE] | tillåten ned till −15 °C [NP7] |
+| Energi per kilo | cirka 250 Wh/kg [S35E], [MJ1] | 120–170 Wh/kg [PSL], [EVE] | cirka 40 Wh/kg [NP7], [CSB] |
+| Laddare | CN3791, guidens kort | 3,6 V-laddare, aldrig CN3791 [PSL] | 12 V-laddare och spänningsomvandlare till noden |
+
+**Vad LiFePO4 har för sig.** Den tål tusentals djupa cykler [PSL], [EVE], är svårare att få att
+brinna och behåller kapaciteten bra i kyla enligt tillverkarnas siffror. Men en solnod gör en djup
+cykel om året, så livslängden spelar liten roll, och den laddar lika lite som litiumjon under 0 °C.
+Det som stoppar den här är spänningen: nRF52-korten startar inte under 3,3 V (MeshCores
+`PWRMGT_VOLTAGE_BOOTLOCK`), och LiFePO4 ligger på 3,2–3,3 V större delen av sin kapacitet. Den
+kräver dessutom en annan laddare, så modellens steg från panel till laddning (B.4) gäller inte.
+
+**Vad blysyra har för sig.** Den är billig, tål laddning ned till −15 °C [NP7] och självurladdar
+lite i kyla. Men den behöver cirka 2,5 gånger så mycket lagrad energi för samma vinter (sämre
+kapacitet i kyla och bara halva kapaciteten användbar), väger ungefär 13 gånger mer, och
+elektrolyten fryser vid −15 °C när batteriet är urladdat [BU-410], vilket en vinternod är i januari.
+Vanliga 12 V-regulatorer drar dessutom själva mer än noden.
+
+Vill du ändå bygga med någon av dem gäller inte kalkylatorns siffror. Källorna står i B.15 under
+"Batterikemi".
+
 ## B.13 Mätningar som skulle skärpa siffrorna mest {#b13}
 
 I ordning efter väntad effekt:
@@ -967,6 +999,19 @@ den troligen.
 - [modell] [S12] Waveshare SX1262 LoRaWAN/GNSS HAT: <https://www.waveshare.com/sx1262-lorawan-hat.htm>
 - [kontroll] [S13] Raspberry Pis dokumentation, strömförsörjning: <https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply>
 - [modell] [S14] Adafruit PowerBoost 1000C: <https://learn.adafruit.com/adafruit-powerboost-1000c-load-share-usb-charge-boost>
+
+**Batterikemi (B.12, 17 november 2026)**
+
+- [kontroll] [MJ1] LG Chem INR18650 MJ1, produktspecifikation 2016-06-30: <https://cdn.shopify.com/s/files/1/0721/2761/1190/files/LG-MJ1.pdf>
+- [kontroll] [S35E] Samsung SDI INR18650-35E, teknisk rapport juni 2015: <https://static.rapidonline.com/pdf/10-5181_v1.pdf>
+- [kontroll] [PSL] Power-Sonic PSL-FP-IFR18650EC, LiFePO4-datablad Rev1 06/20: <https://cdn.power-sonic.com/documents/PSL-FP-IFR18650EC_Data_Sheet.pdf>
+- [kontroll] [EVE] EVE LF105 LiFePO4, produktspecifikation: <https://cdn.shopify.com/s/files/1/0603/8283/8841/files/EVE-105Ah-Lithium-Iron-PhosphateLiFePO4-LFP-Battery-Cell-Product-Specification.pdf>
+- [kontroll] [NP7] Yuasa NP7-12, datablad V.3 mars 2013: <https://www.plaisance-pratique.com/IMG/pdf/NP7-12_UK.pdf>
+- [kontroll] [YUA-M] Yuasa NP, manual för ventilreglerade blybatterier, figur 4 och 5: <https://www.thierry-lequeu.fr/data/Yuasa3.pdf>
+- [kontroll] [CSB] CSB GP1272, datablad: <https://csb-battery.com/wp-content/uploads/2026/03/CSB-Datasheet-GP1272-01312026.pdf>
+- [kontroll] [DISC] Discover, AGM-batteriers prestanda och temperatur: <https://assets.discoverbattery.com/documents/07_sla/885_product_literature/standard-agm-battery-performance.pdf>
+- [kontroll] [BU-410] Battery University, laddning vid höga och låga temperaturer: <https://batteryuniversity.com/article/bu-410-charging-at-high-and-low-temperatures/>
+- [kontroll] [BU-802b] Battery University, förhöjd självurladdning: <https://batteryuniversity.com/article/bu-802b-what-does-elevated-self-discharge-do/>
 
 **Panel- och himmelsmodeller**
 

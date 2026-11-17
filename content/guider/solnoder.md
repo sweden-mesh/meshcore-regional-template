@@ -143,7 +143,12 @@ Väljer du en annan panel:
 ## Hur stort batteri
 
 Vill du räkna på en annan panel eller ett annat antal celler? Använd
-[solcellskalkylatorn](/wizard/solcell/): välj trädlinje och firmware, och dra i reglagen.
+[solcellskalkylatorn](/wizard/solcell/): välj trädlinje, kort och firmware, och dra i reglagen.
+
+Allt här gäller litiumjon, 18650-celler eller LiPo. LiFePO4 håller fler cykler och blysyra kan
+laddas i minusgrader, men LiFePO4 ligger under den spänning nRF52-korten startar på och behöver en
+annan laddare, och blysyra behöver ungefär två och en halv gånger så mycket batteri och väger
+mångdubbelt mer. Varför står i [metodbeskrivningen](/wizard/solcell/metod/#litiumjon).
 
 ### Efter batteriets kapacitet
 
