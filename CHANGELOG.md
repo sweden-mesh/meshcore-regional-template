@@ -4,6 +4,28 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.43.0 — 2026-11-17
+
+Copy and map behaviour.
+
+- **Test channel wording (B-302).** Every guide, wizard step and county text that sends a reader
+  to the region's test channel now says: test in `#test-<scope>` if the region has repeaters with
+  auto-reply firmware (linked to the firmware picker's auto-reply update), otherwise in the
+  standard `#test`. Changed: `wzc_6_text`, `lan_test_note`, `lan_net_text`, `ch_requires_ar`
+  ("Svar kräver repeatrar med auto-reply-firmware"), the county pages' Kom igång and
+  troubleshooting text (`assets/lan/`, which now get `.Picker`), and the guides etikett,
+  forsta-meddelandet, kanaler, companion and three troubleshooting pages. A region's own
+  `params.channels` note is its own to update.
+- **The auto-reply footnote on county pages (B-301).** In national mode the derived test channel
+  carries `autoreply = true`, so the county pages' channel box (and the shared pages' channel
+  table) shows "* Svar kräver repeatrar med auto-reply-firmware" with its firmware link.
+- **A warmer invitation (B-303).** `lan_data_link` reads "Vet du något om MeshCore i länet som
+  saknas här? Du kan enkelt bidra med mer information", `lan_footer_data` "Bidra med uppgifter
+  om ditt län" (English to match).
+- **"Utanför regionen" no longer re-zooms the map (B-304).** Switching it on, or opening with
+  `foreign=1`, leaves the camera alone; only the fit button frames what is shown. "Önskade
+  platser" still widens when switched on (`togglesWiden()` in camera.js, tested).
+
 ## v0.42.5 — 2026-11-17
 
 - **The "Ctrl + scroll" hint no longer dims the map** (operator). It is a small pill at the top
