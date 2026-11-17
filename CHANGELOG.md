@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.45.1 — 2026-11-17
+
+- **Sverige's list of every county's groups** is marked (`lan-all-groups`), so the national browser
+  check knows it names other counties on purpose. No change to regional output.
+
 ## v0.45.0 — 2026-11-17
 
 Regional output changes on purpose (COMPARE_BASE moves here).
