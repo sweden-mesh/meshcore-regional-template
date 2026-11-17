@@ -1,4 +1,4 @@
-{{- /* National mode, a county's front page: the county's own columns beside "Vad är MeshCore?",
+{{- /* National mode, a county's front page (and, since B-318, the Sverige front page): the county's own columns beside "Vad är MeshCore?",
   written from its data (plan Q6.1): the network and its region, the county's local pages, and its
   groups. Returns a list of HTML strings, each starting with an <h2>; empty elsewhere. */ -}}
 {{- $cols := slice -}}
@@ -28,5 +28,21 @@
   {{- end -}}
   {{- with site.Params.lanData }}{{ $comm = printf "%s<p>%s</p>" $comm (T "lan_data_link" (dict "URL" .) | markdownify) }}{{ end -}}
   {{- $cols = $cols | append $comm -}}
+{{- end -}}
+{{- if and site.Params.national .IsHome (not (partial "lan-page.html" .)) -}}
+  {{- /* Sverige, the national front page (B-318): the same three columns with national content. */ -}}
+  {{- $lanURL := "" }}{{ with site.GetPage "/lan" }}{{ $lanURL = .RelPermalink }}{{ end -}}
+  {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p>" (T "lan_net_title" (dict "Name" "Sverige")) (T "lan_se_net_text" (dict "URL" $lanURL) | markdownify)) -}}
+  {{- $links := slice -}}
+  {{- with site.GetPage "/lan" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .Title) }}{{ end -}}
+  {{- range $p := slice "/guider/regioner" "/guider/kanaler" "/guider/forsta-meddelandet" -}}
+    {{- with site.GetPage $p }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
+  {{- end -}}
+  {{- with $links }}{{ $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "lan_local_title" (dict "Short" "Sverige")) (T "lan_se_local_intro") (delimit . "")) }}{{ end -}}
+  {{- $items := slice }}{{ $seen := slice -}}
+  {{- range site.Params.chats }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end }}{{ end -}}
+  {{- range site.Params.links }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end }}{{ end -}}
+  {{- range partialCached "lan.html" . "lan" }}{{ $short := .short }}{{ range .groups }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a> <small>%s</small></li>" .url (.name | htmlEscape) ($short | htmlEscape)) }}{{ end }}{{ end }}{{ end -}}
+  {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "section_community") (T "lan_se_groups_intro") (delimit $items "")) -}}
 {{- end -}}
 {{- return $cols -}}

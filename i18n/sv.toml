@@ -1158,3 +1158,9 @@ other = "Testkanal för hela landet, med regionen (scope) `se`."
 other = "Repeatrarna svarar inte automatiskt här än: du ser andras tester och svar från människor. Vill du ha ett automatiskt svar, skriv `test` i ditt läns `#test-<region>` om länet har repeatrar med auto-svar, annars i den vanliga `#test`."
 [lan_se_channels]
 other = "Chattkanalerna skiljer sig mellan länen. [Välj ditt län]({{ .URL }}) så visas länets kanaler och testkanal här."
+[lan_se_net_text]
+other = "I hela landet används regionen (scope) `se`, och varje län har dessutom sin egen region. Testkanalen för hela landet är `#test-se`; repeatrarna svarar inte automatiskt där än. Kartan nedan visar repeatrarna och observatörerna som hörs i hela landet. [Välj ditt län]({{ .URL }}) för länets region och kanaler."
+[lan_se_local_intro]
+other = "Sidorna här gäller hela landet: hur regionerna hänger ihop, vilka kanaler som finns och hur du skickar ditt första meddelande."
+[lan_se_groups_intro]
+other = "Här finns de som använder MeshCore i hela landet, och de lokala grupperna i länen. Fråga om hjälp, hitta andra som bygger och hör vad som händer i nätet."
