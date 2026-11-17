@@ -60,7 +60,7 @@ export function fillTemplate(s, values) {
 // marked with its domain and is never a saved choice.
 export function modalModel(data, current) {
   const items = data.counties.map((c) => ({
-    v: c.scb, name: c.name, own: !!c.site, site: c.site || "",
+    v: c.scb, name: c.name, label: c.short || c.name, own: !!c.site, site: c.site || "",
     domain: c.site ? c.site.replace(/^https?:\/\/([^/]+).*$/, "$1") : "",
     current: c.scb === current,
   }));

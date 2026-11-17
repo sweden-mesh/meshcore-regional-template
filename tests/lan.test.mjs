@@ -46,10 +46,10 @@ test("groups are https links only; channel rows carry the county's scope", () =>
   assert.deepEqual(channelRows(countyFor(data, "09")), []);
 });
 test("the modal lists every county and Sverige, an own site marked by its domain", () => {
-  const d = { ...data, counties: [...data.counties, { scb: "06", name: "Jönköpings län", site: "https://meshcore-jkp.se/" }] };
+  const d = { ...data, counties: [...data.counties, { scb: "06", name: "Jönköpings län", short: "Jönköping", site: "https://meshcore-jkp.se/" }] };
   const m = modalModel(d, "09");
   assert.deepEqual(m.items.map((i) => i.v), ["08", "09", "06", "se"]);
-  assert.deepEqual(m.items.find((i) => i.v === "06"), { v: "06", name: "Jönköpings län", own: true, site: "https://meshcore-jkp.se/", domain: "meshcore-jkp.se", current: false });
+  assert.deepEqual(m.items.find((i) => i.v === "06"), { v: "06", name: "Jönköpings län", label: "Jönköping", own: true, site: "https://meshcore-jkp.se/", domain: "meshcore-jkp.se", current: false });
   assert.equal(m.items.find((i) => i.v === "09").current, true);
   assert.equal(m.items.at(-1).name, "Sverige (hela landet)");
   assert.equal(fillTemplate("{name} har en egen sida ({x})", { name: "Jönköpings län" }), "Jönköpings län har en egen sida ({x})");

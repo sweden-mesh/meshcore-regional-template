@@ -35,7 +35,7 @@ function showList(forced) {
   // (legend under it) and named in the button's tooltip; Sverige is its own button below the list.
   const button = (item) => {
     const b = el("button", { type: "button", "data-lan": item.v, "aria-current": item.current ? "true" : false,
-      ...(item.own && { title: `${t.own}: ${item.domain}` }) }, el("span", { class: "lan-modal-name", text: item.name }));
+      title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, el("span", { class: "lan-modal-name", text: item.label || item.name }));
     b.addEventListener("click", () => pick(item));
     return b;
   };

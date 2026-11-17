@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.45.2 — 2026-11-17
+
+- **County picker: short names** (anti-AI-design review 17). The buttons cut long county names
+  ("Södermanland…"); they now show the short name ("Södermanland", "Västra Götaland"), the full
+  name in the tooltip, and the rows no longer stretch to the map's height. National only.
+
 ## v0.45.1 — 2026-11-17
 
 - **Sverige's list of every county's groups** is marked (`lan-all-groups`), so the national browser
