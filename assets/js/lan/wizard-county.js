@@ -80,6 +80,10 @@ function selector() {
   });
   box.replaceChildren(el("label", { for: "lan-wizard-select", text: t.label }), sel, el("p", { class: "muted", text: t.why }), out);
   box.hidden = false;
+  // The solar calculator needs the county's sun data (B-319): hidden until one is chosen. Without
+  // script this never runs, so the calculator stays visible.
+  const solar = document.getElementById("solar-calc");
+  if (solar) solar.hidden = true;
 }
 
 // The picked position, read from the wizard's own status line ("Vald plats: 57.78, 14.16").

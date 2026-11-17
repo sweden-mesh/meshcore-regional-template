@@ -16,7 +16,7 @@
 {{- end -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}
 {{- $method := "" }}{{ with site.GetPage "/solcell-metod" }}{{ $method = .RelPermalink }}{{ end -}}
-{{- if site.Params.national }}{{ partial "lan-wizard.html" (dict "page" .Page "shapes" false) }}{{ end -}}
+{{- if site.Params.national }}{{ partial "lan-wizard.html" (dict "page" .Page "shapes" false "why" (T "sol_lan_why")) }}{{ end -}}
 <form class="wizard solar-calc" id="solar-calc" novalidate
       data-calc="{{ $calc | jsonify }}" data-own="{{ $own }}" data-notes="{{ $notes | jsonify }}" data-boards="{{ $boards | jsonify }}">
 
