@@ -7,7 +7,7 @@
      "fl_v_core-ar" "fl_v_core-ar_d" "fl_v_observer-ar" "fl_v_observer-ar_d" "fl_v_observer-arrc" "fl_v_observer-arrc_d" "fl_v_observer-rc" "fl_v_observer-rc_d"
      "dfu_timeout" "dfu_closed" "dfu_crc" "dfu_not_app" "dfu_incomplete" -}}
 {{- $t := dict }}{{ range $keys }}{{ $t = merge $t (dict . (T .)) }}{{ end -}}
-{{- $esptool := resources.Get "vendor/esptool-js-0.7.0/bundle.js" | fingerprint -}}
+{{- $esptool := resources.Get "lib/esptool-js-0.7.0/bundle.js" | fingerprint -}}
 {{- $wizard := "" }}{{ with site.GetPage "/wizard" }}{{ $wizard = .RelPermalink }}{{ end -}}
 <div class="alert alert-warning fl-official" role="note">
   <p class="alert-title">{{ partial "alert-icon.html" "warning" }}{{ T "fl_official_title" }}</p>

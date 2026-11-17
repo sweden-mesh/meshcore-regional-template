@@ -41,6 +41,6 @@ test("esp32.js is the firmware page's flasher.js but for the esptool URL", () =>
   const src = readFileSync(new URL("../assets/js/flasher/esp32.js", import.meta.url), "utf8");
   const back = src.replace(/\/\/ The vendored esptool-js bundle; the template passes its fingerprinted URL \(setEsptool\)\.\nlet ESPTOOL = "";\nexport function setEsptool\(url\)\{ ESPTOOL = url; \}/, "const ESPTOOL = './vendor/esptool-js-0.7.0/bundle.js';");
   assert.equal(createHash("sha256").update(back).digest("hex"), "85598e31151c7c57ca9cd3d39f683a9fc66e9712b796339ac632d95ecfe28ecd");
-  const bundle = readFileSync(new URL("../assets/vendor/esptool-js-0.7.0/bundle.js", import.meta.url));
+  const bundle = readFileSync(new URL("../assets/lib/esptool-js-0.7.0/bundle.js", import.meta.url));
   assert.equal(bundle.length, 313171);
 });
