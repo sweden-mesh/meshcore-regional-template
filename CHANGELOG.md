@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.46.0 — 2026-11-17
+
+Regional output changes on purpose (COMPARE_BASE moves here).
+
+- **Solar calculator: a generic board last in each family (B-322).** For a board not in the list:
+  the family's highest sourced load (nRF52 6/8.6 mA, ESP32 13.4 mA, Raspberry Pi 190 mA), marked
+  less certain, with its own pixel-art board; the method page names the figures.
+
 ## v0.45.2 — 2026-11-17
 
 - **County picker: short names** (anti-AI-design review 17). The buttons cut long county names
