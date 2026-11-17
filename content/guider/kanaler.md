@@ -46,8 +46,9 @@ området. Välj den minsta region som når dem kanalen är till för:
 
 ## Testa på rätt ställe
 
-Testmeddelanden kostar sändningstid för alla inom räckhåll. Testa i regionens testkanal
-{{< testchannel >}} eller i den allmänna `#test`, inte i chattkanalerna, och skicka inte fler test än du behöver. Repeatrar med auto-svar svarar på `test`
+Testmeddelanden kostar sändningstid för alla inom räckhåll. Har regionen repeatrar med
+[auto-svar]({{< param "firmware.picker" >}}#f=ar&install=update), testa i regionens testkanal {{< testchannel >}}, annars
+i den vanliga `#test`. Aldrig i chattkanalerna, och skicka inte fler test än du behöver. Repeatrar med auto-svar svarar på `test`
 i testkanalen, med en fördröjning, så att svaren inte krockar.
 
 Kommer inget svar? Se [Meddelanden kommer inte fram](../../felsokning/meddelanden-kommer-inte-fram/) och [Auto-svaret svarar inte i länets testkanal](../../felsokning/auto-svar-legacy/).

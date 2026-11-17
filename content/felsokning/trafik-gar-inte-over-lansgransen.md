@@ -31,4 +31,4 @@ get flood.max.unscoped
 
 ## Så vet du att det fungerar
 
-Ett `test` i grannlänets testkanal får svar från repeatrar på andra sidan gränsen.
+Ett `test` i grannlänets testkanal får svar från repeatrar med auto-svar på andra sidan gränsen.

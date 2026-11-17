@@ -30,11 +30,12 @@ stund: se [Jag hör inga repeatrar](../../felsokning/hor-inga-repeatrar/).
 
 ## 3. Testa i testkanalen
 
-Testa i {{< testchannel >}}, regionens egen testkanal, eller i den allmänna `#test`. Inte i
-chattkanalerna: där läser andra, och varje test kostar dem sändningstid.
+Har regionen repeatrar med [auto-svar]({{< param "firmware.picker" >}}#f=ar&install=update), testa i regionens egen
+testkanal {{< testchannel >}}. Annars använder du den vanliga `#test`. Inte i chattkanalerna: där
+läser andra, och varje test kostar dem sändningstid.
 
 1. Lägg till kanalen i appen med namnet, inklusive `#`.
-2. Skriv `test` i {{< testchannel >}} och skicka.
+2. Skriv `test` i testkanalen och skicka.
 3. Vänta. Repeatrar med [auto-svar](../firmware-lou/) svarar med vem som hörde dig och hur
    starkt. Svaren kommer utspridda under några minuter, för att de inte ska krocka med varandra.
 
@@ -64,7 +65,7 @@ Tystnad betyder sällan att något är fel. Oftast är det något av det här:
 
 - **Ingen var vaken.** Människor svarar inte i kanalen dygnet runt.
 - **Inget auto-svar inom räckhåll.** Bara repeatrar med auto-svar svarar på `test`, och alla
-  repeatrar har det inte.
+  repeatrar har det inte. Har regionen inga, testa i den vanliga `#test`.
 - **Svaret kom inte tillbaka.** Du når kanske en repeater som inte når dig, eller tvärtom: se
   [Jag hör andra, men de hör inte mig](../../felsokning/hor-andra-men-inte-mig/).
 - **Du skickade nyss.** Vänta några minuter innan du försöker igen.

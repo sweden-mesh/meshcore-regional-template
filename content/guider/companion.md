@@ -69,7 +69,8 @@ Dela den bara om du vill, och gärna avrundad.
 ## 6. Skicka en advert och testa
 
 1. Skicka en advert från appen, så att andra ser att du finns.
-2. Skriv `test` i regionens testkanal {{< testchannel >}}, eller i den allmänna `#test`. Inte i
+2. Skriv `test` i regionens testkanal {{< testchannel >}} om regionen har repeatrar med
+   [auto-svar]({{< param "firmware.picker" >}}#f=ar&install=update), annars i den vanliga `#test`. Inte i
    chattkanalerna. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig.
 
 Vad svaren betyder, och varför tystnad oftast är normalt: [Första meddelandet](../forsta-meddelandet/).

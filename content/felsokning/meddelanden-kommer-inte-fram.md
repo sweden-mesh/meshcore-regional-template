@@ -21,6 +21,7 @@ lastmod: 2026-11-16
 ## Åtgärda
 
 1. Skicka `test` i regionens testkanal. Repeatrar med auto-svar svarar och visar att du når ut.
+   Har regionen inga sådana repeatrar, prova den vanliga `#test`.
 2. Nollställ vägen till kontakten i appen (*Reset path*) och skicka igen.
 3. Kontrollera kanalens namn tecken för tecken, och att din app använder regionens scope.
 4. Flytta radion högre upp eller närmare ett fönster.

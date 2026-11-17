@@ -20,7 +20,8 @@ lastmod: 2026-11-16
 get tx
 ```
 
-Skicka `test` i regionens testkanal: kommer det svar når du ut.
+Skicka `test` i regionens testkanal, eller i den vanliga `#test` om regionen saknar repeatrar med
+auto-svar: kommer det svar når du ut.
 
 ## Åtgärda
 

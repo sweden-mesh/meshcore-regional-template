@@ -13,8 +13,9 @@ kan därför ta flera sekunders sändningstid över hela nätet.
 
 ## Vanor som hjälper
 
-**Testa i testkanalen.** Ett `test` i en chattkanal stör alla som läser den. Testa i regionens
-testkanal {{< testchannel >}}, där repeatrar med auto-svar svarar, eller i den allmänna `#test`.
+**Testa i testkanalen.** Ett `test` i en chattkanal stör alla som läser den. Har regionen repeatrar
+med [auto-svar]({{< param "firmware.picker" >}}#f=ar&install=update), testa i regionens testkanal {{< testchannel >}}. Annars
+använder du den vanliga `#test`.
 
 **Testa sparsamt.** Ett test räcker oftast. Vänta på svaren (de kommer med fördröjning, ibland
 flera minuter) innan du skickar nästa.

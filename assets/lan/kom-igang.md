@@ -25,7 +25,8 @@ i [Regioner](/guider/regioner/).
 
 {{"{{<"}} channels {{">}}"}}
 
-Hashtag-kanaler lägger du till i appen med namnet, inklusive `#`. Testa bara i `{{ .Test }}`, inte i
+Hashtag-kanaler lägger du till i appen med namnet, inklusive `#`. Har länet repeatrar med
+[auto-svar]({{ .Picker }}#f=ar&install=update), testa i `{{ .Test }}`, annars i den vanliga `#test`. Aldrig i
 en chattkanal: varje test kostar sändningstid för alla inom räckhåll. Mer om kanaler i
 [Kanaler i MeshCore](/guider/kanaler/).
 
@@ -44,7 +45,8 @@ en chattkanal: varje test kostar sändningstid för alla inom räckhåll. Mer om
 6. **Skriv `test` i `{{ .Test }}`.** Repeatrar med auto-svar svarar med en kort rapport om vem som
    hörde dig och hur starkt. Svaren kommer utspridda under ungefär två minuter, så vänta innan du
    skriver igen. Kommer inget svar, se
-   [Ingen svarar på test i {{ .Test }}]({{ .URL }}ingen-svar-pa-test/). Vad svaren betyder står i
+   [Ingen svarar på test i {{ .Test }}]({{ .URL }}ingen-svar-pa-test/). Finns inga repeatrar med
+   auto-svar i länet än, testa i den vanliga `#test` i stället. Vad svaren betyder står i
    [Första meddelandet](/guider/forsta-meddelandet/).
 7. **Säg hej**{{ with .Chat }} i `{{ . }}`{{ end }}{{ with .Groups }}, eller hos {{ range $i, $g := . }}{{ if $i }} eller {{ end }}[{{ $g.name }}]({{ $g.url }}){{ end }}{{ else }}{{ with .Chats }}, eller i {{ range $i, $g := . }}{{ if $i }} eller {{ end }}[{{ $g.name }}]({{ $g.url }}){{ end }}{{ end }}{{ end }}.
 
