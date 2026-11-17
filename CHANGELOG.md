@@ -4,6 +4,21 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.47.0 — 2026-11-17
+
+- **A regional site's county button opens the national county modal** (B-324, with
+  `params.regionSwitch.on`): the same map and county buttons as meshcoresverige.se, counties with a
+  site of their own tinted green, the site's own county marked. Every county is a link to its own site
+  (`data/county_sites.toml`) or its page on the national site, "Sverige (hela landet)" to the national
+  site; nothing is stored and the modal never opens by itself. One component (`lan/modal.js`, regional
+  mode from `region-island.html`); without JavaScript the popover list stays the chooser. The modal's
+  CSS moved from `national.css` to `lan-modal.css`, loaded in both modes. New text `lan_region_intro`.
+- **"Sverige (hela landet)" sits in the county buttons' column, centred under them** (B-325), on
+  meshcoresverige.se and in the regional modal; on a phone directly under the buttons.
+- **The Sverige view's Gemenskap column lists one community site per county** (B-326): the county
+  file's `community`, no longer every group, and never one of our own regional sites (a county's `site`).
+- Test: every repeater setup the wizard writes defines `eu` (B-323).
+
 ## v0.46.3 — 2026-11-17
 
 - Solar calculator, battery cell note: "men vi har inte hittat några mätvärden för den" instead of
