@@ -86,22 +86,24 @@ class C:
         im.resize((W*scale,H*scale),Image.NEAREST).save(path)
 
 def heltec(v4=False,fem=True):
+    """Heltec WiFi LoRa 32 V3/V4 as photographed: a long black board, 18 header pins per side, USB-C
+    at one end between the PRG and RST buttons, the OLED over most of the middle, and at the far end
+    the antenna plug, a small LED and two round mounting holes. V4 carries a white "V4" mark."""
     c=C()
-    c.board(4,8,54,24,'b','B','d')
-    c.pins(7,9,25); c.pins(7,30,25)            # header rows top & bottom
-    c.usbc(4,18,vertical=True)                  # USB-C on the left edge
-    c.oled(18,12,24,15)                         # 0.96" OLED
-    c.chip(45,13,6,6)                           # ESP32-S3
-    c.shield(45,21,7,6) if not v4 else c.shield(44,21,8,6)  # SX1262 module
-    c.ipex(54,12)                               # antenna connector
-    c.button(9,12); c.button(9,25)              # PRG / RST
-    c.led(13,13,'a')
+    c.board(4,8,56,24,'b','B','d')
+    c.pins(7,9,18,step=3); c.pins(7,30,18,step=3)    # 2 x 18 header pins
+    c.usbc(4,17,vertical=True)                      # USB-C at the left end
+    c.button(9,11); c.button(9,26)                  # PRG / RST beside it
+    c.oled(15,12,30,16)                             # 0.96" OLED, most of the board
+    for (hx,hy) in ((52,12),(52,25)):               # mounting holes at the far end
+        c.rect(hx,hy,4,4,'z'); c.rect(hx+1,hy+1,2,2,'k')
+    c.ipex(52,18)                                   # antenna plug
+    c.led(49,13,'a')
     if v4:
-        c.rect(53,22,4,5,'k'); c.rect(54,23,2,3,'M'); c.px(54,23,'S')  # FEM
-        c.rect(12,17,3,5,'e'); c.rect(13,18,1,3,'b')  # solar/battery JST
-        if not fem: c.px(55,25,'n')
+        c.rect(46,24,5,3,'e'); c.rect(47,25,1,1,'b'); c.rect(49,25,1,1,'b')   # white "V4" mark
+        if not fem: c.px(50,22,'n')                 # V4.3: FEM switched off (green dot)
     else:
-        c.rect(12,18,3,4,'e'); c.rect(13,19,1,2,'b')  # battery JST
+        c.rect(46,24,4,3,'e'); c.rect(47,25,2,1,'b')  # battery connector (SH1.25)
     return c
 
 def t096():
@@ -119,19 +121,27 @@ def t096():
     return c
 
 def rak():
+    """RAK WisBlock base with a RAK4631 core, as photographed: a black base board, gold round
+    mounting holes, white battery and solar plugs and USB-C at one end, the RAK4631 module with its
+    white label, and the sensor slots with their screw holes at the other end."""
     c=C()
-    c.board(3,6,58,30,'u','U','y')               # WisBlock base (RAK19007)
-    c.board(14,9,26,22,'b','B','d',round_=False) # RAK4631 core module
-    c.shield(16,11,22,18)
-    for i in range(18,36,4): c.px(i,15,'z')
-    c.ipex(41,10); c.ipex(41,15)                 # LoRa + BLE
-    c.usbc(3,17,vertical=True)
-    c.rect(44,26,6,4,'e'); c.rect(45,27,4,2,'b')  # battery
-    c.rect(52,26,5,4,'e'); c.rect(53,27,3,2,'b')  # solar
-    for k in range(4): c.rect(45+k*0,9+k*0,0,0,'k')
-    c.board(44,10,14,13,'y','u','y',round_=False) # empty sensor slot
-    c.rect(46,12,10,9,'d'); c.pins(47,16,5)
-    c.button(8,8); c.led(8,30,'n'); c.led(10,30,'u' if False else 'U')
+    c.board(3,7,58,28,'b','B','d')                  # WisBlock base, black
+    for (hx,hy) in ((5,9),(5,29),(55,9),(55,29)):   # gold mounting holes
+        c.rect(hx,hy,4,4,'G'); c.rect(hx+1,hy+1,2,2,'h')
+    c.usbc(3,18,vertical=True)                      # USB-C
+    c.rect(9,13,5,4,'e'); c.rect(10,14,3,2,'M')     # battery plug (white JST)
+    c.rect(9,24,5,4,'e'); c.rect(10,25,3,2,'M')     # solar plug
+    c.board(16,11,20,18,'d','b','k',round_=False)   # RAK4631 core module
+    c.rect(18,13,16,14,'z'); c.rect(19,14,14,12,'W') # its shield with the white label
+    for i in range(21,31):
+        if i%3: c.px(i,17,'L')
+    c.rect(21,20,3,3,'i'); c.rect(25,21,6,1,'l')    # blue RAK mark, text line
+    c.ipex(32,28)                                   # LoRa antenna plug
+    c.pins(17,9,9,step=2)                           # header row above the module
+    for (sx,sy) in ((39,10),(39,21)):               # two sensor slots with screw holes
+        c.rect(sx,sy,14,9,'k'); c.rect(sx+1,sy+1,12,7,'d')
+        c.rect(sx+2,sy+3,6,2,'c'); c.rect(sx+10,sy+3,2,2,'z')
+    c.led(15,31,'n'); c.led(17,31,'U')
     return c
 
 def xiao(esp=False):

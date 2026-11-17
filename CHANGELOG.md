@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.46.2 — 2026-11-17
+
+- **Heltec V3/V4 and RAK4631 in the solar calculator drawn after the real boards** (operator's
+  reference photos): Heltec with 2 × 18 header pins, PRG and RST beside the USB-C, the OLED over most
+  of the board, mounting holes and the antenna plug at the far end, a white "V4" mark on V4 (V4.3 with
+  a green dot); the WisBlock base black with gold mounting holes, white battery and solar plugs, the
+  RAK4631 module with its white label and two sensor slots.
+
 ## v0.46.1 — 2026-11-17
 
 - **The two Seeed XIAO boards in the solar calculator look like the real ones** (operator): a small
