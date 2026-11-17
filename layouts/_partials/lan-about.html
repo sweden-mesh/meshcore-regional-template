@@ -9,7 +9,7 @@
   {{- $net := printf "<h2>%s</h2><p>%s</p>" (T "lan_net_title" (dict "Name" $c.name)) (T "lan_net_text" (dict "Name" $c.name "Scope" $scope "Test" (printf "`%s`" $c.test)) | markdownify) -}}
   {{- if eq $c.decision "forslag" }}{{ $net = printf "%s<p>%s</p>" $net (T "lan_proposal_note" (dict "URL" "https://github.com/zombiefredrik/meshcore-se-regioner") | markdownify) }}{{ end -}}
   {{- with $c.text }}{{ $net = printf "%s<blockquote class=\"lan-text\"><p>%s</p>%s</blockquote>" $net (. | htmlEscape) (cond (ne ($c.text_by | default "") "") (printf "<p class=\"muted\">%s</p>" (T "lan_text_by" (dict "By" ($c.text_by | htmlEscape)))) "") }}{{ end -}}
-  {{- $net = printf "%s<p class=\"muted\">%s</p>" $net (T "lan_checked" (dict "Date" (time.Format "2006-01-02" $c.checked))) -}}
+  {{- $net = printf "%s<p class=\"lan-checked\">%s</p>" $net (T "lan_checked" (dict "Date" (time.Format "2006-01-02" $c.checked))) -}}
   {{- $cols = $cols | append $net -}}
   {{- $links := slice -}}
   {{- range $p := slice "kom-igang" "ingen-svar-pa-test" "fragor" -}}

@@ -1,6 +1,10 @@
 /* National mode only (params.national; loaded by head.html when it is on). */
 
 /* The "välj län" note on pages with county values: hidden once a county is chosen. */
+.lan-checked { font-size: .8rem; color: color-mix(in srgb, var(--muted) 85%, var(--bg)); }
+/* Light: less mixing, so the line keeps 4.5:1 on the tinted background (4.9:1 on #d6e8f3). */
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .lan-checked { color: color-mix(in srgb, var(--muted) 95%, var(--bg)); } }
+:root[data-theme="light"] .lan-checked { color: color-mix(in srgb, var(--muted) 95%, var(--bg)); }
 .lan-note { margin: 0 0 1.25rem; color: var(--muted); }
 html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
 
