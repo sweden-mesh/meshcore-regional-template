@@ -62,9 +62,9 @@ export function modalModel(data, current) {
   const items = data.counties.map((c) => ({
     v: c.scb, name: c.name, label: c.short || c.name, own: !!c.site, site: c.site || "",
     domain: c.site ? c.site.replace(/^https?:\/\/([^/]+).*$/, "$1") : "",
-    current: c.scb === current,
+    current: c.scb === current, href: c.href || "",
   }));
-  items.push({ v: "se", name: data.texts.sweden, own: false, site: "", domain: "", current: current === "se" });
+  items.push({ v: "se", name: data.texts.sweden, own: false, site: "", domain: "", current: current === "se", href: data.national || "" });
   return { items };
 }
 

@@ -1,0 +1,21 @@
+{{- /* Regional mode with params.regionSwitch.on (B-324): the national site's county modal
+  (lan/modal.js) in regional mode. Every county links to its own site where it has one
+  (data/county_sites.toml), else to its page on the national site; "Sverige" to the national
+  site. Plain JSON in a non-executing script element; without JavaScript the header's popover
+  list stays the chooser. */ -}}
+{{- $cs := hugo.Data.county_sites -}}
+{{- $nat := site.Params.regionSwitch.national | default $cs.national -}}
+{{- $base := printf "%s/" (strings.TrimSuffix "/" $nat) -}}
+{{- $counties := slice -}}
+{{- range $cs.lan -}}
+  {{- $counties = $counties | append (dict "scb" .scb "name" .short "short" .short "site" (.site | default "")
+        "href" (.site | default (printf "%s%s/" $base .slug))) -}}
+{{- end -}}
+{{- $geo := "" }}{{ with resources.Get "se-lan.geojson" | fingerprint }}{{ $geo = .RelPermalink }}{{ end -}}
+{{- $d := dict "mode" "regional" "here" (site.Params.region.scb | default "") "national" $nat "geo" $geo "counties" $counties
+      "texts" (dict "title" (T "lan_modal_title") "intro" (T "lan_region_intro" (dict "Site" (replaceRE `^https?://([^/]+).*$` "$1" $nat))) "sweden" (T "lan_sweden") "own" (T "lan_own_mark")
+      "ownLegend" (T "lan_own_legend") "close" (T "close") "list" (T "lan_modal_list")) -}}
+<script type="application/json" id="lan-data">{{ $d | jsonify | safeJS }}</script>
+{{- with resources.Get "js/lan/modal.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

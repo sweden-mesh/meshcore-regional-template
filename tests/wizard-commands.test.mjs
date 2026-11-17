@@ -25,6 +25,14 @@ test("every command verb exists in the firmware's CLI docs", () => {
   }
 });
 
+test("every repeater setup defines eu (B-323): county, Sverige, none, edge, off-grid", () => {
+  for (const v of [{}, { scope: "se" }, { scope: "" }, { extraScopes: ["se-ost"] }, { offgrid: true }, { offgrid: true, extraScopes: ["se-ost", "se-kal"] }]) {
+    const def = repeaterCommands({ ...base, ...v }).commands.filter((c) => c.startsWith("region def "));
+    assert.equal(def.length, 1, JSON.stringify(v));
+    assert.match(def[0], /^region def eu\|\* europe\|eu se( |$)/, JSON.stringify(v));
+  }
+});
+
 test("validation: name limits, ranges, password", () => {
   const codes = (s) => validateRepeater({ ...base, ...s }).errors.map((e) => `${e.field}:${e.code}`);
   assert.deepEqual(codes({ name: "" }), ["name:required"]);

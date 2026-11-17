@@ -18,6 +18,8 @@
   {{- end }}
   {{- if site.Params.national }}
   {{ partial "lan-island.html" . }}
+  {{- else if site.Params.regionSwitch.on }}
+  {{ partial "region-island.html" . }}
   {{- end }}
   {{ partial "hooks/body-end.html" . }}
 </body>

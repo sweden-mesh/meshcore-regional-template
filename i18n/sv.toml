@@ -1152,6 +1152,8 @@ other = "Linux med openHop Repeater. Ingen firmware att välja."
 other = "Kalkylatorn räknar på litiumjon (18650 eller LiPo). [Varför inte LiFePO4 eller blysyra]({{ .Method }}#litiumjon)."
 [lan_own_legend]
 other = "Grönt: länet har en egen MeshCore-sida."
+[lan_region_intro]
+other = "Varje län har en MeshCore-sida: sin egen där det finns en, annars länets sida på {{ .Site }}. Välj Sverige för hela landet."
 [lan_se_test_purpose]
 other = "Testkanal för hela landet, med regionen (scope) `se`."
 [lan_se_test_note]

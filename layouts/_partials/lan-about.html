@@ -42,7 +42,10 @@
   {{- $items := slice }}{{ $seen := slice -}}
   {{- range site.Params.chats }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end }}{{ end -}}
   {{- range site.Params.links }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end }}{{ end -}}
-  {{- range partialCached "lan.html" . "lan" }}{{ $short := .short }}{{ range .groups }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a> <small>%s</small></li>" .url (.name | htmlEscape) ($short | htmlEscape)) }}{{ end }}{{ end }}{{ end -}}
+  {{- /* One community site per county (B-326): the county file's `community`, never its other groups,
+         and never one of our own regional sites (a county's `site`). */ -}}
+  {{- $own := slice }}{{ range partialCached "lan.html" . "lan" }}{{ with .site }}{{ $own = $own | append . }}{{ end }}{{ end -}}
+  {{- range partialCached "lan.html" . "lan" }}{{ $short := .short }}{{ with .community }}{{ if and .url (not (in $seen .url)) (not (in $own .url)) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a> <small>%s</small></li>" .url (.name | htmlEscape) ($short | htmlEscape)) }}{{ end }}{{ end }}{{ end -}}
   {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul class=\"lan-all-groups\">%s</ul>" (T "section_community") (T "lan_se_groups_intro") (delimit $items "")) -}}
 {{- end -}}
 {{- return $cols -}}

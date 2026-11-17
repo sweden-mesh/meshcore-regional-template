@@ -3,9 +3,15 @@
 // a county (no county address, no ?lan=, nothing stored) unless storage is blocked; otherwise
 // opened by the header's county button. A county with its own site is never saved: picking it
 // shows a choice between going there and picking another county.
+// Regional mode (B-324, #lan-data with mode "regional"): the same modal behind a regional site's
+// county button. Every choice is a link (its own site, or its page on the national site), nothing
+// is stored, and the modal never opens by itself.
 import { modalModel, fillTemplate, geoToPaths } from "./lan.js";
 
-const lan = window.meshcoreLan;
+const island = document.getElementById("lan-data");
+const regionalData = island && !window.meshcoreLan ? JSON.parse(island.textContent) : null;
+const regional = !!(regionalData && regionalData.mode === "regional");
+const lan = regional ? { data: regionalData, get: () => regionalData.here } : window.meshcoreLan;
 const root = document.documentElement;
 
 function el(tag, attrs = {}, ...kids) {
@@ -34,6 +40,8 @@ function showList(forced) {
   // One line per button (B-315): the name only. A county with its own site is tinted on the map
   // (legend under it) and named in the button's tooltip; Sverige is its own button below the list.
   const button = (item) => {
+    if (regional) return el("a", { href: item.href, "aria-current": item.current ? "page" : false,
+      title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, el("span", { class: "lan-modal-name", text: item.label || item.name }));
     const b = el("button", { type: "button", "data-lan": item.v, "aria-current": item.current ? "true" : false,
       title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, el("span", { class: "lan-modal-name", text: item.label || item.name }));
     b.addEventListener("click", () => pick(item));
@@ -47,8 +55,10 @@ function showList(forced) {
   const head = el("h2", { id: "lan-modal-title", tabindex: "-1", text: t.title });
   const mapCol = el("div", { class: "lan-modal-mapcol" }, el("div", { class: "lan-modal-map", "data-lan-map": "" }),
     el("p", { class: "lan-modal-legend" }, el("span", { class: "lan-modal-swatch", "aria-hidden": "true" }), t.ownLegend || ""));
-  const body = [head, el("p", { id: "lan-modal-intro", text: t.intro }), el("div", { class: "lan-modal-body" }, mapCol, list)];
-  if (all) body.push(all);
+  // The county buttons and, centred under them, Sverige share one column beside the map (B-325).
+  const pickCol = el("div", { class: "lan-modal-pick" }, list);
+  if (all) pickCol.append(all);
+  const body = [head, el("p", { id: "lan-modal-intro", text: t.intro }), el("div", { class: "lan-modal-body" }, mapCol, pickCol)];
   if (!forced) {
     const close = el("button", { type: "button", class: "lan-modal-close", "aria-label": t.close, text: "×" });
     close.addEventListener("click", () => dialog.close());
@@ -96,6 +106,7 @@ function showOwn(item) {
 }
 
 function pick(item) {
+  if (regional) { if (item.href) location.assign(item.href); return; }
   if (item.own) { showOwn(item); return; }
   dialog.dataset.forced = "0";
   dialog.close();
@@ -111,7 +122,14 @@ export function open(forced) {
   head.focus();
 }
 
-if (lan) {
+if (regional) {
+  // The header button opens the modal; its popover list is the chooser without JavaScript only.
+  for (const b of document.querySelectorAll("[data-lan-open]")) {
+    b.removeAttribute("popovertarget"); b.removeAttribute("aria-controls");
+    b.setAttribute("aria-haspopup", "dialog");
+    b.addEventListener("click", (e) => { e.preventDefault(); open(false); });
+  }
+} else if (lan) {
   window.meshcoreLan.open = open;
   for (const a of document.querySelectorAll("[data-lan-open]")) {
     a.addEventListener("click", (e) => { e.preventDefault(); open(false); });

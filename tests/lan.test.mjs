@@ -49,10 +49,19 @@ test("the modal lists every county and Sverige, an own site marked by its domain
   const d = { ...data, counties: [...data.counties, { scb: "06", name: "Jönköpings län", short: "Jönköping", site: "https://meshcore-jkp.se/" }] };
   const m = modalModel(d, "09");
   assert.deepEqual(m.items.map((i) => i.v), ["08", "09", "06", "se"]);
-  assert.deepEqual(m.items.find((i) => i.v === "06"), { v: "06", name: "Jönköpings län", label: "Jönköping", own: true, site: "https://meshcore-jkp.se/", domain: "meshcore-jkp.se", current: false });
+  assert.deepEqual(m.items.find((i) => i.v === "06"), { v: "06", name: "Jönköpings län", label: "Jönköping", own: true, site: "https://meshcore-jkp.se/", domain: "meshcore-jkp.se", current: false, href: "" });
   assert.equal(m.items.find((i) => i.v === "09").current, true);
   assert.equal(m.items.at(-1).name, "Sverige (hela landet)");
   assert.equal(fillTemplate("{name} har en egen sida ({x})", { name: "Jönköpings län" }), "Jönköpings län har en egen sida ({x})");
+});
+test("regional mode (B-324): every county and Sverige carry their link, the site's own county is current", () => {
+  const d = { ...data, national: "https://meshcoresverige.se/", counties: [
+    { scb: "06", name: "Jönköping", short: "Jönköping", site: "https://meshcore-jkp.se/", href: "https://meshcore-jkp.se/" },
+    { scb: "08", name: "Kalmar", short: "Kalmar", site: "", href: "https://meshcoresverige.se/kalmar/" }] };
+  const m = modalModel(d, "06");
+  assert.deepEqual(m.items.map((i) => [i.v, i.href, i.own, i.current]), [
+    ["06", "https://meshcore-jkp.se/", true, true], ["08", "https://meshcoresverige.se/kalmar/", false, false],
+    ["se", "https://meshcoresverige.se/", false, false]]);
 });
 test("the modal map: one path per county, inside the view box", async () => {
   const { readFileSync } = await import("node:fs");

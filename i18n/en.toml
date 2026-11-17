@@ -1156,6 +1156,8 @@ other = "Linux with openHop Repeater. No firmware to choose."
 other = "The calculator assumes Li-ion (18650 or LiPo). [Why not LiFePO4 or lead-acid]({{ .Method }}#litiumjon)."
 [lan_own_legend]
 other = "Green: the county has a MeshCore site of its own."
+[lan_region_intro]
+other = "Every county has a MeshCore page: its own site where there is one, otherwise the county's page on {{ .Site }}. Choose Sweden for the whole country."
 [lan_se_test_purpose]
 other = "Test channel for the whole country, with the region (scope) `se`."
 [lan_se_test_note]
