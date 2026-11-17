@@ -1,9 +1,9 @@
 // Neighbour links: which repeaters hear each other directly. Beacon derives the edges from
 // adverts, zero-hop receptions, TRACE hops and observers' neighbour reports.
 //
-// Every link is coloured by how often it is heard (operator 2026-11-15): the counts come from
-// /nodes/{id}/neighbors, one request per node, fetched after the map is drawn (linkCountLoader)
-// and kept for the session. Until a link's count arrives, or when its requests fail, it stays
+// Every link is coloured by how often it is heard (operator 2026-11-15): the counts come from a
+// links file (params.beacon.links) or else /nodes/{id}/neighbors, one request per node on the
+// map, fetched after the map is drawn (linkCountLoader) and kept for the session. Until a link's count arrives, or when its requests fail, it stays
 // neutral grey. With a node selected, its links keep their colours and every other link turns
 // a faint grey.
 import { validPosition } from "./nodes.js";
@@ -88,39 +88,107 @@ export function allLinks(nodes, counts = new Map(), { selected = null, focus = f
   return { type: "FeatureCollection", features };
 }
 
-// Fetches /nodes/{id}/neighbors for the nodes that have neighbours: `concurrency` at a time,
-// `staggerMs` between starts, and a node again only after `maxAgeMs`. onUpdate runs after each
+// A links file's pairs (Beacon's /static/neighbors.json: { generatedAt, pairs: [{ nodeId,
+// neighborId, iata, observationCount, lastSeen }] }, directed, as /nodes/{id}/neighbors returns
+// them) -> one { count, lastSeen } per link, merged as mergeLinkCounts does: both directions and
+// every IATA summed. Only pairs of `iatas` count (all of them when empty).
+export function mergePairCounts(pairs, iatas = []) {
+  const out = new Map(), only = iatas.length ? new Set(iatas) : null;
+  for (const r of pairs || []) {
+    if (!r?.nodeId || !r?.neighborId || r.nodeId === r.neighborId || (only && !only.has(r.iata))) continue;
+    const k = linkKey(r.nodeId, r.neighborId), cur = out.get(k) || { count: 0, lastSeen: 0 };
+    cur.count += r.observationCount || 0;
+    cur.lastSeen = Math.max(cur.lastSeen, r.lastSeen || 0);
+    out.set(k, cur);
+  }
+  return out;
+}
+
+// A `bulk` for linkCountLoader: the pairs of the links file `links`, or of one file per IATA when
+// it holds {iata}; there a 404 is an area with no links yet. If those fail otherwise, the file
+// `all` (one for every IATA) instead.
+export function linksFile({ links, all = "", iatas = [], fetch = globalThis.fetch.bind(globalThis) }) {
+  const get = async (u, area) => {
+    const r = await fetch(u, { priority: "low" });
+    if (area && r.status === 404) return [];
+    if (!r.ok) throw new Error(`links ${r.status}`);
+    return (await r.json())?.pairs || [];
+  };
+  return async () => {
+    if (!links.includes("{iata}")) return get(links, false);
+    try {
+      return (await Promise.all(iatas.map((i) => get(links.replaceAll("{iata}", encodeURIComponent(i)), true)))).flat();
+    } catch (err) {
+      if (!all) throw err;
+      return get(all, false);
+    }
+  };
+}
+
+const neighbourSig = (n) => (n.neighborIds || []).slice().sort().join(",");
+
+// The link counts behind the colours (B-309). With `bulk` (a function returning the pairs of one
+// or more links files; those of `iatas` count) one request per sweep, at most every `bulkMaxAgeMs`; if it
+// fails, that sweep falls back to the nodes. Without it, /nodes/{id}/neighbors for the nodes with neighbours that sweep(nodes,
+// { want }) asks for (main.js: the ones on the map, in or near the view): `concurrency` at a
+// time, `staggerMs` between starts. A node is fetched again after `maxAgeMs`, or after
+// `changedAgeMs` if its neighbour list changed. `stop()` true (tab hidden) ends a sweep early; the
+// nodes it skipped stay due. A sweep asked for while one runs follows it. onUpdate runs after each
 // arrival. Failures leave the node out (its links stay neutral) until the next sweep.
-export function linkCountLoader(client, { concurrency = 3, staggerMs = 150, maxAgeMs = 600e3, onUpdate = () => {},
+export function linkCountLoader(client, { concurrency = 3, staggerMs = 150, maxAgeMs = 1800e3, changedAgeMs = 600e3,
+  bulk = null, bulkMaxAgeMs = 600e3, iatas = [], onUpdate = () => {}, stop = () => false,
   sleep = (ms) => new Promise((r) => setTimeout(r, ms)), clock = () => Date.now() } = {}) {
-  const rows = new Map(), fetchedAt = new Map();
-  let running = null, requests = 0;
-  async function sweep(nodes) {
-    if (running) return running;
+  const rows = new Map(), fetchedAt = new Map(), sigs = new Map();
+  let running = null, queued = null, requests = 0, pairs = null, bulkAt = -Infinity;
+  async function sweepNodes(nodes, want) {
     const now = clock();
-    const due = (nodes || []).filter((n) => validPosition(n) && (n.neighborIds?.length || n.knownNeighborCount > 0)
-      && !(now - (fetchedAt.get(n.id) ?? -Infinity) < maxAgeMs)).map((n) => n.id);
-    if (!due.length) return;
-    for (const id of due) fetchedAt.set(id, now);
-    running = (async () => {
-      let next = 0;
-      const worker = async (w) => {
-        await sleep(w * staggerMs);
-        while (next < due.length) {
-          const id = due[next++];
-          requests++;
-          try {
-            rows.set(id, await client.get(`/nodes/${encodeURIComponent(id)}/neighbors`, undefined, { priority: "low" }) || []);
-            onUpdate();
-          } catch { /* stays neutral */ }
-          if (next < due.length) await sleep(staggerMs);
-        }
-      };
-      await Promise.all(Array.from({ length: Math.min(concurrency, due.length) }, (_, w) => worker(w)));
-    })().finally(() => { running = null; });
+    const due = (nodes || []).filter((n) => {
+      if (!validPosition(n) || !(n.neighborIds?.length || n.knownNeighborCount > 0) || !want(n)) return false;
+      const age = now - (fetchedAt.get(n.id) ?? -Infinity);
+      return age >= maxAgeMs || (sigs.get(n.id) !== neighbourSig(n) && age >= changedAgeMs);
+    });
+    for (const n of due) { fetchedAt.set(n.id, now); sigs.set(n.id, neighbourSig(n)); }
+    let next = 0;
+    const worker = async (w) => {
+      await sleep(w * staggerMs);
+      while (next < due.length) {
+        if (stop()) { for (const n of due.slice(next)) fetchedAt.delete(n.id); next = due.length; return; }
+        const id = due[next++].id;
+        requests++;
+        try {
+          rows.set(id, await client.get(`/nodes/${encodeURIComponent(id)}/neighbors`, undefined, { priority: "low" }) || []);
+          onUpdate();
+        } catch { /* stays neutral */ }
+        if (next < due.length) await sleep(staggerMs);
+      }
+    };
+    await Promise.all(Array.from({ length: Math.min(concurrency, due.length) }, (_, w) => worker(w)));
+  }
+  async function run(nodes, want) {
+    if (bulk) {
+      if (clock() - bulkAt < bulkMaxAgeMs) return;
+      requests++;
+      bulkAt = clock(); // a failed file is tried again after bulkMaxAgeMs too
+      try { pairs = await bulk(); onUpdate(); return; } catch { /* fall back to the nodes */ }
+    }
+    await sweepNodes(nodes, want);
+  }
+  function sweep(nodes, { want = () => true } = {}) {
+    if (running) { queued = [nodes, want]; return running; }
+    running = run(nodes, want).finally(() => {
+      running = null;
+      if (queued) { const [n, w] = queued; queued = null; sweep(n, { want: w }); }
+    });
     return running;
   }
-  return { sweep, rows, counts: () => mergeLinkCounts(rows), requests: () => requests };
+  const counts = () => {
+    const own = mergeLinkCounts(rows);
+    if (!pairs) return own;
+    const out = mergePairCounts(pairs, iatas);
+    for (const [k, v] of own) if (!out.has(k)) out.set(k, v);
+    return out;
+  };
+  return { sweep, rows, counts, requests: () => requests, idle: () => (running || Promise.resolve()) };
 }
 
 export function addLinkLayer(map, data, id = "links") {

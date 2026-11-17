@@ -8,7 +8,7 @@ import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
-import { allLinks, addLinkLayer, linkCountLoader } from "./neighbours.js";
+import { allLinks, addLinkLayer, linkCountLoader, linksFile } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
@@ -78,8 +78,10 @@ async function start() {
   const popup = attachPopups(map, maplibregl, client, sites);
   const empty = { type: "FeatureCollection", features: [] };
   // Every link coloured by how often it is heard (toggle); with a node clicked (its popup open)
-  // the other links turn faint grey. The counts arrive one node at a time after the first draw,
-  // at most every 10 minutes per node (neighbours.js).
+  // the other links turn faint grey. The counts come from the links file (data-links) in one
+  // request, or else one node at a time after the first draw: only nodes on the map and in or
+  // near the view, again after 30 minutes (10 if its neighbours changed), never while the tab is
+  // hidden or the links are off (neighbours.js, B-309).
   // In national mode the county page adds its own "outside the county" test (el.isOutside, set by
   // lan/map-county.js), so links to nodes outside the county hide with them too (B-299).
   const linkNodes = () => (el.isOutside
@@ -87,10 +89,23 @@ async function start() {
     : state.nodes);
   const drawLinks = () => addLinkLayer(map, state.showLinks
     ? allLinks(linkNodes(), linkCounts.counts(), { selected: state.selected, focus: state.focus, foreign: state.showForeign }) : empty);
-  el.redrawLinks = drawLinks; // lan/map-county.js redraws once its test is in place
+  el.redrawLinks = () => { drawLinks(); sweepLinks(); }; // lan/map-county.js, once its test is in place
   let linkTimer = 0;
-  const linkCounts = linkCountLoader(client, { onUpdate: () => { if (!linkTimer) linkTimer = setTimeout(() => { linkTimer = 0; drawLinks(); }, 400); } });
+  const bulk = ds.links ? linksFile({ links: ds.links, all: ds.linksAll, iatas }) : null;
+  const linkCounts = linkCountLoader(client, { bulk, iatas, stop: () => document.hidden,
+    onUpdate: () => { if (!linkTimer) linkTimer = setTimeout(() => { linkTimer = 0; drawLinks(); }, 400); } });
   el.linkCounts = linkCounts; // for browser tests
+  // The nodes worth a count: on the map (outside the region only while shown) and in the view
+  // widened by half its size each way. A county page waits for its county test (map-county.js).
+  const sweepLinks = () => {
+    if (!live || !state.nodes.length || !state.showLinks || document.hidden || (ds.lanScb && !el.isOutside)) return;
+    const b = map.getBounds(), dx = (b.getEast() - b.getWest()) / 2, dy = (b.getNorth() - b.getSouth()) / 2;
+    const near = (n) => n.lng >= b.getWest() - dx && n.lng <= b.getEast() + dx && n.lat >= b.getSouth() - dy && n.lat <= b.getNorth() + dy;
+    linkCounts.sweep(linkNodes(), { want: (n) => (state.showForeign || !n.possiblyForeign) && near(n) });
+  };
+  let sweepTimer = 0;
+  map.on("moveend", () => { clearTimeout(sweepTimer); sweepTimer = setTimeout(sweepLinks, 500); });
+  document.addEventListener("visibilitychange", sweepLinks);
   for (const id of ["node-points", "node-pills"]) map.on("click", id, (e) => { state.selected = e.features[0].properties.id; drawLinks(); });
   popup.on("close", () => { state.selected = null; drawLinks(); });
   map.addControl(new MapPanel({
@@ -113,8 +128,8 @@ async function start() {
       ...extraLegend,
     ],
     onToggle: (key, on) => {
-      if (key === "links") { state.showLinks = on; drawLinks(); }
-      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); drawLinks(); }
+      if (key === "links") { state.showLinks = on; drawLinks(); sweepLinks(); }
+      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); drawLinks(); sweepLinks(); }
       if (key === "live") { state.live = on; state.onLive?.(on); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); drawLinks(); }
       extraToggle(key, on);
@@ -131,7 +146,7 @@ async function start() {
     addBorderLayers(map, state.borders);
     setForeignVisible(map, state.showForeign);
     drawLinks();
-    if (live) linkCounts.sweep(state.nodes);
+    sweepLinks();
     state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
     applyFocus(map, state);
   };

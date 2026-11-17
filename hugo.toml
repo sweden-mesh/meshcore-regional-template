@@ -93,6 +93,11 @@
 
 [params.beacon]
   url = "https://beacon.meshcoresverige.se"   # the shared national Beacon by default; a region may run its own; "" = no live data
+  # links = "…"              # the map's link colours from one file (Beacon's /static/neighbors.json shape), or one per IATA
+                             # when it holds {iata} (a 404 there = no links yet); "" = one request per node instead. Unset:
+                             # <url>/static/neighbors/{iata}.json, then <url>/static/neighbors.json, when url is in links_from.
+                             # A failed file falls back to the per-node requests.
+  links_from = ["https://beacon.meshcoresverige.se", "https://beacon.meshcore-jkp.se"]
 
 # MeshMapper (README "MeshMapper coverage"): a link to the region's map, and its measured coverage as a map
 # layer, fetched at build time when coverage = true and HUGO_MESHMAPPER_KEY is set (the key decides the region).

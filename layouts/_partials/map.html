@@ -25,6 +25,7 @@
        data-style-light="{{ $m.style_light }}"
        data-style-dark="{{ $m.style_dark }}"
        data-beacon="{{ site.Params.beacon.url }}"
+       {{ with partial "beacon-links.html" . }}{{ with .links }}data-links="{{ . }}"{{ end }}{{ with .all }} data-links-all="{{ . }}"{{ end }}{{ end }}
        data-iatas="{{ $r.iatas | jsonify }}"
        data-center="{{ $r.center | jsonify }}"
        data-zoom="{{ $r.zoom }}"

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { allLinks, mergeLinkCounts, linkRole, rampColour, linkStyle, linkCountLoader, linkKey } from "../assets/js/map/neighbours.js";
+import { allLinks, mergeLinkCounts, mergePairCounts, linkRole, rampColour, linkStyle, linkCountLoader, linkKey, linksFile } from "../assets/js/map/neighbours.js";
 import { palette } from "../assets/js/map/palette.js";
 
 const rows = JSON.parse(readFileSync(new URL("./data/neighbors.json", import.meta.url)));
@@ -102,8 +102,95 @@ test("linkCountLoader: at most `concurrency` at once, one request per node with 
   assert.equal(calls.length, 6);
   assert.ok(peak <= 3);
   assert.equal(l.rows.size, 5); // the failed one stays out
-  t = 5 * 60e3; await l.sweep(nodes);
-  assert.equal(calls.length, 6); // within 10 minutes: nothing again
   t = 11 * 60e3; await l.sweep(nodes);
+  assert.equal(calls.length, 6); // within 30 minutes and unchanged: nothing again
+  t = 31 * 60e3; await l.sweep(nodes);
   assert.equal(calls.length, 12);
+});
+
+test("linkCountLoader: only the nodes `want` asks for; a changed neighbour list is due after 10 minutes", async () => {
+  const calls = [];
+  const client = { get: async (path) => { calls.push(path); return []; } };
+  let t = 0;
+  const l = linkCountLoader(client, { staggerMs: 0, clock: () => t, sleep: async () => {} });
+  const nodes = [{ id: "in", lat: 57, lng: 14, neighborIds: ["x"] }, { id: "out", lat: 57, lng: 14, neighborIds: ["x"], possiblyForeign: true }];
+  const want = (n) => !n.possiblyForeign;
+  await l.sweep(nodes, { want });
+  assert.deepEqual(calls, ["/nodes/in/neighbors"]);
+  const changed = [{ ...nodes[0], neighborIds: ["x", "y"] }, nodes[1]];
+  t = 5 * 60e3; await l.sweep(changed, { want });
+  assert.equal(calls.length, 1); // changed, but within 10 minutes
+  t = 11 * 60e3; await l.sweep(changed, { want });
+  assert.equal(calls.length, 2);
+  t = 12 * 60e3; await l.sweep(changed); // "Utanför regionen" switched on: the other one now
+  assert.deepEqual(calls.slice(2), ["/nodes/out/neighbors"]);
+});
+
+test("linkCountLoader: stop() ends a sweep early, the skipped nodes stay due; a sweep asked for while one runs follows it", async () => {
+  const calls = [];
+  let hidden = false;
+  const client = { get: async (path) => { calls.push(path); if (calls.length === 2) hidden = true; return []; } };
+  const l = linkCountLoader(client, { concurrency: 1, staggerMs: 0, clock: () => 0, stop: () => hidden, sleep: async () => {} });
+  const nodes = ["a", "b", "c", "d"].map((id) => ({ id, lat: 57, lng: 14, neighborIds: ["z"] }));
+  await l.sweep(nodes);
+  assert.equal(calls.length, 2);
+  hidden = false;
+  const first = l.sweep(nodes.slice(0, 3));
+  l.sweep(nodes); // queued behind the first
+  await first; await l.idle();
+  assert.deepEqual(calls.slice(2).sort(), ["/nodes/c/neighbors", "/nodes/d/neighbors"]);
+});
+
+const PAIRS = { generatedAt: 1, pairs: [
+  { nodeId: "a", neighborId: "b", iata: "JKG", observationCount: 203, snr: null, firstSeen: 1, lastSeen: 1000 },
+  { nodeId: "b", neighborId: "a", iata: "JKG", observationCount: 5, snr: 3, firstSeen: 1, lastSeen: 2000 },
+  { nodeId: "a", neighborId: "c", iata: "HAD", observationCount: 7, snr: 1, firstSeen: 1, lastSeen: 3000 },
+  { nodeId: "a", neighborId: "a", iata: "JKG", observationCount: 9, lastSeen: 1 },
+] };
+
+test("mergePairCounts: directed pairs summed per link like mergeLinkCounts, filtered by IATA", () => {
+  const all = mergePairCounts(PAIRS.pairs);
+  assert.deepEqual(all.get(linkKey("a", "b")), { count: 208, lastSeen: 2000 });
+  assert.equal(all.size, 2);
+  const jkg = mergePairCounts(PAIRS.pairs, ["JKG"]);
+  assert.equal(jkg.size, 1);
+  // The same as the per-node rows would give.
+  const rows = new Map([["a", [{ id: "b", observationCount: 203, lastSeen: 1000 }]], ["b", [{ id: "a", observationCount: 5, lastSeen: 2000 }]]]);
+  assert.deepEqual(mergeLinkCounts(rows).get(linkKey("a", "b")), jkg.get(linkKey("a", "b")));
+});
+
+test("linkCountLoader with a bulk file: one request per sweep and no per-node requests; a failed file falls back", async () => {
+  const calls = [];
+  const client = { get: async (path) => { calls.push(path); return [{ id: "z", observationCount: 1 }]; } };
+  let t = 0, fail = false, files = 0;
+  const bulk = async () => { files++; if (fail) throw new Error("404"); return PAIRS.pairs; };
+  const l = linkCountLoader(client, { bulk, iatas: ["JKG"], staggerMs: 0, clock: () => t, sleep: async () => {} });
+  const nodes = ["a", "b", "c"].map((id) => ({ id, lat: 57, lng: 14, neighborIds: ["z"] }));
+  await l.sweep(nodes);
+  assert.equal(files, 1);
+  assert.equal(calls.length, 0);
+  assert.equal(l.counts().get(linkKey("a", "b")).count, 208);
+  assert.equal(l.counts().has(linkKey("a", "c")), false); // another IATA
+  t = 5 * 60e3; await l.sweep(nodes);
+  assert.equal(files, 1); // within 10 minutes
+  fail = true; t = 11 * 60e3; await l.sweep(nodes);
+  assert.equal(files, 2);
+  assert.equal(calls.length, 3); // the file failed: per node this time
+  assert.equal(l.counts().get(linkKey("a", "b")).count, 208); // the last good file still counts
+});
+
+test("linksFile: one file per IATA, a 404 is no links, other failures read the national file", async () => {
+  const asked = [];
+  const answers = { "/n/JKG.json": { status: 200, body: { iata: "JKG", pairs: [PAIRS.pairs[0]] } }, "/n/GVX.json": { status: 404 },
+    "/n.json": { status: 200, body: PAIRS }, "/n/BAD.json": { status: 500 } };
+  const fetch = async (u) => { asked.push(u); const a = answers[u] || { status: 404 };
+    return { ok: a.status === 200, status: a.status, json: async () => a.body }; };
+  assert.equal((await linksFile({ links: "/n/{iata}.json", all: "/n.json", iatas: ["JKG", "GVX"], fetch })()).length, 1);
+  assert.deepEqual(asked, ["/n/JKG.json", "/n/GVX.json"]);
+  asked.length = 0;
+  assert.equal((await linksFile({ links: "/n/{iata}.json", all: "/n.json", iatas: ["JKG", "BAD"], fetch })()).length, 4);
+  assert.ok(asked.includes("/n.json"));
+  await assert.rejects(linksFile({ links: "/n/{iata}.json", iatas: ["BAD"], fetch })());
+  await assert.rejects(linksFile({ links: "/missing.json", fetch })()); // a plain file's 404 is a failure
+  assert.equal((await linksFile({ links: "/n.json", fetch })()).length, 4);
 });

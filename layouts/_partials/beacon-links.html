@@ -1,0 +1,13 @@
+{{- /* The links files for the map's link colours (B-309). links: params.beacon.links when the site
+  sets it ("" = none, per node instead), else <beacon.url>/static/neighbors/{iata}.json for the
+  Beacons in params.beacon.links_from, which serve it. all: for those, the national file
+  <beacon.url>/static/neighbors.json, read if the per-area files fail. */ -}}
+{{- $b := site.Params.beacon -}}
+{{- $out := dict "links" "" "all" "" -}}
+{{- $base := strings.TrimSuffix "/" ($b.url | default "") -}}
+{{- if isset $b "links" -}}
+  {{- $out = dict "links" $b.links "all" "" -}}
+{{- else if and $base (in ($b.links_from | default slice) $base) -}}
+  {{- $out = dict "links" (printf "%s/static/neighbors/{iata}.json" $base) "all" (printf "%s/static/neighbors.json" $base) -}}
+{{- end -}}
+{{- return $out -}}
