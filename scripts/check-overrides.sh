@@ -73,10 +73,11 @@ check sitemap.xml '/guider/flasha-firmware/</loc><lastmod>20' "dates: the sitema
 check guider/index.html '<h2 class=guide-group>Kom igång' "guides: the hub groups its guides under H2s"
 # NEWCOMER-3 (2026-11-16): the three audience ways in on the home page, the new guides in their
 # groups, the region's own test channel derived from the scope, and companions sent to the web flasher.
-check index.html '<nav class=audience aria-label="Var börjar du?">' "newcomer: the home page has the audience list"
-check index.html '<strong>Ny här?</strong> <a href=/guider/skaffa-hardvara/>' "newcomer: Ny här? leads to the device ladder"
-check index.html '<strong>Radioamatör?</strong> <a href=/guider/for-radioamatorer/>' "newcomer: Radioamatör? leads to the radio amateurs' guide"
-check index.html '<strong>Vill du bygga?</strong> <a href=/guider/bygg-en-repeater/>' "newcomer: Vill du bygga? leads to the build guide"
+check index.html '<section class=card id=kom-igang><p class=eyebrow>01</p><h2>Kom igång</h2><nav class=ways aria-label="Var börjar du?">' "newcomer: the three ways in open the Kom igång card (B-311)"
+if grep -q 'class=hero-actions.*Ny här' "$P/index.html"; then echo "FAIL the ways in are still under the hero buttons"; fail=1; else echo "ok   the hero holds only its buttons (B-311)"; fi
+check index.html '<strong>Ny här?</strong><a href=/guider/skaffa-hardvara/>' "newcomer: Ny här? leads to the device ladder"
+check index.html '<strong>Radioamatör?</strong><a href=/guider/for-radioamatorer/>' "newcomer: Radioamatör? leads to the radio amateurs' guide"
+check index.html '<strong>Vill du bygga?</strong><a href=/guider/bygg-en-repeater/>' "newcomer: Vill du bygga? leads to the build guide"
 check guider/index.html '<h2 class=guide-group>Radio och antenner' "newcomer: the hub has the Radio och antenner group"
 for g in forsta-meddelandet for-radioamatorer antenner bygg-en-repeater; do check guider/index.html "href=/guider/$g/" "newcomer: the hub lists $g"; done
 check guider/forsta-meddelandet/index.html '>#test-se-xxx</code>' "newcomer: the test channel is #test-<scope> from the region"
