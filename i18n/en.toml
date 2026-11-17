@@ -906,8 +906,12 @@ other = "Written by {{ .By }}"
 other = "The county's details were last checked on {{ .Date }}."
 [lan_local_title]
 other = "In {{ .Short }}"
+[lan_local_intro]
+other = "These pages are written for {{ .Name }}, with the county's region and test channel already filled in."
 [lan_no_groups]
 other = "No group for the county is listed here yet. Questions about MeshCore in the whole country go to {{ .Chats }}."
+[lan_groups_intro]
+other = "This is where people using MeshCore in {{ .Short }} meet. Ask for help, find others who build and hear what is happening in the network."
 [lan_data_link]
 other = "Know something about MeshCore in the county that is missing here? [You can easily add more information]({{ .URL }})."
 [lan_home_desc]

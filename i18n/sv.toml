@@ -902,8 +902,12 @@ other = "Skrivet av {{ .By }}"
 other = "Länets uppgifter kontrollerades senast {{ .Date }}."
 [lan_local_title]
 other = "I {{ .Short }}"
+[lan_local_intro]
+other = "Sidorna här gäller {{ .Name }} särskilt, med länets region och testkanal redan ifyllda."
 [lan_no_groups]
 other = "Ingen grupp för länet finns med här än. Frågor om MeshCore i hela landet tas i {{ .Chats }}."
+[lan_groups_intro]
+other = "Här finns de som använder MeshCore i {{ .Short }}. Fråga om hjälp, hitta andra som bygger och hör vad som händer i nätet."
 [lan_data_link]
 other = "Vet du något om MeshCore i länet som saknas här? [Du kan enkelt bidra med mer information]({{ .URL }})."
 [lan_home_desc]
