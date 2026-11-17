@@ -107,6 +107,14 @@ källa finns inte med; en firmware utan siffra för kortet går inte att välja.
 | Seeed XIAO ESP32-S3 + Wio-SX1262 | 7 mA (7,1) ² | – | [S3], [S5] | låg |
 | Raspberry Pi Zero 2 W + SX1262-HAT | 190 mA (190), ingen firmware att välja | | [S6]–[S14], härlett nedan | medel |
 
+**Annat kort** (B-322) står sist i varje familj för ett kort som inte finns i listan. Det räknas med
+familjens högsta källbelagda ström, så att batteriet aldrig blir för litet, och är alltid märkt som
+osäkrare:
+
+- **Annat nRF52-kort:** 6 mA med EasySkyMesh (RAK4631) och 8,6 mA med officiell firmware (Heltec T096).
+- **Annat ESP32-kort:** 13,4 mA med båda (Heltec V4 med förstärkaren på).
+- **Annan Raspberry Pi:** 190 mA, som Pi Zero 2 W; större modeller drar mer.
+
 ¹ Ingen PPK2-mätning finns; siffran är övre delen av det spann en multimeter visade (operatörens
 beslut 2026-11-17), alltså försiktigt hög. ² Läget `powersaving on` utan mottagningscykling, den
 enda publicerade siffran; försiktig. En multimeter visar ett spann, inte ett medelvärde, och bara

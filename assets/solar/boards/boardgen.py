@@ -167,6 +167,25 @@ def pizero():
     c.led(12,15,'r'); c.led(14,15,'n'); c.button(11,18)
     return c
 
+QMARK = ["0111110", "1100011", "0000011", "0001110", "0011000", "0000000", "0011000"]
+def qmark(c, x, y, col='e'):
+    for j, row in enumerate(QMARK):
+        for i, v in enumerate(row):
+            if v == '1': c.px(x + i, y + j, col)
+
+def generic(kind):
+    """A board not listed (B-322): the family's shape, plain, with a question mark."""
+    if kind == 'nrf52':
+        c = C(); c.board(8, 8, 48, 24, 'b', 'B', 'd'); c.usbc(8, 18, vertical=True)
+        c.shield(34, 12, 14, 14); c.ipex(50, 11); qmark(c, 18, 13)
+    elif kind == 'esp32':
+        c = C(); c.board(4, 8, 54, 24, 'b', 'B', 'd'); c.pins(7, 9, 25); c.pins(7, 30, 25)
+        c.usbc(4, 18, vertical=True); c.chip(40, 14, 7, 7); c.shield(48, 14, 6, 6); c.ipex(54, 11); qmark(c, 20, 14)
+    else:
+        c = C(); c.board(2, 10, 60, 26, 'v', 'V', 'w'); c.board(6, 4, 50, 20, 'u', 'U', 'y', round_=False)
+        c.pins(9, 6, 22); c.shield(34, 11, 10, 9); qmark(c, 18, 11)
+    return c
+
 boards = {
  'heltec-v3': (heltec(), 'Heltec V3'),
  'heltec-v4': (heltec(v4=True), 'Heltec V4 (FEM på)'),
@@ -176,12 +195,15 @@ boards = {
  'xiao-nrf52840': (xiao(), 'XIAO nRF52840 med Wio-SX1262'),
  'xiao-esp32s3': (xiao(esp=True), 'XIAO ESP32-S3 med Wio-SX1262'),
  'pi-zero-2w': (pizero(), 'Raspberry Pi Zero 2 W med LoRa-HAT'),
+ 'generic-nrf52': (generic('nrf52'), 'Annat nRF52-kort'),
+ 'generic-esp32': (generic('esp32'), 'Annat ESP32-kort'),
+ 'generic-pi': (generic('pi'), 'Annan Raspberry Pi'),
 }
 os.makedirs(OUT,exist_ok=True)
 for k,(c,t) in boards.items():
     open(f'{OUT}/{k}.svg','w').write(c.svg(t)); c.png(f'{OUT}/{k}.png')
 # contact sheet
 ims=[Image.open(f'{OUT}/{k}.png') for k in boards]
-sheet=Image.new('RGBA',(ims[0].width*2+30, (ims[0].height+10)*4),(240,240,236,255))
+sheet=Image.new('RGBA',(ims[0].width*2+30, (ims[0].height+10)*((len(ims)+1)//2)),(240,240,236,255))
 for i,im in enumerate(ims): sheet.paste(im,((i%2)*(im.width+30),(i//2)*(im.height+10)),im)
 sheet.save(f'{OUT}/_sheet.png'); print('ok', len(boards))

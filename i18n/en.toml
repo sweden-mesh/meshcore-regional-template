@@ -1178,3 +1178,9 @@ other = "No results."
 other = "{n} results."
 [search_missing]
 other = "The search index is missing."
+[sol_hint_generic-nrf52]
+other = "An nRF52 board not in the list: calculated with the highest measured current among the nRF52 boards, so the battery is never too small."
+[sol_hint_generic-esp32]
+other = "An ESP32 board not in the list: calculated with the highest measured current among the ESP32 boards (Heltec V4 with the amplifier on)."
+[sol_hint_generic-pi]
+other = "Another Raspberry Pi: calculated as the Pi Zero 2 W, the only one with a derived figure. Larger models draw more."

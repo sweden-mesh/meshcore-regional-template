@@ -59,3 +59,26 @@
   family = "Raspberry Pi"
   img = "pi-zero-2w"
   any = { ma = 190.0, grid = "190", src = "S6" }
+
+# A board not listed (B-322, operator 2026-11-17): last in each family, with the family's highest
+# sourced load on the grid, so the battery is never too small; always marked less certain.
+[[board]]
+  key = "generic-nrf52"
+  name = "Annat nRF52-kort"
+  family = "nRF52"
+  img = "generic-nrf52"
+  esm = { ma = 6.0, grid = "6", src = "RAK4631", low = true }
+  official = { ma = 8.6, grid = "8.6", src = "Heltec T096", low = true }
+[[board]]
+  key = "generic-esp32"
+  name = "Annat ESP32-kort"
+  family = "ESP32"
+  img = "generic-esp32"
+  esm = { ma = 13.4, grid = "13.4", src = "Heltec V4", low = true }
+  official = { ma = 13.4, grid = "13.4", src = "Heltec V4", low = true }
+[[board]]
+  key = "generic-pi"
+  name = "Annan Raspberry Pi"
+  family = "Raspberry Pi"
+  img = "generic-pi"
+  any = { ma = 190.0, grid = "190", src = "Pi Zero 2 W", low = true }
