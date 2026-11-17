@@ -4,6 +4,38 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.45.0 — 2026-11-17
+
+Regional output changes on purpose (COMPARE_BASE moves here).
+
+- **Landowners (B-305).** `/markagare/`, "Till dig som äger platsen": what is put up, power and
+  cost, the radio in plain numbers, ownership and insurance, access and removal; linked both ways
+  with Bli nodvärd and from the footer; prints on one A4 (a print stylesheet for every page).
+- **Community site beside Se kartan (B-306).** National county files take `community = {name,
+  url}`; a regional site sets `params.community.hero = true` (off by default). The hero's secondary
+  buttons get a visible thin border.
+- **Front page.** The three ways in open the Kom igång card (B-311); county list columns open with
+  a sentence (B-307); the checked-date line smaller and fainter (B-308).
+- **Region selector (B-312).** `params.regionSwitch.on` (off by default): a county button in the
+  header, every county from `data/county_sites.toml` (own site, else its national page).
+- **County picker (B-315).** Own-site counties green on the map with a legend (Jönköping was grey),
+  one-line buttons, Sverige as its own button.
+- **Sverige (B-316, B-318).** The channels card stays with `#test-se` (no auto-reply promised yet),
+  and the three text columns get national content.
+- **Footer (B-317).** Each community link once; a county's groups were listed twice.
+- **Map.** One `/nodes` request for statistics and map (B-310); live traffic no longer lights up
+  hidden out-of-region nodes (B-313); a transmitting repeater's links flash white (B-314).
+- **Solar.** Board list with pixel-art boards on a load grid, one data file per county, Pi Zero
+  limits only while chosen, method page board table and sources (B-291); Li-ion only, explained
+  (B-295); prebuilt solar repeaters in one data file and a box (B-296); the national solar page
+  explains the county and waits for one (B-319).
+- **Search (B-321).** A scope filter on every page; search shows common, national and the
+  visitor's region. `searchScope` / `searchPair` in front matter.
+- **Site flasher (B-298), off by default.** `params.firmware.flash`, `flashIndex`; `/flasha/` with
+  ESP32 (esptool-js) and nRF52 serial DFU, official-first box, Update by default. Not to be turned
+  on before the bench tests.
+- **Guides.** No colon in a guide title; Etikett is "Sändningstid är gemensam" (B-320).
+
 ## v0.44.0 — 2026-11-17
 
 - **The map's link colours in one request (B-309).** The counts behind the link colours came from

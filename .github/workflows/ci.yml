@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.169.0
-      COMPARE_BASE: v0.44.0
+      COMPARE_BASE: v0.45.0
     steps:
       - uses: actions/checkout@v4
         with:
