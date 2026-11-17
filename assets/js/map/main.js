@@ -1,7 +1,7 @@
 // Map island entry point. Settings come from #map's data attributes, written
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
-import { nodesBounds, frameNodes, widenToFit, fitItems, fitTo } from "./camera.js";
+import { nodesBounds, frameNodes, widenToFit, togglesWiden, fitItems, fitTo } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom, withSeeded } from "./nodes.js";
 import { attachPopups } from "./popup.js";
@@ -43,9 +43,10 @@ async function start() {
   const extraToggles = [...covToggles, ...(want ? [{ key: "want", label: ds.wantedLabel || "Önskade platser", on: want.on }] : [])];
   const extraLegend = [...covLegend, ...(want ? wantedLegend() : [])];
   const extraToggle = (key, on) => { covToggle(key, on); if (key === "want") want.set(on); };
-  // Switching on "Önskade platser" or "Utanför regionen" widens the view once, so every object
-  // shown (nodes, wanted places; not the border) fits; switching off leaves the view alone. So
-  // does opening with want=1 or foreign=1, unless the URL also gives a view.
+  // Switching on "Önskade platser" widens the view once, so every object shown (nodes, wanted
+  // places; not the border) fits; switching off leaves the view alone. So does opening with
+  // want=1, unless the URL also gives a view. "Utanför regionen" never moves the camera (B-304):
+  // only the fit button does.
   const wantBox = want ? wantedBounds(places) : null;
   if (!ds.beacon) {
     if (want) map.addControl(fitControl(() => fitItems([], false, want.on ? wantBox : null)), "top-right");
@@ -117,12 +118,12 @@ async function start() {
       if (key === "live") { state.live = on; state.onLive?.(on); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); drawLinks(); }
       extraToggle(key, on);
-      if ((key === "foreign" || key === "want") && on) widenToFit(map, shown());
+      if (togglesWiden(key, on)) widenToFit(map, shown());
       saveUrl();
     },
   }), "top-left");
   // The objects shown: the nodes (foreign ones while on) and the wanted places while on, never the
-  // region's border (B-289). The fit button frames them; a toggle's widening takes them in.
+  // region's border (B-289). The fit button frames them; the "want" toggle's widening takes them in.
   const shown = () => fitItems(state.nodes, state.showForeign, want?.on ? wantBox : null);
   map.addControl(fitControl(shown), "top-right");
   const draw = () => {
@@ -166,7 +167,7 @@ async function start() {
   const ready = () => {
     draw();
     if (!frameNodes(map, nodesBounds(state.nodes))) frameBorders(map, state.borders);
-    if (!url.view && ((url.want && want?.on) || url.foreign === true)) widenToFit(map, shown(), { animate: false });
+    if (!url.view && url.want && want?.on) widenToFit(map, shown(), { animate: false });
   };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
   if (live) startLive(map, ds, client, iatas, state, draw);

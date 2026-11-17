@@ -90,6 +90,11 @@ function fitPad(map, padding) {
 }
 const calm = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Which map toggles widen the view when switched on (B-304): only "Önskade platser". "Utanför
+// regionen" shows or hides nodes and leaves the camera alone; the fit button frames what is shown.
+export function togglesWiden(key, on) {
+  return key === "want" && !!on;
+}
 export function widenToFit(map, items, { padding = FIT_PADDING, animate = true } = {}) {
   if (!items) return false;
   const c = map.getContainer();

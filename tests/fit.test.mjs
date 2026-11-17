@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { nodePoints, pointsBounds, expandBounds, needsWiden, widenToFit } from "../assets/js/map/camera.js";
+import { nodePoints, pointsBounds, expandBounds, needsWiden, widenToFit, togglesWiden } from "../assets/js/map/camera.js";
 import { wantedBounds } from "../assets/js/map/wanted.js";
 
 const view = [[14.0, 57.7], [14.3, 57.85]]; // zoomed in on Jönköping
@@ -120,4 +120,13 @@ test("the toggle widening does nothing when the objects already fit", () => {
   const m = fakeMap(14.0, 57.6);
   assert.equal(widenToFit(m, fitItems(nodes, false, null)), false);
   assert.equal(m.calls.length, 0);
+});
+
+// B-304: "Utanför regionen" never moves the camera; only "Önskade platser" widens when switched on.
+test("only the wanted-places toggle widens, and only when switched on", () => {
+  assert.equal(togglesWiden("want", true), true);
+  assert.equal(togglesWiden("want", false), false);
+  assert.equal(togglesWiden("foreign", true), false);
+  assert.equal(togglesWiden("foreign", false), false);
+  assert.equal(togglesWiden("links", true), false);
 });

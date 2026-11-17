@@ -290,8 +290,8 @@ shown: the nodes, the foreign ones while "Utanför regionen" is on, and the want
 while "Önskade platser" is on. Not the region's border, and coverage squares do not count. It
 zooms in as well as out (to zoom 12 at most), padded as the first framing, animated unless the
 visitor asks for reduced motion. Without Beacon it is there when the region has wanted places. Switching on
-"Önskade platser" or "Utanför regionen" widens the view to the same objects when they reach past
-its edge, but never zooms in.
+"Önskade platser" widens the view to the same objects when they reach past its edge, but never
+zooms in. "Utanför regionen" never moves the camera: only the button does.
 
 ## Links on the map
 
