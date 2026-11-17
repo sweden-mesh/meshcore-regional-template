@@ -739,7 +739,7 @@ other = "cells"
 [sol_cap]
 other = "Capacity per cell (mAh)"
 [sol_cap_help]
-other = "Biltema's cell (art. 84-1378) is labelled 3000 mAh, but nobody has measured it. Cheap cells with the same label gave about half in a field test. If you have measured yours, enter the value."
+other = "Biltema's cell (art. 84-1378) is labelled 3000 mAh, but we have found no measurements of it. Cheap cells with the same label gave about half in a field test. If you have measured yours, enter the value."
 [sol_result]
 other = "With a {W} W panel, {N} cells ({MAH} mAh) are needed for the worst winter in five, sized to the pessimistic case, snow on the panel and {M} % margin. Expected need with the same margin: {EXP} mAh."
 [sol_w_summer]

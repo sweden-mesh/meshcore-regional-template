@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.46.3 — 2026-11-17
+
+- Solar calculator, battery cell note: "men vi har inte hittat några mätvärden för den" instead of
+  "men ingen har mätt den" (operator); English to match.
+
 ## v0.46.2 — 2026-11-17
 
 - **Heltec V3/V4 and RAK4631 in the solar calculator drawn after the real boards** (operator's
