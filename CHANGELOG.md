@@ -4,6 +4,21 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.44.0 — 2026-11-17
+
+- **The map's link colours in one request (B-309).** The counts behind the link colours came from
+  `/nodes/{id}/neighbors`, one request per node with neighbours, again every 10 minutes: 35
+  requests per page load on meshcore-jkp.se and 307 on a county page (Halland) on
+  meshcoresverige.se, against Beacon's 600 per minute per address. Now they come from Beacon's
+  neighbour files: `<beacon.url>/static/neighbors/{iata}.json`, one request per IATA (a 404 is an
+  area with no links yet), and the national `<beacon.url>/static/neighbors.json` if those fail.
+  Measured: 1 request per page load on both. New params: `beacon.links` (a file URL, `{iata}` for
+  one per IATA, `""` for none) and `beacon.links_from` (the Beacons that serve the files; by
+  default the national Beacon and beacon.meshcore-jkp.se).
+- **Without a file, fewer per-node requests.** Only nodes on the map (outside the region only
+  while "Utanför regionen" is on) and in or near the view; a node again after 30 minutes, or 10
+  if its neighbour list changed; never while the tab is hidden or the links are off.
+
 ## v0.43.2 — 2026-11-17
 
 - **The shared national Beacon is the default** (`params.beacon.url` =
