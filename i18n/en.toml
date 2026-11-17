@@ -940,16 +940,6 @@ other = "own site"
 other = "region"
 [lan_sweden]
 other = "Sweden (the whole country)"
-[lan_own_title]
-other = "{{ .Name }} has its own site"
-[lan_own_desc]
-other = "MeshCore in {{ .Name }} has its own site, with the county's map, channels and guides."
-[lan_own_text]
-other = "MeshCore in {{ .Name }} has its own site, which shows the county's map, channels and settings. This site does not show the county, so its details live in one place."
-[lan_own_go]
-other = "Go to {{ .Site }}"
-[lan_own_other]
-other = "Choose another county"
 [lan_n_name]
 other = "your county"
 [lan_n_scope]

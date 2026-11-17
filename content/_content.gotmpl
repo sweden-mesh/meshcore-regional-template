@@ -1,6 +1,7 @@
 {{- /*
   National mode only (params.national): a front page for every county without a site of its own,
-  at /<slug>/ (plan §6.2.2, §6.8). Nothing is added on a regional site.
+  at /<slug>/ (plan §6.2.2, §6.8). A county with its own site gets no page: its address redirects
+  there (_redirects, layouts/lan/list.html; B-327). Nothing is added on a regional site.
 */ -}}
 {{- /* The site flasher (B-298): one page, only on a site that turns it on. */ -}}
 {{- if site.Params.firmware.flash -}}
@@ -15,15 +16,6 @@
   {{- $.AddPage (dict "path" "lan" "kind" "page" "type" "lan" "layout" "list" "title" (T "lan_list_title") "description" (T "lan_list_desc")
         "params" (dict "description" (T "lan_list_desc")) "content" (dict "mediaType" "text/markdown" "value" "")) -}}
   {{- range $all -}}
-    {{- if .site -}}
-      {{- /* A county with its own site (Q7.2): a small page that says so, with two choices; never an
-             automatic redirect. Not indexed, not in the sitemap. */ -}}
-      {{- $.AddPage (dict "path" .slug "kind" "page" "type" "lan" "layout" "elsewhere"
-            "title" (T "lan_own_title" (dict "Name" .name))
-            "description" (T "lan_own_desc" (dict "Name" .name))
-            "params" (dict "lan" .scb "noindex" true "description" (T "lan_own_desc" (dict "Name" .name)))
-            "content" (dict "mediaType" "text/markdown" "value" "")) -}}
-    {{- end -}}
     {{- if not .site -}}
       {{- $.AddPage (dict
         "path" .slug

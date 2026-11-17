@@ -2,7 +2,7 @@
 // crawlers and visitors without JavaScript never see it. Forced on a visit where nothing has chosen
 // a county (no county address, no ?lan=, nothing stored) unless storage is blocked; otherwise
 // opened by the header's county button. A county with its own site is never saved: picking it
-// shows a choice between going there and picking another county.
+// goes straight to that site (B-327).
 // Regional mode (B-324, #lan-data with mode "regional"): the same modal behind a regional site's
 // county button. Every choice is a link (its own site, or its page on the national site), nothing
 // is stored, and the modal never opens by itself.
@@ -95,19 +95,9 @@ function drawMap(slot, model) {
   });
 }
 
-function showOwn(item) {
-  const t = lan.data.texts;
-  const head = el("h2", { id: "lan-modal-title", tabindex: "-1", text: fillTemplate(t.ownTitle, { name: item.name }) });
-  const go = el("a", { class: "button ext", href: item.site, target: "_blank", rel: "noopener", text: fillTemplate(t.ownGo, { site: item.domain }) });
-  const other = el("button", { type: "button", class: "button button-secondary", text: t.ownOther });
-  other.addEventListener("click", () => showList(dialog.dataset.forced === "1").focus());
-  dialog.replaceChildren(head, el("p", { id: "lan-modal-intro", text: fillTemplate(t.ownText, { name: item.name }) }), el("p", { class: "hero-actions" }, go, other));
-  head.focus();
-}
-
 function pick(item) {
   if (regional) { if (item.href) location.assign(item.href); return; }
-  if (item.own) { showOwn(item); return; }
+  if (item.own) { location.assign(item.site); return; }
   dialog.dataset.forced = "0";
   dialog.close();
   lan.set(item.v);
@@ -134,7 +124,7 @@ if (regional) {
   for (const a of document.querySelectorAll("[data-lan-open]")) {
     a.addEventListener("click", (e) => { e.preventDefault(); open(false); });
   }
-  // /lan/ is the chooser itself and works as plain links; an own-site page offers its two choices.
-  const quiet = document.querySelector(".lan-elsewhere") || location.pathname.replace(/\/$/, "").endsWith("/lan");
+  // /lan/ is the chooser itself and works as plain links.
+  const quiet = location.pathname.replace(/\/$/, "").endsWith("/lan");
   if (!root.getAttribute("data-lan") && root.getAttribute("data-lan-store") !== "0" && !quiet) open(true);
 }

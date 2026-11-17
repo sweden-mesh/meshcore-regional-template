@@ -37,7 +37,7 @@ check index.html "svarar inte automatiskt här än" "Sverige: #test-se is not pr
 if grep -q 'class=ch-ar' "$P/index.html"; then echo "FAIL Sverige: an auto-reply footnote on #test-se"; fail=1; else echo "ok   Sverige: no auto-reply footnote (B-316)"; fi
 check skåne/index.html "Rikschatten" "county page: no groups, the national chats stand in"
 check sitemap.xml "/sk%C3%A5ne/</loc>" "county page: in the sitemap, address with åäö"
-if grep -q "id=karta" "$P/jönköping/index.html" || [ -e "$P/jönköping/kom-igang" ]; then echo "FAIL county page: a county with its own site got a front page"; fail=1; else echo "ok   county page: none for a county with its own site"; fi
+if grep -qs "id=karta" "$P/jönköping/index.html" || [ -e "$P/jönköping/kom-igang" ]; then echo "FAIL county page: a county with its own site got a front page"; fail=1; else echo "ok   county page: none for a county with its own site"; fi
 # The county's local pages (Q7.7), modelled on meshcore-jkp.se's four.
 check kalmar/kom-igang/index.html "<h1>Kom igång med MeshCore i Kalmar</h1>" "local: Kom igång has the county's title"
 check kalmar/kom-igang/index.html "Lägg till kanalerna</strong> <code class=nobreak>#kalmar-exempel</code> och <code class=nobreak>#test-se08</code>" "local: Kom igång lists the county's channels and test channel"
@@ -55,9 +55,9 @@ check sitemap.xml "/kalmar/fragor/</loc>" "local: the local pages are in the sit
 check lan/index.html 'href=/kalmar/ data-lan-pick=08>Kalmar län</a>' "lan: /lan/ links a county page"
 check lan/index.html 'href=https://example.org/egen-sida/ class=ext target=_blank rel=noopener>Jönköpings län</a> <span class=muted>egen sida: example.org' "lan: /lan/ links an own site, marked"
 check lan/index.html 'data-lan-pick=se>Sverige (hela landet)' "lan: /lan/ offers Sverige"
-check jönköping/index.html 'href=https://example.org/egen-sida/ target=_blank rel=noopener data-lan-away>Gå till example.org' "own site: the county's address offers its site"
-check jönköping/index.html 'href=/lan/>Välj ett annat län' "own site: and another county"
-check jönköping/index.html 'name=robots content="noindex, follow"' "own site: the page is not indexed"
+if [ -e "$P/jönköping/index.html" ]; then echo "FAIL own site: the county's address got a page (B-327: it redirects)"; fail=1; else echo "ok   own site: no page at the county's address"; fi
+check _redirects '^/j%C3%B6nk%C3%B6ping/ https://example.org/egen-sida/ 302$' "redirects: an own-site county's address answers 302 to its site"
+check _redirects '^/jonkoping/\* https://example.org/egen-sida/ 302$' "redirects: and the address without åäö, and below it"
 if grep -q "j%C3%B6nk" "$P/sitemap.xml"; then echo "FAIL own site: in the sitemap"; fail=1; else echo "ok   own site: not in the sitemap"; fi
 check _redirects '^/skane/ /sk%C3%A5ne/ 301$' "redirects: the address without åäö answers 301"
 check _redirects '^/skane/\* /sk%C3%A5ne/:splat 301$' "redirects: and its local pages"
@@ -66,7 +66,6 @@ if grep -q "^/kalmar/" "$P/_redirects"; then echo "FAIL redirects: a name withou
 check index.html 'localStorage.getItem("lan")' "prepaint: the script is in the head"
 check index.html '<html [^>]*data-lan-page>' "prepaint: a shared page names no county"
 check kalmar/index.html '<html [^>]*data-lan-page=08>' "prepaint: a county page names its county"
-check jönköping/index.html '<html [^>]*data-lan-page>' "prepaint: an own-site county's page is not saved as the choice"
 # The data island and the apply script (§6.2.2, §6.2.3); behaviour in tests/lan.test.mjs and a browser.
 check guider/regioner/index.html '<script type=application/json id=lan-data>{"counties":\[' "island: every page carries the county data"
 check guider/regioner/index.html 'src=/js/lan/apply' "island: and the apply script"
@@ -98,7 +97,7 @@ check kalmar/index.html '<span data-r=label>Kalmar</span>' "header: a county pag
 # The county modal (M6) is drawn by script only: no dialog in the HTML; its behaviour is checked in a browser.
 if grep -q '<dialog' "$P/guider/regioner/index.html"; then echo "FAIL modal: a dialog is in the HTML"; fail=1; else echo "ok   modal: not in the HTML (crawlers and no-JS never see it)"; fi
 check guider/regioner/index.html 'src=/js/lan/modal' "modal: the script is loaded"
-check lan/pages.json '{"08":"/kalmar/","12":"/sk%C3%A5ne/"}' "function: /lan/pages.json maps each county with a page (not an own-site one)"
+check lan/pages.json '{"06":"https://example.org/egen-sida/","08":"/kalmar/","12":"/sk%C3%A5ne/"}' "function: /lan/pages.json maps each county to its page, an own-site one to its site (B-327)"
 # Wanted places (Q6.6): a county page shows its own; the Sverige map every county's, named.
 check kalmar/index.html 'data-wanted=.*"name":"Exempelberget","note":"högt läge mot havet"' "wanted: a county page's map has its places"
 check index.html 'data-wanted=.*"name":"Exempelberget","note":"Kalmar: högt läge mot havet"' "wanted: the Sverige map has every county's, with the county's name"

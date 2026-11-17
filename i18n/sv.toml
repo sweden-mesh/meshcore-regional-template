@@ -936,16 +936,6 @@ other = "egen sida"
 other = "region"
 [lan_sweden]
 other = "Sverige (hela landet)"
-[lan_own_title]
-other = "{{ .Name }} har en egen sida"
-[lan_own_desc]
-other = "MeshCore i {{ .Name }} har en egen sida, med länets karta, kanaler och guider."
-[lan_own_text]
-other = "MeshCore i {{ .Name }} har en egen sida, som visar länets karta, kanaler och inställningar. Den här sidan visar inte länet, så att uppgifterna bara finns på ett ställe."
-[lan_own_go]
-other = "Gå till {{ .Site }}"
-[lan_own_other]
-other = "Välj ett annat län"
 [lan_n_name]
 other = "ditt län"
 [lan_n_scope]

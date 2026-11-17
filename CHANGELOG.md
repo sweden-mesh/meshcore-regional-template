@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.48.0 — 2026-11-17
+
+- **A county with its own site goes straight there, no notice** (B-327, reversing plan §7 Q3): on the
+  national site, picking such a county in the county modal (button or map) navigates to its site at
+  once, and its address `/<county>/` (with and without åäö, and anything below it) is a 302 to that site
+  in the generated `_redirects`; the "har en egen sida" page is gone. `/lan/pages.json` maps an own-site
+  county to its site's absolute address, so a site's `/` function can send a saved county there. The
+  green "egen sida" tint in the list and on the map stays. Texts `lan_own_title`, `lan_own_desc`,
+  `lan_own_text`, `lan_own_go` and `lan_own_other` removed. The regional modal already linked
+  straight to a county's own site; unchanged.
+
 ## v0.47.0 — 2026-11-17
 
 - **A regional site's county button opens the national county modal** (B-324, with
