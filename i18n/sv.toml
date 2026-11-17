@@ -444,6 +444,8 @@ other = "Trace"
 other = "hörd {n}×"
 [mt_hops]
 other = "{n} hopp"
+[mt_channel]
+other = "kanal {n}"
 [mt_route_unknown]
 other = "vägen okänd"
 [wz_mqtt_label]

@@ -448,6 +448,8 @@ other = "Trace"
 other = "heard {n}×"
 [mt_hops]
 other = "{n} hops"
+[mt_channel]
+other = "channel {n}"
 [mt_route_unknown]
 other = "route unknown"
 [wz_mqtt_label]

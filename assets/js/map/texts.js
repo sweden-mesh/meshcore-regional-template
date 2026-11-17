@@ -23,7 +23,7 @@ const SV = {
   decimal: ",",
   pk_ADVERT: "Annons", pk_GRP_TXT: "Kanalmeddelande", pk_TXT_MSG: "Direktmeddelande", pk_ACK: "Kvittens",
   pk_PATH: "Väg", pk_REQ: "Förfrågan", pk_RESPONSE: "Svar", pk_TRACE: "Trace",
-  heard_times: "hörd {n}×", hops: "{n} hopp", route_unknown: "vägen okänd",
+  heard_times: "hörd {n}×", hops: "{n} hopp", route_unknown: "vägen okänd", channel: "kanal {n}",
   lg_cov: "täckning: {q}",
   lg_cov_old: "blekare: senast uppmätt för över 90 dagar sedan",
   cov_heading: "Täckning", cov_credit: "Täckning: MeshMapper",

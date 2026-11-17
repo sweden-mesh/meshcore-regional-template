@@ -1,14 +1,14 @@
 // Map island entry point. Settings come from #map's data attributes, written
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
-import { nodesBounds, frameNodes, widenToFit, togglesWiden, fitItems, fitTo } from "./camera.js";
+import { nodesBounds, frameNodes, widenToFit, togglesWiden, fitItems, fitTo, pointsBounds, needsWiden } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom, withSeeded } from "./nodes.js";
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { visibleOnly, observerPoint, neighbourPoints, hiddenBy } from "./visible.js";
-import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
+import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer, packetObservations, involved, channelName, applyPick } from "./packetpath.js";
 import { allLinks, addLinkLayer, linkCountLoader, linksFile } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
@@ -150,6 +150,8 @@ async function start() {
     sweepLinks();
     state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
     applyFocus(map, state);
+    if (state.pathData) addPathLayer(map, state.pathData);
+    applyPick(map, state.pickIds);
   };
   // The threshold depends on the map's width: recompute after a resize.
   let resizeTimer;
@@ -267,7 +269,7 @@ function startLive(map, ds, client, iatas, state, draw) {
       pending = 0; panel.hidden = false;
       // Not under the visitor's focus or pointer: a redraw would drop the button they are on.
       if (list.contains(document.activeElement) || list.matches(":hover")) return;
-      list.innerHTML = recentListHtml(recent.items);
+      list.innerHTML = recentListHtml(recent.items, { selected: state.pick });
     });
   };
   list?.addEventListener("focusout", (e) => { if (!list.contains(e.relatedTarget)) renderRecent(); });
@@ -277,37 +279,62 @@ function startLive(map, ds, client, iatas, state, draw) {
   const calm = matchMedia("(prefers-reduced-motion: reduce)");
   let onScreen = true;
   if ("IntersectionObserver" in window) new IntersectionObserver((es) => { onScreen = es[es.length - 1].isIntersecting; }).observe(el);
-  const observerKeys = new Map(); // observerId → publicKey
-  const keyFor = async (id) => {
-    if (!observerKeys.has(id)) observerKeys.set(id, client.get(`/observers/${encodeURIComponent(id)}`).then((o) => o?.publicKey || null).catch(() => null));
-    return observerKeys.get(id);
+  // A click on a packet (B-328): the map fits the nodes it touched and dims the rest, drawn at once
+  // from the live feed's observations; then one /packets/{hash} adds the observations from before
+  // the page opened, the channel and a decrypted sender. Esc, the same packet again or "Stäng" clear.
+  const keyByName = (name) => {
+    const k = String(name || "").trim();
+    return k ? state.nodes.find((n) => (n.name || "").trim() === k)?.publicKey || null : null;
   };
-  list?.addEventListener("click", async (e) => {
-    const hash = e.target.closest("button")?.dataset.hash;
-    if (!hash) return;
-    try {
-      const detail = await client.get(`/packets/${encodeURIComponent(hash)}`);
-      const ids = [...new Set((detail.observations || []).map((o) => o.observerId))];
-      const keys = new Map();
-      for (let i = 0; i < ids.length; i += 3) { // Beacon allows 4 concurrent requests per client
-        await Promise.all(ids.slice(i, i + 3).map(async (id) => keys.set(id, await keyFor(id))));
-      }
-      const routes = packetRoutes(detail, (id) => observerPoint(state.nodes, keys.get(id), state.hidden), (c) => visibleOnly(state.nodes, c, state.hidden));
-      const fc = routesToGeoJSON(routes);
-      addPathLayer(map, fc);
-      const pts = fc.features.flatMap((f) => f.geometry.coordinates);
-      if (pts.length) {
-        const lngs = pts.map((p) => p[0]), lats = pts.map((p) => p[1]);
-        map.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding: 60, maxZoom: 13 });
-      }
-      pathBox.hidden = false;
-      pathBox.querySelector(".routes").innerHTML = routesListHtml(routes);
-    } catch (err) { console.error(err); }
-  });
-  document.getElementById("packet-path-close")?.addEventListener("click", () => {
+  const show = (item, detail) => {
+    const obs = packetObservations(item, detail);
+    const end = (o) => observerPoint(state.nodes, o.observerPublicKey || recent.observerKeys.get(o.observerId) || keyByName(o.observerName), state.hidden);
+    const routes = packetRoutes({ observations: obs }, end, (c) => visibleOnly(state.nodes, c, state.hidden));
+    const { ids, points } = involved(routes, obs.map(end));
+    state.pathData = routesToGeoJSON(routes);
+    state.pickIds = ids;
+    addPathLayer(map, state.pathData);
+    applyPick(map, ids);
+    pathBox.hidden = false;
+    pathBox.querySelector(".routes").innerHTML = routesListHtml(routes);
+    return pointsBounds(points);
+  };
+  const clearPick = () => {
+    if (!state.pick) return;
+    state.pick = null; state.pickIds = null; state.pathData = null;
     pathBox.hidden = true;
     addPathLayer(map, { type: "FeatureCollection", features: [] });
+    applyPick(map, null);
+    forceRender();
+  };
+  const forceRender = () => { if (list) list.innerHTML = recentListHtml(recent.items, { selected: state.pick }); };
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && state.pick) clearPick(); });
+  list?.addEventListener("click", async (e) => {
+    const hash = e.target.closest("button")?.dataset.hash;
+    const item = hash && recent.get(hash);
+    if (!item) return;
+    if (state.pick === hash) { clearPick(); return; }
+    state.pick = hash;
+    forceRender();
+    list.querySelector(`button[data-hash="${CSS.escape(hash)}"]`)?.focus();
+    const first = show(item, null);
+    if (first) fitTo(map, first);
+    try {
+      const detail = await client.get(`/packets/${encodeURIComponent(hash)}`);
+      if (state.pick !== hash) return; // cleared or another packet picked meanwhile
+      const sender = detail?.parsedPayload?.decrypted?.sender;
+      if (sender && !item.facts.origin) item.sender = sender;
+      const ch = detail?.channelHash ?? detail?.parsedPayload?.channelHash;
+      if (ch) item.channel = (await channelName(ch, iatas)) || t("channel", { n: String(ch).toUpperCase() });
+      const all = show(item, detail);
+      // Only move again when the fetched observers reach outside the first framing.
+      if (all && (!first || needsWiden(first, all))) fitTo(map, all);
+      forceRender();
+      list.querySelector(`button[data-hash="${CSS.escape(hash)}"]`)?.focus();
+    } catch (err) { console.error(err); }
   });
+  document.getElementById("packet-path-close")?.addEventListener("click", clearPick);
+  setInterval(renderRecent, 30000); // the ages
   map.on("style.load", () => flows.install());
   function handle(name, data) {
       if (name === "nodeUpdate") {

@@ -4,6 +4,19 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.49.0 — 2026-11-17
+
+- **"Senaste paket" says more, and a click frames the packet** (B-328): on wider screens each packet in
+  the live list shows its origin (name and the key's first 3 bytes, when Beacon resolved it), type,
+  channel once known, hop count with the relays (names where resolved, the hop's byte otherwise), the
+  last hop's SNR/RSSI, how often heard and its age; phones keep one line. Clicking a packet fits the map
+  to the nodes it touched (origin, relays, the observers that heard it) and dims every other node and
+  link, at once from the live feed; one `/packets/{hash}` request then adds earlier observations, the
+  channel (Public and the derivable hashtag channels by name) and a decrypted sender. No `/observers`
+  lookups any more. Esc, the same packet again or "Stäng" clears it. Hidden nodes ("Utanför
+  regionen", a county page's outside nodes) stay hidden and are not framed; reduced motion jumps.
+  New text `mt_channel`.
+
 ## v0.48.1 — 2026-11-17
 
 - **The page blurs at once when a county is chosen** (operator): picking a county in the picker or on
