@@ -1170,3 +1170,11 @@ other = "These pages apply to the whole country: how the regions fit together, w
 other = "This is where people using MeshCore across the country meet, and the local groups in the counties. Ask for help, find others who build and hear what is happening in the network."
 [sol_lan_why]
 other = "The county decides the sun: the calculator uses the solar irradiance for a point in the county (PVGIS, hour by hour 2005–2023), and the county's days with snow or frost on the panel and how long and dark its winter is. You choose the tilt and the tree line yourself afterwards."
+[search_label]
+other = "Search the site"
+[search_none]
+other = "No results."
+[search_count]
+other = "{n} results."
+[search_missing]
+other = "The search index is missing."

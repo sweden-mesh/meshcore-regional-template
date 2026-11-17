@@ -137,6 +137,14 @@ is switched on by one setting, `params.national = true`, and nothing of it reach
 with the setting off the template emits no new HTML, script or CSS, and
 `scripts/compare-regional.sh` proves the example site and meshcore-jkp.se build byte-identical.
 
+**Search scope (B-321).** Every page carries one Pagefind filter `scope`: `common` (the template's
+content), `national` (the national site's own pages), `region:<scope>` (a county's pages, or a
+regional site's own content). Front matter `searchScope` overrides the default; `searchPair: <key>`
+marks one version of an article that exists in two scopes, and the common or national version is
+then searched only where the region has none. The search page shows common + national + the
+visitor's region (on the national site the chosen county; Sverige: common + national).
+`scripts/search-scopes.sh` fails on an indexed page without exactly one scope.
+
 **What the site provides:**
 - `data/lan/<scb>.toml`, one file per county (21). Only what cannot be derived: `slug` (the address,
   with åäö), `short`, `checked`, and optionally `site` (the county's own site), `iata`, `center`,

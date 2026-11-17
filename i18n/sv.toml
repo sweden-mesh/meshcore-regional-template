@@ -1166,3 +1166,11 @@ other = "Sidorna här gäller hela landet: hur regionerna hänger ihop, vilka ka
 other = "Här finns de som använder MeshCore i hela landet, och de lokala grupperna i länen. Fråga om hjälp, hitta andra som bygger och hör vad som händer i nätet."
 [sol_lan_why]
 other = "Länet avgör solen: kalkylatorn räknar med solinstrålningen för en punkt i länet (PVGIS, timme för timme 2005–2023), och med länets antal dagar då snö eller frost täcker panelen och hur lång och mörk vintern är. Lutning och trädlinje väljer du själv efteråt."
+[search_label]
+other = "Sök på sidan"
+[search_none]
+other = "Inga träffar."
+[search_count]
+other = "{n} träffar."
+[search_missing]
+other = "Sökindex saknas."

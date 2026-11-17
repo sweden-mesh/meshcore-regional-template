@@ -13,3 +13,4 @@ htmltest --conf .htmltest.yml
 scripts/check-overrides.sh
 scripts/check-national.sh
 scripts/guide-titles.sh
+scripts/search-scopes.sh

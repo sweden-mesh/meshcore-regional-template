@@ -58,7 +58,7 @@
           "layout" "local"
           "title" $p.title
           "description" $p.desc
-          "params" (dict "lan" $c.scb "description" $p.desc)
+          "params" (dict "lan" $c.scb "description" $p.desc "searchPair" $p.path)
           "dates" (dict "lastmod" (time.AsTime $c.checked))
           "content" (dict "mediaType" "text/markdown" "value" $body.Content)) -}}
       {{- end -}}

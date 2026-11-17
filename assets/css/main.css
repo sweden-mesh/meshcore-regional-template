@@ -460,7 +460,16 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 400vw; heig
 .wz-diff td, .wz-diff th { padding: .35rem .7rem; border-bottom: 1px solid var(--line); text-align: left; }
 .wz-diff tr.changed td:last-child { font-weight: 700; color: var(--accent-2); }
 .wz-inline { display: inline-block; background: var(--surface); padding: .3rem .6rem; border-radius: var(--radius-xs); }
-.search-box { margin-top: 1rem; --pagefind-ui-font: var(--font-body); --pagefind-ui-primary: var(--accent); --pagefind-ui-text: var(--fg); --pagefind-ui-background: var(--bg); --pagefind-ui-border: var(--line); --pagefind-ui-border-radius: 10px; }
+/* Search (B-321): our own small UI over Pagefind's API. */
+.search-box { margin-top: 1rem; }
+.search-box input { width: 100%; max-width: 36rem; min-height: 48px; padding: 0 .9rem; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--field-border); border-radius: var(--radius-sm); }
+.search-box input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.search-results { list-style: none; padding: 0; margin: .5rem 0 0; max-width: 46rem; }
+.search-results li { padding: .75rem 0; border-bottom: 1px solid var(--line); }
+.search-results a { font-weight: 600; }
+.search-results p { margin: .25rem 0 0; color: var(--muted); font-size: .95rem; }
+.search-results mark { background: color-mix(in srgb, var(--caution) 35%, transparent); color: inherit; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Style "console" (params.style = "console"): the dark, technical direction A of the
    design mockups, regardless of the OS colour scheme. Tokens only; the layout is the same. */

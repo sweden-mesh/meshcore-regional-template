@@ -1,7 +1,27 @@
-{{- /* {{< search >}}: Pagefind's search UI (built after Hugo with `pagefind --site public`).
-       Pagefind's UI picks Swedish from <html lang="sv">. */ -}}
-<link rel="stylesheet" href="{{ "pagefind/pagefind-ui.css" | relURL }}">
-<div id="search" class="search-box" data-bundle="{{ "pagefind/" | relURL }}"><noscript>{{ T "search_noscript" }}</noscript></div>
+{{- /* {{< search >}}: search over the Pagefind index (built after Hugo with `pagefind --site public`),
+  through Pagefind's JS API so the results can be limited to the visitor's region (B-321): common
+  pages, national pages and the chosen region's; a paired common or national page only where the
+  region has no version of its own. The data below tells the script which is which. */ -}}
+{{- $r := partialCached "region.html" . "region" -}}
+{{- $pairs := dict -}}
+{{- range site.Pages -}}
+  {{- $s := partial "search-scope.html" . -}}
+  {{- if and .Params.searchPair (hasPrefix $s "region:") -}}
+    {{- $pairs = merge $pairs (dict $s (union (index $pairs $s | default slice) (slice .Params.searchPair))) -}}
+  {{- end -}}
+{{- end -}}
+{{- $counties := dict -}}
+{{- if site.Params.national }}{{ range partialCached "lan.html" . "lan" }}{{ $counties = merge $counties (dict .scb .scope) }}{{ end }}{{ end -}}
+<div class="search-box" role="search" id="search" data-bundle="{{ "pagefind/" | relURL }}"
+      data-region="{{ if site.Params.national }}{{ else }}region:{{ $r.scope }}{{ end }}" data-national="{{ site.Params.national | default false }}"
+      data-counties="{{ $counties | jsonify }}" data-pairs="{{ $pairs | jsonify }}"
+      data-texts="{{ dict "none" (T "search_none") "count" (T "search_count") "missing" (T "search_missing") | jsonify }}">
+  <label for="search-q" class="visually-hidden">{{ T "search_label" }}</label>
+  <input type="search" id="search-q" autocomplete="off" placeholder="{{ T "search_label" }}" disabled>
+  <p class="search-status muted" aria-live="polite"></p>
+  <ol class="search-results"></ol>
+  <noscript>{{ T "search_noscript" }}</noscript>
+</div>
 {{- with resources.Get "js/search.js" | js.Build (dict "minify" true "format" "esm") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

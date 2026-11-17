@@ -1,0 +1,20 @@
+{{- /* B-321: the page's search scope, for Pagefind's filter "scope": "common" (the template's own
+  content, valid everywhere), "national" (the national site's own pages), or "region:<scope>" (a
+  county's pages, or a regional site's own content). Front matter `searchScope` overrides.
+  A page with front matter `searchPair: <key>` is one version of an article that also exists in
+  another scope; a common or national page with a pair gets "paired:<key>", which search shows only
+  when the chosen region has no page with that key. Returns the filter value. */ -}}
+{{- $scope := "" -}}
+{{- with .Params.searchScope }}{{ $scope = . }}{{ end -}}
+{{- if not $scope -}}
+  {{- with partial "lan-page.html" . }}{{ $scope = printf "region:%s" .scope }}{{ end -}}
+{{- end -}}
+{{- if not $scope -}}
+  {{- $own := false -}}
+  {{- with .File }}{{ $own = hasPrefix .Filename (path.Join hugo.WorkingDir "content") }}{{ end -}}
+  {{- if and site.Params.national (or $own (eq .Type "lan")) }}{{ $scope = "national" -}}
+  {{- else if $own }}{{ $scope = printf "region:%s" (partialCached "region.html" . "region").scope -}}
+  {{- else }}{{ $scope = "common" }}{{ end -}}
+{{- end -}}
+{{- with .Params.searchPair }}{{ if not (hasPrefix $scope "region:") }}{{ $scope = printf "paired:%s" . }}{{ end }}{{ end -}}
+{{- return $scope -}}
