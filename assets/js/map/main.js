@@ -7,6 +7,7 @@ import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoo
 import { attachPopups } from "./popup.js";
 import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
+import { visibleOnly, observerPoint, neighbourPoints, hiddenBy } from "./visible.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer } from "./packetpath.js";
 import { allLinks, addLinkLayer, linkCountLoader, linksFile } from "./neighbours.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
@@ -185,6 +186,7 @@ async function start() {
     if (!url.view && url.want && want?.on) widenToFit(map, shown(), { animate: false });
   };
   if (map.isStyleLoaded()) ready(); else map.once("load", ready);
+  state.hidden = hiddenBy(state, (n) => el.isOutside?.(n)); // read at each event: isOutside comes later on county pages
   if (live) startLive(map, ds, client, iatas, state, draw);
   return { map, client, state };
 }
@@ -248,28 +250,6 @@ function applyFocus(map, state) {
   } else if (!on && map.getLayer("focus-dim")) map.removeLayer("focus-dim");
 }
 
-function neighbourPoints(state, id) {
-  const byId = new Map(state.nodes.map((n) => [n.id, n]));
-  const n = byId.get(id);
-  return (n?.neighborIds || []).map((x) => byId.get(x)).filter((m) => m && Number.isFinite(m.lat) && !(m.lat === 0 && m.lng === 0))
-    .map((m) => ({ lng: m.lng, lat: m.lat }));
-}
-
-// Hops through nodes that are not shown (companions) become gaps.
-function visibleOnly(state, chain) {
-  const ids = new Set(state.nodes.map((n) => n.id));
-  return chain.map((p) => (p && ids.has(p.id) ? p : null));
-}
-
-// The observer's own node (and position), matched by public key: observer
-// display names often differ from the node's advertised name.
-function observerPoint(state, key) {
-  if (!key) return null;
-  const k = key.toLowerCase();
-  const n = state.nodes.find((x) => (x.publicKey || "").toLowerCase() === k);
-  return n && Number.isFinite(n.lat) && !(n.lat === 0 && n.lng === 0) ? { id: n.id, lat: n.lat, lng: n.lng } : null;
-}
-
 function startLive(map, ds, client, iatas, state, draw) {
   if (!iatas.length || !("WebSocket" in window)) return;
   // Fewer simultaneous flows on small screens: less to draw on a phone.
@@ -312,7 +292,7 @@ function startLive(map, ds, client, iatas, state, draw) {
       for (let i = 0; i < ids.length; i += 3) { // Beacon allows 4 concurrent requests per client
         await Promise.all(ids.slice(i, i + 3).map(async (id) => keys.set(id, await keyFor(id))));
       }
-      const routes = packetRoutes(detail, (id) => observerPoint(state, keys.get(id)), (c) => visibleOnly(state, c));
+      const routes = packetRoutes(detail, (id) => observerPoint(state.nodes, keys.get(id), state.hidden), (c) => visibleOnly(state.nodes, c, state.hidden));
       const fc = routesToGeoJSON(routes);
       addPathLayer(map, fc);
       const pts = fc.features.flatMap((f) => f.geometry.coordinates);
@@ -337,10 +317,10 @@ function startLive(map, ds, client, iatas, state, draw) {
       }
       if (name !== "packetObservation") return;
       const o = data.observation;
-      const obsPt = observerPoint(state, o.observerPublicKey);
+      const obsPt = observerPoint(state.nodes, o.observerPublicKey, state.hidden);
       const animate = onScreen && !calm.matches;
       if (onScreen) flows.glow(obsPt);
-      const chain = visibleOnly(state, chainFromObservation(o, obsPt));
+      const chain = visibleOnly(state.nodes, chainFromObservation(o, obsPt), state.hidden);
       if (animate) flows.add(chain, { type: data.packet.payloadTypeName });
       for (const p of chain) if (p) state.relays.set(p.id, (state.relays.get(p.id) || 0) + 1);
       if (!recount) recount = setTimeout(() => {
@@ -353,7 +333,7 @@ function startLive(map, ds, client, iatas, state, draw) {
         chain.forEach((p, i) => {
           if (!p || seen.has(p.id) || (obsPt && p.id === obsPt.id)) return;
           seen.add(p.id);
-          flows.transmit(p, neighbourPoints(state, p.id), i * HOP_MS);
+          flows.transmit(p, neighbourPoints(state.nodes, p.id, state.hidden), i * HOP_MS);
         });
       }
       recent.add(data);
