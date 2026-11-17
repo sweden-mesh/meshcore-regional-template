@@ -10,6 +10,9 @@ async function attach(map) {
   const geo = await (await fetch(el.dataset.geo)).json();
   const g = geo.features.find((f) => f.properties.scb === el.dataset.lanScb)?.geometry;
   if (!g) return;
+  // The links read nodes from the map's own state, not this source: give the map the same test.
+  el.isOutside = (n) => !inGeometry(n.lng, n.lat, g);
+  el.redrawLinks?.();
   let busy = false;
   map.on("sourcedata", async (e) => {
     if (busy || e.sourceId !== "nodes" || !e.isSourceLoaded) return;

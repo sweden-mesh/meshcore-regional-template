@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.42.4 — 2026-11-17
+
+- **County maps in national mode hide links to nodes outside the county too (B-299).** The county
+  page marked those nodes only on the drawn dots, so v0.42.3's link filter never saw them; it now
+  hands the map the same test (`el.isOutside`), and the links redraw once it is in place.
+  Regional sites: unchanged behaviour.
+
 ## v0.42.3 — 2026-11-17
 
 Two map and page fixes.

@@ -79,8 +79,14 @@ async function start() {
   // Every link coloured by how often it is heard (toggle); with a node clicked (its popup open)
   // the other links turn faint grey. The counts arrive one node at a time after the first draw,
   // at most every 10 minutes per node (neighbours.js).
+  // In national mode the county page adds its own "outside the county" test (el.isOutside, set by
+  // lan/map-county.js), so links to nodes outside the county hide with them too (B-299).
+  const linkNodes = () => (el.isOutside
+    ? state.nodes.map((n) => (n.possiblyForeign || !Number.isFinite(n.lat) || !el.isOutside(n) ? n : { ...n, possiblyForeign: true }))
+    : state.nodes);
   const drawLinks = () => addLinkLayer(map, state.showLinks
-    ? allLinks(state.nodes, linkCounts.counts(), { selected: state.selected, focus: state.focus, foreign: state.showForeign }) : empty);
+    ? allLinks(linkNodes(), linkCounts.counts(), { selected: state.selected, focus: state.focus, foreign: state.showForeign }) : empty);
+  el.redrawLinks = drawLinks; // lan/map-county.js redraws once its test is in place
   let linkTimer = 0;
   const linkCounts = linkCountLoader(client, { onUpdate: () => { if (!linkTimer) linkTimer = setTimeout(() => { linkTimer = 0; drawLinks(); }, 400); } });
   el.linkCounts = linkCounts; // for browser tests
