@@ -1,0 +1,61 @@
+# The solar calculator's boards (B-291, operator 2026-11-17: option B, a board list on a load grid).
+# Each board's average current as a repeater, per firmware, at the battery, in mA, from a source
+# the method page names (B.2): `ma` is the sourced figure, `grid` the load it is rounded UP to
+# (reference_solar_need.LOAD_GRID_MA), so a board never gets a smaller battery than its source
+# supports. No entry for a firmware = no figure found, and that choice is greyed out for the board.
+# `low = true`: no PPK2 average exists, the figure is the upper end of a multimeter range or a
+# `powersaving on` reading (lower confidence). Images: assets/solar/boards/<img>.svg.
+
+[[board]]
+  key = "xiao-nrf52840"
+  name = "Seeed XIAO nRF52840 med Wio-SX1262"
+  family = "nRF52"
+  img = "xiao-nrf52840"
+  esm = { ma = 4.5, grid = "4.5", src = "S1" }
+  official = { ma = 7.1, grid = "7.1", src = "S1" }
+[[board]]
+  key = "rak4631"
+  name = "RAK4631 (WisBlock)"
+  family = "nRF52"
+  img = "rak4631"
+  esm = { ma = 6.0, grid = "6", src = "S2", low = true }
+  official = { ma = 6.0, grid = "6", src = "S2" }
+[[board]]
+  key = "heltec-t096"
+  name = "Heltec T096"
+  family = "nRF52"
+  img = "heltec-t096"
+  esm = { ma = 5.2, grid = "5.2", src = "S1" }
+  official = { ma = 8.6, grid = "8.6", src = "S1" }
+[[board]]
+  key = "heltec-v3"
+  name = "Heltec V3"
+  family = "ESP32"
+  img = "heltec-v3"
+  esm = { ma = 9.0, grid = "9", src = "S3", low = true }
+  official = { ma = 10.49, grid = "10.5", src = "S4" }
+[[board]]
+  key = "heltec-v4"
+  name = "Heltec V4 (FEM på)"
+  family = "ESP32"
+  img = "heltec-v4"
+  esm = { ma = 13.4, grid = "13.4", src = "S2", low = true }
+  official = { ma = 13.29, grid = "13.4", src = "S4" }
+[[board]]
+  key = "heltec-v4-3"
+  name = "Heltec V4.3 (FEM av)"
+  family = "ESP32"
+  img = "heltec-v4-3"
+  esm = { ma = 13.0, grid = "13", src = "S3", low = true }
+[[board]]
+  key = "xiao-esp32s3"
+  name = "Seeed XIAO ESP32-S3 med Wio-SX1262"
+  family = "ESP32"
+  img = "xiao-esp32s3"
+  esm = { ma = 7.0, grid = "7.1", src = "S3", low = true }
+[[board]]
+  key = "pi-zero-2w"
+  name = "Raspberry Pi Zero 2 W med LoRa-HAT"
+  family = "Raspberry Pi"
+  img = "pi-zero-2w"
+  any = { ma = 190.0, grid = "190", src = "S6" }

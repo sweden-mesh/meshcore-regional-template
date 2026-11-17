@@ -1,17 +1,24 @@
 {{- /* {{< wizard-solar >}}: the solar calculator (backlog B-259). Panel watts ⇄ Biltema cells, for the
   region's own county (B-272: no map; the data has one point per county, so a position inside the
-  county changed nothing). Numbers from assets/data/solar-calc.json (the solar
-  session's model); county notes from data/solar.toml. */ -}}
+  county changed nothing). Numbers from assets/data/solar/<IATA>.json (the solar session's model on
+  a load grid, B-291: one file per county, only the visitor's is fetched); boards and their loads
+  from data/solar_boards.toml; county notes from data/solar.toml. */ -}}
 {{- $r := partialCached "region.html" .Page "region" -}}
 {{- $notes := dict -}}
 {{- range $code, $d := hugo.Data.solar -}}{{- $notes = merge $notes (dict $code (dict "place" $d.place "lat" $d.lat "source" ($d.source | default "") "note" (cond (ne $d.note nil) ($d.note | markdownify | string) ""))) -}}{{- end -}}
 {{- $own := index ($r.iatas | default slice) 0 | default "JKG" -}}
-{{- $calc := resources.Get "data/solar-calc.json" | minify | fingerprint -}}
+{{- $calc := dict -}}
+{{- range resources.Match "data/solar/*.json" }}{{ $calc = merge $calc (dict (path.BaseName .Name) (. | minify | fingerprint).RelPermalink) }}{{ end -}}
+{{- $boards := slice -}}
+{{- range hugo.Data.solar_boards.board -}}
+  {{- $img := "" }}{{ with resources.Get (printf "solar/boards/%s.svg" .img) }}{{ $img = (. | minify | fingerprint).RelPermalink }}{{ end -}}
+  {{- $boards = $boards | append (dict "key" .key "name" .name "family" .family "img" $img "esm" .esm "official" .official "any" .any "hint" (T (printf "sol_hint_%s" .key) | default "")) -}}
+{{- end -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}
 {{- $method := "" }}{{ with site.GetPage "/solcell-metod" }}{{ $method = .RelPermalink }}{{ end -}}
 {{- if site.Params.national }}{{ partial "lan-wizard.html" (dict "page" .Page "shapes" false) }}{{ end -}}
 <form class="wizard solar-calc" id="solar-calc" novalidate
-      data-calc="{{ $calc.RelPermalink }}" data-own="{{ $own }}" data-notes="{{ $notes | jsonify }}">
+      data-calc="{{ $calc | jsonify }}" data-own="{{ $own }}" data-notes="{{ $notes | jsonify }}" data-boards="{{ $boards | jsonify }}">
 
   <fieldset class="wz-step">
     <legend><span class="wz-num">1</span> {{ T "sol_site" }}</legend>
@@ -20,10 +27,26 @@
     <label for="sol-tree">{{ T "sol_tree" }} <output data-out="tree"></output></label>
     <input type="range" id="sol-tree" min="0" max="5" step="1" value="3" aria-describedby="sol-tree-help">
     <p class="muted" id="sol-tree-help">{{ T "sol_tree_help" }}</p>
-    <fieldset class="wz-q"><legend class="sol-label">{{ T "sol_fw" }}</legend>
+    <fieldset class="wz-q sol-boards"><legend class="sol-label">{{ T "sol_board" }}</legend>
+    <p class="muted">{{ T "sol_board_help" }}</p>
+    {{- range $fam := slice "nRF52" "ESP32" "Raspberry Pi" }}
+    <p class="sol-family">{{ $fam }}</p>
+    <div class="sol-board-grid">
+      {{- range where $boards "family" $fam }}
+      <label class="sol-board"><input type="radio" name="sol-board" value="{{ .key }}"{{ if eq .key "xiao-nrf52840" }} checked{{ end }}>
+        {{ with .img }}<img src="{{ . }}" alt="" width="128" height="80" loading="lazy">{{ end }}
+        <span>{{ .name }}</span></label>
+      {{- end }}
+    </div>
+    {{- end }}
+    <p class="muted" data-out="hint"></p>
+    </fieldset>
+    <fieldset class="wz-q" data-fwq><legend class="sol-label">{{ T "sol_fw" }}</legend>
     <label class="wz-check"><input type="radio" name="sol-fw" value="esm" checked> <span>{{ T "sol_fw_esm" | markdownify }}</span></label>
     <label class="wz-check"><input type="radio" name="sol-fw" value="official"> <span>{{ T "sol_fw_official" | markdownify }}</span></label>
     </fieldset>
+    <p class="muted" data-out="load"></p>
+    <p class="muted" data-pi hidden>{{ T "sol_pi" }}</p>
     <label class="wz-check"><input type="checkbox" id="sol-exposed"> <span>{{ T "sol_exposed" | markdownify }}</span></label>
     <label class="wz-check"><input type="checkbox" id="sol-brush"> <span>{{ T "sol_brush" | markdownify }}</span></label>
     <fieldset class="sol-tilt wz-q" data-tilt hidden>
@@ -72,7 +95,7 @@
     </ul>
   </fieldset>
 </form>
-<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") "snow" (T "sol_snow") "buried" (T "sol_buried") | jsonify }}"></div>
+<div id="sol-texts" hidden data-texts="{{ dict "trees" (slice (T "sol_tree_0") "10°" "15°" "20°" "30°" "50°") "where" (T "sol_where") "era5" (T "sol_era5") "w" (T "sol_w") "cellsUnit" (T "sol_cells_unit") "summer" (T "sol_w_summer") "panelNeed" (T "sol_w_panel") "beyond" (T "sol_w_beyond") "nopanel" (T "sol_w_nopanel") "cellsNeed" (T "sol_w_cells") "result" (T "sol_result") "north" (T "sol_north") "min" (T "sol_min") "snow" (T "sol_snow") "buried" (T "sol_buried") "load" (T "sol_load") "loadLow" (T "sol_load_low") "fwNone" (T "sol_fw_none") | jsonify }}"></div>
 {{- with resources.Get "js/wizard/solar-ui.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
 <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}

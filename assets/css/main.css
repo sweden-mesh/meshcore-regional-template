@@ -660,3 +660,14 @@ body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin
 .fl progress { width: 100%; max-width: 28rem; height: .6rem; }
 .fl pre { max-height: 14rem; overflow: auto; font-size: .8rem; white-space: pre-wrap; }
 .fl-download { margin-left: .75rem; }
+
+/* The solar calculator's boards (B-291): pixel-art pictures on a light tile in both themes, so
+   the dark boards read on a dark page too; the picture is the choice, the name under it. */
+.sol-family { margin: .75rem 0 .35rem; font-size: .85rem; font-weight: 700; color: var(--muted); }
+.sol-board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .5rem; }
+.sol-board { position: relative; display: grid; gap: .35rem; justify-items: center; text-align: center; padding: .5rem; border: 1px solid var(--line); border-radius: var(--radius-sm); cursor: pointer; font-size: .9rem; line-height: 1.3; }
+.sol-board img { width: 100%; max-width: 128px; height: auto; aspect-ratio: 64 / 40; image-rendering: pixelated; background: #dfe7ec; border-radius: var(--radius-xs); padding: .25rem; }
+.sol-board input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.sol-board:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.sol-board:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sol-board:hover { border-color: var(--field-border); }

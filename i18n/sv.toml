@@ -703,9 +703,9 @@ other = "Den högsta vinkeln där träd, hus eller berg skär av himlen, från s
 [sol_fw]
 other = "Firmware"
 [sol_fw_esm]
-other = "**EasySkyMesh**, strömsparande (cirka 4,5 mA)"
+other = "**EasySkyMesh**, strömsparande"
 [sol_fw_official]
-other = "**Officiell MeshCore** med strömsparläge (cirka 7,1 mA)"
+other = "**Officiell MeshCore** med strömsparläge"
 [sol_brush]
 other = "**Någon borstar bort snön** från panelen på vintern"
 [sol_tilt]
@@ -1130,3 +1130,21 @@ other = "Filen är skadad (kontrollsumman i paketet stämmer inte). Inget har sk
 other = "Paketet innehåller ingen firmware för kortet."
 [dfu_incomplete]
 other = "Paketet är ofullständigt."
+[sol_board]
+other = "Kort"
+[sol_board_help]
+other = "Strömmen beror på kortet och firmwaren. Siffrorna är uppmätta medelvärden; källorna står i metodbeskrivningen."
+[sol_fw_none]
+other = "Ingen uppmätt siffra för det här kortet med den firmwaren."
+[sol_load]
+other = "Räknar med {MA} mA i snitt."
+[sol_load_low]
+other = "Räknar med {MA} mA i snitt. Ingen exakt medelvärdesmätning finns för kortet, så siffran är försiktigt hög och osäkrare."
+[sol_pi]
+other = "En Raspberry Pi drar ungefär 40 gånger så mycket som ett nRF52-kort. Reglagen går därför upp till 300 W och hundratals celler medan den är vald."
+[sol_hint_heltec-v4]
+other = "V4.2 och de flesta V4 har förstärkaren (FEM) på. Står det V4.3 på kortet och FEM är avslaget, välj nästa rad."
+[sol_hint_heltec-v4-3]
+other = "V4.3 med förstärkaren avslagen."
+[sol_hint_pi-zero-2w]
+other = "Linux med openHop Repeater. Ingen firmware att välja."

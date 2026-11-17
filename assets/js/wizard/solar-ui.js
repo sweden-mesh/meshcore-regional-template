@@ -1,7 +1,14 @@
 // The solar calculator page (wizard-solar.html). DOM only; the arithmetic is in solar.js.
-import { SLIDER_PANELS, TREES, DEFAULT_PANEL, MIN_CELLS, cellsFor, needAt, expectedAt, maxCells, couple } from "./solar.js";
+import { TREES, DEFAULT_PANEL, MIN_CELLS, cellsFor, needAt, expectedAt, maxCells, couple, sliderPanels } from "./solar.js";
 
-const form = document.getElementById("solar-calc");
+// The board and firmware chosen → { load, ma, low } from data/solar_boards.toml, or null when the
+// board has no figure for that firmware (B-291). Pure, for tests.
+export function boardLoad(board, fw) {
+  const e = board?.any || board?.[fw];
+  return e ? { load: e.grid, ma: e.ma, low: !!e.low } : null;
+}
+
+const form = globalThis.document?.getElementById("solar-calc");
 if (form) init(form);
 
 async function init(form) {
@@ -11,16 +18,34 @@ async function init(form) {
   const fmt = (n) => Math.round(n).toLocaleString("sv-SE");
   // Enter in the one text field would submit the form and reload the page.
   form.addEventListener("submit", (e) => e.preventDefault());
-  const all = await fetch(form.dataset.calc).then((r) => r.json());
+  const urls = JSON.parse(form.dataset.calc);
+  const boards = JSON.parse(form.dataset.boards || "[]");
+  const code = urls[form.dataset.own] ? form.dataset.own : "JKG";
+  const all = { [code]: await fetch(urls[code]).then((r) => r.json()) };
 
-  const st = { code: all[form.dataset.own] ? form.dataset.own : "JKG", lock: "panel" };
+  const st = { code, lock: "panel" };
   const panel = q("#sol-panel"), cells = q("#sol-cells"), margin = q("#sol-margin"), tree = q("#sol-tree");
   const brush = q("#sol-brush"), cap = q("#sol-cap"), exposed = q("#sol-exposed");
-  panel.value = SLIDER_PANELS.indexOf(DEFAULT_PANEL);
+  panel.value = sliderPanels(all[code], "4.5").indexOf(DEFAULT_PANEL);
+  let lastBig = false;
+
+  // The board's load; a firmware the board has no figure for is greyed out and the other chosen.
+  const chosen = () => {
+    const b = boards.find((x) => x.key === form.querySelector('input[name="sol-board"]:checked')?.value) || boards[0];
+    for (const r of form.querySelectorAll('input[name="sol-fw"]')) {
+      r.disabled = !b?.any && !b?.[r.value];
+      r.closest("label").title = r.disabled ? t.fwNone : "";
+    }
+    const fwOk = form.querySelector('input[name="sol-fw"]:checked:not(:disabled)') || form.querySelector('input[name="sol-fw"]:not(:disabled)');
+    if (fwOk) fwOk.checked = true;
+    q("[data-fwq]").hidden = !!b?.any;
+    q('[data-out="hint"]').textContent = b?.hint || "";
+    return { b, ...(boardLoad(b, fwOk?.value) || { load: "4.5", ma: 4.5, low: false }) };
+  };
 
   const settings = () => ({
     tilt: brush.checked ? form.querySelector('input[name="sol-tilt"]:checked').value : "vertical",
-    fw: form.querySelector('input[name="sol-fw"]:checked').value,
+    load: chosen().load,
     tree: TREES[Number(tree.value)],
     margin: Number(margin.value) / 100,
     cap: Math.max(100, Number(String(cap.value).replace(/\s/g, "")) || 3000),
@@ -47,15 +72,27 @@ async function init(form) {
   const update = () => {
     const d = all[st.code];
     const s = settings();
+    const c = chosen();
+    const sizes = sliderPanels(d, s.load), big = sizes !== sliderPanels(d, "4.5");
+    // The Pi Zero's limits (B-291): the panel slider reaches 300 W only while it is chosen, and
+    // keeps the same watts across the switch where it can.
+    if (big !== lastBig) {
+      const W = (lastBig ? sliderPanels(d, "190") : sliderPanels(d, "4.5"))[Number(panel.value)];
+      panel.max = sizes.length - 1;
+      panel.value = Math.max(0, sizes.indexOf(W) >= 0 ? sizes.indexOf(W) : Math.min(Number(panel.value), sizes.length - 1));
+      lastBig = big;
+    }
+    q("[data-pi]").hidden = !big;
+    q('[data-out="load"]').textContent = (c.low ? t.loadLow : t.load).replace("{MA}", String(c.ma).replace(".", ","));
     q("[data-tilt]").hidden = !brush.checked;
     q("[data-tilt-off]").hidden = brush.checked;
     if (!brush.checked) form.querySelector('input[name="sol-tilt"][value="vertical"]').checked = true;
-    const max = maxCells(d, s.cap);
+    const max = maxCells(d, s.cap, s.load);
     cells.max = max;
     const r = couple(d, s, { lock: st.lock, panelIdx: Number(panel.value), cells: Math.min(Number(cells.value), max), max });
     panel.value = r.panelIdx;
     cells.value = r.cells;
-    const W = SLIDER_PANELS[r.panelIdx];
+    const W = sizes[r.panelIdx];
     q('[data-out="tree"]').textContent = t.trees[Number(tree.value)];
     q('[data-out="panel"]').textContent = `${String(W).replace(".", ",")} ${t.w}`;
     q('[data-out="cells"]').textContent = `${r.cells} ${t.cellsUnit} (${fmt(r.cells * s.cap)} mAh)`;

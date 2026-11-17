@@ -707,9 +707,9 @@ other = "The highest angle where trees, buildings or hills cut the sky, from sou
 [sol_fw]
 other = "Firmware"
 [sol_fw_esm]
-other = "**EasySkyMesh**, power-saving (about 4.5 mA)"
+other = "**EasySkyMesh**, power-saving"
 [sol_fw_official]
-other = "**Official MeshCore** with power saving (about 7.1 mA)"
+other = "**Official MeshCore** with power saving"
 [sol_brush]
 other = "**Someone brushes the snow** off the panel in winter"
 [sol_tilt]
@@ -1134,3 +1134,21 @@ other = "The file is damaged (the package checksum does not match). Nothing has 
 other = "The package holds no firmware for the board."
 [dfu_incomplete]
 other = "The package is incomplete."
+[sol_board]
+other = "Board"
+[sol_board_help]
+other = "The current depends on the board and the firmware. The figures are measured averages; the method page names the sources."
+[sol_fw_none]
+other = "No measured figure for this board with that firmware."
+[sol_load]
+other = "Calculating with {MA} mA on average."
+[sol_load_low]
+other = "Calculating with {MA} mA on average. No exact average measurement exists for this board, so the figure is cautiously high and less certain."
+[sol_pi]
+other = "A Raspberry Pi draws about 40 times what an nRF52 board does. The sliders therefore go up to 300 W and hundreds of cells while it is chosen."
+[sol_hint_heltec-v4]
+other = "The V4.2 and most V4 boards have the amplifier (FEM) on. If the board says V4.3 and the FEM is off, choose the next row."
+[sol_hint_heltec-v4-3]
+other = "V4.3 with the amplifier off."
+[sol_hint_pi-zero-2w]
+other = "Linux with openHop Repeater. No firmware to choose."

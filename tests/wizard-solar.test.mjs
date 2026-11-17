@@ -1,22 +1,26 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { needAt, cellsFor, panelFor, maxCells, couple, SLIDER_PANELS, MIN_CELLS } from "../assets/js/wizard/solar.js";
+import { readFileSync, readdirSync } from "node:fs";
+import { needAt, cellsFor, panelFor, maxCells, couple, sliderPanels, SLIDER_PANELS, MIN_CELLS } from "../assets/js/wizard/solar.js";
 
-const data = JSON.parse(readFileSync(new URL("../assets/data/solar-calc.json", import.meta.url)));
-const s = (o = {}) => ({ tilt: "vertical", fw: "esm", tree: 20, margin: 0.2, cap: 3000, ...o });
+// One file per county since the load grid (B-291); the firmware keys became loads: esm = 4.5 mA,
+// official = 7.1 mA, with the same numbers (build_load_grid.py checked them against the old file).
+const dir = new URL("../assets/data/solar/", import.meta.url);
+const data = Object.fromEntries(readdirSync(dir).map((f) => [f.replace(".json", ""), JSON.parse(readFileSync(new URL(f, dir)))]));
+const FW = { esm: "4.5", official: "7.1" };
+const s = (o = {}) => { const { fw = "esm", ...rest } = o; return { tilt: "vertical", load: FW[fw] || fw, tree: 20, margin: 0.2, cap: 3000, ...rest }; };
 const i10 = data.JKG.panels.indexOf(10);
 
 test("at 10 W the data reproduce the solar session's Jönköping preview (value × 1.5, rounded up to 100)", () => {
   const up = (x) => Math.ceil((x * 1.5) / 100) * 100;
   const preview = { 0: [800, 600, 1300], 10: [6200, 4100, 9600], 20: [10400, 6400, 22100], 30: [14700, 9500, 29800] };
   for (const [tree, row] of Object.entries(preview))
-    assert.deepEqual(data.JKG.need.vertical.esm[tree][i10].map(up), row, `tree ${tree}`);
-  assert.equal(up(data.JKG.need.vertical.official["20"][i10][0]), 23200);
+    assert.deepEqual(data.JKG.need.vertical["4.5"][tree][i10].map(up), row, `tree ${tree}`);
+  assert.equal(up(data.JKG.need.vertical["7.1"]["20"][i10][0]), 23200);
   assert.equal(data.JKG.setpoint_V, 5.0);
 });
 test("the snow allowance is added before the margin; exposed sites get more days", () => {
-  const e = data.JKG.need.vertical.esm["20"][i10];
+  const e = data.JKG.need.vertical["4.5"]["20"][i10];
   const high = Math.max(e[0], e[2]);
   const sheltered = 2 * 153.5, exposed = 4 * 153.5;
   assert.ok(Math.abs(needAt(data.JKG, s(), i10) - (high + sheltered) * 1.2) < 1e-6);
@@ -24,7 +28,7 @@ test("the snow allowance is added before the margin; exposed sites get more days
   assert.ok(needAt(data.BLE, s({ exposed: true }), i10) - needAt(data.BLE, s(), i10) > 0);
 });
 test("cells are sized to the pessimistic value with the margin", () => {
-  const e = data.JKG.need.vertical.esm["20"][i10];
+  const e = data.JKG.need.vertical["4.5"]["20"][i10];
   const high = Math.max(e[0], e[2]) + 2 * 153.5;
   assert.ok(Math.abs(needAt(data.JKG, s(), i10) - high * 1.2) < 1e-6);
   assert.equal(cellsFor(data.JKG, s(), i10), Math.ceil((high * 1.2) / 3000));
@@ -49,7 +53,7 @@ test("past the slider's end: a panel beyond 100 W is named; past 300 W the floor
   const r = couple(data.UME, north, { lock: "cells", panelIdx: 2, cells: 1, max: 30 });
   assert.equal(r.panelIdx, SLIDER_PANELS.length - 1);
   assert.ok(["panel", "nopanel", "beyond"].includes(r.warn.kind));
-  const floor = (data.UME.floor.vertical.official["50"][2] + 5 * 242.1) * 1.2;
+  const floor = (data.UME.floor.vertical["7.1"]["50"][2] + 5 * 242.1) * 1.2;
   assert.equal(panelFor(data.UME, north, 2).noPanel, floor > 6000);
 });
 test("too many cells for the slider: the slider stops at max and says how many", () => {
@@ -74,7 +78,7 @@ test("the smallest panels: 0.15 W never keeps up, the slider starts there and ho
   assert.deepEqual(SLIDER_PANELS.slice(0, 5), [0.15, 0.5, 1, 1.5, 3]);
   for (const [code, d] of Object.entries(data)) {
     const i = d.panels.indexOf(0.15);
-    for (const tilt of ["vertical", "tilt60", "tilt40"]) for (const fw of ["esm", "official"])
+    for (const tilt of ["vertical", "tilt60", "tilt40"]) for (const fw of d.loads)
       for (const tree of [0, 10, 15, 20, 30, 50])
         assert.equal(cellsFor(d, s({ tilt, fw, tree }), i), null, `${code} ${tilt} ${fw} ${tree}`);
   }
@@ -96,4 +100,24 @@ test("sized to the larger of central and high; null when either is null (solar-0
   // the one case with central null but high finite: Halland, vertical, official, 10°, 0.5 W
   const i05 = data.HAD.panels.indexOf(0.5);
   assert.equal(needAt(data.HAD, s({ fw: "official", tree: 10 }), i05), null);
+});
+
+test("the board grid: every county has every load, and more draw never needs a smaller battery", () => {
+  for (const [code, d] of Object.entries(data)) {
+    assert.deepEqual(d.loads, ["4.5", "5.2", "6", "7.1", "8.6", "9", "10.5", "13", "13.4", "190"], code);
+    for (let k = 1; k < d.loads.length; k++) {
+      const a = needAt(d, s({ fw: d.loads[k - 1], tree: 0 }), i10), b = needAt(d, s({ fw: d.loads[k], tree: 0 }), i10);
+      if (a != null && b != null) assert.ok(b >= a, `${code} ${d.loads[k]}`);
+    }
+  }
+});
+
+test("the Pi Zero (190 mA) raises the limits only while chosen", () => {
+  assert.equal(sliderPanels(data.JKG, "4.5"), SLIDER_PANELS);
+  assert.equal(sliderPanels(data.JKG, "190").at(-1), 300);
+  assert.ok(maxCells(data.JKG, 3000, "190") > 10 * maxCells(data.JKG, 3000, "4.5"));
+  assert.equal(maxCells(data.JKG, 3000, "4.5"), maxCells(data.JKG, 3000));
+  // A 10 W panel cannot carry it in Jönköping's winter; 300 W behind no trees can.
+  assert.equal(cellsFor(data.JKG, s({ fw: "190", tree: 0 }), i10), null);
+  assert.ok(cellsFor(data.JKG, s({ fw: "190", tree: 0 }), data.JKG.panels.indexOf(300)) > 30);
 });
