@@ -966,6 +966,8 @@ other = "så visas länets värden."
 other = "Regionen <code>{{ .Scope }}</code> för {{ .Name }} är ett förslag i <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">listan över regioner</a>: ingen grupp i länet har bestämt den än."
 [lan_pick]
 other = "Välj län"
+[region_switch_all]
+other = "Hela Sverige"
 [lan_toggle]
 other = "Län"
 [lan_modal_title]

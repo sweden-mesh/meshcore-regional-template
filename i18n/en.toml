@@ -970,6 +970,8 @@ other = "to see its values."
 other = "The region <code>{{ .Scope }}</code> for {{ .Name }} is a proposal in <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">the list of regions</a>: no group in the county has decided on it yet."
 [lan_pick]
 other = "Choose county"
+[region_switch_all]
+other = "All of Sweden"
 [lan_toggle]
 other = "County"
 [lan_modal_title]

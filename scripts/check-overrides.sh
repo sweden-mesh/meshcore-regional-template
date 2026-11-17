@@ -87,6 +87,8 @@ check guider/companion/index.html 'href=https://meshcore.io/flasher' "newcomer: 
 check guider/skaffa-hardvara/index.html 'november 2026' "newcomer: the device ladder dates its prices"
 check markagare/index.html 'href=/bli-nodvard/' "landowner page: links to Bli nodvärd (B-305)"
 check bli-nodvard/index.html 'href=/markagare/' "Bli nodvärd: links to the landowner page (B-305)"
+# B-312: the region selector is off unless a site turns it on.
+if grep -q 'id=region-menu' "$P/index.html"; then echo "FAIL region selector shown although params.regionSwitch.on is false"; fail=1; else echo "ok   region selector off by default (B-312)"; fi
 # Every link to another site opens in a new tab (operator's review, 2026-11-12).
 missing=$(grep -rhoE '<a [^>]*href="?https?://[^>]*>' "$P" | grep -vc 'target=' || true)
 if [ "$missing" = "0" ]; then echo "ok   every external link has target=_blank"; else echo "FAIL $missing external links without target=_blank"; fail=1; fi

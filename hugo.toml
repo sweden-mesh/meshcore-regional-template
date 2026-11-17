@@ -117,6 +117,10 @@
   deny = []
   exclude = []
 
+[params.regionSwitch]          # B-312: a county button in the header listing every county's site
+  on = false                 # (data/county_sites.toml); regional mode only, national has its own
+  national = ""              # empty = the list's national site
+
 [params.community]
   name = ""                  # the local group, e.g. JKPG-Mesh
   url = ""

@@ -300,6 +300,31 @@ td, th { vertical-align: top; }
    while open, or it would override the browser's own hiding; the second selector is the polyfill's. */
 .site-header .nav-narrow { display: none; margin-left: auto; }
 .nav-toggle { min-width: 44px; min-height: 44px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: inherit; font-size: 1.2rem; }
+/* The region selector on a regional site (B-312): the national site's county button, opening a
+   popover with every county. The button's look is national.css's .lan-toggle, repeated here
+   because regional sites do not load national.css. */
+.lan-toggle { margin-left: auto; min-height: 44px; display: inline-flex; align-items: center; gap: .375rem; padding: 0 .75rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--fg); font: inherit; font-weight: 500; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.lan-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.lan-toggle ~ .theme-toggle { margin-left: 0; }
+.lan-toggle span { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; }
+.region-menu { position: fixed; inset: 4.25rem 1rem auto auto; margin: 0; z-index: 20; width: min(20rem, calc(100vw - 2rem)); max-height: calc(100dvh - 5.5rem); overflow: auto; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .5rem; box-shadow: 0 12px 30px rgba(15, 29, 38, .15); }
+.region-menu:not(:is(:popover-open, .\:popover-open)) { display: none; }
+.region-menu-title { margin: .25rem .6rem .4rem; font-size: .85rem; font-weight: 700; color: var(--muted); }
+.region-menu ul { list-style: none; margin: 0; padding: 0; }
+.region-menu a { display: flex; justify-content: space-between; align-items: baseline; gap: .75rem; padding: .5rem .6rem; border-radius: var(--radius-xs); color: var(--fg); text-decoration: none; }
+.region-menu a:hover { background: var(--surface); }
+.region-menu a[aria-current] { font-weight: 700; }
+.region-menu small { color: var(--muted); font-size: .8rem; }
+.region-menu-all { border-top: 1px solid var(--line); margin-top: .35rem; padding-top: .35rem; }
+/* On a phone the brand keeps its logo only and the row tightens, so the county fits beside the
+   toggles and the menu button (as national.css does for the national site). */
+@media (max-width: 40em) {
+  .site-header:has(.lan-toggle) { gap: .5rem; }
+  .site-header:has(.lan-toggle) .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .site-header:has(.lan-toggle) :is(.cvd-toggle, .motion-toggle) { margin-left: 0; }
+  .lan-toggle { padding: 0 .5rem; }
+  .lan-toggle span { max-width: 7.5rem; }
+}
 .nav-narrow [popover] { position: absolute; inset: 4.25rem 1rem auto auto; margin: 0; z-index: 10; flex-direction: column; min-width: 12rem; max-width: calc(100vw - 2rem); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .4rem; box-shadow: 0 12px 30px rgba(15, 29, 38, .15); }
 .nav-narrow [popover]:is(:popover-open, .\:popover-open) { display: flex; }
 .nav-narrow [popover]:not(:is(:popover-open, .\:popover-open)) { display: none; }

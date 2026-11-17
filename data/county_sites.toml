@@ -1,0 +1,91 @@
+# The counties and the sites that serve them, for the region selector (B-312): a county with a
+# site of its own links there, every other county to its page on the national site. One list for
+# every site built from the template; the national site's own data/lan/<scb>.toml `site` keys win
+# where they are set (lan.html falls back to this list). Swedish alphabetical order, the order
+# the selector shows them in.
+national = "https://meshcoresverige.se/"
+
+[[lan]]
+  scb = "20"
+  short = "Dalarna"
+  slug = "dalarna"
+[[lan]]
+  scb = "09"
+  short = "Gotland"
+  slug = "gotland"
+[[lan]]
+  scb = "21"
+  short = "Gävleborg"
+  slug = "gävleborg"
+[[lan]]
+  scb = "13"
+  short = "Halland"
+  slug = "halland"
+[[lan]]
+  scb = "23"
+  short = "Jämtland"
+  slug = "jämtland"
+[[lan]]
+  scb = "06"
+  short = "Jönköping"
+  slug = "jönköping"
+  site = "https://meshcore-jkp.se/"
+[[lan]]
+  scb = "08"
+  short = "Kalmar"
+  slug = "kalmar"
+[[lan]]
+  scb = "07"
+  short = "Kronoberg"
+  slug = "kronoberg"
+[[lan]]
+  scb = "25"
+  short = "Norrbotten"
+  slug = "norrbotten"
+[[lan]]
+  scb = "12"
+  short = "Skåne"
+  slug = "skåne"
+[[lan]]
+  scb = "01"
+  short = "Stockholm"
+  slug = "stockholm"
+  site = "https://meshcore-sth.se/"
+[[lan]]
+  scb = "04"
+  short = "Södermanland"
+  slug = "södermanland"
+[[lan]]
+  scb = "03"
+  short = "Uppsala"
+  slug = "uppsala"
+[[lan]]
+  scb = "17"
+  short = "Värmland"
+  slug = "värmland"
+[[lan]]
+  scb = "24"
+  short = "Västerbotten"
+  slug = "västerbotten"
+[[lan]]
+  scb = "22"
+  short = "Västernorrland"
+  slug = "västernorrland"
+[[lan]]
+  scb = "19"
+  short = "Västmanland"
+  slug = "västmanland"
+[[lan]]
+  scb = "14"
+  short = "Västra Götaland"
+  slug = "västra-götaland"
+  site = "https://meshcore-vgr.se/"
+[[lan]]
+  scb = "18"
+  short = "Örebro"
+  slug = "örebro"
+[[lan]]
+  scb = "05"
+  short = "Östergötland"
+  slug = "östergötland"
+  site = "https://meshcore-ost.se/"
