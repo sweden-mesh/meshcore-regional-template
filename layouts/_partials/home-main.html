@@ -69,6 +69,8 @@
       <dl class="channels">
         {{ range . }}<dt><code>{{ .name }}</code></dt><dd>{{ .purpose | markdownify }}{{ with .note }}<br><small>{{ . | markdownify }}</small>{{ end }}</dd>{{ end }}
       </dl>
+      {{- /* Sverige: the chat channels are per county (B-316). */ -}}
+      {{ if and site.Params.national (eq $r.scope "se") }}{{ with site.GetPage "/lan" }}<p class="ch-se">{{ T "lan_se_channels" (dict "URL" .RelPermalink) | markdownify }}</p>{{ end }}{{ end }}
       {{ partial "channel-autoreply.html" . }}
     </section>
     {{ end }}

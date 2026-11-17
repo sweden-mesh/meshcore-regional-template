@@ -1156,3 +1156,9 @@ other = "Linux with openHop Repeater. No firmware to choose."
 other = "The calculator assumes Li-ion (18650 or LiPo). [Why not LiFePO4 or lead-acid]({{ .Method }}#litiumjon)."
 [lan_own_legend]
 other = "Green: the county has a MeshCore site of its own."
+[lan_se_test_purpose]
+other = "Test channel for the whole country, with the region (scope) `se`."
+[lan_se_test_note]
+other = "Repeaters do not answer here automatically yet: you see other people's tests and replies from people. For an automatic answer, write `test` in your county's `#test-<region>` if the county has repeaters with auto-reply, otherwise in the standard `#test`."
+[lan_se_channels]
+other = "The chat channels differ between counties. [Choose your county]({{ .URL }}) to see its channels and test channel here."

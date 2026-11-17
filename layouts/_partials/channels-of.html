@@ -10,6 +10,11 @@
     {{- /* The chat channels named in the test note: Public, then the county's own chat channels (purpose says chat; sensor feeds are not chat). */ -}}
     {{- $chat := slice "Public" -}}{{- range $r.channels | default slice }}{{ if findRE `(?i)chatt?` (.purpose | default "") }}{{ with .name }}{{ $chat = $chat | append (printf "`%s`" .) }}{{ end }}{{ end }}{{ end -}}
     {{- $ch = $ch | append (dict "name" (printf "#test-%s" $r.scope) "scope" $r.scope "purpose" (T "lan_test_purpose") "note" (T "lan_test_note" (dict "Chat" (delimit $chat ", "))) "autoreply" true) -}}
+  {{- else -}}
+    {{- /* Sverige (B-316): the national test channel. No firmware answers on it yet (the national
+           auto-reply is a later firmware task), so it carries no auto-reply mark, and its note is
+           one key (lan_se_test_note) to change when that ships. */ -}}
+    {{- $ch = $ch | append (dict "name" "#test-se" "scope" "se" "purpose" (T "lan_se_test_purpose") "note" (T "lan_se_test_note")) -}}
   {{- end -}}
 {{- end -}}
 {{- return $ch -}}

@@ -29,6 +29,9 @@ check kalmar/index.html "<h2>Gemenskap</h2><p>Här finns de som använder MeshCo
 check kalmar/index.html "<span data-r=name>Kalmar län</span>" "county page: the footer names the county"
 check kalmar/index.html 'class="button button-secondary ext" href=https://example.org/grupp target=_blank rel=noopener>Exempelgruppen</a>' "county page: the community site beside Se kartan (B-306)"
 if grep -q 'button-secondary ext' "$P/skåne/index.html"; then echo "FAIL county page: a community button without a community"; fail=1; else echo "ok   county page: no community, no button"; fi
+check index.html "<dt><code>#test-se</code></dt>" "Sverige: the channels card shows #test-se (B-316)"
+check index.html "svarar inte automatiskt här än" "Sverige: #test-se is not promised auto-replies (B-316)"
+if grep -q 'class=ch-ar' "$P/index.html"; then echo "FAIL Sverige: an auto-reply footnote on #test-se"; fail=1; else echo "ok   Sverige: no auto-reply footnote (B-316)"; fi
 check skåne/index.html "Rikschatten" "county page: no groups, the national chats stand in"
 check sitemap.xml "/sk%C3%A5ne/</loc>" "county page: in the sitemap, address with åäö"
 if grep -q "id=karta" "$P/jönköping/index.html" || [ -e "$P/jönköping/kom-igang" ]; then echo "FAIL county page: a county with its own site got a front page"; fail=1; else echo "ok   county page: none for a county with its own site"; fi
