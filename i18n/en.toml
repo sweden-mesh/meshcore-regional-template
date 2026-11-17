@@ -907,7 +907,7 @@ other = "In {{ .Short }}"
 [lan_no_groups]
 other = "No group for the county is listed here yet. Questions about MeshCore in the whole country go to {{ .Chats }}."
 [lan_data_link]
-other = "Something missing about the county? [Correct the county's details]({{ .URL }})."
+other = "Know something about MeshCore in the county that is missing here? [You can easily add more information]({{ .URL }})."
 [lan_home_desc]
 other = "MeshCore in {{ .Name }}: the county's region {{ .Scope }}, test channel, map and where the network needs repeaters, with guides and wizards to get started."
 [lan_place_example]
@@ -993,4 +993,4 @@ other = "The place is in {name}."
 [lan_wz_switch]
 other = "Switch to {short}"
 [lan_footer_data]
-other = "Correct your county's details"
+other = "Add information about your county"

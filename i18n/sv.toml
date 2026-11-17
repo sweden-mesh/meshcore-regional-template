@@ -903,7 +903,7 @@ other = "I {{ .Short }}"
 [lan_no_groups]
 other = "Ingen grupp för länet finns med här än. Frågor om MeshCore i hela landet tas i {{ .Chats }}."
 [lan_data_link]
-other = "Saknas något om länet? [Rätta länets uppgifter]({{ .URL }})."
+other = "Vet du något om MeshCore i länet som saknas här? [Du kan enkelt bidra med mer information]({{ .URL }})."
 [lan_home_desc]
 other = "MeshCore i {{ .Name }}: länets region {{ .Scope }}, testkanal, karta och var nätet behöver repeatrar, med guider och wizards för att komma igång."
 [lan_place_example]
@@ -989,4 +989,4 @@ other = "Platsen ligger i {name}."
 [lan_wz_switch]
 other = "Byt till {short}"
 [lan_footer_data]
-other = "Rätta ditt läns uppgifter"
+other = "Bidra med uppgifter om ditt län"
