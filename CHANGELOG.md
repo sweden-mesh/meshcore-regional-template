@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.42.5 — 2026-11-17
+
+- **The "Ctrl + scroll" hint no longer dims the map** (operator). It is a small pill at the top
+  centre with a yellow border (`--caution`), and in Swedish: "Håll Ctrl och scrolla för att zooma
+  kartan", "Håll ⌘ …" on a Mac, "Använd två fingrar för att flytta kartan" on touch (map texts
+  `gesture_win`, `gesture_mac`, `gesture_touch`, passed to MapLibre's `locale`).
+
 ## v0.42.4 — 2026-11-17
 
 - **County maps in national mode hide links to nodes outside the county too (B-299).** The county

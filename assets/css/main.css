@@ -584,3 +584,13 @@ body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin
   :root[data-cvd="1"]:not([data-theme="dark"]) body:not(.style-console) .swatch-link-strong { background: linear-gradient(90deg, #0072b2, #cc79a7, #d55e00); }
 }
 :root[data-cvd="1"][data-theme="light"] body:not(.style-console) .swatch-link-strong { background: linear-gradient(90deg, #0072b2, #cc79a7, #d55e00); }
+
+/* "Ctrl + scroll to zoom" (operator 2026-11-17): no dimming over the whole map; the hint is a small
+   pill at the top centre with a yellow border, so the map stays visible while scrolling past it. */
+.map .maplibregl-cooperative-gesture-screen {
+  background: none; height: auto; inset: .75rem auto auto 50%; transform: translateX(-50%);
+  display: block; width: max-content; max-width: calc(100% - 2rem);
+  padding: .3rem .9rem; border: 2px solid var(--caution); border-radius: 999px;
+  background-color: var(--surface); color: var(--fg); font-size: .9rem; line-height: 1.3; text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+}

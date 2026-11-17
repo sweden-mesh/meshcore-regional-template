@@ -3,6 +3,9 @@
 // setTexts() before anything renders. "{n}" in a text is replaced by t(key, { n }).
 const SV = {
   legend: "Teckenförklaring",
+  gesture_win: "Håll Ctrl och scrolla för att zooma kartan",
+  gesture_mac: "Håll ⌘ och scrolla för att zooma kartan",
+  gesture_touch: "Använd två fingrar för att flytta kartan",
   lg_active: "repeater, hörd nyligen (prick = exakt plats)",
   lg_stale: "repeater, inte hörd på länge",
   lg_observer: "observatör (rapporterar till kartan)",

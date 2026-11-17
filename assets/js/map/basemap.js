@@ -4,6 +4,7 @@
 
 import { startCamera, trackUserMoves } from "./camera.js";
 import { effectiveTheme } from "../theme.js";
+import { t } from "./texts.js";
 
 // The basemap follows the site's theme: the system setting, the header toggle, or dark.
 export function styleUrl(ds, dark = effectiveTheme() === "dark") {
@@ -25,6 +26,12 @@ export async function createMap(el) {
     ...startCamera(ds),
     attributionControl: { compact: true },
     cooperativeGestures: true,
+    // The "Ctrl + scroll" hint in the site's language (MapLibre's own text is English).
+    locale: {
+      "CooperativeGesturesHandler.WindowsHelpText": t("gesture_win"),
+      "CooperativeGesturesHandler.MacHelpText": t("gesture_mac"),
+      "CooperativeGesturesHandler.MobileHelpText": t("gesture_touch"),
+    },
   });
   trackUserMoves(map);
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
