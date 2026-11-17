@@ -27,6 +27,8 @@ export function buildUrl(base, path, params = {}) {
   return url.toString();
 }
 
+const SHARE_MS = 60000;
+
 export function createClient(base, opts = {}) {
   if (!base) throw new BeaconError("no Beacon URL configured");
   const fetchFn = opts.fetch || globalThis.fetch.bind(globalThis);
@@ -64,7 +66,25 @@ export function createClient(base, opts = {}) {
   }
 
   // Walk a paged list. Returns every item, at most maxPages pages.
-  async function getAll(path, params = {}, { maxPages = 20, priority } = {}) {
+  // share: the same list asked for by another script on this page within SHARE_MS gets the
+  // same request (B-310: the front page's statistics and its map both read /nodes; one
+  // request instead of two). Each caller gets its own copy, so neither sees the other's edits.
+  async function getAll(path, params = {}, { maxPages = 20, priority, share = false } = {}) {
+    if (share) {
+      const shared = (globalThis.__beaconShared ||= new Map());
+      const key = buildUrl(base, path, params);
+      let hit = shared.get(key);
+      if (!hit || Date.now() - hit.at > SHARE_MS) {
+        hit = { at: Date.now(), promise: walk(path, params, maxPages, priority) };
+        shared.set(key, hit);
+        hit.promise.catch(() => shared.delete(key));
+      }
+      return structuredClone(await hit.promise);
+    }
+    return walk(path, params, maxPages, priority);
+  }
+
+  async function walk(path, params, maxPages, priority) {
     const items = [];
     let cursor, pageCursor, restarted = false;
     for (let page = 0; page < maxPages; page++) {

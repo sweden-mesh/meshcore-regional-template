@@ -23,7 +23,8 @@ export function formatCount(n) {
 
 export async function fillStats(el, client, iatas) {
   const [nodes, breakdown] = await Promise.all([
-    client.getAll("/nodes", { iatas, limit: 2000 }),
+    // The same request as the map's (neighbors included), so the page makes it once (B-310).
+    client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }, { share: true }),
     client.get("/stats/payload-breakdown", { iatas }),
   ]);
   const s = summarize(nodes, breakdown);

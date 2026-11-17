@@ -75,3 +75,31 @@ test("a background walk asks for low priority on every page; a normal one sets n
   await c.get("/nodes/x");
   assert.equal("priority" in opts[2], false);
 });
+
+test("share: two scripts asking for the same list make one request, each gets its own copy (B-310)", async () => {
+  globalThis.__beaconShared = new Map();
+  let calls = 0;
+  const fetch = async () => { calls++; await null; return res(200, [{ id: 1 }]); };
+  const a = createClient("https://b.example", { fetch, sleep: noSleep });
+  const b = createClient("https://b.example", { fetch, sleep: noSleep }); // a second bundle on the page
+  const [x, y] = await Promise.all([
+    a.getAll("/nodes", { iatas: ["JKG"], neighbors: true }, { share: true }),
+    b.getAll("/nodes", { iatas: ["JKG"], neighbors: true }, { share: true }),
+  ]);
+  assert.equal(calls, 1);
+  x[0].id = 99;
+  assert.equal(y[0].id, 1);
+  await a.getAll("/nodes", { iatas: ["JKG"], neighbors: true }); // without share: its own request
+  assert.equal(calls, 2);
+  await b.getAll("/nodes", { iatas: ["XYZ"], neighbors: true }, { share: true }); // other params
+  assert.equal(calls, 3);
+});
+
+test("share: a failed request is not kept", async () => {
+  globalThis.__beaconShared = new Map();
+  let calls = 0;
+  const fetch = async () => (++calls === 1 ? res(500, {}) : res(200, [{ id: 2 }]));
+  const c = createClient("https://b.example", { fetch, sleep: noSleep });
+  await assert.rejects(c.getAll("/nodes", {}, { share: true }));
+  assert.deepEqual(await c.getAll("/nodes", {}, { share: true }), [{ id: 2 }]);
+});

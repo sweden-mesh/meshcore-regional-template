@@ -164,7 +164,7 @@ async function start() {
   map.on("style.load", () => { if (state.nodes.length || state.borders.length) draw(); });
   try {
     const [nodes, borders, snap] = await Promise.all([
-      client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }),
+      client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }, { share: true }),
       loadBorders(client, iatas),
       loadSnapshot(ds.snapshot),
     ]);
