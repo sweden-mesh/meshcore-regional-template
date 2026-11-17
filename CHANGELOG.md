@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.43.1 — 2026-11-17
+
+- **Test messages: "helst inte" instead of "aldrig"** (operator). The test channel's note now says
+  "Använd helst inte de vanliga chattkanalerna (Public, `#…`) för testmeddelanden." In national
+  mode it names Public and the county's own chat channels (those whose purpose says chat);
+  `lan_test_note` takes `.Chat`, and shared pages say "Public och länets chattkanal"
+  (`lan_test_note_chat`). The channels guide and the example site use the same wording; a site
+  with its own `note` in `params.channels` keeps its own text.
+
 ## v0.43.0 — 2026-11-17
 
 Copy and map behaviour.

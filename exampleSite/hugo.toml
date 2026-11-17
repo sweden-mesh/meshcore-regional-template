@@ -50,7 +50,7 @@ enableRobotsTXT = true
   name = "#test-xxx"
   scope = "se-xxx"
   purpose = "Skriv `test` så svarar repeatrar med auto-svar"
-  note = "Har regionen inga sådana repeatrar, testa i den vanliga `#test`. Aldrig i chattkanalerna"
+  note = "Har regionen inga sådana repeatrar, testa i den vanliga `#test`. Använd helst inte de vanliga chattkanalerna (Public och regionens chattkanal) för testmeddelanden."
   autoreply = true
 
 # Places wanted for new repeaters: listed on "Bli nodvärd", and a circle of about 1 km with a

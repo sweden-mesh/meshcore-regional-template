@@ -885,7 +885,9 @@ other = "Bygg en repeater av ett Wio- eller Heltec-kort"
 [lan_test_purpose]
 other = "Testkanal: skriv `test` så svarar repeatrar med auto-svar."
 [lan_test_note]
-other = "Har länet inga sådana repeatrar, testa i den vanliga `#test`. Aldrig i chattkanalerna."
+other = "Har länet inga sådana repeatrar, testa i den vanliga `#test`. Använd helst inte de vanliga chattkanalerna ({{ .Chat }}) för testmeddelanden."
+[lan_test_note_chat]
+other = "Public och länets chattkanal"
 [lan_proposal]
 other = "förslag"
 [lan_proposal_note]

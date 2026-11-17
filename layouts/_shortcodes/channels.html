@@ -23,7 +23,7 @@
     <tr>
       <td><code data-r="test">{{ T "lan_n_test" }}</code></td>
       <td><code class="scope" data-r="scope">{{ T "lan_n_scope" }}</code></td>
-      <td>{{ T "lan_test_purpose" | markdownify }}<br><small class="muted">{{ T "lan_test_note" | markdownify }}</small></td>
+      <td>{{ T "lan_test_purpose" | markdownify }}<br><small class="muted">{{ T "lan_test_note" (dict "Chat" (T "lan_test_note_chat")) | markdownify }}</small></td>
     </tr>
   </tbody>
 </table>

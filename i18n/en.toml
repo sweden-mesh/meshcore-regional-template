@@ -889,7 +889,9 @@ other = "Build a repeater from a Wio or Heltec board"
 [lan_test_purpose]
 other = "Test channel: write `test` and repeaters with auto-reply answer."
 [lan_test_note]
-other = "If the county has no such repeaters, test in the standard `#test`. Never in the chat channels."
+other = "If the county has no such repeaters, test in the standard `#test`. Preferably don't use the ordinary chat channels ({{ .Chat }}) for test messages."
+[lan_test_note_chat]
+other = "Public and the county's chat channel"
 [lan_proposal]
 other = "proposal"
 [lan_proposal_note]
