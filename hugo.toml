@@ -120,6 +120,7 @@
 [params.community]
   name = ""                  # the local group, e.g. JKPG-Mesh
   url = ""
+  hero = false               # true: also a button beside "Se kartan" on the front page
 
 [params.chat]
   discord = ""               # invite URL (shown as "Discord")

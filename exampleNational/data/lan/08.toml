@@ -7,6 +7,7 @@ place   = "Exempelberget"
 text    = "Nätet i länet växer längs kusten."
 text_by = "Exempelgruppen"
 meshmapper = "https://example.org/meshmapper/"
+community = { name = "Exempelgruppen", url = "https://example.org/grupp" }   # B-306: a button beside "Se kartan"
 
 [[channels]]
   name = "#kalmar-exempel"

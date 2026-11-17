@@ -11,6 +11,14 @@
     <p class="hero-actions">
       {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
       <a class="button button-secondary" href="#karta" data-ease>{{ T "cta_map" }}</a>
+      {{- /* The county's own community site, linked out beside the map (B-306): in national mode
+             from the county file's `community = {name, url}`, on a regional site from
+             params.community when its `hero` is true. */ -}}
+      {{- $comm := cond (site.Params.community.hero | default false) site.Params.community dict -}}
+      {{- with partial "lan-page.html" . }}{{ $comm = .community | default dict }}{{ end -}}
+      {{- with $comm }}{{ if .url }}
+      <a class="button button-secondary ext" href="{{ .url }}" target="_blank" rel="noopener">{{ .name | default .url }}</a>
+      {{- end }}{{ end }}
     </p>
     {{- /* Three ways in, one per newcomer (NEWCOMER-3, operator 2026-11-16): the beginner, the
            radio amateur and the maker. A plain list under the buttons; a region that removes a

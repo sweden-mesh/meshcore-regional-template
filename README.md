@@ -81,7 +81,7 @@ this repository's `hugo.toml`.
 | `wanted` | places where the region wants a new repeater (`[[params.wanted]]` with `name`, `lat`, `lon` and an optional `note` in inline Markdown): listed on "Bli nodvärd" and drawn as a circle of about 1 km with a star on the maps. See [Wanted places](#wanted-places) |
 | `links` | plain links in the footer's community column (`[[params.links]]` with `name`, `url`), for sites that are not chats |
 | `beacon.seeds` | other Beacons that have heard the region longer (e.g. `["https://beacon.meshat.se"]`); their nodes inside the region's border fill the map until `beacon.url` has heard them |
-| `community.name`, `community.url` | the local group |
+| `community.name`, `community.url`, `community.hero` | the local group; `hero = true` also puts it as a button beside "Se kartan" on the front page (off by default) |
 | `chat.discord`, `chat.matrix` | invite links; empty ones are not shown |
 | `chats` | more named chat links, a list of `{name, url}` (e.g. the local and the national Discord) |
 | `contact.email` | optional: an e-mail address shown as "Kontakt" in the footer (a `mailto:` link) |
@@ -139,7 +139,8 @@ with the setting off the template emits no new HTML, script or CSS, and
 **What the site provides:**
 - `data/lan/<scb>.toml`, one file per county (21). Only what cannot be derived: `slug` (the address,
   with åäö), `short`, `checked`, and optionally `site` (the county's own site), `iata`, `center`,
-  `zoom`, `place`, `meshmapper`, `text` and `text_by`, and the lists `[[channels]]`, `[[groups]]` and
+  `zoom`, `place`, `meshmapper`, `text`, `text_by` and `community = {name, url}` (the county's
+  central community site, a button beside "Se kartan"), and the lists `[[channels]]`, `[[groups]]` and
   `[[wanted]]`. Name, scope and its decision, neighbours and the county's shape come from the region
   list and `se-lan.geojson` (`layouts/_partials/lan.html`).
 - `params.region` for the "Sverige" state (name and short "Sverige", scope `se`, every map area in

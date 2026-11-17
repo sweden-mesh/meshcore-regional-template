@@ -150,6 +150,9 @@ a { color: var(--accent); }
 .stat-grid dt { font-size: .8rem; color: var(--muted); }
 .badge { display: inline-flex; align-items: center; gap: .4rem; margin: 0; padding: .35rem .8rem; border-radius: 999px; background: color-mix(in srgb, var(--online) 14%, var(--bg)); color: var(--accent-2); font-size: .85rem; font-weight: 600; }
 .badge .dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--online); box-shadow: 0 0 0 3px color-mix(in srgb, var(--online) 25%, transparent); }
+/* Secondary buttons in the hero get a visible thin border (B-306): --field-border is 3:1 against
+   the background in both themes, where --line is about 1.4:1. */
+.hero-actions .button-secondary { border-color: var(--field-border); }
 .hero-actions { display: flex; gap: .75rem; justify-content: flex-start; flex-wrap: wrap; margin: 1.5rem 0 0; }
 /* Three ways in under the buttons (NEWCOMER-3): a plain list, one line per audience. */
 .audience ul { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: .15rem; max-width: 40rem; }
