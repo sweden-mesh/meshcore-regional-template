@@ -1,0 +1,21 @@
+{{- /* {{< prebuilt-solar >}}: the box "Du behöver inte bygga den själv" (B-296): the prebuilt solar
+  repeaters from data/prebuilt_solar.toml, a rough price range and the two winter sentences.
+  {{< prebuilt-solar list >}}: only the names as an inline list, for the device list. */ -}}
+{{- $d := hugo.Data.prebuilt_solar -}}
+{{- $solar := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $solar = .RelPermalink }}{{ end -}}
+{{- $shop := "" }}{{ with site.GetPage "/guider/skaffa-hardvara" }}{{ $shop = .RelPermalink }}{{ end -}}
+{{- if eq (.Get 0) "list" -}}
+  {{- $names := slice }}{{ range $d.node }}{{ $names = $names | append (printf "<a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a>" .url (.name | htmlEscape)) }}{{ end -}}
+  {{- delimit $names ", " ", och " | safeHTML -}}
+{{- else -}}
+<div class="alert alert-note prebuilt" role="note" id="fardiga-solrepeatrar">
+  <p class="alert-title">{{ partial "alert-icon.html" "note" }}{{ T "prebuilt_title" }}</p>
+  <p>{{ T "prebuilt_intro" (dict "Picker" site.Params.firmware.picker "Range" $d.range) | markdownify }}</p>
+  <ul>
+    {{- range $d.node }}
+    <li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a>: {{ .note }}{{ with .dated }} <small>({{ T "prebuilt_dated" (dict "Date" .) }})</small>{{ end }}</li>
+    {{- end }}
+  </ul>
+  <p>{{ T "prebuilt_winter" (dict "Solar" $solar "Shop" $shop) | markdownify }}</p>
+</div>
+{{- end -}}

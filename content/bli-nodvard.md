@@ -36,6 +36,8 @@ visar vad som är bra med den.
 - **Inget om dig.** Repeatern för vidare paket utan att spara dem och samlar inget om dig eller
   ditt nät.
 
+{{< prebuilt-solar >}}
+
 ## Vem gör vad?
 
 Du kan sätta upp repeatern själv med guiden [Sätt upp en repeater](/guider/repeater/), eller låta

@@ -20,7 +20,8 @@ sikt. Därför är just din plats intressant.
 
 - **En låda** ungefär som en tvålask, och **en antenn** på några decimeter.
 - **Ett fäste**, till exempel en klammer på ett rör eller en skruv i en vägg, som ett tv-antennfäste.
-- **En solpanel** om det inte finns el. Panelen är ofta mindre än ett A4.
+- **En solpanel** om det inte finns el. Panelen är ofta mindre än ett A4. Det finns också
+  [färdiga solrepeatrar](/bli-nodvard/#fardiga-solrepeatrar) där allt sitter i en låda.
 
 ## Ström och kostnad
 

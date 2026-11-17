@@ -6,7 +6,7 @@ description: "Så fungerar en solcellsdriven MeshCore-repeater i Sverige: varfö
 weight: 40
 group: sol
 date: 2026-11-14
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 ## Räkna på din egen plats
@@ -113,6 +113,8 @@ I korthet, för en nod som ska klara sig själv:
 - **Radio:** Seeed XIAO nRF52840 med Wio-SX1262, och inget annat som drar ström på batteriet.
 
 Detaljerna står under [Vad siffrorna förutsätter](#vad-siffrorna-förutsätter).
+
+{{< prebuilt-solar >}}
 
 ### Clas Ohlsons panel, och om du köper en annan
 

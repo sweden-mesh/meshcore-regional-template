@@ -5,7 +5,7 @@ description: "Vilken MeshCore-radio ska du köpa? Färdiga companions, enheter m
 weight: 35
 group: start
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 MeshCore körs på billiga LoRa-kort. Samma kort kan oftast bli companion eller repeater beroende på
@@ -62,10 +62,13 @@ Bygga själv
   repeater](../bygg-en-repeater/).
 
 Färdig
-: **Seeed SenseCAP Solar Node P1-Pro**, med solpanel och batteri i samma låda: 1 495 kr för
-  Meshtastic-versionen (Limmared), som flashas om till MeshCore. **RAK WisMesh Repeater Mini**
-  1 685 kr och **Heltec MeshTower** 2 250 kr (Pileup). Kontrollera i firmwareväljaren att din
-  modell finns innan du köper.
+: Sex färdiga solrepeatrar med panel och batteri i samma låda: {{< prebuilt-solar list >}}.
+  Priser den 16 november 2026: **SenseCAP Solar Node P1-Pro** 1 495 kr för Meshtastic-versionen
+  (Limmared), som flashas om till MeshCore; MeshCore-versionen cirka 135 euro i EU. **RAK WisMesh
+  Repeater Mini** 1 685 kr (Pileup). **Heltec MeshTower V2** 109–129 USD direkt från Heltec, plus
+  frakt och moms. **ThinkNode M6** cirka 80 USD hos Elecrow. **RAK WisMesh Repeater med solkit**
+  5 077 kr (Pileup). Kontrollera i firmwareväljaren att din modell finns innan du köper, och läs
+  [vad de klarar på vintern](../solnoder/#fardiga-solrepeatrar).
 
 Antenn
 : En bättre antenn för 868 MHz kostar 130–270 kr hos Pileup. Se [Antenner](../antenner/).

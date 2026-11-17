@@ -998,3 +998,11 @@ other = "Platsen ligger i {name}."
 other = "Byt till {short}"
 [lan_footer_data]
 other = "Bidra med uppgifter om ditt län"
+[prebuilt_title]
+other = "Du behöver inte bygga den själv"
+[prebuilt_intro]
+other = "Det finns färdiga solrepeatrar med panel, batteri och tät låda i samma paket, för {{ .Range }}. Alla har en strömsnål nRF52-processor och finns i [firmwareväljaren]({{ .Picker }}). De flesta levereras med Meshtastic och flashas om till MeshCore. Köp utförandet för 868 MHz."
+[prebuilt_winter]
+other = "Panelerna är små, 5–10 W, och flera av laddarna slutar ladda under 0 °C, så bakom träd kan en sådan nod tystna i december. Kalkylatorn räknar på ett eget bygge, inte på de här; priser med datum står under [Skaffa hårdvara]({{ .Shop }}#en-egen-repeater)."
+[prebuilt_dated]
+other = "uppgifterna från {{ .Date }}"

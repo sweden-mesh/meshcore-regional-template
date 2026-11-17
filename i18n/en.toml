@@ -1002,3 +1002,11 @@ other = "The place is in {name}."
 other = "Switch to {short}"
 [lan_footer_data]
 other = "Add information about your county"
+[prebuilt_title]
+other = "You do not have to build it yourself"
+[prebuilt_intro]
+other = "Ready-made solar repeaters come with panel, battery and a sealed box in one package, for {{ .Range }}. All have a low-power nRF52 processor and are in the [firmware picker]({{ .Picker }}). Most ship with Meshtastic and are reflashed with MeshCore. Buy the 868 MHz version."
+[prebuilt_winter]
+other = "The panels are small, 5–10 W, and several of the chargers stop charging below 0 °C, so behind trees such a node can go quiet in December. The calculator is for a node you build yourself, not for these; dated prices are under [Get hardware]({{ .Shop }}#en-egen-repeater)."
+[prebuilt_dated]
+other = "details from {{ .Date }}"

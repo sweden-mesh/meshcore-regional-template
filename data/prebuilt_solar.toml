@@ -1,0 +1,32 @@
+# Prebuilt solar repeaters (B-296, operator 2026-11-17): one list for the solar guide's box, the
+# device list in "Skaffa hårdvara" and the host pages, via the shortcode {{< prebuilt-solar >}}.
+# Research and sources: the workspace note solar-prebuilt-nodes-20261116.md (checked 2026-11-16).
+# Exact, dated prices stay in skaffa-hardvara.md; the box shows only `range`.
+checked = 2026-11-16
+range = "ungefär 1 000–5 000 kr"
+
+[[node]]
+  name = "Seeed SenseCAP Solar Node P1-Pro"
+  url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/"
+  note = "panel på 5 W, fyra 18650-celler; finns förflashad med MeshCore"
+[[node]]
+  name = "Seeed SenseCAP Solar Node P1"
+  url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/"
+  note = "samma nod utan batterier, billigare; du sätter i egna celler"
+[[node]]
+  name = "RAK WisMesh Repeater Mini"
+  url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater-mini"
+  note = "minst panel och batteri av de sex"
+[[node]]
+  name = "Heltec MeshTower V2"
+  url = "https://heltec.org/project/meshtower/"
+  note = "panel på 10 W, tre celler, aluminiumlåda"
+[[node]]
+  name = "Elecrow ThinkNode M6"
+  url = "https://www.elecrow.com/wiki/ThinkNode_M6_Outdoor_Solar_Power_for_LoRa_Powered_By_nRF52840_Supports_GPS-868_MHz.html"
+  note = "panel på 6 W, två 18650-celler; uppgifter om lysdioder och täthet kontrolleras vid nästa prisgenomgång"
+  dated = "2026-11-16"
+[[node]]
+  name = "RAK WisMesh Repeater med solkit"
+  url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater"
+  note = "panel på 10 W och batteri på 56 Wh; dyrast, för en höjd snarare än ett första försök"
