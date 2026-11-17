@@ -128,7 +128,7 @@ other = "Används till"
 [ch_no_scope]
 other = "ingen"
 [ch_requires_ar]
-other = "Kräver auto-reply firmware"
+other = "Svar kräver repeatrar med auto-reply-firmware"
 [firmware_link]
 other = "Välj din firmware här"
 [nc_label]
@@ -324,7 +324,7 @@ other = "Lägg till regionens kanaler med exakt samma namn. För lokala samtal, 
 [wzc_6]
 other = "Testa"
 [wzc_6_text]
-other = "Skicka en advert från appen och skriv test i testkanalen. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig."
+other = "Skicka en advert från appen och skriv test i regionens testkanal, eller i den vanliga #test om regionen saknar repeatrar med auto-svar. Svarar repeatrar ser du vilka som hörde dig."
 [search_noscript]
 other = "Sökningen behöver JavaScript."
 [wz_review]
@@ -885,7 +885,7 @@ other = "Bygg en repeater av ett Wio- eller Heltec-kort"
 [lan_test_purpose]
 other = "Testkanal: skriv `test` så svarar repeatrar med auto-svar."
 [lan_test_note]
-other = "Testa här, inte i chattkanalerna."
+other = "Har länet inga sådana repeatrar, testa i den vanliga `#test`. Aldrig i chattkanalerna."
 [lan_proposal]
 other = "förslag"
 [lan_proposal_note]
@@ -893,7 +893,7 @@ other = "Regionen är ett förslag i [listan över regioner]({{ .URL }}): ingen 
 [lan_net_title]
 other = "Nätet i {{ .Name }}"
 [lan_net_text]
-other = "I {{ .Name }} används regionen (scope) {{ .Scope }}. Skriv `test` i {{ .Test }} så svarar repeatrar med auto-svar. Kartan nedan visar repeatrarna och observatörerna som hörs i länet."
+other = "I {{ .Name }} används regionen (scope) {{ .Scope }}. Skriv `test` i {{ .Test }} så svarar repeatrar med auto-svar, om länet har några. Annars testar du i den vanliga `#test`. Kartan nedan visar repeatrarna och observatörerna som hörs i länet."
 [lan_text_by]
 other = "Skrivet av {{ .By }}"
 [lan_checked]

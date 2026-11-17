@@ -18,6 +18,8 @@ check kalmar/index.html "<h1>MeshCore i Kalmar län</h1>" "county page: the hero
 check kalmar/index.html "<link rel=canonical href=https://national.example.org/kalmar/>" "county page: its own canonical URL"
 check kalmar/index.html "data-iatas='\\[\"KLR\"\\]'" "county page: the stats and map read its map area"
 check kalmar/index.html "<dt><code>#test-se08</code></dt>" "county page: the test channel is derived from the scope"
+check kalmar/index.html '<p class=ch-ar><a href="https://sweden-mesh.github.io/firmware/#f=ar&amp;install=update"' "county page: the test channel's auto-reply footnote (B-301)"
+check kalmar/index.html 'testa i den vanliga <code>#test</code>' "county page: without auto-reply repeaters, test in #test (B-302)"
 check kalmar/index.html "<dt><code>#kalmar-exempel</code></dt>" "county page: the county's own channel is listed"
 check kalmar/index.html "Skrivet av Exempelgruppen" "county page: the own paragraph is signed"
 check kalmar/index.html "kontrollerades senast 2026-11-16" "county page: the checked date"
