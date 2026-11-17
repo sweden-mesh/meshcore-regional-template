@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.46.1 — 2026-11-17
+
+- **The two Seeed XIAO boards in the solar calculator look like the real ones** (operator): a small
+  black board with USB-C out past one edge, 7 castellated pads per side and the white "seeed studio"
+  label on the shield; the ESP32-S3 with its board-to-board connector and antenna plug, the nRF52840
+  with its blue button; the Wio-SX1262 underneath shows as an edge with its LoRa antenna plug.
+
 ## v0.46.0 — 2026-11-17
 
 Regional output changes on purpose (COMPARE_BASE moves here).

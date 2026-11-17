@@ -17,6 +17,8 @@ P = {
  'm': '#5d636b', 'M': '#878e97',                      # button / plastic
  'e': '#e7e7e2',                                      # silkscreen
  'p': '#7a2fb5', 'P': '#9b55d6', 'x': '#561f82',      # purple pcb (RAK base)
+ 'W': '#eef0f2', 'l': '#a3a9b1', 'L': '#5f666f',      # white label on the XIAO shield, its print
+ 'i': '#3f86d8',                                      # small blue button
 }
 class C:
     def __init__(s): s.g=[[None]*W for _ in range(H)]
@@ -133,22 +135,36 @@ def rak():
     return c
 
 def xiao(esp=False):
+    """Seeed XIAO (nRF52840 or ESP32-S3) as sold: a small black board, USB-C out past one short
+    edge, 7 castellated pads on each long side, a metal shield under a white "seeed studio" label.
+    The Wio-SX1262 for XIAO sits underneath and shows only as a darker edge with its antenna plug."""
     c=C()
-    c.board(12,8,40,26,'b','B','d')              # Wio-SX1262 for XIAO (base)
-    c.shield(36,12,13,13)                         # SX1262 module
-    c.ipex(46,27)
-    c.pins(14,10,6,step=3); c.pins(14,31,6,step=3)
-    c.board(10,10,22,20,'d','b','k',round_=False) # XIAO on top
-    c.usbc(8,17,vertical=True)
-    c.shield(14,12,15,14)
+    x,y,w,h=20,8,28,24
+    c.board(x+3,y+3,w,h,'d','b','k')              # Wio-SX1262 underneath, peeking out
+    c.ipex(x+w-2,y+h-1)                           # its LoRa antenna (U.FL)
+    c.board(x,y,w,h,'b','B','d')                  # the XIAO
+    for k in range(7):                            # castellated pads, top and bottom edge
+        px=x+2+k*4
+        c.rect(px,y,2,2,'g'); c.px(px,y,'h'); c.px(px+1,y,'h')
+        c.rect(px,y+h-2,2,2,'g'); c.px(px,y+h-1,'h'); c.px(px+1,y+h-1,'h')
+    # USB-C out past the left edge
+    c.rect(x-5,y+7,9,10,'z'); c.rect(x-4,y+8,7,8,'S'); c.rect(x-4,y+9,7,6,'s'); c.rect(x-3,y+11,5,2,'o')
+    # shield with the white label
+    lx,ly,lw,lh=x+6,y+3,w-9,h-6
+    c.rect(lx,ly,lw,lh,'z'); c.rect(lx+1,ly+1,lw-2,lh-2,'W')
+    for i in range(lx+3,lx+lw-3):                 # "seeed studio" as a bold print line
+        if (i-lx)%5: c.px(i,ly+4,'L'); c.px(i,ly+5,'L')
+    for r,ln in enumerate([lw-8,lw-10,lw-12]):    # model / FCC lines
+        for i in range(lx+3,lx+3+ln):
+            if (i*3+r)%4: c.px(i,ly+8+r*2,'l')
+    c.rect(lx+3,ly+lh-5,3,2,'L'); c.rect(lx+7,ly+lh-5,3,2,'L')   # FC  CE marks
     if esp:
-        c.ipex(27,26)                             # XIAO ESP32-S3 Wi-Fi antenna connector
-        c.led(13,27,'a')
+        c.rect(x+w-3,y+5,2,12,'c'); c.rect(x+w-3,y+6,1,10,'C')    # board-to-board connector
+        c.ipex(x+w-5,y+h-6)                       # Wi-Fi/BT antenna plug
+        c.led(x+5,y+4,'a')                        # charge LED
     else:
-        c.led(13,27,'n'); c.led(13,28,'r')
-    for k in range(7):                            # castellations
-        c.px(11,12+k*2,'g'); c.px(30,12+k*2,'g')
-    c.button(17,27) if esp else None
+        c.rect(x+9,y+h-3,3,1,'i')                 # the small blue button
+        c.led(x+4,y+4,'n'); c.led(x+4,y+h-5,'r')
     return c
 
 def pizero():
