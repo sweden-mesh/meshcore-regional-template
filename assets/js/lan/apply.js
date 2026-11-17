@@ -94,7 +94,10 @@ if (data) {
       const c = countyFor(data, v);
       if (page || location.pathname === "/") {
         const to = c && c.url ? c.url : "/?lan=se";
-        if (location.pathname + location.search !== to) { location.assign(to); return; }
+        if (location.pathname + location.search !== to) {
+          root.classList.add("lan-leaving"); document.body.setAttribute("aria-busy", "true"); // the click landed (see modal.js)
+          location.assign(to); return;
+        }
       }
       fill(v);
     },

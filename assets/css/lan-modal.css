@@ -47,3 +47,12 @@ dialog.lan-modal:modal { overscroll-behavior: contain; }
 .lan-map path.current { fill: color-mix(in srgb, var(--accent) 45%, transparent); stroke: var(--fg); stroke-width: 2; }
 @media (max-width: 47.99em) { .lan-modal-map { display: none; } }
 
+
+/* While the next county page loads: the page (and the open picker) blurs at once, so the click is
+   seen to have landed (operator 2026-11-17). No transition for reduced motion. */
+html.lan-leaving body > :not(dialog),
+html.lan-leaving dialog { filter: blur(3px); opacity: .55; pointer-events: none; cursor: progress; }
+html.lan-leaving { cursor: progress; }
+@media (prefers-reduced-motion: no-preference) {
+  body > :not(dialog), dialog { transition: filter .12s ease-out, opacity .12s ease-out; }
+}

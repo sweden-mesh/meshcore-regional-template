@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.48.1 — 2026-11-17
+
+- **The page blurs at once when a county is chosen** (operator): picking a county in the picker or on
+  its map, on meshcoresverige.se or a regional site, blurs and dims the page (and the open picker) right
+  away while the next page loads, so the click is seen to have landed; `aria-busy` on the body; undone
+  if the page returns from the back-forward cache; no transition with reduced motion.
+
 ## v0.48.0 — 2026-11-17
 
 - **A county with its own site goes straight there, no notice** (B-327, reversing plan §7 Q3): on the

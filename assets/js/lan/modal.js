@@ -95,9 +95,18 @@ function drawMap(slot, model) {
   });
 }
 
+// A click that leaves the page takes a moment before the next one paints: blur the page at once
+// so the visitor sees the click landed (operator 2026-11-17). Undone if the page comes back from
+// the back-forward cache.
+function leaving() {
+  root.classList.add("lan-leaving");
+  document.body.setAttribute("aria-busy", "true");
+}
+addEventListener("pageshow", (e) => { if (e.persisted) { root.classList.remove("lan-leaving"); document.body.removeAttribute("aria-busy"); } });
+
 function pick(item) {
-  if (regional) { if (item.href) location.assign(item.href); return; }
-  if (item.own) { location.assign(item.site); return; }
+  if (regional) { if (item.href) { leaving(); location.assign(item.href); } return; }
+  if (item.own) { leaving(); location.assign(item.site); return; }
   dialog.dataset.forced = "0";
   dialog.close();
   lan.set(item.v);
