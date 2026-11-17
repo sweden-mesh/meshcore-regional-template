@@ -2,6 +2,12 @@
   National mode only (params.national): a front page for every county without a site of its own,
   at /<slug>/ (plan §6.2.2, §6.8). Nothing is added on a regional site.
 */ -}}
+{{- /* The site flasher (B-298): one page, only on a site that turns it on. */ -}}
+{{- if site.Params.firmware.flash -}}
+  {{- $.AddPage (dict "path" "flasha" "kind" "page" "title" (T "fl_title") "description" (T "fl_desc")
+        "params" (dict "description" (T "fl_desc") "lead" false)
+        "content" (dict "mediaType" "text/markdown" "value" "{{< flasher >}}")) -}}
+{{- end -}}
 {{- if site.Params.national -}}
   {{- $all := partial "lan.html" . -}}
   {{- /* /lan/: every county, linking to its page or its own site; the no-JS target of the header's

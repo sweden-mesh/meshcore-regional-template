@@ -650,3 +650,13 @@ body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin
   main :is(td, th) { border: 1px solid #000 !important; padding: 4pt 6pt !important; height: 13pt; text-align: left; }
   main :is(td, th):first-child { width: 38%; }
 }
+
+/* The site flasher (B-298). */
+.fl select { display: block; width: 100%; max-width: 28rem; min-height: 44px; margin: .35rem 0 1rem; }
+.fl fieldset { border: 0; padding: 0; margin: 0 0 1rem; }
+.fl legend { margin-bottom: .35rem; }
+.fl-choice { display: flex; gap: .5rem; align-items: flex-start; padding: .35rem 0; }
+.fl-choice input { margin-top: .3rem; }
+.fl progress { width: 100%; max-width: 28rem; height: .6rem; }
+.fl pre { max-height: 14rem; overflow: auto; font-size: .8rem; white-space: pre-wrap; }
+.fl-download { margin-left: .75rem; }

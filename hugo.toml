@@ -27,6 +27,8 @@
 [params.firmware]
   picker = "https://sweden-mesh.github.io/firmware/"   # firmware images by board and release
   flasher = "https://meshcore.io/flasher"              # the official web flasher (Web Serial)
+  flash = false              # true: the page /flasha/ flashes lou firmware from this site (B-298)
+  flashIndex = "https://fw.meshcoresverige.se/"        # where fw/hosted.json and the images are (CORS GET)
 
 [params.observer]
   preset = "meshat.se"       # the Observer firmware's MQTT preset this region's map is fed from

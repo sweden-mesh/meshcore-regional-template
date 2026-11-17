@@ -1010,3 +1010,127 @@ other = "Ready-made solar repeaters come with panel, battery and a sealed box in
 other = "The panels are small, 5–10 W, and several of the chargers stop charging below 0 °C, so behind trees such a node can go quiet in December. The calculator is for a node you build yourself, not for these; dated prices are under [Get hardware]({{ .Shop }}#en-egen-repeater)."
 [prebuilt_dated]
 other = "details from {{ .Date }}"
+[fl_title]
+other = "Flash firmware"
+[fl_desc]
+other = "Flash lou firmware with auto-reply onto an ESP32 or nRF52 board straight from the browser, over USB."
+[fl_official_title]
+other = "This is not the official firmware"
+[fl_official_intro]
+other = "This flashes lou firmware: special builds with auto-reply on the county's test channel, the Observer's MQTT reporting and remote control. If you are new, or want MeshCore as it is, start with one of these instead:"
+[fl_official_vanilla]
+other = "The official MeshCore flasher"
+[fl_official_vanilla_d]
+other = "the standard MeshCore firmware from the MeshCore project"
+[fl_official_observer]
+other = "Observer firmware"
+[fl_official_observer_d]
+other = "MeshCore that also reports what the node hears to the map over MQTT, by agessaman"
+[fl_official_ours]
+other = "lou firmware is an unofficial fork of both. Every file, version and checksum is on the [firmware page]({{ .Picker }})."
+[fl_noserial]
+other = "This browser cannot talk to USB devices (Web Serial). Use Chrome or Edge on a computer, or Firefox 151 or later. You can still download the file below and flash it another way."
+[fl_loading]
+other = "Loading the list…"
+[fl_board]
+other = "Board"
+[fl_board_pick]
+other = "Choose your board"
+[fl_release]
+other = "Version {tag}."
+[fl_variant]
+other = "Firmware"
+[fl_v_core-ar]
+other = "Repeater with auto-reply"
+[fl_v_core-ar_d]
+other = "Replies to test on the county's test channel. Needs no Wi-Fi."
+[fl_v_observer-ar]
+other = "Observer with auto-reply"
+[fl_v_observer-ar_d]
+other = "As above, and reports what it hears to the map over Wi-Fi and MQTT."
+[fl_v_observer-arrc]
+other = "Observer with auto-reply and remote control"
+[fl_v_observer-arrc_d]
+other = "Also signed commands from the owner over MQTT."
+[fl_v_observer-rc]
+other = "Observer with remote control"
+[fl_v_observer-rc_d]
+other = "Observer and signed commands, without auto-reply."
+[fl_mode]
+other = "How"
+[fl_update]
+other = "Update"
+[fl_update_d]
+other = "Writes only the new firmware. The settings and the node's key stay."
+[fl_new]
+other = "New install"
+[fl_new_d]
+other = "Erases the whole flash first. For a new board or one running something else."
+[fl_new_warn]
+other = "A new install erases the node's identity key. The node gets a new public key, and neighbours, regions, maps and remote control no longer recognise it. Name, password and radio settings are erased too. Choose Update for a node that already runs MeshCore."
+[fl_new_confirm]
+other = "A new install erases the node's identity key and every setting. Continue?"
+[fl_nrf]
+other = "nRF52 boards are updated through their bootloader. Only the firmware is written: the settings and the node's key stay. The board restarts in update mode, and then you choose the port once more."
+[fl_inboot]
+other = "The board is already in update mode (double-press reset)"
+[fl_go]
+other = "Flash"
+[fl_again]
+other = "Choose the port again"
+[fl_download]
+other = "Download {file}"
+[fl_log]
+other = "Log"
+[fl_touch]
+other = "Restarting the board in update mode…"
+[fl_pick_boot]
+other = "Press Choose the port again and pick the board's new port."
+[fl_done]
+other = "Done. The board restarts with the new firmware."
+[fl_after]
+other = "Set the node up now: [guided settings]({{ .Wizard }}) over the same cable."
+[fl_noport]
+other = "No port was chosen."
+[fl_index_fail]
+other = "The list of files could not be loaded ({status})."
+[fl_fetch]
+other = "Fetching the file…"
+[fl_fetch_fail]
+other = "The file could not be fetched ({status})."
+[fl_check]
+other = "Checking the file…"
+[fl_sha]
+other = "The file does not match its checksum. Nothing has been written."
+[fl_connect]
+other = "Connecting to the board…"
+[fl_noanswer]
+other = "The board does not answer. Hold BOOT, press RESET, release BOOT and try again."
+[fl_chip]
+other = "The board has an {have}, the file is for an {want}. Nothing has been written. Check that you chose the right board."
+[fl_size]
+other = "The file needs {needs} MB of flash, the board has {has} MB. Nothing has been written. Check that you chose the right board."
+[fl_table]
+other = "Reading the board's partition table…"
+[fl_erasewrite]
+other = "Erasing the flash and writing…"
+[fl_write]
+other = "Writing…"
+[fl_restart]
+other = "Restarting the board…"
+[fl_notable]
+other = "The board has no readable partition table. Choose New install."
+[fl_noapp]
+other = "The board has no app slot at 0x10000: it runs something other than MeshCore. Choose New install."
+[fl_toobig]
+other = "The file ({size} bytes) does not fit the board's app slot ({app} bytes). Choose New install."
+[dfu_timeout]
+other = "The bootloader does not answer. Double-press reset, tick that the board is in update mode and try again."
+[dfu_closed]
+other = "The port closed during the transfer. Try again; the bootloader is still there."
+[dfu_crc]
+other = "The file is damaged (the package checksum does not match). Nothing has been written."
+[dfu_not_app]
+other = "The package holds no firmware for the board."
+[dfu_incomplete]
+other = "The package is incomplete."

@@ -1,0 +1,47 @@
+{{- /* The site flasher (B-298), on the page /flasha/ that content/_content.gotmpl adds when
+  params.firmware.flash is true. The official-first box comes first, always (operator 2026-11-17:
+  these are speciality firmwares; a newcomer may prefer stock MeshCore or the Observer). */ -}}
+{{- $f := site.Params.firmware -}}
+{{- $keys := slice "fl_fetch" "fl_fetch_fail" "fl_check" "fl_sha" "fl_connect" "fl_noanswer" "fl_chip" "fl_size" "fl_table" "fl_erasewrite" "fl_write" "fl_restart" "fl_notable" "fl_noapp" "fl_toobig"
+     "fl_index_fail" "fl_board_pick" "fl_release" "fl_download" "fl_new_confirm" "fl_touch" "fl_pick_boot" "fl_done" "fl_noport"
+     "fl_v_core-ar" "fl_v_core-ar_d" "fl_v_observer-ar" "fl_v_observer-ar_d" "fl_v_observer-arrc" "fl_v_observer-arrc_d" "fl_v_observer-rc" "fl_v_observer-rc_d"
+     "dfu_timeout" "dfu_closed" "dfu_crc" "dfu_not_app" "dfu_incomplete" -}}
+{{- $t := dict }}{{ range $keys }}{{ $t = merge $t (dict . (T .)) }}{{ end -}}
+{{- $esptool := resources.Get "vendor/esptool-js-0.7.0/bundle.js" | fingerprint -}}
+{{- $wizard := "" }}{{ with site.GetPage "/wizard" }}{{ $wizard = .RelPermalink }}{{ end -}}
+<div class="alert alert-warning fl-official" role="note">
+  <p class="alert-title">{{ partial "alert-icon.html" "warning" }}{{ T "fl_official_title" }}</p>
+  <p>{{ T "fl_official_intro" }}</p>
+  <ul>
+    <li><a href="https://flasher.meshcore.io/" class="ext" target="_blank" rel="noopener">{{ T "fl_official_vanilla" }}</a>: {{ T "fl_official_vanilla_d" }}</li>
+    <li><a href="https://observer.gessaman.com/" class="ext" target="_blank" rel="noopener">{{ T "fl_official_observer" }}</a>: {{ T "fl_official_observer_d" }}</li>
+  </ul>
+  <p>{{ T "fl_official_ours" (dict "Picker" ($f.picker | default "https://sweden-mesh.github.io/firmware/")) | markdownify }}</p>
+</div>
+
+<form id="flasher" class="wizard fl" novalidate data-index="{{ $f.flashIndex }}" data-esptool="{{ $esptool.RelPermalink }}" data-t="{{ $t | jsonify }}">
+  <p class="fl-noserial alert alert-note" data-noserial hidden>{{ T "fl_noserial" }}</p>
+  <p class="muted" data-release></p>
+  <label for="fl-board"><strong>{{ T "fl_board" }}</strong></label>
+  <select id="fl-board" disabled><option>{{ T "fl_loading" }}</option></select>
+  <fieldset class="fl-variants"><legend><strong>{{ T "fl_variant" }}</strong></legend><div data-variants></div></fieldset>
+  <fieldset data-mode hidden><legend><strong>{{ T "fl_mode" }}</strong></legend>
+    <label class="fl-choice"><input type="radio" name="fl-mode" value="update" checked> <span><strong>{{ T "fl_update" }}</strong><br><small>{{ T "fl_update_d" }}</small></span></label>
+    <label class="fl-choice"><input type="radio" name="fl-mode" value="new"> <span><strong>{{ T "fl_new" }}</strong><br><small>{{ T "fl_new_d" }}</small></span></label>
+  </fieldset>
+  <div class="alert alert-warning" role="note" data-newwarn hidden><p>{{ T "fl_new_warn" }}</p></div>
+  <div data-nrf hidden>
+    <p>{{ T "fl_nrf" }}</p>
+    <label class="fl-choice"><input type="checkbox" id="fl-inboot"> <span>{{ T "fl_inboot" }}</span></label>
+  </div>
+  <p class="wz-actions"><button type="button" class="button" id="fl-go" disabled>{{ T "fl_go" }}</button>
+    <button type="button" class="button button-secondary" data-again hidden>{{ T "fl_again" }}</button>
+    <a class="fl-download" data-download hidden></a></p>
+  <progress max="1" value="0" hidden></progress>
+  <p class="wz-status" data-status aria-live="polite"></p>
+  <p data-done hidden>{{ T "fl_after" (dict "Wizard" $wizard) | markdownify }}</p>
+  <details><summary>{{ T "fl_log" }}</summary><pre data-log></pre></details>
+</form>
+{{- with resources.Get "js/flasher/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}

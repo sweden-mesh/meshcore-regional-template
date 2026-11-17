@@ -4,5 +4,9 @@
      name read as part of it. */ -}}
 {{- if where . "autoreply" true -}}
 {{- $picker := site.Params.firmware.picker | default "https://sweden-mesh.github.io/firmware/" -}}
+{{- with and site.Params.firmware.flash (site.GetPage "/flasha") }}
+<p class="ch-ar"><a href="{{ .RelPermalink }}">* {{ T "ch_requires_ar" }}</a></p>
+{{- else }}
 <p class="ch-ar"><a href="{{ $picker }}#f=ar&amp;install=update" target="_blank" rel="noopener">* {{ T "ch_requires_ar" }}&nbsp;<span aria-hidden="true">↗</span></a></p>
+{{- end }}
 {{- end -}}

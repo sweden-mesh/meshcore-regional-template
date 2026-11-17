@@ -1006,3 +1006,127 @@ other = "Det finns färdiga solrepeatrar med panel, batteri och tät låda i sam
 other = "Panelerna är små, 5–10 W, och flera av laddarna slutar ladda under 0 °C, så bakom träd kan en sådan nod tystna i december. Kalkylatorn räknar på ett eget bygge, inte på de här; priser med datum står under [Skaffa hårdvara]({{ .Shop }}#en-egen-repeater)."
 [prebuilt_dated]
 other = "uppgifterna från {{ .Date }}"
+[fl_title]
+other = "Flasha firmware"
+[fl_desc]
+other = "Flasha lou-firmware med autosvar på ett ESP32- eller nRF52-kort direkt från webbläsaren, över USB."
+[fl_official_title]
+other = "Det här är inte den officiella firmwaren"
+[fl_official_intro]
+other = "Här flashar du lou-firmware: specialbyggen med autosvar på länets testkanal, Observerns MQTT-rapportering och fjärrstyrning. Är du ny, eller vill du ha MeshCore som det är, börja hellre med någon av dessa:"
+[fl_official_vanilla]
+other = "MeshCores officiella flasher"
+[fl_official_vanilla_d]
+other = "den vanliga MeshCore-firmwaren från MeshCore-projektet"
+[fl_official_observer]
+other = "Observer-firmware"
+[fl_official_observer_d]
+other = "MeshCore som också rapporterar det noden hör till kartan över MQTT, av agessaman"
+[fl_official_ours]
+other = "lou-firmware är en inofficiell fork av båda. Alla filer, versioner och kontrollsummor finns på [firmwaresidan]({{ .Picker }})."
+[fl_noserial]
+other = "Den här webbläsaren kan inte prata med USB-enheter (Web Serial). Använd Chrome eller Edge på en dator, eller Firefox 151 och senare. Du kan fortfarande ladda ned filen nedan och flasha den på annat sätt."
+[fl_loading]
+other = "Hämtar listan…"
+[fl_board]
+other = "Kort"
+[fl_board_pick]
+other = "Välj ditt kort"
+[fl_release]
+other = "Version {tag}."
+[fl_variant]
+other = "Firmware"
+[fl_v_core-ar]
+other = "Repeater med autosvar"
+[fl_v_core-ar_d]
+other = "Svarar på test i länets testkanal. Behöver inget wifi."
+[fl_v_observer-ar]
+other = "Observer med autosvar"
+[fl_v_observer-ar_d]
+other = "Som ovan, och rapporterar det den hör till kartan över wifi och MQTT."
+[fl_v_observer-arrc]
+other = "Observer med autosvar och fjärrstyrning"
+[fl_v_observer-arrc_d]
+other = "Dessutom signerade kommandon från ägaren över MQTT."
+[fl_v_observer-rc]
+other = "Observer med fjärrstyrning"
+[fl_v_observer-rc_d]
+other = "Observer och signerade kommandon, utan autosvar."
+[fl_mode]
+other = "Hur"
+[fl_update]
+other = "Uppdatera"
+[fl_update_d]
+other = "Skriver bara den nya firmwaren. Inställningarna och nodens nyckel finns kvar."
+[fl_new]
+other = "Ny installation"
+[fl_new_d]
+other = "Raderar hela flashminnet först. För ett nytt kort eller ett som kör något annat."
+[fl_new_warn]
+other = "En ny installation raderar nodens identitetsnyckel. Noden får en ny publik nyckel, och grannar, regioner, kartor och fjärrstyrning känner inte längre igen den. Namn, lösenord och radioinställningar raderas också. Välj Uppdatera för en nod som redan kör MeshCore."
+[fl_new_confirm]
+other = "Ny installation raderar nodens identitetsnyckel och alla inställningar. Fortsätta?"
+[fl_nrf]
+other = "nRF52-kort uppdateras genom sin bootloader. Bara firmwaren skrivs: inställningarna och nodens nyckel finns kvar. Kortet startar om i uppdateringsläge, och sedan väljer du porten en gång till."
+[fl_inboot]
+other = "Kortet står redan i uppdateringsläge (dubbeltryck på reset)"
+[fl_go]
+other = "Flasha"
+[fl_again]
+other = "Välj porten igen"
+[fl_download]
+other = "Ladda ned {file}"
+[fl_log]
+other = "Logg"
+[fl_touch]
+other = "Startar om kortet i uppdateringsläge…"
+[fl_pick_boot]
+other = "Tryck på Välj porten igen och välj kortets nya port."
+[fl_done]
+other = "Klart. Kortet startar om med den nya firmwaren."
+[fl_after]
+other = "Ställ in noden nu: [guidade inställningar]({{ .Wizard }}) över samma kabel."
+[fl_noport]
+other = "Ingen port valdes."
+[fl_index_fail]
+other = "Listan över filer kunde inte hämtas ({status})."
+[fl_fetch]
+other = "Hämtar filen…"
+[fl_fetch_fail]
+other = "Filen kunde inte hämtas ({status})."
+[fl_check]
+other = "Kontrollerar filen…"
+[fl_sha]
+other = "Filen stämmer inte med sin kontrollsumma. Inget har skrivits."
+[fl_connect]
+other = "Ansluter till kortet…"
+[fl_noanswer]
+other = "Kortet svarar inte. Håll ned BOOT, tryck på RESET, släpp BOOT och försök igen."
+[fl_chip]
+other = "Kortet har en {have}, filen är för en {want}. Inget har skrivits. Kontrollera att du valt rätt kort."
+[fl_size]
+other = "Filen behöver {needs} MB flashminne, kortet har {has} MB. Inget har skrivits. Kontrollera att du valt rätt kort."
+[fl_table]
+other = "Läser kortets partitionstabell…"
+[fl_erasewrite]
+other = "Raderar flashminnet och skriver…"
+[fl_write]
+other = "Skriver…"
+[fl_restart]
+other = "Startar om kortet…"
+[fl_notable]
+other = "Kortet har ingen partitionstabell som går att läsa. Välj Ny installation."
+[fl_noapp]
+other = "Kortet har ingen programplats på 0x10000: det kör något annat än MeshCore. Välj Ny installation."
+[fl_toobig]
+other = "Filen ({size} byte) får inte plats i kortets programplats ({app} byte). Välj Ny installation."
+[dfu_timeout]
+other = "Bootloadern svarar inte. Dubbeltryck på reset, kryssa i att kortet står i uppdateringsläge och försök igen."
+[dfu_closed]
+other = "Porten stängdes under överföringen. Försök igen; bootloadern finns kvar."
+[dfu_crc]
+other = "Filen är skadad (kontrollsumman i paketet stämmer inte). Inget har skrivits."
+[dfu_not_app]
+other = "Paketet innehåller ingen firmware för kortet."
+[dfu_incomplete]
+other = "Paketet är ofullständigt."
