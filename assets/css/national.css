@@ -52,6 +52,7 @@ dialog.lan-modal:modal { overscroll-behavior: contain; }
 .lan-modal-body { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
 .lan-modal-map:empty { display: none; }
 @media (min-width: 48em) { .lan-modal-body:has(.lan-modal-map:not(:empty)) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
+@media (max-width: 47.99em) { .lan-modal-mapcol { display: none; } }
 .lan-modal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.375rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
 .lan-modal-list button {
   width: 100%; min-height: 44px; padding: 0.375rem 0.75rem; text-align: left; cursor: pointer;
@@ -60,12 +61,21 @@ dialog.lan-modal:modal { overscroll-behavior: contain; }
 .lan-modal-list button:hover, .lan-modal-list button:focus-visible { border-color: var(--accent); color: var(--accent); }
 .lan-modal-list button[aria-current="true"] { border-color: var(--accent); border-width: 2px; }
 .lan-modal-own { display: block; font-size: 0.85em; color: var(--muted); }
+.lan-modal-list button { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lan-modal-map:empty + .lan-modal-legend { display: none; }
+.lan-modal-legend { display: flex; align-items: center; gap: .5rem; margin: .5rem 0 0; font-size: .85rem; color: var(--muted); }
+.lan-modal-swatch { width: .9rem; height: .9rem; border-radius: 3px; border: 1px solid var(--muted); background: color-mix(in srgb, var(--accent-2) 40%, transparent); }
+.lan-modal-all { display: flex; justify-content: center; margin: 1.5rem 0 0; }
+.lan-modal-all button { min-height: 44px; padding: .375rem 1.25rem; cursor: pointer; border: 1px solid var(--field-border); border-radius: var(--radius-sm); background: transparent; color: var(--fg); font: inherit; font-weight: 600; }
+.lan-modal-all button:hover, .lan-modal-all button:focus-visible { border-color: var(--accent); color: var(--accent); }
+.lan-modal-all button[aria-current="true"] { border-color: var(--accent); border-width: 2px; }
 
 /* The modal's county map: outlines, the chosen county by a thick outline as well as its fill. */
 .lan-map { width: 100%; max-height: 60dvh; display: block; }
 .lan-map path { fill: var(--surface, transparent); stroke: var(--muted); stroke-width: 0.6; stroke-linejoin: round; cursor: pointer; }
 .lan-map path:hover { fill: color-mix(in srgb, var(--accent) 30%, transparent); stroke: var(--accent); }
-.lan-map path.own { fill: color-mix(in srgb, var(--muted) 18%, transparent); }
+/* A county with its own site (B-315): green, not grey (grey read as "not available"). */
+.lan-map path.own { fill: color-mix(in srgb, var(--accent-2) 40%, transparent); }
 .lan-map path.current { fill: color-mix(in srgb, var(--accent) 45%, transparent); stroke: var(--fg); stroke-width: 2; }
 @media (max-width: 47.99em) { .lan-modal-map { display: none; } }
 

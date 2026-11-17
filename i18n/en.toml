@@ -1154,3 +1154,5 @@ other = "V4.3 with the amplifier off."
 other = "Linux with openHop Repeater. No firmware to choose."
 [sol_chem]
 other = "The calculator assumes Li-ion (18650 or LiPo). [Why not LiFePO4 or lead-acid]({{ .Method }}#litiumjon)."
+[lan_own_legend]
+other = "Green: the county has a MeshCore site of its own."

@@ -1150,3 +1150,5 @@ other = "V4.3 med förstärkaren avslagen."
 other = "Linux med openHop Repeater. Ingen firmware att välja."
 [sol_chem]
 other = "Kalkylatorn räknar på litiumjon (18650 eller LiPo). [Varför inte LiFePO4 eller blysyra]({{ .Method }}#litiumjon)."
+[lan_own_legend]
+other = "Grönt: länet har en egen MeshCore-sida."

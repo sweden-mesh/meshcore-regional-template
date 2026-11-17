@@ -31,16 +31,24 @@ function showList(forced) {
   const t = lan.data.texts;
   const model = modalModel(lan.data, lan.get());
   const list = el("ul", { class: "lan-modal-list", "aria-label": t.list });
-  for (const item of model.items) {
-    const b = el("button", { type: "button", "data-lan": item.v, "aria-current": item.current ? "true" : false },
-      el("span", { class: "lan-modal-name", text: item.name }));
-    if (item.own) b.append(el("span", { class: "lan-modal-own", text: `${t.own}: ${item.domain}` }));
-    if (item.current) b.append(el("span", { class: "lan-modal-own", text: t.current }));
+  // One line per button (B-315): the name only. A county with its own site is tinted on the map
+  // (legend under it) and named in the button's tooltip; Sverige is its own button below the list.
+  const button = (item) => {
+    const b = el("button", { type: "button", "data-lan": item.v, "aria-current": item.current ? "true" : false,
+      ...(item.own && { title: `${t.own}: ${item.domain}` }) }, el("span", { class: "lan-modal-name", text: item.name }));
     b.addEventListener("click", () => pick(item));
-    list.append(el("li", {}, b));
+    return b;
+  };
+  let all = null;
+  for (const item of model.items) {
+    if (item.v === "se") { all = el("p", { class: "lan-modal-all" }, button(item)); continue; }
+    list.append(el("li", {}, button(item)));
   }
   const head = el("h2", { id: "lan-modal-title", tabindex: "-1", text: t.title });
-  const body = [head, el("p", { id: "lan-modal-intro", text: t.intro }), el("div", { class: "lan-modal-body" }, el("div", { class: "lan-modal-map", "data-lan-map": "" }), list)];
+  const mapCol = el("div", { class: "lan-modal-mapcol" }, el("div", { class: "lan-modal-map", "data-lan-map": "" }),
+    el("p", { class: "lan-modal-legend" }, el("span", { class: "lan-modal-swatch", "aria-hidden": "true" }), t.ownLegend || ""));
+  const body = [head, el("p", { id: "lan-modal-intro", text: t.intro }), el("div", { class: "lan-modal-body" }, mapCol, list)];
+  if (all) body.push(all);
   if (!forced) {
     const close = el("button", { type: "button", class: "lan-modal-close", "aria-label": t.close, text: "×" });
     close.addEventListener("click", () => dialog.close());

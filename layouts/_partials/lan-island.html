@@ -12,7 +12,7 @@
 {{- $r := partialCached "region.html" . "region" -}}
 {{- $geo := "" }}{{ with resources.Get "se-lan.geojson" | fingerprint }}{{ $geo = .RelPermalink }}{{ end -}}
 {{- $d := dict "geo" $geo "sweden" (dict "name" $r.name "short" $r.short) "texts" (dict "proposal" (T "lan_proposal") "or" (T "or")
-      "title" (T "lan_modal_title") "intro" (T "lan_modal_intro") "sweden" (T "lan_sweden") "own" (T "lan_own_mark")
+      "title" (T "lan_modal_title") "intro" (T "lan_modal_intro") "sweden" (T "lan_sweden") "own" (T "lan_own_mark") "ownLegend" (T "lan_own_legend")
       "ownTitle" (T "lan_own_title" (dict "Name" "{name}")) "ownText" (T "lan_own_text" (dict "Name" "{name}"))
       "ownGo" (T "lan_own_go" (dict "Site" "{site}")) "ownOther" (T "lan_own_other") "close" (T "close") "list" (T "lan_modal_list")
       "current" (T "lan_modal_current")) "counties" $cs -}}
