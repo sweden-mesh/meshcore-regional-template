@@ -38,3 +38,18 @@ test("bubbles start at the transmitter and arrive at each neighbour", () => {
   assert.deepEqual(bubblePositions(from, ns, BUBBLE_MS / 2), [[5, 0], [0, 2]]);
   assert.deepEqual(bubblePositions(from, ns, BUBBLE_MS * 3), [[10, 0], [0, 4]]);
 });
+
+import { linkFlash, FADE_MS } from "../assets/js/map/flow.js";
+
+test("a transmitting node's links flash, then fade, then are gone (B-314)", () => {
+  const from = { lng: 14, lat: 57 }, ns = [{ lng: 14.1, lat: 57.1 }, { lng: 13.9, lat: 57.2 }];
+  assert.deepEqual(linkFlash(from, ns, -1), []);
+  const at0 = linkFlash(from, ns, 0);
+  assert.equal(at0.length, 2);
+  assert.deepEqual(at0[0].geometry.coordinates, [[14, 57], [14.1, 57.1]]);
+  assert.equal(at0[0].properties.a, 1);
+  const mid = linkFlash(from, ns, BUBBLE_MS + FADE_MS / 2)[0].properties.a;
+  assert.ok(mid > 0.4 && mid < 0.6);
+  assert.deepEqual(linkFlash(from, ns, BUBBLE_MS + FADE_MS + 1), []);
+  assert.deepEqual(linkFlash(from, [], 0), []);
+});

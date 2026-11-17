@@ -48,6 +48,17 @@ export function runs(chain) {
   return out;
 }
 
+// B-314: when a node transmits, its links flash white with a faint glow and fade back: full
+// strength while the bubbles travel, then a fade. Pure, for tests: the line features at time t
+// after the transmission (empty before it starts and once faded).
+export function linkFlash(from, neighbours, t) {
+  if (t < 0 || t > BUBBLE_MS + FADE_MS) return [];
+  const a = t <= BUBBLE_MS ? 1 : Math.max(0, 1 - (t - BUBBLE_MS) / FADE_MS);
+  if (a <= 0) return [];
+  return neighbours.map((n) => ({ type: "Feature", properties: { a },
+    geometry: { type: "LineString", coordinates: [[from.lng, from.lat], [n.lng, n.lat]] } }));
+}
+
 // Position along a run after t ms: { coords: [lng, lat], trail: [[lng,lat]...], done }.
 export function positionAt(run, t) {
   const hops = run.length - 1;
@@ -70,12 +81,18 @@ export class FlowLayer {
   install() {
     const map = this.map, empty = { type: "FeatureCollection", features: [] };
     if (map.getSource("flow-trails")) return;
+    this.linksOnTop = false;
     const before = map.getLayer("node-points") ? "node-points" : undefined;
     map.addSource("flow-trails", { type: "geojson", data: empty });
     map.addSource("flow-heads", { type: "geojson", data: empty });
     map.addSource("flow-glow", { type: "geojson", data: empty });
     map.addSource("flow-flash", { type: "geojson", data: empty });
     map.addSource("flow-bubbles", { type: "geojson", data: empty });
+    map.addSource("flow-links", { type: "geojson", data: empty });
+    // One line layer for the link flash (B-314): white, blurred for a faint glow, under the nodes.
+    // White reads the same in the colour-blind palette.
+    map.addLayer({ id: "flow-links", type: "line", source: "flow-links", layout: { "line-cap": "round" },
+      paint: { "line-color": "#ffffff", "line-width": 3.5, "line-blur": 1.5, "line-opacity": ["*", 0.85, ["get", "a"]] } }, before);
     map.addLayer({ id: "flow-glow", type: "circle", source: "flow-glow",
       paint: { "circle-color": "#f97316", "circle-radius": 14, "circle-blur": 0.6, "circle-opacity": ["get", "a"] } }, before);
     map.addLayer({ id: "flow-flash", type: "circle", source: "flow-flash",
@@ -127,6 +144,11 @@ export class FlowLayer {
   // Returns true while something is still visible.
   render() {
     if (!this.map.getSource("flow-trails")) this.install();
+    // The link layer is often added after this one: keep the flash above the links, under the nodes.
+    if (!this.linksOnTop && this.map.getLayer("links")) {
+      this.map.moveLayer("flow-links", this.map.getLayer("node-points") ? "node-points" : undefined);
+      this.linksOnTop = true;
+    }
     const now = this.now(), trails = [], heads = [];
     this.flows = this.flows.filter((f) => {
       const t = now - f.t0;
@@ -150,13 +172,14 @@ export class FlowLayer {
       if (a <= 0) { this.glows.delete(id); continue; }
       glows.push({ type: "Feature", properties: { a: 0.7 * a }, geometry: { type: "Point", coordinates: [g.p.lng, g.p.lat] } });
     }
-    const flash = [], bubbles = [];
+    const flash = [], bubbles = [], links = [];
     this.transmits = this.transmits.filter((x) => {
       const t = now - x.t0;
       if (t < 0) return true; // scheduled for a later hop
       if (t > BUBBLE_MS + FADE_MS) return false;
       const a = t <= BUBBLE_MS ? 1 : Math.max(0, 1 - (t - BUBBLE_MS) / FADE_MS);
       flash.push({ type: "Feature", properties: { a: 0.85 * a, t: Math.min(1, t / BUBBLE_MS) }, geometry: { type: "Point", coordinates: [x.p.lng, x.p.lat] } });
+      links.push(...linkFlash(x.p, x.neighbours, t));
       if (t <= BUBBLE_MS) {
         for (const c of bubblePositions(x.p, x.neighbours, t)) bubbles.push({ type: "Feature", properties: { a: 0.95 }, geometry: { type: "Point", coordinates: c } });
       }
@@ -165,6 +188,7 @@ export class FlowLayer {
     const fc = (features) => ({ type: "FeatureCollection", features });
     this.map.getSource("flow-flash").setData(fc(flash));
     this.map.getSource("flow-bubbles").setData(fc(bubbles));
+    this.map.getSource("flow-links").setData(fc(links));
     this.map.getSource("flow-trails").setData(fc(trails));
     this.map.getSource("flow-heads").setData(fc(heads));
     this.map.getSource("flow-glow").setData(fc(glows));
