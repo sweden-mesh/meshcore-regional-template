@@ -3,7 +3,7 @@ title: "Bli nodvärd"
 description: "Har du ett tak, en mast eller ett högt läge? Så kan du låta en repeater stå hos dig och hjälpa nätet att nå längre."
 lead: false
 date: 2026-11-13
-lastmod: 2026-11-14
+lastmod: 2026-11-17
 ---
 
 Nätet i {{< region "name" >}} når så långt som repeatrarna kan höra varandra, och det avgörs
@@ -41,6 +41,10 @@ visar vad som är bra med den.
 Du kan sätta upp repeatern själv med guiden [Sätt upp en repeater](/guider/repeater/), eller låta
 någon i gemenskapen göra det. Ni kommer överens om var den sitter, hur den får ström och hur man
 når den om något behöver ses över. Repeatern kan tas bort när du vill.
+
+Äger någon annan platsen, till exempel en förening, en granne eller en hyresvärd? [Till dig som
+äger platsen](/markagare/) går igenom ström, radio, ansvar och borttagning på ett A4 som du kan
+skriva ut och lämna över.
 
 ## Hör av dig
 
