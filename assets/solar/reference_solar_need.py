@@ -74,6 +74,10 @@ PANELS_W = [0.15, 0.5, 1, 1.5, 3, 5, 10, 15, 20, 25, 30, 40, 50, 100, 150, 200, 
 TILTS = (90, 60, 40)
 TREE_LINES = (0, 10, 15, 20, 30, 50)
 FIRMWARE_MA = {"esm": 4.5, "official": 7.1}   # B.2: average draw at the battery
+# B.2 (boards, 2026-11-17): the load grid. Every board in data/solar_boards.toml rounds its sourced
+# figure UP to the next level here, so the published tables are computed for these loads only.
+# 4.5 and 7.1 are the two firmware values above; their tables are unchanged.
+LOAD_GRID_MA = (4.5, 5.2, 6.0, 7.1, 8.6, 9.0, 10.5, 13.0, 13.4, 190.0)
 
 PVGIS_URL = ("https://re.jrc.ec.europa.eu/api/v5_3/seriescalc?lat={lat}&lon={lon}"
              "&raddatabase={db}&startyear=2005&endyear=2023&components=1"
@@ -392,10 +396,20 @@ def running_minimum(values):
 # One full case
 # ---------------------------------------------------------------------------
 
-def compute_case(code, tilt, trees, firmware, cache_dir, detail=False):
+def load_ma(firmware):
+    """A firmware key ("esm", "official") or a load in mA from the grid ("13.4")."""
+    if firmware in FIRMWARE_MA:
+        return FIRMWARE_MA[firmware]
+    ma = float(firmware)
+    if ma not in LOAD_GRID_MA:
+        raise ValueError(f"{firmware} mA is not on the load grid {LOAD_GRID_MA}")
+    return ma
+
+
+def compute_case(code, tilt, trees, firmware, cache_dir, detail=False, _harvests=None):
     wx = load_pvgis(code, tilt, trees, cache_dir)
-    harvest, floor_h, R = daily_harvests(wx, tilt, trees)
-    daily_need = FIRMWARE_MA[firmware] * 24 / 1000.0          # Ah per day
+    harvest, floor_h, R = _harvests or daily_harvests(wx, tilt, trees)
+    daily_need = load_ma(firmware) * 24 / 1000.0              # Ah per day
     bounds = winter_bounds(wx["dates"])
 
     cols = [h for per_var in harvest for h in per_var] + floor_h
@@ -465,6 +479,10 @@ TEST_VECTORS = [
     ("MMX", 90, "esm", 10, 5, [1195.5, 884.0, 1697.1]),
     ("LLA", 90, "esm", 20, 10, [16918.7, 15061.7, 22768.4]),
     ("OSD", 60, "official", 30, 20, [17420.9, 15602.4, 23330.5]),
+    # The load grid (B.2, boards, 2026-11-17): loads given in mA.
+    ("JKG", 90, "13.4", 20, 10, [42286.8, 35332.8, 56460.5]),
+    ("JKG", 90, "5.2", 0, 10, [643.3, 461.2, 991.9]),
+    ("JKG", 90, "190", 0, 10, [N, 686851.9, N]),
 ]
 GVX_VECTOR = ("GVX", 90, "esm", 50, 25, 40700.2, 40983.3)  # high after / before
 FLOOR_VECTORS = [
@@ -563,7 +581,8 @@ def main():
     ap.add_argument("point", nargs="?", choices=sorted(POINTS), help="point code")
     ap.add_argument("--tilt", type=int, choices=TILTS, default=90)
     ap.add_argument("--trees", type=int, choices=TREE_LINES, default=20)
-    ap.add_argument("--firmware", choices=sorted(FIRMWARE_MA), default="esm")
+    ap.add_argument("--firmware", default="esm",
+                    help="esm, official, or a load in mA from the grid: " + ", ".join(map(str, LOAD_GRID_MA)))
     ap.add_argument("--cache-dir", default="pvgis_cache")
     ap.add_argument("--check", action="store_true", help="run the B.14 test vectors")
     ap.add_argument("--tables", action="store_true", help="print R, Voc_stc, start light")
