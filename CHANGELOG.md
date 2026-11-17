@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.43.2 — 2026-11-17
+
+- **The shared national Beacon is the default** (`params.beacon.url` =
+  `https://beacon.meshcoresverige.se`, the same Beacon under a national name). A site that sets its
+  own `beacon.url` is unchanged; set `url = ""` for no live data.
+
 ## v0.43.1 — 2026-11-17
 
 - **Test messages: "helst inte" instead of "aldrig"** (operator). The test channel's note now says

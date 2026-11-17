@@ -92,7 +92,7 @@
   companions = false         # true = also show companion nodes (handsets); their positions can be homes
 
 [params.beacon]
-  url = ""                   # Beacon base URL, e.g. https://beacon.example.se; empty = no live data
+  url = "https://beacon.meshcoresverige.se"   # the shared national Beacon by default; a region may run its own; "" = no live data
 
 # MeshMapper (README "MeshMapper coverage"): a link to the region's map, and its measured coverage as a map
 # layer, fetched at build time when coverage = true and HUGO_MESHMAPPER_KEY is set (the key decides the region).
