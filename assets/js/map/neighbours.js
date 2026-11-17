@@ -64,9 +64,10 @@ export function linkStyle({ count = 0, age = 0, role = "all" }, { p = palette(),
 }
 
 // One line per unordered pair whose both ends have a position: the pairs in the node list's
-// neighborIds and in the fetched counts.
-export function allLinks(nodes, counts = new Map(), { selected = null, focus = false, p = palette(), now = Date.now() } = {}) {
-  const byId = new Map((nodes || []).filter(validPosition).map((n) => [n.id, n]));
+// neighborIds and in the fetched counts. With `foreign` off ("Utanför regionen" hidden) a link
+// with an end outside the region is left out too, since that end is not on the map.
+export function allLinks(nodes, counts = new Map(), { selected = null, focus = false, foreign = true, p = palette(), now = Date.now() } = {}) {
+  const byId = new Map((nodes || []).filter((n) => validPosition(n) && (foreign || !n.possiblyForeign)).map((n) => [n.id, n]));
   const pairs = new Map();
   for (const n of byId.values()) for (const other of n.neighborIds || []) {
     const k = linkKey(n.id, other);

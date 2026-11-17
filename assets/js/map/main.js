@@ -80,7 +80,7 @@ async function start() {
   // the other links turn faint grey. The counts arrive one node at a time after the first draw,
   // at most every 10 minutes per node (neighbours.js).
   const drawLinks = () => addLinkLayer(map, state.showLinks
-    ? allLinks(state.nodes, linkCounts.counts(), { selected: state.selected, focus: state.focus }) : empty);
+    ? allLinks(state.nodes, linkCounts.counts(), { selected: state.selected, focus: state.focus, foreign: state.showForeign }) : empty);
   let linkTimer = 0;
   const linkCounts = linkCountLoader(client, { onUpdate: () => { if (!linkTimer) linkTimer = setTimeout(() => { linkTimer = 0; drawLinks(); }, 400); } });
   el.linkCounts = linkCounts; // for browser tests
@@ -107,7 +107,7 @@ async function start() {
     ],
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); }
-      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); }
+      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); drawLinks(); }
       if (key === "live") { state.live = on; state.onLive?.(on); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); drawLinks(); }
       extraToggle(key, on);

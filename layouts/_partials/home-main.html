@@ -5,7 +5,9 @@
   <section class="hero">
     <h1>{{ T "hero_title" (dict "Region" $r.name) }}</h1>
     <p class="tagline">{{ T "hero_tagline" }}</p>
-    {{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+    {{- /* The region's scope in the lead gets the scope style it has everywhere else (B-300). Only a
+           county scope (se-had, se08), never the bare "se", which also occurs inside words. */ -}}
+    {{ with .Description }}{{ $d := . | htmlEscape }}{{ with $r.scope }}{{ if ne . "se" }}{{ $d = replaceRE (printf `(^|[\s("])%s([\s,.;:)"]|$)` (. | htmlEscape)) (printf `${1}<code class="scope">%s</code>${2}` (. | htmlEscape)) $d }}{{ end }}{{ end }}<p class="lead">{{ $d | safeHTML }}</p>{{ end }}
     <p class="hero-actions">
       {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
       <a class="button button-secondary" href="#karta" data-ease>{{ T "cta_map" }}</a>

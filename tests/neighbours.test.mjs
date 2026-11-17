@@ -18,6 +18,17 @@ test("allLinks draws each pair once and skips ends without a position", () => {
   assert.equal(fc.features[0].properties.colour, P.linkNone); // no count yet: neutral
 });
 
+test("allLinks leaves out links to out-of-region nodes while those are hidden", () => {
+  const F = { id: "f", lat: 58.1, lng: 14.6, neighborIds: ["a"], possiblyForeign: true };
+  const A2 = { ...A, neighborIds: ["b", "f"] };
+  const counts = new Map([[linkKey("a", "f"), { count: 9, lastSeen: Date.now() }]]);
+  const pairs = (fc) => fc.features.map((f) => [f.properties.a, f.properties.b].sort().join("|")).sort();
+  assert.deepEqual(pairs(allLinks([A2, B, F], counts, { p: P })), ["a|b", "a|f"]);
+  assert.deepEqual(pairs(allLinks([A2, B, F], counts, { p: P, foreign: false })), ["a|b"]);
+  const cb = palette("light", true);
+  assert.deepEqual(pairs(allLinks([A2, B, F], counts, { p: cb, foreign: false })), ["a|b"]);
+});
+
 test("mergeLinkCounts sums the two directions and the IATAs into one value per link", () => {
   const m = mergeLinkCounts(new Map([
     ["a", [{ id: "b", observationCount: 203, lastSeen: 10 }, { id: "b", observationCount: 7, lastSeen: 30 }]],

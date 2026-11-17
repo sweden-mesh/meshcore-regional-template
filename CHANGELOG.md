@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.42.3 — 2026-11-17
+
+Two map and page fixes.
+
+- **Links to hidden nodes are hidden too (B-299).** With "Utanför regionen" turned off, the links
+  that end at a node outside the region now disappear with the node, and come back with it.
+  `allLinks()` takes `foreign` (default on).
+- **The scope in the front-page lead is styled as a scope (B-300).** In national mode a county's
+  lead ("… länets region se13, …") shows the scope in the same fixed-width style as elsewhere;
+  the meta description stays plain text. The bare `se` is never marked up.
+
 ## v0.42.2 — 2026-11-16
 
 Removes a Python cache file that v0.42.1 carried by mistake (`assets/solar/__pycache__/`, never
