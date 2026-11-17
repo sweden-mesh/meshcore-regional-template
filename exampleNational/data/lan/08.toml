@@ -17,6 +17,10 @@ community = { name = "Exempelgruppen", url = "https://example.org/grupp" }   # B
   name = "Exempelgruppen"
   url  = "https://example.org/grupp"
 
+[[groups]]
+  name = "Rikschatten"         # the same address as params.chats: the footer lists it once (B-317)
+  url  = "https://example.org/chat"
+
 [[wanted]]
   name = "Exempelberget"
   lat  = 57.1

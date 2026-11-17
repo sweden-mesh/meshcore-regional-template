@@ -41,7 +41,12 @@ function renderLists(c) {
   const groups = groupsFor(c);
   for (const ul of document.querySelectorAll('[data-r-groups="list"]')) {
     ul.querySelectorAll("[data-r-item]").forEach((n) => n.remove());
-    groups.slice().reverse().forEach((g) => { const li = document.createElement("li"); li.dataset.rItem = ""; li.append(link(g)); ul.prepend(li); });
+    // A group whose address is already one of the list's own links is not added twice (B-317).
+    const have = new Set([...ul.querySelectorAll("a")].map((a) => a.href));
+    groups.slice().reverse().forEach((g) => {
+      if (have.has(new URL(g.url, location.href).href)) return;
+      const li = document.createElement("li"); li.dataset.rItem = ""; li.append(link(g)); ul.prepend(li);
+    });
   }
   for (const el of document.querySelectorAll('[data-r-groups="inline"]')) {
     if (!el.rNeutral) el.rNeutral = [...el.childNodes].map((n) => n.cloneNode(true));

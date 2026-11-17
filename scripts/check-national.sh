@@ -81,7 +81,9 @@ check kalmar/index.html '<code class=scope>se08</code></dd></div><div><dt>IATA f
 # Channels, groups and contact from the county (G13, G14).
 check guider/kanaler/index.html '<tbody data-r-channels><tr><td><code data-r=test>#test-se-&lt;län></code>' "channels: a guide's table holds the county's test channel row"
 check index.html '<ul data-r-groups=list><li><a href=https://example.org/chat' "groups: the footer list takes the county's groups, national chats after"
-check kalmar/index.html '<ul data-r-groups=list><li><a href=https://example.org/grupp class=ext target=_blank rel=noopener>Exempelgruppen</a>' "groups: a county page's footer lists its group"
+check kalmar/index.html '<ul data-r-groups=list><li data-r-item><a href=https://example.org/grupp class=ext target=_blank rel=noopener>Exempelgruppen</a>' "groups: a county page's footer lists its group"
+n=$(grep -o '<p class=footer-title>Gemenskap</p>.*</ul>' "$P/kalmar/index.html" | grep -o 'href=https://example.org/chat ' | wc -l)
+if [ "$n" = "1" ]; then echo "ok   footer: a group with the same address as a chat link is listed once (B-317)"; else echo "FAIL footer: example.org/chat listed $n times"; fail=1; fi
 check bli-nodvard/index.html '<span data-r-groups=inline><a href=https://example.org/chat' "contact: shared pages name the national chats until a county is chosen"
 # Proposed scopes (P2) and the solar guide's reference (G17).
 check guider/regioner/index.html '<p class=lan-proposal data-r-proposal hidden>Regionen <code><span data-r=scope>' "proposal: the page has the hidden proposal line"
