@@ -49,6 +49,7 @@ Alla som ska höra varandra måste ha samma frekvens, bandbredd och spreading fa
 
 Välj förinställningen i appens radioinställningar och spara. Sändeffekten väljer du efter radio,
 antenn och vad som är tillåtet; många använder 22 dBm, men kontrollera vad din radio klarar.
+Värdena och reglerna bakom dem: [MeshCore-inställningar i Sverige](../radioinstallningar/).
 
 ## 4. Ge radion ett namn
 

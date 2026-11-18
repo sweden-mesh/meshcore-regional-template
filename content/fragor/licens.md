@@ -11,4 +11,5 @@ begränsningar som [PTSFS 2025:1](https://pts.se/contentassets/b05c8a7d01a64783a
 ERP, antennens vinst inräknad, och högst 10 procent av tiden (duty cycle) för en radio som inte
 använder LBT-teknik (lyssna innan den sänder). MeshCore räknar med 10 procent. Med regionens standardinställningar och en vanlig antenn
 håller du dig inom dem. Det är inte amatörradio: ingen anropssignal behövs, och ett certifikat ger
-inga extra rättigheter. Mer i [För radioamatörer](../guider/for-radioamatorer/).
+inga extra rättigheter. Reglerna i en tabell: [MeshCore-inställningar i
+Sverige](../guider/radioinstallningar/). Mer i [För radioamatörer](../guider/for-radioamatorer/).

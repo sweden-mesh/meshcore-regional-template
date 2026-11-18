@@ -42,25 +42,9 @@ Duty cycle
 
 ### Antennvinsten räknas in
 
-Gränsen gäller ERP, inte uteffekten från kortet. ERP räknas mot en halvvågsdipol, som har
-2,15 dBi:
-
-```text {title="ERP"}
-ERP (dBm) = uteffekt (dBm) − kabelförlust (dB) + antennvinst (dBi) − 2,15
-```
-
-| Uteffekt | Kabel | Antenn | ERP | Inom gränsen? |
-| --- | --- | --- | --- | --- |
-| 22 dBm | 1 dB | 3 dBi | cirka 150 mW | ja |
-| 22 dBm | 1 dB | 6 dBi | cirka 310 mW | ja |
-| 28,4 dBm (Heltec V4, `set tx 22`) | 0 dB | 3 dBi | cirka 850 mW | **nej** |
-| 25,3 dBm (Heltec V4, `set tx 16`) | 0 dB | 3 dBi | cirka 420 mW | ja |
-
-De flesta kort har en SX1262 som ger högst 22 dBm, och då håller du dig inom gränsen med en
-vanlig antenn. Kort med ett effektsteg efter radiokretsen ger mer än `set tx` säger. Heltec V4
-gav 28,4 dBm på `set tx 22`, uppmätt med kalibrerad mätare på tre kort ([MeshCore issue
-1708](https://github.com/meshcore-dev/MeshCore/issues/1708)). Det finns också kort på 1 W
-(30 dBm). Med dem räknar du ut ERP innan du sätter `set tx`, och sänker den tills summan håller.
+Gränsen gäller ERP, inte uteffekten från kortet, och kort med ett effektsteg ger mer än `set tx`
+säger. Formeln, ett räkneexempel och Heltec V4:s uppmätta effekt står i [Sändeffekt och
+antenn](../radioinstallningar/#sändeffekt-och-antenn).
 
 ## LoRa-parametrarna
 

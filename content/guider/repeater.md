@@ -51,7 +51,8 @@ svar efter varje kommando.
 
 ### Radio
 
-Samma inställningar som alla andra i {{< region "name" >}}:
+Samma inställningar som alla andra i {{< region "name" >}} (varför de är just de här: [MeshCore-inställningar
+i Sverige](../radioinstallningar/)):
 
 {{< settings >}}
 

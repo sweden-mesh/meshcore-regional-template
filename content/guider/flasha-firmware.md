@@ -100,7 +100,7 @@ längre in i flashen och skrivs inte över.
 - **Companion:** öppna MeshCore-appen och anslut till radion via Bluetooth eller USB; se
   [Kom igång med en companion](../companion/#2-anslut-appen).
 - **Repeater:** ställ in namn, position och [region](../regioner/) innan den sätts upp. Radions
-  inställningar för {{< region "name" >}}:
+  inställningar för {{< region "name" >}} ([vad de betyder](../radioinstallningar/)):
 
 {{< settings >}}
 
