@@ -349,7 +349,7 @@ MeshCore- och EasySkyMesh-byggen på XIAO nRF52840 med Wio-SX1262; CN3791-databl
 modultemperaturer från FMI:s fältmätningar i Sodankylä och laminatdatablad; köldegenskaper för
 celler från tillverkarnas datablad och publicerade tester, bland annat Battery Universitys
 [BU-410](https://batteryuniversity.com/article/bu-410-charging-at-high-and-low-temperatures) om laddning i
-kyla och ett [typiskt LiFePO4-datablad](https://stg.robu.in/wp-content/uploads/2021/03/10-871884-Orange-50Ah-3.2V-Prismatic-LFP-Battery.pdf)
+kyla och ett [typiskt LiFePO4-datablad](https://robu.in/wp-content/uploads/2021/03/10-871884-Orange-50Ah-3.2V-Prismatic-LFP-Battery.pdf)
 (laddning vid 0–45 °C); fälttestet i Jönköping oktober och
 november 2026.
 
