@@ -1328,3 +1328,13 @@ other = "Län"
 other = "Region (scope)"
 [iata_code]
 other = "IATA-kod för kartan"
+[gem_own_site]
+other = "länets egen webbplats"
+[gem_none]
+other = "ingen grupp känd än"
+[gem_add]
+other = "1. Läs [hur länets uppgifter rättas]({{ .URL }}).\n2. Lägg till gruppens namn och adress i länets fil, eller be någon i Discord göra det.\n3. Gruppen syns här, i sidfoten och på länets sida när ändringen är godkänd."
+[gem_all]
+other = "Alla grupper, län för län"
+[page_checked]
+other = "Kontrollerad mot MeshCore {{ .Version }} ({{ .Month }})"

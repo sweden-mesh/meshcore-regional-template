@@ -10,6 +10,8 @@ source:
   changes: "Omskriven efter den svenska tvånivåmodellen (se + länets namn, inga kommunkoder); regionsvärden från sidans inställningar; verktyget ersatt av färdiga kommandon."
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 En **region** (i appen ibland *scope*) är en etikett på ett paket. Den talar om för repeatrarna

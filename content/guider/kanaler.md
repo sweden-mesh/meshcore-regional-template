@@ -6,6 +6,8 @@ weight: 80
 group: regioner
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 En **kanal** är ett gemensamt rum: alla som har kanalens nyckel kan läsa och skriva där. Utöver

@@ -6,6 +6,8 @@ weight: 30
 group: start
 date: 2026-11-18
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 En companion på batteri och repeatrar på sol eller batteri fortsätter att skicka meddelanden

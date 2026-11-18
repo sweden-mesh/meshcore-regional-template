@@ -284,6 +284,7 @@
   cons = ["Basplattan har ingen MPPT-laddning", "Ingen låda ingår", "Varianter med lös OLED kräver lödning"]
   warnings = ["Enligt en kundrecension i RAK:s butik måste OLED-skärmen tas bort för att koppla in eller ur LiPo-batteriet", "MeshCore FAQ rekommenderar starkt OTAFIX-bootloadern för nRF52-enheter"]
   sources = [{ name = "RAK store: WisBlock Meshtastic Starter Kit", url = "https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit" }, { name = "RAK4631 datablad", url = "https://docs.rakwireless.com/product-categories/wisblock/rak4631/datasheet/" }, { name = "MeshCore FAQ (1.2.1, 7.1, 7.8)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "rak-wisblock.webp", alt = "RAK WisBlock-baskort med RAK4631-modulen och USB-C-kontakt" }
 
 [[repeater]]
   name = "Seeed SenseCAP Solar Node P1-Pro (MeshCore)"

@@ -7,6 +7,8 @@ group: repeater
 date: 2026-11-16
 lastmod: 2026-11-18
 wideTables: true
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 Den här guiden bygger hårdvaran. Hur du sedan ställer in repeatern, väljer plats och kontrollerar

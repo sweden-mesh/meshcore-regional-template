@@ -58,8 +58,8 @@ const choose = async (v) => {
 };
 const visible = () => page.evaluate(() => {
   // Lists of every county (the modal, /lan/, the wizard selector, Sverige's list of every county's
-  // groups, B-318) name them all on purpose.
-  for (const d of document.querySelectorAll("dialog, .lan-list, [data-lan-wizard], .lan-all-groups")) d.remove();
+  // groups, B-318; the IATA table and Gemenskap's county list, .lan-every) name them all on purpose.
+  for (const d of document.querySelectorAll("dialog, .lan-list, [data-lan-wizard], .lan-all-groups, .lan-every")) d.remove();
   return `${document.title}\n${document.body.innerText}`;
 });
 let fail = 0;

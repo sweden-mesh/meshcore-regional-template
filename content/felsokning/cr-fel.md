@@ -5,6 +5,8 @@ category: radio
 weight: 50
 date: 2026-11-18
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 ## Troliga orsaker

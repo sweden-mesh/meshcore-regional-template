@@ -9,6 +9,8 @@ cardSkip: true
 aliases: ["/guider/antenner/"]
 date: 2026-11-18
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 Antennen och var den sitter betyder mer för en repeater än kortet. Den lilla antennen som följer

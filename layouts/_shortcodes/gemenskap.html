@@ -1,0 +1,40 @@
+{{- /* {{< gemenskap "sverige" >}} / "lan" / "lagg-till" (CONTENT-SV-15): the community page's lists,
+  from the same params and county files as the footer, so no link is typed twice. "sverige": the
+  site's chats and links; "lan": national mode, every county with its [[groups]] (a county's own
+  regional site is not repeated as a group), a regional site: params.community; "lagg-till": the
+  steps to add a group, only when params.lanData points to the county files' instructions. */ -}}
+{{- $what := .Get 0 -}}
+{{- if eq $what "sverige" -}}
+  {{- $seen := slice }}{{ $items := slice -}}
+  {{- with site.Params.chat.discord }}{{ $items = $items | append (dict "name" "Discord" "url" .) }}{{ end -}}
+  {{- with site.Params.chat.matrix }}{{ $items = $items | append (dict "name" "Matrix" "url" .) }}{{ end -}}
+  {{- range site.Params.chats }}{{ $items = $items | append (dict "name" .name "url" .url) }}{{ end -}}
+  {{- range site.Params.links }}{{ $items = $items | append (dict "name" .name "url" .url) }}{{ end -}}
+<ul>
+  {{- range $items }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}
+  <li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a></li>{{ end }}{{ end }}
+  {{- with site.GetPage "/egen-regional-sida" }}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+</ul>
+{{- else if eq $what "lan" -}}
+  {{- if site.Params.national -}}
+  {{- $own := slice }}{{ range partialCached "lan.html" . "lan" }}{{ with .site }}{{ $own = $own | append . }}{{ end }}{{ end }}
+<dl class="gemenskap-lan lan-every">
+  {{- range partialCached "lan.html" . "lan" }}
+  {{- $gs := slice }}{{ $urls := slice }}
+  {{- range .groups }}{{ if and .url (not (in $urls .url)) (not (in $own .url)) }}{{ $gs = $gs | append . }}{{ $urls = $urls | append .url }}{{ end }}{{ end }}
+  {{- with .community }}{{ if and .url (not (in $urls .url)) (not (in $own .url)) }}{{ $gs = $gs | append (dict "name" (.name | default .url) "url" .url) }}{{ end }}{{ end }}
+  <dt>{{ .name }}</dt>
+  <dd>{{ with .site }}<a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "gem_own_site" }}</a>{{ if $gs }} · {{ end }}{{ end }}
+    {{- range $i, $g := $gs }}{{ if $i }} · {{ end }}<a href="{{ $g.url }}" class="ext" target="_blank" rel="noopener">{{ $g.name }}</a>{{ end }}
+    {{- if and (not $gs) (not .site) }}<span class="muted">{{ T "gem_none" }}</span>{{ end }}</dd>
+  {{- end }}
+</dl>
+  {{- else -}}
+  {{- with site.Params.community }}{{ if .url }}<p><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name | default .url }}</a></p>{{ end }}{{ end -}}
+  {{- end -}}
+{{- else if eq $what "lagg-till" -}}
+  {{- with site.Params.lanData }}
+{{ T "gem_add" (dict "URL" .) | markdownify }}
+  {{- end }}
+{{- else }}{{ errorf "gemenskap: unknown list %q in %s" $what .Position }}{{ end -}}

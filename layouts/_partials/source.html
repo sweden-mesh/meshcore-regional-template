@@ -20,5 +20,9 @@
     {{- $edit = print "https://github.com/sweden-mesh/meshcore-regional-template/edit/main/content/" .Path -}}
   {{- end -}}
 {{- end }}
-<p class="page-meta">{{ T "page_updated" (dict "Date" (.Lastmod | time.Format ":date_long")) }}{{ with $edit }} · <a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "page_edit" }}</a>{{ end }}</p>
+{{- /* "Kontrollerad mot MeshCore 1.18 (november 2026)" (CONTENT-SV-18): front matter
+  checkedFirmware (the version) and checkedOn (the date the page's facts were checked against it). */ -}}
+{{- $checked := "" -}}
+{{- with .Params.checkedFirmware }}{{ $checked = T "page_checked" (dict "Version" . "Month" (time.Format "January 2006" ($.Params.checkedOn | default $.Lastmod))) }}{{ end }}
+<p class="page-meta">{{ T "page_updated" (dict "Date" (.Lastmod | time.Format ":date_long")) }}{{ with $checked }} · {{ . }}{{ end }}{{ with $edit }} · <a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "page_edit" }}</a>{{ end }}</p>
 {{- end -}}

@@ -1332,3 +1332,13 @@ other = "County"
 other = "Region (scope)"
 [iata_code]
 other = "IATA code for the map"
+[gem_own_site]
+other = "the county's own site"
+[gem_none]
+other = "no group known yet"
+[gem_add]
+other = "1. Read [how to correct the county's details]({{ .URL }}).\n2. Add the group's name and address to the county's file, or ask someone on Discord to do it.\n3. The group shows here, in the footer and on the county's page once the change is accepted."
+[gem_all]
+other = "All groups, county by county"
+[page_checked]
+other = "Checked against MeshCore {{ .Version }} ({{ .Month }})"

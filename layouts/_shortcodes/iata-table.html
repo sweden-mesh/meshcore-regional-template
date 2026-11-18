@@ -8,7 +8,7 @@
   {{- $r := partialCached "region.html" .Page "region" -}}
   {{- $rows = slice (dict "name" $r.name "scope" $r.scope "iata" ($r.iatas | default slice)) -}}
 {{- end -}}
-<div class="table-wrap"><table>
+<div class="table-wrap{{ if site.Params.national }} lan-every{{ end }}"><table>
   <thead><tr><th scope="col">{{ T "iata_county" }}</th><th scope="col">{{ T "iata_region" }}</th><th scope="col">{{ T "iata_code" }}</th></tr></thead>
   <tbody>
   {{- range $rows }}

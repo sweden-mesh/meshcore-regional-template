@@ -791,3 +791,6 @@ body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin
 .diagram .dg-dot { fill: var(--accent); }
 .diagram .dg-zone { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 4; }
 .diagram .dg-hill { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+/* Gemenskap (CONTENT-SV-15): county → groups. */
+.gemenskap-lan dt { font-weight: 600; margin-top: .8rem; }
+.gemenskap-lan dd { margin: .2rem 0 0; }

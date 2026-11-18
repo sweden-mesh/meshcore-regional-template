@@ -6,6 +6,8 @@ weight: 95
 group: start
 date: 2026-11-16
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 MeshCore och Meshtastic är två fria system för textmeddelanden över LoRa. **De körs på samma

@@ -10,6 +10,8 @@ source:
   changes: "Utbyggt till en egen guide med vanliga kommandon och felsökning."
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 Repeatrar och room servers har ingen app för alla inställningar. De ställs in med korta

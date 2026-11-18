@@ -6,6 +6,8 @@ weight: 14
 group: start
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 MeshCore körs på billiga LoRa-kort. Samma kort kan oftast bli companion eller repeater beroende på

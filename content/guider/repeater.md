@@ -11,6 +11,8 @@ source:
   changes: "Omskriven och förkortad; radio och region från sidans inställningar; grundvärdena och tabellen över sändfördröjningar återgivna med källa; test och checklista omskrivna."
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 En **repeater** tar emot trafik och sänder den vidare. Varje välplacerad repeater gör att fler

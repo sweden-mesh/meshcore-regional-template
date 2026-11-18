@@ -11,6 +11,8 @@ source:
   changes: "Omskriven och förkortad för regionala sidor; observatörsrollen, flooding och vägar tillagda; kartlänkarna ersatta av kartan på startsidan."
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 MeshCore skickar textmeddelanden mellan små LoRa-radior. Meddelandena går från radio till

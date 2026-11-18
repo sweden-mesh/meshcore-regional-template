@@ -10,6 +10,8 @@ source:
   changes: "Flashningsdelen omskriven som egen guide; val av firmware via firmwareväljaren; filer och adresser för ESP32; felsökning tillagd."
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 Att *flasha* är att installera programvaran (firmware) i radion. Samma radio kan bli companion,

@@ -6,6 +6,8 @@ weight: 104
 group: radio
 date: 2026-11-18
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 MeshCore i Sverige använder förinställningen **{{< param "radio.preset" >}}** på {{< param "radio.freq" >}} MHz.

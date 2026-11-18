@@ -4,6 +4,22 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.59.0 — 2026-11-18
+
+- **Gemenskap** (CONTENT-SV-15): a new page `/gemenskap/` with the site's chats and links, every
+  county's groups in national mode (from the county files), ways to help without a radio, and how to
+  add a group (when `params.lanData` is set). New shortcode `{{</* gemenskap "sverige|lan|lagg-till" */>}}`;
+  linked from the footer and Sverige's community column.
+- **"Kontrollerad mot MeshCore 1.18 (november 2026)"** (CONTENT-SV-18): front matter `checkedFirmware`
+  and `checkedOn`, printed beside the update date; set on every guide and troubleshooting entry the
+  content plan touched. The Källor convention and the quarterly re-check are in the README.
+- **Ordlista** (CONTENT-SV-19): 37 terms, each a heading with a stable anchor (`#duty-cycle`, `#erp`,
+  `#sf`, `#bw`, `#cr`, `#iata` …), linking the guide that explains it.
+- **RAK WisBlock picture** in the repeater table.
+- Fix: the national browser check skips lists that name every county on purpose (`.lan-every`: the IATA
+  table and Gemenskap's county list); v0.58.0's CI failed on that.
+- No script changes: **no CSP hash changes**.
+
 ## v0.58.0 — 2026-11-18
 
 - **Kartan och observatörer** (CONTENT-SV-11), the retitled `/guider/visa-pa-kartan/` (URL kept): the

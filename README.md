@@ -261,6 +261,14 @@ Plain Markdown plus:
   name or scope into a shared guide.
 - A page adapted from elsewhere names its source in front matter
   (`source: {title, url, license, changes}`); the page prints the credit that CC BY requires.
+- **Sources (Källor):** a page that states a number or a rule ends with `## Källor`, one Markdown
+  footnote per source (`[^key]: Utgivare, [titel](url), avsnitt.`), cited where the fact stands.
+  No number without its source.
+- **Checked against firmware:** `checkedFirmware: "1.18"` and `checkedOn: 2026-11-18` in front matter
+  print "Kontrollerad mot MeshCore 1.18 (november 2026)" beside the update date on guides and
+  troubleshooting pages. Re-check them each quarter, with the prices on the hardware pages and the
+  "Andra kartor" links, and grep the version to find stale pages.
+- Drawings: `{{</* diagram "region|fresnel|observer" */>}}`; IATA codes: `{{</* iata-table */>}}`.
 
 `exampleSite/content/om-regionen.md` shows every component.
 

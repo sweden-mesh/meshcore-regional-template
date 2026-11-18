@@ -49,6 +49,7 @@
          and never one of our own regional sites (a county's `site`). */ -}}
   {{- $own := slice }}{{ range partialCached "lan.html" . "lan" }}{{ with .site }}{{ $own = $own | append . }}{{ end }}{{ end -}}
   {{- range partialCached "lan.html" . "lan" }}{{ $short := .short }}{{ with .community }}{{ if and .url (not (in $seen .url)) (not (in $own .url)) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a> <small>%s</small></li>" .url (.name | htmlEscape) ($short | htmlEscape)) }}{{ end }}{{ end }}{{ end -}}
+  {{- with site.GetPage "/gemenskap" }}{{ $items = $items | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink (T "gem_all")) }}{{ end -}}
   {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul class=\"lan-all-groups\">%s</ul>" (T "section_community") (T "lan_se_groups_intro") (delimit $items "")) -}}
 {{- end -}}
 {{- return $cols -}}

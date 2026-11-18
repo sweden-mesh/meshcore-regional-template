@@ -11,6 +11,8 @@ source:
   changes: "Omskriven; tre sätt med egna steg; regionens IATA och förinställning från sidans parametrar; IATA-tabellen ur länsfilerna."
 date: 2026-11-12
 lastmod: 2026-11-18
+checkedFirmware: "1.18"
+checkedOn: 2026-11-18
 ---
 
 En **observatör** är en repeater, eller en dator vid en radio, som skickar det den hör till en
