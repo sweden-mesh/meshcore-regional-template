@@ -48,7 +48,7 @@ en chattkanal: varje test kostar sändningstid för alla inom räckhåll. Mer om
    [Ingen svarar på test i {{ .Test }}]({{ .URL }}ingen-svar-pa-test/). Finns inga repeatrar med
    auto-svar i länet än, testa i den vanliga `#test` i stället. Vad svaren betyder står i
    [Första meddelandet](/guider/forsta-meddelandet/).
-7. **Säg hej**{{ with .Chat }} i `{{ . }}`{{ end }}{{ with .Groups }}, eller hos {{ range $i, $g := . }}{{ if $i }} eller {{ end }}[{{ $g.name }}]({{ $g.url }}){{ end }}{{ else }}{{ with .Chats }}, eller i {{ range $i, $g := . }}{{ if $i }} eller {{ end }}[{{ $g.name }}]({{ $g.url }}){{ end }}{{ end }}{{ end }}.
+7. **Säg hej**{{ with .Chat }} i `{{ . }}`{{ end }}{{ $or := cond (ne .Chat "") ", eller" "" }}{{ with .Groups }}{{ $or }} hos {{ range $i, $g := . }}{{ if $i }} eller {{ end }}[{{ $g.name }}]({{ $g.url }}){{ end }}{{ else }}{{ with .Chats }}{{ $or }} i {{ range $i, $g := . }}{{ if $i }} eller {{ end }}[{{ $g.name }}]({{ $g.url }}){{ end }}{{ end }}{{ end }}.
 
 Hör du bara en repeater är det oftast helt normalt: den för vidare dina meddelanden till resten av
 nätet. Se [Jag hör bara en repeater](/felsokning/bara-en-repeater/).
