@@ -25,7 +25,10 @@ export function regionFor(ds, chosen) {
 const box = globalThis.document?.getElementById("search");
 if (box) start(box);
 
-async function start(box) {
+// Runs once per box: the /sok/ page and the header's dialog (search-dialog.js) both import this.
+export async function start(box) {
+  if (box.dataset.started) return;
+  box.dataset.started = "1";
   const t = JSON.parse(box.dataset.texts || "{}");
   const input = box.querySelector("input"), status = box.querySelector(".search-status"), list = box.querySelector(".search-results");
   let pf;

@@ -5,6 +5,9 @@
 {{- $out := .value -}}
 {{- if site.Params.national -}}{{- if not (partial "lan-page.html" .page) -}}
   {{- $neutral := index (dict "name" (T "lan_n_name") "short" (T "lan_n_name") "scope" (T "lan_n_scope") "test" (T "lan_n_test") "iata" (T "lan_n_iata") "prefix" (T "lan_n_prefix") "place" (T "lan_place_example")) .key | default .value -}}
-  {{- $out = printf `<span data-r="%s">%s</span>` .key (htmlEscape $neutral) | safeHTML -}}
+  {{- /* Placeholder forms (se-<län>, XXX, SE-<LÄN>) stay out of the search index and its excerpts
+        (UX-SV-5); a readable one ("ditt län") stays in. */ -}}
+  {{- $ign := cond (in (slice "scope" "test" "iata" "prefix") .key) " data-pagefind-ignore" "" -}}
+  {{- $out = printf `<span data-r="%s"%s>%s</span>` .key $ign (htmlEscape $neutral) | safeHTML -}}
 {{- end -}}{{- end -}}
 {{- return $out -}}
