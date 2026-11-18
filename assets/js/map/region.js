@@ -20,15 +20,31 @@ export async function loadBorders(client, iatas) {
   return results.filter((r) => r.status === "fulfilled" && r.value?.geometry).map((r) => r.value);
 }
 
+// More than one border on the map (the national Sverige view: every county's IATA) is drawn
+// dimmer and thinner, so the counties read as a background grid and not as a cage (B-348). One
+// border (a county page, a regional site) keeps the full line. Pure, for tests.
+export function borderStyle(count) {
+  return count > 1
+    ? { line: 0.3, width: 1, fill: 0.03 }
+    : { line: 0.7, width: 1.5, fill: 0.05 };
+}
+
 export function addBorderLayers(map, features) {
   const data = { type: "FeatureCollection", features };
-  if (map.getSource("region-border")) { map.getSource("region-border").setData(data); return; }
+  const st = borderStyle(features.length);
+  if (map.getSource("region-border")) {
+    map.getSource("region-border").setData(data);
+    map.setPaintProperty("region-fill", "fill-opacity", st.fill);
+    map.setPaintProperty("region-line", "line-opacity", st.line);
+    map.setPaintProperty("region-line", "line-width", st.width);
+    return;
+  }
   const before = ["wanted-area", "node-points"].find((id) => map.getLayer(id));
   map.addSource("region-border", { type: "geojson", data });
   map.addLayer({ id: "region-fill", type: "fill", source: "region-border",
-    paint: { "fill-color": "#0b6bcb", "fill-opacity": 0.05 } }, before);
+    paint: { "fill-color": "#0b6bcb", "fill-opacity": st.fill } }, before);
   map.addLayer({ id: "region-line", type: "line", source: "region-border",
-    paint: { "line-color": "#0b6bcb", "line-width": 1.5, "line-dasharray": [3, 2], "line-opacity": 0.7 } }, before);
+    paint: { "line-color": "#0b6bcb", "line-width": st.width, "line-dasharray": [3, 2], "line-opacity": st.line } }, before);
 }
 
 export function frameBorders(map, features) {
