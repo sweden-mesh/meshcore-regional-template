@@ -163,11 +163,18 @@ export function pickPaint(base, ids, dim, prop = "id", soft = false) {
 // The node and link layers' own opacities (as nodes.js and neighbours.js add them).
 const fade = (v) => ["case", ["get", "foreign"], v, 1];
 const DIM = 0.12, LINK_DIM = 0.06;
+// B-352 (operator 2026-11-18): the soft overview is somewhat stronger on the light basemap, where
+// the dark map's levels are too faint; the dark map keeps exactly the B-347 levels. Pure, for tests.
+export function softLevels(soft) {
+  return soft === "light" ? { node: 0.3, link: 0.15 } : { node: DIM, link: LINK_DIM };
+}
 // `soft`: the overview of many regions (the national Sverige view) is drawn zoomed out the way a
 // picked packet dims the rest: faint nodes and links, so the transmissions stand out. Operator
-// 2026-11-18 (B-347): the look he saw after picking a packet, wanted as the normal one.
+// 2026-11-18 (B-347): the look he saw after picking a packet, wanted as the normal one. `soft` is
+// false, or the basemap's theme ("dark" or "light"; true reads as dark).
 export function applyPick(map, ids, soft = false) {
-  const set = (layer, prop, base) => { if (map.getLayer(layer)) map.setPaintProperty(layer, prop, pickPaint(base, ids, DIM, "id", soft)); };
+  const lv = ids ? { node: DIM, link: LINK_DIM } : softLevels(soft);
+  const set = (layer, prop, base) => { if (map.getLayer(layer)) map.setPaintProperty(layer, prop, pickPaint(base, ids, lv.node, "id", !!soft)); };
   set("node-points", "circle-opacity", fade(0.4));
   set("node-points", "circle-stroke-opacity", fade(0.4));
   set("node-obs-dot", "circle-opacity", fade(0.4));
@@ -178,7 +185,7 @@ export function applyPick(map, ids, soft = false) {
     // A link stays when both its ends are involved.
     map.setPaintProperty("links", "line-opacity", ids
       ? ["case", ["all", ["in", ["get", "a"], ["literal", ids]], ["in", ["get", "b"], ["literal", ids]]], ["get", "opacity"], LINK_DIM]
-      : soft ? ["step", ["zoom"], LINK_DIM, SOFT_UNTIL, ["get", "opacity"]] : ["get", "opacity"]);
+      : soft ? ["step", ["zoom"], lv.link, SOFT_UNTIL, ["get", "opacity"]] : ["get", "opacity"]);
   }
 }
 

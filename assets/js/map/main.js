@@ -1,6 +1,7 @@
 // Map island entry point. Settings come from #map's data attributes, written
 // by layouts/_partials/map.html from the site's params.
 import { createMap } from "./basemap.js";
+import { effectiveTheme } from "../theme.js";
 import { nodesBounds, frameNodes, widenToFit, togglesWiden, fitItems, fitTo, pointsBounds, needsWiden } from "./camera.js";
 import { createClient } from "../beacon/rest.js";
 import { nodesToGeoJSON, addNodeLayers, publicNodes, mergeNodeUpdate, setMiniZoom, withSeeded } from "./nodes.js";
@@ -67,7 +68,8 @@ async function start() {
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
   // The national overview (more than one region's border) is drawn soft zoomed out (B-347).
-  const soft = () => state.borders.length > 1 && !state.selected;
+  // Its strength follows the basemap: somewhat stronger on the light one (B-352).
+  const soft = () => state.borders.length > 1 && !state.selected && (effectiveTheme() === "dark" ? "dark" : "light");
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   let live = true; // false once Beacon is unreachable and the map shows the snapshot
   const saveUrl = (extra = {}) => {

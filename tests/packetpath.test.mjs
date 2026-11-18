@@ -105,3 +105,22 @@ test("pickPaint soft: the national overview dimmed zoomed out, the base zoomed i
   assert.equal(pickPaint(1, null, 0.12, "id", false), 1);
   assert.deepEqual(pickPaint(1, ["a"], 0.12, "id", true), ["case", ["in", ["get", "id"], ["literal", ["a"]]], 1, 0.12]);
 });
+
+import { softLevels, applyPick } from "../assets/js/map/packetpath.js";
+
+test("the soft overview: stronger on the light basemap, the dark one unchanged (B-352)", () => {
+  assert.deepEqual(softLevels("dark"), { node: 0.12, link: 0.06 });
+  assert.deepEqual(softLevels(true), { node: 0.12, link: 0.06 });
+  const light = softLevels("light");
+  assert.ok(light.node > 0.12 && light.node < 0.4);
+  assert.ok(light.link > 0.06 && light.link < 0.2);
+  const paints = {};
+  const map = { getLayer: () => true, setPaintProperty: (l, p, v) => { paints[`${l}.${p}`] = v; } };
+  applyPick(map, null, "light");
+  assert.deepEqual(paints["links.line-opacity"], ["step", ["zoom"], light.link, SOFT_UNTIL, ["get", "opacity"]]);
+  assert.equal(paints["node-points.circle-opacity"][2], light.node);
+  applyPick(map, null, "dark");
+  assert.equal(paints["node-points.circle-opacity"][2], 0.12);
+  applyPick(map, ["a"], "light"); // a picked packet dims as before, whatever the theme
+  assert.equal(paints["node-points.circle-opacity"][3], 0.12);
+});
