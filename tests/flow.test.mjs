@@ -108,3 +108,17 @@ test("the white centre is drawn above the node layers, also when they are added 
   fl.render();
   assert.equal(map.order.at(-1), FLASH_TOP);
 });
+
+import { brighten } from "../assets/js/map/flow.js";
+
+test("a link flashes in its own colour brightened toward white, else white (B-350)", () => {
+  assert.equal(brighten("#000000", 0.5), "#808080");
+  assert.equal(brighten("#22c55e", 0), "#22c55e");
+  assert.equal(brighten("#22c55e", 1), "#ffffff");
+  assert.equal(brighten(undefined), "#ffffff");
+  const from = { lng: 14, lat: 57 };
+  const [green, plain] = linkFlash(from, [{ lng: 14.1, lat: 57.1, colour: "#000000" }, { lng: 14.2, lat: 57.2 }], 0);
+  assert.equal(green.properties.c, brighten("#000000"));
+  assert.notEqual(green.properties.c, "#ffffff");
+  assert.equal(plain.properties.c, "#ffffff");
+});

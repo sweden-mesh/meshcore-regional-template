@@ -194,3 +194,28 @@ test("linksFile: one file per IATA, a 404 is no links, other failures read the n
   await assert.rejects(linksFile({ links: "/missing.json", fetch })()); // a plain file's 404 is a failure
   assert.equal((await linksFile({ links: "/n.json", fetch })()).length, 4);
 });
+
+import { MUTE, linkEnds } from "../assets/js/map/neighbours.js";
+
+test("live traffic mutes the links with nothing selected, never a selected node's own (B-350)", () => {
+  const full = linkStyle({ count: 200, age: 0, role: "all" });
+  const muted = linkStyle({ count: 200, age: 0, role: "all" }, { muted: true });
+  assert.equal(muted.colour, full.colour);
+  assert.equal(muted.width, full.width);
+  assert.equal(muted.opacity, Math.round(full.opacity * MUTE * 100) / 100);
+  assert.ok(muted.opacity < 0.4);
+  assert.deepEqual(linkStyle({ count: 200, role: "own" }, { muted: true }), linkStyle({ count: 200, role: "own" }));
+  assert.deepEqual(linkStyle({ role: "background" }, { muted: true }), linkStyle({ role: "background" }));
+  assert.ok(linkStyle({ count: 0 }, { muted: true }).opacity < linkStyle({ count: 0 }).opacity);
+});
+
+test("linkEnds: every drawn link of a node, the far end with the link's colour (B-350)", () => {
+  const nodes = [{ id: "a", lat: 57, lng: 14, neighborIds: ["b", "c"] }, { id: "b", lat: 57.1, lng: 14.1 }, { id: "c", lat: 57.2, lng: 14.2, neighborIds: ["b"] }];
+  const fc = allLinks(nodes, new Map(), { muted: true });
+  const ends = linkEnds(fc, "b").sort((x, y) => x.id.localeCompare(y.id));
+  assert.deepEqual(ends.map((e) => [e.id, e.lng, e.lat]), [["a", 14, 57], ["c", 14.2, 57.2]]);
+  assert.ok(ends.every((e) => /^#/.test(e.colour)));
+  assert.deepEqual(linkEnds(fc, "a").map((e) => [e.id, e.lng, e.lat]).sort(), [["b", 14.1, 57.1], ["c", 14.2, 57.2]]);
+  assert.deepEqual(linkEnds(fc, "zz"), []);
+  assert.deepEqual(linkEnds(undefined, "a"), []);
+});

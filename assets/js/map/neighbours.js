@@ -55,18 +55,37 @@ export function rampColour(count, ramp) {
   return toHex(p.map((v, j) => v + (q[j] - v) * f));
 }
 
-// What a link looks like: colour, width, opacity. Traffic focus draws every link a bit thinner.
-export function linkStyle({ count = 0, age = 0, role = "all" }, { p = palette(), focus = false } = {}) {
+// B-350: with Live-trafik on, links with no node selected are drawn at this share of their opacity,
+// so the flashes stand out; a selected node's own links keep full strength.
+export const MUTE = 0.35;
+
+// What a link looks like: colour, width, opacity. Traffic focus draws every link a bit thinner;
+// `muted` (live traffic on) dims the links of the "all" role.
+export function linkStyle({ count = 0, age = 0, role = "all" }, { p = palette(), focus = false, muted = false } = {}) {
   if (role === "background") return { colour: p.linkMuted, width: 1, opacity: 0.3 };
   const c = rampColour(count, p.linkRamp);
-  if (!c) return { colour: p.linkNone, width: focus ? 2.2 : 1.2, opacity: 0.85 };
-  return { colour: c, width: focus ? 2.2 : 2.5, opacity: Math.round((0.85 - 0.6 * age) * 100) / 100 };
+  const k = muted && role === "all" ? MUTE : 1;
+  const r2 = (x) => Math.round(x * k * 100) / 100;
+  if (!c) return { colour: p.linkNone, width: focus ? 2.2 : 1.2, opacity: r2(0.85) };
+  return { colour: c, width: focus ? 2.2 : 2.5, opacity: r2(0.85 - 0.6 * age) };
+}
+
+// B-350: the other ends of the drawn links of node `id`, with each link's colour, for the flash
+// when it transmits. `fc` is what allLinks returned.
+export function linkEnds(fc, id) {
+  const out = [];
+  for (const f of fc?.features || []) {
+    const { a, b, colour } = f.properties, [pa, pb] = f.geometry.coordinates;
+    if (a === id) out.push({ id: b, lng: pb[0], lat: pb[1], colour });
+    else if (b === id) out.push({ id: a, lng: pa[0], lat: pa[1], colour });
+  }
+  return out;
 }
 
 // One line per unordered pair whose both ends have a position: the pairs in the node list's
 // neighborIds and in the fetched counts. With `foreign` off ("Utanför regionen" hidden) a link
 // with an end outside the region is left out too, since that end is not on the map.
-export function allLinks(nodes, counts = new Map(), { selected = null, focus = false, foreign = true, p = palette(), now = Date.now() } = {}) {
+export function allLinks(nodes, counts = new Map(), { selected = null, focus = false, foreign = true, muted = false, p = palette(), now = Date.now() } = {}) {
   const byId = new Map((nodes || []).filter((n) => validPosition(n) && (foreign || !n.possiblyForeign)).map((n) => [n.id, n]));
   const pairs = new Map();
   for (const n of byId.values()) for (const other of n.neighborIds || []) {
@@ -82,7 +101,7 @@ export function allLinks(nodes, counts = new Map(), { selected = null, focus = f
     const c = counts.get(k), m = byId.get(a), n = byId.get(b);
     const age = c?.lastSeen ? Math.min(1, Math.max(0, (now - c.lastSeen) / (FADE_DAYS * 86400e3))) : 0;
     const props = { a, b, count: c?.count || 0, age, role: linkRole(a, b, selected) };
-    features.push({ type: "Feature", properties: { ...props, ...linkStyle(props, { p, focus }) },
+    features.push({ type: "Feature", properties: { ...props, ...linkStyle(props, { p, focus, muted }) },
       geometry: { type: "LineString", coordinates: [[m.lng, m.lat], [n.lng, n.lat]] } });
   }
   return { type: "FeatureCollection", features };

@@ -9,7 +9,7 @@ import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { visibleOnly, observerPoint, neighbourPoints, hiddenBy } from "./visible.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer, packetObservations, involved, channelName, applyPick } from "./packetpath.js";
-import { allLinks, addLinkLayer, linkCountLoader, linksFile } from "./neighbours.js";
+import { allLinks, addLinkLayer, linkCountLoader, linksFile, linkEnds } from "./neighbours.js";
 import { fullscreenButton } from "./fullscreen.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
@@ -91,8 +91,9 @@ async function start() {
   const linkNodes = () => (el.isOutside
     ? state.nodes.map((n) => (n.possiblyForeign || !Number.isFinite(n.lat) || !el.isOutside(n) ? n : { ...n, possiblyForeign: true }))
     : state.nodes);
-  const drawLinks = () => addLinkLayer(map, state.showLinks
-    ? allLinks(linkNodes(), linkCounts.counts(), { selected: state.selected, focus: state.focus, foreign: state.showForeign }) : empty);
+  // Muted while Live-trafik runs, so the flashes stand out (B-350); kept for the flashes' colours.
+  const drawLinks = () => addLinkLayer(map, state.linkData = state.showLinks
+    ? allLinks(linkNodes(), linkCounts.counts(), { selected: state.selected, focus: state.focus, foreign: state.showForeign, muted: state.live && live }) : empty);
   el.redrawLinks = () => { drawLinks(); sweepLinks(); }; // lan/map-county.js, once its test is in place
   let linkTimer = 0;
   const bulk = ds.links ? linksFile({ links: ds.links, all: ds.linksAll, iatas }) : null;
@@ -134,7 +135,7 @@ async function start() {
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); sweepLinks(); }
       if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); drawLinks(); sweepLinks(); }
-      if (key === "live") { state.live = on; state.onLive?.(on); }
+      if (key === "live") { state.live = on; state.onLive?.(on); drawLinks(); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); drawLinks(); }
       extraToggle(key, on);
       if (togglesWiden(key, on)) widenToFit(map, shown());
@@ -379,7 +380,10 @@ function startLive(map, ds, client, iatas, state, draw) {
         chain.forEach((p, i) => {
           if (!p || seen.has(p.id) || (obsPt && p.id === obsPt.id)) return;
           seen.add(p.id);
-          flows.transmit(p, neighbourPoints(state.nodes, p.id, state.hidden), i * HOP_MS);
+          // Every drawn link of the node flashes in its own colour (B-350); with the links off, the
+          // neighbours from the node list, in white.
+          const ends = linkEnds(state.linkData, p.id);
+          flows.transmit(p, ends.length ? ends : neighbourPoints(state.nodes, p.id, state.hidden), i * HOP_MS);
         });
       }
       recent.add(data);

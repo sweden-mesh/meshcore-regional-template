@@ -48,14 +48,24 @@ export function runs(chain) {
   return out;
 }
 
-// B-314: when a node transmits, its links flash white with a faint glow and fade back: full
-// strength while the bubbles travel, then a fade. Pure, for tests: the line features at time t
-// after the transmission (empty before it starts and once faded).
+// B-350: a link's colour brightened toward white (share f of the way), for its flash.
+export function brighten(hex, f = 0.55) {
+  if (!/^#[0-9a-f]{6}$/i.test(hex || "")) return "#ffffff";
+  return "#" + [1, 3, 5].map((i) => {
+    const v = parseInt(hex.slice(i, i + 2), 16);
+    return Math.round(v + (255 - v) * f).toString(16).padStart(2, "0");
+  }).join("");
+}
+
+// B-314: when a node transmits, its links flash with a faint glow and fade back: full strength
+// while the bubbles travel, then a fade. A neighbour with a link colour (B-350) flashes in that
+// colour brightened, else white. Pure, for tests: the line features at time t after the
+// transmission (empty before it starts and once faded).
 export function linkFlash(from, neighbours, t) {
   if (t < 0 || t > BUBBLE_MS + FADE_MS) return [];
   const a = t <= BUBBLE_MS ? 1 : Math.max(0, 1 - (t - BUBBLE_MS) / FADE_MS);
   if (a <= 0) return [];
-  return neighbours.map((n) => ({ type: "Feature", properties: { a },
+  return neighbours.map((n) => ({ type: "Feature", properties: { a, c: brighten(n.colour) },
     geometry: { type: "LineString", coordinates: [[from.lng, from.lat], [n.lng, n.lat]] } }));
 }
 
@@ -108,10 +118,10 @@ export class FlowLayer {
     map.addSource("flow-flash", { type: "geojson", data: empty });
     map.addSource("flow-bubbles", { type: "geojson", data: empty });
     map.addSource("flow-links", { type: "geojson", data: empty });
-    // One line layer for the link flash (B-314): white, blurred for a faint glow, under the nodes.
-    // White reads the same in the colour-blind palette.
+    // One line layer for the link flash (B-314): the link's colour brightened toward white (B-350;
+    // white without one), blurred for a faint glow, under the nodes.
     map.addLayer({ id: "flow-links", type: "line", source: "flow-links", layout: { "line-cap": "round" },
-      paint: { "line-color": "#ffffff", "line-width": 3.5, "line-blur": 1.5, "line-opacity": ["*", 0.85, ["get", "a"]] } }, before);
+      paint: { "line-color": ["get", "c"], "line-width": 3.5, "line-blur": 1.5, "line-opacity": ["*", 0.85, ["get", "a"]] } }, before);
     map.addLayer({ id: "flow-glow", type: "circle", source: "flow-glow",
       paint: { "circle-color": "#f97316", "circle-radius": 14, "circle-blur": 0.6, "circle-opacity": ["get", "a"] } }, before);
     // The transmitter's flash (B-347, stronger in B-349): a yellow halo, a yellow core with a white
