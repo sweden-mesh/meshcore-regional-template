@@ -969,13 +969,13 @@ other = "{{ .Name }} has its own MeshCore site with the county's values:"
 [lan_proposal_page]
 other = "The region <code>{{ .Scope }}</code> for {{ .Name }} is a proposal from <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">the list of regions</a>."
 [lan_pick]
-other = "Choose county"
+other = "Choose region"
 [region_switch_all]
 other = "All of Sweden"
 [lan_toggle]
-other = "County"
+other = "Region"
 [lan_modal_title]
-other = "Choose your county"
+other = "Choose your region"
 [lan_modal_intro]
 other = "The county decides the region (scope) your radios use, the county's channels and test channel, and what the map shows. The choice is saved in the browser and can be changed at any time with the button at the top."
 [lan_modal_list]
