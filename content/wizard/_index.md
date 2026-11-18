@@ -5,7 +5,7 @@ description: "Guider som gör jobbet åt dig: ställ in en repeater eller compan
 lead: false
 outputs: ["html"]   # no RSS feed (SEO-T22)
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 Varje sida här ställer in en sak åt dig, steg för steg, med regionens värden redan ifyllda. De två

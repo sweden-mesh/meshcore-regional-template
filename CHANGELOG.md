@@ -4,6 +4,31 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.53.0 — 2026-11-18
+
+- **"Steg för steg"** replaces "Wizards" (UX-SV-D2): the hub's title, the home box and the link labels.
+  A site's menu entry is its own: rename it in `hugo.toml`.
+- **The lou guide's title names no person** (UX-SV-D3): "Specialfirmware lou med fjärrstyrning och
+  autosvar"; the author is named in the text.
+- **Verktyg för dig som har en nod** (UX-SV-7): a new guide, `/guider/for-nodagare/`, that lists every
+  tool for node owners with one sentence on when to use it; linked from the home page's Steg för steg box.
+- **A message from phone to phone** (UX-SV-11): a new shortcode `{{</* flow */>}}`, an ordered list
+  drawn as a chain with the region hop marked, on "Vad är MeshCore?". New texts `flow_*`.
+- **"Uppdaterad <datum> · Rätta sidan"** (UX-SV-6) at the end of guides and troubleshooting pages: the
+  page's lastmod and an edit link to its file, in this repository or, for a site's own file, under the
+  new `params.editURL`.
+- **The map's data age** (UX-SV-14): a line under the map, "Senaste paket: 12 s sedan", and "Kartdata
+  kan inte hämtas just nu" once the live feed has been down for 15 s. New texts `map_last_packet`,
+  `map_wait_packet`, `map_live_down`.
+- **heroLead** front matter (UX-SV-9): a hero lead that differs from the description (the search
+  snippet); county pages get "Se nätet i <län>, ställ in din radio med länets värden …".
+- National mode: the Sverige front page shows "Region och IATA beror på länet · Välj län" instead of
+  placeholder values (UX-SV-8) and lists every county page (SEO-SV-9); on a phone a county page shows
+  the network's numbers first (UX-SV-13); a seoTitle naming MeshCore ends in "– MeshCore Sverige"
+  within 60 characters (SEO-SV-12); every page alias answers 301 in `_redirects` (SEO-SV-13).
+- 20 px radios and checkboxes on touch screens (UX-SV-12).
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.52.2 — 2026-11-18
 
 - **"På sidan" links match their headings again**: the titles are read from the page after the long

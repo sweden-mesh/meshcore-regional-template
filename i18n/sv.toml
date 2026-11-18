@@ -1202,3 +1202,29 @@ other = "Senaste paket: {age} sedan"
 other = "Väntar på första paketet…"
 [map_live_down]
 other = "Kartdata kan inte hämtas just nu. Sidan försöker igen."
+[flow_label]
+other = "Så går ett meddelande från telefon till telefon"
+[flow_phone]
+other = "Din telefon"
+[flow_phone_note]
+other = "Du skriver i MeshCore-appen."
+[flow_companion]
+other = "Din companion"
+[flow_companion_note]
+other = "Får meddelandet via Bluetooth och sänder det över LoRa."
+[flow_repeater]
+other = "En repeater"
+[flow_repeater_note]
+other = "Hör paketet och sänder det vidare en gång."
+[flow_region]
+other = "Nästa repeater"
+[flow_region_note]
+other = "Sänder vidare om paketets region finns i dess lista. Annars stannar paketet här."
+[flow_companion2]
+other = "Mottagarens companion"
+[flow_companion2_note]
+other = "Tar emot paketet."
+[flow_phone2]
+other = "Mottagarens telefon"
+[flow_phone2_note]
+other = "Visar meddelandet i appen."

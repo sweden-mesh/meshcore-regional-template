@@ -1206,3 +1206,29 @@ other = "Latest packet: {age} ago"
 other = "Waiting for the first packet…"
 [map_live_down]
 other = "Map data cannot be fetched right now. The page keeps trying."
+[flow_label]
+other = "How a message travels from phone to phone"
+[flow_phone]
+other = "Your phone"
+[flow_phone_note]
+other = "You write in the MeshCore app."
+[flow_companion]
+other = "Your companion"
+[flow_companion_note]
+other = "Gets the message over Bluetooth and sends it over LoRa."
+[flow_repeater]
+other = "A repeater"
+[flow_repeater_note]
+other = "Hears the packet and sends it on once."
+[flow_region]
+other = "The next repeater"
+[flow_region_note]
+other = "Sends it on if the packet's region is in its list. Otherwise the packet stops here."
+[flow_companion2]
+other = "The recipient's companion"
+[flow_companion2_note]
+other = "Receives the packet."
+[flow_phone2]
+other = "The recipient's phone"
+[flow_phone2_note]
+other = "Shows the message in the app."

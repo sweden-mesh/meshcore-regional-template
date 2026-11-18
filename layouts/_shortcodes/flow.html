@@ -1,0 +1,8 @@
+{{- /* {{< flow >}}: how a message travels, from phone to phone, as an ordered list drawn as a chain
+  (UX-SV-11). A list rather than a picture, so screen readers read the steps in order and it
+  wraps on a phone; one hop shows the region filter. Texts in i18n (flow_*). */ -}}
+<ol class="flow" aria-label="{{ T "flow_label" }}">
+  {{- range $k := slice "phone" "companion" "repeater" "region" "companion2" "phone2" }}
+  <li class="flow-{{ $k }}"><strong>{{ T (print "flow_" $k) }}</strong><span>{{ T (print "flow_" $k "_note") }}</span></li>
+  {{- end }}
+</ol>

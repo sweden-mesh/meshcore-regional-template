@@ -10,7 +10,7 @@ source:
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad för regionala sidor; observatörsrollen, flooding och vägar tillagda; kartlänkarna ersatta av kartan på startsidan."
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 MeshCore skickar textmeddelanden mellan små LoRa-radior. Meddelandena går från radio till
@@ -64,6 +64,8 @@ Room server
 Ett meddelande skickas som ett **paket**. Första gången skickas det ofta som *flood*: varje
 repeater som hör paketet sänder det vidare en gång, tills det har nått så långt det kan. Varje
 repeater som för det vidare lägger till sig själv i paketets **väg** (path).
+
+{{< flow >}}
 
 När mottagaren svarar kan svaret skickas *direkt* längs den väg som fungerade, i stället för att
 floodas över hela nätet igen. Det sparar sändningstid, och sändningstid är det som är dyrt i ett

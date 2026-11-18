@@ -3,7 +3,7 @@ title: "Vad är lou-firmwaren?"
 category: natet
 weight: 70
 date: 2026-11-13
-lastmod: 2026-11-13
+lastmod: 2026-11-18
 ---
 
 En variant av MeshCore som bygger på den vanliga och lägger till funktioner, bland annat

@@ -84,6 +84,8 @@
       <p class="eyebrow">{{ printf "%02d" $n }}</p>
       <h2>{{ T "wizards" }}</h2>
       <ul class="link-list">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
+      {{- /* Every tool for node owners on one page (UX-SV-7). */ -}}
+      {{ with site.GetPage "/guider/for-nodagare" }}<p class="firmware-link"><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}
       {{- /* With the site flasher on (B-298) the firmware link stays on the site. */ -}}
       {{ with and site.Params.firmware.flash (site.GetPage "/flasha") }}<p class="firmware-link"><a href="{{ .RelPermalink }}">{{ T "firmware_link" }}</a></p>
       {{ else }}{{ with site.Params.firmware.picker }}<p class="firmware-link"><a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "firmware_link" }}</a></p>{{ end }}{{ end }}

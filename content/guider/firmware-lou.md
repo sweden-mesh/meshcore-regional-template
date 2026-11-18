@@ -5,7 +5,7 @@ description: "Vad sweden-mesh:s lou-firmware är, vilka varianter som finns (aut
 weight: 45
 group: repeater
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 Utöver MeshCore-projektets egen firmware finns lou, modifierade varianter som Louie skrivit: repeaterfirmware som byggs av
