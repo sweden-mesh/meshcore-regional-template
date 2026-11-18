@@ -7,6 +7,7 @@
   {{- $scope := printf "`%s`" $c.scope -}}
   {{- $net := printf "<h2>%s</h2><p>%s</p>" (T "lan_net_title" (dict "Name" $c.name)) (T "lan_net_text" (dict "Name" $c.name "Scope" $scope "Test" (printf "`%s`" $c.test)) | markdownify) -}}
   {{- with $c.text }}{{ $net = printf "%s<blockquote class=\"lan-text\"><p>%s</p>%s</blockquote>" $net (. | htmlEscape) (cond (ne ($c.text_by | default "") "") (printf "<p class=\"muted\">%s</p>" (T "lan_text_by" (dict "By" ($c.text_by | htmlEscape)))) "") }}{{ end -}}
+  {{- $net = printf "%s%s" $net (partial "lan-towns.html" (dict "page" $ "scb" $c.scb)) -}}
   {{- $net = printf "%s<p class=\"lan-checked\">%s</p>" $net (T "lan_checked" (dict "Date" (time.Format "2006-01-02" $c.checked))) -}}
   {{- $cols = $cols | append $net -}}
   {{- $links := slice -}}

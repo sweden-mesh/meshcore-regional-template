@@ -1356,3 +1356,15 @@ other = "Alla grupper, län för län"
 other = "Kontrollerad mot MeshCore {{ .Version }} ({{ .Month }})"
 [kort_print]
 other = "Skriv ut länets kort"
+# A county's front page: its largest towns and the repeaters near each (CONTENT-SV-27).
+[lan_towns_title]
+other = "Största orterna"
+[lan_town_pop]
+other = "({{ .Pop }} inv.)"
+[lan_town_none]
+other = "ingen repeater på kartan inom 10 km än"
+[lan_town_reps]
+one = "1 repeater på kartan inom 10 km"
+other = "{{ .Count }} repeatrar på kartan inom 10 km"
+[lan_towns_note]
+other = "Tätorter och folkmängd: SCB 2023. Repeatrarna räknade från kartan {{ .At }}."

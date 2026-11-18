@@ -1359,3 +1359,14 @@ other = "All groups, county by county"
 other = "Checked against MeshCore {{ .Version }} ({{ .Month }})"
 [kort_print]
 other = "Print the county card"
+[lan_towns_title]
+other = "Largest towns"
+[lan_town_pop]
+other = "({{ .Pop }} people)"
+[lan_town_none]
+other = "no repeater on the map within 10 km yet"
+[lan_town_reps]
+one = "1 repeater on the map within 10 km"
+other = "{{ .Count }} repeaters on the map within 10 km"
+[lan_towns_note]
+other = "Towns and population: SCB 2023. Repeaters counted from the map on {{ .At }}."

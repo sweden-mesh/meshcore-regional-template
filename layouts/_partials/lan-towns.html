@@ -1,0 +1,33 @@
+{{- /* National mode, a county's front page (CONTENT-SV-27): the county's largest towns (SCB tätorter,
+  assets/data/tatorter.json), each with the repeaters the build's snapshot places within 10 km of the
+  town's centre, and its area page where the site has one (front matter area + areaName, B-360). Facts
+  from data only: the count is what the map shows, not a claim about coverage. Up to five towns; past the
+  third, only towns of 10 000 or more. Returns an HTML string, empty without a snapshot.
+  Usage: partial "lan-towns.html" (dict "page" . "scb" "06") */ -}}
+{{- $html := "" -}}
+{{- $snap := partialCached "beacon-snapshot.html" $.page (printf "snapshot-%s" $.scb) -}}
+{{- $t := resources.Get "data/tatorter.json" -}}
+{{- if and $t (eq $snap.source "beacon") -}}
+  {{- $rows := slice }}{{ range (transform.Unmarshal $t.Content).rows }}{{ if eq (index . 1) $.scb }}{{ $rows = $rows | append (dict "name" (index . 0) "bef" (int (index . 3)) "lat" (float (index . 4)) "lng" (float (index . 5))) }}{{ end }}{{ end -}}
+  {{- $reps := slice }}{{ range $snap.nodes }}{{ if and (eq .nodeType 2) .lat .lng (not .possiblyForeign) }}{{ $reps = $reps | append . }}{{ end }}{{ end -}}
+  {{- $items := slice -}}
+  {{- /* A tätort named after a larger one in the list ("Nordöstra Göteborg") is part of that town to a reader. */ -}}
+  {{- $keep := slice }}{{ range $rows }}{{ $r := . }}{{ $part := false }}{{ range $keep }}{{ if and (ne .name $r.name) (strings.Contains $r.name .name) }}{{ $part = true }}{{ end }}{{ end }}{{ if not $part }}{{ $keep = $keep | append $r }}{{ end }}{{ end -}}
+  {{- range $i, $r := first 5 $keep -}}
+    {{- $name := $r.name }}{{ $bef := $r.bef }}{{ $lat := $r.lat }}{{ $lng := $r.lng -}}
+    {{- if or (lt $i 3) (ge $bef 10000) -}}
+      {{- $k := math.Cos (div (mul $lat math.Pi) 180) -}}
+      {{- $n := 0 -}}
+      {{- range $reps -}}
+        {{- $dx := mul (sub (float .lng) $lng) (mul $k 111.32) }}{{ $dy := mul (sub (float .lat) $lat) 110.57 -}}
+        {{- if le (add (mul $dx $dx) (mul $dy $dy)) 100.0 }}{{ $n = add $n 1 }}{{ end -}}
+      {{- end -}}
+      {{- $pop := cond (ge $bef 10000) (mul (int (math.Round (div (float $bef) 1000))) 1000) (mul (int (math.Round (div (float $bef) 100))) 100) -}}
+      {{- $label := $name | htmlEscape -}}
+      {{- range where site.RegularPages "Params.area" $.scb }}{{ if eq .Params.areaName $name }}{{ $label = printf "<a href=\"%s\">%s</a>" .RelPermalink ($name | htmlEscape) }}{{ end }}{{ end -}}
+      {{- $items = $items | append (printf "<li>%s <span class=\"muted\">%s</span>: %s</li>" $label (T "lan_town_pop" (dict "Pop" (lang.FormatNumber 0 $pop))) (cond (eq $n 0) (T "lan_town_none") (T "lan_town_reps" $n))) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $items }}{{ $html = printf "<h3>%s</h3><ul class=\"lan-towns\">%s</ul><p class=\"muted\">%s</p>" (T "lan_towns_title") (delimit . "") (T "lan_towns_note" (dict "At" ($snap.at | time.Format "2006-01-02"))) }}{{ end -}}
+{{- end -}}
+{{- return $html -}}
