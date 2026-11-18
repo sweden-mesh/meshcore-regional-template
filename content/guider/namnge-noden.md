@@ -9,7 +9,7 @@ source:
   license: "CC BY 4.0"
   changes: "Egen guide; regionens namnförslag från sidans parametrar; namnlängden räknas av ett eget verktyg."
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 En repeaters namn syns för alla i listor och på kartan, så det ska tala om **var den står**.

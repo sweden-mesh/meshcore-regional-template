@@ -4,7 +4,7 @@ description: "Allt fungerar, sedan kommer inget ut på ett tag, sedan fungerar d
 category: radio
 weight: 40
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 ## Troliga orsaker

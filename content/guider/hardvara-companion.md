@@ -6,6 +6,8 @@ url: /guider/skaffa-hardvara/companion/
 weight: 15
 group: start
 cardSkip: true
+date: 2026-11-18
+lastmod: 2026-11-18
 ---
 
 En companion är radion du bär med dig. Den kopplas till appen i telefonen, oftast via Bluetooth,

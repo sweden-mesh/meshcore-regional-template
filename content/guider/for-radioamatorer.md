@@ -5,7 +5,7 @@ description: "Du kan antenner och vågutbredning. Här är det som skiljer MeshC
 weight: 105
 group: radio
 date: 2026-11-16
-lastmod: 2026-11-17
+lastmod: 2026-11-18
 ---
 
 Du som har amatörradiocertifikat kan redan det mesta som avgör hur långt en LoRa-nod når: höjd,

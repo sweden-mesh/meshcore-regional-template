@@ -5,7 +5,7 @@ description: "Två repeaterbyggen för MeshCore: ett strömsnålt Seeed XIAO med
 weight: 48
 group: repeater
 date: 2026-11-16
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 Den här guiden bygger hårdvaran. Hur du sedan ställer in repeatern, väljer plats och kontrollerar

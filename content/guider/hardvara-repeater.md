@@ -6,6 +6,8 @@ url: /guider/skaffa-hardvara/repeater/
 weight: 16
 group: start
 cardSkip: true
+date: 2026-11-18
+lastmod: 2026-11-18
 ---
 
 En repeater för trafiken vidare och gör nätet större. Den står still, högt upp, dygnet runt. Det

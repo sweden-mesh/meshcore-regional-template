@@ -5,7 +5,7 @@ description: "Skicka ditt första meddelande i MeshCore: kontakter, direktmeddel
 weight: 22
 group: start
 date: 2026-11-16
-lastmod: 2026-11-17
+lastmod: 2026-11-18
 ---
 
 Radion är flashad, appen är ansluten och radioinställningarna stämmer (annars: [Kom igång med en

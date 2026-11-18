@@ -3,7 +3,7 @@ title: "Behöver jag licens för att sända?"
 category: grunder
 weight: 10
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 Nej. MeshCore använder 868 MHz-bandet för kortdistansradio, som är fritt att använda med de

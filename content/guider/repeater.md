@@ -10,7 +10,7 @@ source:
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad; radio och region från sidans inställningar; finjusteringen av fördröjningar länkad i stället för återgiven."
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 En **repeater** tar emot trafik och sänder den vidare. Varje välplacerad repeater gör att fler

@@ -4,6 +4,29 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.54.0 — 2026-11-18
+
+- **Hardware in three pages with one table** (B-332…B-335): `/guider/skaffa-hardvara/` is a short hub;
+  `…/companion/`, `…/repeater/` and `…/antenn/` each show a product table from the new
+  `data/hardware.toml` (shortcodes `{{</* hw "companion|repeater|antenna" */>}}` and `{{</* hw-credits */>}}`):
+  maker's product page, maker, type, figures, price, pros, cons and warnings, each with its sources; cards
+  below 48em. Pictures only with a recorded reuse licence (four Seeed wiki images, CC BY-SA 4.0),
+  resized and served from the site, opened larger in a `<dialog>` (new `js/lightbox.js`).
+- **The Antenner guide moved** into `/guider/skaffa-hardvara/antenn/`; `/guider/antenner/` is an alias
+  (301 on the national site). A region that links `/guider/antenner/` keeps working.
+- **Kom igång med MeshCore** (CONTENT-SV-2): a new page `/kom-igang/`, five steps; the hero's "Kom igång"
+  leads there (a county page: the county's own).
+- **MeshCore-inställningar i Sverige** (CONTENT-SV-7): `/guider/radioinstallningar/` with the values,
+  PTSFS 2025:1's sub-bands, ERP (moved from the radio-amateur guide), duty cycle, default traps.
+- **MeshCore när el och mobilnät går ner** (CONTENT-SV-14): `/guider/nar-natet-gar-ner/`.
+- **Välj och flasha firmware** (B-336g): standard MeshCore firmware first; the lou picker is named as
+  such; the home page's firmware link goes to the guide. Flashing comes right after the hardware in
+  "Kom igång" (B-336f).
+- Legal wording names PTSFS 2025:1 § 146, "LBT or 10 %" (CONTENT-SV-8); node names 23 bytes with a
+  position, 31 without, in the checker, the wizards and the text (CONTENT-SV-D2); the radio-amateur
+  guide gets "a repeater that is up beats a perfect one" (B-331).
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.53.0 — 2026-11-18
 
 - **"Steg för steg"** replaces "Wizards" (UX-SV-D2): the hub's title, the home box and the link labels.

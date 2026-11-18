@@ -4,6 +4,8 @@ seoTitle: "Verktyg för MeshCore-nodägare"
 description: "Kartan, livetrafiken, firmware, fjärrstyrning, solcellskalkylatorn, platstestet, USB-konsolen och en egen broker: vad varje verktyg är till för och när du behöver det."
 weight: 90
 group: repeater
+date: 2026-11-18
+lastmod: 2026-11-18
 ---
 
 Har du en repeater eller en observatör är det här verktygen på sidan som hjälper dig. Varje rad
