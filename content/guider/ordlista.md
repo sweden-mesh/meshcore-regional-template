@@ -169,7 +169,8 @@ En nod som tar emot och sänder vidare trafik, oftast högt placerad. Se [Sätt 
 
 ## Room server {#room-server}
 
-En nod som lagrar meddelanden i gemensamma rum.
+En nod som lagrar meddelanden i gemensamma rum, så att den som var borta kan läsa ikapp. Se
+[Room server](../room-server/).
 
 ## Sensor {#sensor}
 

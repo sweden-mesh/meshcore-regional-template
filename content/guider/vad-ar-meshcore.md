@@ -73,13 +73,11 @@ Observatör
 
 Room server
 : En nod som sparar meddelanden i ett gemensamt rum, ungefär som en anslagstavla. Du loggar in
-  från appen, ofta med ett lösenord, och servern skickar det som skrivits medan du var borta. Det
-  låter användbart, men **room servers är svåra att få att fungera pålitligt**. Det är kända fel
-  i MeshCore (hösten 2026), inte ditt nät: inloggningen hinner ofta passera sin tidsgräns över
-  flera hopp, så appen säger att det misslyckades fast meddelandena kommer fram; servern sparar
-  bara de 32 senaste inläggen; och en ESP32-baserad server utan klockbatteri kan efter en
-  omstart tro att det är 2024 och sluta skicka nya inlägg. Räkna med att den fungerar bäst för
-  noder som når servern direkt eller med få hopp.
+  från appen, ofta med ett lösenord, och servern skickar det som skrivits medan du var borta. Det är
+  det bästa sättet MeshCore har i dag för att läsa ikapp, men det har kända begränsningar: över
+  många hopp kan inloggningen se misslyckad ut fast den lyckades, och servern sparar bara de 32
+  senaste inläggen. Den fungerar bäst för dem som når den direkt eller med få hopp. Se
+  [Room server](../room-server/).
 
 ## Så tar sig ett meddelande fram
 
