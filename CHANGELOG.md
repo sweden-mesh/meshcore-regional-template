@@ -4,6 +4,16 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.51.1 — 2026-11-18
+
+- **`?lan=` leaves the address bar** (operator): national mode's prepaint script, after storing the
+  county from a valid `?lan=<scb|se>`, removes the parameter with `history.replaceState` (no reload, no
+  history entry; other parameters and the `#hash` stay). Links that carry it, such as the retired
+  regional sites' redirects, end on a clean address. An invalid value is left alone. With storage
+  blocked it is still removed. The inline script changed: **the national site's CSP hash for it
+  changes** (the county list in the script also changes the hash whenever a county gains or loses its
+  own site).
+
 ## v0.51.0 — 2026-11-18
 
 - **The county dialog always closes** (UX-SV-1, SEO-SV-2, operator decision UX-SV-D1): national mode still

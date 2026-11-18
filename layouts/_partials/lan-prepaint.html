@@ -4,7 +4,10 @@
   other. Sets <html data-lan="<scb|se>">, or data-lan-store="0" when neither store can be written
   (the county modal is then not forced, §6.2.4). On / with a saved county that has a page here
   and no cookie, the cookie is restored and / reloaded once, so the / function can serve the
-  county's front page (§6.8, Q7.4). */ -}}
+  county's front page (§6.8, Q7.4). A valid ?lan= is then taken out of the address bar
+  (history.replaceState: no reload, no history entry; other parameters and the #hash stay), so links
+  that carry it, such as the retired regional sites' redirects, leave a clean address; an invalid
+  value is left alone (operator 2026-11-18). */ -}}
 {{- $pages := slice -}}{{- range partialCached "lan.html" . "lan" }}{{ if .url }}{{ $pages = $pages | append .scb }}{{ end }}{{ end -}}
 <script>(function(){var d=document,r=d.documentElement,ok=/^(se|\d\d)$/,P={{ delimit $pages " " }}.split(" "),s=null,c=null,L=!0,C=!0;
 try{s=localStorage.getItem("lan")}catch(e){L=!1}
@@ -17,4 +20,5 @@ if(w||s!==v){try{localStorage.setItem("lan",v)}catch(e){L=!1}}
 var had=c===v;if(w||!had){try{d.cookie="lan="+v+"; Path=/; Max-Age=31536000; SameSite=Lax; Secure";C=d.cookie.indexOf("lan="+v)>=0}catch(e){C=!1}}
 if(!L&&!C)r.setAttribute("data-lan-store","0");
 if(!w&&!had&&C&&location.pathname==="/"&&!q&&P.indexOf(v)>=0){try{if(!sessionStorage.getItem("lan-reload")){sessionStorage.setItem("lan-reload","1");location.reload()}}catch(e){}}}
-else{try{localStorage.setItem("lan-t","1");localStorage.removeItem("lan-t")}catch(e){r.setAttribute("data-lan-store","0")}}})()</script>
+else{try{localStorage.setItem("lan-t","1");localStorage.removeItem("lan-t")}catch(e){r.setAttribute("data-lan-store","0")}}
+if(ok.test(q||"")){try{var u=new URL(location.href);u.searchParams.delete("lan");history.replaceState(history.state,"",u.pathname+u.search+u.hash)}catch(e){}}})()</script>
