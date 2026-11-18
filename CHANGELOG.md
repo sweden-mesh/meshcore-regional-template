@@ -4,6 +4,19 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.60.0 — 2026-11-18
+
+- **Länets kort** (CONTENT-SV-17): `/kort/`, noindex and out of the sitemap, one A4 in Chrome: radio
+  values, region, channels, test channel, five steps, 112 and P4, a blank date line. Values from the
+  shortcodes (national mode: the chosen county; county pages link `/kort/?lan=<scb>`). Linked from the
+  preparedness page's step 6.
+- **Nytt i MeshCore** (CONTENT-SV-20): a new section `/nytt/`, one page per firmware release from 1.18,
+  with only what changes for users here, each linking its guide; in the footer.
+- **Press hook** (SEO-SV-11): front matter `press: [{type, name, url, date, publisher}]` adds schema.org
+  `mentions` (NewsArticle or VideoObject) to the page's JSON-LD; the footer links `/press/` when a site
+  has that page.
+- No script changes: **no CSP hash changes**.
+
 ## v0.59.0 — 2026-11-18
 
 - **Gemenskap** (CONTENT-SV-15): a new page `/gemenskap/` with the site's chats and links, every

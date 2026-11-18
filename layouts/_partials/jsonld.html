@@ -27,6 +27,18 @@
 {{- if not .Date.IsZero }}{{ $node = merge $node (dict "datePublished" (.Date.Format "2006-01-02")) }}{{ end -}}
 {{- with .Params.source }}{{ $node = merge $node (dict "isBasedOn" .url) }}{{ end -}}
 {{- end -}}
+{{- /* A page about press coverage (front matter press: [{type, name, url, date, publisher}]) lists each
+       item as a NewsArticle or VideoObject it mentions (SEO-SV-11). */ -}}
+{{- with .Params.press -}}
+  {{- $m := slice -}}
+  {{- range . -}}
+    {{- $it := dict "@type" (.type | default "NewsArticle") "url" .url -}}
+    {{- $it = merge $it (cond (eq .type "VideoObject") (dict "name" .name "uploadDate" .date) (dict "headline" .name "datePublished" .date)) -}}
+    {{- with .publisher }}{{ $it = merge $it (dict "publisher" (dict "@type" "Organization" "name" .)) }}{{ end -}}
+    {{- $m = $m | append $it -}}
+  {{- end -}}
+  {{- $node = merge $node (dict "mentions" $m) -}}
+{{- end -}}
 {{- $doc := dict "@context" "https://schema.org" "@graph" (slice (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) $node) -}}
 <script type="application/ld+json">{{ $doc | jsonify | safeJS }}</script>
 {{- end -}}

@@ -1338,3 +1338,5 @@ other = "1. Läs [hur länets uppgifter rättas]({{ .URL }}).\n2. Lägg till gru
 other = "Alla grupper, län för län"
 [page_checked]
 other = "Kontrollerad mot MeshCore {{ .Version }} ({{ .Month }})"
+[kort_print]
+other = "Skriv ut länets kort"

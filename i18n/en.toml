@@ -1342,3 +1342,5 @@ other = "1. Read [how to correct the county's details]({{ .URL }}).\n2. Add the 
 other = "All groups, county by county"
 [page_checked]
 other = "Checked against MeshCore {{ .Version }} ({{ .Month }})"
+[kort_print]
+other = "Print the county card"

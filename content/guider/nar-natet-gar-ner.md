@@ -37,8 +37,8 @@ Var de står ser du på [kartan](/#karta) medan internet fungerar.
 4. **Testa nu, inte när det händer.** Skriv `test` i testkanalen och se vem som svarar, se
    [Första meddelandet](../forsta-meddelandet/).
 5. **Spara dina kontakter** i appen medan nätet är lugnt, så att du kan skriva direkt till dem.
-6. **Skriv upp värdena på papper**: förinställning, region och kanaler, som de står i
-   [Kom igång med en companion](../companion/).
+6. **Skriv ut [länets kort](/kort/)**, med förinställning, region, kanaler och de första stegen,
+   och lägg det med radion.
 
 ## När det händer
 
