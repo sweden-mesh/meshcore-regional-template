@@ -66,6 +66,8 @@ async function start() {
   const client = createClient(ds.beacon);
   const iatas = JSON.parse(ds.iatas || "[]");
   const opts = { companions: ds.companions === "true" };
+  // The national overview (more than one region's border) is drawn soft zoomed out (B-347).
+  const soft = () => state.borders.length > 1 && !state.selected;
   const state = { nodes: [], borders: [], showForeign: url.foreign ?? true, showLinks: url.links ?? true, live: url.live ?? true, focus: url.focus ?? true, selected: null, onLive: null, miniZoom: null, relays: new Map() };
   let live = true; // false once Beacon is unreachable and the map shows the snapshot
   const saveUrl = (extra = {}) => {
@@ -108,8 +110,8 @@ async function start() {
   let sweepTimer = 0;
   map.on("moveend", () => { clearTimeout(sweepTimer); sweepTimer = setTimeout(sweepLinks, 500); });
   document.addEventListener("visibilitychange", sweepLinks);
-  for (const id of ["node-points", "node-pills"]) map.on("click", id, (e) => { state.selected = e.features[0].properties.id; drawLinks(); });
-  popup.on("close", () => { state.selected = null; drawLinks(); });
+  for (const id of ["node-points", "node-pills"]) map.on("click", id, (e) => { state.selected = e.features[0].properties.id; drawLinks(); applyPick(map, state.pickIds, soft()); });
+  popup.on("close", () => { state.selected = null; drawLinks(); applyPick(map, state.pickIds, soft()); });
   map.addControl(new MapPanel({
     toggles: [
       { key: "live", label: ds.liveLabel || "Live-trafik", on: state.live },
@@ -152,7 +154,7 @@ async function start() {
     state.miniZoom = setMiniZoom(map, unionBbox(state.borders) || nodesBounds(state.nodes));
     applyFocus(map, state);
     if (state.pathData) addPathLayer(map, state.pathData);
-    applyPick(map, state.pickIds);
+    applyPick(map, state.pickIds, soft());
   };
   // The threshold depends on the map's width: recompute after a resize.
   let resizeTimer;
@@ -320,7 +322,7 @@ function startLive(map, ds, client, iatas, state, draw) {
     state.pick = null; state.pickIds = null; state.pathData = null;
     pathBox.hidden = true;
     addPathLayer(map, { type: "FeatureCollection", features: [] });
-    applyPick(map, null);
+    applyPick(map, null, soft());
     forceRender();
   };
   const forceRender = () => { if (list) list.innerHTML = recentListHtml(recent.items, { selected: state.pick }); };

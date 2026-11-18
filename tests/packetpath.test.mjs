@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, packetFacts, packetObservations, involved, channelName, pickPaint } from "../assets/js/map/packetpath.js";
+import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, packetFacts, packetObservations, involved, channelName, pickPaint, SOFT_UNTIL } from "../assets/js/map/packetpath.js";
 import { webcrypto } from "node:crypto";
 
 const detail = JSON.parse(readFileSync(new URL("./data/packet-detail.json", import.meta.url)));
@@ -98,4 +98,10 @@ test("channel names from the one-byte channel hash", async () => {
 test("dimming wraps the layer's own value, and nothing picked gives it back", () => {
   assert.equal(pickPaint(1, null, 0.1), 1);
   assert.deepEqual(pickPaint(1, ["a"], 0.1), ["case", ["in", ["get", "id"], ["literal", ["a"]]], 1, 0.1]);
+});
+
+test("pickPaint soft: the national overview dimmed zoomed out, the base zoomed in; a pick wins (B-347)", () => {
+  assert.deepEqual(pickPaint(1, null, 0.12, "id", true), ["step", ["zoom"], 0.12, SOFT_UNTIL, 1]);
+  assert.equal(pickPaint(1, null, 0.12, "id", false), 1);
+  assert.deepEqual(pickPaint(1, ["a"], 0.12, "id", true), ["case", ["in", ["get", "id"], ["literal", ["a"]]], 1, 0.12]);
 });

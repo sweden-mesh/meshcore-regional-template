@@ -152,17 +152,22 @@ export async function channelName(hash, iatas = [], subtle = globalThis.crypto?.
 }
 
 // Dimming for a picked packet: `base` (a layer's own paint value) for the involved nodes, `dim`
-// for the rest. ids null = nothing picked, the base back.
-export function pickPaint(base, ids, dim, prop = "id") {
-  if (!ids) return base;
+// for the rest. ids null = nothing picked, the base back; with `soft` (B-347: the national
+// overview, nothing selected) the dimmed look below zoom SOFT_UNTIL and the base from there in.
+export const SOFT_UNTIL = 7;
+export function pickPaint(base, ids, dim, prop = "id", soft = false) {
+  if (!ids) return soft ? ["step", ["zoom"], dim, SOFT_UNTIL, base] : base;
   return ["case", ["in", ["get", prop], ["literal", ids]], base, dim];
 }
 
 // The node and link layers' own opacities (as nodes.js and neighbours.js add them).
 const fade = (v) => ["case", ["get", "foreign"], v, 1];
-const DIM = 0.12;
-export function applyPick(map, ids) {
-  const set = (layer, prop, base) => { if (map.getLayer(layer)) map.setPaintProperty(layer, prop, pickPaint(base, ids, DIM)); };
+const DIM = 0.12, LINK_DIM = 0.06;
+// `soft`: the overview of many regions (the national Sverige view) is drawn zoomed out the way a
+// picked packet dims the rest: faint nodes and links, so the transmissions stand out. Operator
+// 2026-11-18 (B-347): the look he saw after picking a packet, wanted as the normal one.
+export function applyPick(map, ids, soft = false) {
+  const set = (layer, prop, base) => { if (map.getLayer(layer)) map.setPaintProperty(layer, prop, pickPaint(base, ids, DIM, "id", soft)); };
   set("node-points", "circle-opacity", fade(0.4));
   set("node-points", "circle-stroke-opacity", fade(0.4));
   set("node-obs-dot", "circle-opacity", fade(0.4));
@@ -172,8 +177,8 @@ export function applyPick(map, ids) {
   if (map.getLayer("links")) {
     // A link stays when both its ends are involved.
     map.setPaintProperty("links", "line-opacity", ids
-      ? ["case", ["all", ["in", ["get", "a"], ["literal", ids]], ["in", ["get", "b"], ["literal", ids]]], ["get", "opacity"], 0.06]
-      : ["get", "opacity"]);
+      ? ["case", ["all", ["in", ["get", "a"], ["literal", ids]], ["in", ["get", "b"], ["literal", ids]]], ["get", "opacity"], LINK_DIM]
+      : soft ? ["step", ["zoom"], LINK_DIM, SOFT_UNTIL, ["get", "opacity"]] : ["get", "opacity"]);
   }
 }
 
