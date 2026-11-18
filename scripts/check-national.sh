@@ -148,6 +148,8 @@ check kalmar/index.html '<meta name=description content="MeshCore i Kalmar län:
 check kalmar/kom-igang/index.html '<meta name=description content="Kom igång med MeshCore i Kalmar län' "seo: a local page's own description"
 check lan/index.html '<meta name=description content="MeshCore i Sveriges 21 län' "seo: /lan/ has its description"
 check index.html '"@type":"Organization"[^}]*"name":"MeshCore Exempellandet"' "seo: the Organization is the site"
+check kalmar/fragor/index.html '"position":2},{"@type":"ListItem","item":"https://national.example.org/kalmar/fragor/"' "seo: a local page's BreadcrumbList passes through its county (SEO-SV-31)"
+check kalmar/fragor/index.html '"item":"https://national.example.org/kalmar/","name":"MeshCore i Kalmar län","position":2' "seo: the county is the local page's second crumb (SEO-SV-31)"
 # Plausible (G23, Q6.5): the chosen county travels as the custom property lan.
 check index.html 'plausible.init({endpoint:"/p/event",customProperties:function(){return{lan:document.documentElement.getAttribute("data-lan")||"se"}}})' "analytics: every event carries the county as lan"
 # The footer's link (G25): the county-data guide instead of "start a site for your region".
