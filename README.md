@@ -6,9 +6,8 @@ from this template, pinned by git tag.
 
 [meshcoresverige.se](https://meshcoresverige.se/), the national site for all of Sweden, is the
 original: its guides, troubleshooting, questions and wizards are the reference copy of the content
-in this template. A regional site is a fork of it, an example of how a region takes that content and
-adds, edits or removes pages for its own county; [meshcore-jkp.se](https://meshcore-jkp.se/) is one,
-for Jönköpings län. Search engines are told the same (see [Search engines](#search-engines)).
+in this template. A regional site is a fork of it: it takes that content and adds, edits or removes
+pages for its own region.
 
 ## How a region overrides the template
 
@@ -61,7 +60,6 @@ this repository's `hugo.toml`.
 |---|---|
 | `style` | `product` (default: light, follows the OS dark mode) or `console` (dark, technical); a region can still override tokens in its own CSS |
 | `noindex` | `true` on staging: a robots `noindex, nofollow` meta tag and a `robots.txt` that disallows everything. Set it in CI with `HUGO_PARAMS_NOINDEX=true`; the site's config needs `enableRobotsTXT = true`. For single pages or whole sections, see [Search engines](#search-engines) |
-| `original` | the reference copy of the template's shared content, default `"https://meshcoresverige.se/"`. The template's pages on this site carry a canonical link to the same path there and stay out of the sitemap; `""` = every page self-canonical. See [Search engines](#search-engines) |
 | `sameAs` | optional list of profile URLs the site itself owns (e.g. its own Mastodon or GitHub account), emitted as the home page Organization's `sameAs`. Empty = none. The community's site and chat invites are other entities and are never put there |
 | `ogImage`, `ogImageAlt` | the default social-card image (path under `static/`, default `images/og.png`, 1200×630) and its alt text (default the site title). `og:image:width`/`height` are written only for the template's own image |
 | `region.scb` | **the county's SCB code, e.g. `"06"`**: the template fetches the county's name, its region (scope) and its neighbours' regions from [zombiefredrik/meshcore-se-regioner](https://github.com/zombiefredrik/meshcore-se-regioner) at build time (a copy in `assets/meshcore-se-regioner/` is the fallback) |
@@ -104,21 +102,13 @@ Per page, in front matter (or for many pages at once through a `[[cascade]]` in 
 |---|---|
 | `seoTitle` | replaces the title in `<title>` and `og:title` only (the H1 and lists keep `title`). Keep it to 40 characters or less, so that with the suffix it stays within 60. A `seoTitle` that names MeshCore ends in "– <short>", any other in "– MeshCore <short>" |
 | `noindex` | `true` = robots `noindex, follow` (out of search, links still followed) and left out of the sitemap |
-| `original` | `false` = this page keeps its own canonical even though it comes from the template (see below) |
 | `image`, `imageAlt` | the page's own social-card image and its alt text |
 | `group` | on a guide: the H2 group it is listed under on `/guider/` (`start`, `repeater`, `regioner`, `sol`; the groups are in `content/guider/_index.md`). A guide without a known group is listed last, under "Fler guider" |
 
-**The reference copy.** Every site built from the template publishes the same guides, and search
-engines rank only one copy. That copy is the national site's: on a regional site, each page that
-comes from the template (not a file in the site's own `content/`) has a canonical link to the same
-path on `params.original` (default `https://meshcoresverige.se/`) and is left out of the site's
-sitemap. The site's home page, its own pages, its noindex pages and a page with `original: false` in
-front matter stay self-canonical. A page the region rewrites is its own file, so it is its own page.
-`original = ""` turns this off; the national site (`national = true`) never has it.
-`scripts/check-overrides.sh` tests it on the example site.
-
-**Keeping the shared guides out of search.** A site can also mark them `noindex` with a cascade;
-its own pages (home, its own pages, the section hubs) stay indexed:
+**Opting out of the shared guides.** Every site built from the template publishes the same guides,
+and search engines rank only one copy, the national site's being the reference. A site that does not
+want to compete for them marks them `noindex` with a cascade, and its own pages (home, its own pages,
+the section hubs) stay indexed:
 
 ```toml
 [[cascade]]

@@ -66,14 +66,10 @@ if grep -q 'name=robots' "$P/guider/regioner/index.html"; then echo "FAIL noinde
 if grep -q '/guider/etikett/' "$P/sitemap.xml"; then echo "FAIL noindex: a noindex page is in the sitemap"; fail=1; else echo "ok   noindex: a noindex page is left out of the sitemap"; fi
 check sok/index.html 'name=robots content="noindex, follow"' "noindex: the search page is noindex"
 if grep -q '/sok/' "$P/sitemap.xml"; then echo "FAIL sitemap: /sok/ is in the sitemap"; fail=1; else echo "ok   sitemap: /sok/ is left out"; fi
-# SEO-SV-4: the template's pages point at the reference copy and leave this site's sitemap; the
-# site's own pages and its home stay self-canonical and listed. (The national example's sitemap, in
-# check-national.sh, carries the solar method page and the guides' lastmod.)
-check guider/flasha-firmware/index.html '<link rel=canonical href=https://meshcoresverige.se/guider/flasha-firmware/>' "canonical: a template guide points at the reference copy"
-check index.html '<link rel=canonical href=https://example.org/>' "canonical: the home page is self-canonical"
-if grep -q '/guider/flasha-firmware/' "$P/sitemap.xml"; then echo "FAIL canonical: a template guide is in the sitemap"; fail=1; else echo "ok   canonical: a template guide is left out of the sitemap"; fi
+check sitemap.xml '/wizard/solcell/metod/' "sitemap: the solar method page is in it"
 if grep -rqs '0001-01-01' "$P"; then echo "FAIL dates: 0001-01-01 is in the output"; fail=1; else echo "ok   dates: no 0001-01-01 anywhere"; fi
 check guider/flasha-firmware/index.html '"dateModified":"20[0-9][0-9]-' "dates: a template guide has a real dateModified"
+check sitemap.xml '/guider/flasha-firmware/</loc><lastmod>20' "dates: the sitemap has lastmod for a template guide"
 check guider/index.html '<h2 class=guide-group>Kom igång' "guides: the hub groups its guides under H2s"
 # NEWCOMER-3 (2026-11-16): the three audience ways in on the home page, the new guides in their
 # groups, the region's own test channel derived from the scope, and companions sent to the web flasher.

@@ -37,9 +37,6 @@ check index.html "svarar inte automatiskt här än" "Sverige: #test-se is not pr
 if grep -q 'class=ch-ar' "$P/index.html"; then echo "FAIL Sverige: an auto-reply footnote on #test-se"; fail=1; else echo "ok   Sverige: no auto-reply footnote (B-316)"; fi
 check skåne/index.html "Rikschatten" "county page: no groups, the national chats stand in"
 check sitemap.xml "/sk%C3%A5ne/</loc>" "county page: in the sitemap, address with åäö"
-check sitemap.xml '/wizard/solcell/metod/' "sitemap: the solar method page is in it"
-check sitemap.xml '/guider/flasha-firmware/</loc><lastmod>20' "dates: the sitemap has lastmod for a template guide"
-check guider/flasha-firmware/index.html '<link rel=canonical href=https://national.example.org/guider/flasha-firmware/>' "canonical: the national site is the reference copy, self-canonical (SEO-SV-4)"
 if grep -qs "id=karta" "$P/jönköping/index.html" || [ -e "$P/jönköping/kom-igang" ]; then echo "FAIL county page: a county with its own site got a front page"; fail=1; else echo "ok   county page: none for a county with its own site"; fi
 # The county's local pages (Q7.7), modelled on meshcore-jkp.se's four.
 check kalmar/kom-igang/index.html "<h1>Kom igång med MeshCore i Kalmar</h1>" "local: Kom igång has the county's title"

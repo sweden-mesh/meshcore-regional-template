@@ -40,14 +40,13 @@
 {{- $desc := .Description | default site.Params.description | default (T "hero_tagline") -}}
 {{- /* The 404 is not a page to share or index: no canonical, no Open Graph (SEO-T21). */}}
 {{- if ne .Kind "404" }}
-{{- $canonical := partial "canonical.html" . }}
-<link rel="canonical" href="{{ $canonical }}">
+<link rel="canonical" href="{{ .Permalink }}">
 <meta property="og:type" content="{{ cond (or .IsHome .IsSection) "website" "article" }}">
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:locale" content="sv_SE">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
-<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:url" content="{{ .Permalink }}">
 {{- $img := .Params.image | default site.Params.ogImage | default "images/og.png" }}
 <meta property="og:image" content="{{ $img | absURL }}">
 {{- /* The size is known only for the template's own image (SEO-T17). */}}
