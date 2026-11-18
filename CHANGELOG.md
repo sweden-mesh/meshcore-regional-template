@@ -4,6 +4,29 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.66.0 — 2026-11-18
+
+- **New repeaters page** (B-362): the shortcode `{{< new-repeaters >}}` lists `data/new_repeaters.json`
+  (written by the site's build; on meshcoresverige.se by `scripts/new-repeaters.mjs`) newest first, one
+  section per county (`#lan-<scb>`; a node outside the simplified outlines goes to its nearest town's
+  county, a possibly foreign one is left out), each node with its nearest SCB tätort, distance and
+  direction ("3 km NV om Habo", "i Habo"), first heard, observer, firmware and hardware where known,
+  and a map of the same nodes (`js/map/newmap.js`, no Beacon calls). National mode: each county page
+  links "Nya repeatrar i länet" with its count, and the Sverige page links the page.
+- **Sitemap**: a page with front matter `lastmodData: <data file>` is dated by that file's `at`.
+- **County pages: the numbers in the HTML** (CONTENT-SV-30): repeaters, observers, packets per day and
+  "Senast hörd nod" are rendered at build from the snapshot (`stats-build.html`), the live numbers
+  replace them; the last-heard line is updated live in the visitor's time (`lastHeard`, unit-tested).
+- **County pages: the largest towns** (CONTENT-SV-27): up to five SCB tätorter with the repeaters on the
+  map within 10 km, linked to an area page where the site has one.
+- **Data**: `assets/data/tatorter.json`, SCB's tätorter 2023 (name, county, municipality, population,
+  centroid, radius of equal area), made by `scripts/tatorter.py`; credited in THIRD-PARTY.md.
+- **Structured data** (SEO-SV-31): a county's local page has the county as its second breadcrumb.
+- **Header on phones**: the county button now gives way with an ellipsis, so a long county name
+  (Västra Götaland, Västernorrland, Södermanland) no longer pushes ☰ off screen at 320–460 px.
+- CI: `COMPARE_BASE` moved to v0.66.0 (regional output changes on purpose: the header CSS and the
+  build-time numbers); the new-repeaters page is left out of the county-switch browser check.
+
 ## v0.65.3 — 2026-11-18
 
 - CI only: `COMPARE_BASE` moved to v0.65.2, whose header CSS changes regional output on purpose. No
