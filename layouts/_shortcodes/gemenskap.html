@@ -9,7 +9,7 @@
   {{- with site.Params.chat.discord }}{{ $items = $items | append (dict "name" "Discord" "url" .) }}{{ end -}}
   {{- with site.Params.chat.matrix }}{{ $items = $items | append (dict "name" "Matrix" "url" .) }}{{ end -}}
   {{- range site.Params.chats }}{{ $items = $items | append (dict "name" .name "url" .url) }}{{ end -}}
-  {{- range site.Params.links }}{{ $items = $items | append (dict "name" .name "url" .url) }}{{ end -}}
+  {{- range site.Params.links }}{{ $items = $items | append (dict "name" (.footer | default .name) "url" .url) }}{{ end -}}
 <ul>
   {{- range $items }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}
   <li><a href="{{ .url }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a></li>{{ end }}{{ end }}
