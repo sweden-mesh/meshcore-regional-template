@@ -44,8 +44,8 @@ Repeatrar kan flytta mellan den gemensamma brokern och en egen utan att flashas 
 
 1. **Brokern.** mcbroker är ett tillägg till Mosquitto som sköter inloggning, behörigheter och
    kontroll av signaturer. Koden och en driftsguide för andra regioner är inte publicerade än;
-   tills de är det kan du fråga i [mccontrol på GitHub](https://github.com/sweden-mesh/mccontrol/issues).
-2. **Verktyget.** [mccontrol](https://github.com/sweden-mesh/mccontrol) är programmet som
+   tills de är det kan du fråga i [mccontrol på GitHub](https://github.com/sweden-mesh/mccontrol-cli/issues).
+2. **Verktyget.** [mccontrol](https://github.com/sweden-mesh/mccontrol-cli) är programmet som
    repeaterägare signerar och skickar kommandon med. Där står hur du skapar en nyckel, registrerar
    den hos en broker och lägger till dina repeatrar.
 3. **Sidan.** Regionens sida anger sin broker med `host` under `[params.backend]` i `hugo.toml`.
