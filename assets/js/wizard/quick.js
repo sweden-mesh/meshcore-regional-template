@@ -42,7 +42,7 @@ function init(form) {
     const s = settings();
     const b = bytes(s.name);
     let msg = s.name ? `${s.name} · ${b} ${t.bytes}` : "";
-    if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 22) msg += ` · ${t.noPos}`;
+    if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 23) msg += ` · ${t.noPos}`;
     if (s.name && $("wz-key").checked && !state.publicKey) msg += ` · ${t.suffix}`;
     $("wz-name").textContent = msg;
     $("wz-review").replaceChildren(...repeaterReview(s).map(({ key, value }) => {

@@ -19,7 +19,7 @@ En repeaters namn syns för alla i listor och på kartan, så det ska tala om **
 ## Längd
 
 Namnet räknas i byte, inte tecken: `å`, `ä` och `ö` tar två byte var. Håll namnet inom
-**22 byte**, så får positionen plats i samma advert. Upp till 31 byte går, men då skickas namnet
+**23 byte**, så får positionen plats i samma advert. Upp till 31 byte går, men då skickas namnet
 utan position.
 
 {{< namecheck >}}
@@ -36,6 +36,6 @@ utan position.
 
 En companion namnger du som du vill; namnförslaget ovan gäller bara repeatrar. Namnet syns för
 andra när radion skickar en advert, och det behöver inte avslöja vem du är. Samma gräns gäller:
-22 byte om positionen ska följa med. En emoji tar fyra byte.
+23 byte om positionen ska följa med. En emoji tar fyra byte.
 
 {{< namecheck kind="companion" >}}

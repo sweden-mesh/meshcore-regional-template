@@ -1,12 +1,13 @@
 // Name-length checker: counts UTF-8 bytes the way the firmware stores the
-// name. 22 bytes leaves room for a position in the same advert; 31 is the max.
+// name. 23 bytes leaves room for a position in the same advert; 31 is the max (CONTENT-SV-D2,
+// from the firmware's AdvertDataHelpers.cpp: 32-byte advert data, 1 type byte, 8 position bytes).
 export function utf8Bytes(s) {
   return new TextEncoder().encode(s).length;
 }
 
 export function verdict(bytes) {
   if (bytes === 0) return "empty";
-  if (bytes <= 22) return "ok";
+  if (bytes <= 23) return "ok";
   if (bytes <= 31) return "no-position";
   return "too-long";
 }

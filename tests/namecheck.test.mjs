@@ -6,9 +6,9 @@ test("å, ä and ö take two bytes each", () => {
   assert.equal(utf8Bytes("SE-JKP-Bråneryd"), 16);
   assert.equal(utf8Bytes("ÅÄÖ"), 6);
 });
-test("verdicts at the 22- and 31-byte limits", () => {
-  assert.equal(verdict(22), "ok");
-  assert.equal(verdict(23), "no-position");
+test("verdicts at the 23- and 31-byte limits", () => {
+  assert.equal(verdict(23), "ok");
+  assert.equal(verdict(24), "no-position");
   assert.equal(verdict(31), "no-position");
   assert.equal(verdict(32), "too-long");
   assert.equal(verdict(0), "empty");

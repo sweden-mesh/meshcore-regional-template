@@ -80,7 +80,7 @@ function init(form) {
     const s = settings();
     const b = bytes(s.name);
     let msg = s.name ? `${s.name} · ${b} ${t.bytes}` : "";
-    if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 22) msg += ` · ${t.noPos}`;
+    if (b > 31) msg += ` · ${t.tooLong}`; else if (b > 23) msg += ` · ${t.noPos}`;
     if (s.name && q("#wzg-key").checked && !state.publicKey) msg += ` · ${t.suffix}`;
     q('[data-out="name"]').textContent = msg;
     const { commands, errors } = repeaterCommands(s);

@@ -319,7 +319,7 @@ other = "Radioinställningar"
 [wzc_2_text]
 other = "Välj förinställningen, eller fyll i värdena för hand:"
 [wzc_3_text]
-other = "Kort, igenkännbart och utan att avslöja mer än du vill. Under 22 byte får positionen plats i samma advert."
+other = "Kort, igenkännbart och utan att avslöja mer än du vill. Inom 23 byte får positionen plats i samma advert."
 [wzc_4_text]
 other = "Frivillig för en companion. Den följer med dig, så en delad position kan visa var du bor. Kartan på den här sidan visar inte companions."
 [wzc_5_text]

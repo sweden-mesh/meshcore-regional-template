@@ -323,7 +323,7 @@ other = "Radio settings"
 [wzc_2_text]
 other = "Choose the preset, or fill in the values by hand:"
 [wzc_3_text]
-other = "Short, recognisable and without giving away more than you want. Under 22 bytes leaves room for the position in the same advert."
+other = "Short, recognisable and without giving away more than you want. Up to 23 bytes leaves room for the position in the same advert."
 [wzc_4_text]
 other = "Optional for a companion. It goes where you go, so a shared position can show where you live. The map on this site doesn't show companions."
 [wzc_5_text]

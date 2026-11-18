@@ -66,7 +66,7 @@ set tx 22
 ### Namn och position
 
 Namnet syns för alla när repeatern skickar adverts. Använd ortnamnet eller platsen, så att
-andra förstår var den står, och håll det under 22 byte så att positionen får plats i samma
+andra förstår var den står, och håll det inom 23 byte så att positionen får plats i samma
 advert.
 
 ```text {title="Namn"}

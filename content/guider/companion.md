@@ -53,7 +53,7 @@ antenn och vad som är tillåtet; många använder 22 dBm, men kontrollera vad d
 ## 4. Ge radion ett namn
 
 Namnet syns för andra när din radio skickar en *advert*, ett kort paket som säger att den finns.
-Du väljer namnet själv; regionens namnförslag gäller repeatrar. Håll det under 22 byte om
+Du väljer namnet själv; regionens namnförslag gäller repeatrar. Håll det inom 23 byte om
 positionen ska få plats i samma advert.
 
 {{< namecheck kind="companion" >}}
