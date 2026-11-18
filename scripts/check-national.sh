@@ -49,6 +49,16 @@ if grep -q 'DK-Utomlands' "$P/nya-repeatrar/index.html"; then echo "FAIL new rep
 check kalmar/index.html '<a href=/nya-repeatrar/#lan-08>Nya repeatrar i länet</a> <span class=muted>3 den senaste veckan</span>' "county page: Nya i länet with its count (B-362)"
 check index.html '<li><a href=/nya-repeatrar/>Nya repeatrar</a></li>' "Sverige: links the new-repeaters page (B-362)"
 check sitemap.xml '<loc>https://national.example.org/nya-repeatrar/</loc><lastmod>2026-11-19</lastmod>' "sitemap: the new-repeaters page dated by its data (B-362)"
+# B-337: English under /en/ beside the unchanged Swedish pages.
+check en/index.html "<html lang=en" "english: the front page in English"
+check kalmar/index.html "<link rel=alternate hreflang=en href=https://national.example.org/en/kalmar/>" "english: hreflang en on a Swedish county page"
+check en/kalmar/index.html "<link rel=alternate hreflang=x-default href=https://national.example.org/kalmar/>" "english: x-default is the Swedish page"
+check kalmar/index.html "<a class=lang-switch href=/en/kalmar/ hreflang=en lang=en" "english: the language link goes to the same page"
+check en/guides/companion/index.html "href=/en/guides/what-is-meshcore/" "english: a link written as a Swedish path goes to the English page"
+check en/kalmar/index.html 'data-home=/en/' "english: the county script knows the English front page"
+check _redirects "/en/skane/ /en/sk%C3%A5ne/ 301" "english: the address without åäö answers 301 in English too"
+check sitemap.xml 'hreflang="en" href="https://national.example.org/en/guides/companion/"' "english: the sitemap pairs the languages"
+if [ -e "$P/en/sitemap.xml" ] && grep -q "<sitemapindex" "$P/sitemap.xml"; then echo "FAIL english: /sitemap.xml became a sitemap index"; fail=1; else echo "ok   english: /sitemap.xml stays one urlset"; fi
 check index.html "<h2>I Sverige</h2><p>Sidorna här gäller hela landet" "Sverige: the pages column (B-318)"
 check index.html "<h2>Gemenskap</h2><p>Här finns de som använder MeshCore i hela landet" "Sverige: the community column with the counties' groups (B-318)"
 check index.html "i nätet.</p><p>Hosta er egna lokala sida med <a href=https://github.com/sweden-mesh/meshcore-regional-template" "Sverige: the template paragraph between the community text and its links (B-345)"

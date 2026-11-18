@@ -1,7 +1,7 @@
 <!doctype html>
 {{- $lp := "" }}{{ with partial "lan-page.html" . }}{{ if .url }}{{ $lp = .scb }}{{ end }}{{ end }}
 {{- if site.Params.national }}
-<html lang="{{ site.Language.Locale | default "sv" }}" data-copy-label="{{ T "code_copy" }}" data-copied-label="{{ T "code_copied" }}" data-copy-failed="{{ T "code_copy_failed" }}" data-lan-page="{{ $lp }}"{{ if hugo.IsMultilingual }} data-home="{{ "/" | relLangURL }}"{{ end }}>
+<html lang="{{ site.Language.Locale | default "sv" }}" data-copy-label="{{ T "code_copy" }}" data-copied-label="{{ T "code_copied" }}" data-copy-failed="{{ T "code_copy_failed" }}"{{ if hugo.IsMultilingual }} data-home="{{ "/" | relLangURL }}"{{ end }} data-lan-page="{{ $lp }}">
 {{- else }}
 <html lang="{{ site.Language.Locale | default "sv" }}" data-copy-label="{{ T "code_copy" }}" data-copied-label="{{ T "code_copied" }}" data-copy-failed="{{ T "code_copy_failed" }}">
 {{- end }}
