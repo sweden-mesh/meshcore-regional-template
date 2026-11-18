@@ -869,6 +869,11 @@ other = "The region would like a new repeater here."
 # The map's fit button under + / − (tooltip and aria-label).
 [mt_fit_all]
 other = "Fit all"
+# The map's fullscreen button (B-346).
+[mt_fs_enter]
+other = "Full screen"
+[mt_fs_exit]
+other = "Exit full screen"
 [hp_wanted]
 other = "Where the region would like new repeaters"
 [hp_wanted_help]

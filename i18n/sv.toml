@@ -865,6 +865,11 @@ other = "Här vill regionen gärna ha en ny repeater."
 # The map's fit button under + / − (tooltip and aria-label).
 [mt_fit_all]
 other = "Visa allt"
+# The map's fullscreen button (B-346).
+[mt_fs_enter]
+other = "Helskärm"
+[mt_fs_exit]
+other = "Lämna helskärm"
 [hp_wanted]
 other = "Här vill regionen gärna ha nya repeatrar"
 [hp_wanted_help]

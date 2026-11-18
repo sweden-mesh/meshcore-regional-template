@@ -10,6 +10,7 @@ import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { visibleOnly, observerPoint, neighbourPoints, hiddenBy } from "./visible.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer, packetObservations, involved, channelName, applyPick } from "./packetpath.js";
 import { allLinks, addLinkLayer, linkCountLoader, linksFile } from "./neighbours.js";
+import { fullscreenButton } from "./fullscreen.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
@@ -194,7 +195,8 @@ async function start() {
 }
 
 // The fit button (B-286): a control group of its own, right under MapLibre's zoom buttons and
-// styled like them. A click frames what `items()` returns; nothing shown, nothing happens.
+// styled like them. A click frames what `items()` returns; nothing shown, nothing happens. The
+// fullscreen button (B-346, fullscreen.js) shares the group.
 function fitControl(items) {
   let box;
   return {
@@ -205,10 +207,10 @@ function fitControl(items) {
       b.type = "button";
       b.title = t("fit_all");
       b.setAttribute("aria-label", t("fit_all"));
-      // A dashed square: "the frame around everything".
-      b.innerHTML = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3.5" y="3.5" width="13" height="13" rx="1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3.2 2.3"/></svg>';
+      // A square drawn as its four corners only (B-346): "the frame around everything".
+      b.innerHTML = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5v-4h4M12.5 3.5h4v4M16.5 12.5v4h-4M7.5 16.5h-4v-4"/></svg>';
       b.addEventListener("click", () => fitTo(map, items()));
-      box.append(b);
+      box.append(b, fullscreenButton(map, map.getContainer()));
       return box;
     },
     onRemove() { box.remove(); },
