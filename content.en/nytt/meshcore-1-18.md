@@ -4,6 +4,8 @@ description: "MeshCore 1.18 (October 15, 2026) for Sweden: the command line for 
 url: /en/news/meshcore-1-18/
 date: 2026-10-15
 lastmod: 2026-11-18
+group: meshcore
+release: {product: meshcore, version: "1.18.0"}
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
