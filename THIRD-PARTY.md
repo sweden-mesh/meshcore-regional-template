@@ -8,6 +8,7 @@
 | OpenFreeMap basemap (styles, tiles) | loaded at view time from tiles.openfreemap.org | OpenFreeMap: free use, attribution; data © OpenMapTiles, © OpenStreetMap contributors (ODbL) | MapLibre's attribution control is always on the map |
 | meshat.se guide texts | adapted into `content/guider/*.md` | CC BY 4.0 (reuse approved by meshat.se) | Each adapted page names its source, the licence and what changed (`source:` front matter → page footer) |
 | Swedish county borders (simplified to ~1 km) | `assets/se-lan.geojson`, made by `scripts/se-lan.py` from Natural Earth 10m admin-1 v5.1.2 | Public domain (Natural Earth) | Nothing required; the source is named here |
+| Swedish urban areas (tätorter 2023: name, county, municipality, population, centroid) | `assets/data/tatorter.json`, made by `scripts/tatorter.py` from SCB's open geodata (WFS `stat:Tatorter_2023`) | SCB open data, free to use with the source named | The source is named here and on every page that shows a town ("Tätorter: SCB") |
 | Beacon backend | called over its public REST API and WebSocket | Beacon is AGPL-3.0; **no Beacon code is in this repository** | Only network calls; the region runs its own instance |
 | Plausible tracker script (optional) | proxied at view time from the region's Plausible server | Plausible CE (AGPL-3.0); not bundled here | Only loaded when a region turns analytics on |
 
