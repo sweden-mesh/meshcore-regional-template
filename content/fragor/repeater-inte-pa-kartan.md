@@ -3,7 +3,7 @@ title: "Varför syns inte min repeater på kartan?"
 category: natet
 weight: 40
 date: 2026-11-13
-lastmod: 2026-11-14
+lastmod: 2026-11-18
 ---
 
 Din repeater behöver inte vara observatör för att synas. Den syns när den har en position, har

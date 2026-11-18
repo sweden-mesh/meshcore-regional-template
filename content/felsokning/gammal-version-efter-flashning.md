@@ -5,7 +5,7 @@ description: "Flashningen gick bra, men ver visar samma MeshCore-version som fö
 category: flasha
 weight: 20
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 ## Troliga orsaker

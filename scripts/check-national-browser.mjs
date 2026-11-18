@@ -51,7 +51,7 @@ page.on("pageerror", (e) => errors.push(e.message));
 // A switch applies in place on most pages; the front page opens the county's page and a wizard
 // reloads (it reads its values once). Either way, read the page the switch leaves.
 const choose = async (v) => {
-  const moves = await page.evaluate(() => location.pathname === "/" || !!document.documentElement.getAttribute("data-lan-page") || !!document.querySelector("script[src*=wizard-county]"));
+  const moves = await page.evaluate(() => location.pathname === (document.documentElement.dataset.home || "/") || !!document.documentElement.getAttribute("data-lan-page") || !!document.querySelector("script[src*=wizard-county]"));
   if (!moves) { await page.evaluate((x) => window.meshcoreLan.set(x), v); return; }
   await Promise.all([
     page.waitForNavigation({ waitUntil: "networkidle0", timeout: 10000 }),

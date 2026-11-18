@@ -4,6 +4,25 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.68.0 — 2026-11-18
+
+- **Languages** (B-337): a site can add English under `/en/` with a `[languages]` block; Swedish stays at
+  `/` with every address unchanged, and a site without English builds exactly as before. The template
+  ships English translations of its guides, troubleshooting, questions, news and site pages in
+  `content.en/` (mounted only for `en`), the county local pages' texts in `assets/lan/en/`, hardware and
+  prebuilt-solar data in `data/*_en.toml`, and English variants of the privacy and solar shortcodes. The
+  county and wizard pages are generated in every language. hreflang (sv, en, x-default → sv) in the head
+  and in `/sitemap.xml`, which stays one urlset of every language (`sitemapindex.xml` overridden); a
+  language link in the header and the ☰ menu (`css/lang.css`, multilingual sites only); links written as
+  Swedish paths go to the reader's language; `og:locale` and JSON-LD `inLanguage` per language; national
+  `_redirects` include `/en/` county addresses. README: Languages. **Hugo ≥ 0.153** (`sites.matrix`).
+- **New repeaters** (B-363): a node without a position stays in its county's list (the county of its first
+  map area) with the position "Okänd" and no map marker; no "Utan position" group.
+- **Nytt i MeshCore** (CONTENT-SV-31): grouped by source (MeshCore, MeshMapper, MQTT Observer,
+  EasySkyMesh), posts for MQTT Observer 1.18, MeshMapper app 1.4.2 and EasySkyMesh PowerSaving 18;
+  `scripts/news-check.mjs` lists releases newer than the last post (four requests, at most daily).
+- CI: `COMPARE_BASE` moved to v0.68.0 (regional output changes on purpose: the news posts).
+
 ## v0.67.0 — 2026-11-18
 
 - **Map: "SE" toggle** (B-370): on a county's map (a county page in national mode, or a regional site

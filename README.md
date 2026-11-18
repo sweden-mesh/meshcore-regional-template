@@ -211,11 +211,49 @@ Update the template later with `hugo mod get -u` (newest tag) or
 `hugo mod get github.com/sweden-mesh/meshcore-regional-template@v0.2.0` (a given one). Dependabot
 can do it for you: add `.github/dependabot.yml` with the `gomod` ecosystem to the region repo.
 
+## Languages
+
+Swedish is the template's language and stays at `/`. A site can add English under `/en/` (B-337) with a
+`[languages]` block in its `hugo.toml`, as `exampleNational/hugo.toml` does:
+
+```toml
+[languages.sv]
+  weight = 1
+  locale = "sv"
+  label = "Svenska"
+[languages.en]
+  weight = 2
+  locale = "en"
+  label = "English"
+  title = "MeshCore Sweden"
+  contentDir = "content.en"          # the site's own English pages, if it has any
+  [[languages.en.menus.main]]        # menus and params that hold text, per language
+    name = "Guides"
+    pageRef = "/guider"
+```
+
+What the template then does:
+- `content.en/` is mounted for English only (a site without English never sees it). An English page has
+  the same file path as its Swedish one, which pairs them, and sets its own `url: /en/…/`.
+- The county and wizard pages are generated in both languages; the county local pages' text comes from
+  `assets/lan/en/` where it exists. Data with text per language: `data/hardware_en.toml`,
+  `data/prebuilt_solar_en.toml`; shortcodes with prose: `privacy.en.html`, `solar.en.html`.
+- Links in content are written as the Swedish path (`/guider/x/`, `../x/`); on an English page they go to
+  the English page, or to the Swedish one when there is no translation. Headings in a translation keep
+  the Swedish id (`## Antenna {#antenn}`), so `#` links work in both.
+- Each page names its translations with `hreflang` (and `x-default` → Swedish) in its head and in
+  `/sitemap.xml`, which stays one urlset of every language. A link in the header (`EN` / `SV`, the full
+  name in the ☰ menu) goes to the same page in the other language. Nothing redirects by itself.
+- Not yet in English: the solar method page and the counties' own texts in a national site's `data/lan`.
+
+A further language: `content.<code>/`, `i18n/<code>.toml`, and the three `content` mounts in this
+template's `hugo.toml` repeated with its code.
+
 ## Versions of the tools
 
 | Tool | Minimum | Tested in CI | Why the minimum |
 |---|---|---|---|
-| Hugo (standard or extended) | 0.146.0 (`module.hugoVersion` in `hugo.toml`) | 0.169.0 | the 0.146 layout structure (`layouts/_partials`, `_shortcodes`, `_markup`); `try` (0.141) and content adapters (0.126) are older |
+| Hugo (standard or extended) | 0.153.0 (`module.hugoVersion` in `hugo.toml`) | 0.169.0 | `sites.matrix` on module mounts (0.153), for the English content; the 0.146 layout structure (`layouts/_partials`, `_shortcodes`, `_markup`), `try` (0.141) and content adapters (0.126) are older |
 | Go | any supported release | stable | `hugo mod` fetches the template |
 | Pagefind | 1.5 | 1.5.2 | the search UI the template loads |
 | Node (tests only) | 22 | 22 | `node --test`, global WebSocket in the live-feed smoke test |
