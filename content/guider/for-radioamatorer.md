@@ -106,3 +106,15 @@ mer än de ger. Se [Sändningstid är gemensam](../etikett/).
 Det du kan om antenner, master och placering är just det ett meshnät saknar oftast. En repeater
 högt upp med fri sikt gör mer för nätet än tio companions. Se [Antenner](../antenner/), [Sätt
 upp en repeater](../repeater/) och [Bli nodvärd](../../bli-nodvard/).
+
+## En repeater som är uppe slår en perfekt som inte är det
+
+Som radioamatör är du van att få ut det mesta av en station. I ett meshnät kommer täckningen från
+många noder tillsammans: varje repeater för vidare det den hör, så nästa nod längs vägen tar över
+där din når fram. En repeater som står uppe i dag gör därför mer nytta än en som väntar på den
+bästa platsen eller den bästa antennen.
+
+Bästa platsen är ofta bara lite bättre än den näst bästa. Sätt upp en nod som är tillräckligt bra,
+se på [kartan](/#karta) vilka den hör och vilka som hör den, och flytta eller bygg om den när du vet
+mer. Din känsla för antenner och placering gör störst skillnad just där, när du finjusterar.
+Hur du sätter upp den: [Sätt upp en repeater](../repeater/).
