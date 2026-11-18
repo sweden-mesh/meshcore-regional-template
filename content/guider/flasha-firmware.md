@@ -1,8 +1,8 @@
 ---
-title: "Flasha firmware"
-description: "Flasha MeshCore från webbläsaren: companion-firmware från den officiella webbflashern, repeatrar från firmwareväljaren, och vad du gör om något krånglar."
-weight: 40
-group: repeater
+title: "Välj och flasha firmware"
+description: "Välj och flasha MeshCore från webbläsaren: standardfirmware från den officiella webbflashern för companion och repeater, Observer för kartan, och vad du gör om något krånglar."
+weight: 18
+group: start
 source:
   title: "Sätt upp en egen MeshCore Companion"
   url: "https://meshat.se/meshcore/satt-upp-egen-companion/"
@@ -25,36 +25,35 @@ Vilken radio du ska välja står i [Skaffa hårdvara](../skaffa-hardvara/).
 
 ## 1. Välj firmware
 
-Var du hämtar firmwaren beror på vad radion ska bli.
+Börja med MeshCore-projektets egen firmware. Den finns i den officiella
+[webbflashern]({{< param "firmware.flasher" >}}) för companion, repeater och room server, och den
+räcker för de flesta.
 
 ### Companion
 
-Din egen radio, den du parar med appen, flashas från MeshCore-projektets
-[webbflasher]({{< param "firmware.flasher" >}}). Firmwareväljaren nedan har bara repeatrar än så
-länge.
+Din egen radio, den du parar med appen:
 
-1. Välj din radio i listan, exakt modell och version.
+1. Öppna [webbflashern]({{< param "firmware.flasher" >}}) och välj din radio, exakt modell och
+   version.
 2. Välj companion-firmware: **Bluetooth** om du ska använda telefonen, **USB** om radion ska sitta
    i datorn.
 3. Fortsätt med [Anslut radion](#2-anslut-radion) nedan.
 
 ### Repeater
 
-Börja i [firmwareväljaren]({{< param "firmware.picker" >}}). Den frågar efter:
+1. I [webbflashern]({{< param "firmware.flasher" >}}): välj din radio och **Repeater**.
+2. Ska repeatern också visa på kartan vad den hör, välj en **Observer**-firmware i stället. Den
+   kommer från [MeshCore Observer-projektet](https://github.com/agessaman/MeshCore) och behöver ett
+   kort med wifi; se [Din repeater på kartan](../visa-pa-kartan/).
 
-1. **Typ av nod**: repeater.
-2. **Funktioner**: till exempel *Observer*, som rapporterar vad noden hör till kartan.
-3. **Ny installation eller uppdatering**: en uppdatering behåller nodens inställningar och
-   identitet.
-4. **Din radio**: välj exakt modell och hårdvaruversion.
+### Specialfirmware, om du vill ha mer
 
-Svaret är en fil och instruktioner för just den. För ESP32-radior har sidan en egen knapp,
-**Flasha via USB**, som flashar direkt från webbläsaren. Den kontrollerar att filen passar
-radions chip och skriver den på rätt ställe. Välj *Uppdatera* för att behålla inställningar och
-identitet; *Ny installation* raderar dem.
-
-Du kan också flasha en repeater med [webbflashern]({{< param "firmware.flasher" >}}), som har
-stöd för fler modeller men saknar auto-svar och fjärrstyrning (se [Specialfirmware lou](../firmware-lou/)).
+[Specialfirmware lou](../firmware-lou/) är repeaterfirmware som byggs för de svenska näten. Den lägger
+till auto-svar på test och fjärrstyrning, och fungerar ihop med vanlig MeshCore. Du behöver den inte
+för att komma igång. Den finns i en egen väljare, [lou-firmwareväljaren]({{< param "firmware.picker" >}}),
+som bara har lou-firmware: välj typ av nod, funktioner, ny installation eller uppdatering, och din
+radio. För ESP32-radior har den en knapp, **Flasha via USB**, som flashar direkt från webbläsaren.
+Välj *Uppdatera* för att behålla inställningar och identitet; *Ny installation* raderar dem.
 
 > [!WARNING] Rätt modell
 > Firmware för fel modell kan göra att skärm, radio eller knappar inte fungerar. Kontrollera
