@@ -21,7 +21,10 @@ Länet använder regionen (scope) `{{ .Scope }}`.{{ if .Proposal }} Regionen är
 [listan över regioner](https://github.com/zombiefredrik/meshcore-se-regioner): ingen grupp i länet
 har bestämt den än.{{ end }} En kanal med regionen `{{ .Scope }}` förs bara vidare av repeatrar som
 bär den, så samtalet stannar i länet och tar inte sändningstid från grannarna. Hur det fungerar står
-i [Regioner](/guider/regioner/).
+i [Regioner](/guider/regioner/).{{ range $r := .RegionsExtra }}{{ if $r.scope }}
+
+{{ if $r.group }}[{{ $r.group }}]({{ $r.source }}){{ else }}En grupp i länet{{ end }} lägger också till regionen `{{ $r.scope }}`{{ with $r.note }} ({{ . }}){{ end }} på sina repeatrar,
+utöver `{{ $.Scope }}`. Det är ett lokalt tillägg som fungerar ihop med länets region.{{ end }}{{ end }}
 
 {{"{{<"}} channels {{">}}"}}
 
@@ -70,8 +73,10 @@ eller låta någon annan sätta en hos dig. Det gäller också föreningar och a
 - [Sätt upp en MeshCore-repeater](/guider/repeater/) går igenom installationen, och
   [snabbkonfigurationen](/wizard/repeater-snabb/) skickar inställningarna till radion via USB.
 
-En repeater i länet heter `{{ .Prefix }}-` följt av en välkänd plats, till exempel
-`{{ .Prefix }}-{{ .Place }}`. Mer om namnen i [Namnge din repeater](/guider/namnge-noden/).
+{{ with .Naming.format }}{{ if $.Naming.group }}[{{ $.Naming.group }}]({{ $.Naming.source }}){{ else }}Länets grupp{{ end }}
+namnger repeatrarna i länet så här: `{{ . }}`{{ with $.Naming.example }}, till exempel `{{ . }}`{{ end }}. Använd det formatet i länet. Det nationella förslaget för län utan eget format
+är `{{ $.Prefix }}-` följt av en välkänd plats, som `{{ $.Prefix }}-{{ $.Place }}`.{{ else }}En repeater i länet heter `{{ .Prefix }}-` följt av en välkänd plats, till exempel
+`{{ .Prefix }}-{{ .Place }}`.{{ end }} Mer om namnen i [Namnge din repeater](/guider/namnge-noden/).
 
 ## Hjälp och gemenskap
 {{ with .Groups }}

@@ -155,8 +155,10 @@ visitor's region (on the national site the chosen county; Sverige: common + nati
 - `data/lan/<scb>.toml`, one file per county (21). Only what cannot be derived: `slug` (the address,
   with åäö), `short`, `checked`, and optionally `site` (the county's own site), `iata`, `center`,
   `zoom`, `place`, `meshmapper`, `text`, `text_by` and `community = {name, url}` (the county's
-  central community site, a button beside "Se kartan"), and the lists `[[channels]]`, `[[groups]]` and
-  `[[wanted]]`. Name, scope and its decision, neighbours and the county's shape come from the region
+  central community site, a button beside "Se kartan"), `naming = {format, example, source, group}`
+  (the county group's own node-name format, shown on Kom igång before the national `SE<NN>-Plats`),
+  and the lists `[[channels]]`, `[[groups]]`, `[[wanted]]` and `[[regions_extra]]` (`scope`, `note`,
+  `source`, `group`: a local region a group adds beside the county's, noted on Kom igång). Name, scope and its decision, neighbours and the county's shape come from the region
   list and `se-lan.geojson` (`layouts/_partials/lan.html`).
 - `params.region` for the "Sverige" state (name and short "Sverige", scope `se`, every map area in
   `iatas` for the national map), and `params.lanData`, the county-data guide's URL.

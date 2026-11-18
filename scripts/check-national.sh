@@ -46,6 +46,10 @@ check kalmar/kom-igang/index.html "Lägg till kanalerna</strong> <code class=nob
 check kalmar/kom-igang/index.html "regionen (scope) <code class=scope>se08</code>" "local: a numeric scope (se08) is styled as a scope"
 check kalmar/kom-igang/index.html "<strong>Exempelberget</strong>: högt läge mot havet" "local: Kom igång lists the wanted places"
 check kalmar/kom-igang/index.html "SE08-Exempelberget" "local: the name example uses the prefix and the county's place"
+check kalmar/kom-igang/index.html "namnger repeatrarna i länet så här: <code class=nobreak>SE-{kommun}-{plats}</code>, till exempel <code class=nobreak>SE-KAM-Exempelberget</code>" "local: a county's own naming format (naming) on Kom igång"
+if tr '\n' ' ' < "$P/kalmar/kom-igang/index.html" | grep -q 'SE-KAM-Exempelberget.*SE08-Exempelberget'; then echo "ok   local: the county's own format comes before the national suggestion"; else echo "FAIL local: the county's own format comes before the national suggestion"; fail=1; fi
+check kalmar/kom-igang/index.html "lägger också till regionen <code class=nobreak>se0880</code> (Kalmar kommun)" "local: a municipality region the group adds (regions_extra)"
+check skåne/kom-igang/index.html "En repeater i länet heter <code class=nobreak>SE12-</code>" "local: no naming key, the national suggestion alone"
 check kalmar/kom-igang/index.html "<dd><code class=scope>se08</code></dd>" "local: the settings box shows the county's scope"
 check skåne/kom-igang/index.html "Ingen lista över platser finns för länet än" "local: no wanted places, the general advice"
 check skåne/ingen-svar-pa-test/index.html "<h1>Ingen svarar på test i #test-se12</h1>" "local: the troubleshooting page names the test channel"

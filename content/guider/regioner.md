@@ -43,7 +43,8 @@ Sverige använder två nivåer:
 
 Länets namn bestäms av länet självt; finns inget beslut används ett uppmätt eller föreslaget
 namn. Alla läns namn finns i [meshcore-se-regioner](https://github.com/zombiefredrik/meshcore-se-regioner).
-Kommunregioner använder vi inte; se [Kommuner och offgrid](#kommuner-och-offgrid).
+Vi föreslår länets region som grund; vissa grupper lägger till en kommunregion, som `se0880` i
+Kalmar. Se [Kommuner och offgrid](#kommuner-och-offgrid).
 
 > [!WARNING] `*` betyder inte "allt"
 > `*` är trafik som saknar regionetikett, inte ett jokertecken för alla regioner.
@@ -130,11 +131,11 @@ Kommunregioner
 : Trafik för noder som ägaren själv bedömer har reservkraft, som batteri eller sol. Etiketten har
   ingen gemensam definition.
 
-Vi rekommenderar länets region och `se`, inget annat. Ett paket med en region kommer bara fram
+Vi föreslår länets region och `se` som grund. Ett paket med en region kommer bara fram
 genom repeatrar som har just den regionen, så varje extra etikett måste finnas på alla repeatrar
 längs vägen för att fungera. Två nivåer är lätta att hålla lika i hela länet, och länens namn
 finns samlade på ett ställe. Använder ett lokalt nät redan kommunregioner kan en repeater ha
-dem i listan också, utöver länets.
+dem i listan också, utöver länets: Kalmar-Mesh lägger till exempel till `se0880` (Kalmar kommun).
 
 ## Vanliga frågor
 

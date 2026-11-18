@@ -8,6 +8,13 @@ text    = "Nätet i länet växer längs kusten."
 text_by = "Exempelgruppen"
 meshmapper = "https://example.org/meshmapper/"
 community = { name = "Exempelgruppen", url = "https://example.org/grupp" }   # B-306: a button beside "Se kartan"
+naming  = { format = "SE-{kommun}-{plats}", example = "SE-KAM-Exempelberget", source = "https://example.org/grupp/namn", group = "Exempelgruppen" }   # the group's own format, shown before SE08-
+
+[[regions_extra]]   # a municipality region the group adds beside se08
+  scope  = "se0880"
+  note   = "Kalmar kommun"
+  source = "https://example.org/grupp/region"
+  group  = "Exempelgruppen"
 
 [[channels]]
   name = "#kalmar-exempel"

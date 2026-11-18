@@ -4,6 +4,18 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.62.0 — 2026-11-18
+
+- **A county group's own naming format** (national mode): county files take an optional
+  `naming = {format, example, source, group}`; the county's Kom igång shows it first, crediting the
+  group, then the national `SE<NN>-Plats` as the suggestion for counties without one.
+- **Local municipality regions**: an optional `[[regions_extra]]` list (`scope`, `note`, `source`,
+  `group`) notes a region a group adds beside the county's (Kalmar-Mesh's `se0880`) on Kom igång.
+- **Regioner**: "Kommunregioner använder vi inte" softened to "Vi föreslår länets region som grund;
+  vissa grupper lägger till en kommunregion, som `se0880` i Kalmar."
+- No script changes: **no CSP hash changes**. Regional output changes (Regioner): `COMPARE_BASE`
+  moved to v0.62.0.
+
 ## v0.61.0 — 2026-11-18
 
 - **Glossary links**: on every guide page the first use of each glossary word links to its entry on
