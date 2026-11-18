@@ -4,6 +4,35 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.64.0 — 2026-11-18
+
+- **No county dialog by itself** (B-343): a visit where nothing has chosen a county reads Sverige and
+  is not interrupted; the county dialog opens only from the header's county button (replaces the
+  automatic opening of UX-SV-D1; sessionStorage `lan-skip` is gone).
+- **"Välj din region här!"** (B-344): national mode, for a visitor who never chose a county (nothing
+  stored; choosing Sverige in the dialog counts), a large pointer under the header's county button,
+  only at scroll position 0. Hidden while the ☰ menu, a dialog or a focused control outside the header
+  is around; gone once a county is chosen. Placed by script inside the header (no layout shift, first
+  shown once the header has settled), from 245 px up; a click opens the dialog. New i18n `lan_tip`.
+  `menu.js` ignores it when deciding to fold the header. `scripts/check-header-browser.mjs` checks it
+  on a fresh visit from 245 to 1600 px, light and dark.
+- **Sverige Gemenskap column** (B-345): the national chats and links tagged "Nationell" (i18n
+  `lan_se_national_tag`), and between the text and the links a paragraph pointing at this template
+  (`lan_se_template`). `[[params.links]]` take an optional `footer` name, used in the footer and the
+  `gemenskap` shortcode where `name` is short.
+- **Map: fullscreen** (B-346): a fullscreen button under the fit button (i18n `mt_fs_enter`,
+  `mt_fs_exit`): the Fullscreen API on the map's element, prefixed where needed, else the map pinned
+  over the viewport (an iPhone), Esc leaves; the map resizes in and out. The fit button's icon is a
+  square drawn as its four corners.
+- **Map: a stronger transmit flash** (B-347, operator 2026-11-18): a yellow halo, a yellow core with a
+  white edge at full strength and an amber ring that spreads out, all larger zoomed out, so a
+  transmission reads over the repeaters' blurred glow at national zoom. The glow itself is unchanged.
+- **Map: dimmer county borders when more than one is drawn** (B-348): the national Sverige view draws
+  its borders at 0.3 opacity and 1 px; one border (a county page, a regional site) stays 0.7 and 1.5 px.
+- **Kolla platsen**: landscape screenshots, the sources section removed (operator 2026-11-18).
+- No inline script changes: **no CSP hash changes**. Regional output changes (map JS, menu.js, CSS):
+  `COMPARE_BASE` moved to v0.64.0.
+
 ## v0.63.1 — 2026-11-18
 
 - **The ☰ menu opens under its button** (B-341): the panel was placed against the viewport's right
