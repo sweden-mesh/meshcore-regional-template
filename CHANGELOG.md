@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.64.1 — 2026-11-18
+
+- **Map: the national overview drawn soft** (B-347, operator 2026-11-18): the look the operator saw
+  after picking a packet in the list under the map (every other node at 0.12 opacity, every link at
+  0.06, `applyPick`), and wanted as the normal look, is now the Sverige view's look below zoom 7 when
+  no packet and no node is picked: faint nodes and links, so the transmission flashes stand out. From
+  zoom 7 in, and on a county page or a regional site (one border), nothing changes. `pickPaint` takes a
+  `soft` flag.
+- No inline script changes: **no CSP hash changes**. The map's script changes (a regional site draws
+  as before, one border): `COMPARE_BASE` moved to v0.64.1.
+
 ## v0.64.0 — 2026-11-18
 
 - **No county dialog by itself** (B-343): a visit where nothing has chosen a county reads Sverige and
