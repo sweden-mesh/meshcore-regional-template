@@ -213,6 +213,9 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 /* The header's text 12.5 % smaller than the body's, so the menu, the search and the county fit (B-338). */
 .site-header { font-size: .875rem; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
+/* UX-SV-16: each link box at least 24 px tall (WCAG 2.5.8 without the spacing exception); the
+   negative margin keeps the header exactly as tall as before. */
+.site-header .nav-wide a { display: inline-block; padding-block: 1px; margin-block: -1px; }
 .site-header nav a:hover { color: var(--fg); }
 .map-panel { display: flex; flex-direction: column; gap: .4rem; font-family: var(--font-body); }
 .map-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
