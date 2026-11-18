@@ -17,22 +17,27 @@
     <p>{{ T "lan_areas" }} {{ range $i, $p := . }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Params.areaName | default $p.Title }}</a>{{ end }}.</p>
     {{- end }}
   </article>
+  {{- /* Published once, by the default language, for every language (B-337): a non-default language's
+         addresses carry its prefix (/en/jonkoping/ → /en/jönköping/). */ -}}
+  {{- if eq site.Language.Lang (index hugo.Sites 0).Language.Lang -}}
   {{- $lines := slice -}}
+  {{- range $s := hugo.Sites }}{{ $pre := strings.TrimSuffix "/" $s.Home.RelPermalink -}}
   {{- range $all -}}
     {{- $ascii := replace (replace (replace .slug "å" "a") "ä" "a") "ö" "o" -}}
     {{- if .site -}}{{- $to := .site -}}
       {{- $enc := replace (replace (replace .slug "å" "%C3%A5") "ä" "%C3%A4") "ö" "%C3%B6" -}}
       {{- range $p := uniq (slice $enc $ascii) -}}
-        {{- $lines = $lines | append (printf "/%s %s 302" $p $to) (printf "/%s/ %s 302" $p $to) (printf "/%s/* %s 302" $p $to) -}}
+        {{- $lines = $lines | append (printf "%s/%s %s 302" $pre $p $to) (printf "%s/%s/ %s 302" $pre $p $to) (printf "%s/%s/* %s 302" $pre $p $to) -}}
       {{- end -}}
-    {{- else if ne $ascii .slug -}}{{- with site.GetPage (printf "/%s" .slug) -}}
-      {{- $lines = $lines | append (printf "/%s/ %s 301" $ascii .RelPermalink) (printf "/%s/* %s:splat 301" $ascii .RelPermalink) -}}
+    {{- else if ne $ascii .slug -}}{{- with $s.GetPage (printf "/%s" .slug) -}}
+      {{- $lines = $lines | append (printf "%s/%s/ %s 301" $pre $ascii .RelPermalink) (printf "%s/%s/* %s:splat 301" $pre $ascii .RelPermalink) -}}
     {{- end -}}{{- end -}}
+  {{- end -}}
   {{- end -}}
   {{- /* Every page's old addresses (aliases) answer 301, instead of Hugo's meta-refresh page (SEO-SV-13). */ -}}
   {{- /* An address with åäö is written as the browser sends it, percent-encoded (B-360). */ -}}
   {{- $pct := dict "å" "%C3%A5" "ä" "%C3%A4" "ö" "%C3%B6" "Å" "%C3%85" "Ä" "%C3%84" "Ö" "%C3%96" "é" "%C3%A9" -}}
-    {{- range site.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $a := strings.TrimSuffix "/" . }}{{ range $k, $v := $pct }}{{ $a = replace $a $k $v }}{{ end }}{{ $lines = $lines | append (printf "%s %s 301" $a $to) (printf "%s/ %s 301" $a $to) }}{{ end }}{{ end -}}
+    {{- range $s := hugo.Sites }}{{ range $s.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $a := strings.TrimSuffix "/" . }}{{ range $k, $v := $pct }}{{ $a = replace $a $k $v }}{{ end }}{{ $lines = $lines | append (printf "%s %s 301" $a $to) (printf "%s/ %s 301" $a $to) }}{{ end }}{{ end }}{{ end -}}
   {{- /* Other addresses that answer 301, from params.redirects: [["/from/", "/to/"], …] (B-360). */ -}}
   {{- range site.Params.redirects }}{{ $from := strings.TrimSuffix "/" (index . 0) }}{{ $to := index . 1 }}{{ range $k, $v := $pct }}{{ $from = replace $from $k $v }}{{ $to = replace $to $k $v }}{{ end }}{{ $lines = $lines | append (printf "%s %s 301" $from $to) (printf "%s/ %s 301" $from $to) }}{{ end -}}
   {{- /* /lan/pages.json: SCB code → county page, or the county's own site as an absolute address
@@ -40,4 +45,5 @@
   {{- $pages := dict }}{{ range $c := $all }}{{ if $c.url }}{{ with site.GetPage (printf "/%s" $c.slug) }}{{ $pages = merge $pages (dict $c.scb .RelPermalink) }}{{ end }}{{ else if $c.site }}{{ $pages = merge $pages (dict $c.scb $c.site) }}{{ end }}{{ end -}}
   {{- (resources.FromString "lan/pages.json" ($pages | jsonify)).Publish -}}
   {{- with $lines }}{{ $r := resources.FromString "_redirects" (printf "# Made by the template (national mode): addresses without åäö, counties with their own site, and old page addresses.\n%s\n" (delimit . "\n")) }}{{ $r.Publish }}{{ end -}}
+  {{- end -}}
 {{ end }}
