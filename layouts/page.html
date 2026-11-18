@@ -10,7 +10,10 @@
     {{- range partialCached "lan.html" . "lan" }}{{ if .site }}
     <p class="lan-own" data-own="{{ .scb }}">{{ T "lan_own_site" (dict "Name" .name) }} <a href="{{ .site }}" class="ext" target="_blank" rel="noopener">{{ replaceRE `^https?://([^/]+)/?.*$` "$1" .site }}</a></p>
     {{- end }}{{ end }}
+    {{- /* The region's proposal status only where the region is the subject (B-342). */}}
+    {{- if eq .Path "/guider/regioner" }}
     <p class="lan-proposal" data-r-proposal hidden>{{ T "lan_proposal_page" (dict "Name" (partial "r.html" (dict "page" . "key" "name" "value" "")) "Scope" (partial "r.html" (dict "page" . "key" "scope" "value" "")) "URL" "https://github.com/zombiefredrik/meshcore-se-regioner") | safeHTML }}</p>
+    {{- end }}
     {{- end }}{{ end }}
     {{ partial "toc.html" . }}
     <div class="prose">{{ partial "scopes.html" (partial "glossary.html" (dict "page" . "html" .Content)) }}</div>

@@ -408,11 +408,30 @@ td, th { vertical-align: top; }
   .lan-toggle span { max-width: 7.5rem; }
 }
 .nav-narrow [popover] { position: absolute; inset: 4.25rem 1rem auto auto; margin: 0; z-index: 10; flex-direction: column; min-width: 12rem; max-width: calc(100vw - 2rem); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .4rem; box-shadow: 0 12px 30px rgba(15, 29, 38, .15); }
+/* Anchored to ☰ (B-341): directly below it, its right edge on the button's, flipped to the button's
+   left edge if that would leave the viewport. Without anchor positioning menu.js places it the same way
+   when it opens; the inset above is what is left without script. */
+.nav-toggle { anchor-name: --nav-toggle; }
+@supports (position-area: block-end) {
+  .nav-narrow [popover] { inset: auto; margin: .25rem 0 0; position-anchor: --nav-toggle; position-area: block-end span-inline-start; position-try-fallbacks: flip-inline; }
+}
 .nav-narrow [popover]:is(:popover-open, .\:popover-open) { display: flex; }
 .nav-narrow [popover]:not(:is(:popover-open, .\:popover-open)) { display: none; }
 .nav-narrow [popover] a { padding: .6rem .75rem; border-radius: var(--radius-xs); }
 .nav-narrow [popover] a:hover { background: var(--surface); }
 @media (max-width: 40em) { .site-header .nav-wide { display: none; } .site-header .nav-narrow { display: block; } }
+/* A narrow phone or a zoomed one (B-341): the row tightens before it overflows and pushes ☰ off the
+   screen; then the search button goes (Sök is in the menu), then the county button's label (its
+   aria-label keeps the name). */
+@media (max-width: 24em) { .site-header, .site-header:has(.lan-toggle) { gap: .25rem; } }
+@media (max-width: 21em) {
+  .site-header .search-open { display: none; }
+  .site-header .brand { margin-right: auto; }
+}
+@media (max-width: 19em) {
+  .site-header .lan-toggle { min-width: 44px; justify-content: center; }
+  .site-header .lan-toggle span { display: none; }
+}
 /* With script (menu.js) the wide menu folds when the row does not fit, measured instead of at a
    fixed width: unfolded, nothing in the row may shrink or wrap, so an overflow is measurable. */
 .site-header.js-nav:not(.nav-collapsed) > :is(.brand, .nav-wide, .search-open, .lan-toggle) { flex-shrink: 0; white-space: nowrap; }

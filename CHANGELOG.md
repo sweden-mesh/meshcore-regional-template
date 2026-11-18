@@ -4,6 +4,23 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.63.1 — 2026-11-18
+
+- **The ☰ menu opens under its button** (B-341): the panel was placed against the viewport's right
+  edge, and below about 370 px (a 320–360 px phone, or 125 % zoom under 460 px) the header row was
+  wider than the screen, so ☰ sat past the edge and the menu opened up to 156 px to its left. The
+  panel is now anchored to ☰ (CSS anchor positioning, flipped to the button's left edge at the screen
+  edge; `menu.js` places it the same way where anchor positioning is missing), and the narrow header
+  fits down to 245 px: tighter gaps below 24em, the search button left to the menu's Sök below 21em,
+  the county button's label (still its accessible name) below 19em. Opening moves focus to the first
+  link; Escape closes and returns focus to ☰. `scripts/check-header-browser.mjs` checks the opened
+  menu from 320 px up at 100/125 % zoom, light and dark.
+- **The region-proposal note only on the regions guide** (B-342): no longer on every guide with county
+  values, nor in the county page's region box or the /lan/ list; the remaining line is neutral
+  ("Regionen … är ett förslag från listan över regioner."). `lan_proposal_note` removed.
+- No inline script changes: **no CSP hash changes**. Regional output changes (header CSS and JS):
+  `COMPARE_BASE` moved to v0.63.1.
+
 ## v0.63.0 — 2026-11-18
 
 - **Kolla platsen med MeshMapper** (B-339): a new guide `/guider/kolla-platsen/` in the repeater group:

@@ -899,8 +899,6 @@ other = "If the county has no such repeaters, test in the standard `#test`. Pref
 other = "Public and the county's chat channel"
 [lan_proposal]
 other = "proposal"
-[lan_proposal_note]
-other = "The region is a proposal in [the list of regions]({{ .URL }}): no group in the county has decided on it yet. If another one is in use here, correct the list."
 [lan_net_title]
 other = "The network in {{ .Name }}"
 [lan_net_text]
@@ -964,7 +962,7 @@ other = "to see its values."
 [lan_own_site]
 other = "{{ .Name }} has its own MeshCore site with the county's values:"
 [lan_proposal_page]
-other = "The region <code>{{ .Scope }}</code> for {{ .Name }} is a proposal in <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">the list of regions</a>: no group in the county has decided on it yet."
+other = "The region <code>{{ .Scope }}</code> for {{ .Name }} is a proposal from <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">the list of regions</a>."
 [lan_pick]
 other = "Choose county"
 [region_switch_all]

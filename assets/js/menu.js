@@ -6,6 +6,21 @@
 const toggle = document.querySelector(".nav-toggle");
 if (toggle && !Object.hasOwn(HTMLElement.prototype, "popover")) import(toggle.dataset.polyfill);
 
+// Opened, focus moves to the first link (B-341); Escape closes it and the browser hands focus back to
+// ☰. Where CSS anchor positioning is missing (main.css), the menu is placed under ☰ here instead:
+// right edges together, or left edges if that would leave the screen. The menu is absolutely
+// positioned in the top layer, so its offsets are taken against the document, not the viewport.
+const menu = toggle && document.getElementById(toggle.getAttribute("popovertarget"));
+if (menu) menu.addEventListener("toggle", (e) => {
+  if (e.newState !== "open") return;
+  if (!CSS.supports("position-area", "block-end")) {
+    const b = toggle.getBoundingClientRect(), w = menu.offsetWidth, vw = document.documentElement.clientWidth;
+    const left = b.right - w >= 0 ? b.right - w : Math.min(b.left, vw - w);
+    Object.assign(menu.style, { inset: "auto", top: `${b.bottom + scrollY + 4}px`, left: `${Math.max(0, left) + scrollX}px` });
+  }
+  menu.querySelector("a")?.focus();
+});
+
 // The wide menu folds into ☰ when the logo, the links and the theme button do not fit on one row,
 // measured rather than at a fixed width, so a region with more or longer menu items never wraps.
 // Without script the CSS media query does the same at a fixed width.

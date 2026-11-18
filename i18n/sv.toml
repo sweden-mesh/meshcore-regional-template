@@ -895,8 +895,6 @@ other = "Har länet inga sådana repeatrar, testa i den vanliga `#test`. Använd
 other = "Public och länets chattkanal"
 [lan_proposal]
 other = "förslag"
-[lan_proposal_note]
-other = "Regionen är ett förslag i [listan över regioner]({{ .URL }}): ingen grupp i länet har bestämt den än. Används en annan i länet, rätta listan."
 [lan_net_title]
 other = "Nätet i {{ .Name }}"
 [lan_net_text]
@@ -960,7 +958,7 @@ other = "så visas länets värden."
 [lan_own_site]
 other = "{{ .Name }} har en egen MeshCore-sida med länets värden:"
 [lan_proposal_page]
-other = "Regionen <code>{{ .Scope }}</code> för {{ .Name }} är ett förslag i <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">listan över regioner</a>: ingen grupp i länet har bestämt den än."
+other = "Regionen <code>{{ .Scope }}</code> för {{ .Name }} är ett förslag från <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">listan över regioner</a>."
 [lan_pick]
 other = "Välj län"
 [region_switch_all]

@@ -100,6 +100,7 @@ if [ "$n" = "1" ]; then echo "ok   footer: a group with the same address as a ch
 check bli-nodvard/index.html '<span data-r-groups=inline><a href=https://example.org/chat' "contact: shared pages name the national chats until a county is chosen"
 # Proposed scopes (P2) and the solar guide's reference (G17).
 check guider/regioner/index.html '<p class=lan-proposal data-r-proposal hidden>Regionen <code><span data-r=scope data-pagefind-ignore>' "proposal: the page has the hidden proposal line"
+if grep -q 'data-r-proposal' "$P/guider/flasha-firmware/index.html"; then echo "FAIL proposal: a general guide carries the proposal line (B-342)"; fail=1; else echo "ok   proposal: not on a general guide"; fi
 check guider/solnoder/index.html 'Jönköping som referens' "solar: the tables are labelled as the Jönköping reference"
 check guider/solnoder/index.html 'href=/wizard/solcell/>Solcells' "solar: and point to the calculator"
 # The header's county button (M5): a link to /lan/ without JavaScript, labelled with the county.
