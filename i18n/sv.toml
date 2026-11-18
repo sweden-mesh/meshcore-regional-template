@@ -1179,3 +1179,6 @@ other = "Ett nRF52-kort som inte finns i listan: räknas med den högsta uppmät
 other = "Ett ESP32-kort som inte finns i listan: räknas med den högsta uppmätta strömmen bland ESP32-korten (Heltec V4 med förstärkaren på)."
 [sol_hint_generic-pi]
 other = "En annan Raspberry Pi: räknas som Pi Zero 2 W, den enda med en härledd siffra. Större modeller drar mer."
+
+[toc_title]
+other = "På sidan"

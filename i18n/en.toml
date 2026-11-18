@@ -1183,3 +1183,6 @@ other = "An nRF52 board not in the list: calculated with the highest measured cu
 other = "An ESP32 board not in the list: calculated with the highest measured current among the ESP32 boards (Heltec V4 with the amplifier on)."
 [sol_hint_generic-pi]
 other = "Another Raspberry Pi: calculated as the Pi Zero 2 W, the only one with a derived figure. Larger models draw more."
+
+[toc_title]
+other = "On this page"

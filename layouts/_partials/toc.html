@@ -1,0 +1,19 @@
+{{- /* "På sidan" (UX-SV-4): the page's H2s, on a page with 4 or more. Closed <details> under the
+  lead on narrow screens; from 80em it stands in the empty column to the right, open and sticky
+  (js/toc.js opens it and marks the section in view). The page's text does not move either way. */ -}}
+{{- $h2 := slice -}}
+{{- range .Fragments.Headings }}
+  {{- if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end -}}
+  {{- range .Headings }}{{ if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end }}{{ end -}}
+{{- end -}}
+{{- if ge (len $h2) 4 }}
+<nav class="toc" aria-labelledby="toc-title">
+  <details>
+    <summary id="toc-title">{{ T "toc_title" }}</summary>
+    <ol>{{ range $h2 }}<li><a href="#{{ .ID }}">{{ .Title | safeHTML }}</a></li>{{ end }}</ol>
+  </details>
+</nav>
+{{- with resources.Get "js/toc.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}
+{{- end -}}
