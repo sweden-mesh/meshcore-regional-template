@@ -24,6 +24,22 @@ utan position.
 
 {{< namecheck >}}
 
+> [!NOTE]- Varför 23 och 31 byte
+> En advert har 32 byte för typ, position och namn. Typen tar 1 och positionen 8, så namnet får
+> 23 byte med position och 31 utan [^cli]. Å, ä och ö är två byte var i UTF-8 [^utf8].
+
+## Andra format du kan se
+
+Alla i Sverige använder inte samma format. Två vanliga, med en kommun som exempel:
+
+| Format | Exempel | Byte |
+| --- | --- | --- |
+| Land, förkortning, plats | `SE-STHLM-Kvarnberget` | 20 |
+| Land och kommunkod, plats | `SE0180-KvarnbergetREP` | 21 |
+
+Följ det som redan används i ditt nät. Fler exempel och förslag finns i [Meshcore naming convention
+in Sweden](https://github.com/MrBengt666/Meshcore-naming-convention-in-Sweden).
+
 ## Tips
 
 - Använd en välkänd plats som de flesta i trakten känner igen, inte ditt namn: andra ska förstå
@@ -39,3 +55,8 @@ andra när radion skickar en advert, och det behöver inte avslöja vem du är. 
 23 byte om positionen ska följa med. En emoji tar fyra byte.
 
 {{< namecheck kind="companion" >}}
+
+## Källor
+
+[^cli]: MeshCore, [CLI-referensen](https://github.com/meshcore-dev/MeshCore/blob/main/docs/cli_commands.md), `set name`, och [AdvertDataHelpers.cpp](https://github.com/meshcore-dev/MeshCore/blob/main/src/helpers/AdvertDataHelpers.cpp).
+[^utf8]: [RFC 3629](https://www.rfc-editor.org/rfc/rfc3629), UTF-8.

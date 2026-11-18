@@ -45,6 +45,8 @@ Din egen radio, den du parar med appen:
 2. Ska repeatern också visa på kartan vad den hör, välj en **Observer**-firmware i stället. Den
    kommer från [MeshCore Observer-projektet](https://github.com/agessaman/MeshCore) och behöver ett
    kort med wifi; se [Din repeater på kartan](../visa-pa-kartan/).
+3. Webbflashern har ingen separat strömsnål firmware. Ska repeatern gå på batteri eller sol slår du på
+   strömsparläget efter flashningen; se [Bygg en repeater](../bygg-en-repeater/#spara-ström).
 
 ### Specialfirmware, om du vill ha mer
 

@@ -1274,3 +1274,51 @@ other = "Välj trädlinje och firmware, så räknar kalkylatorn ut hur stor pane
 other = "Öppna solcellskalkylatorn"
 [chat_example]
 other = "#exempel"
+[diagram_region_title]
+other = "En region stoppar trafiken där den inte hör hemma"
+[diagram_region_caption]
+other = "En companion skickar ett paket med länets region. Repeater A och B har regionen i sin lista och sänder vidare. Repeater C hör paketet men saknar regionen, så paketet stannar där."
+[diagram_region_sender]
+other = "Companion"
+[diagram_region_sender_note]
+other = "Skickar ett paket med länets region."
+[diagram_region_a]
+other = "Repeater A"
+[diagram_region_b]
+other = "Repeater B"
+[diagram_region_c]
+other = "Repeater C"
+[diagram_region_has]
+other = "Har regionen: sänder vidare."
+[diagram_region_lacks]
+other = "Saknar regionen: sänder inte vidare."
+[diagram_fresnel_title]
+other = "Fresnelzonen mellan två antenner"
+[diagram_fresnel_caption]
+other = "Mellan antenn A och B går siktlinjen. Runt den ligger Fresnelzonen, bredast mitt på (radien r). En kulle under linjen kan nå in i zonen och dämpa signalen fast linjen är fri."
+[diagram_fresnel_zone]
+other = "Fresnelzonen"
+[diagram_fresnel_line]
+other = "siktlinjen"
+[diagram_fresnel_hill]
+other = "hinder i zonen"
+[diagram_observer_title]
+other = "Från radiopaket till kartan"
+[diagram_observer_caption]
+other = "En nod sänder ett paket. En observatör hör det och skickar det via internet till en MQTT-server, som kartan läser från. Meshnätet fungerar likadant utan observatören."
+[diagram_observer_air]
+other = "Ett paket i luften"
+[diagram_observer_air_note]
+other = "En advert eller ett meddelande."
+[diagram_observer_observer]
+other = "Observatör"
+[diagram_observer_observer_note]
+other = "Hör paketet och skickar en kopia."
+[diagram_observer_broker]
+other = "MQTT-server"
+[diagram_observer_broker_note]
+other = "Tar emot över internet."
+[diagram_observer_map]
+other = "Kartan"
+[diagram_observer_map_note]
+other = "Visar noder och vägar."

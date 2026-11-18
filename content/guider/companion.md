@@ -26,7 +26,7 @@ Har du ingen radio än: [Skaffa hårdvara](../skaffa-hardvara/).
 
 ## 2. Anslut appen
 
-MeshCore-appen är gratis och finns för:
+MeshCore-appen finns för:
 
 - **Android** (Google Play) och **iPhone** (App Store),
 - **Windows** och **macOS**, att ladda ned från [meshcore.io](https://meshcore.io),
@@ -39,6 +39,11 @@ MeshCore-appen är gratis och finns för:
    `123456`.
 
 Appen visar kontakter, kanaler och meddelanden. Radion sköter sändningen.
+
+> [!NOTE]- Kostar appen något?
+> Nej, inte för att skicka och ta emot. Appen är gratis att ladda ned och använda. I mobilappen kan
+> väntetiden för att administrera en repeater eller room server över radio låsas upp med ett köp i
+> appen; appen för Windows och Mac är helt gratis [^faq].
 
 ## 3. Ställ in radion
 
@@ -71,14 +76,30 @@ Dela den bara om du vill, och gärna avrundad.
 
 1. Skicka en advert från appen, så att andra ser att du finns.
 2. Skriv `test` i regionens testkanal {{< testchannel >}} om regionen har repeatrar med
-   [auto-svar]({{< param "firmware.picker" >}}#f=ar&install=update), annars i den vanliga `#test`. Inte i
+   [auto-svar](../firmware-lou/), annars i den vanliga `#test`. Inte i
    chattkanalerna. Repeatrar med auto-svar svarar, och du ser vilka som hörde dig.
 
 Vad svaren betyder, och varför tystnad oftast är normalt: [Första meddelandet](../forsta-meddelandet/).
 
+## 7. Testa med två radior
+
+Svarar ingen repeater i testkanalen kan du prova med två egna radior, eller med en vän.
+
+> [!NOTE]- Så testar du med två radior
+> 1. Ställ in båda radiorna med samma värden som i steg 3.
+> 2. Skicka en advert från båda.
+> 3. Kontrollera att de ser varandra under kontakter i appen.
+> 4. Skicka ett direktmeddelande från den ena till den andra och vänta på kvittot.
+> 5. Gå isär, eller ställ den ena högre upp, och skicka igen. Så ser du hur långt de når.
+
 {{< channels >}}
 
 ## Om något krånglar
+
+> [!NOTE]- Flashern hittar inte radion
+> Använd en USB-kabel som klarar data, prova en annan USB-port, och starta radion i
+> bootloader-läge. Se [Webbläsaren hittar ingen port](../../felsokning/ingen-port/) och, för
+> nRF52-kort, [nRF52-radion syns inte som en USB-enhet](../../felsokning/nrf52-ingen-enhet/).
 
 > [!NOTE]- Appen hittar inte radion
 > Kontrollera att Bluetooth är på, att du flashade en *Bluetooth* companion och att radion inte
@@ -98,4 +119,8 @@ Fler svar i Felsökning: [Appen kan inte ansluta till radion](../../felsokning/a
 
 - [Första meddelandet](../forsta-meddelandet/): kontakter, kvittenser och vad du kan vänta dig
 - [Regioner](../regioner/): skicka med rätt region i chattkanalerna
-- [Flasha firmware](../flasha-firmware/): bygg om radion till repeater när du vill hjälpa nätet
+- [Välj och flasha firmware](../flasha-firmware/): bygg om radion till repeater när du vill hjälpa nätet
+
+## Källor
+
+[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md), om apparna och köp i appen.

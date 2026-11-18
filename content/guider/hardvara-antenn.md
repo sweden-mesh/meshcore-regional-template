@@ -19,7 +19,7 @@ räknar på kabel står längre ned.
 
 1. **Höjd och fri sikt.** En antenn högt upp med fri sikt mot dem den ska nå gör mer än en med
    högre vinst lägre ned. Mellan två antenner behöver inte bara linjen vara fri, utan ett område
-   runt den (Fresnelzonen) [^fresnel]. Se [Placering](#placering).
+   runt den (Fresnelzonen) [^fresnel]. Se [Fri sikt är mer än en linje](#fri-sikt-är-mer-än-en-linje).
 2. **Rätt band.** Antennen ska vara gjord för 868 MHz, eller ett band som täcker 863–870 MHz.
 3. **Kontakt och kabel.** Kontakten ska passa radion (oftast SMA), och kabeln ska vara kort:
    tunn kabel som RG58 förlorar många gånger mer än grov lågförlustkabel som LMR-400
@@ -93,8 +93,9 @@ enligt typiska datablad:
 | Kabel | Förlust per meter |
 | --- | --- |
 | RG174 (tunn, ofta på övergångskablar) | cirka 1 dB |
-| RG58 | cirka 0,5 dB |
-| LMR-400 och liknande grov lågförlustkabel | cirka 0,13 dB |
+| RG58 | cirka 0,5 dB [^rg58] |
+| LMR-195 | cirka 0,36 dB [^lmr195] |
+| LMR-400 och liknande grov lågförlustkabel | cirka 0,13 dB [^lmr400] |
 
 Tre decibel är halva effekten. Fem meter RG58 tar alltså nästan lika mycket som en antenn på
 3 dBi ger. Håll kabeln kort, eller sätt radion uppe vid antennen och dra ström i stället för
@@ -106,10 +107,44 @@ tiden.
 - **Höjd före allt.** Över hustak och trädtoppar, med fri sikt åt de håll nätet finns.
 - **Lodrätt.** Alla i nätet använder lodrät polarisation; en vågrät antenn tappar mycket mot dem.
 - **Fri från metall.** En halvmeter från stolpar, plåttak och andra antenner, om du kan.
-- **Åska.** En antenn högst upp på en mast ska jordas som annan utomhusantenn.
+- **Åska.** Se [Åska och jordning](#åska-och-jordning).
 
 Inomhus: vid ett fönster åt rätt håll, så högt som möjligt. Moderna energifönster med metallskikt
 dämpar mycket; prova ett annat fönster eller en antenn utanför.
+
+## Fri sikt är mer än en linje
+
+Radiovågorna mellan två antenner behöver mer än en fri linje. Runt linjen ligger ett område,
+Fresnelzonen, som är bredast mitt på och som också ska vara fritt från berg, träd och hus. Når ett
+hinder in i zonen blir signalen svagare, fast du ser den andra antennen [^fresnel].
+
+{{< diagram "fresnel" >}}
+
+| Avstånd | Radie mitt på |
+| --- | --- |
+| 1 km | cirka 9 m |
+| 5 km | cirka 21 m |
+| 20 km | cirka 42 m |
+
+Därför når en repeater i en mast längre än en på ett lågt tak: på 5 km behöver linjen gå drygt 20
+meter över trädtopparna mitt på.
+
+> [!NOTE]- Så räknas radien
+> Radien mitt mellan antennerna är r = 8,66 · √(D ÷ f) meter, med avståndet D i kilometer och
+> frekvensen f i gigahertz [^fresnel]. För 869 MHz är f = 0,868. Tabellen ovan är räknad med den
+> formeln.
+
+## Åska och jordning
+
+En antenn högst upp är det som åskan når först.
+
+- **Jorda masten**, särskilt om byggnaden saknar åskskydd [^dehn].
+- **Sätt ett överspänningsskydd** på antennkabeln där den går in i byggnaden [^dehn].
+- **Arbeta inte i masten** när det åskar.
+- **Låt en elektriker** göra jordningen.
+
+Vi har inte hittat någon svensk myndighets vägledning för jordning av antennmaster för
+radioamatörer och hobbyradio. Råden ovan kommer från en tillverkare av åskskydd.
 
 {{< hw-credits >}}
 
@@ -123,4 +158,6 @@ dämpar mycket; prova ett annat fönster eller en antenn utanför.
 
 [^fresnel]: Omni Calculator, [Fresnel zone calculator](https://www.omnicalculator.com/physics/fresnel-zone).
 [^rg58]: Pro-Tecs, [datablad för RG58](https://shop.pro-tecs.de/pub/media/datasheets/79037803-6FB1-4875-974D-2A8F0989469A.pdf): 51–55 dB per 100 m.
+[^lmr195]: [Datablad för LMR-195](https://dtsheet.com/model/2274863): 11,1 dB per 100 fot.
+[^dehn]: DEHN, [Lightning and surge protection for cable networks](https://www.dehn-international.com/sites/default/files/media/files/wp005-cable-networks.pdf).
 [^lmr400]: Fairview Microwave, [datablad för LMR-400](https://www.fairviewmicrowave.com/images/productPDF/LMR-400.pdf): 3,9 dB per 100 fot.

@@ -13,7 +13,7 @@ Den här guiden bygger hårdvaran. Hur du sedan ställer in repeatern, väljer p
 att den hörs står i [Sätt upp en repeater](../repeater/). Två byggen, efter hur repeatern ska
 få ström:
 
-| | Seeed XIAO nRF52840 + Wio-SX1262 | Heltec V4 |
+| Egenskap | Seeed XIAO nRF52840 + Wio-SX1262 | Heltec V4 |
 | --- | --- | --- |
 | Passar | batteri och sol | nätström |
 | Wifi (kan bli [observatör](../visa-pa-kartan/)) | nej | ja |
@@ -57,8 +57,10 @@ sol året runt, om panel och batteri är rätt valda.
 
 ### Flasha
 
-1. Öppna [firmwareväljaren]({{< param "firmware.picker" >}}), välj *repeater* och radion
-   **Xiao nrf52**.
+Repeatern får MeshCore-projektets vanliga repeaterfirmware från den officiella webbflashern.
+
+1. Öppna [webbflashern]({{< param "firmware.flasher" >}}), välj radion **Seeed Studio Xiao nRF52
+   WIO** och **Repeater**, och ladda ner `.uf2`-filen.
 2. Dubbelklicka på kortets reset-knapp. Kortet dyker upp som en USB-enhet i datorn.
 3. Kopiera `.uf2`-filen dit. Kortet startar om av sig självt när filen är på plats.
 
@@ -74,8 +76,8 @@ som tål sol och värme bättre än PLA. Låt ett litet dräneringshål vara öp
 
 Samma radiomodul finns i ett kit med **XIAO ESP32-S3**. Det har wifi och kan bli observatör, men
 drar mer ström. Seeed har en [egen guide](https://wiki.seeedstudio.com/get_started_with_esp32s3_meshcore/)
-till det kitet, med en utskrivbar låda. I firmwareväljaren heter det **Xiao S3 WIO** och flashas
-som Heltec V4 nedan.
+till det kitet, med en utskrivbar låda. I webbflashern heter det **Seeed Studio Xiao S3 WIO** och
+flashas som Heltec V4 nedan.
 
 ## Bygge 2: Heltec V4
 
@@ -103,14 +105,27 @@ set tx 16
 
 ### Flasha
 
-1. Öppna [firmwareväljaren]({{< param "firmware.picker" >}}), välj *repeater* och radion
-   **Heltec v4**. Det finns flera hårdvaruversioner (bland annat R8 och med TFT-skärm): välj den
-   som står på ditt kort. Vill du att repeatern ska synas på kartan med det den hör, välj
-   funktionen *Observer*.
-2. Anslut kortet med en USB-kabel som klarar data och klicka på **Flasha via USB**.
-3. Välj *Ny installation* första gången.
+1. Öppna [webbflashern]({{< param "firmware.flasher" >}}) och välj radion **Heltec v4** eller
+   **Heltec v4 R8**, efter vad som står på ditt kort, och sedan **Repeater**.
+2. Ska repeatern också visa på kartan vad den hör, välj en **Observer**-firmware i stället. Den
+   kommer från [MeshCore Observer-projektet](https://github.com/agessaman/MeshCore); se [Din
+   repeater på kartan](../visa-pa-kartan/).
+3. Anslut kortet med en USB-kabel som klarar data, starta flashningen och välj kortets port.
 
-Mer om varje steg, och vad du gör om något krånglar, står i [Flasha firmware](../flasha-firmware/).
+Mer om varje steg, och vad du gör om något krånglar, står i [Välj och flasha firmware](../flasha-firmware/).
+Vill du ha auto-svar på test och fjärrstyrning finns [specialfirmware lou](../firmware-lou/) som ett
+tillval; vanlig MeshCore räcker för en repeater.
+
+## Spara ström
+
+Repeaterfirmwaren har en inställning som låter radion sova mellan sändningarna [^cli]. Den är
+avstängd från början. Slå på den på en repeater som går på batteri eller sol:
+
+```text {title="Konsol"}
+powersaving on
+```
+
+En repeater på nätström behöver den inte.
 
 ## När den är byggd
 
@@ -121,3 +136,7 @@ Mer om varje steg, och vad du gör om något krånglar, står i [Flasha firmware
 3. Montera den högt, med antennen lodrätt och fri från metall.
 
 Behöver du en plats högt upp: se [Bli nodvärd](../../bli-nodvard/).
+
+## Källor
+
+[^cli]: MeshCore, [CLI-referensen](https://github.com/meshcore-dev/MeshCore/blob/main/docs/cli_commands.md), `powersaving` (standard `off`).

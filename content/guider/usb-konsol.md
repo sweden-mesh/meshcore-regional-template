@@ -28,6 +28,11 @@ till radion via USB-kabeln.
 > Radion tar emot ett kommando i taget. Skickar du flera på en gång kan några tappas bort.
 > `reboot` startar om radion, och konsolen tappar då anslutningen; anslut igen efteråt.
 
+> [!TIP] Hellre knappar än kommandon?
+> MeshCore har en webbsida för att ställa in repeatrar och room servers via USB:
+> [config.meshcore.io](https://config.meshcore.io). Där ställer du in namn, frekvens och annat i
+> ett formulär ([MeshCore FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md)).
+
 ## Bra att kunna
 
 ```text {title="Visa inställningar"}

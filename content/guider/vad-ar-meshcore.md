@@ -1,7 +1,7 @@
 ---
 title: "Vad är MeshCore?"
 seoTitle: "Vad är MeshCore? En guide på svenska"
-description: "En kort introduktion: vad MeshCore är, vilka roller noderna har och vad du behöver för att börja."
+description: "Vad MeshCore är, vad du kan använda det till och inte, fakta i korthet, nodernas roller och hur ett meddelande tar sig fram."
 weight: 10
 group: start
 source:
@@ -16,6 +16,26 @@ lastmod: 2026-11-18
 MeshCore skickar textmeddelanden mellan små LoRa-radior. Meddelandena går från radio till
 radio, utan mobilnät, wifi eller internet. När många radior hjälps åt att föra trafiken vidare
 bildar de ett **meshnät**, och varje radio i nätet kallas en **nod**.
+
+## Vad kan du använda det till?
+
+- Skicka meddelanden där mobilen saknar täckning, i skogen, på sjön eller på landet.
+- Prata med andra i närheten i en gemensam kanal för ditt län.
+- Ha en reserv när el och mobilnät går ner; se [MeshCore när el och mobilnät går
+  ner](../nar-natet-gar-ner/).
+- Bygga nätet tillsammans med andra, med repeatrar på höga platser.
+
+## Fakta i korthet
+
+| Vad | Kort svar |
+| --- | --- |
+| Band | 868 MHz, [inställningarna för Sverige](../radioinstallningar/) |
+| Licens | behövs inte, se [frågorna](../../fragor/#licens) |
+| Hopp | upp till 64 repeatrar på vägen [^faq] |
+| Meddelande | högst 160 byte, se [Kanaler](../kanaler/#hur-långt-kan-ett-meddelande-vara) [^text] |
+| Kryptering | direktmeddelanden och privata kanaler, se [frågorna](../../fragor/#kryptering) |
+| Appar | Android, iOS, Windows, Mac och webben, se [Companion](../companion/) [^faq] |
+| Kostnad | radion; appen är gratis för meddelanden, se [Skaffa hårdvara](../skaffa-hardvara/) |
 
 > [!NOTE] Officiell information
 > MeshCore-projektets egen webbplats är [meshcore.io](https://meshcore.io), med
@@ -71,8 +91,25 @@ När mottagaren svarar kan svaret skickas *direkt* längs den väg som fungerade
 floodas över hela nätet igen. Det sparar sändningstid, och sändningstid är det som är dyrt i ett
 LoRa-nät: bara en nod i taget kan sända på samma frekvens.
 
+> [!NOTE]- Exakt hur
+> - Ett direktmeddelande floodas första gången. Mottagarens kvitto kommer tillbaka med listan över
+>   repeatrarna på vägen, och nästa meddelande går direkt längs den [^faq].
+> - Kanalmeddelanden floodas alltid, eftersom de inte har en enda mottagare [^faq].
+> - Paket kan gå upp till 64 hopp. Varje repeater skrivs in i vägen med 1, 2 eller 3 byte av sin
+>   nyckel; med 2 byte blir gränsen 32 hopp och med 3 byte 21 hopp, men risken minskar att två
+>   repeatrar förväxlas [^faq].
+
 Nätet i {{< region "name" >}} använder regionen (scope) `{{< region "scope" >}}`, som håller
 lokal trafik lokal. Mer om det i [Regioner](../regioner/).
+
+## Vad det inte gör
+
+- Det skickar bara text, högst 160 byte per meddelande [^text]. Å, ä och ö tar två byte var.
+- Det klarar inte röst eller bilder.
+- Det lovar inte att ett meddelande kommer fram. Nätet byggs av frivilliga, och en väg kan vara
+  borta.
+- Alla delar på samma sändningstid. Ett långt samtal i en kanal tar tid från alla i regionen; se
+  [God sed i nätet](../etikett/).
 
 ## MeshCore i Sverige
 
@@ -89,13 +126,17 @@ Regler
 
 Kostnad
 : En radio kostar från ett par hundra kronor för ett enkelt kort med antenn, upp till ungefär
-  tusen kronor för en färdig enhet med skärm, tangentbord eller GPS. Appen och firmwaren är
-  gratis, och nätet har inga abonnemang eller avgifter. En repeater för utomhusbruk kostar mer:
+  tusen kronor för en färdig enhet med skärm, tangentbord eller GPS. Firmwaren är gratis, och appen
+  är gratis att ladda ned och använda för meddelanden; i mobilappen kan väntetiden för att
+  administrera en repeater låsas upp med ett köp [^faq]. Nätet har inga abonnemang eller avgifter. En repeater för utomhusbruk kostar mer:
   låda, bättre antenn och kanske sol och batteri. Se [Skaffa hårdvara](../skaffa-hardvara/).
 
 Vid strömavbrott
 : Radior och repeatrar på batteri eller sol fungerar utan el och mobilnät. Se [MeshCore när el och
   mobilnät går ner](../nar-natet-gar-ner/).
+
+I nyheterna
+: TV4 har berättat om nätet i Västerbotten, i [Bygger eget radionät](https://www.tv4.se/artikel/5Frw4pRToGwrcn8m6vdOaU/bygger-eget-radionaet-naesta-steg-i-den-digitala-preppingen).
 
 Meshtastic
 : Ett annat system på samma radior, som inte pratar med MeshCore. Se
@@ -103,20 +144,7 @@ Meshtastic
 
 ## Vanliga ord
 
-LoRa
-: Radioteknik med lång räckvidd, låg datahastighet och låg strömförbrukning.
-
-Advert
-: Ett kort paket där en nod talar om att den finns, med namn, typ och ibland position.
-
-Flooda
-: Skicka ett paket och låta varje repeater som hör det sända det vidare.
-
-Väg (path)
-: Listan över repeatrar som ett paket passerat.
-
-Firmware
-: Programvaran i radion. *Flasha* betyder att installera eller uppdatera den.
+Orden som används här, som *advert*, *flooda* och *väg*, förklaras i [ordlistan](../ordlista/).
 
 ## Räckvidd
 
@@ -130,3 +158,8 @@ normalt: se [Jag hör bara en repeater](../../felsokning/bara-en-repeater/).
 - [Regioner](../regioner/): vilken region du ska använda här
 - [MeshCore eller Meshtastic?](../meshcore-eller-meshtastic/): skillnaden, och hur du väljer
 - Kartan på [startsidan](/): se vilka repeatrar som finns nära dig
+
+## Källor
+
+[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md): hopp och väg-id, flood och direkt, kanaler, appar och köp i appen.
+[^text]: MeshCore, [BaseChatMesh.h](https://github.com/meshcore-dev/MeshCore/blob/main/src/helpers/BaseChatMesh.h), `MAX_TEXT_LEN`; UTF-8 enligt [RFC 3629](https://www.rfc-editor.org/rfc/rfc3629).

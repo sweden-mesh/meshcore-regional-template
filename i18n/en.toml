@@ -1278,3 +1278,51 @@ other = "Choose the tree line and the firmware, and the calculator works out the
 other = "Open the solar calculator"
 [chat_example]
 other = "#example"
+[diagram_region_title]
+other = "A region stops traffic where it does not belong"
+[diagram_region_caption]
+other = "A companion sends a packet with the county region. Repeaters A and B have the region in their list and pass it on. Repeater C hears the packet but lacks the region, so the packet stops there."
+[diagram_region_sender]
+other = "Companion"
+[diagram_region_sender_note]
+other = "Sends a packet with the county region."
+[diagram_region_a]
+other = "Repeater A"
+[diagram_region_b]
+other = "Repeater B"
+[diagram_region_c]
+other = "Repeater C"
+[diagram_region_has]
+other = "Has the region: passes it on."
+[diagram_region_lacks]
+other = "Lacks the region: does not pass it on."
+[diagram_fresnel_title]
+other = "The Fresnel zone between two antennas"
+[diagram_fresnel_caption]
+other = "The line of sight runs between antenna A and B. Around it lies the Fresnel zone, widest in the middle (radius r). A hill below the line can reach into the zone and weaken the signal although the line is clear."
+[diagram_fresnel_zone]
+other = "Fresnel zone"
+[diagram_fresnel_line]
+other = "line of sight"
+[diagram_fresnel_hill]
+other = "obstacle in the zone"
+[diagram_observer_title]
+other = "From radio packet to the map"
+[diagram_observer_caption]
+other = "A node sends a packet. An observer hears it and sends it over the internet to an MQTT server, which the map reads from. The mesh works the same without the observer."
+[diagram_observer_air]
+other = "A packet on the air"
+[diagram_observer_air_note]
+other = "An advert or a message."
+[diagram_observer_observer]
+other = "Observer"
+[diagram_observer_observer_note]
+other = "Hears the packet and sends a copy."
+[diagram_observer_broker]
+other = "MQTT server"
+[diagram_observer_broker_note]
+other = "Receives over the internet."
+[diagram_observer_map]
+other = "The map"
+[diagram_observer_map_note]
+other = "Shows nodes and paths."

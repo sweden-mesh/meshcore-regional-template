@@ -4,6 +4,34 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.57.0 — 2026-11-18
+
+- **New shortcode `{{</* diagram "region|fresnel|observer" */>}}`** (CONTENT-SV-23): inline SVG drawn
+  360 units wide, theme tokens only (light and dark), `role="img"` with title and description, and the
+  same text as a visible caption. Texts in i18n (`diagram_*`). CSS: `.diagram` in `main.css`.
+- **Vad är MeshCore?** (CONTENT-SV-1): what it is for, Fakta i korthet, "Exakt hur" (flood, direct,
+  64/32/21 hops), what it does not do, the TV4 report, app cost corrected; "Vanliga ord" now links the
+  glossary; Källor.
+- **Companion** (CONTENT-SV-3): "Kostar appen något?", step 7 "Testa med två radior", "Flashern hittar
+  inte radion". Screenshots not added (they need a radio connected to the app).
+- **Sätt upp en repeater** (CONTENT-SV-5): wizard links, the default-value warning (50 % duty cycle,
+  CR 5, password `password`), Finjustera (txdelay table from meshat.se, path.hash.mode, agc, multi.acks,
+  rxdelay, flood advert 47 h vs the FAQ's 12 h), test before mounting, checklist; the meshat.se delay
+  link replaced.
+- **Antenner** (CONTENT-SV-6): "Fri sikt är mer än en linje" with the Fresnel drawing and table,
+  LMR-195 and datasheet sources, "Åska och jordning". Solnoder: BU-410 and an LiFePO4 datasheet in its
+  sources.
+- **Regioner** (CONTENT-SV-9, -D1): the region drawing, "Kommuner och offgrid" (what they are, why the
+  county), two new questions, region commands since 1.10.
+- **Kanaler** (CONTENT-SV-10): why hashtag channels are readable, 160 bytes with a byte table, how to
+  create a private channel.
+- **Namnge din repeater, USB-konsolen** (CONTENT-SV-16): why 23/31 bytes, two Swedish name formats,
+  MrBengt666's convention; config.meshcore.io.
+- **Bygg en repeater** (B-336g): flashes from the official web flasher (Xiao nRF52 WIO, Heltec v4),
+  Observer as the option, lou as an add-on; new "Spara ström" (`powersaving on`, from the CLI
+  reference). Välj och flasha firmware: the flasher has no separate low-power firmware.
+- No script changes: **no CSP hash changes**.
+
 ## v0.56.0 — 2026-11-18
 
 - **Six new questions** (CONTENT-SV-21) under `/fragor/`: how long a message can be (160 bytes), whether

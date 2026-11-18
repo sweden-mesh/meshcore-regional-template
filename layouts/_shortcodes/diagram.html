@@ -1,0 +1,64 @@
+{{- /* {{< diagram "region" >}}, "fresnel" or "observer" (CONTENT-SV-23): a drawing as inline SVG,
+  drawn 360 units wide so its text reads on a phone. Colours come from the theme's tokens (CSS
+  .diagram), so it follows light and dark. role="img" with a title and description, and the same
+  text as a visible caption. Texts in i18n (diagram_<name>_*). */ -}}
+{{- $n := .Get 0 -}}
+{{- $id := printf "dg-%s-%d" $n .Ordinal -}}
+<figure class="diagram diagram-{{ $n }}">
+{{- if eq $n "region" }}
+<svg role="img" viewBox="0 0 360 312" aria-labelledby="{{ $id }}-t {{ $id }}-d">
+  <title id="{{ $id }}-t">{{ T "diagram_region_title" }}</title>
+  <desc id="{{ $id }}-d">{{ T "diagram_region_caption" }}</desc>
+  <rect class="dg-box" x="20" y="10" width="320" height="50" rx="6"/>
+  <text class="dg-strong" x="36" y="32">{{ T "diagram_region_sender" }}</text>
+  <text class="dg-note" x="36" y="50">{{ T "diagram_region_sender_note" }}</text>
+  <path class="dg-arrow" d="M60 62v24"/><path class="dg-head" d="M54 80l6 8 6-8"/>
+  <rect class="dg-box dg-ok" x="20" y="92" width="320" height="50" rx="6"/>
+  <text class="dg-strong" x="36" y="114">{{ T "diagram_region_a" }}</text>
+  <text class="dg-note" x="36" y="132">{{ T "diagram_region_has" }}</text>
+  <path class="dg-arrow" d="M60 144v24"/><path class="dg-head" d="M54 162l6 8 6-8"/>
+  <rect class="dg-box dg-ok" x="20" y="174" width="320" height="50" rx="6"/>
+  <text class="dg-strong" x="36" y="196">{{ T "diagram_region_b" }}</text>
+  <text class="dg-note" x="36" y="214">{{ T "diagram_region_has" }}</text>
+  <path class="dg-arrow" d="M60 226v24"/><path class="dg-head" d="M54 244l6 8 6-8"/>
+  <rect class="dg-box dg-stop" x="20" y="256" width="320" height="50" rx="6"/>
+  <text class="dg-strong" x="36" y="278">{{ T "diagram_region_c" }}</text>
+  <text class="dg-note" x="36" y="296">{{ T "diagram_region_lacks" }}</text>
+</svg>
+<figcaption>{{ T "diagram_region_caption" }}</figcaption>
+{{- else if eq $n "fresnel" }}
+<svg role="img" viewBox="0 0 360 210" aria-labelledby="{{ $id }}-t {{ $id }}-d">
+  <title id="{{ $id }}-t">{{ T "diagram_fresnel_title" }}</title>
+  <desc id="{{ $id }}-d">{{ T "diagram_fresnel_caption" }}</desc>
+  <path class="dg-ground" d="M0 190h360"/>
+  <path class="dg-mast" d="M30 190V60M330 190V60"/>
+  <circle class="dg-dot" cx="30" cy="60" r="5"/><circle class="dg-dot" cx="330" cy="60" r="5"/>
+  <path class="dg-hill" d="M110 190Q180 -6 250 190Z"/>
+  <ellipse class="dg-zone" cx="180" cy="60" rx="150" ry="42"/>
+  <path class="dg-arrow" d="M30 60H330"/>
+  <path class="dg-arrow dg-thin" d="M180 60v42"/>
+  <text class="dg-note" x="188" y="86">r</text>
+  <text class="dg-strong" x="180" y="14" text-anchor="middle">{{ T "diagram_fresnel_zone" }}</text>
+  <text class="dg-note" x="180" y="52" text-anchor="middle">{{ T "diagram_fresnel_line" }}</text>
+  <text class="dg-note" x="180" y="176" text-anchor="middle">{{ T "diagram_fresnel_hill" }}</text>
+  <text class="dg-note" x="30" y="206" text-anchor="middle">A</text>
+  <text class="dg-note" x="330" y="206" text-anchor="middle">B</text>
+</svg>
+<figcaption>{{ T "diagram_fresnel_caption" }}</figcaption>
+{{- else if eq $n "observer" }}
+<svg role="img" viewBox="0 0 360 330" aria-labelledby="{{ $id }}-t {{ $id }}-d">
+  <title id="{{ $id }}-t">{{ T "diagram_observer_title" }}</title>
+  <desc id="{{ $id }}-d">{{ T "diagram_observer_caption" }}</desc>
+  {{- range $i, $k := slice "air" "observer" "broker" "map" }}
+  {{- $y := add 10 (mul $i 82) }}
+  <rect class="dg-box{{ if eq $k "observer" }} dg-ok{{ end }}" x="20" y="{{ $y }}" width="320" height="50" rx="6"/>
+  <text class="dg-strong" x="36" y="{{ add $y 22 }}">{{ T (print "diagram_observer_" $k) }}</text>
+  <text class="dg-note" x="36" y="{{ add $y 40 }}">{{ T (print "diagram_observer_" $k "_note") }}</text>
+  {{- if lt $i 3 }}
+  <path class="dg-arrow" d="M60 {{ add $y 52 }}v24"/><path class="dg-head" d="M54 {{ add $y 70 }}l6 8 6-8"/>
+  {{- end }}
+  {{- end }}
+</svg>
+<figcaption>{{ T "diagram_observer_caption" }}</figcaption>
+{{- else }}{{ errorf "diagram: unknown drawing %q in %s" $n .Position }}{{ end }}
+</figure>

@@ -775,3 +775,19 @@ body.style-console .site-header .cvd-toggle:not([hidden]) ~ .nav-narrow { margin
 .sol-board:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 .sol-board:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sol-board:hover { border-color: var(--field-border); }
+/* {{< diagram >}} (CONTENT-SV-23): inline SVG drawn with the theme's tokens, no gradients. */
+.diagram { margin: 1.5rem 0; max-width: 34rem; }
+.diagram svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
+.diagram figcaption { margin-top: .5rem; color: var(--muted); font-size: .9rem; }
+.diagram .dg-box { fill: var(--bg); stroke: var(--muted); stroke-width: 1; }
+.diagram .dg-ok { stroke: var(--accent); stroke-width: 2; }
+.diagram .dg-stop { stroke: var(--danger); stroke-width: 2; stroke-dasharray: 6 4; }
+.diagram .dg-strong { fill: var(--fg); font-size: 15px; font-weight: 600; }
+.diagram .dg-note { fill: var(--muted); font-size: 13px; }
+.diagram .dg-arrow { fill: none; stroke: var(--muted); stroke-width: 2; }
+.diagram .dg-thin { stroke-width: 1; stroke-dasharray: 3 3; }
+.diagram .dg-head { fill: none; stroke: var(--muted); stroke-width: 2; }
+.diagram .dg-ground, .diagram .dg-mast { stroke: var(--muted); stroke-width: 2; fill: none; }
+.diagram .dg-dot { fill: var(--accent); }
+.diagram .dg-zone { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 4; }
+.diagram .dg-hill { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }

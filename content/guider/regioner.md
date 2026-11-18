@@ -1,6 +1,6 @@
 ---
 title: "Regioner (scope)"
-description: "Vad en region är i MeshCore, vilken region som gäller här och hur du ställer in den på en repeater."
+description: "Vad en region (scope) är i MeshCore, vilken region som gäller här, hur du ställer in den på en repeater, och kommunregioner och offgrid."
 weight: 30
 group: regioner
 source:
@@ -9,7 +9,7 @@ source:
   license: "CC BY 4.0"
   changes: "Omskriven efter den svenska tvånivåmodellen (se + länets namn, inga kommunkoder); regionsvärden från sidans inställningar; verktyget ersatt av färdiga kommandon."
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 En **region** (i appen ibland *scope*) är en etikett på ett paket. Den talar om för repeatrarna
@@ -18,6 +18,8 @@ vara, så trafik märkt med en region stannar inom det område där repeatrarna 
 
 Regionen säger inget om var en nod står. Radiovågorna når lika långt som förut; det som ändras
 är vilka repeatrar som sänder paketet vidare.
+
+{{< diagram "region" >}}
 
 ## Varför
 
@@ -39,7 +41,7 @@ Sverige använder två nivåer:
 
 Länets namn bestäms av länet självt; finns inget beslut används ett uppmätt eller föreslaget
 namn. Alla läns namn finns i [meshcore-se-regioner](https://github.com/zombiefredrik/meshcore-se-regioner).
-Det finns inga kommunregioner.
+Kommunregioner använder vi inte; se [Kommuner och offgrid](#kommuner-och-offgrid).
 
 > [!WARNING] `*` betyder inte "allt"
 > `*` är trafik som saknar regionetikett, inte ett jokertecken för alla regioner.
@@ -48,7 +50,8 @@ Det finns inga kommunregioner.
 
 Repeatern behöver alla regioner som trafiken genom den ska kunna ha: ingen etikett (`*`),
 `eu` och `europe`, `se` och länets region. Länet blir också repeaterns hemregion och `se` dess
-standardregion. Kommandona kräver repeater-firmware 1.16 eller senare.
+standardregion. Regionkommandona finns sedan firmware 1.10 [^cli]; hemregion och standardregion
+kräver repeater-firmware 1.16 eller senare.
 
 ### I appen
 
@@ -113,11 +116,38 @@ Välj den minsta region som når dem kanalen är till för.
 > Ett paket med en region kommer bara fram genom repeatrar som har den regionen. Saknar en
 > repeater mitt i vägen den, stannar trafiken där.
 
+## Kommuner och offgrid
+
+Du kan se två andra sorters etiketter, bland annat i [meshat.se:s regionguide](https://meshat.se/meshcore/regioner/):
+
+Kommunregioner
+: `se` följt av kommunkoden, till exempel `se0180` för Stockholms kommun. De begränsar trafik till
+  en kommun.
+
+`offgrid`
+: Trafik för noder som ägaren själv bedömer har reservkraft, som batteri eller sol. Etiketten har
+  ingen gemensam definition.
+
+Vi rekommenderar länets region och `se`, inget annat. Ett paket med en region kommer bara fram
+genom repeatrar som har just den regionen, så varje extra etikett måste finnas på alla repeatrar
+längs vägen för att fungera. Två nivåer är lätta att hålla lika i hela länet, och länens namn
+finns samlade på ett ställe. Använder ett lokalt nät redan kommunregioner kan en repeater ha
+dem i listan också, utöver länets.
+
 ## Vanliga frågor
 
 > [!NOTE]- Når mina meddelanden kortare med en mindre region?
 > Nej. Radiosignalen når lika långt. Skillnaden är att repeatrar utan regionen inte sänder
 > paketet vidare.
+
+> [!NOTE]- Betyder `*` alla regioner?
+> Nej. `*` är trafik som saknar regionetikett. En repeater med `region allowf *` för vidare
+> sådan trafik, men inte trafik med en region den saknar.
+
+> [!NOTE]- Är regionen samma sak som IATA-koden?
+> Nej. Regionen styr vilka repeatrar som för trafiken vidare. IATA-koden är en etikett som
+> observatörer sätter på det de rapporterar till kartan, och den påverkar inte meshnätet. Se
+> [Din repeater på kartan](../visa-pa-kartan/).
 
 > [!NOTE]- Måste jag använda region?
 > Nej. Trafik utan region förs vidare som förut. Regioner är ett sätt att spara sändningstid
@@ -128,3 +158,7 @@ Välj den minsta region som når dem kanalen är till för.
 - Felsökning: [Trafiken går inte över länsgränsen](../../felsokning/trafik-gar-inte-over-lansgransen/), [Hemregionen är borta efter en omstart](../../felsokning/region-home-forsvinner/) och [Kommandot region def ger fel](../../felsokning/region-def-fungerar-inte/)
 - [MeshCore CLI: Region Management](https://docs.meshcore.io/cli_commands/#region-management-v110)
 - [Vad är MeshCore?](../vad-ar-meshcore/)
+
+## Källor
+
+[^cli]: MeshCore, [CLI-referensen](https://github.com/meshcore-dev/MeshCore/blob/main/docs/cli_commands.md), Region Management (v1.10+).
