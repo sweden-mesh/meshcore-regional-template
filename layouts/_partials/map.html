@@ -78,10 +78,12 @@
   </details>
   {{- end }}
   {{ with site.Params.beacon.url }}
-  <div class="packets" id="packets" hidden>
+  {{- /* In the layout from the start, with a fixed-height list, so packets arriving never move the
+         page below it (UX-SV-15); hidden without script, and by script when there is no live feed. */}}
+  <div class="packets" id="packets">
     <div>
       <h3>{{ T "packets_recent" }}</h3>
-      <ul id="recent-packets" class="recent"></ul>
+      <ul id="recent-packets" class="recent"><li class="muted">{{ T "map_wait_packet" }}</li></ul>
     </div>
     <div id="packet-path" hidden>
       <h3>{{ T "packets_path" }} <button type="button" id="packet-path-close">{{ T "close" }}</button></h3>

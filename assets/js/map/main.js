@@ -180,6 +180,7 @@ async function start() {
   } catch (err) {
     // Beacon unreachable from this browser: fall back to the build-time snapshot.
     live = false;
+    document.getElementById("packets")?.setAttribute("hidden", ""); // no live packets to list
     const snap = await loadSnapshot(ds.snapshot);
     state.nodes = publicNodes(snap?.nodes, opts); state.borders = snap?.borders || [];
     note(el, snap ? (ds.snapshotNote || "Beacon kan inte nås just nu; kartan visar läget från {at}.").replace("{at}", formatAt(snap.at))
@@ -258,7 +259,7 @@ function applyFocus(map, state) {
 }
 
 function startLive(map, ds, client, iatas, state, draw) {
-  if (!iatas.length || !("WebSocket" in window)) return;
+  if (!iatas.length || !("WebSocket" in window)) { document.getElementById("packets")?.setAttribute("hidden", ""); return; }
   // "Senaste paket: 12 s sedan" under the map, and a notice once the live feed has been down for
   // 15 s (UX-SV-14). Paused (tab hidden) shows nothing new.
   let lastPacket = 0, feedStatus = "connecting", downSince = 0;
@@ -287,7 +288,7 @@ function startLive(map, ds, client, iatas, state, draw) {
     pending = requestAnimationFrame(() => {
       pending = 0; panel.hidden = false;
       // Not under the visitor's focus or pointer: a redraw would drop the button they are on.
-      if (list.contains(document.activeElement) || list.matches(":hover")) return;
+      if (list.contains(document.activeElement) || list.matches(":hover") || !recent.items.length) return; // keeps "Väntar …"
       list.innerHTML = recentListHtml(recent.items, { selected: state.pick });
     });
   };

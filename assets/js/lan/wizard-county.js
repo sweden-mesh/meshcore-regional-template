@@ -79,7 +79,7 @@ function selector() {
     choose(c.scb);
   });
   box.replaceChildren(el("label", { for: "lan-wizard-select", text: t.label }), sel, el("p", { class: "muted", text: t.why }), out);
-  box.hidden = false;
+  box.style.display = "block"; // national.css shows it before paint already, for any county code it does not know
   // The solar calculator needs the county's sun data (B-319): hidden until one is chosen. Without
   // script this never runs, so the calculator stays visible.
   const solar = document.getElementById("solar-calc");

@@ -128,7 +128,9 @@ check kalmar/index.html 'map-mm">[^<]*<a href=https://example.org/meshmapper/' "
 if grep -q 'data-coverage=' "$P/kalmar/index.html" "$P/index.html"; then echo "FAIL meshmapper: a coverage layer nationally"; fail=1; else echo "ok   meshmapper: no coverage layer nationally"; fi
 # The wizards follow the county (G15, G16, Q4.1, Q4.2): the selector's slot, all county shapes and
 # the national script before the wizard's own; the neighbour box is there, hidden, to be filled.
-check wizard/repeater-snabb/index.html '<div class=lan-wizard data-lan-wizard hidden' "wizards: the county selector's slot"
+check wizard/repeater-snabb/index.html '<div class=lan-wizard data-lan-wizard data-geo=' "wizards: the county selector's slot"
+# UX-SV-15: the selector's shape is in the page, so filling it by script moves nothing.
+check wizard/repeater-snabb/index.html '<select id=lan-wizard-select><option value>' "wizards: the selector is drawn before the script"
 check wizard/repeater-snabb/index.html '<script type=application/json id=lan-shapes>{"01":' "wizards: all county shapes for the neighbour box"
 if tr -d '\n' < "$P/wizard/repeater-snabb/index.html" | grep -q 'js/lan/wizard-county[^>]*></script>.*js/wizard/quick'; then echo "ok   wizards: the national script runs before the wizard's"; else echo "FAIL wizards: the national script is not before the wizard's"; fail=1; fi
 check wizard/repeater-snabb/index.html '<div class=wz-neighbours hidden data-areas=\[\]' "wizards: the neighbour box waits, empty and hidden"

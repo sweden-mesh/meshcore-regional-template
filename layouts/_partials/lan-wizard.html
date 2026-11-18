@@ -5,7 +5,10 @@
   Usage: partial "lan-wizard.html" (dict "page" .Page "shapes" true ["why" text under the selector]) */ -}}
 {{- if site.Params.national -}}
 {{- $geo := (resources.Get "se-lan.geojson" | fingerprint).RelPermalink -}}
-<div class="lan-wizard" data-lan-wizard hidden data-geo="{{ $geo }}" data-texts="{{ dict "label" (T "lan_wz_label") "pick" (T "lan_wz_pick") "why" (.why | default (T "lan_wz_why")) "own" (T "lan_own_mark") "ownLine" (T "lan_wz_own_line") "ownPos" (T "lan_wz_own_pos") "mismatch" (T "lan_wz_mismatch") "posIn" (T "lan_wz_pos_in") "switchTo" (T "lan_wz_switch") | jsonify }}"></div>
+<div class="lan-wizard" data-lan-wizard data-geo="{{ $geo }}" data-texts="{{ dict "label" (T "lan_wz_label") "pick" (T "lan_wz_pick") "why" (.why | default (T "lan_wz_why")) "own" (T "lan_own_mark") "ownLine" (T "lan_wz_own_line") "ownPos" (T "lan_wz_own_pos") "mismatch" (T "lan_wz_mismatch") "posIn" (T "lan_wz_pos_in") "switchTo" (T "lan_wz_switch") | jsonify }}">
+  {{- /* The selector's shape before the script fills it (UX-SV-15): shown by national.css before the
+         first paint, with script and no county chosen, so filling it moves nothing. */ -}}
+  <label for="lan-wizard-select">{{ T "lan_wz_label" }}</label><select id="lan-wizard-select"><option value="">{{ T "lan_wz_pick" }}</option></select><p class="muted">{{ .why | default (T "lan_wz_why") }}</p><p class="wz-status" aria-live="polite"></p></div>
 {{- if .shapes }}
 {{- $shapes := dict -}}
 {{- with resources.Get "se-lan.geojson" -}}{{- range (.Content | transform.Unmarshal).features -}}{{- $shapes = merge $shapes (dict .properties.scb .geometry.coordinates) -}}{{- end -}}{{- end }}

@@ -9,13 +9,16 @@
 @font-face { font-family: "Plex Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("LiberationSans-Bold"); font-weight: 600 700; size-adjust: 97.3%; ascent-override: 105.34%; descent-override: 28.26%; line-gap-override: 0%; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../fonts/plex-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "IBM Plex Mono"; src: url("../fonts/plex-mono-latin-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+/* UX-SV-15: Courier New (Liberation Mono on Linux) has Plex Mono's 0.6 em advance; matching the line
+   metrics too keeps code from changing height and wrapping when Plex Mono arrives. */
+@font-face { font-family: "Plex Mono Fallback"; src: local("Courier New"), local("CourierNewPSMT"), local("Liberation Mono"), local("LiberationMono"); size-adjust: 100%; ascent-override: 102.5%; descent-override: 27.5%; line-gap-override: 0%; }
 
 /* Design tokens (planning: design-direction.md, direction D). A region overrides
    the accent tokens (and its logo) in its own assets/css/region.css, if any. */
 :root {
   --font-body: "IBM Plex Sans", "Plex Fallback", system-ui, sans-serif;
   --font-head: "IBM Plex Sans", "Plex Fallback", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", "Plex Mono Fallback", ui-monospace, monospace;
   --radius: 10px;
   --radius-sm: 6px;
   --radius-xs: 4px;
@@ -52,7 +55,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 1rem/1.6 var(--font-body); accent-color: var(--accent); font-size-adjust: cap-height 0.698; }
-code, pre, kbd, samp { font-family: var(--font-mono); }
+code, pre, kbd, samp { font-family: var(--font-mono); font-size-adjust: none; } /* Plex Mono is already at cap-height 0.698; the fallback keeps its 0.6 em advance (UX-SV-15) */
 /* A region name (scope) wherever it is named: fixed width, strongest text colour (operator 2026-11-14). */
 code.scope { color: var(--strong); }
 /* Scopes, channel names and other short code items stay on one line (operator 2026-11-14). */
@@ -107,6 +110,9 @@ a { color: var(--accent); }
 .packets { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); margin-top: .75rem; font-size: .9rem; }
 .packets h3 { font-size: .95rem; margin: 0 0 .25rem; display: flex; gap: .5rem; align-items: center; }
 .recent, .routes { list-style: none; margin: 0; padding: 0; }
+/* UX-SV-15: a fixed height, scrolled inside, so new packets never shift the page below. */
+.recent { height: 20rem; overflow-y: auto; overscroll-behavior: contain; }
+@media (scripting: none) { .packets { display: none; } }
 .recent button { all: unset; box-sizing: border-box; cursor: pointer; display: block; width: 100%; padding: .2rem .4rem; margin-left: -.4rem; border-radius: 4px; }
 .recent button:hover .pk-head, .recent button:focus-visible .pk-head { color: var(--accent); text-decoration: underline; }
 .recent button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
