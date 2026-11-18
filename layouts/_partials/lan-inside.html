@@ -1,0 +1,35 @@
+{{- /* National mode: the nodes a county's map area holds that lie inside the county's outline
+  (se-lan.geojson), the same ray-casting test as assets/js/lan/geo.js, which the map and the
+  "Nätet" card use (B-330). A node without a position is kept, as the map keeps it.
+  Usage: partial "lan-inside.html" (dict "nodes" $nodes "scb" "13") → the nodes inside. */ -}}
+{{- $g := false -}}
+{{- with resources.Get "se-lan.geojson" }}{{ range (.Content | transform.Unmarshal).features }}{{ if eq .properties.scb $.scb }}{{ $g = .geometry }}{{ end }}{{ end }}{{ end -}}
+{{- $out := slice -}}
+{{- if not $g -}}{{- $out = $.nodes -}}{{- else -}}
+{{- $polys := cond (eq $g.type "Polygon") (slice $g.coordinates) $g.coordinates -}}
+{{- range $n := $.nodes -}}
+  {{- $inside := true -}}
+  {{- if and $n.lat $n.lng -}}
+    {{- $lng := float $n.lng }}{{ $lat := float $n.lat -}}
+    {{- $inside = false -}}
+    {{- range $poly := $polys -}}
+      {{- $hit := false }}{{ $hole := false -}}
+      {{- range $ri, $ring := $poly -}}
+        {{- $c := false }}{{ $j := sub (len $ring) 1 -}}
+        {{- range $i, $p := $ring -}}
+          {{- $q := index $ring $j -}}
+          {{- $xi := float (index $p 0) }}{{ $yi := float (index $p 1) }}{{ $xj := float (index $q 0) }}{{ $yj := float (index $q 1) -}}
+          {{- if ne (gt $yi $lat) (gt $yj $lat) -}}
+            {{- if lt $lng (add (div (mul (sub $xj $xi) (sub $lat $yi)) (sub $yj $yi)) $xi) }}{{ $c = not $c }}{{ end -}}
+          {{- end -}}
+          {{- $j = $i -}}
+        {{- end -}}
+        {{- if eq $ri 0 }}{{ $hit = $c }}{{ else if $c }}{{ $hole = true }}{{ end -}}
+      {{- end -}}
+      {{- if and $hit (not $hole) }}{{ $inside = true }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $inside }}{{ $out = $out | append $n }}{{ end -}}
+{{- end -}}
+{{- end -}}
+{{- return $out -}}

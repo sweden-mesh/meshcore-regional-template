@@ -106,6 +106,8 @@ if grep -q 'data-wanted=' "$P/skåne/index.html"; then echo "FAIL wanted: a coun
 # small national script marks the nodes outside it; the shared map bundle is unchanged.
 check kalmar/index.html 'data-lan-scb=08 data-geo=/se-lan\.' "outside: a county page's map names its county and the polygons"
 check kalmar/index.html 'src=/js/lan/map-county' "outside: and loads the marking script"
+check kalmar/index.html 'id=stats [^>]*data-lan-scb=08 data-geo=/se-lan\.[^>]*data-out-text="+ {n} i grannlänen"' "outside: the Nätet card counts nodes outside the county apart (B-330)"
+if grep -q 'id=stats [^>]*data-lan-scb' "$P/index.html"; then echo "FAIL outside: the Sverige card splits by county"; fail=1; else echo "ok   outside: the Sverige card counts everything"; fi
 if grep -q 'map-county' "$P/index.html"; then echo "FAIL outside: the Sverige map marks counties"; fail=1; else echo "ok   outside: the Sverige map marks nothing"; fi
 # MeshMapper (G18, Q5.2): a county's own map linked under its map; no coverage layer nationally.
 check kalmar/index.html 'map-mm">[^<]*<a href=https://example.org/meshmapper/' "meshmapper: a county page links the county's MeshMapper map"

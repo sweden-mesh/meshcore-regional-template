@@ -190,6 +190,7 @@ a { color: var(--accent); }
 .stat-grid dd { color: var(--accent); }
 .stat-grid div:nth-child(2) dd { color: var(--accent-2); }
 .stat-grid div:nth-child(3) dd { color: var(--fg); }
+.stat-grid div dd.stat-out { font-size: .75rem; font-weight: 400; color: var(--muted); order: 1; }
 .map-section { padding-top: 2rem; }
 /* The map breaks out of the content column: 80 % of the window, 10 % margin each side
    (operator 2026-11-13); phones keep the 16 px gutter. */

@@ -66,6 +66,9 @@ other = "Ändrat:"
 other = "Repeatrar"
 [stat_observers]
 other = "Observatörer"
+# A county page: the nodes in its map area outside the county, under the count (B-330).
+[stat_outside]
+other = "+ {n} i grannlänen"
 [stat_packets]
 other = "Paket/dygn"
 # The name of a scrolling table region: "Tabell: Månad, Jan, Feb".

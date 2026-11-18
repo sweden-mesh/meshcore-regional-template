@@ -79,11 +79,13 @@
     <section class="card card-surface" id="natet">
       <p class="eyebrow">{{ printf "%02d" $n }}</p>
       <h2>{{ T "section_network" }}</h2>
-      <div id="stats" class="stats" data-beacon="{{ site.Params.beacon.url }}" data-iatas="{{ $r.iatas | jsonify }}">
+      {{- /* National mode, a county's page: nodes outside the county's outline counted apart (B-330). */}}
+      <div id="stats" class="stats" data-beacon="{{ site.Params.beacon.url }}" data-iatas="{{ $r.iatas | jsonify }}"
+        {{- with partial "lan-page.html" . }} data-lan-scb="{{ .scb }}" data-geo="{{ (resources.Get "se-lan.geojson" | fingerprint).RelPermalink }}" data-out-text="{{ T "stat_outside" }}"{{ end }}>
         {{ with site.Params.beacon.url }}
         <dl class="stat-grid">
-          <div><dt>{{ T "stat_repeaters" }}</dt><dd data-stat="repeaters">–</dd></div>
-          <div><dt>{{ T "stat_observers" }}</dt><dd data-stat="online">–</dd></div>
+          <div><dt>{{ T "stat_repeaters" }}</dt><dd data-stat="repeaters">–</dd><dd class="stat-out" data-stat-out="repeaters" hidden></dd></div>
+          <div><dt>{{ T "stat_observers" }}</dt><dd data-stat="online">–</dd><dd class="stat-out" data-stat-out="online" hidden></dd></div>
           <div><dt>{{ T "stat_packets" }}</dt><dd data-stat="packets">–</dd></div>
         </dl>
         {{ end }}

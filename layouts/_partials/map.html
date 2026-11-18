@@ -4,6 +4,10 @@
 {{- $ml := printf "lib/maplibre-gl/%s/" $m.maplibre -}}
 {{- $snapKey := "snapshot" }}{{ if site.Params.national }}{{ with partial "lan-page.html" . }}{{ $snapKey = printf "snapshot-%s" .scb }}{{ end }}{{ end -}}
 {{- $snap := partialCached "beacon-snapshot.html" . $snapKey -}}
+{{- /* National mode, a county's page: the build-time counts and list hold only the nodes inside the
+       county (B-330); the map itself gets every node in the map area and dims the rest. */ -}}
+{{- $inCounty := $snap.nodes -}}
+{{- if site.Params.national }}{{ with partial "lan-page.html" . }}{{ $inCounty = partial "lan-inside.html" (dict "nodes" $snap.nodes "scb" .scb) }}{{ end }}{{ end -}}
 {{- $snapRes := dict -}}
 {{- if or $snap.nodes $snap.borders -}}
   {{- $snapRes = resources.FromString "beacon/snapshot.json" ($snap | jsonify) | minify | fingerprint -}}
@@ -49,7 +53,7 @@
          7 days, so the map can look empty where nodes exist. Counted from the build's snapshot. map-mm keeps the map's own fallback note (main.js) off it. */}}
   {{- if site.Params.national }}{{ if and (partial "lan-page.html" .) (eq $snap.source "beacon") }}
     {{- $since := mul (sub now.Unix 604800) 1000 }}{{ $obs := 0 }}
-    {{- range $snap.nodes }}{{ if and .isObserver (gt (float (.lastSeen | default 0)) (float $since)) }}{{ $obs = add $obs 1 }}{{ end }}{{ end }}
+    {{- range $inCounty }}{{ if and .isObserver (gt (float (.lastSeen | default 0)) (float $since)) }}{{ $obs = add $obs 1 }}{{ end }}{{ end }}
     {{- if eq $obs 0 }}
   <p class="map-note map-mm lan-no-observers">{{ T "lan_no_observers" (dict "URL" ((site.GetPage "/guider/visa-pa-kartan").RelPermalink | default "/guider/visa-pa-kartan/")) | safeHTML }}</p>
     {{- end }}
@@ -62,7 +66,7 @@
   {{ with $mmUrl }}<p class="map-note map-mm">{{ T "map_meshmapper_note" (dict "URL" .) | $.Page.RenderString }}</p>{{ end }}
   {{- /* A text alternative for the map: the repeaters from the build-time snapshot,
          readable without JavaScript and by screen readers. */ -}}
-  {{- $list := slice -}}{{- range $snap.nodes }}{{ if and (ne .nodeType 1) (not .possiblyForeign) (not .seeded) }}{{ $list = $list | append . }}{{ end }}{{ end -}}
+  {{- $list := slice -}}{{- range $inCounty }}{{ if and (ne .nodeType 1) (not .possiblyForeign) (not .seeded) }}{{ $list = $list | append . }}{{ end }}{{ end -}}
   {{- with $list }}
   <details class="node-list">
     <summary>{{ T "map_list" (dict "Count" (len .)) }}</summary>

@@ -5,13 +5,23 @@
 // populations: observers that had not yet advertised as nodes, and all node
 // types; two equal numbers looked wrong. Operator's review, 2026-11-12.)
 // Packets in the last 24 h come from /stats/payload-breakdown.
+// National mode, a county's page (B-330): the county's map area (its IATA) reaches into the
+// neighbouring counties, so a node placed outside the county's outline (the test the map hides
+// them by, lan/map-county.js) is counted apart, as "+ N i grannlänen". Packets stay per map area:
+// Beacon does not say where a packet was heard.
+import { inGeometry } from "../lan/geo.js";
 
-export function summarize(nodes, breakdown) {
+const placed = (n) => Number.isFinite(n.lat) && Number.isFinite(n.lng) && !(n.lat === 0 && n.lng === 0);
+
+// isOutside(n) → true for a node outside the county; none on a regional site or Sverige.
+export function summarize(nodes, breakdown, isOutside = null) {
   const local = (nodes || []).filter((n) => !n.possiblyForeign);
-  const repeaters = local.filter((n) => n.nodeType === 2).length;
-  const online = local.filter((n) => n.isObserver).length;
+  const out = (n) => !!isOutside && placed(n) && isOutside(n);
+  const count = (f) => [local.filter((n) => f(n) && !out(n)).length, local.filter((n) => f(n) && out(n)).length];
+  const [repeaters, repeatersOut] = count((n) => n.nodeType === 2);
+  const [online, onlineOut] = count((n) => n.isObserver);
   const packets = (breakdown || []).reduce((n, b) => n + (b.count || 0), 0);
-  return { repeaters, online, packets };
+  return { repeaters, online, packets, repeatersOut, onlineOut };
 }
 
 export function formatCount(n) {
@@ -21,15 +31,30 @@ export function formatCount(n) {
   return String(n);
 }
 
+// The county's outline test, from data-lan-scb and data-geo; null when the page has none.
+async function countyTest(el) {
+  const { lanScb, geo } = el.dataset;
+  if (!lanScb || !geo) return null;
+  const g = (await (await fetch(geo)).json()).features.find((f) => f.properties.scb === lanScb)?.geometry;
+  return g ? (n) => !inGeometry(n.lng, n.lat, g) : null;
+}
+
 export async function fillStats(el, client, iatas) {
-  const [nodes, breakdown] = await Promise.all([
+  const [nodes, breakdown, isOutside] = await Promise.all([
     // The same request as the map's (neighbors included), so the page makes it once (B-310).
     client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }, { share: true }),
     client.get("/stats/payload-breakdown", { iatas }),
+    countyTest(el).catch(() => null),
   ]);
-  const s = summarize(nodes, breakdown);
+  const s = summarize(nodes, breakdown, isOutside);
   for (const [key, value] of Object.entries(s)) {
     for (const target of document.querySelectorAll(`[data-stat="${key}"]`)) target.textContent = formatCount(value);
+  }
+  // "+ N i grannlänen" under a count, only when there are any.
+  for (const target of el.querySelectorAll("[data-stat-out]")) {
+    const n = s[`${target.dataset.statOut}Out`] || 0;
+    target.textContent = (el.dataset.outText || "+ {n}").replace("{n}", formatCount(n));
+    target.hidden = !isOutside || n === 0;
   }
   const badge = document.getElementById("online-badge");
   if (badge && s.repeaters > 0) badge.hidden = false;

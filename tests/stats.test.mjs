@@ -9,11 +9,20 @@ test("repeaters and observers are counted separately; a companion can be an obse
     { nodeType: 1, isObserver: true }, { nodeType: 1, isObserver: true, possiblyForeign: true }, { nodeType: 4 },
   ];
   const s = summarize(nodes, [{ count: 474 }, { count: 117 }]);
-  assert.deepEqual(s, { repeaters: 3, online: 3, packets: 591 });
+  assert.deepEqual(s, { repeaters: 3, online: 3, packets: 591, repeatersOut: 0, onlineOut: 0 });
 });
 test("formatCount uses Swedish decimals and k", () => {
   assert.equal(formatCount(591), "591");
   assert.equal(formatCount(2140), "2,1k");
   assert.equal(formatCount(12345), "12k");
   assert.equal(formatCount(undefined), "–");
+});
+test("a county page counts nodes outside the county apart (B-330)", () => {
+  const isOutside = (n) => n.lng > 10;
+  const nodes = [
+    { nodeType: 2, lat: 57, lng: 9 }, { nodeType: 2, lat: 57, lng: 11, isObserver: true }, { nodeType: 2, lat: 57, lng: 12 },
+    { nodeType: 2 }, { nodeType: 1, isObserver: true, lat: 57, lng: 9 }, { nodeType: 2, lat: 57, lng: 11, possiblyForeign: true },
+  ];
+  const s = summarize(nodes, [], isOutside);
+  assert.deepEqual(s, { repeaters: 2, online: 1, packets: 0, repeatersOut: 2, onlineOut: 1 });
 });

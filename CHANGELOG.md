@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.50.0 — 2026-11-18
+
+- **County pages count only the county** (B-330): national mode's county front page counted every node
+  in the county's map area (its IATA), which reaches into the neighbouring counties (Halland: 201
+  repeaters). The "Nätet" card now counts repeaters and observers inside the county's outline, the same
+  test the map hides them by (`assets/js/lan/geo.js`), and shows the rest as a smaller figure under each
+  count ("+ 128 i grannlänen"); a node without a position counts as inside, as on the map. The no-JS
+  repeater list and the "no observers here" note count only nodes inside the county too (new partial
+  `lan-inside.html`). Packets per day stay per map area: Beacon does not say where a packet was heard.
+  Regional sites and the Sverige page are unchanged. New text `stat_outside`.
+
 ## v0.49.0 — 2026-11-17
 
 - **"Senaste paket" says more, and a click frames the packet** (B-328): on wider screens each packet in
