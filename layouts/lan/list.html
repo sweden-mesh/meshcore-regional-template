@@ -1,6 +1,6 @@
 {{- /* National mode: /lan/, the 21 counties as a plain list (no JavaScript needed). Also publishes
      _redirects: the address without åäö answers 301 to the one with (plan Q7.1), and a county with
-     its own site answers 302 to that site (B-327). */ -}}
+     its own site answers 302 to that site (B-327), and a page's aliases answer 301 (SEO-SV-13). */ -}}
 {{ define "main" }}
   {{- $all := partialCached "lan.html" . "lan" -}}
   <article class="content page">
@@ -25,9 +25,11 @@
       {{- $lines = $lines | append (printf "/%s/ %s 301" $ascii .RelPermalink) (printf "/%s/* %s:splat 301" $ascii .RelPermalink) -}}
     {{- end -}}{{- end -}}
   {{- end -}}
+  {{- /* Every page's old addresses (aliases) answer 301, instead of Hugo's meta-refresh page (SEO-SV-13). */ -}}
+  {{- range site.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $a := strings.TrimSuffix "/" . }}{{ $lines = $lines | append (printf "%s %s 301" $a $to) (printf "%s/ %s 301" $a $to) }}{{ end }}{{ end -}}
   {{- /* /lan/pages.json: SCB code → county page, or the county's own site as an absolute address
          (B-327), for the site's / function (plan §6.8, Q7.4). */ -}}
   {{- $pages := dict }}{{ range $c := $all }}{{ if $c.url }}{{ with site.GetPage (printf "/%s" $c.slug) }}{{ $pages = merge $pages (dict $c.scb .RelPermalink) }}{{ end }}{{ else if $c.site }}{{ $pages = merge $pages (dict $c.scb $c.site) }}{{ end }}{{ end -}}
   {{- (resources.FromString "lan/pages.json" ($pages | jsonify)).Publish -}}
-  {{- with $lines }}{{ $r := resources.FromString "_redirects" (printf "# Made by the template (national mode): addresses without åäö, and counties with their own site.\n%s\n" (delimit . "\n")) }}{{ $r.Publish }}{{ end -}}
+  {{- with $lines }}{{ $r := resources.FromString "_redirects" (printf "# Made by the template (national mode): addresses without åäö, counties with their own site, and old page addresses.\n%s\n" (delimit . "\n")) }}{{ $r.Publish }}{{ end -}}
 {{ end }}

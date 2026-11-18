@@ -7,7 +7,9 @@
     <p class="tagline">{{ T "hero_tagline" }}</p>
     {{- /* The region's scope in the lead gets the scope style it has everywhere else (B-300). Only a
            county scope (se-had, se08), never the bare "se", which also occurs inside words. */ -}}
-    {{ with .Description }}{{ $d := . | htmlEscape }}{{ with $r.scope }}{{ if ne . "se" }}{{ $d = replaceRE (printf `(^|[\s("])%s([\s,.;:)"]|$)` (. | htmlEscape)) (printf `${1}<code class="scope">%s</code>${2}` (. | htmlEscape)) $d }}{{ end }}{{ end }}<p class="lead">{{ $d | safeHTML }}</p>{{ end }}
+    {{- /* heroLead: a lead that says what the visitor can do here, where the description (also the
+           search snippet) would repeat the H1 (UX-SV-9). */ -}}
+    {{ with .Params.heroLead | default .Description }}{{ $d := . | htmlEscape }}{{ with $r.scope }}{{ if ne . "se" }}{{ $d = replaceRE (printf `(^|[\s("])%s([\s,.;:)"]|$)` (. | htmlEscape)) (printf `${1}<code class="scope">%s</code>${2}` (. | htmlEscape)) $d }}{{ end }}{{ end }}<p class="lead">{{ $d | safeHTML }}</p>{{ end }}
     {{- with partial "lan-page.html" . }}
     {{- /* A county's front page (operator 2026-11-18, replacing B-326's one community button): every
            regional group of the county as a button, in the order of its file's [[groups]], the old

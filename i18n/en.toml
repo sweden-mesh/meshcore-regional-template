@@ -1190,3 +1190,19 @@ other = "On this page"
 other = "Groups in {{ .Name }}"
 [lan_more_groups]
 other = "More groups"
+[set_scope_iata]
+other = "Region and IATA"
+[set_by_county]
+other = "depend on the county"
+[lan_home_lead]
+other = "See the network in {{ .Short }}, set up your radio with the county's values and find the people who build it."
+[page_updated]
+other = "Updated {{ .Date }}"
+[page_edit]
+other = "Correct this page"
+[map_last_packet]
+other = "Latest packet: {age} ago"
+[map_wait_packet]
+other = "Waiting for the first packet…"
+[map_live_down]
+other = "Map data cannot be fetched right now. The page keeps trying."

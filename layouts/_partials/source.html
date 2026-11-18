@@ -6,3 +6,19 @@
   {{- with .changes }} {{ T "source_changes" }} {{ . }}{{ end }}
 </aside>
 {{- end -}}
+
+{{- /* "Uppdaterad <datum> · Rätta sidan" on guides and troubleshooting (UX-SV-6): the page's lastmod
+  (written from git at each release, SEO-T1) and an edit link to the file, in the template's
+  repository or, for the site's own file, in params.editURL (e.g.
+  "https://github.com/<owner>/<repo>/edit/main/"); none where neither is known. */ -}}
+{{- if and (in (slice "guider" "felsokning") .Section) (not .Lastmod.IsZero) (ne .Kind "section") -}}
+{{- $edit := "" -}}
+{{- with .File -}}
+  {{- if hasPrefix .Filename (print hugo.WorkingDir "/") -}}
+    {{- with site.Params.editURL }}{{ $edit = print . "content/" $.File.Path }}{{ end -}}
+  {{- else -}}
+    {{- $edit = print "https://github.com/sweden-mesh/meshcore-regional-template/edit/main/content/" .Path -}}
+  {{- end -}}
+{{- end }}
+<p class="page-meta">{{ T "page_updated" (dict "Date" (.Lastmod | time.Format ":date_long")) }}{{ with $edit }} · <a href="{{ . }}" class="ext" target="_blank" rel="noopener">{{ T "page_edit" }}</a>{{ end }}</p>
+{{- end -}}

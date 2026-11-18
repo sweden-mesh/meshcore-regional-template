@@ -1,7 +1,7 @@
 ---
 title: "Till dig som äger platsen"
 linkTitle: "Till markägare"
-description: "Någon vill sätta en liten repeater på ditt tak, din mast eller din mark. Vad det är, hur mycket ström och radio det handlar om, vem som äger och ansvarar, och hur den tas bort."
+description: "Någon vill sätta en liten repeater på ditt tak, din mast eller din mark. Vad det är, vad den drar i ström, vem som ansvarar och hur den tas bort."
 lead: false
 date: 2026-11-17
 lastmod: 2026-11-17

@@ -254,6 +254,20 @@ function applyFocus(map, state) {
 
 function startLive(map, ds, client, iatas, state, draw) {
   if (!iatas.length || !("WebSocket" in window)) return;
+  // "Senaste paket: 12 s sedan" under the map, and a notice once the live feed has been down for
+  // 15 s (UX-SV-14). Paused (tab hidden) shows nothing new.
+  let lastPacket = 0, feedStatus = "connecting", downSince = 0;
+  const statusLine = el.parentElement.querySelector(".map-live-status");
+  const ago = (ms) => { const s = Math.round(ms / 1000); return s < 60 ? `${s} s` : `${Math.round(s / 60)} min`; };
+  const showStatus = () => {
+    if (!statusLine) return;
+    const sd = statusLine.dataset;
+    let text = lastPacket ? sd.last.replace("{age}", ago(Date.now() - lastPacket)) : sd.wait;
+    if (downSince && Date.now() - downSince > 15000) text = sd.down;
+    statusLine.textContent = text;
+    statusLine.classList.toggle("map-live-down", text === sd.down);
+  };
+  setInterval(showStatus, 5000);
   // Fewer simultaneous flows on small screens: less to draw on a phone.
   const flows = new FlowLayer(map, { maxFlows: window.innerWidth < 640 ? 40 : 120 });
   let redraw = 0;
@@ -343,6 +357,7 @@ function startLive(map, ds, client, iatas, state, draw) {
         return;
       }
       if (name !== "packetObservation") return;
+      lastPacket = Date.now();
       const o = data.observation;
       const obsPt = observerPoint(state.nodes, o.observerPublicKey, state.hidden);
       const animate = onScreen && !calm.matches;
@@ -368,7 +383,7 @@ function startLive(map, ds, client, iatas, state, draw) {
   }
   const feed = new LiveFeed(ds.beacon, {
     iatas, events: ["packetObservation", "nodeUpdate"], resolvePath: true, includeObserverKey: true,
-    onEvent: handle,
+    onEvent: handle, onStatus: (s) => { feedStatus = s; if (s === "live") downSince = 0; else if (s === "reconnecting" && !downSince) downSince = Date.now(); showStatus(); },
     // Missed events are only in REST: refresh the nodes.
     onGap: async () => {
       try { state.nodes = publicNodes(withSeeded(await client.getAll("/nodes", { iatas, neighbors: true, limit: 2000 }, { priority: "low" }), state.seeded, state.borders), { companions: ds.companions === "true" }); draw(); } catch { /* next gap */ }

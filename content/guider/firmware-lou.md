@@ -1,5 +1,6 @@
 ---
-title: "Firmwarevarianterna av Louie"
+title: "Specialfirmware lou med fjärrstyrning och autosvar"
+seoTitle: "Specialfirmware lou med autosvar"
 description: "Vad sweden-mesh:s lou-firmware är, vilka varianter som finns (auto-svar, Observer, fjärrstyrning) och hur du väljer rätt."
 weight: 45
 group: repeater
@@ -7,7 +8,7 @@ date: 2026-11-12
 lastmod: 2026-11-16
 ---
 
-Utöver MeshCore-projektets egen firmware finns modifierade varianter av Louie: repeaterfirmware som byggs av
+Utöver MeshCore-projektets egen firmware finns lou, modifierade varianter som Louie skrivit: repeaterfirmware som byggs av
 [sweden-mesh](https://github.com/sweden-mesh/MeshCore-lou) för de svenska näten. De bygger på
 MeshCore och lägger till funktioner som hjälper nätet att mäta sig självt. Allt annat fungerar som
 i vanlig MeshCore, och noder med och utan lou pratar med varandra som vanligt.
@@ -54,7 +55,7 @@ set autoreply on
 Auto-svaret använder nodens region, så ställ in den först (se [Regioner](../regioner/)).
 
 Fjärrstyrningen slås på från USB-konsolen, eftersom nyckeln bara kan sättas där. Raderna nedan
-gäller lou-17 och senare. Repeaterguiderna under [Wizards](../../wizard/) kan skicka dem åt dig.
+gäller lou-17 och senare. Repeaterguiderna under [Steg för steg](../../wizard/) kan skicka dem åt dig.
 
 {{< region-control >}}
 

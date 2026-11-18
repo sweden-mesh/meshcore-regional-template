@@ -285,6 +285,10 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
   .toc a { display: block; padding: .3rem 0 .3rem .75rem; margin-left: -1px; border-left: 2px solid transparent; color: var(--muted); }
   .toc a:is(:target-current, .target-current) { border-left-color: var(--accent); color: var(--fg); }
 }
+.lan-county-list { columns: 2 9rem; column-gap: 1.5rem; padding-left: 1.1rem; }
+.map-live-status { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.map-live-status.map-live-down { color: var(--fg); font-weight: 600; }
+.page-meta { margin: 2.5rem 0 0; font-size: .9rem; color: var(--muted); }
 .prose { font-size: 1.05rem; line-height: 1.7; overflow-wrap: break-word; }
 .prose h2 { font-size: 1.5rem; margin: 2.5rem 0 .5rem; letter-spacing: -.01em; }
 .prose h3 { font-size: 1.15rem; margin: 1.75rem 0 .4rem; }
@@ -578,6 +582,8 @@ body.style-console .theme-toggle ~ .nav-narrow { margin-left: auto; }
    component, so a new <details> or button cannot miss it. Disabled controls keep their own. */
 summary, button:not([disabled]), .button:not([disabled]), select, [role="button"], label[for],
 label:has(input:is([type="checkbox"], [type="radio"])), input[type="checkbox"], input[type="radio"], .wz-progress li { cursor: pointer; }
+/* Easier to hit with a finger (UX-SV-12): 20 px radios and checkboxes on touch screens. */
+@media (pointer: coarse) { input:is([type="radio"], [type="checkbox"]) { inline-size: 1.25rem; block-size: 1.25rem; } }
 input[type="text"], input[type="search"], input:not([type]), textarea { cursor: text; }
 
 /* Solar calculator (wizard-solar.html). */

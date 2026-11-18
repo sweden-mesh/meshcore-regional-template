@@ -54,7 +54,7 @@ radions chip och skriver den på rätt ställe. Välj *Uppdatera* för att behå
 identitet; *Ny installation* raderar dem.
 
 Du kan också flasha en repeater med [webbflashern]({{< param "firmware.flasher" >}}), som har
-stöd för fler modeller men saknar auto-svar och fjärrstyrning (se [Firmwarevarianterna](../firmware-lou/)).
+stöd för fler modeller men saknar auto-svar och fjärrstyrning (se [Specialfirmware lou](../firmware-lou/)).
 
 > [!WARNING] Rätt modell
 > Firmware för fel modell kan göra att skärm, radio eller knappar inte fungerar. Kontrollera

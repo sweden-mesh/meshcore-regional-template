@@ -49,6 +49,9 @@
     <noscript>{{ T "map_noscript" }}</noscript>
   </div>
   {{ if not site.Params.beacon.url }}<p class="map-note">{{ T "map_no_beacon" }}</p>{{ end }}
+  {{- /* How fresh the live data is, and whether the live feed is reachable (UX-SV-14). The line is
+         there from the start, so filling it moves nothing. */}}
+  {{ with site.Params.beacon.url }}<p class="map-note map-mm map-live-status" data-last="{{ T "map_last_packet" }}" data-wait="{{ T "map_wait_packet" }}" data-down="{{ T "map_live_down" }}">&nbsp;</p>{{ end }}
   {{- /* National mode, a county's page (Q6.7, Q7.9): no observer in its map area has reported in the last
          7 days, so the map can look empty where nodes exist. Counted from the build's snapshot. map-mm keeps the map's own fallback note (main.js) off it. */}}
   {{- if site.Params.national }}{{ if and (partial "lan-page.html" .) (eq $snap.source "beacon") }}

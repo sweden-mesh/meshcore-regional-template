@@ -11,7 +11,7 @@ lastmod: 2026-11-18
 **Du behöver ingen egen: den gemensamma brokern fungerar.** Brokern
 `{{< param "backend.host" >}}` tar emot repeatrar från alla regioner. Den skickar vidare
 signerade kommandon till repeatrar med fjärrstyrning och tar emot paketen de hör. Repeaterguiderna
-under [Wizards](../../wizard/) och [Firmwarevarianterna av Louie](../firmware-lou/) ställer in den
+under [Steg för steg](../../wizard/) och [Specialfirmware lou](../firmware-lou/) ställer in den
 åt dig, och de flesta regioner kommer aldrig att behöva något annat.
 
 En broker är den MQTT-server som repeatrarna håller en anslutning till. Den läser inga kommandon

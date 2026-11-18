@@ -63,6 +63,7 @@ check guider/regioner/index.html 'class=lan-own data-own=06>' "own site: a share
 check guider/regioner/index.html '<style>html\[data-lan="06"\] .lan-own\[data-own="06"\]' "own site: the line is shown before paint by a rule on html[data-lan] (UX-SV-2)"
 if [ -e "$P/jönköping/index.html" ]; then echo "FAIL own site: the county's address got a page (B-327: it redirects)"; fail=1; else echo "ok   own site: no page at the county's address"; fi
 check _redirects '^/j%C3%B6nk%C3%B6ping/ https://example.org/egen-sida/ 302$' "redirects: an own-site county's address answers 302 to its site"
+check _redirects '^/guider/fragor-och-ord/ /fragor/ 301$' "redirects: a page's alias answers 301 (SEO-SV-13)"
 check _redirects '^/jonkoping/\* https://example.org/egen-sida/ 302$' "redirects: and the address without åäö, and below it"
 if grep -q "j%C3%B6nk" "$P/sitemap.xml"; then echo "FAIL own site: in the sitemap"; fail=1; else echo "ok   own site: not in the sitemap"; fi
 check _redirects '^/skane/ /sk%C3%A5ne/ 301$' "redirects: the address without åäö answers 301"

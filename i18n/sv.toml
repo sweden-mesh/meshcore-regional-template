@@ -291,7 +291,7 @@ other = "Anslut igen och se vilka repeatrar den hört med kommandot"
 [wzg_test_3]
 other = "Leta efter den på kartan:"
 [wizards]
-other = "Guidade inställningar"
+other = "Steg för steg"
 [wz_quick_title]
 other = "Snabbkonfiguration av repeater"
 [wz_quick_desc]
@@ -472,7 +472,7 @@ other = "Fjärrstyrning"
 [rm_title]
 other = "Regionens egen MQTT-server"
 [rm_text]
-other = "Regionen har en egen MQTT-server, `{{ .Server }}`. En observatör kan rapportera dit också, utöver kartan ovan, genom att en av dess MQTT-platser (här plats {{ .Slot }}) pekas dit. Paketen signeras med repeaterns egen nyckel, precis som till de stora servrarna. Guiderna under [Wizards](/wizard/) kan skicka inställningarna åt dig."
+other = "Regionen har en egen MQTT-server, `{{ .Server }}`. En observatör kan rapportera dit också, utöver kartan ovan, genom att en av dess MQTT-platser (här plats {{ .Slot }}) pekas dit. Paketen signeras med repeaterns egen nyckel, precis som till de stora servrarna. Sidorna under [Steg för steg](/wizard/) kan skicka inställningarna åt dig."
 [rc_key]
 other = "<ägarens publika nyckel>"
 [rc_cmds]
@@ -916,7 +916,7 @@ other = "Här finns de som använder MeshCore i {{ .Short }}. Fråga om hjälp, 
 [lan_data_link]
 other = "Vet du något om MeshCore i länet som saknas här? [Du kan enkelt bidra med mer information]({{ .URL }})."
 [lan_home_desc]
-other = "MeshCore i {{ .Name }}: länets region {{ .Scope }}, testkanal, karta och var nätet behöver repeatrar, med guider och wizards för att komma igång."
+other = "MeshCore i {{ .Name }}: länets region {{ .Scope }}, testkanal, karta och var nätet behöver repeatrar, med guider för att komma igång."
 [lan_place_example]
 other = "Utsikten"
 [lan_start_title]
@@ -1186,3 +1186,19 @@ other = "På sidan"
 other = "Grupper i {{ .Name }}"
 [lan_more_groups]
 other = "Fler grupper"
+[set_scope_iata]
+other = "Region och IATA"
+[set_by_county]
+other = "beror på länet"
+[lan_home_lead]
+other = "Se nätet i {{ .Short }}, ställ in din radio med länets värden och hitta de som bygger nätet här."
+[page_updated]
+other = "Uppdaterad {{ .Date }}"
+[page_edit]
+other = "Rätta sidan"
+[map_last_packet]
+other = "Senaste paket: {age} sedan"
+[map_wait_packet]
+other = "Väntar på första paketet…"
+[map_live_down]
+other = "Kartdata kan inte hämtas just nu. Sidan försöker igen."

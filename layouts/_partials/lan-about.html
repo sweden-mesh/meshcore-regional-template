@@ -32,7 +32,9 @@
 {{- if and site.Params.national .IsHome (not (partial "lan-page.html" .)) -}}
   {{- /* Sverige, the national front page (B-318): the same three columns with national content. */ -}}
   {{- $lanURL := "" }}{{ with site.GetPage "/lan" }}{{ $lanURL = .RelPermalink }}{{ end -}}
-  {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p>" (T "lan_net_title" (dict "Name" "Sverige")) (T "lan_se_net_text" (dict "URL" $lanURL) | markdownify)) -}}
+  {{- /* Every county, linked (SEO-SV-9): the county pages one click from the front page. */ -}}
+  {{- $cl := slice }}{{ range partialCached "lan.html" . "lan" }}{{ if .site }}{{ $cl = $cl | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .site (.short | htmlEscape)) }}{{ else }}{{ $short := .short }}{{ with site.GetPage (printf "/%s" .slug) }}{{ $cl = $cl | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink ($short | htmlEscape)) }}{{ end }}{{ end }}{{ end -}}
+  {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul class=\"lan-county-list\">%s</ul>" (T "lan_net_title" (dict "Name" "Sverige")) (T "lan_se_net_text" (dict "URL" $lanURL) | markdownify) (delimit $cl "")) -}}
   {{- $links := slice -}}
   {{- with site.GetPage "/lan" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .Title) }}{{ end -}}
   {{- range $p := slice "/guider/regioner" "/guider/kanaler" "/guider/forsta-meddelandet" -}}

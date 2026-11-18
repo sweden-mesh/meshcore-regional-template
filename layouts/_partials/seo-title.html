@@ -11,5 +11,12 @@
   {{- printf "%s – MeshCore %s" (T "nf_title") $short -}}
 {{- else -}}
   {{- $t := .Params.seoTitle | default .Title -}}
-  {{- if and .Params.seoTitle (strings.Contains $t "MeshCore") }}{{ printf "%s – %s" $t $short }}{{ else }}{{ printf "%s – MeshCore %s" $t $short }}{{ end -}}
+  {{- if and .Params.seoTitle (strings.Contains $t "MeshCore") -}}
+    {{- /* National mode (SEO-SV-12): "– Sverige" alone loses the brand, so "– MeshCore Sverige" while
+           the title stays within 60 characters, else no suffix. */ -}}
+    {{- if and site.Params.national (not $lan) -}}
+      {{- $long := printf "%s – MeshCore %s" $t $short -}}
+      {{- if le (strings.RuneCount $long) 60 }}{{ $long }}{{ else }}{{ $t }}{{ end -}}
+    {{- else }}{{ printf "%s – %s" $t $short }}{{ end -}}
+  {{- else }}{{ printf "%s – MeshCore %s" $t $short }}{{ end -}}
 {{- end -}}

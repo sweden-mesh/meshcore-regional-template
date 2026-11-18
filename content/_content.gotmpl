@@ -24,7 +24,7 @@
         "layout" "county"
         "title" (T "hero_title" (dict "Region" .name))
         "description" (T "lan_home_desc" (dict "Name" .name "Scope" .scope))
-        "params" (dict "lan" .scb "lanHome" true "lead" false
+        "params" (dict "lan" .scb "lanHome" true "lead" false "heroLead" (T "lan_home_lead" (dict "Short" .short))
                   "description" (T "lan_home_desc" (dict "Name" .name "Scope" .scope)))
         "dates" (dict "lastmod" (time.AsTime .checked))
         "content" (dict "mediaType" "text/markdown" "value" "")) -}}

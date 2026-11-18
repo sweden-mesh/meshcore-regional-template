@@ -47,3 +47,6 @@ html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
 .lan-wizard-warn p { margin: 0 0 0.5rem; }
 /* With the wizard's own selector on screen, the page's välj län note would say the same twice. */
 main:has([data-lan-wizard]:not([hidden])) .lan-note { display: none; }
+/* On a phone the network's numbers come before the guides' boxes (UX-SV-13): the map, the reason a
+   county page exists, was about 4,500 px down at 390 px. */
+@media (max-width: 47.99em) { .sections > #natet { order: -1; } .sections .eyebrow { display: none; } } /* no "04" before "01" */

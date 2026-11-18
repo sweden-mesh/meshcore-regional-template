@@ -71,7 +71,7 @@ enableRobotsTXT = true
   pageRef = "/guider"
   weight = 10
 [[menus.main]]
-  name = "Wizards"
+  name = "Steg för steg"
   pageRef = "/wizard"
   weight = 15
 [[menus.main]]
