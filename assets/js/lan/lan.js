@@ -88,3 +88,19 @@ export function geoToPaths(geo, width = 300) {
   }));
   return { viewBox: `0 0 ${width} ${height}`, paths };
 }
+
+// The "choose your region" pointer under the header's county button (B-344): shown only while no
+// county was ever chosen (nothing stored, so <html> has no data-lan), at the very top of the page,
+// and while no menu, dialog or focused control beyond the header could be covered by it.
+export function tipShown({ chosen, scrollY, covered }) {
+  return !chosen && scrollY <= 0 && !covered;
+}
+
+// Where the pointer goes: centred under the button, kept `gutter` px inside the viewport, its arrow
+// on the button's middle (clamped so it stays on the box's straight edge).
+export function tipPlace(button, viewport, width, gutter = 8, arrowPad = 16) {
+  const mid = (button.left + button.right) / 2;
+  const left = Math.max(gutter, Math.min(mid - width / 2, viewport - gutter - width));
+  const arrow = Math.max(arrowPad, Math.min(mid - left, width - arrowPad));
+  return { left: Math.round(left), arrow: Math.round(arrow) };
+}

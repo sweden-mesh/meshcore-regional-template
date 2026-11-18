@@ -971,6 +971,8 @@ other = "Välj ditt län"
 other = "Länet bestämmer regionen (scope) dina radior ska använda, länets kanaler och testkanal, och vad kartan visar. Valet sparas i webbläsaren och kan ändras när som helst med knappen högst upp."
 [lan_modal_list]
 other = "Län"
+[lan_tip]
+other = "Välj din region här!"
 [lan_modal_current]
 other = "valt nu"
 [lan_no_observers]

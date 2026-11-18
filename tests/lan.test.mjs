@@ -78,3 +78,21 @@ test("the modal map: one path per county, inside the view box", async () => {
   const maxY = (d) => Math.max(...d.match(/,[\d.]+/g).map((c) => +c.slice(1)));
   assert.ok(maxY(skane.d) > maxY(norrbotten.d), "Skåne is south of Norrbotten");
 });
+
+import { tipShown, tipPlace } from "../assets/js/lan/lan.js";
+
+test("tipShown: only unchosen, at the top, nothing covered (B-344)", () => {
+  assert.equal(tipShown({ chosen: false, scrollY: 0, covered: false }), true);
+  assert.equal(tipShown({ chosen: true, scrollY: 0, covered: false }), false);
+  assert.equal(tipShown({ chosen: false, scrollY: 1, covered: false }), false);
+  assert.equal(tipShown({ chosen: false, scrollY: 0, covered: true }), false);
+});
+
+test("tipPlace: centred under the button, inside the viewport, arrow on the button (B-344)", () => {
+  assert.deepEqual(tipPlace({ left: 500, right: 600 }, 1280, 200), { left: 450, arrow: 100 });
+  // Near the right edge: pushed in, the arrow still under the button's middle.
+  assert.deepEqual(tipPlace({ left: 150, right: 194 }, 245, 200), { left: 37, arrow: 135 });
+  // Wider than there is room for the arrow: clamped to the box's straight edge.
+  assert.deepEqual(tipPlace({ left: 230, right: 244 }, 245, 200), { left: 37, arrow: 184 });
+  assert.deepEqual(tipPlace({ left: 0, right: 10 }, 1280, 200), { left: 8, arrow: 16 });
+});

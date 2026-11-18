@@ -41,7 +41,7 @@ if (header && wide && "ResizeObserver" in window) {
   const overflows = () => {
     const cs = getComputedStyle(header);
     const edge = header.getBoundingClientRect().right - parseFloat(cs.paddingRight) - parseFloat(cs.borderRightWidth) + 0.5;
-    return [...header.children].some((c) => c.getClientRects().length && c.getBoundingClientRect().right > edge);
+    return [...header.children].some((c) => c.getClientRects().length && !c.matches(".lan-tip") && c.getBoundingClientRect().right > edge); // not the region pointer (lan/modal.js)
   };
   const ro = new ResizeObserver(fit);
   ro.observe(header);

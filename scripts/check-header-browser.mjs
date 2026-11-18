@@ -3,6 +3,8 @@
 // zoom, nothing in the header row overlaps, wraps, reaches past the header's edge or is clipped
 // (the search button holds its label and the "/" hint). Zoom is taken as the CSS width it leaves.
 // And the opened ☰ menu from 320 px up (B-341): under the button, inside the viewport, focus in it.
+// National mode, nothing stored (B-343/B-344): no dialog opens by itself, and "Välj din region här!"
+// points at the county button from 245 px up, only at scroll position 0 and not while ☰ is open.
 // Needs Puppeteer and Chrome: PUPPETEER=<path to puppeteer> CHROME=/usr/bin/google-chrome
 //   node scripts/check-header-browser.mjs [built site dir ...]
 // Default: exampleSite/public and exampleNational/public, as scripts/check.sh leaves them.
@@ -35,7 +37,7 @@ const inspect = () => {
   const cs = getComputedStyle(h);
   const r = h.getBoundingClientRect();
   const left = r.left + parseFloat(cs.paddingLeft) - 0.5, right = r.right - parseFloat(cs.paddingRight) + 0.5;
-  const shown = [...h.children].filter((c) => c.getClientRects().length && getComputedStyle(c).visibility !== "hidden" && c.getBoundingClientRect().width > 0 && !c.matches("[popover], template, script"));
+  const shown = [...h.children].filter((c) => c.getClientRects().length && getComputedStyle(c).visibility !== "hidden" && c.getBoundingClientRect().width > 0 && !c.matches("[popover], template, script, .lan-tip"));
   const out = [];
   const name = (c) => c.className || c.tagName.toLowerCase();
   const boxes = shown.map((c) => [c, c.getBoundingClientRect()]);
@@ -102,6 +104,33 @@ const menuClosed = () => {
   return out;
 };
 
+// The region pointer (B-344) at the current width: null in regional mode, else a list of findings.
+const tipCase = async () => {
+  const frames = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const tip = document.getElementById("lan-tip"), b = document.querySelector(".site-header [data-lan-open]");
+  if (!tip) return null;
+  const out = [];
+  if (document.querySelector("dialog[open]")) out.push("a dialog opened by itself");
+  scrollTo(0, 0); await frames();
+  if (tip.hidden) return [...out, "the pointer is not shown at the top"];
+  const t = tip.getBoundingClientRect(), bb = b.getBoundingClientRect(), vw = document.documentElement.clientWidth;
+  const arrow = t.left + parseFloat(tip.style.getPropertyValue("--arrow"));
+  if (t.left < 0 || t.right > vw + 0.5) out.push(`the pointer is outside the viewport (${Math.round(t.left)}–${Math.round(t.right)} of ${vw})`);
+  if (t.top < bb.bottom || t.top > bb.bottom + 20) out.push(`the pointer starts ${Math.round(t.top - bb.bottom)} px below the button`);
+  if (arrow < bb.left || arrow > bb.right) out.push("the pointer's arrow is not under the button");
+  scrollTo(0, 50); await frames();
+  if (document.documentElement.scrollHeight > innerHeight + 50 && !tip.hidden) out.push("the pointer stays when scrolled");
+  scrollTo(0, 0); await frames();
+  if (tip.hidden) out.push("the pointer does not come back at the top");
+  const t2 = document.querySelector(".nav-toggle");
+  if (t2 && t2.getClientRects().length) {
+    t2.click(); await frames();
+    if (!tip.hidden) out.push("the pointer stays while ☰ is open");
+    document.getElementById(t2.getAttribute("popovertarget")).hidePopover(); await frames();
+  }
+  return out;
+};
+
 const browser = await puppeteer.launch({ executablePath: process.env.CHROME || "/usr/bin/google-chrome", args: ["--no-sandbox", "--disable-dev-shm-usage"] });
 let fail = 0;
 try {
@@ -144,6 +173,27 @@ try {
       if (!seen) { console.log(`FAIL ${root} ${path}: ☰ never shows from 320 px up`); mbad = 1; }
       console.log(`${mbad ? "FAIL" : "ok  "} ☰ menu ${root.replace(/.*\/(example\w+|[^/]+)\/public\/$/, "$1")} ${path}: under the button at ${seen} widths`);
       fail ||= mbad;
+      // The region pointer (B-344), on a fresh visit with nothing stored, 245–1600 px, light and dark.
+      let tbad = 0, tseen = 0;
+      for (const scheme of ["light", "dark"]) {
+        const ctx = await browser.createBrowserContext();
+        const fresh = await ctx.newPage();
+        fresh.on("pageerror", (e) => { console.log(`FAIL page error: ${e.message}`); fail = 1; });
+        await fresh.emulateMediaFeatures([{ name: "prefers-color-scheme", value: scheme }]);
+        await fresh.setViewport({ width: 1280, height: 900 });
+        await fresh.goto(base + path, { waitUntil: "networkidle0" });
+        await fresh.waitForFunction(() => !document.getElementById("lan-tip") || !document.getElementById("lan-tip").hidden, { timeout: 5000 }).catch(() => {});
+        for (let w = 245; w <= 1600; w += 45) {
+          await fresh.setViewport({ width: w, height: 900 });
+          const m = await fresh.evaluate(tipCase);
+          if (!m) break;
+          tseen++;
+          for (const f of m) { console.log(`FAIL ${root} ${path} ${w}px ${scheme}: ${f}`); tbad = 1; }
+        }
+        await ctx.close();
+      }
+      if (tseen) console.log(`${tbad ? "FAIL" : "ok  "} region pointer ${root.replace(/.*\/(example\w+|[^/]+)\/public\/$/, "$1")} ${path}: at ${tseen} widths`);
+      fail ||= tbad;
     }
   }
 } finally {

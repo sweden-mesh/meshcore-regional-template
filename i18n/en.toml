@@ -975,6 +975,8 @@ other = "Choose your county"
 other = "The county decides the region (scope) your radios use, the county's channels and test channel, and what the map shows. The choice is saved in the browser and can be changed at any time with the button at the top."
 [lan_modal_list]
 other = "Counties"
+[lan_tip]
+other = "Choose your region here!"
 [lan_modal_current]
 other = "chosen now"
 [lan_no_observers]

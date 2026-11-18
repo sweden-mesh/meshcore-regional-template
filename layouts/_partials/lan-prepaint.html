@@ -1,8 +1,8 @@
 {{- /* National mode: the chosen county, before the first paint (plan §6.2.3, §6.2.5). Order: the
   page's own county (data-lan-page), ?lan=<scb|se>, localStorage "lan", the cookie "lan". A choice
   from the page or the URL is written to both stores; a store that lost it is restored from the
-  other. Sets <html data-lan="<scb|se>">, or data-lan-store="0" when neither store can be written
-  (the county modal is then not forced, §6.2.4). On / with a saved county that has a page here
+  other. Sets <html data-lan="<scb|se>">, or data-lan-store="0" when neither store can be written.
+  On / with a saved county that has a page here
   and no cookie, the cookie is restored and / reloaded once, so the / function can serve the
   county's front page (§6.8, Q7.4). A valid ?lan= is then taken out of the address bar
   (history.replaceState: no reload, no history entry; other parameters and the #hash stay), so links

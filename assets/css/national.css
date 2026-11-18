@@ -50,3 +50,21 @@ main:has([data-lan-wizard]:not([hidden])) .lan-note { display: none; }
 /* On a phone the network's numbers come before the guides' boxes (UX-SV-13): the map, the reason a
    county page exists, was about 4,500 px down at 390 px. */
 @media (max-width: 47.99em) { .sections > #natet { order: -1; } .sections .eyebrow { display: none; } } /* no "04" before "01" */
+
+/* "Välj din region här!" (lan/modal.js, B-344): a large pointer under the header's county button
+   for a visitor who never chose a county, at the top of the page only. Placed by script in page
+   coordinates (top/left, --arrow = the arrow's x inside the box); under the top layer, so the ☰
+   menu and the dialogs open over it. */
+.lan-tip {
+  position: absolute; z-index: 30; margin-top: 12px; box-sizing: border-box;
+  max-width: calc(100vw - 16px); width: max-content; padding: 0.75rem 1.125rem;
+  border-radius: var(--radius-sm); background: var(--accent); color: var(--bg);
+  font-family: var(--font-head); font-size: clamp(1.05rem, 4.2vw, 1.3rem); font-weight: 700; line-height: 1.25;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.28); cursor: pointer;
+}
+.lan-tip[hidden] { display: none; }
+.lan-tip::before {
+  content: ""; position: absolute; top: -9px; left: calc(var(--arrow, 50%) - 10px);
+  border: 10px solid transparent; border-top: 0; border-bottom: 10px solid var(--accent);
+}
+@media (forced-colors: active) { .lan-tip { border: 2px solid CanvasText; } .lan-tip::before { border-bottom-color: CanvasText; } }

@@ -1,15 +1,15 @@
 // National mode: the county modal (plan §6.2.4, Q4.2, Q4b, Q7.2). Drawn by script only, so
-// crawlers and visitors without JavaScript never see it. Opened by itself on a visit where nothing
-// has chosen a county (no county address, no ?lan=, nothing stored) unless storage is blocked;
-// otherwise by the header's county button. It always closes (the × button, Esc, a click outside):
-// closed without a choice, the page stays on Sverige and the modal does not open by itself again
-// in this visit (UX-SV-1, SEO-SV-2, operator 2026-11-18). A county with its own site: from the
+// crawlers and visitors without JavaScript never see it. It opens only from the header's county
+// button: a visit where nothing has chosen a county (no county address, no ?lan=, nothing stored)
+// reads Sverige and is not interrupted (B-343, operator 2026-11-18; replaces the automatic opening
+// of UX-SV-D1). It always closes (the × button, Esc, a click outside); closed without a choice, the
+// page stays on Sverige. A county with its own site: from the
 // front page or a county page, picking it goes to that site (B-327); from any other page the choice
 // is saved and the visitor stays, with a link to the county's site in the page's county line (UX-SV-2).
 // Regional mode (B-324, #lan-data with mode "regional"): the same modal behind a regional site's
 // county button. Every choice is a link (its own site, or its page on the national site), nothing
 // is stored, and the modal never opens by itself.
-import { modalModel, fillTemplate, geoToPaths } from "./lan.js";
+import { modalModel, fillTemplate, geoToPaths, tipShown, tipPlace } from "./lan.js";
 
 const island = document.getElementById("lan-data");
 const regionalData = island && !window.meshcoreLan ? JSON.parse(island.textContent) : null;
@@ -32,8 +32,6 @@ function build() {
   const t = lan.data.texts;
   dialog = el("dialog", { class: "lan-modal", "aria-labelledby": "lan-modal-title", "aria-describedby": "lan-modal-intro" });
   dialog.setAttribute("closedby", "any");
-  // Closed without a choice: no automatic opening again in this visit.
-  dialog.addEventListener("close", () => { try { sessionStorage.setItem("lan-skip", "1"); } catch (e) { /* blocked */ } });
   document.body.append(dialog);
   return t;
 }
@@ -136,9 +134,50 @@ if (regional) {
   for (const a of document.querySelectorAll("[data-lan-open]")) {
     a.addEventListener("click", (e) => { e.preventDefault(); open(); });
   }
-  // /lan/ is the chooser itself and works as plain links.
-  const quiet = location.pathname.replace(/\/$/, "").endsWith("/lan");
-  let skip = false;
-  try { skip = sessionStorage.getItem("lan-skip") === "1"; } catch (e) { /* blocked */ }
-  if (!root.getAttribute("data-lan") && root.getAttribute("data-lan-store") !== "0" && !quiet && !skip) open();
+  pointer();
+}
+
+// "Välj din region här!" (B-344): a large pointer under the header's county button for a visitor
+// who never chose a county (nothing stored: <html> has no data-lan; choosing Sverige stores "se").
+// Only at scroll position 0; hidden while the ☰ menu, a dialog or a focused control outside the
+// header is around, gone once a county is chosen. Drawn by script, absolutely placed in the header (no
+// layout shift) and under the top layer, so it never covers the opened menu or the search dialog.
+// Not on /lan/, which is the chooser itself. A click on it opens the modal like the button does.
+function pointer() {
+  const btn = document.querySelector(".site-header [data-lan-open]");
+  const text = lan.data.texts.tip;
+  if (!btn || !text || root.getAttribute("data-lan") || location.pathname.replace(/\/$/, "").endsWith("/lan")) return;
+  const tip = el("div", { class: "lan-tip", id: "lan-tip", role: "tooltip", hidden: true }, el("span", { text }));
+  tip.addEventListener("click", () => open());
+  const header = btn.closest(".site-header");
+  header.append(tip); // inside the banner landmark; placed relative to the header (position: relative)
+  btn.setAttribute("aria-describedby", "lan-tip");
+  const menuOpen = () => { try { return !!document.querySelector(".site-header [popover]:popover-open"); } catch (e) { return !!document.querySelector(".site-header .\\:popover-open"); } };
+  const covered = () => !!document.querySelector("dialog[open]") || menuOpen()
+    || !!(document.activeElement && document.activeElement !== document.body && !header.contains(document.activeElement) && !tip.contains(document.activeElement));
+  let ready = false; // first shown once the header has settled (fonts, the toggles), so it never moves
+  const update = () => {
+    if (!tip.isConnected || !ready) return;
+    const show = tipShown({ chosen: !!root.getAttribute("data-lan"), scrollY: window.scrollY, covered: covered() }) && btn.getClientRects().length > 0;
+    tip.hidden = !show;
+    if (!show) return;
+    const b = btn.getBoundingClientRect(), h = header.getBoundingClientRect();
+    const p = tipPlace(b, document.documentElement.clientWidth, tip.offsetWidth);
+    tip.style.left = `${Math.round(p.left - h.left)}px`;
+    tip.style.top = `${Math.round(b.bottom - h.top)}px`;
+    tip.style.setProperty("--arrow", `${p.arrow}px`);
+  };
+  const done = () => { tip.remove(); btn.removeAttribute("aria-describedby"); };
+  document.addEventListener("lan:change", (e) => { if (e.detail && e.detail.lan) done(); });
+  addEventListener("scroll", update, { passive: true });
+  addEventListener("resize", update);
+  document.addEventListener("toggle", () => requestAnimationFrame(update), true);
+  document.addEventListener("focusin", update);
+  document.addEventListener("focusout", () => requestAnimationFrame(update));
+  new ResizeObserver(update).observe(btn);
+  // menu.js folds the header after a resize (class nav-collapsed): the button moves, keeping its size.
+  new MutationObserver(update).observe(header, { attributes: true, attributeFilter: ["class"] });
+  const loaded = document.readyState === "complete" ? Promise.resolve() : new Promise((r) => addEventListener("load", r, { once: true }));
+  Promise.all([loaded, document.fonts ? document.fonts.ready : null])
+    .then(() => requestAnimationFrame(() => requestAnimationFrame(() => { ready = true; update(); })));
 }
