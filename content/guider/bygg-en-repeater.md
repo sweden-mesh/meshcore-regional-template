@@ -107,9 +107,9 @@ set tx 16
 
 1. Öppna [webbflashern]({{< param "firmware.flasher" >}}) och välj radion **Heltec v4** eller
    **Heltec v4 R8**, efter vad som står på ditt kort, och sedan **Repeater**.
-2. Ska repeatern också visa på kartan vad den hör, välj en **Observer**-firmware i stället. Den
-   kommer från [MeshCore Observer-projektet](https://github.com/agessaman/MeshCore); se [Din
-   repeater på kartan](../visa-pa-kartan/).
+2. Ska repeatern också visa på kartan vad den hör, flasha **Observer**-firmware i stället, från
+   [MeshCore Observer-projektets flasher](https://observer.gessaman.com/); se [Kartan och
+   observatörer](../visa-pa-kartan/).
 3. Anslut kortet med en USB-kabel som klarar data, starta flashningen och välj kortets port.
 
 Mer om varje steg, och vad du gör om något krånglar, står i [Välj och flasha firmware](../flasha-firmware/).

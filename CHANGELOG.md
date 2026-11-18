@@ -4,6 +4,29 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.58.0 — 2026-11-18
+
+- **Kartan och observatörer** (CONTENT-SV-11), the retitled `/guider/visa-pa-kartan/` (URL kept): the
+  observer drawing, what the map shows (FAQ `kartan` now one sentence + link), what an observer sends,
+  three ways (Observer firmware from its own flasher, meshcoretomqtt with a repeater on USB,
+  meshcore-packet-capture with a companion), the IATA table and other maps. New shortcode
+  `{{</* iata-table */>}}`: every county's region and IATA code in national mode, the region's own on a
+  regional site (i18n `iata_*`).
+- **Felsökning** (CONTENT-SV-12): five new entries (CR 5 against the network's CR, the name is cut, the
+  message is cut, the app's admin wait, a repeater left at 50 % duty cycle) and "Vanligaste felen" at the
+  top of the hub.
+- **MeshCore eller Meshtastic?** (CONTENT-SV-13): Meshtastic's managed flooding, hop limits 64 vs 3/7,
+  two phone-width tables, encryption described from the code, "Och Reticulum?", "Vad används i
+  Sverige?", Källor.
+- **Skaffa hårdvara** (CONTENT-SV-4): "Modellerna i jämförelse" (chip, transmit power, battery, one
+  source per figure), "Bäst till", the Heltec V4 power warning, "ESP32 eller nRF52?".
+- **Product pictures** in the hardware tables (operator 2026-11-18): Heltec V3, V4, T114, T096, LilyGO
+  T-Deck and T-Beam, Elecrow ThinkNode M1, M5 and M9, with Swedish alt text (new optional `image.alt`).
+  Four new companion rows with sourced specs: ThinkNode M9, Heltec T096, ThinkNode M1, ThinkNode M5.
+  `{{</* hw-credits */>}}` lists only pictures with a licence.
+- Observer firmware is flashed from the Observer project's own flasher (flasha-firmware, bygg-en-repeater).
+- No script changes: **no CSP hash changes**.
+
 ## v0.57.0 — 2026-11-18
 
 - **New shortcode `{{</* diagram "region|fresnel|observer" */>}}`** (CONTENT-SV-23): inline SVG drawn

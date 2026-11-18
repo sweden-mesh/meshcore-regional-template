@@ -1326,3 +1326,9 @@ other = "Receives over the internet."
 other = "The map"
 [diagram_observer_map_note]
 other = "Shows nodes and paths."
+[iata_county]
+other = "County"
+[iata_region]
+other = "Region (scope)"
+[iata_code]
+other = "IATA code for the map"

@@ -8,4 +8,4 @@ lastmod: 2026-11-14
 
 Din repeater behöver inte vara observatör för att synas. Den syns när den har en position, har
 skickat en advert, och en observatör i närheten har hört den. Ingen observatör nära? Gör din egen
-till en, se [Din repeater på kartan](../guider/visa-pa-kartan/).
+till en, se [Kartan och observatörer](../guider/visa-pa-kartan/).

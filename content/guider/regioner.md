@@ -147,7 +147,7 @@ dem i listan också, utöver länets.
 > [!NOTE]- Är regionen samma sak som IATA-koden?
 > Nej. Regionen styr vilka repeatrar som för trafiken vidare. IATA-koden är en etikett som
 > observatörer sätter på det de rapporterar till kartan, och den påverkar inte meshnätet. Se
-> [Din repeater på kartan](../visa-pa-kartan/).
+> [Kartan och observatörer](../visa-pa-kartan/).
 
 > [!NOTE]- Måste jag använda region?
 > Nej. Trafik utan region förs vidare som förut. Regioner är ett sätt att spara sändningstid

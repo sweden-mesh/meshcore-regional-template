@@ -7,6 +7,8 @@
 # Pictures only with a licence that allows reuse (today: Seeed's wiki images, CC BY-SA 4.0), downloaded
 # to assets/images/hardware/ and credited by {{< hw-credits >}}:
 #   image = { file, source (the page it was shown on), by, licence, licenceUrl, date }.
+# Or, for the makers' press images the site operator supplied (operator 2026-11-18; no credit line):
+#   image = { file, alt (Swedish) }.
 
 [[companion]]
   name = "Seeed SenseCAP Card Tracker T1000-E"
@@ -67,6 +69,7 @@
   cons = ["Batteri ingår inte", "Wifi och Bluetooth kan inte köras samtidigt (inget PSRAM, enligt Heltec)"]
   warnings = ["Mycket liten Bluetooth-antenn på kortet, räckvidd bara några fot, så anslutningen till telefonen tappas lätt (MeshCore FAQ)", "Wifi-companion kräver att du kompilerar firmware själv (MeshCore FAQ)"]
   sources = [{ name = "Heltec, WiFi LoRa 32 V3", url = "https://heltec.org/project/wifi-lora-32-v3/" }, { name = "MeshCore FAQ, 6.6 and 7.6", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-v3.png", alt = "Heltec WiFi LoRa 32 V3, ett kretskort med liten skärm och USB-C-kontakt" }
 
 [[companion]]
   name = "Heltec WiFi LoRa 32 V4"
@@ -81,6 +84,7 @@
   cons = []
   warnings = ["Ställ in 10 dBm i appen för att få 22 dBm ut; 22 dBm i appen ger 28 dBm (MeshCore FAQ)", "Fel inställd sändareffekt kan skada radion permanent (MeshCore FAQ)"]
   sources = [{ name = "Heltec, WiFi LoRa 32 V4", url = "https://heltec.org/project/wifi-lora-32-v4/" }, { name = "MeshCore FAQ, 7.7 (Heltec V4 transmit power)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-v4.png", alt = "Heltec WiFi LoRa 32 V4, ett svart kretskort med USB-C-kontakt" }
 
 [[companion]]
   name = "Heltec Mesh Node T114"
@@ -95,6 +99,7 @@
   cons = ["Batteri ingår inte", "GNSS är tillbehör"]
   warnings = []
   sources = [{ name = "Heltec, Mesh Node T114", url = "https://heltec.org/project/mesh-node-t114/" }, { name = "MeshCore FAQ (supported hardware; OTA settings for T114)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-t114.png", alt = "Heltec Mesh Node T114 i genomskinlig låda med färgskärm" }
 
 [[companion]]
   name = "Heltec Wireless Tracker (V1.1)"
@@ -124,6 +129,7 @@
   cons = ["Djupare kartzoom och serverhantering kräver en upplåsningskod för 10 USD per enhet (MeshCore FAQ)", "T-Deck-firmwaren är inte öppen källkod (MeshCore FAQ)"]
   warnings = []
   sources = [{ name = "LilyGO wiki, T-Deck (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck/" }, { name = "LilyGO GitHub, T-Deck", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "MeshCore FAQ, 2.2, 4.9 and 5.7", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "lilygo-tdeck.jpg", alt = "LilyGO T-Deck, en handenhet med skärm och tangentbord som visar MeshCore" }
 
 [[companion]]
   name = "LilyGO T-Deck Plus"
@@ -152,6 +158,7 @@
   cons = ["Finns med olika LoRa-chip (SX1262/SX1276/SX1278), kontrollera variant före köp (LilyGO GitHub)"]
   warnings = ["Fel inställd sändareffekt kan skada PA-steget (LilyGO GitHub)"]
   sources = [{ name = "LilyGO GitHub, LoRa-Series (T-Beam V1.2 examples per chip; PA warning)", url = "https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series" }, { name = "LilyGO, T-Beam SoftRF (search result only)", url = "https://lilygo.cc/products/t-beam-softrf" }]
+  image = { file = "lilygo-tbeam.jpg", alt = "LilyGO T-Beam V1.2, ett avlångt kretskort med skärm, GPS-modul och antennkontakt" }
 
 [[companion]]
   name = "RAK WisMesh TAP V2"
@@ -167,6 +174,71 @@
   cons = ["Ska laddas med 5 V / 2 A väggladdare; laddning från datorns USB rekommenderas inte (RAK)"]
   warnings = ["Finns inte i MeshCores flasherlista (2026-11-18)", "Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
   sources = [{ name = "RAK Docs, WisMesh TAP V2 översikt", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/overview/" }, { name = "RAK Docs, WisMesh TAP V2 quick start", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/quickstart/" }, { name = "MeshCore flasher device list", url = "https://flasher.meshcore.io/config.json" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+
+[[companion]]
+  name = "Elecrow ThinkNode M9"
+  url = "https://www.elecrow.com/thinknode-m9-meshcore-communication-terminal-with-full-keyboard-2-4inch-lcd-esp32-s3-lr1110-gps-2300mah.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "handenhet med tangentbord"
+  chip = "ESP32-S3 + LR1110"
+  connects = "Bluetooth 5.0 (LE), Wi-Fi 2.4 GHz, USB-C"
+  battery = "2300 mAh"
+  price = "Pris i november 2026: från 74,90 USD hos Elecrow"
+  pros = ["Levereras med MeshCore förinstallerat", "Fristående: fullt QWERTY-tangentbord och 2,4-tums färgskärm, ingen telefon behövs", "GPS och kompass inbyggda", "2–3 dagars drift i standby enligt Elecrow"]
+  cons = ["Wi-Fi (bland annat automatisk kartnedladdning) kräver en köpt licens", "868 MHz-versionen beräknas skickas i början av december"]
+  warnings = ["Säljs också i en Meshtastic-version; köp MeshCore-versionen"]
+  sources = [{ name = "Elecrow, ThinkNode M9 MeshCore", url = "https://www.elecrow.com/thinknode-m9-meshcore-communication-terminal-with-full-keyboard-2-4inch-lcd-esp32-s3-lr1110-gps-2300mah.html" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "elecrow-m9.webp", alt = "Elecrow ThinkNode M9, en handenhet med färgskärm och tangentbord som visar MeshCore" }
+
+[[companion]]
+  name = "Heltec Mesh Node T096"
+  url = "https://heltec.org/project/t096/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "kort"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth 5 (LE), USB-C"
+  txPower = "28±1 dBm"
+  price = "Pris i november 2026: cirka 33,90 USD hos Heltec (bandet anges inte)"
+  pros = ["Låg strömförbrukning: ca 12 µA i viloläge", "GPS inbyggd", "Kontakt för solpanel och för litiumbatteri", "Heltec anger stöd för både MeshCore och Meshtastic"]
+  cons = ["Batteri ingår inte", "Inget Wi-Fi"]
+  warnings = ["Upp till 28 dBm, mer än gränsen 500 mW ERP (27 dBm); räkna ut ERP innan du ställer in sändeffekten"]
+  sources = [{ name = "Heltec, Mesh Node T096", url = "https://heltec.org/project/t096/" }, { name = "PTSFS 2025:1 § 146", url = "https://pts.se/contentassets/b05c8a7d01a64783aafc6a19e1b78590/ptsfs-2025-1-foreskrifter-om-undantag-fran-tillstandsplikt-for-anvandning-av-vissa-radiosandare.pdf" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "heltec-t096.png", alt = "Heltec Mesh Node T096, ett litet kort i genomskinlig låda" }
+
+[[companion]]
+  name = "Elecrow ThinkNode M1"
+  url = "https://www.elecrow.com/thinknode-m1-meshtastic-lora-signal-transceiver-powered-by-nrf52840-with-154-screen-support-gps.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "färdig enhet"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth 5 (LE), USB-C"
+  battery = "1200 mAh"
+  txPower = "22 dBm"
+  price = "Pris i november 2026: från 53,90 USD hos Elecrow"
+  pros = ["Låg strömförbrukning: ca 5,6 µA i lågeffektläge", "1,54-tums e-pappersskärm och GPS", "Batteri, antenn (RP-SMA) och bältesklämma ingår"]
+  cons = []
+  warnings = ["Levereras med Meshtastic förinstallerat; MeshCore flashar du själv", "Elecrow ber köpare kontakta dem innan annan firmware används"]
+  sources = [{ name = "Elecrow, ThinkNode M1", url = "https://www.elecrow.com/thinknode-m1-meshtastic-lora-signal-transceiver-powered-by-nrf52840-with-154-screen-support-gps.html" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "thinknode-m1.webp", alt = "Elecrow ThinkNode M1, en svart handenhet med antenn och liten skärm" }
+
+[[companion]]
+  name = "Elecrow ThinkNode M5"
+  url = "https://www.elecrow.com/thinknode-m5-meshtastic-lora-signal-transceiver-esp32-s3-1-54-screen-gps-function.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "färdig enhet"
+  chip = "ESP32-S3 + SX1262"
+  connects = "Bluetooth 5.0 (LE), USB-C"
+  battery = "1200 mAh"
+  price = "Pris i november 2026: från 53,90 USD hos Elecrow"
+  pros = ["1,54-tums e-pappersskärm och GPS", "Batteri, antenn (RP-SMA) och bältesklämma ingår"]
+  cons = ["Drar mer än M1: upp till ca 340 mA, ca 34 µA i lågeffektläge"]
+  warnings = ["Levereras med Meshtastic förinstallerat; MeshCore flashar du själv"]
+  sources = [{ name = "Elecrow, ThinkNode M5", url = "https://www.elecrow.com/thinknode-m5-meshtastic-lora-signal-transceiver-esp32-s3-1-54-screen-gps-function.html" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "thinknode-m5.webp", alt = "Elecrow ThinkNode M5, en svart handenhet med antenn och e-pappersskärm" }
 
 [[repeater]]
   name = "Seeed XIAO nRF52840 & Wio-SX1262 Kit"
@@ -197,6 +269,7 @@
   cons = ["Tillverkaren anger inte vilket läge 20 µA gäller"]
   warnings = ["MeshCore FAQ: ställ in 10 dBm (set tx 10) för cirka 22 dBm ut; 22 dBm ger cirka 28 dBm (0,5–0,6 W)", "MeshCore FAQ: fel effektinställning kan skada radion permanent"]
   sources = [{ name = "Heltec produktsida", url = "https://heltec.org/project/wifi-lora-32-v4/" }, { name = "MeshCore FAQ 7.7 (TX power for Heltec V4)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-v4.png", alt = "Heltec WiFi LoRa 32 V4, ett svart kretskort med USB-C-kontakt" }
 
 [[repeater]]
   name = "RAK WisBlock Meshtastic Starter Kit (RAK4631)"

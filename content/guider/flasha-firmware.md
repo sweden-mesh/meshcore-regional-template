@@ -42,9 +42,9 @@ Din egen radio, den du parar med appen:
 ### Repeater
 
 1. I [webbflashern]({{< param "firmware.flasher" >}}): välj din radio och **Repeater**.
-2. Ska repeatern också visa på kartan vad den hör, välj en **Observer**-firmware i stället. Den
-   kommer från [MeshCore Observer-projektet](https://github.com/agessaman/MeshCore) och behöver ett
-   kort med wifi; se [Din repeater på kartan](../visa-pa-kartan/).
+2. Ska repeatern också visa på kartan vad den hör, flasha **Observer**-firmware i stället, från
+   [MeshCore Observer-projektets flasher](https://observer.gessaman.com/). Den behöver ett kort med
+   wifi; se [Kartan och observatörer](../visa-pa-kartan/).
 3. Webbflashern har ingen separat strömsnål firmware. Ska repeatern gå på batteri eller sol slår du på
    strömsparläget efter flashningen; se [Bygg en repeater](../bygg-en-repeater/#spara-ström).
 

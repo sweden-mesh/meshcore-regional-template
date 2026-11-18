@@ -528,7 +528,7 @@ other = "Övrigt"
 [wz_obs]
 other = "Observatör"
 [wz_obs_help]
-other = "En observatör rapporterar det repeatern hör till kartan via wifi. Den behöver ett kort med wifi (ESP32) och Observer-firmware. Mer i [Din repeater på kartan]({{ .Link }})."
+other = "En observatör rapporterar det repeatern hör till kartan via wifi. Den behöver ett kort med wifi (ESP32) och Observer-firmware. Mer i [Kartan och observatörer]({{ .Link }})."
 [wz_obs_on]
 other = "Den här repeatern är en observatör"
 [wz_obs_ssid]
@@ -1322,3 +1322,9 @@ other = "Tar emot över internet."
 other = "Kartan"
 [diagram_observer_map_note]
 other = "Visar noder och vägar."
+[iata_county]
+other = "Län"
+[iata_region]
+other = "Region (scope)"
+[iata_code]
+other = "IATA-kod för kartan"

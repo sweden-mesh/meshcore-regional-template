@@ -1,7 +1,7 @@
 ---
 title: "Skaffa hårdvara"
 seoTitle: "Vilken MeshCore-radio ska jag köpa?"
-description: "Vilken MeshCore-radio ska du köpa? En companion att bära med dig, en repeater som gör nätet större och en antenn för 868 MHz, med butiker och priser i kronor."
+description: "Vilken MeshCore-radio ska du köpa? Companion, repeater och antenn för 868 MHz, butiker och priser i kronor, och modellerna jämförda: chip, sändeffekt och batteri."
 weight: 14
 group: start
 date: 2026-11-12
@@ -65,8 +65,58 @@ Färdiga enheter
 > För en **companion** räcker nästan vilket kort som helst. För en **repeater** på batteri eller
 > sol, välj nRF52; för en repeater som också ska rapportera till kartan, välj ESP32 med wifi.
 
+## Modellerna i jämförelse
+
+Alla modellerna nedan finns i MeshCores officiella webbflasher [^flasher]. Sändeffekten är
+tillverkarens uppgift; ett streck betyder att tillverkaren inte anger den, eller att vi inte har
+kunnat läsa den.
+
+| Modell | Chip | Sändeffekt | Batteri och tålighet |
+| --- | --- | --- | --- |
+| Heltec V3 | ESP32-S3 | 21 ± 1 dBm [^v3] | – |
+| Heltec V4 | ESP32-S3 | 28 ± 1 dBm [^v4] | solingång 4,7–6 V [^v4] |
+| Heltec T114 | nRF52840 | 21 ± 1 dBm [^t114] | – |
+| RAK4631 (WisBlock, WisMesh) | nRF52840 | 22 dBm [^rak] | – |
+| Seeed T1000-E | nRF52840 | – | 700 mAh, IP65 [^t1000e] |
+| Seeed Wio Tracker L1 Pro | nRF52840 | – | 2 000 mAh, solingång 5 V [^l1] |
+| LilyGO T-Deck | ESP32 [^flasher] | – | – |
+
+| Modell | Bäst till |
+| --- | --- |
+| Heltec V3, V4 | repeater på nätström, observatör (wifi) |
+| Heltec T114, RAK4631 | repeater på batteri eller sol, companion |
+| Seeed T1000-E, Wio Tracker L1 Pro | companion i fickan |
+| LilyGO T-Deck | meddelanden utan telefon, med tangentbord |
+
+> [!WARNING] Heltec V4 sänder starkare än inställningen
+> Kortet har ett effektsteg efter radiokretsen: `set tx 22` ger cirka 28 dBm, över gränsen med en
+> vanlig antenn. MeshCores FAQ anger 10 dBm i appen för 22 dBm ut [^faq]. Räkna ut din antenns
+> värde i [MeshCore-inställningar i Sverige](../radioinstallningar/#sändeffekt-och-antenn).
+
+> [!NOTE]- ESP32 eller nRF52?
+> ESP32-korten har wifi, och det behövs för en observatör som skickar det den hör till kartan; se
+> [Kartan och observatörer](../visa-pa-kartan/). nRF52-korten saknar wifi men är byggda för låg
+> förbrukning, enligt tillverkarnas egna siffror: Heltec T114 drar cirka 11 µA i djupsömn och cirka
+> 9 mA aktiv med GPS och skärm avstängda [^t114], och RAK4631 2,0 µA i sömn [^rak]. Därför väljer
+> man nRF52 till en repeater på sol, där varje milliampere räknas; se [Solnoder](../solnoder/).
+> Någon direkt jämförelse mellan de två chipfamiljerna i MeshCore har vi inte hittat.
+>
+> T-Deck kan också köra MeshCore utan telefon. Den firmwaren är gratis, men djupare kartzoom och
+> fjärradministration låses upp för 10 dollar per enhet [^faq].
+
 ## Nästa steg
 
-- [Flasha firmware](../flasha-firmware/) på kortet.
+- [Välj och flasha firmware](../flasha-firmware/) på kortet.
 - [Kom igång med en companion](../companion/), sedan [Första meddelandet](../forsta-meddelandet/).
 - [Bygg en repeater](../bygg-en-repeater/) och [Sätt upp en repeater](../repeater/).
+
+## Källor
+
+[^flasher]: MeshCore, [webbflasherns enhetslista](https://flasher.meshcore.io/config.json), läst 18 november 2026.
+[^v3]: Heltec, [WiFi LoRa 32 V3](https://heltec.org/project/wifi-lora-32-v3/).
+[^v4]: Heltec, [WiFi LoRa 32 V4](https://heltec.org/project/wifi-lora-32-v4/), 868 MHz.
+[^t114]: Heltec, [Mesh Node T114](https://heltec.org/project/mesh-node-t114/).
+[^rak]: RAKwireless, [RAK4631 datasheet](https://docs.rakwireless.com/product-categories/wisblock/rak4631/datasheet/).
+[^t1000e]: Seeed Studio, [SenseCAP Card Tracker T1000-E](https://www.seeedstudio.com/SenseCAP-Card-Tracker-T1000-E-for-Meshtastic-p-5913.html).
+[^l1]: Seeed Studio, [Wio Tracker L1 Pro](https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html).
+[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md), 4.9 och 7.7.

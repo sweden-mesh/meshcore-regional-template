@@ -15,9 +15,9 @@
   {{- range $it := $items }}
     <tr>
       <th scope="row" class="hw-product">
-        {{- with .image }}{{ with resources.Get (print "images/hardware/" .file) }}
+        {{- with .image }}{{ $alt := .alt | default $it.name }}{{ with resources.Get (print "images/hardware/" .file) }}
           {{- $thumb := .Fit "320x240 webp q80" }}{{ $big := .Fit "1200x900 webp q82" }}
-        <button type="button" class="hw-thumb" data-full="{{ $big.RelPermalink }}" data-w="{{ $big.Width }}" data-h="{{ $big.Height }}" aria-label="{{ T "hw_bigger" }}"><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $it.name }}" loading="lazy"></button>
+        <button type="button" class="hw-thumb" data-full="{{ $big.RelPermalink }}" data-w="{{ $big.Width }}" data-h="{{ $big.Height }}" aria-label="{{ T "hw_bigger" }}"><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $alt }}" loading="lazy"></button>
         {{- end }}{{ end }}
         <a class="hw-name ext" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
         <span class="hw-maker">{{ if .makerUrl }}<a href="{{ .makerUrl }}" class="ext" target="_blank" rel="noopener">{{ .maker }}</a>{{ else }}{{ .maker }}{{ end }} · {{ .type }}</span>

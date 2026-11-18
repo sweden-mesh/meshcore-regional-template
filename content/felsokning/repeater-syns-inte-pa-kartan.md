@@ -29,7 +29,7 @@ neighbors
 2. Skicka en advert direkt: `advert`.
 3. Vänta några minuter och ladda om kartan.
 
-Se också [Din repeater på kartan](../../guider/visa-pa-kartan/).
+Se också [Kartan och observatörer](../../guider/visa-pa-kartan/).
 
 ## Så vet du att det fungerar
 
