@@ -1,0 +1,9 @@
+{{- /* assets/data/tatorter.json as a list of dicts (name, lan, kommun, bef, lat, lng, r: the radius of a circle of its area, km), largest first.
+  Call it cached: partialCached "tatorter-rows.html" . "tatorter" */ -}}
+{{- $rows := slice -}}
+{{- with resources.Get "data/tatorter.json" -}}
+  {{- range (transform.Unmarshal .Content).rows -}}
+    {{- $rows = $rows | append (dict "name" (index . 0) "lan" (index . 1) "kommun" (index . 2) "bef" (int (index . 3)) "lat" (float (index . 4)) "lng" (float (index . 5)) "r" (float (index . 6))) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $rows -}}

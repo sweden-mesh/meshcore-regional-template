@@ -38,6 +38,16 @@ check kalmar/index.html 'Exempelklubben</a></li><li><a class="button button-seco
 check kalmar/index.html '<h2 id=grupper>Gemenskap</h2>' "county page: Fler grupper leads to the groups column"
 if grep -q 'hero-groups' "$P/skåne/index.html"; then echo "FAIL county page: a group list without groups"; fail=1; else echo "ok   county page: no community, no button"; fi
 check index.html "<h2>Nätet i Sverige</h2>" "Sverige: the network column (B-318)"
+# B-362: the new-repeaters page from data/new_repeaters.json: a section per county, the nearest town, a
+# coastal node outside the simplified outline placed by its nearest town, the foreign one left out.
+check nya-repeatrar/index.html '<h2 id=lan-08>Kalmar län <span class=muted>(2)</span></h2>' "new repeaters: a section per county with its count"
+check nya-repeatrar/index.html 'SE08-Exempel-Slottet</strong> <span class=node-short>AA11BB</span><br><span class=muted>i Kalmar · först hörd 2026-11-18 · observatör · firmware 1.17.0 · Heltec V4</span>' "new repeaters: in a town, observer, firmware and hardware"
+check nya-repeatrar/index.html '2 km NV om Drag · först hörd 2026-11-17 · firmware 1.14.0 eller senare' "new repeaters: distance and direction from the nearest town"
+check nya-repeatrar/index.html '<h2 id=utan-position>Utan position' "new repeaters: nodes without a position last"
+if grep -q 'DK-Utomlands' "$P/nya-repeatrar/index.html"; then echo "FAIL new repeaters: a foreign node listed"; fail=1; else echo "ok   new repeaters: a foreign node left out"; fi
+check kalmar/index.html '<a href=/nya-repeatrar/#lan-08>Nya repeatrar i länet</a> <span class=muted>2 den senaste veckan</span>' "county page: Nya i länet with its count (B-362)"
+check index.html '<li><a href=/nya-repeatrar/>Nya repeatrar</a></li>' "Sverige: links the new-repeaters page (B-362)"
+check sitemap.xml '<loc>https://national.example.org/nya-repeatrar/</loc><lastmod>2026-11-19</lastmod>' "sitemap: the new-repeaters page dated by its data (B-362)"
 check index.html "<h2>I Sverige</h2><p>Sidorna här gäller hela landet" "Sverige: the pages column (B-318)"
 check index.html "<h2>Gemenskap</h2><p>Här finns de som använder MeshCore i hela landet" "Sverige: the community column with the counties' groups (B-318)"
 check index.html "i nätet.</p><p>Hosta er egna lokala sida med <a href=https://github.com/sweden-mesh/meshcore-regional-template" "Sverige: the template paragraph between the community text and its links (B-345)"

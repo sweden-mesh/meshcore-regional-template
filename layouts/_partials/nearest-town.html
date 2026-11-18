@@ -1,0 +1,27 @@
+{{- /* The nearest SCB tätort to a position (assets/data/tatorter.json), with the distance from its edge
+  (its centre less the radius of a circle of its area) and the direction from its centre, as a phrase:
+  "3 km NV om Habo", or "i Habo" within its area or less than a kilometre outside it.
+  Distances on a flat-earth approximation, good to well under a kilometre at these ranges (B-362).
+  Usage: partial "nearest-town.html" (dict "lat" 57.9 "lng" 14.1) → dict name, lan (the town's county), km, dir, text; false
+  without a position or the file. */ -}}
+{{- $out := false -}}
+{{- $rows := partialCached "tatorter-rows.html" . "tatorter" -}}
+{{- if and $rows .lat .lng -}}
+  {{- $lat := float .lat }}{{ $lng := float .lng -}}
+  {{- $k := math.Cos (math.ToRadians $lat) -}}
+  {{- $best := false }}{{ $bd := 1e9 -}}
+  {{- range $rows -}}
+    {{- $dx := mul (sub $lng .lng) (mul $k 111.32) }}{{ $dy := mul (sub $lat .lat) 110.57 -}}
+    {{- $d := sub (math.Sqrt (add (mul $dx $dx) (mul $dy $dy))) .r }}{{ if lt $d 0 }}{{ $d = 0.0 }}{{ end -}}
+    {{- if lt $d $bd }}{{ $bd = $d }}{{ $best = dict "name" .name "lan" .lan "dx" $dx "dy" $dy }}{{ end -}}
+  {{- end -}}
+  {{- with $best -}}
+    {{- $km := $bd -}}
+    {{- $deg := math.ToDegrees (math.Atan2 .dx .dy) }}{{ if lt $deg 0 }}{{ $deg = add $deg 360 }}{{ end -}}
+    {{- $dir := index (slice "N" "NO" "O" "SO" "S" "SV" "V" "NV") (mod (int (math.Round (div $deg 45))) 8) -}}
+    {{- $text := T "town_in" (dict "Town" .name) -}}
+    {{- if ge $km 1.0 }}{{ $text = T "town_near" (dict "Km" (int (math.Round $km)) "Dir" $dir "Town" .name) }}{{ end -}}
+    {{- $out = dict "name" .name "lan" .lan "km" $km "dir" $dir "text" $text -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

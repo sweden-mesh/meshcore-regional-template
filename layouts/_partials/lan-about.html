@@ -8,6 +8,11 @@
   {{- $net := printf "<h2>%s</h2><p>%s</p>" (T "lan_net_title" (dict "Name" $c.name)) (T "lan_net_text" (dict "Name" $c.name "Scope" $scope "Test" (printf "`%s`" $c.test)) | markdownify) -}}
   {{- with $c.text }}{{ $net = printf "%s<blockquote class=\"lan-text\"><p>%s</p>%s</blockquote>" $net (. | htmlEscape) (cond (ne ($c.text_by | default "") "") (printf "<p class=\"muted\">%s</p>" (T "lan_text_by" (dict "By" ($c.text_by | htmlEscape)))) "") }}{{ end -}}
   {{- $net = printf "%s%s" $net (partial "lan-towns.html" (dict "page" $ "scb" $c.scb)) -}}
+  {{- /* "Nya i länet" (B-362): the county's section on the new-repeaters page, with its count. */ -}}
+  {{- with site.GetPage "/nya-repeatrar" -}}
+    {{- $n := 0 }}{{ range partialCached "new-repeaters-groups.html" $ "new-repeaters" }}{{ if eq .scb $c.scb }}{{ $n = len .nodes }}{{ end }}{{ end -}}
+    {{- $net = printf "%s<p><a href=\"%s%s\">%s</a> <span class=\"muted\">%s</span></p>" $net .RelPermalink (cond (gt $n 0) (printf "#lan-%s" $c.scb) "") (T "nya_i_lanet") (T "nya_i_lanet_count" $n) -}}
+  {{- end -}}
   {{- $net = printf "%s<p class=\"lan-checked\">%s</p>" $net (T "lan_checked" (dict "Date" (time.Format "2006-01-02" $c.checked))) -}}
   {{- $cols = $cols | append $net -}}
   {{- $links := slice -}}
@@ -38,7 +43,7 @@
   {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul class=\"lan-county-list\">%s</ul>" (T "lan_net_title" (dict "Name" "Sverige")) (T "lan_se_net_text" (dict "URL" $lanURL) | markdownify) (delimit $cl "")) -}}
   {{- $links := slice -}}
   {{- with site.GetPage "/lan" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .Title) }}{{ end -}}
-  {{- range $p := slice "/guider/regioner" "/guider/kanaler" "/guider/forsta-meddelandet" "/guider/nar-natet-gar-ner" -}}
+  {{- range $p := slice "/nya-repeatrar" "/guider/regioner" "/guider/kanaler" "/guider/forsta-meddelandet" "/guider/nar-natet-gar-ner" -}}
     {{- with site.GetPage $p }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
   {{- end -}}
   {{- with $links }}{{ $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "lan_local_title" (dict "Short" "Sverige")) (T "lan_se_local_intro") (delimit . "")) }}{{ end -}}

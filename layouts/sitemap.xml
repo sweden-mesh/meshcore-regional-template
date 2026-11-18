@@ -9,7 +9,12 @@
     {{- if and .Permalink (not .Params.noindex) }}
   <url>
     <loc>{{ .Permalink }}</loc>
-    {{- if not .Lastmod.IsZero }}
+    {{- /* A page built from data the build fetches (front matter lastmodData: a data file whose `at` is
+           when it was made, e.g. new_repeaters, B-362) changes with that data, not with its text. */ -}}
+    {{- $at := "" }}{{ with .Params.lastmodData }}{{ with index hugo.Data . }}{{ $at = .at | default "" }}{{ end }}{{ end -}}
+    {{- if $at }}
+    <lastmod>{{ (time.AsTime $at).UTC.Format "2006-01-02" }}</lastmod>
+    {{- else if not .Lastmod.IsZero }}
     <lastmod>{{ .Lastmod.Format "2006-01-02" }}</lastmod>
     {{- end }}
   </url>

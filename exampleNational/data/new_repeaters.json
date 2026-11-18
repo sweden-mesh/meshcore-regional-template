@@ -1,0 +1,10 @@
+{
+ "at": "2026-11-19T06:00:00Z",
+ "windowDays": 7,
+ "nodes": [
+  { "publicKey": "aa11bb22cc33dd44ee55ff6600112233445566778899aabbccddeeff00112233", "name": "SE08-Exempel-Slottet", "lat": 56.6577, "lng": 16.3591, "firstSeen": 1795003200000, "isObserver": true, "possiblyForeign": false, "iatas": ["KLR"], "firmware": "1.17.0", "firmwareMin": "1.14.0", "hardware": "Heltec V4" },
+  { "publicKey": "bb22cc33dd44ee55ff6600112233445566778899aabbccddeeff001122334455", "name": "SE08-Exempel-Norr", "lat": 56.80, "lng": 16.40, "firstSeen": 1794916800000, "isObserver": false, "possiblyForeign": false, "iatas": ["KLR"], "firmware": "", "firmwareMin": "1.14.0", "hardware": "" },
+  { "publicKey": "cc33dd44ee55ff6600112233445566778899aabbccddeeff00112233445566aa", "name": "Utan-plats", "lat": null, "lng": null, "firstSeen": 1794830400000, "isObserver": false, "possiblyForeign": false, "iatas": ["KLR"], "firmware": "", "firmwareMin": "", "hardware": "" },
+  { "publicKey": "dd44ee55ff6600112233445566778899aabbccddeeff00112233445566aabbcc", "name": "DK-Utomlands", "lat": 55.67, "lng": 12.57, "firstSeen": 1794830400000, "isObserver": false, "possiblyForeign": true, "iatas": ["MMX"], "firmware": "", "firmwareMin": "", "hardware": "" }
+ ]
+}

@@ -1,0 +1,49 @@
+{{- /* "Nya repeatrar" (B-362): the repeaters first heard in the last days, from data/new_repeaters.json,
+  which the site's build writes before Hugo runs (meshcoresverige: scripts/new-repeaters.mjs; fields:
+  at, windowDays, nodes[publicKey, name, lat, lng, firstSeen, isObserver, possiblyForeign, iatas,
+  firmware, firmwareMin, hardware]). Rendered into the HTML, newest first, one section per county
+  (national mode; anchors #lan-<scb>, linked from each county page as "Nya i länet") with the nearest
+  town, and a map of the same nodes. Only what the map already shows: the node's name and its
+  advertised position. Usage: {{< new-repeaters >}} */ -}}
+{{- $d := hugo.Data.new_repeaters -}}
+{{- $nodes := slice }}{{ with $d }}{{ $nodes = .nodes | default slice }}{{ end -}}
+{{- $days := 7 }}{{ with $d }}{{ with .windowDays }}{{ $days = . }}{{ end }}{{ end -}}
+{{- $groups := partialCached "new-repeaters-groups.html" . "new-repeaters" -}}
+{{- $total := 0 }}{{ range $groups }}{{ $total = add $total (len .nodes) }}{{ end -}}
+<div class="new-repeaters">
+{{- if not $d }}
+  <p>{{ T "nr_no_data" }}</p>
+{{- else }}
+  <p>{{ T "nr_summary" (dict "Count" $total "Days" $days "At" ((time.AsTime $d.at).UTC.Format "2006-01-02 15:04 MST")) }}</p>
+  {{- /* The map: the same nodes, drawn by js/map/newmap.js on the site's basemap. */ -}}
+  {{- $pts := slice }}{{ range $groups }}{{ range .nodes }}{{ if and .lat .lng }}{{ $pts = $pts | append (dict "publicKey" .publicKey "name" .name "lat" .lat "lng" .lng "isObserver" .isObserver "nodeType" 2 "first" ((time.AsTime (int (div .firstSeen 1000))).UTC.Format "2006-01-02")) }}{{ end }}{{ end }}{{ end -}}
+  {{- with $pts }}
+  {{- $m := site.Params.map }}{{ $ml := printf "lib/maplibre-gl/%s/" $m.maplibre }}{{ $r := site.Params.region }}
+  <div class="map map-new" role="region" aria-label="{{ T "nr_map" }}"
+       data-maplibre="{{ printf "%smaplibre-gl.mjs" $ml | relURL }}" data-maplibre-css="{{ printf "%smaplibre-gl.css" $ml | relURL }}"
+       data-style-light="{{ $m.style_light }}" data-style-dark="{{ $m.style_dark }}"
+       data-center="{{ $r.center | jsonify }}" data-zoom="{{ $r.zoom }}"
+       data-nodes="{{ . | jsonify }}" data-first="{{ T "nr_first" }}" data-observer="{{ T "observer" }}">
+    <noscript>{{ T "map_noscript" }}</noscript>
+  </div>
+  {{ with resources.Get "js/map/newmap.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>{{ end }}
+  {{- end }}
+  {{- range $groups }}
+  <h2 id="{{ .id }}">{{ .title }} <span class="muted">({{ len .nodes }})</span></h2>
+  <ul class="nr-list">
+    {{- range .nodes }}
+    {{- $town := partial "nearest-town.html" (dict "lat" .lat "lng" .lng) -}}
+    {{- $facts := slice -}}
+    {{- with $town }}{{ $facts = $facts | append .text }}{{ else }}{{ with .iatas }}{{ $facts = $facts | append (T "nr_area" (dict "Areas" (delimit . ", "))) }}{{ end }}{{ end -}}
+    {{- $facts = $facts | append (T "nr_first_on" (dict "Date" ((time.AsTime (int (div .firstSeen 1000))).UTC.Format "2006-01-02"))) -}}
+    {{- if .isObserver }}{{ $facts = $facts | append (T "observer") }}{{ end -}}
+    {{- if .firmware }}{{ $facts = $facts | append (T "nr_firmware" (dict "V" .firmware)) }}{{ else if .firmwareMin }}{{ $facts = $facts | append (T "nr_firmware_min" (dict "V" .firmwareMin)) }}{{ end -}}
+    {{- with .hardware }}{{ $facts = $facts | append . }}{{ end }}
+    <li><strong>{{ .name | default (T "mt_unnamed") }}</strong> <span class="node-short">{{ upper (substr .publicKey 0 6) }}</span><br><span class="muted">{{ delimit $facts " · " }}</span></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- if not $groups }}<p>{{ T "nr_none" (dict "Days" $days) }}</p>{{ end }}
+  <p class="muted nr-note">{{ T "nr_note" | markdownify }}</p>
+{{- end }}
+</div>
