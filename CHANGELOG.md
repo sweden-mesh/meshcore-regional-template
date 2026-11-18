@@ -4,6 +4,37 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.65.0 — 2026-11-18
+
+- **Map: a stronger transmit flash with a white blurred centre** (B-349): halo, core and ring larger
+  and brighter, and a white blurred centre (`flow-flash-white`) drawn above every node layer, kept on
+  top after a theme switch or redraw (`needsRaise`, unit-tested).
+- **Map: muted links in live traffic** (B-350): while Live-trafik runs, links with nothing selected are
+  drawn at 0.35 of their opacity (`linkStyle` `muted`, `MUTE`); a selected node's own links keep full
+  strength. When a repeater transmits, every drawn link of it flashes in its own colour brightened
+  toward white (`linkEnds`, `brighten`); with the links off, its neighbours in white as before.
+- **Map: the soft Sverige overview somewhat stronger on the light basemap** (B-352): 0.3 for nodes and
+  0.15 for links below zoom 7; the dark map keeps 0.12/0.06 (`softLevels`).
+- **"Region" in the header** (B-351): the county button reads "Välj region", its label "Region: …", the
+  dialog "Välj din region" (i18n `lan_pick`, `lan_toggle`, `lan_modal_title`, sv and en). County names
+  are unchanged.
+- **Area pages** (B-360, national mode): a page with an `area` key (SCB code) is listed on /lan/
+  ("Söker du en stad eller ett område?", i18n `lan_areas`) and has no pager; shortcode
+  `{{< lan-area "14" … >}}` lists each county's page, region and test channel. Aliases with å/ä/ö are
+  written percent-encoded in `_redirects`, and `params.redirects` ([[from, to], …]) adds more 301s.
+- **New guide: Room server** (CONTENT-SV-24): what it is, when it fits, set-up, login, the known
+  limits, alternatives; linked from the glossary, and the note on Vad är MeshCore? matches it.
+- **No layout shifts from late content** (UX-SV-15): the wizards' county selector is in the page from
+  the start and shown before paint when no county is chosen (`@media (scripting: enabled)`), the solar
+  calculator hidden before paint in that case (CLS 0.114 → 0 at 390 px); the packet list under the map
+  is in the layout from the start with a fixed height and "Väntar på första paketet…" (front page CLS
+  0.095 → 0 at 390 px); a metric-matched mono fallback ("Plex Mono Fallback") and no
+  `font-size-adjust` on code.
+- **Header links at least 24 px tall** (UX-SV-16), header height unchanged.
+- Content: titles within 60 and descriptions within 70–160 characters on 16 pages (SEO-SV-17); the
+  solar guide's LiFePO4 datasheet link moved off a dead staging host (SEO-SV-18).
+- No inline script changes: **no CSP hash changes**. Map script changes: `COMPARE_BASE` moved to v0.65.0.
+
 ## v0.64.1 — 2026-11-18
 
 - **Map: the national overview drawn soft** (B-347, operator 2026-11-18): the look the operator saw
