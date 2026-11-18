@@ -4,7 +4,7 @@ description: "Hör du andra men ingen svarar dig? Oftast når repeatern dig men 
 category: radio
 weight: 15
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 ## Troliga orsaker

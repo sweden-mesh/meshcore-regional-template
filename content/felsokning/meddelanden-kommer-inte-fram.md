@@ -5,7 +5,7 @@ description: "Kommer meddelanden inte fram, eller bara ibland? Oftast hör ingen
 category: companion
 weight: 20
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 ## Troliga orsaker

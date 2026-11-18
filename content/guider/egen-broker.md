@@ -5,7 +5,7 @@ description: "Du behöver ingen egen broker: den gemensamma fungerar för alla r
 weight: 85
 group: regioner
 date: 2026-11-16
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 **Du behöver ingen egen: den gemensamma brokern fungerar.** Brokern

@@ -10,7 +10,7 @@ source:
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad; flashningen i en egen guide; regionens inställningar från sidans parametrar; integritetsråd om position tillagt."
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 En **companion** är din personliga radio. Du skriver i MeshCore-appen, och radion skickar och

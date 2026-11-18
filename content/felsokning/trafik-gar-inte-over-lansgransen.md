@@ -4,7 +4,7 @@ description: "Når meddelanden i länets kanal inte grannlänet? Det är oftast 
 category: regioner
 weight: 30
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 ## Troliga orsaker

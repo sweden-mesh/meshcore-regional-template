@@ -5,7 +5,7 @@ description: "Public, hashtag-kanaler och privata kanaler: vem som kan läsa vad
 weight: 80
 group: regioner
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-17
 ---
 
 En **kanal** är ett gemensamt rum: alla som har kanalens nyckel kan läsa och skriva där. Utöver

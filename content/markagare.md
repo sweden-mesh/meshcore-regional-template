@@ -4,6 +4,7 @@ linkTitle: "Till markägare"
 description: "Någon vill sätta en liten repeater på ditt tak, din mast eller din mark. Vad det är, hur mycket ström och radio det handlar om, vem som äger och ansvarar, och hur den tas bort."
 lead: false
 date: 2026-11-17
+lastmod: 2026-11-17
 ---
 
 Den här sidan är till dig som äger ett hus, en lada, en mast eller en höjd där någon vill sätta

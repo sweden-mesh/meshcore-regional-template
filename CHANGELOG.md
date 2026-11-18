@@ -4,6 +4,26 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.51.0 — 2026-11-18
+
+- **The county dialog always closes** (UX-SV-1, SEO-SV-2, operator decision UX-SV-D1): national mode still
+  opens it by itself on a first visit, but it now always has a × button and closes with Esc or a click
+  outside. Closed without a choice, the page stays on Sverige and the dialog does not open by itself again
+  in that visit (sessionStorage `lan-skip`). The map's column is laid out before the county map is
+  fetched, so nothing moves when it arrives: first-visit CLS on a guide at 1280 px 0.322 → 0.000
+  (headless, map data delayed 600 ms). Below 48em, "Sverige (hela landet)" comes before the county list.
+- **A county with its own site** (UX-SV-2): its button shows "↗ domain" under the name (regional sites'
+  picker too). Picked on a shared page, the choice is saved and the visitor stays, with a line "<län> har
+  en egen MeshCore-sida med länets värden: domain" where the county note was (shown before paint by an
+  inline `<style>` rule on `html[data-lan]`, national only; no script, so **no CSP hash changes**); from
+  the front page or a county page it goes to that site as before. New text `lan_own_site`.
+- **County subpages noindex** (SEO-SV-3): the three generated pages per county (`kom-igang`,
+  `ingen-svar-pa-test`, `fragor`) are `noindex, follow` and out of the sitemap; the county front pages
+  stay indexed.
+- **Kom igång step 7** (UX-SV-3): a county without a chat channel read "Säg hej, eller i …"; now "Säg
+  hej i …".
+- README: the national site is the reference copy of the shared content; a regional site forks it.
+
 ## v0.50.0 — 2026-11-18
 
 - **County pages count only the county** (B-330): national mode's county front page counted every node
