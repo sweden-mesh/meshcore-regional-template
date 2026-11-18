@@ -24,6 +24,17 @@ export function summarize(nodes, breakdown, isOutside = null) {
   return { repeaters, online, packets, repeatersOut, onlineOut };
 }
 
+// The newest lastSeen (ms) among the nodes summarize counts in the area (not foreign, not outside);
+// 0 when there is none. Feeds "Senast hörd nod" under the counts (CONTENT-SV-30).
+export function lastHeard(nodes, isOutside = null) {
+  let last = 0;
+  for (const n of nodes || []) {
+    if (n.possiblyForeign || (isOutside && placed(n) && isOutside(n))) continue;
+    if (Number(n.lastSeen) > last) last = Number(n.lastSeen);
+  }
+  return last;
+}
+
 export function formatCount(n) {
   if (!Number.isFinite(n)) return "–";
   if (n >= 10000) return `${Math.round(n / 1000)}k`;
@@ -55,6 +66,13 @@ export async function fillStats(el, client, iatas) {
     const n = s[`${target.dataset.statOut}Out`] || 0;
     target.textContent = (el.dataset.outText || "+ {n}").replace("{n}", formatCount(n));
     target.hidden = !isOutside || n === 0;
+  }
+  // The build's "Senast hörd nod …" line, now from the live list, in the visitor's time zone.
+  const at = el.querySelector("[data-stat-last]");
+  const last = lastHeard(nodes, isOutside);
+  if (at && last) {
+    const t = new Date(last).toLocaleString("sv-SE", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+    at.textContent = at.dataset.statLast.replace("{t}", t);
   }
   const badge = document.getElementById("online-badge");
   if (badge && s.repeaters > 0) badge.hidden = false;

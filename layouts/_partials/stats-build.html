@@ -1,0 +1,42 @@
+{{- /* The "Nätet" card's numbers as of the build (CONTENT-SV-30), so the page carries them without
+  JavaScript and search engines read them; js/stats/stats.js replaces them with live ones. Counted as
+  stats.js counts: the snapshot's own nodes (not seeded, not possibly foreign), repeaters and observers,
+  and on a county's page those outside the county apart. `last` is the newest lastSeen among them (ms),
+  `packets` the map area's packets in the last 24 h. Empty dict without a Beacon snapshot.
+  Usage: partial "stats-build.html" . (a page). */ -}}
+{{- $out := dict -}}
+{{- $snapKey := "snapshot" }}{{ if site.Params.national }}{{ with partial "lan-page.html" . }}{{ $snapKey = printf "snapshot-%s" .scb }}{{ end }}{{ end -}}
+{{- $snap := partialCached "beacon-snapshot.html" . $snapKey -}}
+{{- if eq $snap.source "beacon" -}}
+  {{- $own := slice }}{{ range $snap.nodes }}{{ if and (not .seeded) (not .possiblyForeign) }}{{ $own = $own | append . }}{{ end }}{{ end -}}
+  {{- $in := $own -}}
+  {{- $lan := false }}{{ if site.Params.national }}{{ $lan = partial "lan-page.html" . }}{{ end -}}
+  {{- with $lan }}{{ $in = partial "lan-inside.html" (dict "nodes" $own "scb" .scb) }}{{ end -}}
+  {{- $inKeys := dict }}{{ range $in }}{{ $inKeys = merge $inKeys (dict .publicKey true) }}{{ end -}}
+  {{- $rep := 0 }}{{ $obs := 0 }}{{ $repOut := 0 }}{{ $obsOut := 0 }}{{ $last := 0.0 -}}
+  {{- range $own -}}
+    {{- if index $inKeys .publicKey -}}
+      {{- if eq .nodeType 2 }}{{ $rep = add $rep 1 }}{{ end -}}
+      {{- if .isObserver }}{{ $obs = add $obs 1 }}{{ end -}}
+      {{- if gt (float (.lastSeen | default 0)) $last }}{{ $last = float .lastSeen }}{{ end -}}
+    {{- else -}}
+      {{- if eq .nodeType 2 }}{{ $repOut = add $repOut 1 }}{{ end -}}
+      {{- if .isObserver }}{{ $obsOut = add $obsOut 1 }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $packets := -1 -}}
+  {{- $base := strings.TrimSuffix "/" (site.Params.beacon.url | default "") -}}
+  {{- $iatas := (partial "region-of.html" .).iatas | default slice -}}
+  {{- if and $base $iatas -}}
+    {{- $u := printf "%s/api/v1/stats/payload-breakdown?iatas=%s" $base (delimit $iatas ",") -}}
+    {{- with try (resources.GetRemote $u (dict "key" (printf "breakdown-%s-%s" (md5 $u) (now.UTC.Format "2006010215")))) -}}
+      {{- with .Err }}{{ warnidf "stats-build" "Packet counts not fetched (%s)" . }}{{ else with .Value -}}
+        {{- if hasPrefix (strings.TrimSpace .Content) "[" -}}
+          {{- $packets = 0 }}{{ range (transform.Unmarshal (dict "format" "json") .Content) }}{{ $packets = add $packets (int (.count | default 0)) }}{{ end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $out = dict "repeaters" $rep "online" $obs "repeatersOut" (cond (and $lan (gt $repOut 0)) $repOut 0) "onlineOut" (cond (and $lan (gt $obsOut 0)) $obsOut 0) "last" $last "packets" $packets "at" $snap.at -}}
+{{- end -}}
+{{- return $out -}}

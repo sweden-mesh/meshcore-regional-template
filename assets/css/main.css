@@ -202,6 +202,7 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 .stat-grid dd { color: var(--accent); }
 .stat-grid div:nth-child(2) dd { color: var(--accent-2); }
 .stat-grid div:nth-child(3) dd { color: var(--fg); }
+.stat-at { margin: -.25rem 0 .75rem; font-size: .8rem; }
 .stat-grid div dd.stat-out { font-size: .75rem; font-weight: 400; color: var(--muted); order: 1; }
 .map-section { padding-top: 2rem; }
 /* The map breaks out of the content column: 80 % of the window, 10 % margin each side

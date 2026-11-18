@@ -75,6 +75,8 @@ other = "Observers"
 other = "+ {n} in neighbouring counties"
 [stat_packets]
 other = "Packets/day"
+[stat_last_heard]
+other = "Last node heard {{ .Last }}."
 # The name of a scrolling table region: "Tabell: Månad, Jan, Feb".
 [table]
 other = "Table"

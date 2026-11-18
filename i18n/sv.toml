@@ -71,6 +71,9 @@ other = "Observatörer"
 other = "+ {n} i grannlänen"
 [stat_packets]
 other = "Paket/dygn"
+# Under the "Nätet" card's numbers: when a node in the area was last heard, as of the build (CONTENT-SV-30).
+[stat_last_heard]
+other = "Senast hörd nod {{ .Last }}."
 # The name of a scrolling table region: "Tabell: Månad, Jan, Feb".
 [table]
 other = "Tabell"

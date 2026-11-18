@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { summarize, formatCount } from "../assets/js/stats/stats.js";
+import { summarize, formatCount, lastHeard } from "../assets/js/stats/stats.js";
 
 test("repeaters and observers are counted separately; a companion can be an observer", () => {
   const nodes = [
@@ -25,4 +25,14 @@ test("a county page counts nodes outside the county apart (B-330)", () => {
   ];
   const s = summarize(nodes, [], isOutside);
   assert.deepEqual(s, { repeaters: 2, online: 1, packets: 0, repeatersOut: 2, onlineOut: 1 });
+});
+test("lastHeard: the newest lastSeen in the area, leaving out foreign and outside nodes (CONTENT-SV-30)", () => {
+  const isOutside = (n) => n.lng > 10;
+  const nodes = [
+    { lastSeen: 100, lat: 57, lng: 9 }, { lastSeen: 500, lat: 57, lng: 11 }, { lastSeen: 400, possiblyForeign: true },
+    { lastSeen: 300 }, { lat: 57, lng: 9 },
+  ];
+  assert.equal(lastHeard(nodes, isOutside), 300);
+  assert.equal(lastHeard(nodes), 500);
+  assert.equal(lastHeard([]), 0);
 });
