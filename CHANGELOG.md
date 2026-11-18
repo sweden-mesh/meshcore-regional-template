@@ -4,6 +4,17 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.63.0 — 2026-11-18
+
+- **Kolla platsen med MeshMapper** (B-339): a new guide `/guider/kolla-platsen/` in the repeater group:
+  the Tools menu, Antenna Coverage step by step (27 dBm/500 mW ERP the most allowed, never 30 dBm/1 W),
+  reading the coverage map, Line of Sight, Scope Finder, Coverage Timeline and wardriving afterwards;
+  from MeshMapper's wiki in our own words, with three screenshots. Linked from Sätt upp en repeater.
+- New shortcode `{{</* screenshot src alt caption credit */>}}`: an image under `assets/`, served as
+  WebP at two widths with a caption.
+- No script changes: **no CSP hash changes**. Regional output changes (a new guide): `COMPARE_BASE`
+  moved to v0.63.0.
+
 ## v0.62.1 — 2026-11-18
 
 - `scripts/check-national-browser.mjs` matches a county value only as a whole token, so the Regioner

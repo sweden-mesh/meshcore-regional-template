@@ -37,6 +37,8 @@ Platsen betyder mer än sändeffekten. En bra repeaterplats har:
 Fri sikt är mer än en linje: radiovågorna behöver ett område runt linjen som är fritt från hinder,
 och det är brett på långa avstånd. Se [Antenner](../skaffa-hardvara/antenn/#fri-sikt-är-mer-än-en-linje).
 
+Vill du se ungefär hur långt en plats når innan du klättrar, se [Kolla platsen med MeshMapper](../kolla-platsen/).
+
 {{< region-photo "mount" >}}
 
 En repeater ska stå still. Nätets vägar bygger på att repeatrarna inte flyttar sig, så en

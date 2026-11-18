@@ -1,0 +1,16 @@
+{{- /* {{< screenshot src="images/guider/x.webp" alt="…" caption="…" credit="…" >}}: a screenshot from
+  the template's assets/, re-encoded as WebP (metadata dropped) at two widths, with a caption. */ -}}
+{{- $src := .Get "src" -}}
+{{- with resources.Get $src -}}
+{{- $w := cond (lt .Width 1000) .Width 1000 -}}{{- $s := .Resize (printf "%dx webp q80" (cond (lt .Width 640) .Width 640)) -}}{{- $l := .Resize (printf "%dx webp q80" $w) -}}
+<figure class="photo screenshot">
+  <img src="{{ $l.RelPermalink }}" srcset="{{ $s.RelPermalink }} {{ $s.Width }}w, {{ $l.RelPermalink }} {{ $l.Width }}w" sizes="(max-width: 44rem) 100vw, 40rem"
+       width="{{ $l.Width }}" height="{{ $l.Height }}" alt="{{ $.Get "alt" }}" loading="lazy" decoding="async">
+  {{- $cap := $.Get "caption" }}{{ $cr := $.Get "credit" }}
+  {{- if or $cap $cr }}
+  <figcaption>{{ with $cap }}{{ . | markdownify }}{{ end }}{{ if and $cap $cr }} · {{ end }}{{ with $cr }}{{ . }}{{ end }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+{{- errorf "screenshot: %s not found under assets/" $src -}}
+{{- end -}}
