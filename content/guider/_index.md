@@ -17,4 +17,4 @@ date: 2026-11-12
 lastmod: 2026-11-16
 ---
 
-Ny här? Börja med [Vad är MeshCore?](vad-ar-meshcore/). Radioamatör? Läs [För radioamatörer](for-radioamatorer/). Vill du bygga? Se [Bygg en repeater](bygg-en-repeater/). Krånglar något? Se [Felsökning](../felsokning/).
+Ny här? Börja med [Kom igång med MeshCore](../kom-igang/), fem steg till första meddelandet, och [Vad är MeshCore?](vad-ar-meshcore/). Radioamatör? Läs [För radioamatörer](for-radioamatorer/). Vill du bygga? Se [Bygg en repeater](bygg-en-repeater/). Krånglar något? Se [Felsökning](../felsokning/).
