@@ -4,6 +4,19 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.67.0 — 2026-11-18
+
+- **Map: "SE" toggle** (B-370): on a county's map (a county page in national mode, or a regional site
+  with `params.map.seIatas`) a button "SE" under fit and fullscreen shows every map area's nodes,
+  links and live traffic, as the Sverige map does (the soft overview and the dimmed borders follow),
+  without moving the camera; off goes back to the county, also without moving. Only the map changes;
+  `se=1` in the map's URL state. The live WebSocket is closed before the new subscription opens
+  (`switchFeed`), so a toggle never leaves two. Pure helpers in `js/map/sescope.js`, unit-tested.
+- **Snabbstart** (B-371..B-374): three short guides, `guider/snabbstart-companion`,
+  `guider/snabbstart-forsta-meddelandet` and `guider/snabbstart-repeater`, in a new group "Snabbstart"
+  above "Kom igång" on /guider/, linked from /kom-igang/.
+- CI: `COMPARE_BASE` moved to v0.67.0 (regional output changes on purpose: the new guides and the map).
+
 ## v0.66.0 — 2026-11-18
 
 - **New repeaters page** (B-362): the shortcode `{{< new-repeaters >}}` lists `data/new_repeaters.json`

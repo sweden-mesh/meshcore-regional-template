@@ -92,6 +92,8 @@
   style_light = "https://tiles.openfreemap.org/styles/liberty"
   style_dark = "https://tiles.openfreemap.org/styles/dark"
   companions = false         # true = also show companion nodes (handsets); their positions can be homes
+  # seIatas = ["BLE", "GOT"]   # the whole country's map areas: the map's "SE" toggle (B-370) shows them; unset = no toggle.
+                             # National mode needs none: a county page uses params.region.iatas.
 
 [params.beacon]
   url = "https://beacon.meshcoresverige.se"   # the shared national Beacon by default; a region may run its own; "" = no live data
