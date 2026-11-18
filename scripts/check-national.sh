@@ -14,6 +14,12 @@ check guider/regioner/index.html "<title>Regioner (scope) – MeshCore Sverige</
 check guider/regioner/index.html "<span data-r=name>Sverige</span> · Regionens scope: <code class=scope data-r=scope>se</code>" "strings: the footer holds the county spans, Sverige and se"
 # County front pages (§6.2.2): one per county without its own site, with its values at build time.
 check kalmar/index.html "<title>MeshCore i Kalmar – karta" "county page: its own title"
+# B-360: a page for an area that is not its own region, its aliases and params.redirects as 301s.
+check oland/index.html '<li><a href=/kalmar/ data-lan-pick=08>Kalmar län</a>: region <code class=scope>se08</code>, testkanal <code class=nobreak>#test-se08</code></li>' "area page: the county's link, region and test channel"
+if grep -q 'class=pager' "$P/oland/index.html"; then echo "FAIL area page: has a pager"; fail=1; else echo "ok   area page: no pager"; fi
+check _redirects '/%C3%B6land/ /oland/ 301' "area page: an alias with åäö answers 301, percent-encoded"
+check _redirects '/kalmar-l%C3%A4n/ /kalmar/ 301' "redirects: params.redirects answer 301"
+check lan/index.html '<a href=/oland/>Öland</a>' "/lan/ links the area pages"
 check kalmar/index.html "<h1>MeshCore i Kalmar län</h1>" "county page: the hero names the county"
 check kalmar/index.html "<link rel=canonical href=https://national.example.org/kalmar/>" "county page: its own canonical URL"
 check kalmar/index.html "data-iatas='\\[\"KLR\"\\]'" "county page: the stats and map read its map area"

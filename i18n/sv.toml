@@ -938,6 +938,10 @@ other = "Var du får hjälp med MeshCore i {{ .Name }} och vilka kanaler som anv
 other = "Välj län"
 [lan_list_desc]
 other = "MeshCore i Sveriges 21 län: välj ditt län för länets region, kanaler och karta. Län med en egen MeshCore-sida länkas dit."
+[lan_area_test]
+other = "testkanal"
+[lan_areas]
+other = "Söker du en stad eller ett område?"
 [lan_own_mark]
 other = "egen sida"
 [lan_region]

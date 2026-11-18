@@ -1,0 +1,13 @@
+{{- /* {{< lan-area "14" ["03" …] >}}: national mode, a landing page for an area that is not its own
+  region (B-360): per county (SCB code) its front page, region (scope) and test channel, read from the
+  county data, so nothing is typed twice. An unknown code stops the build. */ -}}
+{{- $all := partialCached "lan.html" .Page "lan" -}}
+<ul class="lan-area">
+{{- range $code := .Params -}}
+  {{- $c := index (where $all "scb" $code) 0 -}}
+  {{- if not $c }}{{ errorf "lan-area: no county %q (%s)" $code $.Position }}{{ end -}}
+  {{- with $c }}
+  <li><a href="{{ with site.GetPage (printf "/%s" .slug) }}{{ .RelPermalink }}{{ end }}" data-lan-pick="{{ .scb }}">{{ .name }}</a>: {{ T "lan_region" }} <code>{{ .scope }}</code>, {{ T "lan_area_test" }} <code>{{ .test }}</code></li>
+  {{- end -}}
+{{- end }}
+</ul>

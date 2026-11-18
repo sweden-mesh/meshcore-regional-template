@@ -13,6 +13,7 @@ enableRobotsTXT = true
     path = "github.com/sweden-mesh/meshcore-regional-template"
 
 [params]
+  redirects = [["/kalmar-län/", "/kalmar/"]]   # B-360: other addresses that answer 301
   national = true
   lanData = "https://example.org/county-data"
 

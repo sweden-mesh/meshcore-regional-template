@@ -12,6 +12,10 @@
       {{- end }}
       <li><a href="{{ "/" | relURL }}?lan=se" data-lan-pick="se">{{ T "lan_sweden" }}</a></li>
     </ul>
+    {{- /* Areas that are not their own region (B-360): pages with an `area` (SCB code) in front matter. */}}
+    {{- with sort (where site.RegularPages "Params.area" "!=" nil) "Title" }}
+    <p>{{ T "lan_areas" }} {{ range $i, $p := . }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Params.areaName | default $p.Title }}</a>{{ end }}.</p>
+    {{- end }}
   </article>
   {{- $lines := slice -}}
   {{- range $all -}}
@@ -26,7 +30,11 @@
     {{- end -}}{{- end -}}
   {{- end -}}
   {{- /* Every page's old addresses (aliases) answer 301, instead of Hugo's meta-refresh page (SEO-SV-13). */ -}}
-  {{- range site.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $a := strings.TrimSuffix "/" . }}{{ $lines = $lines | append (printf "%s %s 301" $a $to) (printf "%s/ %s 301" $a $to) }}{{ end }}{{ end -}}
+  {{- /* An address with åäö is written as the browser sends it, percent-encoded (B-360). */ -}}
+  {{- $pct := dict "å" "%C3%A5" "ä" "%C3%A4" "ö" "%C3%B6" "Å" "%C3%85" "Ä" "%C3%84" "Ö" "%C3%96" "é" "%C3%A9" -}}
+    {{- range site.Pages }}{{ $to := .RelPermalink }}{{ range .Aliases }}{{ $a := strings.TrimSuffix "/" . }}{{ range $k, $v := $pct }}{{ $a = replace $a $k $v }}{{ end }}{{ $lines = $lines | append (printf "%s %s 301" $a $to) (printf "%s/ %s 301" $a $to) }}{{ end }}{{ end -}}
+  {{- /* Other addresses that answer 301, from params.redirects: [["/from/", "/to/"], …] (B-360). */ -}}
+  {{- range site.Params.redirects }}{{ $from := strings.TrimSuffix "/" (index . 0) }}{{ $to := index . 1 }}{{ range $k, $v := $pct }}{{ $from = replace $from $k $v }}{{ $to = replace $to $k $v }}{{ end }}{{ $lines = $lines | append (printf "%s %s 301" $from $to) (printf "%s/ %s 301" $from $to) }}{{ end -}}
   {{- /* /lan/pages.json: SCB code → county page, or the county's own site as an absolute address
          (B-327), for the site's / function (plan §6.8, Q7.4). */ -}}
   {{- $pages := dict }}{{ range $c := $all }}{{ if $c.url }}{{ with site.GetPage (printf "/%s" $c.slug) }}{{ $pages = merge $pages (dict $c.scb .RelPermalink) }}{{ end }}{{ else if $c.site }}{{ $pages = merge $pages (dict $c.scb $c.site) }}{{ end }}{{ end -}}
