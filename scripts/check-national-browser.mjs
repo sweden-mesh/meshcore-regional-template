@@ -62,19 +62,21 @@ const visible = () => page.evaluate(() => {
   for (const d of document.querySelectorAll("dialog, .lan-list, [data-lan-wizard], .lan-all-groups, .lan-every")) d.remove();
   return `${document.title}\n${document.body.innerText}`;
 });
+// A value counts as shown only as a whole token: "se08" is not left over in a guide's "se0880".
+const has = (text, v) => new RegExp(`(?<![\\p{L}\\p{N}])${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}\\p{N}])`, "u").test(text);
 let fail = 0;
 for (const p of pages) {
   if (process.env.DEBUG) console.log("page", p);
   await page.goto(`${base}/${p}?lan=08`, { waitUntil: "networkidle0" });
   const before = await visible();
-  if (!KALMAR.slice(0, 2).some((v) => before.includes(v))) { console.log(`FAIL /${p}: Kalmar's values not shown`); fail = 1; continue; }
+  if (!KALMAR.slice(0, 2).some((v) => has(before, v))) { console.log(`FAIL /${p}: Kalmar's values not shown`); fail = 1; continue; }
   await choose("12");
   const after = await visible();
-  const left = KALMAR.filter((v) => after.includes(v));
-  const got = SKANE.some((v) => after.includes(v));
+  const left = KALMAR.filter((v) => has(after, v));
+  const got = SKANE.some((v) => has(after, v));
   await choose("se");
   const sverige = await visible();
-  const leftSe = [...KALMAR, ...SKANE].filter((v) => sverige.includes(v));
+  const leftSe = [...KALMAR, ...SKANE].filter((v) => has(sverige, v));
   if (left.length || !got || leftSe.length) { console.log(`FAIL /${p}: after Skåne left ${JSON.stringify(left)}, Skåne shown ${got}; after Sverige left ${JSON.stringify(leftSe)}`); fail = 1; }
   else console.log(`ok   /${p}: Kalmar → Skåne → Sverige, nothing left over`);
 }

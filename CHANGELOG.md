@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.62.1 — 2026-11-18
+
+- `scripts/check-national-browser.mjs` matches a county value only as a whole token, so the Regioner
+  guide's `se0880` no longer reads as Kalmar's `se08` left over after a county switch. No site output
+  changes.
+
 ## v0.62.0 — 2026-11-18
 
 - **A county group's own naming format** (national mode): county files take an optional
