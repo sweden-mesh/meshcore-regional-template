@@ -6,9 +6,8 @@
   Usage: partial "lan-towns.html" (dict "page" . "scb" "06") */ -}}
 {{- $html := "" -}}
 {{- $snap := partialCached "beacon-snapshot.html" $.page (printf "snapshot-%s" $.scb) -}}
-{{- $t := resources.Get "data/tatorter.json" -}}
-{{- if and $t (eq $snap.source "beacon") -}}
-  {{- $rows := slice }}{{ range (transform.Unmarshal $t.Content).rows }}{{ if eq (index . 1) $.scb }}{{ $rows = $rows | append (dict "name" (index . 0) "bef" (int (index . 3)) "lat" (float (index . 4)) "lng" (float (index . 5))) }}{{ end }}{{ end -}}
+{{- $rows := where (partialCached "tatorter-rows.html" . "tatorter") "lan" $.scb -}}
+{{- if and $rows (eq $snap.source "beacon") -}}
   {{- $reps := slice }}{{ range $snap.nodes }}{{ if and (eq .nodeType 2) .lat .lng (not .possiblyForeign) }}{{ $reps = $reps | append . }}{{ end }}{{ end -}}
   {{- $items := slice -}}
   {{- /* A tätort named after a larger one in the list ("Nordöstra Göteborg") is part of that town to a reader. */ -}}

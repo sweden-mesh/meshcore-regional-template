@@ -1362,9 +1362,42 @@ other = "Största orterna"
 [lan_town_pop]
 other = "({{ .Pop }} inv.)"
 [lan_town_none]
-other = "ingen repeater på kartan inom 10 km än"
+other = "ingen än"
 [lan_town_reps]
-one = "1 repeater på kartan inom 10 km"
-other = "{{ .Count }} repeatrar på kartan inom 10 km"
+one = "1 repeater"
+other = "{{ .Count }} repeatrar"
 [lan_towns_note]
-other = "Tätorter och folkmängd: SCB 2023. Repeatrarna räknade från kartan {{ .At }}."
+other = "Repeatrar på kartan inom 10 km från ortens mitt, räknade {{ .At }}. Tätorter och folkmängd: SCB 2023."
+# The new-repeaters page (B-362) and the nearest town (nearest-town.html).
+[town_in]
+other = "i {{ .Town }}"
+[town_near]
+other = "{{ .Km }} km {{ .Dir }} om {{ .Town }}"
+[nr_no_data]
+other = "Listan finns inte i den här byggningen av sidan. Den kommer med nästa, inom sex timmar."
+[nr_summary]
+one = "1 repeater hördes för första gången de senaste {{ .Days }} dagarna. Läget {{ .At }}; listan byggs om var sjätte timme."
+other = "{{ .Count }} repeatrar hördes för första gången de senaste {{ .Days }} dagarna. Läget {{ .At }}; listan byggs om var sjätte timme."
+[nr_map]
+other = "Karta över nya repeatrar"
+[nr_first]
+other = "Först hörd"
+[nr_first_on]
+other = "först hörd {{ .Date }}"
+[nr_unplaced]
+other = "Utan position"
+[nr_area]
+other = "kartområde {{ .Areas }}"
+[nr_firmware]
+other = "firmware {{ .V }}"
+[nr_firmware_min]
+other = "firmware {{ .V }} eller senare"
+[nr_none]
+other = "Ingen ny repeater de senaste {{ .Days }} dagarna."
+[nr_note]
+other = "Först hörd är den tidigaste dagen som Beacon (beacon.meshcoresverige.se eller, längre bakåt, beacon.meshat.se) hörde repeaterns nyckel. En repeater som fått ny nyckel men har kvar sitt namn eller sin plats räknas inte som ny. Positionen är den som noden själv annonserar. Närmaste ort: SCB:s tätorter 2023."
+[nya_i_lanet]
+other = "Nya repeatrar i länet"
+[nya_i_lanet_count]
+one = "1 den senaste veckan"
+other = "{{ .Count }} den senaste veckan"

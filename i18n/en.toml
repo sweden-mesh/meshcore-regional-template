@@ -1364,9 +1364,41 @@ other = "Largest towns"
 [lan_town_pop]
 other = "({{ .Pop }} people)"
 [lan_town_none]
-other = "no repeater on the map within 10 km yet"
+other = "none yet"
 [lan_town_reps]
-one = "1 repeater on the map within 10 km"
-other = "{{ .Count }} repeaters on the map within 10 km"
+one = "1 repeater"
+other = "{{ .Count }} repeaters"
 [lan_towns_note]
-other = "Towns and population: SCB 2023. Repeaters counted from the map on {{ .At }}."
+other = "Repeaters on the map within 10 km of the town centre, counted {{ .At }}. Towns and population: SCB 2023."
+[town_in]
+other = "in {{ .Town }}"
+[town_near]
+other = "{{ .Km }} km {{ .Dir }} of {{ .Town }}"
+[nr_no_data]
+other = "The list is not in this build of the page. It comes with the next one, within six hours."
+[nr_summary]
+one = "1 repeater was heard for the first time in the last {{ .Days }} days. As of {{ .At }}; the list is rebuilt every six hours."
+other = "{{ .Count }} repeaters were heard for the first time in the last {{ .Days }} days. As of {{ .At }}; the list is rebuilt every six hours."
+[nr_map]
+other = "Map of new repeaters"
+[nr_first]
+other = "First heard"
+[nr_first_on]
+other = "first heard {{ .Date }}"
+[nr_unplaced]
+other = "No position"
+[nr_area]
+other = "map area {{ .Areas }}"
+[nr_firmware]
+other = "firmware {{ .V }}"
+[nr_firmware_min]
+other = "firmware {{ .V }} or later"
+[nr_none]
+other = "No new repeater in the last {{ .Days }} days."
+[nr_note]
+other = "First heard is the earliest day Beacon heard the repeater's key. A repeater with a new key that kept its name or place does not count as new. The position is the one the node advertises. Nearest town: SCB urban areas 2023."
+[nya_i_lanet]
+other = "New repeaters in the county"
+[nya_i_lanet_count]
+one = "1 in the last week"
+other = "{{ .Count }} in the last week"
