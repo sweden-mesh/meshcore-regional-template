@@ -957,6 +957,8 @@ other = "Sidan visar värden som beror på länet, som regionen och testkanalen.
 other = "Välj ditt län"
 [lan_note_after]
 other = "så visas länets värden."
+[lan_own_site]
+other = "{{ .Name }} har en egen MeshCore-sida med länets värden:"
 [lan_proposal_page]
 other = "Regionen <code>{{ .Scope }}</code> för {{ .Name }} är ett förslag i <a href=\"{{ .URL }}\" class=\"ext\" target=\"_blank\" rel=\"noopener\">listan över regioner</a>: ingen grupp i länet har bestämt den än."
 [lan_pick]

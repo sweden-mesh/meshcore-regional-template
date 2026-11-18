@@ -1,0 +1,15 @@
+{{- /* The page's canonical address (SEO-SV-4, operator 2026-11-18): meshcoresverige.se is the
+  reference copy of the template's shared content, and a regional site is a fork of it. So a page
+  that comes from the template (its file is not in the site's own directory, or it is made by the
+  template's content adapter) points at the same path on params.original. The site's own pages,
+  its home page, a page with `original: false` in front matter and noindex pages stay
+  self-canonical. On the reference site itself (national mode, or baseURL = original) nothing changes. A site that
+  wants its copies to compete sets `original = ""`. Returns the absolute URL. */ -}}
+{{- $u := .Permalink -}}
+{{- $o := site.Params.original | default "" -}}
+{{- if and $o (not site.Params.national) (ne (strings.TrimSuffix "/" $o) (strings.TrimSuffix "/" site.BaseURL)) (not .IsHome) (ne .Params.original false) (not .Params.noindex) (ne .Kind "404") -}}
+  {{- $own := false -}}
+  {{- with .File }}{{ if hasPrefix .Filename (print hugo.WorkingDir "/") }}{{ $own = true }}{{ end }}{{ end -}}
+  {{- if not $own }}{{ $u = print (strings.TrimSuffix "/" $o) .RelPermalink }}{{ end -}}
+{{- end -}}
+{{- return $u -}}

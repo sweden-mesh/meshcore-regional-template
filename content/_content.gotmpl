@@ -29,7 +29,10 @@
         "dates" (dict "lastmod" (time.AsTime .checked))
         "content" (dict "mediaType" "text/markdown" "value" "")) -}}
       {{- /* Three local pages per county (plan Q7.7, §6.8), modelled on meshcore-jkp.se's own:
-             the text is assets/lan/*.md, run as a template with the county's values. */ -}}
+             the text is assets/lan/*.md, run as a template with the county's values. They differ
+             between counties by name, scope and channel only, so they are noindex, follow and out
+             of the sitemap (SEO-SV-3: near-identical pages per region read as doorway pages); the
+             county front page stays indexed. */ -}}
       {{- $c := . -}}
       {{- $chat := "" }}{{ with .channels }}{{ $chat = (index . 0).name }}{{ end -}}
       {{- $names := slice }}{{ range .channels }}{{ $names = $names | append .name }}{{ end }}{{ $names = $names | append .test -}}
@@ -50,7 +53,7 @@
           "layout" "local"
           "title" $p.title
           "description" $p.desc
-          "params" (dict "lan" $c.scb "description" $p.desc "searchPair" $p.path)
+          "params" (dict "lan" $c.scb "description" $p.desc "searchPair" $p.path "noindex" true)
           "dates" (dict "lastmod" (time.AsTime $c.checked))
           "content" (dict "mediaType" "text/markdown" "value" $body.Content)) -}}
       {{- end -}}

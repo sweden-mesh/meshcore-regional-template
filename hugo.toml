@@ -13,6 +13,8 @@
                              # a county switch in the browser, county front pages. False emits nothing of it
                              # (scripts/compare-regional.sh proves a regional build unchanged)
   lanData = ""               # national mode: the county-data guide (how to correct a county), linked from county pages
+  original = "https://meshcoresverige.se/"   # the reference copy of the shared content (SEO-SV-4): the template's
+                             # pages on a regional site carry a canonical to the same path there. "" = self-canonical
 
 [params.region]
   scb = ""                   # the county's SCB code, e.g. "06": the template then fetches the county's

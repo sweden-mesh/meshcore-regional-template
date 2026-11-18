@@ -13,6 +13,10 @@
 <script>try{var s=localStorage,r=document.documentElement;if(s.getItem("motion")==="off")r.dataset.motion="off";if(s.getItem("cvd")==="1")r.dataset.cvd="1"}catch(e){}</script>
 {{- if site.Params.national }}
 {{ partial "lan-prepaint.html" . }}
+{{- $own := slice }}{{ range partialCached "lan.html" . "lan" }}{{ if .site }}{{ $own = $own | append (printf `html[data-lan="%s"] .lan-own[data-own="%s"]` .scb .scb) }}{{ end }}{{ end }}
+{{- with $own }}
+<style>{{ delimit . "," | safeCSS }}{display:block}</style>
+{{- end }}
 {{- end }}
 {{- with site.Params.beacon.url }}
 <link rel="preconnect" href="{{ . }}" crossorigin>
@@ -36,13 +40,14 @@
 {{- $desc := .Description | default site.Params.description | default (T "hero_tagline") -}}
 {{- /* The 404 is not a page to share or index: no canonical, no Open Graph (SEO-T21). */}}
 {{- if ne .Kind "404" }}
-<link rel="canonical" href="{{ .Permalink }}">
+{{- $canonical := partial "canonical.html" . }}
+<link rel="canonical" href="{{ $canonical }}">
 <meta property="og:type" content="{{ cond (or .IsHome .IsSection) "website" "article" }}">
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:locale" content="sv_SE">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
-<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:url" content="{{ $canonical }}">
 {{- $img := .Params.image | default site.Params.ogImage | default "images/og.png" }}
 <meta property="og:image" content="{{ $img | absURL }}">
 {{- /* The size is known only for the template's own image (SEO-T17). */}}

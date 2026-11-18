@@ -1,4 +1,5 @@
-{{- /* Hugo's sitemap, minus the pages marked noindex (front matter or a cascade, SEO-T2), with
+{{- /* Hugo's sitemap, minus the pages marked noindex (front matter or a cascade, SEO-T2) and the
+       pages whose canonical is the reference site's copy (SEO-SV-4), with
        lastmod only where a page has a real date (SEO-T1). The solar method page is kept out of
        every list (build.list: never) but belongs in the sitemap (SEO-T16), so it is added by path. */ -}}
 {{- $pages := where .Pages "Sitemap.Disable" "ne" true -}}
@@ -6,7 +7,7 @@
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {{- range $pages }}
-    {{- if and .Permalink (not .Params.noindex) }}
+    {{- if and .Permalink (not .Params.noindex) (eq (partial "canonical.html" .) .Permalink) }}
   <url>
     <loc>{{ .Permalink }}</loc>
     {{- if not .Lastmod.IsZero }}

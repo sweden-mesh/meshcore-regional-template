@@ -7,6 +7,7 @@
 :root[data-theme="light"] .lan-checked { color: color-mix(in srgb, var(--muted) 95%, var(--bg)); }
 .lan-note { margin: 0 0 1.25rem; color: var(--muted); }
 html[data-lan]:not([data-lan="se"]) .lan-note { display: none; }
+.lan-own { display: none; margin: 0 0 1.25rem; color: var(--muted); }
 
 /* /lan/: the plain county list. */
 .lan-list { list-style: none; padding: 0; columns: 2 18rem; column-gap: 2rem; }

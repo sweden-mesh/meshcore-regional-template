@@ -37,6 +37,9 @@ check index.html "svarar inte automatiskt här än" "Sverige: #test-se is not pr
 if grep -q 'class=ch-ar' "$P/index.html"; then echo "FAIL Sverige: an auto-reply footnote on #test-se"; fail=1; else echo "ok   Sverige: no auto-reply footnote (B-316)"; fi
 check skåne/index.html "Rikschatten" "county page: no groups, the national chats stand in"
 check sitemap.xml "/sk%C3%A5ne/</loc>" "county page: in the sitemap, address with åäö"
+check sitemap.xml '/wizard/solcell/metod/' "sitemap: the solar method page is in it"
+check sitemap.xml '/guider/flasha-firmware/</loc><lastmod>20' "dates: the sitemap has lastmod for a template guide"
+check guider/flasha-firmware/index.html '<link rel=canonical href=https://national.example.org/guider/flasha-firmware/>' "canonical: the national site is the reference copy, self-canonical (SEO-SV-4)"
 if grep -qs "id=karta" "$P/jönköping/index.html" || [ -e "$P/jönköping/kom-igang" ]; then echo "FAIL county page: a county with its own site got a front page"; fail=1; else echo "ok   county page: none for a county with its own site"; fi
 # The county's local pages (Q7.7), modelled on meshcore-jkp.se's four.
 check kalmar/kom-igang/index.html "<h1>Kom igång med MeshCore i Kalmar</h1>" "local: Kom igång has the county's title"
@@ -50,11 +53,15 @@ check skåne/ingen-svar-pa-test/index.html "<h1>Ingen svarar på test i #test-se
 check skåne/ingen-svar-pa-test/index.html "#test-mmx" "local: the troubleshooting page names the old channel from the IATA"
 check skåne/fragor/index.html "Var får jag hjälp i Skåne län?" "local: the county's questions"
 check kalmar/index.html 'href=/kalmar/kom-igang/>Kom igång med MeshCore i Kalmar</a>' "local: the county page links its local pages"
-check sitemap.xml "/kalmar/fragor/</loc>" "local: the local pages are in the sitemap"
+check kalmar/fragor/index.html '<meta name=robots content="noindex, follow">' "local: the local pages are noindex, follow (SEO-SV-3)"
+if grep -q "/kalmar/fragor/</loc>" "$P/sitemap.xml"; then echo "FAIL local: a local page in the sitemap (SEO-SV-3)"; fail=1; else echo "ok   local: the local pages are not in the sitemap (SEO-SV-3)"; fi
+if grep -q 'name=robots' "$P/kalmar/index.html"; then echo "FAIL county page: noindex on the county front page"; fail=1; else echo "ok   county page: the front page stays indexable (SEO-SV-3)"; fi
 # /lan/, the own-site page and the åäö-free addresses (Q7.1, Q7.2).
 check lan/index.html 'href=/kalmar/ data-lan-pick=08>Kalmar län</a>' "lan: /lan/ links a county page"
 check lan/index.html 'href=https://example.org/egen-sida/ class=ext target=_blank rel=noopener>Jönköpings län</a> <span class=muted>egen sida: example.org' "lan: /lan/ links an own site, marked"
 check lan/index.html 'data-lan-pick=se>Sverige (hela landet)' "lan: /lan/ offers Sverige"
+check guider/regioner/index.html 'class=lan-own data-own=06>' "own site: a shared page carries the county's link line (UX-SV-2)"
+check guider/regioner/index.html '<style>html\[data-lan="06"\] .lan-own\[data-own="06"\]' "own site: the line is shown before paint by a rule on html[data-lan] (UX-SV-2)"
 if [ -e "$P/jönköping/index.html" ]; then echo "FAIL own site: the county's address got a page (B-327: it redirects)"; fail=1; else echo "ok   own site: no page at the county's address"; fi
 check _redirects '^/j%C3%B6nk%C3%B6ping/ https://example.org/egen-sida/ 302$' "redirects: an own-site county's address answers 302 to its site"
 check _redirects '^/jonkoping/\* https://example.org/egen-sida/ 302$' "redirects: and the address without åäö, and below it"

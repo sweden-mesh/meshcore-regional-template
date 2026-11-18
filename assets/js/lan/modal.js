@@ -1,8 +1,11 @@
 // National mode: the county modal (plan §6.2.4, Q4.2, Q4b, Q7.2). Drawn by script only, so
-// crawlers and visitors without JavaScript never see it. Forced on a visit where nothing has chosen
-// a county (no county address, no ?lan=, nothing stored) unless storage is blocked; otherwise
-// opened by the header's county button. A county with its own site is never saved: picking it
-// goes straight to that site (B-327).
+// crawlers and visitors without JavaScript never see it. Opened by itself on a visit where nothing
+// has chosen a county (no county address, no ?lan=, nothing stored) unless storage is blocked;
+// otherwise by the header's county button. It always closes (the × button, Esc, a click outside):
+// closed without a choice, the page stays on Sverige and the modal does not open by itself again
+// in this visit (UX-SV-1, SEO-SV-2, operator 2026-11-18). A county with its own site: from the
+// front page or a county page, picking it goes to that site (B-327); from any other page the choice
+// is saved and the visitor stays, with a link to the county's site in the page's county line (UX-SV-2).
 // Regional mode (B-324, #lan-data with mode "regional"): the same modal behind a regional site's
 // county button. Every choice is a link (its own site, or its page on the national site), nothing
 // is stored, and the modal never opens by itself.
@@ -28,22 +31,27 @@ let dialog = null;
 function build() {
   const t = lan.data.texts;
   dialog = el("dialog", { class: "lan-modal", "aria-labelledby": "lan-modal-title", "aria-describedby": "lan-modal-intro" });
-  dialog.addEventListener("cancel", (e) => { if (dialog.dataset.forced === "1") e.preventDefault(); });
+  dialog.setAttribute("closedby", "any");
+  // Closed without a choice: no automatic opening again in this visit.
+  dialog.addEventListener("close", () => { try { sessionStorage.setItem("lan-skip", "1"); } catch (e) { /* blocked */ } });
   document.body.append(dialog);
   return t;
 }
 
-function showList(forced) {
+function showList() {
   const t = lan.data.texts;
   const model = modalModel(lan.data, lan.get());
   const list = el("ul", { class: "lan-modal-list", "aria-label": t.list });
   // One line per button (B-315): the name only. A county with its own site is tinted on the map
   // (legend under it) and named in the button's tooltip; Sverige is its own button below the list.
   const button = (item) => {
+    // A county with its own site shows its domain under the name, as /lan/ does (UX-SV-2).
+    const label = () => [el("span", { class: "lan-modal-name", text: item.label || item.name }),
+      ...(item.own ? [el("span", { class: "lan-modal-own", text: `↗ ${item.domain}` })] : [])];
     if (regional) return el("a", { href: item.href, "aria-current": item.current ? "page" : false,
-      title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, el("span", { class: "lan-modal-name", text: item.label || item.name }));
+      title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, ...label());
     const b = el("button", { type: "button", "data-lan": item.v, "aria-current": item.current ? "true" : false,
-      title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, el("span", { class: "lan-modal-name", text: item.label || item.name }));
+      title: item.own ? `${item.name}, ${t.own}: ${item.domain}` : item.name }, ...label());
     b.addEventListener("click", () => pick(item));
     return b;
   };
@@ -58,13 +66,11 @@ function showList(forced) {
   // The county buttons and, centred under them, Sverige share one column beside the map (B-325).
   const pickCol = el("div", { class: "lan-modal-pick" }, list);
   if (all) pickCol.append(all);
-  const body = [head, el("p", { id: "lan-modal-intro", text: t.intro }), el("div", { class: "lan-modal-body" }, mapCol, pickCol)];
-  if (!forced) {
-    const close = el("button", { type: "button", class: "lan-modal-close", "aria-label": t.close, text: "×" });
-    close.addEventListener("click", () => dialog.close());
-    body.unshift(close);
-  }
-  dialog.replaceChildren(...body);
+  // With a map, its column is laid out before the map arrives, so nothing moves when it does (SEO-SV-2).
+  const close = el("button", { type: "button", class: "lan-modal-close", "aria-label": t.close, text: "×" });
+  close.addEventListener("click", () => dialog.close());
+  dialog.replaceChildren(close, head, el("p", { id: "lan-modal-intro", text: t.intro }),
+    el("div", { class: lan.data.geo ? "lan-modal-body has-map" : "lan-modal-body" }, mapCol, pickCol));
   drawMap(dialog.querySelector("[data-lan-map]"), model);
   dialog.dispatchEvent(new CustomEvent("lan:list", { bubbles: true, detail: { pick: (v) => { const it = model.items.find((i) => i.v === v); if (it) pick(it); } } }));
   return head;
@@ -106,17 +112,14 @@ addEventListener("pageshow", (e) => { if (e.persisted) { root.classList.remove("
 
 function pick(item) {
   if (regional) { if (item.href) { leaving(); location.assign(item.href); } return; }
-  if (item.own) { leaving(); location.assign(item.site); return; }
-  dialog.dataset.forced = "0";
+  if (item.own && (root.getAttribute("data-lan-page") || location.pathname === "/")) { leaving(); location.assign(item.site); return; }
   dialog.close();
   lan.set(item.v);
 }
 
-export function open(forced) {
+export function open() {
   if (!dialog) build();
-  dialog.dataset.forced = forced ? "1" : "0";
-  if (forced) dialog.setAttribute("closedby", "none"); else dialog.setAttribute("closedby", "any");
-  const head = showList(forced);
+  const head = showList();
   if (!dialog.open) dialog.showModal();
   head.focus();
 }
@@ -126,14 +129,16 @@ if (regional) {
   for (const b of document.querySelectorAll("[data-lan-open]")) {
     b.removeAttribute("popovertarget"); b.removeAttribute("aria-controls");
     b.setAttribute("aria-haspopup", "dialog");
-    b.addEventListener("click", (e) => { e.preventDefault(); open(false); });
+    b.addEventListener("click", (e) => { e.preventDefault(); open(); });
   }
 } else if (lan) {
   window.meshcoreLan.open = open;
   for (const a of document.querySelectorAll("[data-lan-open]")) {
-    a.addEventListener("click", (e) => { e.preventDefault(); open(false); });
+    a.addEventListener("click", (e) => { e.preventDefault(); open(); });
   }
   // /lan/ is the chooser itself and works as plain links.
   const quiet = location.pathname.replace(/\/$/, "").endsWith("/lan");
-  if (!root.getAttribute("data-lan") && root.getAttribute("data-lan-store") !== "0" && !quiet) open(true);
+  let skip = false;
+  try { skip = sessionStorage.getItem("lan-skip") === "1"; } catch (e) { /* blocked */ }
+  if (!root.getAttribute("data-lan") && root.getAttribute("data-lan-store") !== "0" && !quiet && !skip) open();
 }

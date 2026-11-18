@@ -5,6 +5,11 @@
     {{ with and (ne .Params.lead false) .Description }}<p class="page-lead">{{ . }}</p>{{ end }}
     {{- if site.Params.national }}{{ if in (string .Content) "data-r=" }}
     <p class="lan-note">{{ T "lan_note" }} {{ with site.GetPage "/lan" }}<a href="{{ .RelPermalink }}" data-lan-open>{{ T "lan_note_pick" }}</a>{{ end }} {{ T "lan_note_after" }}</p>
+    {{- /* A county with its own site, chosen on this page (UX-SV-2): a link to that site in the same
+      place. Shown by head.html's rule for html[data-lan], set before paint, so nothing moves. */}}
+    {{- range partialCached "lan.html" . "lan" }}{{ if .site }}
+    <p class="lan-own" data-own="{{ .scb }}">{{ T "lan_own_site" (dict "Name" .name) }} <a href="{{ .site }}" class="ext" target="_blank" rel="noopener">{{ replaceRE `^https?://([^/]+)/?.*$` "$1" .site }}</a></p>
+    {{- end }}{{ end }}
     <p class="lan-proposal" data-r-proposal hidden>{{ T "lan_proposal_page" (dict "Name" (partial "r.html" (dict "page" . "key" "name" "value" "")) "Scope" (partial "r.html" (dict "page" . "key" "scope" "value" "")) "URL" "https://github.com/zombiefredrik/meshcore-se-regioner") | safeHTML }}</p>
     {{- end }}{{ end }}
     <div class="prose">{{ partial "scopes.html" .Content }}</div>
