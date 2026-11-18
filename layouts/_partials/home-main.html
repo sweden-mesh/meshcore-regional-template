@@ -2,6 +2,10 @@
      (layouts/lan/county.html), where region-of.html gives the county instead of the site's region. */ -}}
   {{- $r := partial "region-of.html" . -}}
   {{- $first := "" -}}{{- with site.GetPage "/guider" }}{{ with index .Pages.ByWeight 0 }}{{ $first = .RelPermalink }}{{ end }}{{ end -}}
+  {{- /* "Kom igång" leads to the getting-started page where there is one (CONTENT-SV-2): a county's
+         own on its page, else /kom-igang/. */ -}}
+  {{- with site.GetPage "/kom-igang" }}{{ $first = .RelPermalink }}{{ end -}}
+  {{- with partial "lan-page.html" . }}{{ with site.GetPage (printf "/%s/kom-igang" .slug) }}{{ $first = .RelPermalink }}{{ end }}{{ end -}}
   <section class="hero">
     <h1>{{ T "hero_title" (dict "Region" $r.name) }}</h1>
     <p class="tagline">{{ T "hero_tagline" }}</p>
