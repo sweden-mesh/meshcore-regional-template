@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.52.1 — 2026-11-18
+
+- **"På sidan" with a shortcode in a heading**: the list read its titles from Hugo's fragments, where
+  a heading such as "Kanaler i {{</* region */>}}" still held Hugo's placeholder text; it now reads
+  them from the rendered page. That placeholder also made two builds of the same commit differ, which
+  failed v0.52.0's regional-comparison check.
+
 ## v0.52.0 — 2026-11-18
 
 - **A county's groups as buttons** (operator 2026-11-18, replacing B-326's single community button): a

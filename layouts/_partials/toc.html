@@ -1,16 +1,17 @@
 {{- /* "På sidan" (UX-SV-4): the page's H2s, on a page with 4 or more. Closed <details> under the
   lead on narrow screens; from 80em it stands in the empty column to the right, open and sticky
   (js/toc.js opens it and marks the section in view). The page's text does not move either way. */ -}}
+{{- /* From the rendered text, not .Fragments: a heading with a shortcode in it ("Kanaler i
+  {{< region >}}") is only filled in there. */ -}}
 {{- $h2 := slice -}}
-{{- range .Fragments.Headings }}
-  {{- if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end -}}
-  {{- range .Headings }}{{ if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end }}{{ end -}}
+{{- range findRESubmatch `<h2 id="([^"]+)"[^>]*>((?s).*?)</h2>` .Content -}}
+  {{- $h2 = $h2 | append (dict "ID" (index . 1) "Title" (index . 2 | plainify | htmlUnescape)) -}}
 {{- end -}}
 {{- if ge (len $h2) 4 }}
 <nav class="toc" aria-labelledby="toc-title">
   <details>
     <summary id="toc-title">{{ T "toc_title" }}</summary>
-    <ol>{{ range $h2 }}<li><a href="#{{ .ID }}">{{ .Title | safeHTML }}</a></li>{{ end }}</ol>
+    <ol>{{ range $h2 }}<li><a href="#{{ .ID | htmlUnescape }}">{{ .Title }}</a></li>{{ end }}</ol>
   </details>
 </nav>
 {{- with resources.Get "js/toc.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
