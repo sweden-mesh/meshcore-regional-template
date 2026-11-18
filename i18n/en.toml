@@ -1232,3 +1232,41 @@ other = "Receives the packet."
 other = "The recipient's phone"
 [flow_phone2_note]
 other = "Shows the message in the app."
+[hw_product]
+other = "Product"
+[hw_pros]
+other = "Good"
+[hw_cons]
+other = "Less good"
+[hw_warnings]
+other = "Warnings"
+[hw_bigger]
+other = "Show a larger picture"
+[hw_sources]
+other = "Sources:"
+[hw_credits]
+other = "The pictures"
+[hw_chip]
+other = "Processor"
+[hw_connects]
+other = "Connects by"
+[hw_battery]
+other = "Battery"
+[hw_power]
+other = "Power"
+[hw_txPower]
+other = "Transmit power"
+[hw_gain]
+other = "Gain"
+[hw_band]
+other = "Band"
+[hw_connector]
+other = "Connector"
+[hw_placement]
+other = "Placement"
+[hw_caption_companion]
+other = "Companions: product, good, less good and warnings"
+[hw_caption_repeater]
+other = "Repeaters: product, good, less good and warnings"
+[hw_caption_antenna]
+other = "Antennas: product, good, less good and warnings"

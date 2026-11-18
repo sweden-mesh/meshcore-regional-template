@@ -98,7 +98,9 @@ region save
 ### Duty cycle
 
 Duty cycle begränsar hur stor del av tiden radion får sända. I bandet 869,4–869,65 MHz, där
-869,618 MHz ligger, är högst 10 procent ett krav i hela EU (i Sverige genom PTS föreskrifter).
+869,618 MHz ligger, är kravet högst 10 procent av tiden, om radion inte använder LBT-teknik (lyssna
+innan den sänder). Det gäller i hela EU, i Sverige genom [PTSFS 2025:1](https://pts.se/contentassets/b05c8a7d01a64783aafc6a19e1b78590/ptsfs-2025-1-foreskrifter-om-undantag-fran-tillstandsplikt-for-anvandning-av-vissa-radiosandare.pdf) § 146.
+MeshCore räknar med 10 procent.
 Det gäller varje sändare, även en repeater.
 
 Gränsen skyddar också nätet. Medan en repeater sänder kan grannarna som hör den inte sända

@@ -29,13 +29,14 @@ tillståndsplikt. Det betyder:
 ## Bandet och gränserna
 
 Nätet här använder {{< param "radio.freq" >}} MHz, i delbandet **869,4–869,65 MHz**. Där gäller
-i hela EU, och i Sverige genom PTS föreskrifter:
+i hela EU, och i Sverige genom [PTSFS 2025:1](https://pts.se/contentassets/b05c8a7d01a64783aafc6a19e1b78590/ptsfs-2025-1-foreskrifter-om-undantag-fran-tillstandsplikt-for-anvandning-av-vissa-radiosandare.pdf) § 146:
 
 Effekt
 : Högst **500 mW ERP** (27 dBm ERP).
 
 Duty cycle
-: Högst **10 procent** av tiden, det vill säga 360 sekunder sändning per timme. Det gäller varje
+: Högst **10 procent** av tiden, det vill säga 360 sekunder sändning per timme, om radion inte
+  använder LBT-teknik (lyssna innan den sänder). MeshCore räknar med 10 procent. Det gäller varje
   sändare, även en repeater. MeshCore håller räkningen; se [Duty cycle i
   repeaterguiden](../repeater/#duty-cycle).
 

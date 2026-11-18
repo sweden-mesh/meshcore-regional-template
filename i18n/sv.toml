@@ -1228,3 +1228,41 @@ other = "Tar emot paketet."
 other = "Mottagarens telefon"
 [flow_phone2_note]
 other = "Visar meddelandet i appen."
+[hw_product]
+other = "Produkt"
+[hw_pros]
+other = "Bra"
+[hw_cons]
+other = "Mindre bra"
+[hw_warnings]
+other = "Varningar"
+[hw_bigger]
+other = "Visa större bild"
+[hw_sources]
+other = "Källor:"
+[hw_credits]
+other = "Bilderna"
+[hw_chip]
+other = "Processor"
+[hw_connects]
+other = "Ansluts via"
+[hw_battery]
+other = "Batteri"
+[hw_power]
+other = "Ström"
+[hw_txPower]
+other = "Sändeffekt"
+[hw_gain]
+other = "Vinst"
+[hw_band]
+other = "Band"
+[hw_connector]
+other = "Kontakt"
+[hw_placement]
+other = "Plats"
+[hw_caption_companion]
+other = "Companions: produkt, bra, mindre bra och varningar"
+[hw_caption_repeater]
+other = "Repeatrar: produkt, bra, mindre bra och varningar"
+[hw_caption_antenna]
+other = "Antenner: produkt, bra, mindre bra och varningar"

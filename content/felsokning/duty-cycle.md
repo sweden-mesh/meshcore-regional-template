@@ -10,7 +10,8 @@ lastmod: 2026-11-16
 ## Troliga orsaker
 
 1. **Sändtidsgränsen (duty cycle) är nådd.** I 868 MHz-bandet får en radio bara sända en viss
-   andel av tiden. MeshCore håller räkningen och väntar när gränsen nås.
+   andel av tiden: på 869,4–869,65 MHz högst 10 procent, om den inte använder LBT-teknik
+   ([PTSFS 2025:1](https://pts.se/contentassets/b05c8a7d01a64783aafc6a19e1b78590/ptsfs-2025-1-foreskrifter-om-undantag-fran-tillstandsplikt-for-anvandning-av-vissa-radiosandare.pdf) § 146). MeshCore håller räkningen och väntar när gränsen nås.
 2. Många meddelanden, adverts eller en repeater i ett tätt nät som för vidare mycket.
 
 ## Kontrollera
