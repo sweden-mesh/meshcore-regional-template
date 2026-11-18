@@ -4,7 +4,50 @@
 # assets/, i18n/, static/). Every key is described in README.md.
 
 [module.hugoVersion]
-  min = "0.146.0"
+  min = "0.153.0"            # module.mounts sites.matrix (the English content below)
+
+# The template's own mounts (the defaults, written out because one is added): Swedish content in
+# content/, and the English translations in content.en/, mounted only for a site that configures the
+# language "en" (B-337). A site without English never sees content.en/. The two content adapters
+# (county pages, wizard pages) are mounted a second time for English, so those pages exist in both
+# languages from the same code; T gives each its strings. A further language: content.<lang>/ and the
+# same three mounts with its code.
+[[module.mounts]]
+  source = "content"
+  target = "content"
+[[module.mounts]]
+  source = "content.en"
+  target = "content"
+  [module.mounts.sites.matrix]
+    languages = ["en"]
+[[module.mounts]]
+  source = "content/_content.gotmpl"
+  target = "content/_content.gotmpl"
+  [module.mounts.sites.matrix]
+    languages = ["en"]
+[[module.mounts]]
+  source = "content/wizard/_content.gotmpl"
+  target = "content/wizard/_content.gotmpl"
+  [module.mounts.sites.matrix]
+    languages = ["en"]
+[[module.mounts]]
+  source = "layouts"
+  target = "layouts"
+[[module.mounts]]
+  source = "assets"
+  target = "assets"
+[[module.mounts]]
+  source = "i18n"
+  target = "i18n"
+[[module.mounts]]
+  source = "data"
+  target = "data"
+[[module.mounts]]
+  source = "static"
+  target = "static"
+[[module.mounts]]
+  source = "archetypes"
+  target = "archetypes"
 
 [params]
   style = "product"          # "product" (light, design D; follows the OS dark mode) or "console" (dark, technical)

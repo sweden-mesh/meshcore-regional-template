@@ -1,23 +1,5 @@
-{{- /* Hugo's sitemap, minus the pages marked noindex (front matter or a cascade, SEO-T2), with
-       lastmod only where a page has a real date (SEO-T1). The solar method page is kept out of
-       every list (build.list: never) but belongs in the sitemap (SEO-T16), so it is added by path. */ -}}
-{{- $pages := where .Pages "Sitemap.Disable" "ne" true -}}
-{{- with site.GetPage "/solcell-metod" }}{{ if ne .Sitemap.Disable true }}{{ $pages = $pages | append . }}{{ end }}{{ end -}}
+{{- /* One language's sitemap; the entries: _partials/sitemap-urls.html. */ -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {{- range $pages }}
-    {{- if and .Permalink (not .Params.noindex) }}
-  <url>
-    <loc>{{ .Permalink }}</loc>
-    {{- /* A page built from data the build fetches (front matter lastmodData: a data file whose `at` is
-           when it was made, e.g. new_repeaters, B-362) changes with that data, not with its text. */ -}}
-    {{- $at := "" }}{{ with .Params.lastmodData }}{{ with index hugo.Data . }}{{ $at = .at | default "" }}{{ end }}{{ end -}}
-    {{- if $at }}
-    <lastmod>{{ (time.AsTime $at).UTC.Format "2006-01-02" }}</lastmod>
-    {{- else if not .Lastmod.IsZero }}
-    <lastmod>{{ .Lastmod.Format "2006-01-02" }}</lastmod>
-    {{- end }}
-  </url>
-    {{- end }}
-  {{- end }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"{{ if hugo.IsMultilingual }} xmlns:xhtml="http://www.w3.org/1999/xhtml"{{ end }}>
+{{- partial "sitemap-urls.html" site }}
 </urlset>

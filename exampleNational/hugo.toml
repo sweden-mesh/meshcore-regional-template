@@ -39,3 +39,20 @@ enableRobotsTXT = true
   name = "Guider"
   pageRef = "/guider"
   weight = 10
+
+# B-337: English under /en/, from the template's content.en/ and this site's content.en/.
+[languages.sv]
+  weight = 1
+  locale = "sv"
+[languages.en]
+  weight = 2
+  locale = "en"
+  title = "MeshCore Example Country"
+  contentDir = "content.en"
+  [languages.en.params.region]
+    name = "Sweden"
+    short = "Sweden"
+  [[languages.en.menus.main]]
+    name = "Guides"
+    pageRef = "/guider"
+    weight = 10

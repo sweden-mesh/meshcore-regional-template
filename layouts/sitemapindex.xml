@@ -1,0 +1,7 @@
+{{- /* A multilingual site (B-337): /sitemap.xml stays one urlset, now of every language with their
+       hreflang pairs, instead of Hugo's index of /sv/sitemap.xml and /en/sitemap.xml, so Search
+       Console's submitted sitemap and the IndexNow step keep reading the same file. */ -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{{- range hugo.Sites }}{{ partial "sitemap-urls.html" . }}{{ end }}
+</urlset>

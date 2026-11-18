@@ -1404,3 +1404,5 @@ other = "Nya repeatrar i länet"
 [nya_i_lanet_count]
 one = "1 den senaste veckan"
 other = "{{ .Count }} den senaste veckan"
+[og_locale]
+other = "sv_SE"

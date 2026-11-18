@@ -1,0 +1,11 @@
+{{- /* B-337: the page's language alternates, for <head> and the sitemap: a slice of dict (lang, href),
+  one per language the page exists in (its translations by path), then x-default → the default
+  language's version. Empty on a one-language site or for a page without a translation, so a
+  Swedish-only site's head and sitemap are unchanged. Usage: partial "hreflang.html" . */ -}}
+{{- $out := slice -}}
+{{- if gt (len .AllTranslations) 1 -}}
+  {{- $def := (index hugo.Sites 0).Language.Lang -}}
+  {{- range .AllTranslations }}{{ $out = $out | append (dict "lang" .Language.Lang "href" .Permalink) }}{{ end -}}
+  {{- range .AllTranslations }}{{ if eq .Language.Lang $def }}{{ $out = $out | append (dict "lang" "x-default" "href" .Permalink) }}{{ end }}{{ end -}}
+{{- end -}}
+{{- return $out -}}

@@ -10,7 +10,7 @@
 {{- /* sameAs only for profiles the site itself owns (params.sameAs), never the community's
        site or shared chat invites: those are other entities (SEO-T3). */ -}}
 {{- with site.Params.sameAs }}{{ $org = merge $org (dict "sameAs" .) }}{{ end -}}
-{{- $website := dict "@type" "WebSite" "name" site.Title "alternateName" (urls.Parse site.Home.Permalink).Host "url" site.Home.Permalink "inLanguage" "sv" -}}
+{{- $website := dict "@type" "WebSite" "name" site.Title "alternateName" (urls.Parse site.Home.Permalink).Host "url" site.Home.Permalink "inLanguage" site.Language.Lang -}}
 {{- $site := dict "@context" "https://schema.org" "@graph" (slice $website $org) -}}
 <script type="application/ld+json">{{ $site | jsonify | safeJS }}</script>
 {{- else -}}
@@ -24,7 +24,7 @@
 {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" (add (len $crumbs) 1) "name" .Title "item" .Permalink) -}}
 {{- $type := "WebPage" -}}
 {{- if .IsSection }}{{ $type = "CollectionPage" }}{{ else if and .IsPage .Parent (not .Parent.IsHome) }}{{ $type = "TechArticle" }}{{ end -}}
-{{- $node := dict "@type" $type "name" .Title "description" (.Description | default "") "inLanguage" "sv" "url" .Permalink -}}
+{{- $node := dict "@type" $type "name" .Title "description" (.Description | default "") "inLanguage" site.Language.Lang "url" .Permalink -}}
 {{- /* Dates only when the page has them: never year 1 (SEO-T1). */ -}}
 {{- if not .Lastmod.IsZero }}{{ $node = merge $node (dict "dateModified" (.Lastmod.Format "2006-01-02")) }}{{ end -}}
 {{- if eq $type "TechArticle" -}}

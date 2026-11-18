@@ -1,0 +1,26 @@
+{{- /* The <url> entries of one language's sitemap (layouts/sitemap.xml, and every language in
+       layouts/sitemapindex.xml on a multilingual site, B-337): Hugo's pages minus the ones marked noindex
+       (front matter or a cascade, SEO-T2), with lastmod only where a page has a real date (SEO-T1), and
+       the page's hreflang alternates where it has a translation. The solar method page is kept out of
+       every list (build.list: never) but belongs in the sitemap (SEO-T16), so it is added by path.
+       Usage: partial "sitemap-urls.html" site */ -}}
+{{- $pages := where .Pages "Sitemap.Disable" "ne" true -}}
+{{- with .GetPage "/solcell-metod" }}{{ if ne .Sitemap.Disable true }}{{ $pages = $pages | append . }}{{ end }}{{ end -}}
+  {{- range $pages }}
+    {{- if and .Permalink (not .Params.noindex) }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- /* A page built from data the build fetches (front matter lastmodData: a data file whose `at` is
+           when it was made, e.g. new_repeaters, B-362) changes with that data, not with its text. */ -}}
+    {{- $at := "" }}{{ with .Params.lastmodData }}{{ with index hugo.Data . }}{{ $at = .at | default "" }}{{ end }}{{ end -}}
+    {{- if $at }}
+    <lastmod>{{ (time.AsTime $at).UTC.Format "2006-01-02" }}</lastmod>
+    {{- else if not .Lastmod.IsZero }}
+    <lastmod>{{ .Lastmod.Format "2006-01-02" }}</lastmod>
+    {{- end }}
+    {{- range partial "hreflang.html" . }}
+    <xhtml:link rel="alternate" hreflang="{{ .lang }}" href="{{ .href }}"/>
+    {{- end }}
+  </url>
+    {{- end }}
+  {{- end }}

@@ -1405,3 +1405,5 @@ other = "New repeaters in the county"
 [nya_i_lanet_count]
 one = "1 in the last week"
 other = "{{ .Count }} in the last week"
+[og_locale]
+other = "en_US"
