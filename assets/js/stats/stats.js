@@ -35,10 +35,11 @@ export function lastHeard(nodes, isOutside = null) {
   return last;
 }
 
-export function formatCount(n) {
+// The decimal sign follows the page's language (B-337): a comma in Swedish, a point in English.
+export function formatCount(n, lang = globalThis.document?.documentElement.lang || "sv") {
   if (!Number.isFinite(n)) return "–";
   if (n >= 10000) return `${Math.round(n / 1000)}k`;
-  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(".", ",")}k`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(".", lang.startsWith("sv") ? "," : ".")}k`;
   return String(n);
 }
 

@@ -36,3 +36,8 @@ test("lastHeard: the newest lastSeen in the area, leaving out foreign and outsid
   assert.equal(lastHeard(nodes), 500);
   assert.equal(lastHeard([]), 0);
 });
+
+test("formatCount: a decimal point on an English page (B-337)", () => {
+  assert.equal(formatCount(1234, "en"), "1.2k");
+  assert.equal(formatCount(1234, "sv"), "1,2k");
+});

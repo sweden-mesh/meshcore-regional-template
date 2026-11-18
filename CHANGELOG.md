@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.68.1 — 2026-11-18
+
+- Anti-AI-design review 22: /nytt/ lists its posts without running numbers (`numbered: false` on a
+  section); the radio values' and the packet counts' decimal sign follows the page's language
+  ("869.618 MHz" in English, `mt_decimal`; `formatCount` in js/stats/stats.js).
+- CI: `COMPARE_BASE` moved to v0.68.1 (regional output changes on purpose: /nytt/).
+
 ## v0.68.0 — 2026-11-18
 
 - **Languages** (B-337): a site can add English under `/en/` with a `[languages]` block; Swedish stays at

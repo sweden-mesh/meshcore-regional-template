@@ -4,6 +4,7 @@ description: "Nya versioner av MeshCore, MeshMapper, MQTT Observer och EasySkyMe
 date: 2026-11-18
 lastmod: 2026-11-18
 outputs: ["html"]
+numbered: false   # news, not steps: no 01, 02 (anti-AI review 22)
 groups:   # one H2 per source (layouts/section.html); each post names its `group` (CONTENT-SV-31)
   - {key: meshcore, title: "MeshCore"}
   - {key: meshmapper, title: "MeshMapper"}

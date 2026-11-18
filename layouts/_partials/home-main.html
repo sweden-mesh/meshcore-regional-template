@@ -123,7 +123,7 @@
         {{- /* The numbers as of the build, in the HTML itself (CONTENT-SV-30); stats.js makes them live. */ -}}
         {{- $sb := partial "stats-build.html" $.Page -}}
         {{- $fmt := dict -}}
-        {{- range $k, $v := $sb }}{{ if and (ne $k "at") (ne $k "last") }}{{ $s := "–" }}{{ if ge $v 10000 }}{{ $s = printf "%dk" (int (math.Round (div (float $v) 1000))) }}{{ else if ge $v 1000 }}{{ $s = replace (printf "%.1fk" (div (float $v) 1000)) "." "," }}{{ else if ge $v 0 }}{{ $s = string $v }}{{ end }}{{ $fmt = merge $fmt (dict $k $s) }}{{ end }}{{ end -}}
+        {{- range $k, $v := $sb }}{{ if and (ne $k "at") (ne $k "last") }}{{ $s := "–" }}{{ if ge $v 10000 }}{{ $s = printf "%dk" (int (math.Round (div (float $v) 1000))) }}{{ else if ge $v 1000 }}{{ $s = replace (printf "%.1fk" (div (float $v) 1000)) "." (T "mt_decimal") }}{{ else if ge $v 0 }}{{ $s = string $v }}{{ end }}{{ $fmt = merge $fmt (dict $k $s) }}{{ end }}{{ end -}}
         <dl class="stat-grid">
           <div><dt>{{ T "stat_repeaters" }}</dt><dd data-stat="repeaters">{{ $fmt.repeaters | default "–" }}</dd><dd class="stat-out" data-stat-out="repeaters"{{ with $sb.repeatersOut }}>{{ replace (T "stat_outside") "{n}" (index $fmt "repeatersOut") }}{{ else }} hidden>{{ end }}</dd></div>
           <div><dt>{{ T "stat_observers" }}</dt><dd data-stat="online">{{ $fmt.online | default "–" }}</dd><dd class="stat-out" data-stat-out="online"{{ with $sb.onlineOut }}>{{ replace (T "stat_outside") "{n}" (index $fmt "onlineOut") }}{{ else }} hidden>{{ end }}</dd></div>

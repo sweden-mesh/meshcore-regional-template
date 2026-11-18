@@ -5,6 +5,7 @@ url: /en/news/
 date: 2026-11-18
 lastmod: 2026-11-18
 outputs: ["html"]
+numbered: false   # news, not steps: no 01, 02 (anti-AI review 22)
 groups:
   - {key: meshcore, title: "MeshCore"}
   - {key: meshmapper, title: "MeshMapper"}

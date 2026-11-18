@@ -5,7 +5,8 @@
     {{ with .Content }}<div class="prose">{{ partial "scopes.html" . }}</div>{{ end }}
     {{- /* A section with `groups` in its front matter (a list of {key, title}) lists its pages
            under one H2 per group, by each page's `group`; pages without a listed group come
-           last, under "Fler guider" (SEO-T9). Without `groups`, one list as before. */}}
+           last, under "Fler guider" (SEO-T9). Without `groups`, one list as before. `numbered: false`
+           drops the running numbers where the pages are no sequence (/nytt/, anti-AI review 22). */}}
     {{- $pages := .Pages.ByWeight }}
     {{- $lists := slice }}
     {{- with .Params.groups }}
@@ -24,7 +25,7 @@
     {{ with .title }}<h2 class="guide-group">{{ . }}</h2>{{ end }}
     <ol class="guide-grid">
       {{ range .pages }}{{ $n = add $n 1 }}
-        <li><a href="{{ .RelPermalink }}"><span class="guide-head"><span class="eyebrow">{{ printf "%02d" $n }}</span> <strong>{{ .Title }}</strong></span>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
+        <li><a href="{{ .RelPermalink }}"><span class="guide-head">{{ if ne $.Params.numbered false }}<span class="eyebrow">{{ printf "%02d" $n }}</span> {{ end }}<strong>{{ .Title }}</strong></span>{{ with .Description }}<span class="muted">{{ . }}</span>{{ end }}</a></li>
       {{ end }}
     </ol>
     {{- end }}
