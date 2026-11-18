@@ -42,13 +42,18 @@
   {{- end -}}
   {{- with $links }}{{ $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "lan_local_title" (dict "Short" "Sverige")) (T "lan_se_local_intro") (delimit . "")) }}{{ end -}}
   {{- $items := slice }}{{ $seen := slice -}}
-  {{- range site.Params.chats }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end }}{{ end -}}
-  {{- range site.Params.links }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end }}{{ end -}}
+  {{- /* The national chats and links carry a "Nationell" tag, as the counties' sites below carry
+         their county (B-345). */ -}}
+  {{- $natTag := T "lan_se_national_tag" -}}
+  {{- $nat := slice }}{{ range site.Params.chats }}{{ $nat = $nat | append . }}{{ end }}{{ range site.Params.links }}{{ $nat = $nat | append . }}{{ end -}}
+  {{- range $nat }}{{ if not (in $seen .url) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a> <small>%s</small></li>" .url (.name | htmlEscape) $natTag) }}{{ end }}{{ end -}}
   {{- /* One community site per county (B-326): the county file's `community`, never its other groups,
          and never one of our own regional sites (a county's `site`). */ -}}
   {{- $own := slice }}{{ range partialCached "lan.html" . "lan" }}{{ with .site }}{{ $own = $own | append . }}{{ end }}{{ end -}}
   {{- range partialCached "lan.html" . "lan" }}{{ $short := .short }}{{ with .community }}{{ if and .url (not (in $seen .url)) (not (in $own .url)) }}{{ $seen = $seen | append .url }}{{ $items = $items | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a> <small>%s</small></li>" .url (.name | htmlEscape) ($short | htmlEscape)) }}{{ end }}{{ end }}{{ end -}}
   {{- with site.GetPage "/gemenskap" }}{{ $items = $items | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink (T "gem_all")) }}{{ end -}}
-  {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul class=\"lan-all-groups\">%s</ul>" (T "section_community") (T "lan_se_groups_intro") (delimit $items "")) -}}
+  {{- /* Between the text and the links, the template's pitch (B-345): a group can run its own
+         local site on it. */ -}}
+  {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><p>%s</p><ul class=\"lan-all-groups\">%s</ul>" (T "section_community") (T "lan_se_groups_intro") (T "lan_se_template" (dict "URL" "https://github.com/sweden-mesh/meshcore-regional-template") | markdownify) (delimit $items "")) -}}
 {{- end -}}
 {{- return $cols -}}

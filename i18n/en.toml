@@ -1165,6 +1165,10 @@ other = "The chat channels differ between counties. [Choose your county]({{ .URL
 other = "The whole country uses the region (scope) `se`, and every county also has a region of its own. The test channel for the whole country is `#test-se`; repeaters do not answer there automatically yet. The map below shows the repeaters and observers heard across the country. [Choose your county]({{ .URL }}) for its region and channels."
 [lan_se_local_intro]
 other = "These pages apply to the whole country: how the regions fit together, which channels there are and how to send your first message."
+[lan_se_national_tag]
+other = "National"
+[lan_se_template]
+other = "Host your own local site with [this template]({{ .URL }}) and run its content yourselves."
 [lan_se_groups_intro]
 other = "This is where people using MeshCore across the country meet, and the local groups in the counties. Ask for help, find others who build and hear what is happening in the network."
 [sol_lan_why]
