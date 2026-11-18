@@ -4,6 +4,23 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.61.0 — 2026-11-18
+
+- **Glossary links**: on every guide page the first use of each glossary word links to its entry on
+  `/guider/ordlista/`, with the entry's first sentence as the link's title; dotted underline in the
+  text's own colour. Built at render time (`_partials/glossary.html`, before `scopes.html`) from the
+  glossary's front matter `terms` (anchor, word forms, optional `before`/`after` context for plain
+  Swedish words like *direkt* and *väg*). Headings, links, code, buttons, `<dt>` labels and county
+  spans are never touched. Checked by `scripts/check-glossary.mjs` (in `check.sh`).
+- **Header at mid widths** (B-338): header text 12.5 % smaller; the search button and the county
+  button no longer shrink while the menu is unfolded, so the menu folds to ☰ instead of clipping
+  "Sök" and its "/" hint. A regional site with the county switch no longer overlaps the theme and
+  colour-blind buttons below 40em. New `scripts/check-header-browser.mjs` (CI): 768–1600 px in
+  32 px steps at 100/110/125 % zoom, nothing overlaps, wraps or clips.
+- T-Deck: transmit power 22 dBm (SX1262), from LilyGO's T-Deck UnitTest source.
+- No script changes: **no CSP hash changes**. Regional output changes (guides, header CSS):
+  `COMPARE_BASE` moved to v0.61.0.
+
 ## v0.60.0 — 2026-11-18
 
 - **Länets kort** (CONTENT-SV-17): `/kort/`, noindex and out of the sitemap, one A4 in Chrome: radio

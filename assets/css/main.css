@@ -204,6 +204,8 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 @media (min-width: 40em) { .map-section, .sections, .about { max-width: none; width: min(100rem, 94vw); padding-left: 0; padding-right: 0; } }
 /* The text columns share the boxes' and the map's width (operator 2026-11-14). */
 .site-header { border-bottom: 0; padding-top: 1.25rem; padding-bottom: 1.25rem; min-height: calc(2.5rem + 44px); } /* the toggles' 44 px, reserved before JS shows them (SEO-T5) */
+/* The header's text 12.5 % smaller than the body's, so the menu, the search and the county fit (B-338). */
+.site-header { font-size: .875rem; }
 .site-header nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
 .site-header nav a:hover { color: var(--fg); }
 .map-panel { display: flex; flex-direction: column; gap: .4rem; font-family: var(--font-body); }
@@ -329,6 +331,10 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 .prose h2 { font-size: 1.5rem; margin: 2.5rem 0 .5rem; letter-spacing: -.01em; }
 .prose h3 { font-size: 1.15rem; margin: 1.75rem 0 .4rem; }
 .prose a { color: var(--accent); text-underline-offset: 2px; }
+/* A glossary word (glossary.html): the text's own colour with a dotted underline, so the first use
+   of each word links to the glossary without turning the page blue. */
+.prose a.gloss { color: inherit; text-decoration: underline dotted var(--muted); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.prose a.gloss:hover { color: var(--accent); text-decoration-color: currentColor; }
 .photo { margin: 1.25rem 0; }
 .photo img { display: block; max-width: 100%; max-height: 32rem; width: auto; height: auto; border-radius: var(--radius-sm); }
 .photo figcaption { margin-top: .35rem; font-size: .85rem; color: var(--muted); }
@@ -397,7 +403,7 @@ td, th { vertical-align: top; }
 @media (max-width: 40em) {
   .site-header:has(.lan-toggle) { gap: .5rem; }
   .site-header:has(.lan-toggle) .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .site-header:has(.lan-toggle) :is(.cvd-toggle, .motion-toggle) { margin-left: 0; }
+  .site-header:has(.lan-toggle) :is(.cvd-toggle, .motion-toggle), .site-header:has(.lan-toggle) .theme-toggle:not([hidden]) ~ .cvd-toggle { margin-left: 0; }
   .lan-toggle { padding: 0 .5rem; }
   .lan-toggle span { max-width: 7.5rem; }
 }
@@ -409,7 +415,7 @@ td, th { vertical-align: top; }
 @media (max-width: 40em) { .site-header .nav-wide { display: none; } .site-header .nav-narrow { display: block; } }
 /* With script (menu.js) the wide menu folds when the row does not fit, measured instead of at a
    fixed width: unfolded, nothing in the row may shrink or wrap, so an overflow is measurable. */
-.site-header.js-nav:not(.nav-collapsed) > .brand, .site-header.js-nav:not(.nav-collapsed) > .nav-wide { flex-shrink: 0; white-space: nowrap; }
+.site-header.js-nav:not(.nav-collapsed) > :is(.brand, .nav-wide, .search-open, .lan-toggle) { flex-shrink: 0; white-space: nowrap; }
 .site-header.js-nav .nav-wide { flex-wrap: nowrap; }
 .site-header.nav-collapsed .nav-wide { display: none; }
 .site-header.nav-collapsed .nav-narrow { display: block; }

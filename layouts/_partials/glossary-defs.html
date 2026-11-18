@@ -1,0 +1,12 @@
+{{- /* The glossary's short definitions, for glossary.html: entry id -> the first sentence of the
+  paragraph under its heading, as plain text. Usage: partialCached "glossary-defs.html" $glossaryPage "glossary" */ -}}
+{{- $defs := dict -}}
+{{- $html := string .Content -}}
+{{- range $t := .Params.terms -}}
+  {{- with findRESubmatch (printf `(?s)<h2[^>]*\sid="?%s"?[\s>].*?</h2>\s*<p>(.*?)</p>` $t.id) $html 1 -}}
+    {{- $text := index (index . 0) 1 | plainify | htmlUnescape | strings.TrimSpace -}}
+    {{- with findRE `^.*?[.!?](?:\s|$)` $text 1 }}{{ $text = index . 0 | strings.TrimSpace }}{{ end -}}
+    {{- $defs = merge $defs (dict $t.id $text) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $defs -}}

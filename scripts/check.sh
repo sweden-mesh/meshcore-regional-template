@@ -10,6 +10,7 @@ hugo --gc --minify --panicOnWarning
 pagefind --site public --quiet
 cd ..
 htmltest --conf .htmltest.yml
+node scripts/check-glossary.mjs
 scripts/check-overrides.sh
 scripts/check-national.sh
 scripts/guide-titles.sh

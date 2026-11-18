@@ -33,6 +33,9 @@ jobs:
         run: |
           npm i --no-save --no-package-lock puppeteer-core@24
           PUPPETEER=puppeteer-core CHROME="$(command -v google-chrome)" node scripts/check-national-browser.mjs
+      # The header at 768–1600 px and 100/110/125 % zoom (B-338): nothing overlaps, wraps or clips.
+      - name: Header at every width
+        run: PUPPETEER=puppeteer-core CHROME="$(command -v google-chrome)" node scripts/check-header-browser.mjs
 
   # National mode (params.national) must leave every regional site's output unchanged: build the
   # example site and meshcore-jkp.se with COMPARE_BASE and with this commit, and compare public/.
@@ -41,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.169.0
-      COMPARE_BASE: v0.60.0
+      COMPARE_BASE: v0.61.0
     steps:
       - uses: actions/checkout@v4
         with:

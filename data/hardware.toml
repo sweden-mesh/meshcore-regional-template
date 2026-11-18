@@ -123,12 +123,13 @@
   makerUrl = "https://lilygo.cc/"
   type = "handenhet med tangentbord"
   chip = "ESP32-S3 + SX1262"
+  txPower = "22 dBm (högst, SX1262)"
   battery = "2000 mAh"
   price = "Pris i november 2026: 65–90 euro (europeisk prislista)"
   pros = ["Tangentbord och styrkula, används utan telefon med MeshCores fristående firmware", "T-Deck-firmwaren är gratis och de flesta funktioner kostar inget (MeshCore FAQ)"]
   cons = ["Djupare kartzoom och serverhantering kräver en upplåsningskod för 10 USD per enhet (MeshCore FAQ)", "T-Deck-firmwaren är inte öppen källkod (MeshCore FAQ)"]
   warnings = []
-  sources = [{ name = "LilyGO wiki, T-Deck (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck/" }, { name = "LilyGO GitHub, T-Deck", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "MeshCore FAQ, 2.2, 4.9 and 5.7", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  sources = [{ name = "LilyGO wiki, T-Deck (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck/" }, { name = "LilyGO GitHub, T-Deck", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "LilyGO GitHub, T-Deck UnitTest (SX1262, RADIO_TX_POWER 22 dBm, range −17 to 22 dBm)", url = "https://github.com/Xinyuan-LilyGO/T-Deck/blob/9aac147a313975ad063594b3fe11e28a96d94936/examples/UnitTest/UnitTest.ino#L366" }, { name = "MeshCore FAQ, 2.2, 4.9 and 5.7", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
   image = { file = "lilygo-tdeck.jpg", alt = "LilyGO T-Deck, en handenhet med skärm och tangentbord som visar MeshCore" }
 
 [[companion]]

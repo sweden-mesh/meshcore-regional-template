@@ -13,7 +13,7 @@
     <p class="lan-proposal" data-r-proposal hidden>{{ T "lan_proposal_page" (dict "Name" (partial "r.html" (dict "page" . "key" "name" "value" "")) "Scope" (partial "r.html" (dict "page" . "key" "scope" "value" "")) "URL" "https://github.com/zombiefredrik/meshcore-se-regioner") | safeHTML }}</p>
     {{- end }}{{ end }}
     {{ partial "toc.html" . }}
-    <div class="prose">{{ partial "scopes.html" .Content }}</div>
+    <div class="prose">{{ partial "scopes.html" (partial "glossary.html" (dict "page" . "html" .Content)) }}</div>
     {{ partial "source.html" . }}
     {{- $pages := .CurrentSection.Pages.ByWeight -}}
     {{- /* Entries with a category (troubleshooting) page within it. */ -}}

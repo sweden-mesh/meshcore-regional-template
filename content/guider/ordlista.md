@@ -6,6 +6,48 @@ weight: 110
 group: start
 date: 2026-11-13
 lastmod: 2026-11-18
+# The words a guide links to this list on first use (layouts/_partials/glossary.html): the anchor,
+# the word forms as a regular expression (case-insensitive; (?-i:...) for acronyms), and where a
+# common word only means the term in one phrase, the words that must come before or after it.
+# Order matters: a longer term goes before a shorter one inside it (privat kanal before kanal).
+terms:
+  - { id: advert, match: 'advert(s|en|et|ar|arna)?' }
+  - { id: auto-svar, match: 'auto-svar(et|en)?' }
+  - { id: bootloader, match: 'bootloader(n|ns)?|(?-i:DFU)' }
+  - { id: bw, match: '(?-i:BW)|bandbredd(en)?' }
+  - { id: companion, match: 'companion(en|s|er|erna)?' }
+  - { id: cr, match: '(?-i:CR)|kodningshastighet(en)?' }
+  - { id: dbi, match: '(?-i:dBi|dBd)' }
+  - { id: direkt, match: 'direkt', after: '\s+längs' }
+  - { id: duty-cycle, match: 'duty\s+cycle(n)?' }
+  - { id: erp, match: '(?-i:ERP)' }
+  - { id: firmware, match: 'firmware(n|ns)?' }
+  - { id: flood, match: 'flood(a|as|ar|ade|ad|at|en|et|s)?' }
+  - { id: forinstallning, match: 'förinställning(en|ar|arna)?|preset(s)?' }
+  - { id: fresnelzon, match: 'fresnelzon(en|er|erna)?' }
+  - { id: hashtag-kanal, match: 'hashtag-?kanal(en|er|erna)?' }
+  - { id: hemregion, match: 'hemregion(en|er)?' }
+  - { id: hopp, match: 'hopp(et|en)?' }
+  - { id: iata, match: '(?-i:IATA)(-kod(en|er)?)?' }
+  - { id: privat-kanal, match: 'privat(a)?\s+kanal(en|er|erna)?' }
+  - { id: testkanal, match: 'testkanal(en|er|erna)?' }
+  - { id: kanal, match: 'kanal(en|er|erna)?' }
+  - { id: lbt, match: '(?-i:LBT)' }
+  - { id: lora, match: '(?-i:LoRa)' }
+  - { id: mqtt, match: '(?-i:MQTT)' }
+  - { id: nod, match: 'nod(en|er|erna)?' }
+  - { id: observator, match: 'observatör(en|er|erna)?' }
+  - { id: path-hash, match: 'path\s+hash(en)?|väg-id(t|n)?' }
+  - { id: public, match: '(?-i:Public)' }
+  - { id: region-default, match: 'standardregion(en)?' }
+  - { id: region, match: 'region(en|er|erna)?' }
+  - { id: repeater, match: 'repeater(n|ns)?|repeatrar(na|nas)?' }
+  - { id: room-server, match: 'room\s+server(n|s)?' }
+  - { id: sensor, match: 'sensor(n|er|erna)?' }
+  - { id: sf, match: '(?-i:SF)' }
+  - { id: sandeffekt, match: 'sändeffekt(en)?' }
+  - { id: vag, match: 'vägen|väg', before: 'längs\s+(den\s+)?' }
+  - { id: webbflasher, match: 'webbflasher(n|ns)?' }
 ---
 Vanliga frågor finns under [Frågor](../../fragor/). Ord som har en egen guide länkar dit.
 

@@ -1,0 +1,28 @@
+{{- /* Glossary links: on a guide page, the first use of each word in the glossary
+  (/guider/ordlista/, its front matter's `terms`) links to its entry, with the entry's first sentence
+  as the title. Headings, links, code, buttons, the settings boxes' labels (dt) and the county spans are never touched, nor the
+  glossary itself. Runs before scopes.html, whose soft hyphens would split the words.
+  Usage: partial "glossary.html" (dict "page" . "html" .Content); returns the HTML. */ -}}
+{{- $p := .page -}}
+{{- $h := string .html -}}
+{{- $g := site.GetPage "/guider/ordlista" -}}
+{{- if and $g $p.IsPage (eq $p.Section "guider") (ne $p $g) $g.Params.terms -}}
+  {{- $defs := partialCached "glossary-defs.html" $g "glossary" -}}
+  {{- /* What may not hold a link: a whole element of these kinds (each closed by its own end tag), or any one tag. Wrapped in NUL
+    marks, the HTML splits into text (even pieces) and the rest (odd pieces). */ -}}
+  {{- $keep := `(?s)<h1[\s>].*?</h1>|<h2[\s>].*?</h2>|<h3[\s>].*?</h3>|<h4[\s>].*?</h4>|<h5[\s>].*?</h5>|<h6[\s>].*?</h6>|<a[\s>].*?</a>|<pre[\s>].*?</pre>|<code[\s>].*?</code>|<kbd[\s>].*?</kbd>|<dt[\s>].*?</dt>|<button[\s>].*?</button>|<summary[\s>].*?</summary>|<label[\s>].*?</label>|<select[\s>].*?</select>|<textarea[\s>].*?</textarea>|<script[\s>].*?</script>|<style[\s>].*?</style>|<svg[\s>].*?</svg>|<figcaption[\s>].*?</figcaption>|<span[^>]*\sdata-r[^>]*>.*?</span>|<[^>]*>` -}}
+  {{- range $g.Params.terms -}}
+    {{- $re := printf `(?i)(?P<pre>(?:^|[^\p{L}\p{N}])%s)(?P<term>%s)(?P<post>%s(?:$|[^\p{L}\p{N}]))` (.before | default "") .match (.after | default "") -}}
+    {{- $title := index $defs .id | default "" -}}
+    {{- $a := printf `${pre}<a class="gloss" href="%s#%s"%s>${term}</a>${post}` $g.RelPermalink .id (cond (ne $title "") (printf ` title="%s"` (replace (htmlEscape $title) "$" "$$")) "") -}}
+    {{- $out := "" -}}{{- $done := false -}}
+    {{- range $i, $s := split (replaceRE $keep "\x00${0}\x00" $h) "\x00" -}}
+      {{- if and (not $done) (eq (mod $i 2) 0) (findRE $re $s 1) -}}
+        {{- $s = replaceRE $re $a $s 1 -}}{{- $done = true -}}
+      {{- end -}}
+      {{- $out = printf "%s%s" $out $s -}}
+    {{- end -}}
+    {{- $h = $out -}}
+  {{- end -}}
+{{- end -}}
+{{- return $h -}}
