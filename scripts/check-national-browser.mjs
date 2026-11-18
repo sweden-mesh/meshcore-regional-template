@@ -27,7 +27,8 @@ await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const base = `http://127.0.0.1:${server.address().port}`;
 
 // Every shared page with county spans (county pages carry their own values and switch by opening
-// the other county's page, so they are not switched in place).
+// the other county's page, so they are not switched in place). An area page (B-360) names its
+// county's values on purpose, whatever is chosen, so it is left out too.
 const pages = [];
 (function walk(dir, rel) {
   for (const name of readdirSync(dir)) {
@@ -35,7 +36,7 @@ const pages = [];
     if (statSync(f).isDirectory()) walk(f, `${rel}${name}/`);
     else if (name === "index.html") {
       const html = readFileSync(f, "utf8");
-      if (/<html[^>]*data-lan-page>/.test(html) && /data-r=|data-r-channels|data-r-groups/.test(html)) pages.push(rel || "");
+      if (/<html[^>]*data-lan-page>/.test(html) && /data-r=|data-r-channels|data-r-groups/.test(html) && !/class=lan-area/.test(html)) pages.push(rel || "");
     }
   }
 })(ROOT, "");
