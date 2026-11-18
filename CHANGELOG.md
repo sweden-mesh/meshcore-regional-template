@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.56.0 — 2026-11-18
+
+- **Six new questions** (CONTENT-SV-21) under `/fragor/`: how long a message can be (160 bytes), whether
+  the app costs anything, how many hops, whether you need line of sight, which frequency MeshCore uses in
+  Sweden, and abroad; each links its guide and its source.
+- No layout or script changes: **no CSP hash changes**.
+
 ## v0.55.0 — 2026-11-18
 
 - **Administrera repeatern från appen** (B-336j): a new guide, `/guider/fjarradministration/`: log in as
