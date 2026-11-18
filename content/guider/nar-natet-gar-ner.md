@@ -2,7 +2,7 @@
 title: "MeshCore när el och mobilnät går ner"
 seoTitle: "MeshCore vid strömavbrott och kris"
 description: "Vad som fungerar i MeshCore när elen och mobilnätet går ner, vad som inte gör det, och vad du kan göra redan nu. MeshCore ersätter inte 112."
-weight: 12
+weight: 30
 group: start
 date: 2026-11-18
 lastmod: 2026-11-18
@@ -35,8 +35,8 @@ Var de står ser du på [kartan](/#karta) medan internet fungerar.
 4. **Testa nu, inte när det händer.** Skriv `test` i testkanalen och se vem som svarar, se
    [Första meddelandet](../forsta-meddelandet/).
 5. **Spara dina kontakter** i appen medan nätet är lugnt, så att du kan skriva direkt till dem.
-6. **Skriv upp länets värden på papper**: förinställning, region och kanaler från
-   [ditt läns sida](/lan/).
+6. **Skriv upp värdena på papper**: förinställning, region och kanaler, som de står i
+   [Kom igång med en companion](../companion/).
 
 ## När det händer
 

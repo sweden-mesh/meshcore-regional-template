@@ -79,7 +79,7 @@ check index.html '<strong>Ny här?</strong><a href=/guider/skaffa-hardvara/>' "n
 check index.html '<strong>Radioamatör?</strong><a href=/guider/for-radioamatorer/>' "newcomer: Radioamatör? leads to the radio amateurs' guide"
 check index.html '<strong>Vill du bygga?</strong><a href=/guider/bygg-en-repeater/>' "newcomer: Vill du bygga? leads to the build guide"
 check guider/index.html '<h2 class=guide-group>Radio och antenner' "newcomer: the hub has the Radio och antenner group"
-for g in forsta-meddelandet for-radioamatorer antenner bygg-en-repeater; do check guider/index.html "href=/guider/$g/" "newcomer: the hub lists $g"; done
+for g in forsta-meddelandet for-radioamatorer skaffa-hardvara/antenn bygg-en-repeater; do check guider/index.html "href=/guider/$g/" "newcomer: the hub lists $g"; done
 check guider/forsta-meddelandet/index.html '>#test-se-xxx</code>' "newcomer: the test channel is #test-<scope> from the region"
 check guider/companion/index.html '>#test-se-xxx</code>' "newcomer: the companion guide names the region's test channel"
 check guider/flasha-firmware/index.html 'id=companion' "newcomer: the flashing guide has a companion section"

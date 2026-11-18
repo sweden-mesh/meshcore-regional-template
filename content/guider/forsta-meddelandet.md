@@ -2,7 +2,7 @@
 title: "Första meddelandet"
 seoTitle: "Ditt första MeshCore-meddelande"
 description: "Skicka ditt första meddelande i MeshCore: kontakter, direktmeddelanden och kanaler, kvittenser, var du testar och varför tystnad oftast är normalt."
-weight: 36
+weight: 22
 group: start
 date: 2026-11-16
 lastmod: 2026-11-17

@@ -89,7 +89,7 @@ mer än de ger. Se [Sändningstid är gemensam](../etikett/).
 ## Vad du kan bidra med
 
 Det du kan om antenner, master och placering är just det ett meshnät saknar oftast. En repeater
-högt upp med fri sikt gör mer för nätet än tio companions. Se [Antenner](../antenner/), [Sätt
+högt upp med fri sikt gör mer för nätet än tio companions. Se [Antenner](../skaffa-hardvara/antenn/), [Sätt
 upp en repeater](../repeater/) och [Bli nodvärd](../../bli-nodvard/).
 
 ## En repeater som är uppe slår en perfekt som inte är det

@@ -1,0 +1,40 @@
+{{- /* {{< hw "companion" >}} / "repeater" / "antenna": the hardware table (B-333, B-334, B-335) from
+  data/hardware.toml. Four columns: the product (picture, name → the maker's product page, the
+  maker, type, the figures, price, sources), pros, cons and warnings, each traceable to the row's
+  sources. Below 48em every row is a card. A picture is shown only with a licence recorded in the
+  data (credits: {{< hw-credits >}}); it is resized and served from this site, and a click opens it
+  larger in a <dialog> (js/lightbox.js). */ -}}
+{{- $kind := .Get 0 -}}
+{{- $items := index hugo.Data.hardware $kind -}}
+{{- $anyImg := false }}{{ range $items }}{{ with .image }}{{ $anyImg = true }}{{ end }}{{ end -}}
+<div class="hw">
+<table class="hw-table">
+  <caption class="visually-hidden">{{ T (print "hw_caption_" $kind) }}</caption>
+  <thead><tr><th scope="col">{{ T "hw_product" }}</th><th scope="col">{{ T "hw_pros" }}</th><th scope="col">{{ T "hw_cons" }}</th><th scope="col">{{ T "hw_warnings" }}</th></tr></thead>
+  <tbody>
+  {{- range $it := $items }}
+    <tr>
+      <th scope="row" class="hw-product">
+        {{- with .image }}{{ with resources.Get (print "images/hardware/" .file) }}
+          {{- $thumb := .Fit "320x240 webp q80" }}{{ $big := .Fit "1200x900 webp q82" }}
+        <button type="button" class="hw-thumb" data-full="{{ $big.RelPermalink }}" data-w="{{ $big.Width }}" data-h="{{ $big.Height }}" aria-label="{{ T "hw_bigger" }}"><img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ $it.name }}" loading="lazy"></button>
+        {{- end }}{{ end }}
+        <a class="hw-name ext" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
+        <span class="hw-maker">{{ if .makerUrl }}<a href="{{ .makerUrl }}" class="ext" target="_blank" rel="noopener">{{ .maker }}</a>{{ else }}{{ .maker }}{{ end }} · {{ .type }}</span>
+        {{- $facts := slice }}
+        {{- range $k := slice "chip" "connects" "battery" "power" "txPower" "gain" "band" "connector" "placement" }}{{ with index $it $k }}{{ $facts = $facts | append (printf "%s: %s" (T (print "hw_" $k)) .) }}{{ end }}{{ end }}
+        {{- with $facts }}<span class="hw-facts">{{ delimit . " · " }}</span>{{ end }}
+        {{- with .price }}<span class="hw-price">{{ . }}</span>{{ end }}
+        {{- with .sources }}<span class="hw-src">{{ T "hw_sources" }} {{ range $i, $s := . }}{{ if $i }}, {{ end }}<a href="{{ $s.url }}" class="ext" target="_blank" rel="noopener">{{ $s.name }}</a>{{ end }}</span>{{ end }}
+      </th>
+      {{- range $k := slice "pros" "cons" "warnings" }}
+      <td data-label="{{ T (print "hw_" $k) }}">{{ with index $it $k }}<ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ else }}<span class="muted">–</span>{{ end }}</td>
+      {{- end }}
+    </tr>
+  {{- end }}
+  </tbody>
+</table>
+</div>
+{{- if $anyImg }}{{ with resources.Get "js/lightbox.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
+<script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" data-close="{{ T "close" }}"></script>
+{{- end }}{{ end -}}

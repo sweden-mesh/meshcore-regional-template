@@ -21,7 +21,7 @@ få ström:
 | Flashas | `.uf2`-fil som kopieras till kortet | i webbläsaren |
 
 Inget av dem kräver att du kan radio. Vill du hellre köpa en färdig repeater: se [Skaffa
-hårdvara](../skaffa-hardvara/#en-egen-repeater).
+hårdvara](../skaffa-hardvara/repeater/).
 
 > [!CAUTION] Antennen först
 > Skruva fast antennen innan radion får ström. En LoRa-radio som sänder utan antenn kan gå sönder.
@@ -36,7 +36,7 @@ sol året runt, om panel och batteri är rätt valda.
 - **Kitet XIAO nRF52840 & Wio-SX1262** från Seeed Studio. Det kostade 13,49 USD hos Seeed i
   november 2026, med en liten antenn men utan låda och batteri.
 - **En antenn för 868 MHz.** Kitets lilla antenn duger för att prova på bordet. Ute behövs en
-  bättre; se [Antenner](../antenner/).
+  bättre; se [Antenner](../skaffa-hardvara/antenn/).
 - **Ett litiumjonbatteri** (3,7 V) med skyddskrets, till exempel 18650-celler.
 - **En tät låda** (IP65 eller bättre) med kabelgenomföringar.
 - För sol: panel och laddare enligt [Solnoder](../solnoder/), inte bara en enkel laddmodul.
@@ -85,7 +85,7 @@ USB. Det drar för mycket för att gå länge på batteri: ställ det där det f
 
 - **Heltec WiFi LoRa 32 V4**, i 868 MHz-utförandet. Det kostade 429 kr hos Pileup i november
   2026 (annonsen säger inte vilket band; kontrollera innan du köper).
-- **En antenn för 868 MHz**, med rätt kontakt för kortet. Se [Antenner](../antenner/#kontakter).
+- **En antenn för 868 MHz**, med rätt kontakt för kortet. Se [Antenner](../skaffa-hardvara/antenn/#kontakter).
 - **En USB-strömadapter** och en kabel som räcker fram.
 - **En tät låda** om den ska stå ute.
 
@@ -94,7 +94,7 @@ USB. Det drar för mycket för att gå länge på batteri: ställ det där det f
 Heltec V4 har ett effektsteg efter radiokretsen och sänder starkare än `set tx` säger. Uppmätt
 gav `set tx 22` cirka 28 dBm, vilket med en vanlig antenn är över gränsen 500 mW ERP. Med en
 antenn på 3 dBi är `set tx 16` (cirka 25 dBm) inom gränsen. Har du en antenn med högre vinst
-behöver du gå lägre. Uträkningen står i [För radioamatörer](../for-radioamatorer/#antennvinsten-räknas-in).
+behöver du gå lägre. Uträkningen står i [MeshCore-inställningar i Sverige](../radioinstallningar/#sändeffekt-och-antenn).
 
 ```text {title="Sändeffekt för Heltec V4 med en antenn på 3 dBi"}
 set tx 16

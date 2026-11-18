@@ -1,0 +1,374 @@
+# The hardware tables (B-333, B-334, B-335), shown by {{< hw "companion" >}}, "repeater" and "antenna".
+# Collected 2026-11-18 from the makers' own pages and datasheets, the MeshCore FAQ, the official
+# flasher's device list (https://flasher.meshcore.io/config.json) and one named review. Every
+# figure, pro, con and warning comes from the row's sources; a field without a source is left out.
+# url is the maker's own product, store or documentation page (no shops, no affiliate links).
+# Prices: Swedish shops in November 2026 where found, else a European or the maker's price; they change.
+# Pictures only with a licence that allows reuse (today: Seeed's wiki images, CC BY-SA 4.0), downloaded
+# to assets/images/hardware/ and credited by {{< hw-credits >}}:
+#   image = { file, source (the page it was shown on), by, licence, licenceUrl, date }.
+
+[[companion]]
+  name = "Seeed SenseCAP Card Tracker T1000-E"
+  url = "https://www.seeedstudio.com/SenseCAP-Card-Tracker-T1000-E-for-Meshtastic-p-5913.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "spårare"
+  chip = "nRF52840 + LR1110"
+  connects = "Bluetooth 5.x, USB (magnetisk laddkabel/pogo-stift)"
+  battery = "700 mAh"
+  price = "Pris i november 2026: 35–50 euro (europeisk prislista)"
+  pros = ["IP65-klassad", "Inbyggd GNSS (AG3335)", "Färdig enhet i kortformat"]
+  cons = ["Laddare/adapter ingår inte", "Laddas bara mellan 0 och 45 °C", "Tillverkaren anger 2–5 km räckvidd beroende på antenn och miljö"]
+  warnings = ["Tillverkarens sida ger motstridiga uppgifter om batteritid (\"upp till 2 dagar\" och \"flera dagar\")"]
+  sources = [{ name = "Seeed Studio, T1000-E produktsida", url = "https://www.seeedstudio.com/SenseCAP-Card-Tracker-T1000-E-for-Meshtastic-p-5913.html" }, { name = "MeshCore FAQ (listed as supported hardware)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "RAK WisMesh Tag"
+  url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/overview"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "spårare"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth (BLE), 4-stifts laddkontakt"
+  battery = "1000 mAh"
+  price = "Pris i november 2026: 667 kr (Pileup)"
+  pros = ["Tunn, färdigmonterad spårare", "Inbyggda antenner för LoRa, BLE och GNSS", "Inbyggd GNSS"]
+  cons = ["Ingen skärm", "Levereras med Meshtastic, måste flashas om till MeshCore"]
+  warnings = []
+  sources = [{ name = "RAK Docs, WisMesh Tag översikt", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/overview" }, { name = "RAK Docs, WisMesh Tag quick start", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/quickstart" }, { name = "MeshCore FAQ, 7.3 (OTA-safe bootloader, WisMesh Tag)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "Seeed Wio Tracker L1 Pro"
+  url = "https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "spårare"
+  chip = "nRF52840 + SX1262 (Wio-SX1262)"
+  connects = "Bluetooth 5.0"
+  battery = "2000 mAh"
+  price = "Pris i november 2026: 725 kr (Limmared)"
+  pros = ["1,3-tums OLED-skärm", "Ingång för solpanel (5 V, 1 A)", "Inbyggd GNSS (L76K)", "Kan uppdateras trådlöst (OTA) med MeshCores säkrare bootloader"]
+  cons = []
+  warnings = []
+  sources = [{ name = "Seeed Studio, Wio Tracker L1 Pro produktsida", url = "https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html" }, { name = "Seeed wiki, Wio Tracker L1", url = "https://wiki.seeedstudio.com/wio_tracker_l1_node/" }, { name = "MeshCore FAQ, 7.1.1 (L1 Pro OTA)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "seeed-wio-tracker-l1-pro.png", source = "https://wiki.seeedstudio.com/wio_tracker_l1_node/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[companion]]
+  name = "Heltec WiFi LoRa 32 V3"
+  url = "https://heltec.org/project/wifi-lora-32-v3/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "kort"
+  chip = "ESP32-S3 + SX1262"
+  connects = "Bluetooth 5 (LE), wifi, USB-C"
+  txPower = "21±1 dBm"
+  pros = ["0,96-tums OLED-skärm", "Inbyggd batteriladdning"]
+  cons = ["Batteri ingår inte", "Wifi och Bluetooth kan inte köras samtidigt (inget PSRAM, enligt Heltec)"]
+  warnings = ["Mycket liten Bluetooth-antenn på kortet, räckvidd bara några fot, så anslutningen till telefonen tappas lätt (MeshCore FAQ)", "Wifi-companion kräver att du kompilerar firmware själv (MeshCore FAQ)"]
+  sources = [{ name = "Heltec, WiFi LoRa 32 V3", url = "https://heltec.org/project/wifi-lora-32-v3/" }, { name = "MeshCore FAQ, 6.6 and 7.6", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "Heltec WiFi LoRa 32 V4"
+  url = "https://heltec.org/project/wifi-lora-32-v4/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "kort"
+  chip = "ESP32-S3 (R2 or R8) + SX1262"
+  connects = "Bluetooth 5 (LE), wifi, USB-C"
+  txPower = "28±1 dBm (863–928 MHz)"
+  pros = ["Solpanelsingång 4,7–6 V", "Kontakt för GNSS-modul", "Finns med eller utan OLED-skärm"]
+  cons = []
+  warnings = ["Ställ in 10 dBm i appen för att få 22 dBm ut; 22 dBm i appen ger 28 dBm (MeshCore FAQ)", "Fel inställd sändareffekt kan skada radion permanent (MeshCore FAQ)"]
+  sources = [{ name = "Heltec, WiFi LoRa 32 V4", url = "https://heltec.org/project/wifi-lora-32-v4/" }, { name = "MeshCore FAQ, 7.7 (Heltec V4 transmit power)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "Heltec Mesh Node T114"
+  url = "https://heltec.org/project/mesh-node-t114/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "kort"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth 5.0 (LE), USB-C"
+  txPower = "21±1 dBm"
+  pros = ["Låg strömförbrukning: ca 11 µA i djupsömn", "Valfri 1,14-tums TFT-skärm", "Valfri GNSS-modul (L76K)"]
+  cons = ["Batteri ingår inte", "GNSS är tillbehör"]
+  warnings = []
+  sources = [{ name = "Heltec, Mesh Node T114", url = "https://heltec.org/project/mesh-node-t114/" }, { name = "MeshCore FAQ (supported hardware; OTA settings for T114)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "Heltec Wireless Tracker (V1.1)"
+  url = "https://heltec.org/project/wireless-tracker/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "spårare"
+  chip = "ESP32-S3 + SX1262"
+  connects = "Bluetooth 5, wifi"
+  txPower = "21±1 dBm"
+  price = "Pris i november 2026: 451 kr (Pileup; annonsen säger inte vilket band)"
+  pros = ["Inbyggd GNSS (UC6580, L1 + L2/L5)", "0,96-tums TFT-skärm"]
+  cons = ["Batteri ingår inte"]
+  warnings = []
+  sources = [{ name = "Heltec, Wireless Tracker", url = "https://heltec.org/project/wireless-tracker/" }, { name = "Heltec, Wireless Tracker V2 (newer version: 28±1 dBm, solar input)", url = "https://heltec.org/project/wireless-tracker-v2/" }]
+
+[[companion]]
+  name = "LilyGO T-Deck"
+  url = "https://lilygo.cc/products/t-deck"
+  maker = "LilyGO"
+  makerUrl = "https://lilygo.cc/"
+  type = "handenhet med tangentbord"
+  chip = "ESP32-S3 + SX1262"
+  battery = "2000 mAh"
+  price = "Pris i november 2026: 65–90 euro (europeisk prislista)"
+  pros = ["Tangentbord och styrkula, används utan telefon med MeshCores fristående firmware", "T-Deck-firmwaren är gratis och de flesta funktioner kostar inget (MeshCore FAQ)"]
+  cons = ["Djupare kartzoom och serverhantering kräver en upplåsningskod för 10 USD per enhet (MeshCore FAQ)", "T-Deck-firmwaren är inte öppen källkod (MeshCore FAQ)"]
+  warnings = []
+  sources = [{ name = "LilyGO wiki, T-Deck (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck/" }, { name = "LilyGO GitHub, T-Deck", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "MeshCore FAQ, 2.2, 4.9 and 5.7", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "LilyGO T-Deck Plus"
+  url = "https://lilygo.cc/products/t-deck-plus-meshtastic"
+  maker = "LilyGO"
+  makerUrl = "https://lilygo.cc/"
+  type = "handenhet med tangentbord"
+  chip = "ESP32-S3 (ESP32-S3FN16R8) + SX1262"
+  battery = "2000 mAh"
+  price = "Pris i november 2026: 85–120 euro (europeisk prislista)"
+  pros = ["Inbyggd GPS (MIA-M10Q) och inbyggt batteri", "Tangentbord, används utan telefon med MeshCores fristående firmware"]
+  cons = ["Grove-porten är upptagen av GPS-modulen (LilyGO GitHub)", "Djupare kartzoom och serverhantering kräver en upplåsningskod för 10 USD per enhet (MeshCore FAQ)"]
+  warnings = []
+  sources = [{ name = "LilyGO wiki, T-Deck Plus (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck-plus/" }, { name = "LilyGO GitHub, T-Deck (Plus: Grove pins used by GPS)", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "MeshCore FAQ, 4.9", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "LilyGO T-Beam V1.2"
+  url = "https://lilygo.cc/products/t-beam"
+  maker = "LilyGO"
+  makerUrl = "https://lilygo.cc/"
+  type = "kort"
+  chip = "ESP32 + SX1262 eller SX1276 (beroende på variant)"
+  connects = "Bluetooth 4.2, wifi"
+  price = "Pris i november 2026: 45–70 euro (europeisk prislista)"
+  pros = ["Hållare för 18650-batteri"]
+  cons = ["Finns med olika LoRa-chip (SX1262/SX1276/SX1278), kontrollera variant före köp (LilyGO GitHub)"]
+  warnings = ["Fel inställd sändareffekt kan skada PA-steget (LilyGO GitHub)"]
+  sources = [{ name = "LilyGO GitHub, LoRa-Series (T-Beam V1.2 examples per chip; PA warning)", url = "https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series" }, { name = "LilyGO, T-Beam SoftRF (search result only)", url = "https://lilygo.cc/products/t-beam-softrf" }]
+
+[[companion]]
+  name = "RAK WisMesh TAP V2"
+  url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/overview/"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "handenhet med pekskärm"
+  chip = "ESP32-S3 + SX1262 (WisBlock RAK3312)"
+  connects = "Bluetooth (BLE), wifi-antenn, USB-C"
+  battery = "3600 mAh"
+  price = "Pris i november 2026: 1 572 kr (Pileup, 868 MHz)"
+  pros = ["Stor TFT-pekskärm med skärmtangentbord", "Inbyggd GNSS (RAK12501)", "SD-kort för kartor"]
+  cons = ["Ska laddas med 5 V / 2 A väggladdare; laddning från datorns USB rekommenderas inte (RAK)"]
+  warnings = ["Finns inte i MeshCores flasherlista (2026-11-18)", "Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
+  sources = [{ name = "RAK Docs, WisMesh TAP V2 översikt", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/overview/" }, { name = "RAK Docs, WisMesh TAP V2 quick start", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/quickstart/" }, { name = "MeshCore flasher device list", url = "https://flasher.meshcore.io/config.json" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+
+[[repeater]]
+  name = "Seeed XIAO nRF52840 & Wio-SX1262 Kit"
+  url = "https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "byggsats"
+  chip = "nRF52840 + SX1262"
+  power = "USB-C 5 V eller 4,2 V batteri på BAT-ingången (laddström 50/100 mA); standby under 5 µA"
+  price = "Pris i november 2026: 13,49 USD hos Seeed"
+  pros = ["Standby under 5 µA enligt tillverkaren", "Kan laddas från USB-C och ta ett 4,2 V-batteri", "Antenn ingår i kitet", "Stöds av MeshCores OTA-uppdatering och OTAFIX-bootloadern"]
+  cons = ["Ingen låda ingår", "Inget batteri ingår", "Tillverkaren anger ingen sändareffekt"]
+  warnings = ["Uppdatera inte med NRF-OTA (Seeeds wiki: kan göra enheten helt död); använd OTAFIX-bootloadern som MeshCore rekommenderar"]
+  sources = [{ name = "Seeed produktsida", url = "https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html" }, { name = "Seeed wiki: Get Started with XIAO nRF52840 & Wio-SX1262 Kit", url = "https://wiki.seeedstudio.com/xiao_nrf52840&_wio_SX1262_kit_for_meshtastic/" }, { name = "MeshCore FAQ (7.1, 7.3)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "seeed-xiao-nrf52840-wio-sx1262-kit.webp", source = "https://wiki.seeedstudio.com/xiao_nrf52840&_wio_SX1262_kit_for_meshtastic/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[repeater]]
+  name = "Heltec WiFi LoRa 32 V4 (nätdriven)"
+  url = "https://heltec.org/project/wifi-lora-32-v4/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "kort"
+  chip = "ESP32-S3 (S3R2 eller S3R8) + SX1262"
+  power = "USB-C; 3,3–4,4 V litiumbatteri; solingång 4,7–6 V"
+  txPower = "28±1 dBm (863–928 MHz)"
+  price = "Pris i november 2026: 429 kr (Pileup; annonsen säger inte vilket band)"
+  pros = ["Hög uteffekt, 28±1 dBm på 868 MHz", "Har både batteri- och solingång", "Strömsnålt läge under 20 µA enligt tillverkaren (läget anges inte)"]
+  cons = ["Tillverkaren anger inte vilket läge 20 µA gäller"]
+  warnings = ["MeshCore FAQ: ställ in 10 dBm (set tx 10) för cirka 22 dBm ut; 22 dBm ger cirka 28 dBm (0,5–0,6 W)", "MeshCore FAQ: fel effektinställning kan skada radion permanent"]
+  sources = [{ name = "Heltec produktsida", url = "https://heltec.org/project/wifi-lora-32-v4/" }, { name = "MeshCore FAQ 7.7 (TX power for Heltec V4)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[repeater]]
+  name = "RAK WisBlock Meshtastic Starter Kit (RAK4631)"
+  url = "https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "byggsats"
+  chip = "nRF52840 + SX1262 (RAK4631)"
+  power = "USB; SOLAR-kontakt till TP4054 linjär Li-jon-laddare (ingen MPPT); RAK4631 sover på 2,0 µA"
+  txPower = "22 dBm"
+  pros = ["Sover på 2,0 µA (RAK4631-databladet)", "Solkontakt på basplattan", "Tre basplattor att välja mellan: RAK19003, RAK19007, RAK19001", "MeshCore stöder Ethernet via RAK13800"]
+  cons = ["Basplattan har ingen MPPT-laddning", "Ingen låda ingår", "Varianter med lös OLED kräver lödning"]
+  warnings = ["Enligt en kundrecension i RAK:s butik måste OLED-skärmen tas bort för att koppla in eller ur LiPo-batteriet", "MeshCore FAQ rekommenderar starkt OTAFIX-bootloadern för nRF52-enheter"]
+  sources = [{ name = "RAK store: WisBlock Meshtastic Starter Kit", url = "https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit" }, { name = "RAK4631 datablad", url = "https://docs.rakwireless.com/product-categories/wisblock/rak4631/datasheet/" }, { name = "MeshCore FAQ (1.2.1, 7.1, 7.8)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[repeater]]
+  name = "Seeed SenseCAP Solar Node P1-Pro (MeshCore)"
+  url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshcore-p-6741.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "färdig med sol"
+  chip = "nRF52840 (XIAO nRF52840 Plus) + SX1262 (Wio-SX1262)"
+  power = "Sol 5 W; 4 × 18650 à 3350 mAh"
+  txPower = "22 dBm (862–930 MHz)"
+  price = "Pris i november 2026: 1 495 kr för Meshtastic-versionen (Limmared), som flashas om; MeshCore-versionen cirka 135 euro i EU"
+  pros = ["Levereras med MeshCore repeater-firmware", "GPS (L76K) ingår", "5 W solpanel", "2 dBi gummiantenn ingår"]
+  cons = ["Tillverkaren anger ingen IP-klass", "Den medföljande antennen är bara 2 dBi"]
+  warnings = []
+  sources = [{ name = "Seeed produktsida (P1-Pro for MeshCore)", url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshcore-p-6741.html" }, { name = "Seeed wiki: Get started with MeshCore Solar Node", url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/" }]
+  image = { file = "seeed-sensecap-solar-node-p1.png", source = "https://wiki.seeedstudio.com/meshtastic_solar_node/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[repeater]]
+  name = "Seeed SenseCAP Solar Node P1"
+  url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-for-Meshtastic-LoRa-p-6425.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "färdig med sol"
+  chip = "nRF52840 (XIAO nRF52840 Plus) + SX1262 (Wio-SX1262)"
+  power = "Sol 5 W; 18650-batterier (button-top) köps separat"
+  txPower = "22 dBm (862–930 MHz)"
+  pros = ["Billigare än P1-Pro", "5 W solpanel", "2 dBi gummiantenn ingår"]
+  cons = ["Batterier ingår inte", "GPS ingår inte (XIAO L76K köps separat)", "Tillverkaren anger ingen IP-klass"]
+  warnings = []
+  sources = [{ name = "Seeed produktsida (P1)", url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-for-Meshtastic-LoRa-p-6425.html" }, { name = "Seeed wiki: Get started with MeshCore Solar Node", url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/" }]
+  image = { file = "seeed-sensecap-solar-node-p1.png", source = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[repeater]]
+  name = "RAK WisMesh Repeater Mini V2 (RAK10728 / RAK10729)"
+  url = "https://store.rakwireless.com/products/wismesh-repeater-mini-v2"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "färdig med sol"
+  chip = "RAK10728: nRF52840 + SX1262 (RAK4631); RAK10729: RAK3401 nRF52840-kärna + RAK13302 1 W LoRa"
+  power = "Inbyggd solpanel (W anges inte) + 3200 mAh Li-jon (3,7 V)"
+  txPower = "RAK10728: 22 dBm; RAK10729: 30 dBm"
+  price = "Pris i november 2026: 1 685 kr (Pileup)"
+  pros = ["IP67-låda", "Solpanel och batteri ingår", "Vägg- och stolpfäste", "RP-SMA-antennkontakt och WisMesh Blade-antenn ingår"]
+  cons = ["Tillverkaren anger inte solpanelens effekt", "Antennens förstärkning anges inte"]
+  warnings = []
+  sources = [{ name = "RAK store: WisMesh Repeater Mini V2", url = "https://store.rakwireless.com/products/wismesh-repeater-mini-v2" }, { name = "RAK docs: WisMesh Repeater Mini V2 översikt", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-repeater-mini-v2/overview/" }, { name = "RAK store: WisMesh Repeater Mini (V1, RAK10718)", url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater-mini" }]
+
+[[repeater]]
+  name = "Heltec MeshTower V2"
+  url = "https://heltec.org/project/meshtower/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "färdig med sol"
+  chip = "nRF52840 + SX1262"
+  power = "Sol 18 V / 10 W; 3 × 2800 mAh litium (spec-tabellen; annan text på sidan säger 3 × 3000 mAh)"
+  txPower = "30 dBm (produktsidan, 22 dBm-variant finns också); manualen: V2 21±1 dBm, V2H 28±1 dBm"
+  price = "Pris i november 2026: 109–129 USD direkt från Heltec, plus frakt och moms"
+  pros = ["Aluminiumlåda, IP66 (spec-tabellen)", "10 W solpanel", "5,5 dBi glasfiberantenn med N-kontakt ingår", "Extern SMA-antennport"]
+  cons = ["Tillverkarens uppgifter motsäger varandra om batteri (2800 eller 3000 mAh), IP-klass (IP66 eller IP65) och uteffekt"]
+  warnings = ["Kontrollera vilken variant (V2 eller V2H / 22 eller 30 dBm) du köper; tillverkarens sidor ger olika siffror"]
+  sources = [{ name = "Heltec produktsida (MeshTower V2)", url = "https://heltec.org/project/meshtower/" }, { name = "Heltec wiki: MeshTower V2 manual", url = "https://wiki.heltec.org/docs/devices/open-source-hardware/nrf52840-series/mesh-tower-v2/" }]
+
+[[repeater]]
+  name = "Elecrow ThinkNode M6 (868 MHz)"
+  url = "https://www.elecrow.com/thinknode-m6-outdoor-solar-power-for-lora-powered-by-nrf52840-supports-gps.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "färdig med sol"
+  chip = "nRF52840 + SX1262"
+  power = "Sol 6 W; 2 × 18650 (Panasonic), 7000 mAh; 21 µA avstängd"
+  price = "Pris i november 2026: cirka 80 USD hos Elecrow"
+  pros = ["IP65, −20 till 60 °C", "6 W solpanel", "GPS (L76K) och GPS-antenn ingår", "RP-SMA-kontakt för LoRa-antennen"]
+  cons = ["Tillverkaren anger ingen sändareffekt", "Packlistan nämner inga batterier", "CNX-recensionen: lådan går inte att öppna utan att skadas", "CNX-recensionen: bara väggfäste ingår, inget stolpfäste"]
+  warnings = ["Elecrows sida: den här LoRa-versionen stöder inte Meshtastic-firmware; flasha MeshCore själv", "CNX: enheter från AliExpress och Amazon kommer oftast utan firmware"]
+  sources = [{ name = "Elecrow produktsida", url = "https://www.elecrow.com/thinknode-m6-outdoor-solar-power-for-lora-powered-by-nrf52840-supports-gps.html" }, { name = "CNX Software: Mini review of the ThinkNode M6 (2026-03-17)", url = "https://www.cnx-software.com/2026/03/17/review-thinknode-m6-outdoor-solar-power-for-meshtastic/" }]
+
+[[repeater]]
+  name = "RAK WisMesh Repeater (RAK10721) med Solar Battery Lite"
+  url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "färdig med sol"
+  chip = "nRF52840 + SX1262 (RAK4631)"
+  power = "Solar Battery Lite RAK9154: 10 W panel, 5,2 Ah / 10,8 V (56,16 Wh); eller egen 5–16 V DC"
+  price = "Pris i november 2026: 5 077 kr (Pileup)"
+  pros = ["IP67-låda och kontakter", "Stort batteri: 56 Wh", "Vägg- och stolpfäste ingår", "Tar 5–16 V DC från egen sol- eller batterilösning"]
+  cons = ["Sol och batteri ingår bara i Solar Battery Lite-varianten", "Inget batteri i själva repeatern"]
+  warnings = ["RAK: med egen laddare krävs reglerad 12 V-utgång; RAK ansvarar inte för t.ex. kallstart med tomt batteri"]
+  sources = [{ name = "RAK store: WisMesh Repeater", url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater" }, { name = "RAK docs: WisMesh Repeater översikt", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-repeater/overview/" }, { name = "RAK4631 datablad", url = "https://docs.rakwireless.com/product-categories/wisblock/rak4631/datasheet/" }]
+
+[[antenna]]
+  name = "RAKARJ20 Flexible Whip Antenna 868 MHz (20 cm)"
+  url = "https://store.rakwireless.com/products/sma-male-915mhz-868mhz-whip-antenna-20cm"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "gummiantenn"
+  gain = "2 dBi"
+  band = "863–870 MHz"
+  connector = "SMA hane"
+  placement = "inomhus, utomhus"
+  pros = ["Liten och lätt: 200 mm, 25 g", "Böjlig gummiklädd pinne som tål hantering", "Rundstrålande, 360° horisontellt"]
+  cons = ["Låg förstärkning (2 dBi)"]
+  warnings = ["Tål högst 10 W in", "Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
+  sources = [{ name = "RAKARJ20 datablad (RAKwireless)", url = "https://docs.rakwireless.com/product-categories/accessories/rakarj20/datasheet/" }, { name = "RAK store produktsida", url = "https://store.rakwireless.com/products/sma-male-915mhz-868mhz-whip-antenna-20cm" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "RAKARG13 863–870 MHz 5.8 dBi Fiberglass Antenna"
+  url = "https://store.rakwireless.com/products/5-8dbi-fiber-glass-antenna"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "kollinjär (glasfiber)"
+  gain = "5.8 dBi"
+  band = "863–870 MHz"
+  connector = "N hane"
+  placement = "utomhus"
+  pros = ["Byggd för utomhusbruk med glasfiberhölje", "Rundstrålande, vertikalt polariserad", "Fästen för mastmontering ingår"]
+  cons = ["Lång: cirka 800 mm", "N-kontakt: kräver adapter eller kabel till SMA/RP-SMA-enheter"]
+  warnings = ["Den medföljande RP-SMA–N-kabeln är bara för inomhusbruk", "Medföljande kabel har RP-SMA; kontrollera att din enhet passar", "Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
+  sources = [{ name = "RAKARG13 datablad (RAKwireless)", url = "https://docs.rakwireless.com/product-categories/accessories/rakarg13/datasheet/" }, { name = "RAKARG13 översikt (RAKwireless)", url = "https://docs.rakwireless.com/product-categories/accessories/rakarg13/overview/" }, { name = "RAK store produktsida", url = "https://store.rakwireless.com/products/5-8dbi-fiber-glass-antenna" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "ALFA AOA-868-5ACM"
+  url = "https://www.alfa.com.tw/products/aoa-868-5acm"
+  maker = "ALFA Network"
+  makerUrl = "https://www.alfa.com.tw/"
+  type = "pinne"
+  gain = "5 dBi"
+  placement = "utomhus"
+  pros = ["Byggd för utomhusbruk enligt tillverkaren", "Rundstrålande"]
+  cons = []
+  warnings = ["Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
+  sources = [{ name = "ALFA Network produktsida", url = "https://www.alfa.com.tw/products/aoa-868-5acm" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "ALLNET ANT-868-14dbi-Yagi"
+  url = "https://shop-en.allnet.de/ALLNET-Antenne-868MHz-14dbi-Antenne-N-Female-YAGI-ANT-868/208821"
+  maker = "ALLNET GmbH Computersysteme"
+  makerUrl = "https://www.allnet.de/"
+  type = "riktantenn (Yagi)"
+  gain = "14 dBi"
+  band = "860–896 MHz"
+  connector = "N hona"
+  placement = "utomhus"
+  pros = ["Hög förstärkning: 14 dBi", "Smal lob (H 33°, E 30°) för en länk åt ett håll", "Tål vind upp till 200 km/h"]
+  cons = ["Stor: 1297 mm lång", "Riktad: täcker bara åt ett håll"]
+  warnings = ["Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
+  sources = [{ name = "ALLNET shop produktsida", url = "https://shop-en.allnet.de/ALLNET-Antenne-868MHz-14dbi-Antenne-N-Female-YAGI-ANT-868/208821" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "SECTRON AO-A868-MG3SRA2 (Magnet Mount MG3, 868 MHz)"
+  url = "https://eshop.sectron.eu/en/antenna-ism-magnet-mount-mg3-868-mhz-1-3-dbi-sma-m-ra-rg174-3m/p-13102/"
+  maker = "SECTRON s.r.o."
+  makerUrl = "https://www.sectron.cz/"
+  type = "magnetfot"
+  gain = "1.3 dBi"
+  band = "868 MHz (bandbredd ≤ 20 MHz)"
+  connector = "SMA hane, vinklad"
+  pros = ["Magnetfot: kan flyttas utan verktyg", "3 m kabel (RG174) ingår", "Rundstrålande, vertikalt polariserad"]
+  cons = ["Låg förstärkning (1.3 dBi)"]
+  warnings = ["Äldre datablad angav 3 dBi; aktuell uppgift är 1.3 dBi", "Finns inte i MeshCores officiella webbflasher; kontrollera innan du köper"]
+  sources = [{ name = "SECTRON e-shop produktsida", url = "https://eshop.sectron.eu/en/antenna-ism-magnet-mount-mg3-868-mhz-1-3-dbi-sma-m-ra-rg174-3m/p-13102/" }, { name = "SECTRON datablad (current, 1.3 dBi)", url = "https://eshop.sectron.eu/UserFiles/File/AO-A868-MG3SRA2_ism_antenna_datasheet4.pdf" }, { name = "SECTRON datablad (older, 3 dBi)", url = "https://eshop.sectron.eu/UserFiles/Image/AO-A868-MG3SRA2_ISM_antenna_datasheet.pdf" }, { name = "MeshCores webbflasher, enhetslistan", url = "https://flasher.meshcore.io/config.json" }]

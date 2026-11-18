@@ -1,0 +1,9 @@
+{{- /* {{< hw-credits >}}: who made each product picture in data/hardware.toml and under which licence
+  (B-333). The credits live with the picture in the data, so a picture cannot appear without its line:
+  image = { file, source (the page it came from), by, licence, licenceUrl, date }. */ -}}
+{{- $lines := slice -}}
+{{- range $kind := slice "companion" "repeater" "antenna" }}{{ range $it := index hugo.Data.hardware $kind }}{{ with $it.image }}
+  {{- $lic := .licence }}{{ with .licenceUrl }}{{ $lic = printf `<a href="%s" class="ext" target="_blank" rel="noopener">%s</a>` . ($lic | htmlEscape) }}{{ end -}}
+  {{- $lines = $lines | append (printf `<li>%s: <a href="%s" class="ext" target="_blank" rel="noopener">%s</a>, %s, %s</li>` ($it.name | htmlEscape) .source (.by | htmlEscape) $lic .date) -}}
+{{- end }}{{ end }}{{ end -}}
+{{- with $lines }}<details class="hw-credits"><summary>{{ T "hw_credits" }}</summary><ul>{{ delimit . "" | safeHTML }}</ul></details>{{ end -}}
