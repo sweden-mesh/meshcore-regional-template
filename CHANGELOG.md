@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.65.3 — 2026-11-18
+
+- CI only: `COMPARE_BASE` moved to v0.65.2, whose header CSS changes regional output on purpose. No
+  site output changes.
+
 ## v0.65.2 — 2026-11-18
 
 - **Header on narrow phones** (B-351 follow-up): "Välj region" is wider than "Välj län", so at 346 to
