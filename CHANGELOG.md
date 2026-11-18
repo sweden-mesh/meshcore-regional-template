@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.65.2 — 2026-11-18
+
+- **Header on narrow phones** (B-351 follow-up): "Välj region" is wider than "Välj län", so at 346 to
+  358 px (352 px, or 432 px at 125 % zoom) ☰ ended 1 to 7 px outside the screen. The search button
+  (also in the ☰ menu) now folds below 22.4em instead of 21em. Caught by `check-header-browser.mjs`.
+
 ## v0.65.1 — 2026-11-18
 
 - CI: `scripts/check-national-browser.mjs` leaves area pages (B-360) out of the county-switch check:
