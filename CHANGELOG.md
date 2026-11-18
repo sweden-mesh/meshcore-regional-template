@@ -4,6 +4,30 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.55.0 — 2026-11-18
+
+- **Administrera repeatern från appen** (B-336j): a new guide, `/guider/fjarradministration/`: log in as
+  admin over radio, also through other repeaters (the login goes as flood when no path is known), the
+  admin password, what stays USB-only per the CLI reference; linked from the USB console and the
+  repeater guide.
+- **The lou guide** (B-336h): the latest release (lou-18) and what lou-20 and lou-21 bring.
+- **Verktyg för dig som har en nod** (B-336o, B-336p): one heading per tool with a link and 2–3
+  sentences; MeshMapper added.
+- **The solar calculator** as a box at the top and the end of the solar guide (B-336e), new shortcode
+  `{{</* solar-cta */>}}`.
+- **The example hashtag channel follows the county** (B-336l): new shortcode `{{</* chat-example */>}}`
+  (a county's first channel, a regional site's first chat channel, else `#exempel`); national mode fills
+  it for the chosen county.
+- Första meddelandet: a flood advert at first start and after a rename, and why (B-336a); tests interrupt
+  the conversation (B-336b); shorter definitions (B-336c); "say roughly where you are" (B-336d).
+  Etikett: the 47-hour flood advert is the default and the recommendation (B-336n).
+- Guide order: naming before "Sätt upp en repeater" (B-336k), the own broker just before the glossary
+  (B-336m); `wideTables: true` in front matter makes a page's tables as wide as the text (B-336i, on
+  "Bygg en repeater").
+- Defaults: `firmware.picker` is `https://sweden-mesh.github.io/firmware/?lang=sv` (the lou picker, which
+  links the official flasher), `firmware.flasher` is `https://flasher.meshcore.io`.
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.54.0 — 2026-11-18
 
 - **Hardware in three pages with one table** (B-332…B-335): `/guider/skaffa-hardvara/` is a short hub;

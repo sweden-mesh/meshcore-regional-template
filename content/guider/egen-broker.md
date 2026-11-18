@@ -2,7 +2,7 @@
 title: "En egen broker för regionen"
 seoTitle: "En egen MQTT-broker för regionen?"
 description: "Du behöver ingen egen broker: den gemensamma fungerar för alla regioner. Vad en region får med en egen, vad den kostar och var instruktionerna finns."
-weight: 85
+weight: 108
 group: regioner
 date: 2026-11-16
 lastmod: 2026-11-18

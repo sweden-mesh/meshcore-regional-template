@@ -1,0 +1,8 @@
+{{- /* {{< solar-cta >}}: the solar calculator, hard to miss (B-336e): at the top and the end of the solar guide. */ -}}
+{{- with site.GetPage "/wizard/solcell" }}
+<div class="cta-box">
+  <p class="cta-title">{{ T "solar_cta_title" }}</p>
+  <p>{{ T "solar_cta_text" }}</p>
+  <p><a class="button" href="{{ .RelPermalink }}">{{ T "solar_cta_button" }}</a></p>
+</div>
+{{- end -}}

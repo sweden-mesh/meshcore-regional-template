@@ -1,7 +1,7 @@
 ---
 title: "Namnge din repeater"
 description: "Regionens namnförslag för repeatrar, hur långt ett namn får vara, och hur du namnger en companion."
-weight: 70
+weight: 49
 group: repeater
 source:
   title: "Vad är MeshCore? (avsnittet Namnge din enhet)"

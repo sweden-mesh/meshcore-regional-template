@@ -83,7 +83,7 @@ for g in forsta-meddelandet for-radioamatorer skaffa-hardvara/antenn bygg-en-rep
 check guider/forsta-meddelandet/index.html '>#test-se-xxx</code>' "newcomer: the test channel is #test-<scope> from the region"
 check guider/companion/index.html '>#test-se-xxx</code>' "newcomer: the companion guide names the region's test channel"
 check guider/flasha-firmware/index.html 'id=companion' "newcomer: the flashing guide has a companion section"
-check guider/companion/index.html 'href=https://meshcore.io/flasher' "newcomer: the companion guide sends companions to the web flasher"
+check guider/companion/index.html 'href=https://flasher.meshcore.io' "newcomer: the companion guide sends companions to the web flasher"
 check guider/skaffa-hardvara/index.html 'november 2026' "newcomer: the device ladder dates its prices"
 check markagare/index.html 'href=/bli-nodvard/' "landowner page: links to Bli nodvärd (B-305)"
 check bli-nodvard/index.html 'href=/markagare/' "Bli nodvärd: links to the landowner page (B-305)"

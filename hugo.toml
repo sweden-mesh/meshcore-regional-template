@@ -25,8 +25,8 @@
   zoom = 5                   # map start zoom
 
 [params.firmware]
-  picker = "https://sweden-mesh.github.io/firmware/"   # firmware images by board and release
-  flasher = "https://meshcore.io/flasher"              # the official web flasher (Web Serial)
+  picker = "https://sweden-mesh.github.io/firmware/?lang=sv"   # the lou firmware picker (lou only; it links the official flasher)
+  flasher = "https://flasher.meshcore.io"              # the official web flasher (Web Serial)
   flash = false              # true: the page /flasha/ flashes lou firmware from this site (B-298)
   flashIndex = "https://fw.meshcoresverige.se/"        # where fw/hosted.json and the images are (CORS GET)
 

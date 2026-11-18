@@ -4,7 +4,7 @@ description: "Alla delar på samma radiofrekvens. Enkla vanor som gör att näte
 weight: 90
 group: regioner
 date: 2026-11-12
-lastmod: 2026-11-17
+lastmod: 2026-11-18
 ---
 
 LoRa-nätet är en gemensam resurs. Bara en radio i taget kan sända på frekvensen inom hörhåll,
@@ -24,7 +24,8 @@ flera minuter) innan du skickar nästa.
 trafiken i {{< region "name" >}} i stället för att floodas över grannlänen. Se
 [Regioner](../regioner/).
 
-**Skicka adverts med måtta.** Noden skickar själv adverts med jämna mellanrum. Att skicka extra
+**Skicka adverts med måtta.** En repeater skickar själv en flood-advert var 47:e timme; det är
+firmwarens standard (`flood.advert.interval 47`) och det rekommenderade värdet. Att skicka extra
 behövs bara när något ändrats, som namn eller position.
 
 **Inga automatiska utskick.** Botar, bevakningar och scripts som skickar ofta äter sändningstid

@@ -320,6 +320,10 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 .lightbox img { display: block; max-width: 100%; max-height: calc(92dvh - 2px); width: auto; height: auto; }
 .lightbox-close { position: absolute; top: .5rem; right: .5rem; min-width: 44px; min-height: 44px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); color: var(--fg); font-size: 1.4rem; cursor: pointer; }
 .hw-credits { font-size: .85rem; color: var(--muted); margin-top: 2rem; }
+.cta-box { margin: 1.5rem 0; padding: 1rem 1.25rem; border: 2px solid var(--accent); border-radius: var(--radius-sm); }
+.cta-box p { margin: .4rem 0; }
+.prose .cta-box a.button { color: var(--bg); text-decoration: none; }
+.cta-title { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; }
 .page-meta { margin: 2.5rem 0 0; font-size: .9rem; color: var(--muted); }
 .prose { font-size: 1.05rem; line-height: 1.7; overflow-wrap: break-word; }
 .prose h2 { font-size: 1.5rem; margin: 2.5rem 0 .5rem; letter-spacing: -.01em; }
@@ -334,6 +338,7 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 .prose table:not(.table-wrap > table) { width: 100%; display: block; overflow-x: auto; }
 .prose .table-wrap { display: flex; overflow-x: auto; margin: 1rem 0; }
 .prose .table-wrap > table { margin: 0; }
+.wide-tables .prose .table-wrap > table { flex: 1; } /* front matter wideTables: tables as wide as the text (B-336i) */
 /* A soft shadow at an edge with more table beyond it, driven by the scroll position; browsers
    without scroll-driven animations show none and keep the scrollbar as the cue. */
 .table-wrap::before, .table-wrap::after { content: ""; position: sticky; flex: none; inline-size: .75rem; z-index: 1; pointer-events: none; opacity: 0; animation: table-shadow linear both; animation-timeline: scroll(self inline); }

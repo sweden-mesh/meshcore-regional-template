@@ -1270,3 +1270,11 @@ other = "Companions: product, good, less good and warnings"
 other = "Repeaters: product, good, less good and warnings"
 [hw_caption_antenna]
 other = "Antennas: product, good, less good and warnings"
+[solar_cta_title]
+other = "Work out your solar node step by step"
+[solar_cta_text]
+other = "Choose the tree line and the firmware, and the calculator works out the panel and battery that get through the winter in your county."
+[solar_cta_button]
+other = "Open the solar calculator"
+[chat_example]
+other = "#example"

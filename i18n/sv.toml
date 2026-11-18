@@ -1266,3 +1266,11 @@ other = "Companions: produkt, bra, mindre bra och varningar"
 other = "Repeatrar: produkt, bra, mindre bra och varningar"
 [hw_caption_antenna]
 other = "Antenner: produkt, bra, mindre bra och varningar"
+[solar_cta_title]
+other = "Räkna ut din solnod steg för steg"
+[solar_cta_text]
+other = "Välj trädlinje och firmware, så räknar kalkylatorn ut hur stor panel och hur stort batteri som klarar vintern i ditt län."
+[solar_cta_button]
+other = "Öppna solcellskalkylatorn"
+[chat_example]
+other = "#exempel"

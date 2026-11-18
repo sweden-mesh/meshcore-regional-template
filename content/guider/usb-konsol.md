@@ -9,7 +9,7 @@ source:
   license: "CC BY 4.0"
   changes: "Utbyggt till en egen guide med vanliga kommandon och felsökning."
 date: 2026-11-12
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 Repeatrar och room servers har ingen app för alla inställningar. De ställs in med korta
@@ -56,7 +56,8 @@ finns i MeshCore-projektets [kommandolista](https://docs.meshcore.io/cli_command
 Står repeatern i en mast kan du skicka samma kommandon via radio: lägg till den som kontakt i
 appen, logga in med administratörslösenordet och öppna dess kommandorad. Det fungerar så länge
 du når repeatern över nätet, men ta det försiktigt: ett fel radiokommando kan göra att du inte
-når den igen utan att klättra upp.
+når den igen utan att klättra upp. Steg för steg: [Administrera repeatern från
+appen](../fjarradministration/).
 
 ## Om något krånglar
 

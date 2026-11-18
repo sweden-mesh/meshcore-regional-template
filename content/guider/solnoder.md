@@ -6,14 +6,12 @@ description: "Så fungerar en solcellsdriven MeshCore-repeater i Sverige: varfö
 weight: 40
 group: sol
 date: 2026-11-14
-lastmod: 2026-11-17
+lastmod: 2026-11-18
 ---
 
-## Räkna på din egen plats
+{{< solar-cta >}}
 
-Den här sidan förklarar varför och hur. Vill du bara veta hur stor panel och hur många batterier
-du behöver där du bor, använd [solcellskalkylatorn](/wizard/solcell/): välj trädlinje och
-firmware, så räknar den ut resten för ditt län.
+Den här sidan förklarar varför och hur, för dig som vill läsa.
 
 ## Varför sol?
 
@@ -353,3 +351,5 @@ celler från tillverkarnas datablad och publicerade tester; fälttestet i Jönk�
 november 2026.
 
 Har din solnod redan tystnat? Se [Solnoden dör på vintern](/felsokning/sol-dor-pa-vintern/).
+
+{{< solar-cta >}}

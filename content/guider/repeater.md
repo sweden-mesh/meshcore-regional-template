@@ -150,5 +150,7 @@ reboot
 
 ## Nästa steg
 
+- [Administrera repeatern från appen](../fjarradministration/): ändra inställningar när den sitter
+  uppe, utan USB-kabel
 - [Regioner](../regioner/): vad regionerna gör med trafiken
 - Kartan på [startsidan](/): se din repeater och vilka den når

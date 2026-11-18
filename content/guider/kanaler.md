@@ -5,7 +5,7 @@ description: "Public, hashtag-kanaler och privata kanaler: vem som kan läsa vad
 weight: 80
 group: regioner
 date: 2026-11-12
-lastmod: 2026-11-17
+lastmod: 2026-11-18
 ---
 
 En **kanal** är ett gemensamt rum: alla som har kanalens nyckel kan läsa och skriva där. Utöver
@@ -17,7 +17,7 @@ Public
 : Kanalen alla radior har från början. Den har en känd nyckel, så **alla kan läsa den**.
 
 Hashtag-kanaler
-: Kanaler vars namn börjar med `#`, till exempel `#jonkoping`. Nyckeln räknas fram ur namnet,
+: Kanaler vars namn börjar med `#`, till exempel {{< chat-example >}}. Nyckeln räknas fram ur namnet,
   så den som vet namnet kan gå med, och den som vet namnet kan också läsa. Det är så lokala och
   ämnesvisa kanaler fungerar.
 

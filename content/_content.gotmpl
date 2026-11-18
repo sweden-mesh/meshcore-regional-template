@@ -40,7 +40,7 @@
             "Test" .test "Iata" (lower .iata) "Prefix" .prefix "Place" (.place | default (T "lan_place_example"))
             "Channels" $names "Chat" $chat "Groups" .groups "Chats" site.Params.chats "Wanted" .wanted
             "DataURL" (site.Params.lanData | default "")
-            "Picker" (site.Params.firmware.picker | default "https://sweden-mesh.github.io/firmware/") -}}
+            "Picker" (site.Params.firmware.picker | default "https://sweden-mesh.github.io/firmware/?lang=sv") -}}
       {{- range $p := slice
             (dict "path" "kom-igang" "title" (T "lan_start_title" (dict "Short" $c.short)) "desc" (T "lan_start_desc" (dict "Name" $c.name "Scope" $c.scope)))
             (dict "path" "ingen-svar-pa-test" "title" (T "lan_test_title" (dict "Test" $c.test)) "desc" (T "lan_test_desc" (dict "Test" $c.test)))

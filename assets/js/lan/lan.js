@@ -22,6 +22,7 @@ export function valuesFor(data, c) {
     channels: [...c.channels.map((ch) => ch.name), c.test].join(", "),
   };
   if (c.place) v.place = c.place;
+  if (c.channels.length) v.chat = c.channels[0].name; // the example chat channel (B-336l)
   return v;
 }
 

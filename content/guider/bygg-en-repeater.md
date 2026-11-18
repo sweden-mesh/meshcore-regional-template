@@ -6,6 +6,7 @@ weight: 48
 group: repeater
 date: 2026-11-16
 lastmod: 2026-11-18
+wideTables: true
 ---
 
 Den här guiden bygger hårdvaran. Hur du sedan ställer in repeatern, väljer plats och kontrollerar

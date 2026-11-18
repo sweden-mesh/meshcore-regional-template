@@ -19,8 +19,12 @@ position. Andra ser dig först när de har hört din advert, och du ser dem för
 deras. Skicka en från appen. Två sorter finns:
 
 - **Nollhopp** (zero hop): hörs bara av dem som når din radio direkt.
-- **Flood**: förs vidare av repeatrarna och når hela nätet. Bra första gången, men skicka den inte
-  ofta: varje flood tar sändningstid för alla.
+- **Flood**: förs vidare av repeatrarna och når hela nätet. Skicka den inte ofta: varje flood tar
+  sändningstid för alla.
+
+Skicka en **flood-advert första gången radion startar, och varje gång du byter namn**. Andras
+kontaktlistor och kartan lär sig din radio, och dess nya namn, bara från en advert, och en
+nollhopps-advert når bara dem som hör dig direkt.
 
 ## 2. Kontakter
 
@@ -30,9 +34,9 @@ stund: se [Jag hör inga repeatrar](../../felsokning/hor-inga-repeatrar/).
 
 ## 3. Testa i testkanalen
 
-Har regionen repeatrar med [auto-svar]({{< param "firmware.picker" >}}#f=ar&install=update), testa i regionens egen
+Har regionen repeatrar med [auto-svar](../firmware-lou/), testa i regionens egen
 testkanal {{< testchannel >}}. Annars använder du den vanliga `#test`. Inte i chattkanalerna: där
-läser andra, och varje test kostar dem sändningstid.
+läser andra, och ett test avbryter samtalet som pågår där.
 
 1. Lägg till kanalen i appen med namnet, inklusive `#`.
 2. Skriv `test` i testkanalen och skicka.
@@ -47,12 +51,12 @@ minuter, så ett nytt test direkt ger inga fler svar.
 ## 4. Direktmeddelande eller kanal
 
 Direktmeddelande
-: Till en kontakt. Bara mottagaren kan läsa det. När mottagarens radio har tagit emot det skickar
+: Bara mottagaren kan läsa det. När mottagarens radio har tagit emot det skickar
   den en kvittens, och appen visar att meddelandet kom fram. Kommer ingen kvittens försöker appen
   igen, och kan till sist skicka det som flood.
 
 Kanal
-: Till alla som har kanalen. Ingen kvittens: du vet inte vem som läste. Appen kan visa att en
+: Ingen kvittens: du vet inte vem som läste. Appen kan visa att en
   repeater hörde ditt meddelande och sände det vidare, men inte hur långt det kom.
 
 Det första svaret till en ny kontakt tar ofta längre tid. Radion vet inte vägen än, så
@@ -74,8 +78,9 @@ Ett uteblivet svar bevisar inte att meddelandet inte kom fram. Det säger bara a
 kommit tillbaka till dig.
 
 > [!TIP] Säg hej
-> När testet fungerar: skriv något i regionens chattkanal och berätta var du finns. Det är så
-> man hittar dem som bor nära, och de som vet var nätet behöver fler repeatrar.
+> När testet fungerar: skriv något i regionens chattkanal och berätta ungefär var du finns, en ort
+> eller ett område, aldrig en adress. Då ser andra att nätet når dit, och du hittar dem som bor
+> nära och de som vet var nätet behöver fler repeatrar.
 
 ## Nästa steg
 

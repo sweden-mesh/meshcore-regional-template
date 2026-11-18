@@ -1,0 +1,10 @@
+{{- /* {{< chat-example >}}: an example chat channel that follows the region (B-336l): a county's own
+  first channel on its pages and, in national mode, filled by script for the chosen county; a
+  regional site's first channel that is not a test channel; else a neutral example. */ -}}
+{{- $neutral := T "chat_example" -}}
+{{- $v := "" -}}
+{{- with partial "lan-page.html" .Page }}{{ with .channels }}{{ $v = (index . 0).name }}{{ end }}{{ end -}}
+{{- if and (not $v) (not site.Params.national) }}{{ range site.Params.channels }}{{ if and (not $v) (not (hasPrefix .name "#test")) }}{{ $v = .name }}{{ end }}{{ end }}{{ end -}}
+{{- if $v }}<code>{{ $v }}</code>
+{{- else if and site.Params.national (not (partial "lan-page.html" .Page)) }}<code data-r="chat">{{ $neutral }}</code>
+{{- else }}<code>{{ $neutral }}</code>{{ end -}}

@@ -16,7 +16,7 @@
     <li><a href="https://flasher.meshcore.io/" class="ext" target="_blank" rel="noopener">{{ T "fl_official_vanilla" }}</a>: {{ T "fl_official_vanilla_d" }}</li>
     <li><a href="https://observer.gessaman.com/" class="ext" target="_blank" rel="noopener">{{ T "fl_official_observer" }}</a>: {{ T "fl_official_observer_d" }}</li>
   </ul>
-  <p>{{ T "fl_official_ours" (dict "Picker" ($f.picker | default "https://sweden-mesh.github.io/firmware/")) | markdownify }}</p>
+  <p>{{ T "fl_official_ours" (dict "Picker" ($f.picker | default "https://sweden-mesh.github.io/firmware/?lang=sv")) | markdownify }}</p>
 </div>
 
 <form id="flasher" class="wizard fl" novalidate data-index="{{ $f.flashIndex }}" data-esptool="{{ $esptool.RelPermalink }}" data-t="{{ $t | jsonify }}">

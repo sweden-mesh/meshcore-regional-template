@@ -1,36 +1,68 @@
 ---
 title: "Verktyg för dig som har en nod"
 seoTitle: "Verktyg för MeshCore-nodägare"
-description: "Kartan, livetrafiken, firmware, fjärrstyrning, solcellskalkylatorn, platstestet, USB-konsolen och en egen broker: vad varje verktyg är till för och när du behöver det."
+description: "Kartan, MeshMapper, livetrafiken, firmware, fjärrstyrning, solcellskalkylatorn, platstestet, USB-konsolen och en egen broker: vad varje verktyg är till för och när du behöver det."
 weight: 90
 group: repeater
 date: 2026-11-18
 lastmod: 2026-11-18
 ---
+Har du en repeater eller en observatör är det här verktygen som hjälper dig. Under varje rubrik står
+vad verktyget gör och när du har nytta av det.
 
-Har du en repeater eller en observatör är det här verktygen på sidan som hjälper dig. Varje rad
-säger när du har nytta av det.
+## Kartan
 
-- **[Kartan](/#karta)**: se om din nod syns, vilka den hör och hur länkarna ser ut. Behöver du
-  hjälp att få upp den, läs [Din repeater på kartan](../visa-pa-kartan/).
-- **Livetrafiken** under kartan: ”Senaste paket” visar paketen när de hörs. Klicka på ett paket för
-  att se vilka noder det gick genom. Bra när du vill veta om din nod för vidare trafik.
-- **[Firmwareväljaren](https://sweden-mesh.github.io/firmware/)**: rätt firmware för ditt kort,
-  per version. Hur du installerar den står i [Flasha firmware](../flasha-firmware/).
-- **[Specialfirmware lou](../firmware-lou/)**: auto-svar på test, Observer som rapporterar till
-  kartan, och fjärrstyrning. Välj den om du vill att din repeater ska hjälpa nätet att mäta sig
-  självt.
-- **Fjärrstyrning**: ändra inställningar på repeatern utan att åka dit. Den kräver lou-firmware med
-  `rc`; [guidad installation](/wizard/repeater-guidad/) slår på den, och
-  [Specialfirmware lou](../firmware-lou/) förklarar hur den fungerar.
-- **[Snabbkonfiguration](/wizard/repeater-snabb/)** och
-  **[guidad installation](/wizard/repeater-guidad/)**: ställ in en repeater från webbläsaren över
-  USB, med regionens värden ifyllda.
-- **[Räkna på solcell](/wizard/solcell/)**: hur stor panel och hur stort batteri en repeater behöver
-  där du bor, för att klara vintern.
-- **[Bli nodvärd: testa din plats](/wizard/nodvard/)**: ett test av om en plats passar för en
-  repeater, innan du sätter upp den.
-- **[USB-konsolen](../usb-konsol/)**: skriv kommandon direkt till noden när du behöver något som
-  guiderna inte gör.
-- **[En egen broker](../egen-broker/)**: för en region som vill ta emot sina repeatrars data och
-  kommandon på en egen server.
+[Kartan på startsidan](/#karta) visar noderna som observatörerna har hört och länkarna mellan dem.
+Där ser du om din nod syns och vilka den hör. Syns den inte: [Din repeater på
+kartan](../visa-pa-kartan/).
+
+## MeshMapper
+
+[MeshMapper](https://swe.meshmapper.net/) visar var nätet faktiskt når. Folk kör, cyklar eller går
+runt med appen och sin companion och pingar nätet på vägen (wardriving), och varje lyckad ping blir en
+punkt på kartan. Så ser du om en ny repeater har gjort skillnad, och var det fortfarande är tyst. Hur
+du bidrar står i MeshMappers [Getting started](https://wiki.meshmapper.net/app_getting_started/) (på
+engelska).
+
+## Livetrafiken
+
+Under kartan visar ”Senaste paket” trafiken när den hörs. Klicka på ett paket för att se vilka noder
+det gick genom. Bra när du vill veta om din repeater för vidare trafik.
+
+## Firmware
+
+[Välj och flasha firmware](../flasha-firmware/) går igenom MeshCores egen firmware och hur den
+installeras. Vill du ha auto-svar på test eller fjärrstyrning finns [Specialfirmware
+lou](../firmware-lou/), som fungerar ihop med vanlig MeshCore.
+
+## Fjärrstyrning
+
+Ändra inställningar på repeatern utan att åka dit. Det kräver lou-firmware med fjärrstyrning;
+[guidad installation](/wizard/repeater-guidad/) slår på den, och [Specialfirmware
+lou](../firmware-lou/) förklarar hur den fungerar.
+
+## Ställ in en repeater
+
+[Snabbkonfigurationen](/wizard/repeater-snabb/) och den [guidade installationen](/wizard/repeater-guidad/)
+ställer in en repeater från webbläsaren över USB, med regionens värden ifyllda. Snabbt om du vet vad
+du vill, guidat om du vill veta varför.
+
+## Räkna på solcell
+
+[Solcellskalkylatorn](/wizard/solcell/) räknar ut hur stor panel och hur stort batteri en repeater
+behöver för att klara vintern där du bor. Använd den innan du köper.
+
+## Testa en plats
+
+[Bli nodvärd: testa din plats](/wizard/nodvard/) hjälper dig se om en plats passar för en repeater,
+innan du sätter upp den.
+
+## USB-konsolen
+
+I [USB-konsolen](../usb-konsol/) skriver du kommandon direkt till noden. För det som guiderna inte
+gör.
+
+## En egen broker
+
+[En egen broker](../egen-broker/) är för en region som vill ta emot sina repeatrars data och
+kommandon på en egen server. De flesta behöver den inte.
