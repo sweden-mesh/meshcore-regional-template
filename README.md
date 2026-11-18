@@ -4,6 +4,10 @@ A Hugo module for regional MeshCore websites. A region's own repository holds on
 local to it: settings, its own pages, and any file it wants to change. Everything else comes
 from this template, pinned by git tag.
 
+The template is live and in use: [meshcore-jkp.se](https://meshcore-jkp.se/) is a regional site for
+Jönköpings län built on it, and [meshcoresverige.se](https://meshcoresverige.se/) is the national
+site for all of Sweden, built from the same template.
+
 ## How a region overrides the template
 
 Hugo merges the template and the region site into one file tree. **A file at the same path in
