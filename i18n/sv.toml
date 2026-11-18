@@ -1406,3 +1406,5 @@ one = "1 den senaste veckan"
 other = "{{ .Count }} den senaste veckan"
 [og_locale]
 other = "sv_SE"
+[list_and]
+other = "och"

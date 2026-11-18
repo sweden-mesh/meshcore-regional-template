@@ -1407,3 +1407,5 @@ one = "1 in the last week"
 other = "{{ .Count }} in the last week"
 [og_locale]
 other = "en_US"
+[list_and]
+other = "and"

@@ -1,0 +1,25 @@
+{{- /* {{< solar-files >}}: the methods page's downloads, each with the sha256 of the exact file the
+  site serves (computed at build time, so it can never disagree with the file). B.275; since the
+  load grid (B-291) the data is one file per county, plus the build script. */ -}}
+<table>
+  <thead><tr><th>File</th><th>Contents</th><th>sha256</th></tr></thead>
+  <tbody>
+    {{- range $row := slice (slice "solar/reference_solar_need.py" "The reference script (B.14), Python 3 and numpy") (slice "solar/build_load_grid.py" "Builds the data, one file per point, with the reference script") }}
+    {{- with resources.Get (index $row 0) }}
+    <tr>
+      <td><a href="{{ .RelPermalink }}" download><code>{{ path.Base .Name }}</code></a></td>
+      <td>{{ index $row 1 }}</td>
+      <td><code class="nobreak">{{ .Content | crypto.SHA256 }}</code></td>
+    </tr>
+    {{- end }}
+    {{- end }}
+    {{- range resources.Match "data/solar/*.json" }}
+    {{- $f := . | minify | fingerprint }}
+    <tr>
+      <td><a href="{{ $f.RelPermalink }}" download="{{ path.Base .Name }}"><code>{{ path.Base .Name }}</code></a></td>
+      <td>The calculator's data for point {{ path.BaseName .Name }} (B.14)</td>
+      <td><code class="nobreak">{{ $f.Content | crypto.SHA256 }}</code></td>
+    </tr>
+    {{- end }}
+  </tbody>
+</table>

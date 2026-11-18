@@ -6,7 +6,7 @@
 {{- $shop := "" }}{{ with site.GetPage "/guider/skaffa-hardvara" }}{{ $shop = .RelPermalink }}{{ end -}}
 {{- if eq (.Get 0) "list" -}}
   {{- $names := slice }}{{ range $d.node }}{{ $names = $names | append (printf "<a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a>" .url (.name | htmlEscape)) }}{{ end -}}
-  {{- delimit $names ", " ", och " | safeHTML -}}
+  {{- delimit $names ", " (printf ", %s " (T "list_and")) | safeHTML -}}
 {{- else -}}
 <div class="alert alert-note prebuilt" role="note" id="fardiga-solrepeatrar">
   <p class="alert-title">{{ partial "alert-icon.html" "note" }}{{ T "prebuilt_title" }}</p>

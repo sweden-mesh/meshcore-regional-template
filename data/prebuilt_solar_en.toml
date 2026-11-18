@@ -1,0 +1,33 @@
+# Prebuilt solar repeaters (B-296, operator 2026-11-17): one list for the solar guide's box, the
+# device list in "Skaffa hårdvara" and the host pages, via the shortcode {{< prebuilt-solar >}}.
+# English version of data/prebuilt_solar.toml (B-337): same rows and order; only the text is translated.
+# Research and sources: the workspace note solar-prebuilt-nodes-20261116.md (checked 2026-11-16).
+# Exact, dated prices stay in skaffa-hardvara.md; the box shows only `range`.
+checked = 2026-11-16
+range = "about 1,000–5,000 kr"
+
+[[node]]
+  name = "Seeed SenseCAP Solar Node P1-Pro"
+  url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/"
+  note = "5 W panel, four 18650 cells; available preflashed with MeshCore"
+[[node]]
+  name = "Seeed SenseCAP Solar Node P1"
+  url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/"
+  note = "the same node without batteries, cheaper; you put in your own cells"
+[[node]]
+  name = "RAK WisMesh Repeater Mini"
+  url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater-mini"
+  note = "the smallest panel and battery of the six"
+[[node]]
+  name = "Heltec MeshTower V2"
+  url = "https://heltec.org/project/meshtower/"
+  note = "10 W panel, three cells, aluminum case"
+[[node]]
+  name = "Elecrow ThinkNode M6"
+  url = "https://www.elecrow.com/wiki/ThinkNode_M6_Outdoor_Solar_Power_for_LoRa_Powered_By_nRF52840_Supports_GPS-868_MHz.html"
+  note = "6 W panel, two 18650 cells; details on LEDs and sealing are checked at the next price review"
+  dated = "2026-11-16"
+[[node]]
+  name = "RAK WisMesh Repeater with solar kit"
+  url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater"
+  note = "10 W panel and 56 Wh battery; the most expensive, for a hilltop rather than a first try"

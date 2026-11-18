@@ -44,9 +44,11 @@ enableRobotsTXT = true
 [languages.sv]
   weight = 1
   locale = "sv"
+  label = "Svenska"
 [languages.en]
   weight = 2
   locale = "en"
+  label = "English"
   title = "MeshCore Example Country"
   contentDir = "content.en"
   [languages.en.params.region]

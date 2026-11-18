@@ -1,0 +1,62 @@
+{{- /* {{< solar "<part>" >}}: the solar-node page's region-specific numbers, from data/solar.toml
+  keyed by the region's first map code (params.region.iatas). A region without its own entry
+  gets Jönköping's (JKG), and the "where" part says so. Never scaled here.
+  Parts: where, point, short, irradiation, trees, capacity. */ -}}
+{{- $code := index (site.Params.region.iatas | default slice) 0 | default "" -}}
+{{- /* National mode: the Jönköping reference case, labelled as such (plan Q6.8, G17). */ -}}
+{{- if site.Params.national }}{{ $code = "JKG" }}{{ end -}}
+{{- $d := index hugo.Data.solar $code -}}
+{{- $own := ne $d nil -}}
+{{- if not $own }}{{ $d = hugo.Data.solar.JKG }}{{ end -}}
+{{- $fmt := "-|.|," -}}{{/* minus | decimal point | comma grouping, "|" as delimiter */}}
+{{- $part := .Get 0 -}}
+{{- if eq $part "where" -}}
+  {{- if site.Params.national -}}
+> [!NOTE] Jönköping as the reference
+> The tables on this page are worked out for a point in {{ $d.place }} ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N), as an
+> example. Farther north you need more battery, farther south less. The [solar calculator](/wizard/solcell/)
+> uses the figures for your own county.
+  {{- else if $own -}}
+*The figures on this page are worked out for a point in {{ $d.place }} ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N){{ with $d.source }}{{ if ne . "PVGIS-SARAH3" }}, with a different data source than the other counties ({{ . }}){{ end }}{{ end }}. Coast and inland, forest and mountains can differ a lot within the same county.*
+{{ with $d.note }}
+> [!WARNING] Farther north
+> {{ . }}
+{{ end }}
+  {{- else -}}
+> [!NOTE] Worked out for Jönköping
+> There are no calculations yet for {{ (partialCached "region.html" .Page "region").name }}, so
+> the tables show the figures for Jönköping ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N). Farther
+> north you need more battery, farther south less, and the difference grows with the tree line.
+  {{- end -}}
+{{- else if eq $part "point" -}}
+  {{- $d.place }}: {{ lang.FormatNumberCustom 2 $d.lat $fmt "|" }}° N, {{ lang.FormatNumberCustom 2 $d.lon $fmt "|" }}° E
+{{- else if eq $part "short" -}}
+  {{- $need := dict -}}{{- range $d.trees }}{{ if eq .deg 20 }}{{ $need = . }}{{ end }}{{ end -}}
+  {{- $rec20 := 0 }}{{ $rec30 := 0 }}{{ $off20 := 0 -}}
+  {{- /* Never fewer than two cells (operator 2026-11-14): the smallest pack recommended is 6 000 mAh. */ -}}
+  {{- range $d.capacity -}}
+    {{- if and (eq $rec20 0) (ge .pessimistic 20) (ge .mah 6000) }}{{ $rec20 = .mah }}{{ end -}}
+    {{- if and (eq $rec30 0) (ge .pessimistic 30) (ge .mah 6000) }}{{ $rec30 = .mah }}{{ end -}}
+    {{- if and (eq $off20 0) (ge .official 20) (ge .mah 6000) }}{{ $off20 = .mah }}{{ end -}}
+  {{- end -}}
+- The panel stands vertical, facing south, and the trees reach up to 20° above the horizon: {{ with $rec20 }}**{{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh**.{{ else }}**no battery up to 24,000 mAh is enough**.{{ end }}
+  {{- with $need.vertical }} The expected need is {{ lang.FormatNumberCustom 0 (index . 0) $fmt "|" }} mAh and the pessimistic one {{ lang.FormatNumberCustom 0 (index . 2) $fmt "|" }} mAh, both with a 50 % margin; the recommendation covers the pessimistic one.{{ end }}
+- Trees up to 30°: {{ with $rec30 }}{{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh{{ else }}no battery up to 24,000 mAh is enough{{ end }}.
+- With official MeshCore firmware instead of the power-saving version EasySkyMesh, trees up to 20°: {{ with $off20 }}about {{ lang.FormatNumberCustom 0 . $fmt "|" }} mAh{{ else }}no battery up to 24,000 mAh is enough{{ end }}.
+{{- else if eq $part "irradiation" -}}
+| Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+|{{ range $d.irradiation }} {{ lang.FormatNumberCustom 2 . $fmt "|" }} |{{ end }}
+{{- else if eq $part "trees" -}}
+| Tree line, highest point from southeast to southwest | Vertical, south | 60° tilt, south | 40° tilt, south | Vertical, official firmware |
+|---|---:|---:|---:|---:|
+{{ range $d.trees -}}
+| {{ if eq .deg 0 }}No trees, only the terrain around the site{{ else }}Tree line {{ .deg }}°{{ end }} |{{ range slice .vertical .tilt60 .tilt40 }} {{ if lt (index . 0) 0 }}not enough{{ else }}{{ lang.FormatNumberCustom 0 (index . 0) $fmt "|" }} ({{ lang.FormatNumberCustom 0 (index . 1) $fmt "|" }}–{{ if lt (index . 2) 0 }}not enough{{ else }}{{ lang.FormatNumberCustom 0 (index . 2) $fmt "|" }}{{ end }}){{ end }} |{{ end }} {{ if lt .official 0 }}not enough{{ else }}{{ lang.FormatNumberCustom 0 .official $fmt "|" }}{{ end }} |
+{{ end -}}
+{{- else if eq $part "capacity" -}}
+| Battery | Days in total darkness | Gets through a bad winter with | If the calculation is too optimistic | With official firmware |
+|---|---:|---|---|---|
+{{ range $d.capacity -}}
+| {{ lang.FormatNumberCustom 0 .mah $fmt "|" }} mAh | {{ .days }} |{{ range slice .trees .pessimistic .official }} {{ if lt . 0 }}not even without trees{{ else if eq . 0 }}only without trees{{ else }}trees up to {{ . }}°{{ end }} |{{ end }}
+{{ end -}}
+{{- end -}}

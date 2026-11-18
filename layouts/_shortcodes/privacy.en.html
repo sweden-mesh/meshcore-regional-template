@@ -1,0 +1,27 @@
+{{- /* The privacy text, built from what the site actually has turned on. */ -}}
+{{- $a := site.Params.analytics -}}
+{{- $b := site.Params.beacon.url -}}
+<h2>In short</h2>
+<ul>
+  {{- if site.Params.national }}
+  {{- /* National mode (P8, Q4b.4): the chosen county is kept in the browser, in localStorage and a cookie. */}}
+  <li>The site uses <strong>one cookie</strong>, <code>lan</code>, and the same value in the browser's storage (<code>localStorage</code>): the county you have chosen, as a code (like <code>08</code>) or <code>se</code> for the whole country. It is kept for one year, used only to show your county, and not sent to anyone else{{ if and $a.plausible $a.script }}; the visitor statistics below get the county code, but nothing that identifies you{{ end }}. Light or dark mode, stopped motion and color-blind mode are also saved in the browser, if you change them. No login.</li>
+  {{- else }}
+  <li>The site uses <strong>no cookies</strong> and no login.</li>
+  {{- end }}
+  {{- if and $a.plausible $a.script }}
+  <li>We count visits with <a href="https://plausible.io/privacy-focused-web-analytics" class="ext" target="_blank" rel="noopener">Plausible</a>, without cookies. Each day a random code is worked out from your IP address and browser so that the same visitor is not counted twice; the IP address is not stored, and the code changes every day. The statistics are on our own server, not at Plausible or anyone else.</li>
+  {{- else }}
+  <li>We collect <strong>no visitor statistics</strong>.</li>
+  {{- end }}
+  <li>Fonts and the map's software are served by the site itself; nothing is loaded from Google or similar.</li>
+</ul>
+
+<h2>The map</h2>
+<p>The background map is loaded from <a href="https://openfreemap.org/" class="ext" target="_blank" rel="noopener">OpenFreeMap</a>. OpenFreeMap then sees your IP address, as with all web traffic.</p>
+{{- with $b }}
+<p>The nodes and the traffic on the map come from our own Beacon server ({{ . }}), which collects what the observers in the region hear via MQTT. It shows repeaters and their position, which the owners themselves send out in their adverts. <strong>Companions are not shown</strong>, because their position can be someone's home. Message texts are not shown.</p>
+{{- end }}
+
+<h2>What you send over the radio</h2>
+<p>Everything sent on the network can be heard by anyone in range and recorded by observers. That includes names, the position in adverts, and messages in Public and hashtag channels. See <a href="{{ with site.GetPage "/guider/kanaler" }}{{ .RelPermalink }}{{ end }}">Channels</a>.</p>

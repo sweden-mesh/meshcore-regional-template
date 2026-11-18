@@ -1,0 +1,450 @@
+# The hardware tables (B-333, B-334, B-335), shown by {{< hw "companion" >}}, "repeater" and "antenna".
+# English version of data/hardware.toml (B-337): same rows, keys and order; only the text is translated.
+# Collected 2026-11-18 from the makers' own pages and datasheets, the MeshCore FAQ, the official
+# flasher's device list (https://flasher.meshcore.io/config.json) and one named review. Every
+# figure, pro, con and warning comes from the row's sources; a field without a source is left out.
+# url is the maker's own product, store or documentation page (no shops, no affiliate links).
+# Prices: Swedish shops in November 2026 where found, else a European or the maker's price; they change.
+# Pictures only with a licence that allows reuse (today: Seeed's wiki images, CC BY-SA 4.0), downloaded
+# to assets/images/hardware/ and credited by {{< hw-credits >}}:
+#   image = { file, source (the page it was shown on), by, licence, licenceUrl, date }.
+# Or, for the makers' press images the site operator supplied (operator 2026-11-18; no credit line):
+#   image = { file, alt (English here) }.
+
+[[companion]]
+  name = "Seeed SenseCAP Card Tracker T1000-E"
+  url = "https://www.seeedstudio.com/SenseCAP-Card-Tracker-T1000-E-for-Meshtastic-p-5913.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "tracker"
+  chip = "nRF52840 + LR1110"
+  connects = "Bluetooth 5.x, USB (magnetic charging cable/pogo pins)"
+  battery = "700 mAh"
+  price = "Price in November 2026: 35–50 euros (European price list)"
+  pros = ["IP65 rated", "Built-in GNSS (AG3335)", "Ready-made device in card format"]
+  cons = ["Charger/adapter not included", "Only charges between 0 and 45 °C", "The maker states a range of 2–5 km depending on antenna and surroundings"]
+  warnings = ["The maker's page gives conflicting battery life figures (\"up to 2 days\" and \"several days\")"]
+  sources = [{ name = "Seeed Studio, T1000-E product page", url = "https://www.seeedstudio.com/SenseCAP-Card-Tracker-T1000-E-for-Meshtastic-p-5913.html" }, { name = "MeshCore FAQ (listed as supported hardware)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "RAK WisMesh Tag"
+  url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/overview"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "tracker"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth (BLE), 4-pin charging connector"
+  battery = "1000 mAh"
+  price = "Price in November 2026: 667 kr (Pileup)"
+  pros = ["Thin, fully assembled tracker", "Built-in antennas for LoRa, BLE and GNSS", "Built-in GNSS"]
+  cons = ["No screen", "Ships with Meshtastic, must be reflashed to MeshCore"]
+  warnings = []
+  sources = [{ name = "RAK Docs, WisMesh Tag overview", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/overview" }, { name = "RAK Docs, WisMesh Tag quick start", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tag/quickstart" }, { name = "MeshCore FAQ, 7.3 (OTA-safe bootloader, WisMesh Tag)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "Seeed Wio Tracker L1 Pro"
+  url = "https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "tracker"
+  chip = "nRF52840 + SX1262 (Wio-SX1262)"
+  connects = "Bluetooth 5.0"
+  battery = "2000 mAh"
+  price = "Price in November 2026: 725 kr (Limmared)"
+  pros = ["1.3-inch OLED screen", "Solar panel input (5 V, 1 A)", "Built-in GNSS (L76K)", "Can be updated wirelessly (OTA) with MeshCore's safer bootloader"]
+  cons = []
+  warnings = []
+  sources = [{ name = "Seeed Studio, Wio Tracker L1 Pro product page", url = "https://www.seeedstudio.com/Wio-Tracker-L1-Pro-p-6454.html" }, { name = "Seeed wiki, Wio Tracker L1", url = "https://wiki.seeedstudio.com/wio_tracker_l1_node/" }, { name = "MeshCore FAQ, 7.1.1 (L1 Pro OTA)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "seeed-wio-tracker-l1-pro.png", source = "https://wiki.seeedstudio.com/wio_tracker_l1_node/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[companion]]
+  name = "Heltec WiFi LoRa 32 V3"
+  url = "https://heltec.org/project/wifi-lora-32-v3/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "board"
+  chip = "ESP32-S3 + SX1262"
+  connects = "Bluetooth 5 (LE), Wi-Fi, USB-C"
+  txPower = "21±1 dBm"
+  pros = ["0.96-inch OLED screen", "Built-in battery charging"]
+  cons = ["Battery not included", "Wi-Fi and Bluetooth cannot run at the same time (no PSRAM, according to Heltec)"]
+  warnings = ["Very small Bluetooth antenna on the board, with a range of only a few feet, so the connection to the phone drops easily (MeshCore FAQ)", "A Wi-Fi companion requires compiling the firmware yourself (MeshCore FAQ)"]
+  sources = [{ name = "Heltec, WiFi LoRa 32 V3", url = "https://heltec.org/project/wifi-lora-32-v3/" }, { name = "MeshCore FAQ, 6.6 and 7.6", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-v3.png", alt = "Heltec WiFi LoRa 32 V3, a circuit board with a small screen and a USB-C connector" }
+
+[[companion]]
+  name = "Heltec WiFi LoRa 32 V4"
+  url = "https://heltec.org/project/wifi-lora-32-v4/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "board"
+  chip = "ESP32-S3 (R2 or R8) + SX1262"
+  connects = "Bluetooth 5 (LE), Wi-Fi, USB-C"
+  txPower = "28±1 dBm (863–928 MHz)"
+  pros = ["Solar panel input 4.7–6 V", "Connector for a GNSS module", "Available with or without an OLED screen"]
+  cons = []
+  warnings = ["Set 10 dBm in the app to get 22 dBm out; 22 dBm in the app gives 28 dBm (MeshCore FAQ)", "A wrong transmit power setting can permanently damage the radio (MeshCore FAQ)"]
+  sources = [{ name = "Heltec, WiFi LoRa 32 V4", url = "https://heltec.org/project/wifi-lora-32-v4/" }, { name = "MeshCore FAQ, 7.7 (Heltec V4 transmit power)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-v4.png", alt = "Heltec WiFi LoRa 32 V4, a black circuit board with a USB-C connector" }
+
+[[companion]]
+  name = "Heltec Mesh Node T114"
+  url = "https://heltec.org/project/mesh-node-t114/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "board"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth 5.0 (LE), USB-C"
+  txPower = "21±1 dBm"
+  pros = ["Low power draw: about 11 µA in deep sleep", "Optional 1.14-inch TFT screen", "Optional GNSS module (L76K)"]
+  cons = ["Battery not included", "GNSS is an accessory"]
+  warnings = []
+  sources = [{ name = "Heltec, Mesh Node T114", url = "https://heltec.org/project/mesh-node-t114/" }, { name = "MeshCore FAQ (supported hardware; OTA settings for T114)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-t114.png", alt = "Heltec Mesh Node T114 in a transparent case with a color screen" }
+
+[[companion]]
+  name = "Heltec Wireless Tracker (V1.1)"
+  url = "https://heltec.org/project/wireless-tracker/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "tracker"
+  chip = "ESP32-S3 + SX1262"
+  connects = "Bluetooth 5, Wi-Fi"
+  txPower = "21±1 dBm"
+  price = "Price in November 2026: 451 kr (Pileup; the listing does not say which band)"
+  pros = ["Built-in GNSS (UC6580, L1 + L2/L5)", "0.96-inch TFT screen"]
+  cons = ["Battery not included"]
+  warnings = []
+  sources = [{ name = "Heltec, Wireless Tracker", url = "https://heltec.org/project/wireless-tracker/" }, { name = "Heltec, Wireless Tracker V2 (newer version: 28±1 dBm, solar input)", url = "https://heltec.org/project/wireless-tracker-v2/" }]
+
+[[companion]]
+  name = "LilyGO T-Deck"
+  url = "https://lilygo.cc/products/t-deck"
+  maker = "LilyGO"
+  makerUrl = "https://lilygo.cc/"
+  type = "handheld with keyboard"
+  chip = "ESP32-S3 + SX1262"
+  txPower = "22 dBm (max, SX1262)"
+  battery = "2000 mAh"
+  price = "Price in November 2026: 65–90 euros (European price list)"
+  pros = ["Keyboard and trackball, used without a phone with MeshCore's standalone firmware", "The T-Deck firmware is free and most features cost nothing (MeshCore FAQ)"]
+  cons = ["Deeper map zoom and server management require an unlock code at 10 USD per device (MeshCore FAQ)", "The T-Deck firmware is not open source (MeshCore FAQ)"]
+  warnings = []
+  sources = [{ name = "LilyGO wiki, T-Deck (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck/" }, { name = "LilyGO GitHub, T-Deck", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "LilyGO GitHub, T-Deck UnitTest (SX1262, RADIO_TX_POWER 22 dBm, range −17 to 22 dBm)", url = "https://github.com/Xinyuan-LilyGO/T-Deck/blob/9aac147a313975ad063594b3fe11e28a96d94936/examples/UnitTest/UnitTest.ino#L366" }, { name = "MeshCore FAQ, 2.2, 4.9 and 5.7", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "lilygo-tdeck.jpg", alt = "LilyGO T-Deck, a handheld with a screen and keyboard showing MeshCore" }
+
+[[companion]]
+  name = "LilyGO T-Deck Plus"
+  url = "https://lilygo.cc/products/t-deck-plus-meshtastic"
+  maker = "LilyGO"
+  makerUrl = "https://lilygo.cc/"
+  type = "handheld with keyboard"
+  chip = "ESP32-S3 (ESP32-S3FN16R8) + SX1262"
+  battery = "2000 mAh"
+  price = "Price in November 2026: 85–120 euros (European price list)"
+  pros = ["Built-in GPS (MIA-M10Q) and built-in battery", "Keyboard, used without a phone with MeshCore's standalone firmware"]
+  cons = ["The Grove port is taken by the GPS module (LilyGO GitHub)", "Deeper map zoom and server management require an unlock code at 10 USD per device (MeshCore FAQ)"]
+  warnings = []
+  sources = [{ name = "LilyGO wiki, T-Deck Plus (search result only)", url = "https://wiki.lilygo.cc/products/t-deck-series/t-deck-plus/" }, { name = "LilyGO GitHub, T-Deck (Plus: Grove pins used by GPS)", url = "https://github.com/Xinyuan-LilyGO/T-Deck" }, { name = "MeshCore FAQ, 4.9", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+
+[[companion]]
+  name = "LilyGO T-Beam V1.2"
+  url = "https://lilygo.cc/products/t-beam"
+  maker = "LilyGO"
+  makerUrl = "https://lilygo.cc/"
+  type = "board"
+  chip = "ESP32 + SX1262 or SX1276 (depending on variant)"
+  connects = "Bluetooth 4.2, Wi-Fi"
+  price = "Price in November 2026: 45–70 euros (European price list)"
+  pros = ["Holder for an 18650 battery"]
+  cons = ["Comes with different LoRa chips (SX1262/SX1276/SX1278), check the variant before buying (LilyGO GitHub)"]
+  warnings = ["A wrong transmit power setting can damage the PA stage (LilyGO GitHub)"]
+  sources = [{ name = "LilyGO GitHub, LoRa-Series (T-Beam V1.2 examples per chip; PA warning)", url = "https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series" }, { name = "LilyGO, T-Beam SoftRF (search result only)", url = "https://lilygo.cc/products/t-beam-softrf" }]
+  image = { file = "lilygo-tbeam.jpg", alt = "LilyGO T-Beam V1.2, a long circuit board with a screen, GPS module and antenna connector" }
+
+[[companion]]
+  name = "RAK WisMesh TAP V2"
+  url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/overview/"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "handheld with touchscreen"
+  chip = "ESP32-S3 + SX1262 (WisBlock RAK3312)"
+  connects = "Bluetooth (BLE), Wi-Fi antenna, USB-C"
+  battery = "3600 mAh"
+  price = "Price in November 2026: 1,572 kr (Pileup, 868 MHz)"
+  pros = ["Large TFT touchscreen with on-screen keyboard", "Built-in GNSS (RAK12501)", "SD card for maps"]
+  cons = ["Should be charged with a 5 V / 2 A wall charger; charging from a computer's USB port is not recommended (RAK)"]
+  warnings = ["Not in MeshCore's flasher list (2026-11-18)", "Not in MeshCore's official web flasher; check before you buy"]
+  sources = [{ name = "RAK Docs, WisMesh TAP V2 overview", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/overview/" }, { name = "RAK Docs, WisMesh TAP V2 quick start", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-tap-v2/quickstart/" }, { name = "MeshCore flasher device list", url = "https://flasher.meshcore.io/config.json" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+
+[[companion]]
+  name = "Elecrow ThinkNode M9"
+  url = "https://www.elecrow.com/thinknode-m9-meshcore-communication-terminal-with-full-keyboard-2-4inch-lcd-esp32-s3-lr1110-gps-2300mah.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "handheld with keyboard"
+  chip = "ESP32-S3 + LR1110"
+  connects = "Bluetooth 5.0 (LE), Wi-Fi 2.4 GHz, USB-C"
+  battery = "2300 mAh"
+  price = "Price in November 2026: from 74.90 USD at Elecrow"
+  pros = ["Ships with MeshCore preinstalled", "Standalone: full QWERTY keyboard and 2.4-inch color screen, no phone needed", "GPS and compass built in", "2–3 days on standby according to Elecrow"]
+  cons = ["Wi-Fi (including automatic map download) requires a paid license", "The 868 MHz version is expected to ship in early December"]
+  warnings = ["Also sold in a Meshtastic version; buy the MeshCore version"]
+  sources = [{ name = "Elecrow, ThinkNode M9 MeshCore", url = "https://www.elecrow.com/thinknode-m9-meshcore-communication-terminal-with-full-keyboard-2-4inch-lcd-esp32-s3-lr1110-gps-2300mah.html" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "elecrow-m9.webp", alt = "Elecrow ThinkNode M9, a handheld with a color screen and keyboard showing MeshCore" }
+
+[[companion]]
+  name = "Heltec Mesh Node T096"
+  url = "https://heltec.org/project/t096/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "board"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth 5 (LE), USB-C"
+  txPower = "28±1 dBm"
+  price = "Price in November 2026: about 33.90 USD at Heltec (band not stated)"
+  pros = ["Low power draw: about 12 µA at idle", "GPS built in", "Connectors for a solar panel and a lithium battery", "Heltec states support for both MeshCore and Meshtastic"]
+  cons = ["Battery not included", "No Wi-Fi"]
+  warnings = ["Up to 28 dBm, more than the 500 mW ERP (27 dBm) limit; work out the ERP before you set the transmit power"]
+  sources = [{ name = "Heltec, Mesh Node T096", url = "https://heltec.org/project/t096/" }, { name = "PTSFS 2025:1 § 146", url = "https://pts.se/contentassets/b05c8a7d01a64783aafc6a19e1b78590/ptsfs-2025-1-foreskrifter-om-undantag-fran-tillstandsplikt-for-anvandning-av-vissa-radiosandare.pdf" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "heltec-t096.png", alt = "Heltec Mesh Node T096, a small board in a transparent case" }
+
+[[companion]]
+  name = "Elecrow ThinkNode M1"
+  url = "https://www.elecrow.com/thinknode-m1-meshtastic-lora-signal-transceiver-powered-by-nrf52840-with-154-screen-support-gps.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "ready-made device"
+  chip = "nRF52840 + SX1262"
+  connects = "Bluetooth 5 (LE), USB-C"
+  battery = "1200 mAh"
+  txPower = "22 dBm"
+  price = "Price in November 2026: from 53.90 USD at Elecrow"
+  pros = ["Low power draw: about 5.6 µA in low-power mode", "1.54-inch e-paper screen and GPS", "Battery, antenna (RP-SMA) and belt clip included"]
+  cons = []
+  warnings = ["Ships with Meshtastic preinstalled; you flash MeshCore yourself", "Elecrow asks buyers to contact them before using other firmware"]
+  sources = [{ name = "Elecrow, ThinkNode M1", url = "https://www.elecrow.com/thinknode-m1-meshtastic-lora-signal-transceiver-powered-by-nrf52840-with-154-screen-support-gps.html" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "thinknode-m1.webp", alt = "Elecrow ThinkNode M1, a black handheld with an antenna and a small screen" }
+
+[[companion]]
+  name = "Elecrow ThinkNode M5"
+  url = "https://www.elecrow.com/thinknode-m5-meshtastic-lora-signal-transceiver-esp32-s3-1-54-screen-gps-function.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "ready-made device"
+  chip = "ESP32-S3 + SX1262"
+  connects = "Bluetooth 5.0 (LE), USB-C"
+  battery = "1200 mAh"
+  price = "Price in November 2026: from 53.90 USD at Elecrow"
+  pros = ["1.54-inch e-paper screen and GPS", "Battery, antenna (RP-SMA) and belt clip included"]
+  cons = ["Draws more than the M1: up to about 340 mA, about 34 µA in low-power mode"]
+  warnings = ["Ships with Meshtastic preinstalled; you flash MeshCore yourself"]
+  sources = [{ name = "Elecrow, ThinkNode M5", url = "https://www.elecrow.com/thinknode-m5-meshtastic-lora-signal-transceiver-esp32-s3-1-54-screen-gps-function.html" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+  image = { file = "thinknode-m5.webp", alt = "Elecrow ThinkNode M5, a black handheld with an antenna and an e-paper screen" }
+
+[[repeater]]
+  name = "Seeed XIAO nRF52840 & Wio-SX1262 Kit"
+  url = "https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "kit"
+  chip = "nRF52840 + SX1262"
+  power = "USB-C 5 V or a 4.2 V battery on the BAT input (charging current 50/100 mA); standby under 5 µA"
+  price = "Price in November 2026: 13.49 USD at Seeed"
+  pros = ["Standby under 5 µA according to the maker", "Can charge from USB-C and take a 4.2 V battery", "Antenna included in the kit", "Supported by MeshCore's OTA update and the OTAFIX bootloader"]
+  cons = ["No case included", "No battery included", "The maker does not state the transmit power"]
+  warnings = ["Do not update with NRF-OTA (Seeed's wiki: it can brick the device); use the OTAFIX bootloader that MeshCore recommends"]
+  sources = [{ name = "Seeed product page", url = "https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html" }, { name = "Seeed wiki: Get Started with XIAO nRF52840 & Wio-SX1262 Kit", url = "https://wiki.seeedstudio.com/xiao_nrf52840&_wio_SX1262_kit_for_meshtastic/" }, { name = "MeshCore FAQ (7.1, 7.3)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "seeed-xiao-nrf52840-wio-sx1262-kit.webp", source = "https://wiki.seeedstudio.com/xiao_nrf52840&_wio_SX1262_kit_for_meshtastic/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[repeater]]
+  name = "Heltec WiFi LoRa 32 V4 (mains-powered)"
+  url = "https://heltec.org/project/wifi-lora-32-v4/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "board"
+  chip = "ESP32-S3 (S3R2 or S3R8) + SX1262"
+  power = "USB-C; 3.3–4.4 V lithium battery; solar input 4.7–6 V"
+  txPower = "28±1 dBm (863–928 MHz)"
+  price = "Price in November 2026: 429 kr (Pileup; the listing does not say which band)"
+  pros = ["High output power, 28±1 dBm on 868 MHz", "Has both a battery and a solar input", "Low-power mode under 20 µA according to the maker (the mode is not stated)"]
+  cons = ["The maker does not say which mode the 20 µA applies to"]
+  warnings = ["MeshCore FAQ: set 10 dBm (set tx 10) for about 22 dBm out; 22 dBm gives about 28 dBm (0.5–0.6 W)", "MeshCore FAQ: a wrong power setting can permanently damage the radio"]
+  sources = [{ name = "Heltec product page", url = "https://heltec.org/project/wifi-lora-32-v4/" }, { name = "MeshCore FAQ 7.7 (TX power for Heltec V4)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "heltec-v4.png", alt = "Heltec WiFi LoRa 32 V4, a black circuit board with a USB-C connector" }
+
+[[repeater]]
+  name = "RAK WisBlock Meshtastic Starter Kit (RAK4631)"
+  url = "https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "kit"
+  chip = "nRF52840 + SX1262 (RAK4631)"
+  power = "USB; SOLAR connector to a TP4054 linear Li-ion charger (no MPPT); the RAK4631 sleeps at 2.0 µA"
+  txPower = "22 dBm"
+  pros = ["Sleeps at 2.0 µA (RAK4631 datasheet)", "Solar connector on the base board", "Three base boards to choose from: RAK19003, RAK19007, RAK19001", "MeshCore supports Ethernet via the RAK13800"]
+  cons = ["The base board has no MPPT charging", "No case included", "Variants with a loose OLED require soldering"]
+  warnings = ["According to a customer review in RAK's store, the OLED screen must be removed to plug in or unplug the LiPo battery", "The MeshCore FAQ strongly recommends the OTAFIX bootloader for nRF52 devices"]
+  sources = [{ name = "RAK store: WisBlock Meshtastic Starter Kit", url = "https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit" }, { name = "RAK4631 datasheet", url = "https://docs.rakwireless.com/product-categories/wisblock/rak4631/datasheet/" }, { name = "MeshCore FAQ (1.2.1, 7.1, 7.8)", url = "https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md" }]
+  image = { file = "rak-wisblock.webp", alt = "RAK WisBlock base board with the RAK4631 module and a USB-C connector" }
+
+[[repeater]]
+  name = "Seeed SenseCAP Solar Node P1-Pro (MeshCore)"
+  url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshcore-p-6741.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "ready-made with solar"
+  chip = "nRF52840 (XIAO nRF52840 Plus) + SX1262 (Wio-SX1262)"
+  power = "Solar 5 W; 4 × 18650 at 3350 mAh each"
+  txPower = "22 dBm (862–930 MHz)"
+  price = "Price in November 2026: 1,495 kr for the Meshtastic version (Limmared), which you reflash; the MeshCore version about 135 euros in the EU"
+  pros = ["Ships with MeshCore repeater firmware", "GPS (L76K) included", "5 W solar panel", "2 dBi rubber antenna included"]
+  cons = ["The maker does not state an IP rating", "The included antenna is only 2 dBi"]
+  warnings = []
+  sources = [{ name = "Seeed product page (P1-Pro for MeshCore)", url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshcore-p-6741.html" }, { name = "Seeed wiki: Get started with MeshCore Solar Node", url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/" }]
+  image = { file = "seeed-sensecap-solar-node-p1.png", source = "https://wiki.seeedstudio.com/meshtastic_solar_node/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[repeater]]
+  name = "Seeed SenseCAP Solar Node P1"
+  url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-for-Meshtastic-LoRa-p-6425.html"
+  maker = "Seeed Studio"
+  makerUrl = "https://www.seeedstudio.com/"
+  type = "ready-made with solar"
+  chip = "nRF52840 (XIAO nRF52840 Plus) + SX1262 (Wio-SX1262)"
+  power = "Solar 5 W; 18650 batteries (button-top) bought separately"
+  txPower = "22 dBm (862–930 MHz)"
+  pros = ["Cheaper than the P1-Pro", "5 W solar panel", "2 dBi rubber antenna included"]
+  cons = ["Batteries not included", "GPS not included (XIAO L76K bought separately)", "The maker does not state an IP rating"]
+  warnings = []
+  sources = [{ name = "Seeed product page (P1)", url = "https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-for-Meshtastic-LoRa-p-6425.html" }, { name = "Seeed wiki: Get started with MeshCore Solar Node", url = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/" }]
+  image = { file = "seeed-sensecap-solar-node-p1.png", source = "https://wiki.seeedstudio.com/get_started_with_meshcore_solar_node/", by = "Seeed Studio", licence = "CC BY-SA 4.0", licenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/deed.sv", date = "2026-11-18" }
+
+[[repeater]]
+  name = "RAK WisMesh Repeater Mini V2 (RAK10728 / RAK10729)"
+  url = "https://store.rakwireless.com/products/wismesh-repeater-mini-v2"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "ready-made with solar"
+  chip = "RAK10728: nRF52840 + SX1262 (RAK4631); RAK10729: RAK3401 nRF52840 core + RAK13302 1 W LoRa"
+  power = "Built-in solar panel (wattage not stated) + 3200 mAh Li-ion (3.7 V)"
+  txPower = "RAK10728: 22 dBm; RAK10729: 30 dBm"
+  price = "Price in November 2026: 1,685 kr (Pileup)"
+  pros = ["IP67 enclosure", "Solar panel and battery included", "Wall and pole mount", "RP-SMA antenna connector and WisMesh Blade antenna included"]
+  cons = ["The maker does not state the solar panel's wattage", "The antenna's gain is not stated"]
+  warnings = []
+  sources = [{ name = "RAK store: WisMesh Repeater Mini V2", url = "https://store.rakwireless.com/products/wismesh-repeater-mini-v2" }, { name = "RAK docs: WisMesh Repeater Mini V2 overview", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-repeater-mini-v2/overview/" }, { name = "RAK store: WisMesh Repeater Mini (V1, RAK10718)", url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater-mini" }]
+
+[[repeater]]
+  name = "Heltec MeshTower V2"
+  url = "https://heltec.org/project/meshtower/"
+  maker = "Heltec Automation"
+  makerUrl = "https://heltec.org/"
+  type = "ready-made with solar"
+  chip = "nRF52840 + SX1262"
+  power = "Solar 18 V / 10 W; 3 × 2800 mAh lithium (the spec table; other text on the page says 3 × 3000 mAh)"
+  txPower = "30 dBm (the product page, a 22 dBm variant also exists); the manual: V2 21±1 dBm, V2H 28±1 dBm"
+  price = "Price in November 2026: 109–129 USD direct from Heltec, plus shipping and VAT"
+  pros = ["Aluminum enclosure, IP66 (the spec table)", "10 W solar panel", "5.5 dBi fiberglass antenna with N connector included", "External SMA antenna port"]
+  cons = ["The maker's figures contradict each other on battery (2800 or 3000 mAh), IP rating (IP66 or IP65) and output power"]
+  warnings = ["Check which variant (V2 or V2H / 22 or 30 dBm) you are buying; the maker's pages give different figures"]
+  sources = [{ name = "Heltec product page (MeshTower V2)", url = "https://heltec.org/project/meshtower/" }, { name = "Heltec wiki: MeshTower V2 manual", url = "https://wiki.heltec.org/docs/devices/open-source-hardware/nrf52840-series/mesh-tower-v2/" }]
+
+[[repeater]]
+  name = "Elecrow ThinkNode M6 (868 MHz)"
+  url = "https://www.elecrow.com/thinknode-m6-outdoor-solar-power-for-lora-powered-by-nrf52840-supports-gps.html"
+  maker = "Elecrow"
+  makerUrl = "https://www.elecrow.com/"
+  type = "ready-made with solar"
+  chip = "nRF52840 + SX1262"
+  power = "Solar 6 W; 2 × 18650 (Panasonic), 7000 mAh; 21 µA when off"
+  price = "Price in November 2026: about 80 USD at Elecrow"
+  pros = ["IP65, −20 to 60 °C", "6 W solar panel", "GPS (L76K) and GPS antenna included", "RP-SMA connector for the LoRa antenna"]
+  cons = ["The maker does not state the transmit power", "The packing list mentions no batteries", "The CNX review: the case cannot be opened without damaging it", "The CNX review: only a wall mount is included, no pole mount"]
+  warnings = ["Elecrow's page: this LoRa version does not support Meshtastic firmware; flash MeshCore yourself", "CNX: units from AliExpress and Amazon usually come without firmware"]
+  sources = [{ name = "Elecrow product page", url = "https://www.elecrow.com/thinknode-m6-outdoor-solar-power-for-lora-powered-by-nrf52840-supports-gps.html" }, { name = "CNX Software: Mini review of the ThinkNode M6 (2026-03-17)", url = "https://www.cnx-software.com/2026/03/17/review-thinknode-m6-outdoor-solar-power-for-meshtastic/" }]
+
+[[repeater]]
+  name = "RAK WisMesh Repeater (RAK10721) with Solar Battery Lite"
+  url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "ready-made with solar"
+  chip = "nRF52840 + SX1262 (RAK4631)"
+  power = "Solar Battery Lite RAK9154: 10 W panel, 5.2 Ah / 10.8 V (56.16 Wh); or your own 5–16 V DC"
+  price = "Price in November 2026: 5,077 kr (Pileup)"
+  pros = ["IP67 enclosure and connectors", "Large battery: 56 Wh", "Wall and pole mount included", "Takes 5–16 V DC from your own solar or battery setup"]
+  cons = ["Solar and battery are only included in the Solar Battery Lite variant", "No battery in the repeater itself"]
+  warnings = ["RAK: with your own charger a regulated 12 V output is required; RAK is not responsible for, for example, a cold start with a flat battery"]
+  sources = [{ name = "RAK store: WisMesh Repeater", url = "https://store.rakwireless.com/products/wismesh-meshtastic-solar-repeater" }, { name = "RAK docs: WisMesh Repeater overview", url = "https://docs.rakwireless.com/product-categories/meshtastic/wismesh-repeater/overview/" }, { name = "RAK4631 datasheet", url = "https://docs.rakwireless.com/product-categories/wisblock/rak4631/datasheet/" }]
+
+[[antenna]]
+  name = "RAKARJ20 Flexible Whip Antenna 868 MHz (20 cm)"
+  url = "https://store.rakwireless.com/products/sma-male-915mhz-868mhz-whip-antenna-20cm"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "rubber antenna"
+  gain = "2 dBi"
+  band = "863–870 MHz"
+  connector = "SMA male"
+  placement = "indoors, outdoors"
+  pros = ["Small and light: 200 mm, 25 g", "Flexible rubber-coated whip that handles rough use", "Omnidirectional, 360° horizontally"]
+  cons = ["Low gain (2 dBi)"]
+  warnings = ["Handles at most 10 W input", "Not in MeshCore's official web flasher; check before you buy"]
+  sources = [{ name = "RAKARJ20 datasheet (RAKwireless)", url = "https://docs.rakwireless.com/product-categories/accessories/rakarj20/datasheet/" }, { name = "RAK store product page", url = "https://store.rakwireless.com/products/sma-male-915mhz-868mhz-whip-antenna-20cm" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "RAKARG13 863–870 MHz 5.8 dBi Fiberglass Antenna"
+  url = "https://store.rakwireless.com/products/5-8dbi-fiber-glass-antenna"
+  maker = "RAKwireless"
+  makerUrl = "https://www.rakwireless.com/"
+  type = "collinear (fiberglass)"
+  gain = "5.8 dBi"
+  band = "863–870 MHz"
+  connector = "N male"
+  placement = "outdoors"
+  pros = ["Built for outdoor use with a fiberglass housing", "Omnidirectional, vertically polarized", "Mast mounting brackets included"]
+  cons = ["Long: about 800 mm", "N connector: needs an adapter or cable for SMA/RP-SMA devices"]
+  warnings = ["The included RP-SMA to N cable is for indoor use only", "The included cable has RP-SMA; check that it fits your device", "Not in MeshCore's official web flasher; check before you buy"]
+  sources = [{ name = "RAKARG13 datasheet (RAKwireless)", url = "https://docs.rakwireless.com/product-categories/accessories/rakarg13/datasheet/" }, { name = "RAKARG13 overview (RAKwireless)", url = "https://docs.rakwireless.com/product-categories/accessories/rakarg13/overview/" }, { name = "RAK store product page", url = "https://store.rakwireless.com/products/5-8dbi-fiber-glass-antenna" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "ALFA AOA-868-5ACM"
+  url = "https://www.alfa.com.tw/products/aoa-868-5acm"
+  maker = "ALFA Network"
+  makerUrl = "https://www.alfa.com.tw/"
+  type = "whip"
+  gain = "5 dBi"
+  placement = "outdoors"
+  pros = ["Built for outdoor use according to the maker", "Omnidirectional"]
+  cons = []
+  warnings = ["Not in MeshCore's official web flasher; check before you buy"]
+  sources = [{ name = "ALFA Network product page", url = "https://www.alfa.com.tw/products/aoa-868-5acm" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "ALLNET ANT-868-14dbi-Yagi"
+  url = "https://shop-en.allnet.de/ALLNET-Antenne-868MHz-14dbi-Antenne-N-Female-YAGI-ANT-868/208821"
+  maker = "ALLNET GmbH Computersysteme"
+  makerUrl = "https://www.allnet.de/"
+  type = "directional antenna (Yagi)"
+  gain = "14 dBi"
+  band = "860–896 MHz"
+  connector = "N female"
+  placement = "outdoors"
+  pros = ["High gain: 14 dBi", "Narrow beam (H 33°, E 30°) for a link in one direction", "Withstands wind up to 200 km/h"]
+  cons = ["Large: 1297 mm long", "Directional: covers only one direction"]
+  warnings = ["Not in MeshCore's official web flasher; check before you buy"]
+  sources = [{ name = "ALLNET shop product page", url = "https://shop-en.allnet.de/ALLNET-Antenne-868MHz-14dbi-Antenne-N-Female-YAGI-ANT-868/208821" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
+
+[[antenna]]
+  name = "SECTRON AO-A868-MG3SRA2 (Magnet Mount MG3, 868 MHz)"
+  url = "https://eshop.sectron.eu/en/antenna-ism-magnet-mount-mg3-868-mhz-1-3-dbi-sma-m-ra-rg174-3m/p-13102/"
+  maker = "SECTRON s.r.o."
+  makerUrl = "https://www.sectron.cz/"
+  type = "magnetic mount"
+  gain = "1.3 dBi"
+  band = "868 MHz (bandwidth ≤ 20 MHz)"
+  connector = "SMA male, right-angle"
+  pros = ["Magnetic mount: can be moved without tools", "3 m cable (RG174) included", "Omnidirectional, vertically polarized"]
+  cons = ["Low gain (1.3 dBi)"]
+  warnings = ["An older datasheet gave 3 dBi; the current figure is 1.3 dBi", "Not in MeshCore's official web flasher; check before you buy"]
+  sources = [{ name = "SECTRON e-shop product page", url = "https://eshop.sectron.eu/en/antenna-ism-magnet-mount-mg3-868-mhz-1-3-dbi-sma-m-ra-rg174-3m/p-13102/" }, { name = "SECTRON datasheet (current, 1.3 dBi)", url = "https://eshop.sectron.eu/UserFiles/File/AO-A868-MG3SRA2_ism_antenna_datasheet4.pdf" }, { name = "SECTRON datasheet (older, 3 dBi)", url = "https://eshop.sectron.eu/UserFiles/Image/AO-A868-MG3SRA2_ISM_antenna_datasheet.pdf" }, { name = "MeshCore's web flasher, device list", url = "https://flasher.meshcore.io/config.json" }]
