@@ -1,7 +1,7 @@
 {{- /* {{< prebuilt-solar >}}: the box "Du behöver inte bygga den själv" (B-296): the prebuilt solar
   repeaters from data/prebuilt_solar.toml, a rough price range and the two winter sentences.
   {{< prebuilt-solar list >}}: only the names as an inline list, for the device list. */ -}}
-{{- $d := hugo.Data.prebuilt_solar -}}
+{{- $d := index hugo.Data (print "prebuilt_solar_" site.Language.Lang) | default hugo.Data.prebuilt_solar -}}
 {{- $solar := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $solar = .RelPermalink }}{{ end -}}
 {{- $shop := "" }}{{ with site.GetPage "/guider/skaffa-hardvara" }}{{ $shop = .RelPermalink }}{{ end -}}
 {{- if eq (.Get 0) "list" -}}

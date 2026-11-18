@@ -1,0 +1,6 @@
+{{- /* B-337: the default language's pages by address: a dict of RelPermalink → logical path, so a link
+  written as a Swedish address (also one set by url: in front matter) finds the page and so its
+  translation. Call it cached: partialCached "url-paths.html" . "url-paths" */ -}}
+{{- $m := dict -}}
+{{- range (index hugo.Sites 0).Pages }}{{ $p := . }}{{ with .RelPermalink }}{{ $m = merge $m (dict . $p.Path) }}{{ end }}{{ end -}}
+{{- return $m -}}

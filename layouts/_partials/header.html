@@ -1,5 +1,5 @@
 <header class="site-header">
-  <a class="brand" href="{{ "/" | relURL }}">
+  <a class="brand" href="{{ "/" | relLangURL }}">
     {{- with resources.Get "images/logo.svg" }}<img class="brand-logo" src="{{ (. | minify | fingerprint).RelPermalink }}" alt="" width="32" height="32">{{ end -}}
     <span>{{ site.Title }}</span>
   </a>
@@ -48,6 +48,10 @@
     </ul>
   </div>
   {{- end }}
+  {{- /* B-337: the same page in the site's other language(s), a plain link; no automatic redirect. */}}
+  {{- range partial "lang-links.html" . }}
+  <a class="lang-switch" href="{{ .href }}" hreflang="{{ .lang }}" lang="{{ .lang }}" title="{{ .label }}"><span aria-hidden="true">{{ upper .lang }}</span><span class="visually-hidden">{{ .label }}</span></a>
+  {{- end }}
   <button type="button" class="theme-toggle" hidden aria-label="{{ T "theme_toggle" }}" title="{{ T "theme_toggle" }}"><svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button>
   {{- /* Colour-blind mode: an eye, its iris yellow and blue (the two colours the scheme keeps apart). */}}
   <button type="button" class="cvd-toggle" hidden aria-pressed="false" aria-label="{{ T "cvd_toggle" }}" title="{{ T "cvd_toggle" }}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 7.6a4.4 4.4 0 0 0 0 8.8z" fill="#f0c419"/><path d="M12 7.6a4.4 4.4 0 0 1 0 8.8z" fill="#0072b2"/><circle cx="12" cy="12" r="1.6" fill="#0b141b"/></svg></button>
@@ -70,6 +74,7 @@
     <div id="nav-menu" popover>
       {{ range $links }}<a href="{{ .url }}"{{ if .active }} aria-current="page"{{ end }}>{{ .name }}</a>{{ end }}
       {{ with site.GetPage "/sok" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+      {{ range partial "lang-links.html" . }}<a href="{{ .href }}" hreflang="{{ .lang }}" lang="{{ .lang }}">{{ .label }}</a>{{ end }}
     </div>
   </nav>
   {{- with resources.Get "js/menu.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}

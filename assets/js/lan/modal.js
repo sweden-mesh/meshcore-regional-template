@@ -110,7 +110,7 @@ addEventListener("pageshow", (e) => { if (e.persisted) { root.classList.remove("
 
 function pick(item) {
   if (regional) { if (item.href) { leaving(); location.assign(item.href); } return; }
-  if (item.own && (root.getAttribute("data-lan-page") || location.pathname === "/")) { leaving(); location.assign(item.site); return; }
+  if (item.own && (root.getAttribute("data-lan-page") || location.pathname === (root.dataset.home || "/"))) { leaving(); location.assign(item.site); return; }
   dialog.close();
   lan.set(item.v);
 }

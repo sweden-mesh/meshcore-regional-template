@@ -5,7 +5,7 @@
   data (credits: {{< hw-credits >}}); it is resized and served from this site, and a click opens it
   larger in a <dialog> (js/lightbox.js). */ -}}
 {{- $kind := .Get 0 -}}
-{{- $items := index hugo.Data.hardware $kind -}}
+{{- $items := index (index hugo.Data (print "hardware_" site.Language.Lang) | default hugo.Data.hardware) $kind -}}   {{- /* data/hardware_<lang>.toml where the language has one (B-337) */ -}}
 {{- $anyImg := false }}{{ range $items }}{{ with .image }}{{ $anyImg = true }}{{ end }}{{ end -}}
 <div class="hw">
 <table class="hw-table">

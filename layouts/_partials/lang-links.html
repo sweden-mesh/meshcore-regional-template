@@ -1,0 +1,16 @@
+{{- /* B-337: the other languages of the site, for the language switch: a slice of dict (lang, label,
+  href), one per language other than the page's own, linking the page's translation, else that
+  language's front page. label is the language's name in itself (languages.<code>.label in the site's
+  config, else the code). Empty on a one-language site. Usage: partial "lang-links.html" . */ -}}
+{{- $out := slice -}}
+{{- if hugo.IsMultilingual -}}
+  {{- $p := . -}}
+  {{- range hugo.Sites -}}
+    {{- if ne .Language.Lang site.Language.Lang -}}
+      {{- $l := .Language.Lang }}{{ $href := .Home.RelPermalink -}}
+      {{- range $p.Translations }}{{ if eq .Language.Lang $l }}{{ $href = .RelPermalink }}{{ end }}{{ end -}}
+      {{- $out = $out | append (dict "lang" $l "label" (.Language.Label | default (upper $l)) "href" $href) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

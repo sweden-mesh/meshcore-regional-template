@@ -10,7 +10,7 @@
       {{- range $all }}
       <li>{{ if .site }}<a href="{{ .site }}" class="ext" target="_blank" rel="noopener">{{ .name }}</a> <span class="muted">{{ T "lan_own_mark" }}: {{ replaceRE `^https?://([^/]+)/?.*$` "$1" .site }}</span>{{ else }}<a href="{{ with site.GetPage (printf "/%s" .slug) }}{{ .RelPermalink }}{{ end }}" data-lan-pick="{{ .scb }}">{{ .name }}</a> <span class="muted">{{ T "lan_region" }} <code>{{ .scope }}</code></span>{{ end }}</li>
       {{- end }}
-      <li><a href="{{ "/" | relURL }}?lan=se" data-lan-pick="se">{{ T "lan_sweden" }}</a></li>
+      <li><a href="{{ "/" | relLangURL }}?lan=se" data-lan-pick="se">{{ T "lan_sweden" }}</a></li>
     </ul>
     {{- /* Areas that are not their own region (B-360): pages with an `area` (SCB code) in front matter. */}}
     {{- with sort (where site.RegularPages "Params.area" "!=" nil) "Title" }}

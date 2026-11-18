@@ -1,0 +1,6 @@
+/* Loaded only on a site with more than one language (head.html). */
+/* B-337: the other language, a plain two-letter link beside the toggles; its full name in the narrow menu. */
+.lang-switch { min-width: 44px; min-height: 44px; box-sizing: border-box; display: inline-grid; place-items: center; color: var(--fg); font-weight: 600; font-size: .875rem; text-decoration: none; }
+.lang-switch:hover { color: var(--accent); text-decoration: underline; }
+.lang-switch + .theme-toggle { margin-left: 0; }
+@media (max-width: 40em) { .site-header .lang-switch { display: none; } }

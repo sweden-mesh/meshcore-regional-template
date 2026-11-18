@@ -92,8 +92,9 @@ if (data) {
       store(v);
       const page = root.getAttribute("data-lan-page");
       const c = countyFor(data, v);
-      if (page || location.pathname === "/") {
-        const to = c && c.url ? c.url : "/?lan=se";
+      const home = root.dataset.home || "/"; // the front page in the page's language (B-337)
+      if (page || location.pathname === home) {
+        const to = c && c.url ? c.url : home + "?lan=se";
         if (location.pathname + location.search !== to) {
           root.classList.add("lan-leaving"); document.body.setAttribute("aria-busy", "true"); // the click landed (see modal.js)
           location.assign(to); return;

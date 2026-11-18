@@ -46,7 +46,9 @@
             (dict "path" "kom-igang" "title" (T "lan_start_title" (dict "Short" $c.short)) "desc" (T "lan_start_desc" (dict "Name" $c.name "Scope" $c.scope)))
             (dict "path" "ingen-svar-pa-test" "title" (T "lan_test_title" (dict "Test" $c.test)) "desc" (T "lan_test_desc" (dict "Test" $c.test)))
             (dict "path" "fragor" "title" (T "lan_faq_title" (dict "Name" $c.name)) "desc" (T "lan_faq_desc" (dict "Name" $c.name))) -}}
-        {{- $body := resources.Get (printf "lan/%s.md" $p.path) | resources.ExecuteAsTemplate (printf "lan/%s/%s.md" $c.scb $p.path) $ctx -}}
+        {{- /* The text in the site's language where there is one (assets/lan/<lang>/, B-337), else Swedish. */ -}}
+        {{- $src := resources.Get (printf "lan/%s/%s.md" site.Language.Lang $p.path) | default (resources.Get (printf "lan/%s.md" $p.path)) -}}
+        {{- $body := $src | resources.ExecuteAsTemplate (printf "lan/%s/%s/%s.md" site.Language.Lang $c.scb $p.path) $ctx -}}
         {{- $.AddPage (dict
           "path" (printf "%s/%s" $c.slug $p.path)
           "kind" "page"

@@ -2,5 +2,25 @@
 {{- /* A destination written as {{< param "…" >}} reaches this hook as Hugo's
        shortcode placeholder; in this template those params are external URLs. */ -}}
 {{- $external := or (and $u.IsAbs (ne $u.Host (urls.Parse site.BaseURL).Host)) (hasPrefix .Destination "HAHAHUGOSHORTCODE") -}}
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} class="ext" target="_blank" rel="noopener"{{ end }}>{{ .Text }}</a>
+{{- $dest := .Destination -}}
+{{- /* B-337: on a page in a language other than the default, a link to a page of the site, written as
+       the Swedish path (/guider/x/ or ../x/), goes to that page in the page's language when there is a
+       translation, else to the default language's page. A one-language site keeps every link as written. */ -}}
+{{- if and hugo.IsMultilingual (not $external) (not $u.IsAbs) $u.Path (ne site.Language.Lang (index hugo.Sites 0).Language.Lang) -}}
+  {{- $path := $u.Path -}}
+  {{- /* A relative link is relative to the default language's address of the page. */ -}}
+  {{- if not (hasPrefix $path "/") -}}
+    {{- /* A page that is not rendered on its own (a question shown on /fragor/) is read on its section's page. */ -}}
+    {{- $p := .Page }}{{ if not $p.RelPermalink }}{{ $p = $p.Parent }}{{ end -}}
+    {{- $base := $p.RelPermalink }}{{ range $p.AllTranslations }}{{ if eq .Language.Lang (index hugo.Sites 0).Language.Lang }}{{ $base = .RelPermalink }}{{ end }}{{ end -}}
+    {{- $path = path.Join $base $path -}}
+  {{- end -}}
+  {{- $logical := index (partialCached "url-paths.html" . "url-paths") (printf "%s/" (strings.TrimSuffix "/" $path)) | default (strings.TrimSuffix "/" $path) -}}
+  {{- with site.GetPage $logical | default ((index hugo.Sites 0).GetPage $logical) -}}
+    {{- $dest = .RelPermalink -}}
+    {{- with $u.RawQuery }}{{ $dest = printf "%s?%s" $dest . }}{{ end -}}
+    {{- with $u.Fragment }}{{ $dest = printf "%s#%s" $dest . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} class="ext" target="_blank" rel="noopener"{{ end }}>{{ .Text }}</a>
 {{- /* chomp trailing newline */ -}}
