@@ -4,7 +4,7 @@
 {{- /* From the rendered text, not .Fragments: a heading with a shortcode in it ("Kanaler i
   {{< region >}}") is only filled in there. */ -}}
 {{- $h2 := slice -}}
-{{- range findRESubmatch `<h2 id="([^"]+)"[^>]*>((?s).*?)</h2>` .Content -}}
+{{- range findRESubmatch `<h2 id="([^"]+)"[^>]*>((?s).*?)</h2>` (partial "scopes.html" .Content) -}}
   {{- $h2 = $h2 | append (dict "ID" (index . 1) "Title" (index . 2 | plainify | htmlUnescape)) -}}
 {{- end -}}
 {{- if ge (len $h2) 4 }}

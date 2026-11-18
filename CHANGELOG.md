@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.52.2 — 2026-11-18
+
+- **"På sidan" links match their headings again**: the titles are read from the page after the long
+  words get their soft hyphens, which also go into the heading ids (v0.52.1 linked one id without
+  them; the link check caught it).
+
 ## v0.52.1 — 2026-11-18
 
 - **"På sidan" with a shortcode in a heading**: the list read its titles from Hugo's fragments, where
