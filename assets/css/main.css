@@ -438,7 +438,8 @@ td, th { vertical-align: top; }
    screen; then the search button goes (Sök is in the menu), then the county button's label (its
    aria-label keeps the name). */
 @media (max-width: 24em) { .site-header, .site-header:has(.lan-toggle) { gap: .25rem; } }
-@media (max-width: 21em) {
+/* 22.4em, not 21em, since the county button reads "Välj region" (B-351): the row needs ~353 px. */
+@media (max-width: 22.4em) {
   .site-header .search-open { display: none; }
   .site-header .brand { margin-right: auto; }
 }
