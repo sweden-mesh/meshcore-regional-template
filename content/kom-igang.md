@@ -7,7 +7,9 @@ lastmod: 2026-11-18
 ---
 
 Du behöver tre saker: en LoRa-radio, MeshCore-firmware på den och appen i telefonen. Sedan är det
-fem steg till ditt första meddelande, och inget av dem kräver lödning eller licens.
+fem steg till ditt första meddelande, och inget av dem kräver lödning eller licens. Vill du bara
+ha det kortaste: [Från noll till companion i handen](/guider/snabbstart-companion/) och [Skriv ditt
+första meddelande](/guider/snabbstart-forsta-meddelandet/).
 
 ## 1. Förstå grunderna
 

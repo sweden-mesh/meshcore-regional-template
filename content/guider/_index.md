@@ -7,6 +7,7 @@ cascade:
   - lead: false
     target: {kind: page}
 groups:   # the H2 groups on this page (layouts/section.html); each guide names its `group`
+  - {key: snabbstart, title: "Snabbstart"}
   - {key: start, title: "Kom igång"}
   - {key: repeater, title: "Repeater"}
   - {key: radio, title: "Radio och antenner"}
@@ -17,4 +18,5 @@ date: 2026-11-12
 lastmod: 2026-11-18
 ---
 
-Ny här? Börja med [Kom igång med MeshCore](../kom-igang/), fem steg till första meddelandet, och [Vad är MeshCore?](vad-ar-meshcore/). Radioamatör? Läs [För radioamatörer](for-radioamatorer/). Vill du bygga? Se [Bygg en repeater](bygg-en-repeater/). Krånglar något? Se [Felsökning](../felsokning/).
+Bråttom? Snabbstarten nedan är tre korta guider: en egen radio, första meddelandet och en repeater
+i fönstret. Ny här? Börja med [Kom igång med MeshCore](../kom-igang/), fem steg till första meddelandet, och [Vad är MeshCore?](vad-ar-meshcore/). Radioamatör? Läs [För radioamatörer](for-radioamatorer/). Vill du bygga? Se [Bygg en repeater](bygg-en-repeater/). Krånglar något? Se [Felsökning](../felsokning/).
