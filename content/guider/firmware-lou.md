@@ -13,7 +13,7 @@ Utöver MeshCore-projektets egen firmware finns lou, modifierade varianter som L
 MeshCore och lägger till funktioner som hjälper nätet att mäta sig självt. Allt annat fungerar som
 i vanlig MeshCore, och noder med och utan lou pratar med varandra som vanligt.
 
-Den senaste versionen är `v1.18.0-lou-16`, byggd på MeshCore 1.18.0.
+Den senaste släppta versionen är `v1.18.0-lou-18`, byggd på MeshCore 1.18.0.
 
 ## Varianterna
 
@@ -28,9 +28,10 @@ Observer
   kan uppdatera sig själv över nätet (OTA), med uppdateringar signerade av sweden-mesh.
 
 Fjärrstyrning (`rc`)
-: Ägaren kan skicka inställningskommandon till sin repeater via MQTT, genom regionens
-  kommandoserver `{{< param "backend.host" >}}`, signerade med ägarens egen nyckel. Repeatern kontrollerar signaturen innan den gör något, och vissa kommandon (till
-  exempel nycklar och radering) går aldrig att skicka på distans.
+: Ägaren kan ändra inställningar på sin repeater utan att åka dit, genom kommandoservern
+  `{{< param "backend.host" >}}`. Kommandona är signerade med ägarens egen nyckel, och repeatern
+  kontrollerar signaturen innan den gör något. Vissa kommandon, till exempel nycklar och radering,
+  går aldrig att skicka på distans.
 
 | Variant | Innehåll |
 |---|---|
@@ -58,6 +59,23 @@ Fjärrstyrningen slås på från USB-konsolen, eftersom nyckeln bara kan sättas
 gäller lou-17 och senare. Repeaterguiderna under [Steg för steg](../../wizard/) kan skicka dem åt dig.
 
 {{< region-control >}}
+
+## Nästa versioner
+
+lou-20 är byggd men inte släppt än; den släpps när den klarat testerna. Den gör fjärrstyrningen
+enklare och mer privat:
+
+- **Ingen region behövs.** Repeatern nås på sin egen nyckel, oavsett region och karta.
+- **Krypterat till ägaren.** Varje kommando är krypterat till just den repeatern, och svaret går
+  krypterat tillbaka. Ingen annan på servern kan läsa dem.
+- **Repeatern hör av sig.** Ungefär var 15:e minut, och strax efter att den anslutit, skickar den
+  ett krypterat livstecken till ägaren. Det är så ägarens verktyg hittar sina repeatrar. Intervallet
+  ändras med `set alive.interval`.
+- **Över meshen också krypterat.** Ett kommando som skickas via en annan nods radio kan inte läsas
+  av den som för det vidare.
+
+lou-21 kommer tidigast en månad efter lou-20. Den tar bort det äldre sättet att styra repeatrar, så
+att bara det nya finns kvar. Uppdatera till lou-20 först.
 
 ## Bra att veta
 
