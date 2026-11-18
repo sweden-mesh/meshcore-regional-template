@@ -15,6 +15,7 @@
   {{- range $p := slice "kom-igang" "ingen-svar-pa-test" "fragor" -}}
     {{- with site.GetPage (printf "/%s/%s" $c.slug $p) }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
   {{- end -}}
+  {{- with site.GetPage "/guider/nar-natet-gar-ner" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
   {{- /* Each list column opens with a sentence, like the columns beside it (B-307). */ -}}
   {{- with $links }}{{ $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "lan_local_title" (dict "Short" $c.short)) (T "lan_local_intro" (dict "Name" $c.name)) (delimit . "")) }}{{ end -}}
   {{- $groups := slice -}}
@@ -37,7 +38,7 @@
   {{- $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul class=\"lan-county-list\">%s</ul>" (T "lan_net_title" (dict "Name" "Sverige")) (T "lan_se_net_text" (dict "URL" $lanURL) | markdownify) (delimit $cl "")) -}}
   {{- $links := slice -}}
   {{- with site.GetPage "/lan" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .Title) }}{{ end -}}
-  {{- range $p := slice "/guider/regioner" "/guider/kanaler" "/guider/forsta-meddelandet" -}}
+  {{- range $p := slice "/guider/regioner" "/guider/kanaler" "/guider/forsta-meddelandet" "/guider/nar-natet-gar-ner" -}}
     {{- with site.GetPage $p }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
   {{- end -}}
   {{- with $links }}{{ $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "lan_local_title" (dict "Short" "Sverige")) (T "lan_se_local_intro") (delimit . "")) }}{{ end -}}

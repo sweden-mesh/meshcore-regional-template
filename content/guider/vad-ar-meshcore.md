@@ -93,6 +93,10 @@ Kostnad
   gratis, och nätet har inga abonnemang eller avgifter. En repeater för utomhusbruk kostar mer:
   låda, bättre antenn och kanske sol och batteri. Se [Skaffa hårdvara](../skaffa-hardvara/).
 
+Vid strömavbrott
+: Radior och repeatrar på batteri eller sol fungerar utan el och mobilnät. Se [MeshCore när el och
+  mobilnät går ner](../nar-natet-gar-ner/).
+
 Meshtastic
 : Ett annat system på samma radior, som inte pratar med MeshCore. Se
   [MeshCore eller Meshtastic?](../meshcore-eller-meshtastic/).
