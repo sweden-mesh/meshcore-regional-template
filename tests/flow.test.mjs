@@ -69,3 +69,42 @@ test("the transmitter's flash: full strength while the bubbles travel, a ring th
   assert.equal(end.ra, 0);
   assert.equal(flashAt(BUBBLE_MS + FADE_MS + 1), null);
 });
+
+import { FlowLayer, needsRaise, FLASH_TOP } from "../assets/js/map/flow.js";
+
+// A map that keeps only what the flow layer touches: sources and the layer order.
+function fakeMap(initial = []) {
+  const order = [...initial], sources = new Map();
+  return {
+    order,
+    addSource: (id) => sources.set(id, { setData() {} }),
+    getSource: (id) => sources.get(id),
+    getLayer: (id) => (order.includes(id) ? { id } : undefined),
+    addLayer: (l, before) => { const i = before ? order.indexOf(before) : -1; i >= 0 ? order.splice(i, 0, l.id) : order.push(l.id); },
+    moveLayer: (id, before) => { order.splice(order.indexOf(id), 1); const i = before ? order.indexOf(before) : -1; i >= 0 ? order.splice(i, 0, id) : order.push(id); },
+    getLayersOrder: () => [...order],
+  };
+}
+
+test("needsRaise: only when the white centre exists and is not on top (B-349)", () => {
+  assert.equal(needsRaise(["a", FLASH_TOP]), false);
+  assert.equal(needsRaise([FLASH_TOP, "node-points"]), true);
+  assert.equal(needsRaise(["a", "b"]), false);
+  assert.equal(needsRaise(undefined), false);
+});
+
+test("the white centre is drawn above the node layers, also when they are added after it (B-349)", () => {
+  const map = fakeMap(["links", "node-points", "node-obs-dot", "node-pills"]);
+  let T = 0;
+  const fl = new FlowLayer(map, { now: () => T });
+  fl.kick = () => {};
+  fl.install();
+  assert.equal(map.order.at(-1), FLASH_TOP);
+  assert.ok(map.order.indexOf("flow-flash-halo") > map.order.indexOf("node-points"));
+  // a theme switch or redraw puts the node layers back on top
+  map.order.push("node-points-2", "node-pills-2");
+  fl.transmit({ id: "a", lng: 14, lat: 57 }, [{ lng: 14.1, lat: 57.1 }]);
+  T = 300;
+  fl.render();
+  assert.equal(map.order.at(-1), FLASH_TOP);
+});

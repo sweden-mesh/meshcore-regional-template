@@ -70,6 +70,14 @@ export function flashAt(t) {
   return { a, t: Math.min(1, t / BUBBLE_MS), r, ra: Math.max(0, 1 - r) };
 }
 
+// B-349: the white centre must stay above the node layers, which are added again after a theme
+// switch and on every redraw. True when it exists but is not the top layer. Pure, for tests.
+export const FLASH_TOP = "flow-flash-white";
+export function needsRaise(order) {
+  const i = (order || []).indexOf(FLASH_TOP);
+  return i >= 0 && i !== order.length - 1;
+}
+
 // Position along a run after t ms: { coords: [lng, lat], trail: [[lng,lat]...], done }.
 export function positionAt(run, t) {
   const hops = run.length - 1;
@@ -106,21 +114,21 @@ export class FlowLayer {
       paint: { "line-color": "#ffffff", "line-width": 3.5, "line-blur": 1.5, "line-opacity": ["*", 0.85, ["get", "a"]] } }, before);
     map.addLayer({ id: "flow-glow", type: "circle", source: "flow-glow",
       paint: { "circle-color": "#f97316", "circle-radius": 14, "circle-blur": 0.6, "circle-opacity": ["get", "a"] } }, before);
-    // The transmitter's flash (B-347): a yellow halo, a yellow core with a white edge and an amber
-    // ring that spreads out, all larger zoomed out, where the repeaters' blurred glow would swallow
-    // them. Yellow and amber hold on the light map as well as the dark one.
+    // The transmitter's flash (B-347, stronger in B-349): a yellow halo, a yellow core with a white
+    // edge and an amber ring that spreads out, all larger zoomed out, where the repeaters' blurred
+    // glow would swallow them. Yellow and amber hold on the light map as well as the dark one.
     const byZoom = (far, near) => ["interpolate", ["linear"], ["zoom"], 5, far, 11, near];
     map.addLayer({ id: "flow-flash-halo", type: "circle", source: "flow-flash",
       paint: { "circle-color": "#facc15", "circle-blur": 1,
-        "circle-radius": byZoom(["+", 18, ["*", 14, ["get", "t"]]], ["+", 12, ["*", 10, ["get", "t"]]]),
-        "circle-opacity": ["*", 0.75, ["get", "a"]] } });
+        "circle-radius": byZoom(["+", 24, ["*", 18, ["get", "t"]]], ["+", 16, ["*", 12, ["get", "t"]]]),
+        "circle-opacity": ["*", 0.95, ["get", "a"]] } });
     map.addLayer({ id: "flow-flash", type: "circle", source: "flow-flash",
       paint: { "circle-color": "#facc15", "circle-blur": 0.1,
-        "circle-radius": byZoom(["+", 9, ["*", 7, ["get", "t"]]], ["+", 8, ["*", 6, ["get", "t"]]]),
-        "circle-opacity": ["get", "a"], "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5, "circle-stroke-opacity": ["get", "a"] } });
+        "circle-radius": byZoom(["+", 11, ["*", 8, ["get", "t"]]], ["+", 9, ["*", 7, ["get", "t"]]]),
+        "circle-opacity": ["get", "a"], "circle-stroke-color": "#ffffff", "circle-stroke-width": 3, "circle-stroke-opacity": ["get", "a"] } });
     map.addLayer({ id: "flow-flash-ring", type: "circle", source: "flow-flash",
-      paint: { "circle-opacity": 0, "circle-stroke-color": "#f59e0b", "circle-stroke-width": 3,
-        "circle-radius": byZoom(["+", 10, ["*", 38, ["get", "r"]]], ["+", 8, ["*", 26, ["get", "r"]]]),
+      paint: { "circle-opacity": 0, "circle-stroke-color": "#f59e0b", "circle-stroke-width": 4,
+        "circle-radius": byZoom(["+", 12, ["*", 44, ["get", "r"]]], ["+", 10, ["*", 30, ["get", "r"]]]),
         "circle-stroke-opacity": ["get", "ra"] } });
     map.addLayer({ id: "flow-bubbles", type: "circle", source: "flow-bubbles",
       paint: { "circle-color": "#fde047", "circle-radius": 4, "circle-opacity": ["get", "a"],
@@ -130,6 +138,12 @@ export class FlowLayer {
     map.addLayer({ id: "flow-heads", type: "circle", source: "flow-heads",
       paint: { "circle-color": "#f97316", "circle-radius": 5, "circle-stroke-color": "#fff", "circle-stroke-width": 1.5,
         "circle-opacity": ["get", "a"], "circle-stroke-opacity": ["get", "a"] } });
+    // B-349: a white blurred centre on top of everything, the repeater's own marker included, so
+    // the marker is covered at the flash's peak and shows again as the flash fades.
+    map.addLayer({ id: FLASH_TOP, type: "circle", source: "flow-flash",
+      paint: { "circle-color": "#ffffff", "circle-blur": 0.7,
+        "circle-radius": byZoom(["+", 12, ["*", 4, ["get", "t"]]], ["+", 10, ["*", 4, ["get", "t"]]]),
+        "circle-opacity": ["*", 0.95, ["get", "a"]] } });
   }
 
   // Light up a node (the observer that heard something), even without a path.
@@ -209,6 +223,7 @@ export class FlowLayer {
       return true;
     });
     const fc = (features) => ({ type: "FeatureCollection", features });
+    if (flash.length && needsRaise(this.map.getLayersOrder?.())) this.map.moveLayer(FLASH_TOP);
     this.map.getSource("flow-flash").setData(fc(flash));
     this.map.getSource("flow-bubbles").setData(fc(bubbles));
     this.map.getSource("flow-links").setData(fc(links));
