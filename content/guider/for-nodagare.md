@@ -1,7 +1,7 @@
 ---
 title: "Verktyg för dig som har en nod"
 seoTitle: "Verktyg för MeshCore-nodägare"
-description: "Kartan, MeshMapper, livetrafiken, firmware, fjärrstyrning, solcellskalkylatorn, platstestet, USB-konsolen och en egen broker: vad varje verktyg är till för och när du behöver det."
+description: "Kartan, MeshMapper, livetrafiken, firmware, fjärrstyrning, solcellskalkylatorn, platstestet och USB-konsolen: vad varje verktyg är till för."
 weight: 90
 group: repeater
 date: 2026-11-18

@@ -1,7 +1,7 @@
 ---
 title: "Kanaler"
 seoTitle: "Kanaler i MeshCore"
-description: "Public, hashtag-kanaler och privata kanaler i MeshCore: vem som kan läsa vad, hur långt ett meddelande får vara, hur du skapar en privat kanal och vilken region kanalen ska ha."
+description: "Public, hashtag-kanaler och privata kanaler i MeshCore: vem som kan läsa vad, hur långt ett meddelande får vara och hur du skapar en privat kanal."
 weight: 80
 group: regioner
 date: 2026-11-12

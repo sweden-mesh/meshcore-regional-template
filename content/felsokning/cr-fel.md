@@ -1,5 +1,6 @@
 ---
 title: "Repeatern hörs dåligt fast inställningarna ser rätt ut"
+seoTitle: "MeshCore-repeatern hörs dåligt: fel kodningshastighet"
 description: "Frekvens, bandbredd och spreading factor stämmer, men repeatern hör bara de närmaste, eller bara ibland."
 category: radio
 weight: 50

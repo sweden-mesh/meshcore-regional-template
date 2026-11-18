@@ -1,6 +1,6 @@
 ---
 title: "Välj och flasha firmware"
-description: "Välj och flasha MeshCore från webbläsaren: standardfirmware från den officiella webbflashern för companion och repeater, Observer för kartan, och vad du gör om något krånglar."
+description: "Flasha MeshCore från webbläsaren: standardfirmware från den officiella webbflashern för companion och repeater, Observer för kartan, och om något krånglar."
 weight: 18
 group: start
 source:

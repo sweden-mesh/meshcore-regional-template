@@ -1,7 +1,7 @@
 ---
 title: "Antenner"
 seoTitle: "Antenner för MeshCore på 868 MHz"
-description: "Antenner för MeshCore på 868 MHz: vad som spelar roll, modeller med vinst och kontakt, typer, vad dBi betyder, kontakter, kabelförluster och var antennen ska sitta."
+description: "Antenner för MeshCore på 868 MHz: vad som spelar roll, modeller med vinst och kontakt, vad dBi betyder, kabelförluster och var antennen ska sitta."
 url: /guider/skaffa-hardvara/antenn/
 weight: 17
 group: start

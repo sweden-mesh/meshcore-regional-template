@@ -1,6 +1,6 @@
 ---
 title: "Webbläsaren hittar ingen port"
-description: "Listan med enheter är tom, eller radion syns inte i den."
+description: "Listan med enheter är tom när du ska flasha MeshCore, eller radion syns inte i den: kabeln, webbläsaren, flashläget eller drivrutinen."
 category: flasha
 weight: 30
 date: 2026-11-13

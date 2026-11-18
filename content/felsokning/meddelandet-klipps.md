@@ -1,6 +1,6 @@
 ---
 title: "Meddelandet klipps av eller skickas inte"
-description: "Ett långt meddelande kommer fram avklippt, eller går inte att skicka."
+description: "Ett långt MeshCore-meddelande kommer fram avklippt eller går inte att skicka: gränsen är 160 byte, och å, ä och ö tar två byte var."
 category: companion
 weight: 50
 date: 2026-11-18

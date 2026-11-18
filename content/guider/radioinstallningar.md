@@ -1,7 +1,7 @@
 ---
 title: "MeshCore-inställningar i Sverige"
 seoTitle: "MeshCore i Sverige: frekvens och regler"
-description: "Vilken frekvens och vilka radioinställningar MeshCore använder i Sverige, vad PTS regler säger om effekt och duty cycle på 868 MHz, och fällorna i standardvärdena."
+description: "Frekvens och radioinställningar för MeshCore i Sverige, vad PTS regler säger om effekt och duty cycle på 868 MHz, och fällorna i standardvärdena."
 weight: 104
 group: radio
 date: 2026-11-18

@@ -1,7 +1,7 @@
 ---
 title: "Kartan och observatörer"
 seoTitle: "MeshCore-kartan och observatörer (MQTT)"
-description: "Vad MeshCore-kartan visar och var det kommer ifrån, vad en observatör skickar, tre sätt att bli observatör (firmware, dator med repeater, companion), IATA-koden för ditt län och andra kartor."
+description: "Vad MeshCore-kartan visar och var datan kommer ifrån, vad en observatör skickar, tre sätt att bli observatör och IATA-koden för ditt län."
 weight: 100
 group: repeater
 source:

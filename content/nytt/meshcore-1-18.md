@@ -1,6 +1,6 @@
 ---
 title: "MeshCore 1.18"
-description: "MeshCore 1.18 (15 oktober 2026) på svenska: kommandoraden för companions, fjärrstyrning av en companion, trafik utan region och fler ändringar som berör repeatrar i Sverige."
+description: "MeshCore 1.18 (15 oktober 2026) på svenska: kommandoraden för companions, fjärrstyrning av en companion, trafik utan region och fler ändringar."
 date: 2026-10-15
 lastmod: 2026-11-18
 checkedFirmware: "1.18"

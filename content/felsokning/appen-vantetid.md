@@ -1,5 +1,6 @@
 ---
 title: "Appen låter mig vänta innan jag kan administrera repeatern"
+seoTitle: "Väntetid i MeshCore-appen vid fjärradministration"
 description: "Inloggningen på en repeater eller room server fungerar, men appen visar en väntetid."
 category: companion
 weight: 55

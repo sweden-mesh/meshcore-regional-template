@@ -1,7 +1,7 @@
 ---
 title: "Skaffa hårdvara"
 seoTitle: "Vilken MeshCore-radio ska jag köpa?"
-description: "Vilken MeshCore-radio ska du köpa? Companion, repeater och antenn för 868 MHz, butiker och priser i kronor, och modellerna jämförda: chip, sändeffekt och batteri."
+description: "Vilken MeshCore-radio ska du köpa? Companion, repeater och antenn för 868 MHz, butiker och priser i kronor, och modellerna jämförda sida vid sida."
 weight: 14
 group: start
 date: 2026-11-12

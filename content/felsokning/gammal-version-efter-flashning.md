@@ -1,7 +1,7 @@
 ---
 title: "Radion visar fortfarande den gamla versionen efter flashningen"
 seoTitle: "Gamla versionen kvar efter flashning"
-description: "Flashningen gick bra, men ver säger samma version som förut."
+description: "Flashningen gick bra, men ver visar samma MeshCore-version som förut: radion startar från den andra firmwareplatsen, eller filen var gammal."
 category: flasha
 weight: 20
 date: 2026-11-13

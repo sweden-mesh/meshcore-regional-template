@@ -1,7 +1,7 @@
 ---
 title: "Sätt upp en repeater"
 seoTitle: "Sätt upp en MeshCore-repeater: guide"
-description: "Sätt upp en MeshCore-repeater: plats, flashning, radio, namn, region, duty cycle och lösenord, finjustering av fördröjningar, test före montering och en checklista."
+description: "Sätt upp en MeshCore-repeater: plats, flashning, radio, namn, region, duty cycle och lösenord, fördröjningar, test före montering och en checklista."
 weight: 50
 group: repeater
 source:

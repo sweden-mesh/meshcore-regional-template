@@ -1,7 +1,7 @@
 ---
 title: "Administrera repeatern från appen"
 seoTitle: "Administrera en MeshCore-repeater på distans"
-description: "När repeatern sitter uppe är USB opraktiskt. Logga in som administratör från MeshCore-appen över radio, också via andra repeatrar: vad du kan ändra och vad som bara går över USB."
+description: "Logga in som administratör på din MeshCore-repeater från appen, över radio och via andra repeatrar: vad du kan ändra och vad som kräver USB."
 weight: 61
 group: repeater
 date: 2026-11-18

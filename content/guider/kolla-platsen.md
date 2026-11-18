@@ -1,6 +1,6 @@
 ---
 title: "Kolla platsen med MeshMapper"
-seoTitle: "Kolla en repeaterplats med MeshMapper innan du monterar"
+seoTitle: "Kolla en MeshCore-repeaterplats med MeshMapper"
 description: "Så kollar du en tänkt repeaterplats i MeshMapper innan du klättrar: täckning från terrängen, sikt mot en repeater, rätt region och wardriving efteråt."
 weight: 47
 group: repeater
