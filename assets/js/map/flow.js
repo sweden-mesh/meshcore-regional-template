@@ -59,6 +59,17 @@ export function linkFlash(from, neighbours, t) {
     geometry: { type: "LineString", coordinates: [[from.lng, from.lat], [n.lng, n.lat]] } }));
 }
 
+// B-347: the transmitter's own flash at time t after it sends: a white-hot core at full strength
+// while the bubbles travel, then a fade (a), its growth over the bubble time (t), and a ring that
+// spreads over the bubbles and half the fade (r) as it fades (ra). Strong enough to read over the
+// blurred repeater glow zoomed out. null before it starts and once gone. Pure, for tests.
+export function flashAt(t) {
+  if (t < 0 || t > BUBBLE_MS + FADE_MS) return null;
+  const a = t <= BUBBLE_MS ? 1 : Math.max(0, 1 - (t - BUBBLE_MS) / FADE_MS);
+  const r = Math.min(1, t / (BUBBLE_MS + FADE_MS / 2));
+  return { a, t: Math.min(1, t / BUBBLE_MS), r, ra: Math.max(0, 1 - r) };
+}
+
 // Position along a run after t ms: { coords: [lng, lat], trail: [[lng,lat]...], done }.
 export function positionAt(run, t) {
   const hops = run.length - 1;
@@ -95,9 +106,22 @@ export class FlowLayer {
       paint: { "line-color": "#ffffff", "line-width": 3.5, "line-blur": 1.5, "line-opacity": ["*", 0.85, ["get", "a"]] } }, before);
     map.addLayer({ id: "flow-glow", type: "circle", source: "flow-glow",
       paint: { "circle-color": "#f97316", "circle-radius": 14, "circle-blur": 0.6, "circle-opacity": ["get", "a"] } }, before);
+    // The transmitter's flash (B-347): a yellow halo, a yellow core with a white edge and an amber
+    // ring that spreads out, all larger zoomed out, where the repeaters' blurred glow would swallow
+    // them. Yellow and amber hold on the light map as well as the dark one.
+    const byZoom = (far, near) => ["interpolate", ["linear"], ["zoom"], 5, far, 11, near];
+    map.addLayer({ id: "flow-flash-halo", type: "circle", source: "flow-flash",
+      paint: { "circle-color": "#facc15", "circle-blur": 1,
+        "circle-radius": byZoom(["+", 18, ["*", 14, ["get", "t"]]], ["+", 12, ["*", 10, ["get", "t"]]]),
+        "circle-opacity": ["*", 0.75, ["get", "a"]] } });
     map.addLayer({ id: "flow-flash", type: "circle", source: "flow-flash",
-      paint: { "circle-color": "#facc15", "circle-radius": ["+", 6, ["*", 10, ["get", "t"]]], "circle-blur": 0.3,
-        "circle-opacity": ["get", "a"], "circle-stroke-color": "#fde047", "circle-stroke-width": 2, "circle-stroke-opacity": ["get", "a"] } });
+      paint: { "circle-color": "#facc15", "circle-blur": 0.1,
+        "circle-radius": byZoom(["+", 9, ["*", 7, ["get", "t"]]], ["+", 8, ["*", 6, ["get", "t"]]]),
+        "circle-opacity": ["get", "a"], "circle-stroke-color": "#ffffff", "circle-stroke-width": 2.5, "circle-stroke-opacity": ["get", "a"] } });
+    map.addLayer({ id: "flow-flash-ring", type: "circle", source: "flow-flash",
+      paint: { "circle-opacity": 0, "circle-stroke-color": "#f59e0b", "circle-stroke-width": 3,
+        "circle-radius": byZoom(["+", 10, ["*", 38, ["get", "r"]]], ["+", 8, ["*", 26, ["get", "r"]]]),
+        "circle-stroke-opacity": ["get", "ra"] } });
     map.addLayer({ id: "flow-bubbles", type: "circle", source: "flow-bubbles",
       paint: { "circle-color": "#fde047", "circle-radius": 4, "circle-opacity": ["get", "a"],
         "circle-stroke-color": "#ffffff", "circle-stroke-width": 1, "circle-stroke-opacity": ["get", "a"] } });
@@ -177,8 +201,7 @@ export class FlowLayer {
       const t = now - x.t0;
       if (t < 0) return true; // scheduled for a later hop
       if (t > BUBBLE_MS + FADE_MS) return false;
-      const a = t <= BUBBLE_MS ? 1 : Math.max(0, 1 - (t - BUBBLE_MS) / FADE_MS);
-      flash.push({ type: "Feature", properties: { a: 0.85 * a, t: Math.min(1, t / BUBBLE_MS) }, geometry: { type: "Point", coordinates: [x.p.lng, x.p.lat] } });
+      flash.push({ type: "Feature", properties: flashAt(t), geometry: { type: "Point", coordinates: [x.p.lng, x.p.lat] } });
       links.push(...linkFlash(x.p, x.neighbours, t));
       if (t <= BUBBLE_MS) {
         for (const c of bubblePositions(x.p, x.neighbours, t)) bubbles.push({ type: "Feature", properties: { a: 0.95 }, geometry: { type: "Point", coordinates: c } });

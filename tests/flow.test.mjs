@@ -53,3 +53,19 @@ test("a transmitting node's links flash, then fade, then are gone (B-314)", () =
   assert.deepEqual(linkFlash(from, ns, BUBBLE_MS + FADE_MS + 1), []);
   assert.deepEqual(linkFlash(from, [], 0), []);
 });
+
+import { flashAt } from "../assets/js/map/flow.js";
+
+test("the transmitter's flash: full strength while the bubbles travel, a ring that spreads and fades (B-347)", () => {
+  assert.equal(flashAt(-1), null);
+  assert.deepEqual(flashAt(0), { a: 1, t: 0, r: 0, ra: 1 });
+  const mid = flashAt(BUBBLE_MS / 2);
+  assert.equal(mid.a, 1);
+  assert.equal(mid.t, 0.5);
+  assert.ok(mid.r > 0 && mid.ra < 1);
+  const end = flashAt(BUBBLE_MS + FADE_MS / 2);
+  assert.ok(end.a > 0.4 && end.a < 0.6);
+  assert.equal(end.r, 1);
+  assert.equal(end.ra, 0);
+  assert.equal(flashAt(BUBBLE_MS + FADE_MS + 1), null);
+});
