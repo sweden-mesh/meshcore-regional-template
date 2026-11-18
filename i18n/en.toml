@@ -1186,3 +1186,7 @@ other = "Another Raspberry Pi: calculated as the Pi Zero 2 W, the only one with 
 
 [toc_title]
 other = "On this page"
+[lan_groups_label]
+other = "Groups in {{ .Name }}"
+[lan_more_groups]
+other = "More groups"

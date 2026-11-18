@@ -1182,3 +1182,7 @@ other = "En annan Raspberry Pi: räknas som Pi Zero 2 W, den enda med en härled
 
 [toc_title]
 other = "På sidan"
+[lan_groups_label]
+other = "Grupper i {{ .Name }}"
+[lan_more_groups]
+other = "Fler grupper"

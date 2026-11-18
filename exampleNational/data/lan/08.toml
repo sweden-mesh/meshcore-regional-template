@@ -26,3 +26,16 @@ community = { name = "Exempelgruppen", url = "https://example.org/grupp" }   # B
   lat  = 57.1
   lon  = 16.2
   note = "högt läge mot havet"
+
+# Five groups in all: the county page shows the first three as buttons and "Fler grupper" (operator 2026-11-18).
+[[groups]]
+  name = "Exempelklubben"
+  url  = "https://example.org/klubb"
+
+[[groups]]
+  name = "Exempelföreningen"
+  url  = "https://example.org/forening"
+
+[[groups]]
+  name = "Fjärde gruppen"
+  url  = "https://example.org/fjarde"

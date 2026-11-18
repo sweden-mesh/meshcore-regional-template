@@ -19,7 +19,7 @@
   {{- with $links }}{{ $cols = $cols | append (printf "<h2>%s</h2><p>%s</p><ul>%s</ul>" (T "lan_local_title" (dict "Short" $c.short)) (T "lan_local_intro" (dict "Name" $c.name)) (delimit . "")) }}{{ end -}}
   {{- $groups := slice -}}
   {{- range $c.groups }}{{ $groups = $groups | append (printf "<li><a href=\"%s\" class=\"ext\" target=\"_blank\" rel=\"noopener\">%s</a></li>" .url (.name | htmlEscape)) }}{{ end -}}
-  {{- $comm := printf "<h2>%s</h2>" (T "section_community") -}}
+  {{- $comm := printf "<h2 id=\"grupper\">%s</h2>" (T "section_community") -}}
   {{- if $groups -}}
     {{- $comm = printf "%s<p>%s</p><ul>%s</ul>" $comm (T "lan_groups_intro" (dict "Short" $c.short)) (delimit $groups "") -}}
   {{- else -}}

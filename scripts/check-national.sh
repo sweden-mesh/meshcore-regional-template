@@ -25,10 +25,12 @@ check kalmar/index.html "Skrivet av Exempelgruppen" "county page: the own paragr
 check kalmar/index.html "kontrollerades senast 2026-11-16" "county page: the checked date"
 check kalmar/index.html "<p class=lan-checked>" "county page: the checked date in its own small style (B-308)"
 check kalmar/index.html "<h2>I Kalmar</h2><p>Sidorna här gäller" "county page: the local pages' column opens with a sentence (B-307)"
-check kalmar/index.html "<h2>Gemenskap</h2><p>Här finns de som använder MeshCore i Kalmar" "county page: the groups' column opens with a sentence (B-307)"
+check kalmar/index.html "<h2 id=grupper>Gemenskap</h2><p>Här finns de som använder MeshCore i Kalmar" "county page: the groups' column opens with a sentence (B-307)"
 check kalmar/index.html "<span data-r=name>Kalmar län</span>" "county page: the footer names the county"
-check kalmar/index.html 'class="button button-secondary ext" href=https://example.org/grupp target=_blank rel=noopener>Exempelgruppen</a>' "county page: the community site beside Se kartan (B-306)"
-if grep -q 'button-secondary ext' "$P/skåne/index.html"; then echo "FAIL county page: a community button without a community"; fail=1; else echo "ok   county page: no community, no button"; fi
+check kalmar/index.html '<ul class=hero-groups aria-label="Grupper i Kalmar län"><li><a class="button button-secondary ext" href=https://example.org/grupp target=_blank rel=noopener>Exempelgruppen</a></li><li><a class="button button-secondary ext" href=https://example.org/chat' "county page: the groups as buttons after Se kartan, in the file's order, community folded in"
+check kalmar/index.html 'Exempelklubben</a></li><li><a class="button button-secondary" href=#grupper>Fler grupper</a></li></ul>' "county page: more than 4 groups, the first 3 and Fler grupper"
+check kalmar/index.html '<h2 id=grupper>Gemenskap</h2>' "county page: Fler grupper leads to the groups column"
+if grep -q 'hero-groups' "$P/skåne/index.html"; then echo "FAIL county page: a group list without groups"; fail=1; else echo "ok   county page: no community, no button"; fi
 check index.html "<h2>Nätet i Sverige</h2>" "Sverige: the network column (B-318)"
 check index.html "<h2>I Sverige</h2><p>Sidorna här gäller hela landet" "Sverige: the pages column (B-318)"
 check index.html "<h2>Gemenskap</h2><p>Här finns de som använder MeshCore i hela landet" "Sverige: the community column with the counties' groups (B-318)"
@@ -76,23 +78,23 @@ check guider/regioner/index.html 'src=/js/lan/apply' "island: and the apply scri
 size=$(sed -n 's/.*id=lan-data>\([^<]*\)<\/script>.*/\1/p' "$P/index.html" | gzip -c | wc -c)
 if [ "$size" -lt 10240 ]; then echo "ok   island: $size bytes gzipped, under 10 KB"; else echo "FAIL island: $size bytes gzipped, over 10 KB (move it to lan.json)"; fail=1; fi
 # County values in the shared guides (G3): spans with a neutral form, and the "välj län" note.
-check guider/regioner/index.html '<code><span data-r=scope>se-&lt;län></span></code>' "spans: a guide's scope is a span, neutral se-<län>"
+check guider/regioner/index.html '<code><span data-r=scope data-pagefind-ignore>se-&lt;län></span></code>' "spans: a guide's scope is a span, neutral se-<län>"
 check guider/regioner/index.html 'Trafik inom <span data-r=name>ditt län</span>' "spans: a guide's county name is a span, neutral ditt län"
-check guider/forsta-meddelandet/index.html '<code data-r=test>#test-se-&lt;län></code>' "spans: the test channel is a span"
+check guider/forsta-meddelandet/index.html '<code data-r=test data-pagefind-ignore>#test-se-&lt;län></code>' "spans: the test channel is a span"
 check guider/regioner/index.html '<p class=lan-note>.*<a href=/lan/ data-lan-open>Välj ditt län</a>' "spans: the page carries the välj län note"
 if grep -q 'class=lan-note' "$P/guider/antenner/index.html"; then echo "FAIL spans: a page without county values got the note"; fail=1; else echo "ok   spans: no note on a page without county values"; fi
-check guider/namnge-noden/index.html '<code><span data-r=prefix>SE-&lt;LÄN></span>-Plats</code>' "spans: the naming tip from the county's prefix"
-check guider/companion/index.html '<code class=scope><span data-r=scope>se-&lt;län></span></code></dd></div><div><dt>IATA för observatörer</dt><dd><code><span data-r=iata>XXX</span></code>' "spans: the settings box's scope and map code"
+check guider/namnge-noden/index.html '<code><span data-r=prefix data-pagefind-ignore>SE-&lt;LÄN></span>-Plats</code>' "spans: the naming tip from the county's prefix"
+check guider/companion/index.html '<code class=scope><span data-r=scope data-pagefind-ignore>se-&lt;län></span></code></dd></div><div><dt>IATA för observatörer</dt><dd><code><span data-r=iata data-pagefind-ignore>XXX</span></code>' "spans: the settings box's scope and map code"
 check kalmar/index.html '<code class=scope>se08</code></dd></div><div><dt>IATA för observatörer</dt><dd><code>KLR</code>' "spans: a county page's settings box has its values in the HTML"
 # Channels, groups and contact from the county (G13, G14).
-check guider/kanaler/index.html '<tbody data-r-channels><tr><td><code data-r=test>#test-se-&lt;län></code>' "channels: a guide's table holds the county's test channel row"
+check guider/kanaler/index.html '<tbody data-r-channels><tr><td><code data-r=test data-pagefind-ignore>#test-se-&lt;län></code>' "channels: a guide's table holds the county's test channel row"
 check index.html '<ul data-r-groups=list><li><a href=https://example.org/chat' "groups: the footer list takes the county's groups, national chats after"
 check kalmar/index.html '<ul data-r-groups=list><li data-r-item><a href=https://example.org/grupp class=ext target=_blank rel=noopener>Exempelgruppen</a>' "groups: a county page's footer lists its group"
 n=$(grep -o '<p class=footer-title>Gemenskap</p>.*</ul>' "$P/kalmar/index.html" | grep -o 'href=https://example.org/chat ' | wc -l)
 if [ "$n" = "1" ]; then echo "ok   footer: a group with the same address as a chat link is listed once (B-317)"; else echo "FAIL footer: example.org/chat listed $n times"; fail=1; fi
 check bli-nodvard/index.html '<span data-r-groups=inline><a href=https://example.org/chat' "contact: shared pages name the national chats until a county is chosen"
 # Proposed scopes (P2) and the solar guide's reference (G17).
-check guider/regioner/index.html '<p class=lan-proposal data-r-proposal hidden>Regionen <code><span data-r=scope>' "proposal: the page has the hidden proposal line"
+check guider/regioner/index.html '<p class=lan-proposal data-r-proposal hidden>Regionen <code><span data-r=scope data-pagefind-ignore>' "proposal: the page has the hidden proposal line"
 check guider/solnoder/index.html 'Jönköping som referens' "solar: the tables are labelled as the Jönköping reference"
 check guider/solnoder/index.html 'href=/wizard/solcell/>Solcells' "solar: and point to the calculator"
 # The header's county button (M5): a link to /lan/ without JavaScript, labelled with the county.
@@ -124,7 +126,7 @@ if tr -d '\n' < "$P/wizard/repeater-snabb/index.html" | grep -q 'js/lan/wizard-c
 check wizard/repeater-snabb/index.html '<div class=wz-neighbours hidden data-areas=\[\]' "wizards: the neighbour box waits, empty and hidden"
 check wizard/repeater-guidad/index.html 'js/lan/wizard-county' "wizards: the guided wizard too"
 check wizard/solcell/index.html 'js/lan/wizard-county' "wizards: the solar calculator starts on the county"
-check wizard/companion/index.html '<code class=scope><span data-r=scope>se-&lt;län></span></code>' "wizards: the companion steps name the county's scope"
+check wizard/companion/index.html '<code class=scope><span data-r=scope data-pagefind-ignore>se-&lt;län></span></code>' "wizards: the companion steps name the county's scope"
 # Descriptions and structured data (G22): every national page has its own description.
 check kalmar/index.html '<meta name=description content="MeshCore i Kalmar län: länets region se08' "seo: a county page's own description"
 check kalmar/kom-igang/index.html '<meta name=description content="Kom igång med MeshCore i Kalmar län' "seo: a local page's own description"

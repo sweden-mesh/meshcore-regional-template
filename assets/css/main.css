@@ -162,6 +162,12 @@ a { color: var(--accent); }
    the background in both themes, where --line is about 1.4:1. */
 .hero-actions .button-secondary { border-color: var(--field-border); }
 .hero-actions { display: flex; gap: .75rem; justify-content: flex-start; flex-wrap: wrap; margin: 1.5rem 0 0; }
+/* A county's groups after the site's buttons (operator 2026-11-18): one bar before the list, in
+   the gap; when the list starts a line, the bar falls outside the row and is clipped. */
+div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
+.hero-groups { position: relative; display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; margin: 0; padding: 0; }
+.hero-groups::before { content: ""; position: absolute; left: calc(-.375rem - 1px); top: 22%; bottom: 22%; width: 1px; background: var(--muted); }
+.hero-groups li { display: flex; }
 /* Three ways in at the top of "Kom igång" (NEWCOMER-3, B-311): a softly tinted inset without a
    border, three stacked entries (the question small and bold, the link under it), then a hairline
    before the card's guide links. */

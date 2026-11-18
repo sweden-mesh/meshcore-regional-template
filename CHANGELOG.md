@@ -4,6 +4,27 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.52.0 — 2026-11-18
+
+- **A county's groups as buttons** (operator 2026-11-18, replacing B-326's single community button): a
+  national county page shows every group in its file's `[[groups]]`, in that order, as buttons after
+  "Kom igång" and "Se kartan"; the old `community` key is folded in when it names another address.
+  More than 4: the first 3 and "Fler grupper", which leads to the Gemenskap column (`#grupper`). One
+  bar, drawn by CSS at the start of the group list, separates the site's buttons from the groups; it
+  is clipped when the list starts a line. Screen readers get a named list ("Grupper i <län>").
+  Regional sites unchanged. New texts `lan_groups_label`, `lan_more_groups`.
+- **"På sidan"** (UX-SV-4): a page with 4 or more H2s gets a list of them, closed under the lead on
+  narrow screens, open and sticky in the empty right column from 80em; the section in view is marked
+  (`scroll-target-group`, IntersectionObserver otherwise) and has `aria-current`. New `js/toc.js`,
+  text `toc_title`.
+- **Search from the header** (UX-SV-5): the menu's "Sök" link becomes a field-shaped link beside the
+  county button (an icon once the menu folds), opening the same Pagefind search in a dialog; `/` opens
+  it outside text fields; without script it goes to `/sok/`. The search box is now the partial
+  `search-box.html`, used by the shortcode and the header. The national site's placeholder values
+  (`se-<län>`, `#test-se-<län>`, `XXX`, `SE-<LÄN>`) are left out of the search index and its excerpts.
+  A region that overrides `header.html` copies the search link and its `<template>`.
+- No inline script changes: **no CSP hash changes**.
+
 ## v0.51.1 — 2026-11-18
 
 - **`?lan=` leaves the address bar** (operator): national mode's prepaint script, after storing the

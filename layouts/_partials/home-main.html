@@ -8,6 +8,32 @@
     {{- /* The region's scope in the lead gets the scope style it has everywhere else (B-300). Only a
            county scope (se-had, se08), never the bare "se", which also occurs inside words. */ -}}
     {{ with .Description }}{{ $d := . | htmlEscape }}{{ with $r.scope }}{{ if ne . "se" }}{{ $d = replaceRE (printf `(^|[\s("])%s([\s,.;:)"]|$)` (. | htmlEscape)) (printf `${1}<code class="scope">%s</code>${2}` (. | htmlEscape)) $d }}{{ end }}{{ end }}<p class="lead">{{ $d | safeHTML }}</p>{{ end }}
+    {{- with partial "lan-page.html" . }}
+    {{- /* A county's front page (operator 2026-11-18, replacing B-326's one community button): every
+           regional group of the county as a button, in the order of its file's [[groups]], the old
+           `community` added if it is not among them; more than 4: the first 3 and "Fler grupper" to
+           the list further down. One bar between the site's buttons and the groups, drawn by CSS at
+           the start of the group list, so it travels with it and is clipped when the list starts a
+           line; screen readers get a list with a name, no bar. */ -}}
+    {{- $c := . -}}
+    {{- $gs := slice }}{{ $urls := slice -}}
+    {{- range $c.groups }}{{ if and .url (not (in $urls .url)) }}{{ $gs = $gs | append . }}{{ $urls = $urls | append .url }}{{ end }}{{ end -}}
+    {{- with $c.community }}{{ if and .url (not (in $urls .url)) }}{{ $gs = $gs | append (dict "name" (.name | default .url) "url" .url) }}{{ end }}{{ end }}
+    <div class="hero-actions">
+      {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
+      <a class="button button-secondary" href="#karta" data-ease>{{ T "cta_map" }}</a>
+      {{- with $gs }}
+      <ul class="hero-groups" aria-label="{{ T "lan_groups_label" (dict "Name" $c.name) }}">
+        {{- range first (cond (gt (len .) 4) 3 4) . }}
+        <li><a class="button button-secondary ext" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a></li>
+        {{- end }}
+        {{- if gt (len .) 4 }}
+        <li><a class="button button-secondary" href="#grupper">{{ T "lan_more_groups" }}</a></li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+    {{- else }}
     <p class="hero-actions">
       {{ with $first }}<a class="button" href="{{ . }}">{{ T "cta_start" }}</a>{{ end }}
       <a class="button button-secondary" href="#karta" data-ease>{{ T "cta_map" }}</a>
@@ -20,6 +46,7 @@
       <a class="button button-secondary ext" href="{{ .url }}" target="_blank" rel="noopener">{{ .name | default .url }}</a>
       {{- end }}{{ end }}
     </p>
+    {{- end }}
   </section>
 
 
