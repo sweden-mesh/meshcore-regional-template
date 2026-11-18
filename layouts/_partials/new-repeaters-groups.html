@@ -1,6 +1,8 @@
 {{- /* The new repeaters (data/new_repeaters.json, B-362) in groups: national mode, one per county they
   stand in (se-lan.geojson; placed outside every county = abroad, left out), newest first; a regional site,
-  one group; and the nodes without a position (not possibly foreign) last. Each group: id (the anchor,
+  one group. A node without a position (and not possibly foreign) stays in the list with its position
+  "Okänd" (B-363, operator 2026-11-18): national mode puts it in the county of its first map area
+  (the county's iata), left out only when no county has that area; it has no marker on the map. Each group: id (the anchor,
   lan-<scb>), scb, title, nodes. Call it cached: partialCached "new-repeaters-groups.html" . "new-repeaters" */ -}}
 {{- $nodes := slice }}{{ with hugo.Data.new_repeaters }}{{ $nodes = .nodes | default slice }}{{ end -}}
 {{- /* Which county each placed node stands in (se-lan.geojson); placed outside every county = abroad, left out. */ -}}
@@ -17,12 +19,16 @@
       {{- with partial "nearest-town.html" (dict "lat" $n.lat "lng" $n.lng) }}{{ $inside = merge $inside (dict $n.publicKey .lan) }}{{ end -}}
     {{- end -}}
   {{- end -}}
+  {{- /* Without a position: the first county whose map area the node was heard in (B-363). */ -}}
+  {{- range $n := $unplaced -}}
+    {{- $a := index ($n.iatas | default slice) 0 | default "" -}}
+    {{- range $c := partialCached "lan.html" $ "lan" }}{{ if and $a (eq $c.iata $a) (not (index $inside $n.publicKey)) }}{{ $inside = merge $inside (dict $n.publicKey $c.scb) }}{{ end }}{{ end -}}
+  {{- end -}}
   {{- range $c := partialCached "lan.html" . "lan" -}}
-    {{- $in := slice }}{{ range $placed }}{{ if eq (index $inside .publicKey) $c.scb }}{{ $in = $in | append . }}{{ end }}{{ end -}}
+    {{- $in := slice }}{{ range ($placed | append $unplaced) }}{{ if eq (index $inside .publicKey) $c.scb }}{{ $in = $in | append . }}{{ end }}{{ end -}}
     {{- if $in }}{{ $groups = $groups | append (dict "id" (printf "lan-%s" $c.scb) "scb" $c.scb "title" $c.name "nodes" (sort $in "firstSeen" "desc")) }}{{ end -}}
   {{- end -}}
-{{- else if $placed -}}
-  {{- $groups = slice (dict "id" "nya" "title" site.Params.region.name "nodes" (sort $placed "firstSeen" "desc")) -}}
+{{- else if or $placed $unplaced -}}
+  {{- $groups = slice (dict "id" "nya" "title" site.Params.region.name "nodes" (sort ($placed | append $unplaced) "firstSeen" "desc")) -}}
 {{- end -}}
-{{- with $unplaced }}{{ $groups = $groups | append (dict "id" "utan-position" "title" (T "nr_unplaced") "nodes" (sort . "firstSeen" "desc")) }}{{ end -}}
 {{- return $groups -}}

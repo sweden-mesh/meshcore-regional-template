@@ -1387,8 +1387,8 @@ other = "Karta över nya repeatrar"
 other = "Först hörd"
 [nr_first_on]
 other = "först hörd {{ .Date }}"
-[nr_unplaced]
-other = "Utan position"
+[nr_pos_unknown]
+other = "Okänd"
 [nr_area]
 other = "kartområde {{ .Areas }}"
 [nr_firmware]

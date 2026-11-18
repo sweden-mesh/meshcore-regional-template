@@ -34,7 +34,7 @@
     {{- range .nodes }}
     {{- $town := partial "nearest-town.html" (dict "lat" .lat "lng" .lng) -}}
     {{- $facts := slice -}}
-    {{- with $town }}{{ $facts = $facts | append .text }}{{ else }}{{ with .iatas }}{{ $facts = $facts | append (T "nr_area" (dict "Areas" (delimit . ", "))) }}{{ end }}{{ end -}}
+    {{- if not (and .lat .lng) }}{{ $facts = $facts | append (T "nr_pos_unknown") }}{{ else if $town }}{{ $facts = $facts | append $town.text }}{{ else }}{{ with .iatas }}{{ $facts = $facts | append (T "nr_area" (dict "Areas" (delimit . ", "))) }}{{ end }}{{ end -}}
     {{- $facts = $facts | append (T "nr_first_on" (dict "Date" ((time.AsTime (int (div .firstSeen 1000))).UTC.Format "2006-01-02"))) -}}
     {{- if .isObserver }}{{ $facts = $facts | append (T "observer") }}{{ end -}}
     {{- if .firmware }}{{ $facts = $facts | append (T "nr_firmware" (dict "V" .firmware)) }}{{ else if .firmwareMin }}{{ $facts = $facts | append (T "nr_firmware_min" (dict "V" .firmwareMin)) }}{{ end -}}

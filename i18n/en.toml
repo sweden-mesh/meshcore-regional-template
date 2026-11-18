@@ -1388,8 +1388,8 @@ other = "Map of new repeaters"
 other = "First heard"
 [nr_first_on]
 other = "first heard {{ .Date }}"
-[nr_unplaced]
-other = "No position"
+[nr_pos_unknown]
+other = "Unknown"
 [nr_area]
 other = "map area {{ .Areas }}"
 [nr_firmware]
