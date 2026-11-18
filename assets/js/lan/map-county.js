@@ -15,7 +15,8 @@ async function attach(map) {
   el.redrawLinks?.();
   let busy = false;
   map.on("sourcedata", async (e) => {
-    if (busy || e.sourceId !== "nodes" || !e.isSourceLoaded) return;
+    // "SE" on (B-370, el.seMode): the whole country, nothing outside the county to mark.
+    if (busy || el.seMode || e.sourceId !== "nodes" || !e.isSourceLoaded) return;
     const src = map.getSource("nodes");
     if (!src?.getData) return;
     const data = await src.getData();

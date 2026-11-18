@@ -869,6 +869,9 @@ other = "Här vill regionen gärna ha en ny repeater."
 [mt_fit_all]
 other = "Visa allt"
 # The map's fullscreen button (B-346).
+# The map's "SE" toggle (B-370): the whole country's nodes and live traffic from a county's map.
+[mt_se_all]
+other = "Visa hela Sveriges nät"
 [mt_fs_enter]
 other = "Helskärm"
 [mt_fs_exit]

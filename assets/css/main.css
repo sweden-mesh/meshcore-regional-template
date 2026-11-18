@@ -261,6 +261,10 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 .swatch-wanted::after { content: "★"; color: #fbbf24; font-size: .7rem; line-height: 1; -webkit-text-stroke: .5px #5c3300; }
 /* The fit button (B-286): MapLibre's own control group under + / −, its icon in the same ink. */
 .map-fit button { display: grid; place-items: center; color: #333; }
+/* "SE" (B-370): a toggle in the same group, the letters in the place of an icon; on, filled. */
+.map-fit .map-se { font: 700 11px/1 var(--font-body); letter-spacing: .02em; }
+.map-fit .map-se[aria-pressed="true"] { background: #1f5d82; color: #fff; }
+.map-fit .map-se[aria-pressed="true"]:hover { background: #174a69; }
 /* Fullscreen without the Fullscreen API (an iPhone, B-346): the map pinned over the viewport, the
    page under it held still. */
 .map.map-pseudo-full { position: fixed; inset: 0; z-index: 1000; width: 100vw; height: 100dvh; min-height: 0; max-height: none; border-radius: 0; }

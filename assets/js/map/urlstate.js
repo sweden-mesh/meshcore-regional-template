@@ -1,9 +1,9 @@
 // Map state in the URL, so a view can be shared: ?live=0&links=0&foreign=0&focus=0
-// &cov=1&want=1&z=11.2&ll=57.78,14.16 (zoom, then lat,lng). Only non-default values are
+// &cov=1&want=1&se=1&z=11.2&ll=57.78,14.16 (zoom, then lat,lng). Only non-default values are
 // written; anything unparseable is ignored.
 
 const TOGGLES = ["live", "links", "foreign", "focus"]; // on by default
-const OFF_TOGGLES = ["cov", "want"];                   // off by default
+const OFF_TOGGLES = ["cov", "want", "se"];             // off by default (se: B-370)
 
 export function parseState(search) {
   const q = new URLSearchParams(search);

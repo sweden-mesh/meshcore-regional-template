@@ -872,6 +872,9 @@ other = "The region would like a new repeater here."
 [mt_fit_all]
 other = "Fit all"
 # The map's fullscreen button (B-346).
+# The map's "SE" toggle (B-370): the whole country's nodes and live traffic from a county's map.
+[mt_se_all]
+other = "Show all of Sweden's mesh"
 [mt_fs_enter]
 other = "Full screen"
 [mt_fs_exit]

@@ -43,6 +43,7 @@ const SV = {
   want_popup: "Här vill regionen gärna ha en ny repeater.",
   fit_all: "Visa allt",
   fs_enter: "Helskärm", fs_exit: "Lämna helskärm",
+  se_all: "Visa hela Sveriges nät",
   site_antenna: "Antenn", site_height: "Höjd över marken", site_power: "Ström",
   site_power_mains: "elnät", site_power_solar: "sol", site_power_battery: "batteri", site_power_poe: "PoE",
   site_credit: "Platsuppgifter: MeshMapper",
