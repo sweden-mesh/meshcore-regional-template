@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.65.1 — 2026-11-18
+
+- CI: `scripts/check-national-browser.mjs` leaves area pages (B-360) out of the county-switch check:
+  they name their county's values on purpose, whatever county is chosen. No site output changes.
+
 ## v0.65.0 — 2026-11-18
 
 - **Map: a stronger transmit flash with a white blurred centre** (B-349): halo, core and ring larger
