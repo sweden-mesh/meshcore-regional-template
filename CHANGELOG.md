@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.69.1 — 2026-11-19
+
+- The map's flash when a repeater transmits is 80 % transparent at its peak (`FLASH_OPACITY` in
+  js/map/flow.js), so it no longer covers the map (operator 2026-11-19).
+
 ## v0.69.0 — 2026-11-19
 
 - **The rest of the English version** (B-364): the solar method page in English

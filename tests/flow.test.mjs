@@ -122,3 +122,8 @@ test("a link flashes in its own colour brightened toward white, else white (B-35
   assert.notEqual(green.properties.c, "#ffffff");
   assert.equal(plain.properties.c, "#ffffff");
 });
+
+test("the transmitter's flash is 80 % transparent at its peak (operator 2026-11-19)", async () => {
+  const { FLASH_OPACITY } = await import("../assets/js/map/flow.js");
+  assert.equal(FLASH_OPACITY, 0.2);
+});

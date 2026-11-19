@@ -83,6 +83,8 @@ export function flashAt(t) {
 // B-349: the white centre must stay above the node layers, which are added again after a theme
 // switch and on every redraw. True when it exists but is not the top layer. Pure, for tests.
 export const FLASH_TOP = "flow-flash-white";
+// Operator 2026-11-19: the transmitter's flash is 80 % transparent at its peak, so it does not cover the map.
+export const FLASH_OPACITY = 0.2;
 export function needsRaise(order) {
   const i = (order || []).indexOf(FLASH_TOP);
   return i >= 0 && i !== order.length - 1;
@@ -131,15 +133,15 @@ export class FlowLayer {
     map.addLayer({ id: "flow-flash-halo", type: "circle", source: "flow-flash",
       paint: { "circle-color": "#facc15", "circle-blur": 1,
         "circle-radius": byZoom(["+", 24, ["*", 18, ["get", "t"]]], ["+", 16, ["*", 12, ["get", "t"]]]),
-        "circle-opacity": ["*", 0.95, ["get", "a"]] } });
+        "circle-opacity": ["*", 0.95 * FLASH_OPACITY, ["get", "a"]] } });
     map.addLayer({ id: "flow-flash", type: "circle", source: "flow-flash",
       paint: { "circle-color": "#facc15", "circle-blur": 0.1,
         "circle-radius": byZoom(["+", 11, ["*", 8, ["get", "t"]]], ["+", 9, ["*", 7, ["get", "t"]]]),
-        "circle-opacity": ["get", "a"], "circle-stroke-color": "#ffffff", "circle-stroke-width": 3, "circle-stroke-opacity": ["get", "a"] } });
+        "circle-opacity": ["*", FLASH_OPACITY, ["get", "a"]], "circle-stroke-color": "#ffffff", "circle-stroke-width": 3, "circle-stroke-opacity": ["*", FLASH_OPACITY, ["get", "a"]] } });
     map.addLayer({ id: "flow-flash-ring", type: "circle", source: "flow-flash",
       paint: { "circle-opacity": 0, "circle-stroke-color": "#f59e0b", "circle-stroke-width": 4,
         "circle-radius": byZoom(["+", 12, ["*", 44, ["get", "r"]]], ["+", 10, ["*", 30, ["get", "r"]]]),
-        "circle-stroke-opacity": ["get", "ra"] } });
+        "circle-stroke-opacity": ["*", FLASH_OPACITY, ["get", "ra"]] } });
     map.addLayer({ id: "flow-bubbles", type: "circle", source: "flow-bubbles",
       paint: { "circle-color": "#fde047", "circle-radius": 4, "circle-opacity": ["get", "a"],
         "circle-stroke-color": "#ffffff", "circle-stroke-width": 1, "circle-stroke-opacity": ["get", "a"] } });
@@ -153,7 +155,7 @@ export class FlowLayer {
     map.addLayer({ id: FLASH_TOP, type: "circle", source: "flow-flash",
       paint: { "circle-color": "#ffffff", "circle-blur": 0.7,
         "circle-radius": byZoom(["+", 12, ["*", 4, ["get", "t"]]], ["+", 10, ["*", 4, ["get", "t"]]]),
-        "circle-opacity": ["*", 0.95, ["get", "a"]] } });
+        "circle-opacity": ["*", 0.95 * FLASH_OPACITY, ["get", "a"]] } });
   }
 
   // Light up a node (the observer that heard something), even without a path.
