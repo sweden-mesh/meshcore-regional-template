@@ -6,7 +6,7 @@
 // National mode, nothing stored (B-343/B-344): no dialog opens by itself, and "Välj din region här!"
 // points at the county button from 245 px up, only at scroll position 0 and not while ☰ is open.
 // The sticky header (B-366) at 320, 390, 768, 1280 and 1600 px: at the top of the viewport after a
-// scroll, opaque there and clear at the top of the page, no sideways scroll, ☰ opens under its
+// scroll, opaque and at least 24 px slimmer there and clear at the top of the page, no sideways scroll, ☰ opens under its
 // button while scrolled, and a jump to a heading lands below the header.
 // Needs Puppeteer and Chrome: PUPPETEER=<path to puppeteer> CHROME=/usr/bin/google-chrome
 //   node scripts/check-header-browser.mjs [built site dir ...]
@@ -140,12 +140,14 @@ const stickyCase = async () => {
   const h = document.querySelector(".site-header"), out = [];
   const alpha = () => getComputedStyle(h).getPropertyValue("--hdr-a").trim();
   scrollTo(0, 0); await frames();
+  const h0 = h.getBoundingClientRect().height;
   if (CSS.supports("animation-timeline", "scroll()") && alpha() !== "0%") out.push(`the header's background is ${alpha()} at the top`);
   if (document.documentElement.scrollHeight < innerHeight + 400) return [...out, "the page is too short to test"];
   scrollTo(0, 400); await frames();
   const r = h.getBoundingClientRect();
   if (Math.abs(r.top) > 0.5) out.push(`the header is at ${Math.round(r.top)} px after scrolling`);
   if (alpha() !== "100%") out.push(`the header's background is ${alpha()} after scrolling`);
+  if (CSS.supports("animation-timeline", "scroll()") && h0 - r.height < 24) out.push(`the header shrinks only ${Math.round(h0 - r.height)} px when scrolled`);
   if (document.documentElement.scrollWidth > document.documentElement.clientWidth) out.push("the page scrolls sideways");
   if (document.elementFromPoint(innerWidth / 2, r.bottom - 2)?.closest(".site-header") !== h) out.push("something covers the header");
   const t = document.querySelector(".nav-toggle");

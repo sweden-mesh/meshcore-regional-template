@@ -405,7 +405,12 @@ td, th { vertical-align: top; }
   border-image: linear-gradient(to top, color-mix(in srgb, var(--line) var(--hdr-a), transparent) 1px, color-mix(in srgb, var(--bg-a) var(--hdr-a), transparent) 1px) fill 0 / 0 / 0 100vmax; }
 @supports (animation-timeline: scroll()) {
   .site-header { animation: header-stuck linear both; animation-timeline: scroll(root); animation-range: 0 48px; }
-  @keyframes header-stuck { from { --hdr-a: 0%; } to { --hdr-a: 100%; } }
+  /* Scrolled, the header is slimmer (operator 2026-11-19: "takes up too much space"): 84 -> 56 px, its
+     padding 20 -> 6 px. The margin below grows by as much, so the page under it does not move. */
+  @keyframes header-stuck {
+    from { --hdr-a: 0%; padding-block: 1.25rem; min-height: calc(2.5rem + 44px); margin-bottom: 0; }
+    to { --hdr-a: 100%; padding-block: .375rem; min-height: calc(.75rem + 44px); margin-bottom: 1.75rem; }
+  }
 }
 .site-header nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }
 /* The narrow menu: a ☰ button and a popover (header.html). The popover sits in the top layer, so it

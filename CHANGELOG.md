@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.70.1 — 2026-11-19
+
+- The sticky header is slimmer once scrolled (operator 2026-11-19): 84 -> 56 px, padding 20 -> 6 px, over
+  the same first 48 px of scroll; a matching margin below keeps the page from moving. The header browser
+  check asserts it shrinks by at least 24 px.
+
 ## v0.70.0 — 2026-11-19
 
 - The header is sticky (B-366, operator 2026-11-19, on trial): it stays at the top while the page
