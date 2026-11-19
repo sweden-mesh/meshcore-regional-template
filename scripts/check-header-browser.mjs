@@ -143,9 +143,11 @@ const stickyCase = async () => {
   const h0 = h.getBoundingClientRect().height;
   if (CSS.supports("animation-timeline", "scroll()") && alpha() !== "0%") out.push(`the header's background is ${alpha()} at the top`);
   if (document.documentElement.scrollHeight < innerHeight + 400) return [...out, "the page is too short to test"];
-  scrollTo(0, 400); await frames();
+  scrollTo(0, 400); await frames(); await frames(); // the size settles a frame after the scroll
   const r = h.getBoundingClientRect();
   if (Math.abs(r.top) > 0.5) out.push(`the header is at ${Math.round(r.top)} px after scrolling`);
+  const hv = parseFloat(document.documentElement.style.getPropertyValue("--header-h"));
+  if (Math.abs(hv - r.height) > 1) out.push(`--header-h is ${hv} px, the header ${Math.round(r.height)} px`);
   if (alpha() !== "100%") out.push(`the header's background is ${alpha()} after scrolling`);
   if (CSS.supports("animation-timeline", "scroll()") && h0 - r.height < 24) out.push(`the header shrinks only ${Math.round(h0 - r.height)} px when scrolled`);
   if (document.documentElement.scrollWidth > document.documentElement.clientWidth) out.push("the page scrolls sideways");

@@ -51,5 +51,5 @@ if (header && wide && "ResizeObserver" in window) {
 // The sticky header (B-366): its real height as --header-h, so a jump to a heading and the side table
 // of contents clear it also where the header is taller than the CSS guess (a long name on two lines).
 if (header && "ResizeObserver" in window) {
-  new ResizeObserver(() => document.documentElement.style.setProperty("--header-h", `${header.offsetHeight}px`)).observe(header);
+  new ResizeObserver(([e]) => document.documentElement.style.setProperty("--header-h", `${Math.round(e.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight)}px`)).observe(header, { box: "border-box" }); // border-box: scrolled, only the padding shrinks
 }
