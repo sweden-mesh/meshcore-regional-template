@@ -5,6 +5,9 @@
 // And the opened ☰ menu from 320 px up (B-341): under the button, inside the viewport, focus in it.
 // National mode, nothing stored (B-343/B-344): no dialog opens by itself, and "Välj din region här!"
 // points at the county button from 245 px up, only at scroll position 0 and not while ☰ is open.
+// The sticky header (B-366) at 320, 390, 768, 1280 and 1600 px: at the top of the viewport after a
+// scroll, opaque there and clear at the top of the page, no sideways scroll, ☰ opens under its
+// button while scrolled, and a jump to a heading lands below the header.
 // Needs Puppeteer and Chrome: PUPPETEER=<path to puppeteer> CHROME=/usr/bin/google-chrome
 //   node scripts/check-header-browser.mjs [built site dir ...]
 // Default: exampleSite/public and exampleNational/public, as scripts/check.sh leaves them.
@@ -131,6 +134,38 @@ const tipCase = async () => {
   return out;
 };
 
+// The sticky header (B-366) at the current width, page scrolled: a list of findings.
+const stickyCase = async () => {
+  const frames = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const h = document.querySelector(".site-header"), out = [];
+  const alpha = () => getComputedStyle(h).getPropertyValue("--hdr-a").trim();
+  scrollTo(0, 0); await frames();
+  if (CSS.supports("animation-timeline", "scroll()") && alpha() !== "0%") out.push(`the header's background is ${alpha()} at the top`);
+  if (document.documentElement.scrollHeight < innerHeight + 400) return [...out, "the page is too short to test"];
+  scrollTo(0, 400); await frames();
+  const r = h.getBoundingClientRect();
+  if (Math.abs(r.top) > 0.5) out.push(`the header is at ${Math.round(r.top)} px after scrolling`);
+  if (alpha() !== "100%") out.push(`the header's background is ${alpha()} after scrolling`);
+  if (document.documentElement.scrollWidth > document.documentElement.clientWidth) out.push("the page scrolls sideways");
+  if (document.elementFromPoint(innerWidth / 2, r.bottom - 2)?.closest(".site-header") !== h) out.push("something covers the header");
+  const t = document.querySelector(".nav-toggle");
+  if (t && t.getClientRects().length) {
+    t.click(); await frames();
+    const m = document.getElementById(t.getAttribute("popovertarget")), b = t.getBoundingClientRect(), p = m.getBoundingClientRect();
+    if (p.top < b.bottom - 0.5 || p.top > b.bottom + 12) out.push(`scrolled, the menu starts ${Math.round(p.top - b.bottom)} px below ☰`);
+    m.hidePopover(); await frames();
+  }
+  const target = [...document.querySelectorAll("main h2[id], main h3[id]")].find((e) => e.getBoundingClientRect().top + scrollY > innerHeight);
+  if (target) {
+    location.hash = target.id; await frames();
+    const tt = target.getBoundingClientRect().top, hb = h.getBoundingClientRect().bottom;
+    if (tt < hb) out.push(`a jump to #${target.id} lands ${Math.round(hb - tt)} px under the header`);
+    history.replaceState(null, "", location.pathname);
+  }
+  scrollTo(0, 0); await frames();
+  return out;
+};
+
 const browser = await puppeteer.launch({ executablePath: process.env.CHROME || "/usr/bin/google-chrome", args: ["--no-sandbox", "--disable-dev-shm-usage"] });
 let fail = 0;
 try {
@@ -194,6 +229,16 @@ try {
       }
       if (tseen) console.log(`${tbad ? "FAIL" : "ok  "} region pointer ${root.replace(/.*\/(example\w+|[^/]+)\/public\/$/, "$1")} ${path}: at ${tseen} widths`);
       fail ||= tbad;
+      // The sticky header (B-366).
+      let sbad = 0;
+      for (const w of [320, 390, 768, 1280, 1600]) {
+        await page.setViewport({ width: w, height: 800 });
+        await page.goto(base + path, { waitUntil: "networkidle0" });
+        await page.evaluate(() => { for (const d of document.querySelectorAll("dialog[open]")) d.close(); });
+        for (const f of await page.evaluate(stickyCase)) { console.log(`FAIL ${root} ${path} ${w}px: ${f}`); sbad = 1; }
+      }
+      console.log(`${sbad ? "FAIL" : "ok  "} sticky header ${root.replace(/.*\/(example\w+|[^/]+)\/public\/$/, "$1")} ${path}: 320–1600 px`);
+      fail ||= sbad;
     }
   }
 } finally {

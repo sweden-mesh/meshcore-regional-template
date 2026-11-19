@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.70.0 — 2026-11-19
+
+- The header is sticky (B-366, operator 2026-11-19, on trial): it stays at the top while the page
+  scrolls. Its background (the page's base colour, full window width, with a hairline) fades in over
+  the first 48 px of scroll where scroll-driven animations exist, so the top of the page looks as
+  before. menu.js keeps `--header-h` at the header's real height, so jumps to a heading
+  (`scroll-padding-top`) and the side table of contents clear it. The ☰ menu is `position: fixed`, so
+  it opens under its button while scrolled. `scripts/check-header-browser.mjs` checks it at 320–1600 px.
+
 ## v0.69.1 — 2026-11-19
 
 - The map's flash when a repeater transmits is 80 % transparent at its peak (`FLASH_OPACITY` in

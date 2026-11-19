@@ -298,7 +298,7 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 @media (min-width: 80em) {
   .page { position: relative; }
   .page > .toc { position: absolute; top: 2rem; bottom: 3rem; right: 1rem; width: 12.5rem; margin: 0; border: 0; }
-  .toc details { position: sticky; top: 1.5rem; max-height: calc(100dvh - 3rem); overflow-y: auto; scroll-target-group: auto; }
+  .toc details { position: sticky; top: calc(var(--header-h) + 1.5rem); max-height: calc(100dvh - var(--header-h) - 3rem); overflow-y: auto; scroll-target-group: auto; }
   .toc summary { cursor: default; pointer-events: none; list-style: none; padding: 0 0 .25rem; min-height: 0; font-size: .9rem; color: var(--muted); }
   .toc summary::-webkit-details-marker { display: none; }
   .toc ol { list-style: none; padding: 0; font-size: .9rem; border-left: 1px solid var(--line); }
@@ -394,7 +394,19 @@ td, th { vertical-align: top; }
 /* The number on the title's line; a long title wraps under itself, not under the number (operator 2026-11-14). */
 .guide-head { display: grid; grid-template-columns: auto 1fr; column-gap: .5rem; align-items: baseline; }
 .guide-grid .muted { font-size: .92rem; line-height: 1.45; }
-.site-header { position: relative; }
+/* Sticky header (B-366, operator 2026-11-19, on trial): the header stays at the top while the page scrolls.
+   Its background is the page's base colour, drawn the full window width by border-image (the header
+   itself keeps the 72rem column), with a hairline under it. Where scroll-driven animations exist both
+   fade in over the first 48 px of scroll, so the top of the page looks as before; elsewhere they are
+   always there. No blur: backdrop-filter would make the header the containing block of the fixed menus. */
+@property --hdr-a { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+:root { --header-h: calc(2.5rem + 44px); scroll-padding-top: calc(var(--header-h) + .75rem); }
+.site-header { position: sticky; top: 0; z-index: 50;
+  border-image: linear-gradient(to top, color-mix(in srgb, var(--line) var(--hdr-a), transparent) 1px, color-mix(in srgb, var(--bg-a) var(--hdr-a), transparent) 1px) fill 0 / 0 / 0 100vmax; }
+@supports (animation-timeline: scroll()) {
+  .site-header { animation: header-stuck linear both; animation-timeline: scroll(root); animation-range: 0 48px; }
+  @keyframes header-stuck { from { --hdr-a: 0%; } to { --hdr-a: 100%; } }
+}
 .site-header nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }
 /* The narrow menu: a ☰ button and a popover (header.html). The popover sits in the top layer, so it
    is placed against the page: just under the header, at its right edge. Its display is set only
@@ -426,7 +438,7 @@ td, th { vertical-align: top; }
   .lan-toggle { padding: 0 .5rem; }
   .lan-toggle span { max-width: 7.5rem; }
 }
-.nav-narrow [popover] { position: absolute; inset: 4.25rem 1rem auto auto; margin: 0; z-index: 10; flex-direction: column; min-width: 12rem; max-width: calc(100vw - 2rem); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .4rem; box-shadow: 0 12px 30px rgba(15, 29, 38, .15); }
+.nav-narrow [popover] { position: fixed; inset: 4.25rem 1rem auto auto; margin: 0; z-index: 10; flex-direction: column; min-width: 12rem; max-width: calc(100vw - 2rem); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .4rem; box-shadow: 0 12px 30px rgba(15, 29, 38, .15); }
 /* Anchored to ☰ (B-341): directly below it, its right edge on the button's, flipped to the button's
    left edge if that would leave the viewport. Without anchor positioning menu.js places it the same way
    when it opens; the inset above is what is left without script. */

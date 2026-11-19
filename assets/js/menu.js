@@ -8,15 +8,15 @@ if (toggle && !Object.hasOwn(HTMLElement.prototype, "popover")) import(toggle.da
 
 // Opened, focus moves to the first link (B-341); Escape closes it and the browser hands focus back to
 // ☰. Where CSS anchor positioning is missing (main.css), the menu is placed under ☰ here instead:
-// right edges together, or left edges if that would leave the screen. The menu is absolutely
-// positioned in the top layer, so its offsets are taken against the document, not the viewport.
+// right edges together, or left edges if that would leave the screen. The menu is fixed (the header
+// is sticky, B-366), so its offsets are taken against the viewport.
 const menu = toggle && document.getElementById(toggle.getAttribute("popovertarget"));
 if (menu) menu.addEventListener("toggle", (e) => {
   if (e.newState !== "open") return;
   if (!CSS.supports("position-area", "block-end")) {
     const b = toggle.getBoundingClientRect(), w = menu.offsetWidth, vw = document.documentElement.clientWidth;
     const left = b.right - w >= 0 ? b.right - w : Math.min(b.left, vw - w);
-    Object.assign(menu.style, { inset: "auto", top: `${b.bottom + scrollY + 4}px`, left: `${Math.max(0, left) + scrollX}px` });
+    Object.assign(menu.style, { inset: "auto", top: `${b.bottom + 4}px`, left: `${Math.max(0, left)}px` });
   }
   menu.querySelector("a")?.focus();
 });
@@ -46,4 +46,10 @@ if (header && wide && "ResizeObserver" in window) {
   const ro = new ResizeObserver(fit);
   ro.observe(header);
   ro.observe(wide);
+}
+
+// The sticky header (B-366): its real height as --header-h, so a jump to a heading and the side table
+// of contents clear it also where the header is taller than the CSS guess (a long name on two lines).
+if (header && "ResizeObserver" in window) {
+  new ResizeObserver(() => document.documentElement.style.setProperty("--header-h", `${header.offsetHeight}px`)).observe(header);
 }
