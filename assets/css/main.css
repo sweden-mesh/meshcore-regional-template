@@ -394,14 +394,20 @@ td, th { vertical-align: top; }
 .guide-head { display: grid; grid-template-columns: auto 1fr; column-gap: .5rem; align-items: baseline; }
 .guide-grid .muted { font-size: .92rem; line-height: 1.45; }
 /* Sticky header (B-366, operator 2026-11-19, on trial): the header stays at the top while the page scrolls.
-   Its background is the page's base colour, drawn the full window width by border-image (the header
-   itself keeps the 72rem column), with a hairline under it. Where scroll-driven animations exist both
-   fade in over the first 48 px of scroll, so the top of the page looks as before; elsewhere they are
-   always there. No blur: backdrop-filter would make the header the containing block of the fixed menus. */
-@property --hdr-a { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+   No border. Behind it, the full window width, two fixed layers as tall as the header (--header-h, menu.js):
+   the page's base colour, solid down to 40 % of the header's height and then increasingly transparent
+   (10 % at 50, 50 % at 75, 80 % at 90, clear at the bottom), and under it a blur of the page that is full
+   at 40 % and fades out towards both edges (80 % at 50, 40 % at 75, 20 % at 90). Fixed, so they never widen
+   the page; pseudo-elements, so the header itself does not become the containing block of the fixed menus.
+   Where scroll-driven animations exist both fade in over the first 48 px of scroll (--hdr-a), so the top of
+   the page looks as before; elsewhere they are always there. Operator's table, 2026-11-19. */
+@property --hdr-a { syntax: "<percentage>"; inherits: true; initial-value: 100%; }
 :root { --header-h: calc(2.5rem + 44px); scroll-padding-top: calc(var(--header-h) + .75rem); }
-.site-header { position: sticky; top: 0; z-index: 50;
-  border-image: linear-gradient(to top, color-mix(in srgb, var(--line) var(--hdr-a), transparent) 1px, color-mix(in srgb, var(--bg-a) var(--hdr-a), transparent) 1px) fill 0 / 0 / 0 100vmax; }
+.site-header { position: sticky; top: 0; z-index: 50; }
+.site-header::before, .site-header::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); pointer-events: none; opacity: var(--hdr-a); }
+.site-header::before { z-index: -1; background: linear-gradient(var(--bg-a) 40%, color-mix(in srgb, var(--bg-a) 90%, transparent) 50%, color-mix(in srgb, var(--bg-a) 50%, transparent) 75%, color-mix(in srgb, var(--bg-a) 20%, transparent) 90%, transparent); }
+.site-header::after { z-index: -2; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  mask-image: linear-gradient(transparent, #000 40%, rgb(0 0 0 / .8) 50%, rgb(0 0 0 / .4) 75%, rgb(0 0 0 / .2) 90%, transparent); }
 /* Scrolled, the header's controls shrink (operator 2026-11-19: the logo-and-☰-only version was "not better";
    keep everything, but smaller): buttons 44 -> 36 px, logo 32 -> 26 px, driven by the scroll animation below. */
 @property --ctl { syntax: "<length>"; inherits: true; initial-value: 44px; }

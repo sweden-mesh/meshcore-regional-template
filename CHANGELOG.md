@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.73.0 — 2026-11-19
+
+- The sticky header has no border; its background follows the operator's table (2026-11-19): the base
+  colour solid down to 40 % of the header's height, then 10/50/80 % transparent at 50/75/90 % and clear at
+  the bottom, over a blur of the page (12 px) that is full at 40 % and 80/40/20/0 % at 50/75/90/100 %.
+  Two fixed pseudo-elements the full window width, as tall as the header; they fade in over the first 48 px
+  of scroll as before.
+
 ## v0.72.0 — 2026-11-19
 
 - The logo-and-☰ compact header is gone again (operator 2026-11-19: "not better"). Instead the full sticky
