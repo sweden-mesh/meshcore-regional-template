@@ -402,19 +402,21 @@ td, th { vertical-align: top; }
 :root { --header-h: calc(2.5rem + 44px); scroll-padding-top: calc(var(--header-h) + .75rem); }
 .site-header { position: sticky; top: 0; z-index: 50;
   border-image: linear-gradient(to top, color-mix(in srgb, var(--line) var(--hdr-a), transparent) 1px, color-mix(in srgb, var(--bg-a) var(--hdr-a), transparent) 1px) fill 0 / 0 / 0 100vmax; }
-/* Compact (operator 2026-11-19, "make a compact version"): scrolled past 48 px (menu.js sets .is-compact),
-   only the logo and ☰ stay; the name stays for screen readers. Scroll back up for search, county and the toggles. */
-.site-header.is-compact > :not(.brand, .nav-narrow, .lan-tip, [popover], template, script) { display: none; }
-.site-header.is-compact .nav-narrow { display: block; }
-.site-header.is-compact .brand { margin-right: auto; }
-.site-header.is-compact .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Scrolled, the header's controls shrink (operator 2026-11-19: the logo-and-☰-only version was "not better";
+   keep everything, but smaller): buttons 44 -> 36 px, logo 32 -> 26 px, driven by the scroll animation below. */
+@property --ctl { syntax: "<length>"; inherits: true; initial-value: 44px; }
+@property --logo { syntax: "<length>"; inherits: true; initial-value: 32px; }
+header.site-header :is(.nav-toggle, .lan-toggle, .search-open, .theme-toggle, .cvd-toggle, .motion-toggle, .lang-switch) { min-height: var(--ctl); }
+header.site-header :is(.nav-toggle, .search-open, .theme-toggle, .cvd-toggle, .motion-toggle, .lang-switch) { min-width: var(--ctl); }
+header.site-header .brand-logo { width: var(--logo); height: var(--logo); }
 @supports (animation-timeline: scroll()) {
   .site-header { animation: header-stuck linear both; animation-timeline: scroll(root); animation-range: 0 48px; }
-  /* Scrolled, the header is slimmer (operator 2026-11-19: "takes up too much space"): 84 -> 56 px, its
-     padding 20 -> 6 px. The margin below grows by as much, so the page under it does not move. */
+  /* Scrolled, the header is slimmer (operator 2026-11-19: "takes up too much space"): 84 -> 44 px, its
+     padding 20 -> 4 px and its controls 44 -> 36 px. The margin below grows by as much, so the page under it
+     does not move. */
   @keyframes header-stuck {
-    from { --hdr-a: 0%; padding-block: 1.25rem; min-height: calc(2.5rem + 44px); margin-bottom: 0; }
-    to { --hdr-a: 100%; padding-block: .375rem; min-height: calc(.75rem + 44px); margin-bottom: 1.75rem; }
+    from { --hdr-a: 0%; --ctl: 44px; --logo: 32px; padding-block: 1.25rem; min-height: calc(2.5rem + 44px); margin-bottom: 0; }
+    to { --hdr-a: 100%; --ctl: 36px; --logo: 26px; padding-block: .25rem; min-height: calc(.5rem + 36px); margin-bottom: 2.5rem; }
   }
 }
 .site-header nav a[aria-current="page"] { color: var(--fg); font-weight: 600; }

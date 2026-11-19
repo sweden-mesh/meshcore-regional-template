@@ -4,6 +4,13 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.72.0 — 2026-11-19
+
+- The logo-and-☰ compact header is gone again (operator 2026-11-19: "not better"). Instead the full sticky
+  header shrinks while scrolling: buttons 44 -> 36 px, logo 32 -> 26 px, padding 20 -> 4 px, so the bar is
+  44 px tall with every item kept (`--ctl` and `--logo`, animated with the scroll). The header browser check
+  asserts the same items show, the controls are 36 px and nothing sticks out.
+
 ## v0.71.0 — 2026-11-19
 
 - Compact sticky header (operator 2026-11-19): scrolled past 48 px (off again under 32), only the logo

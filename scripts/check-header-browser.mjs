@@ -6,7 +6,7 @@
 // National mode, nothing stored (B-343/B-344): no dialog opens by itself, and "Välj din region här!"
 // points at the county button from 245 px up, only at scroll position 0 and not while ☰ is open.
 // The sticky header (B-366) at 320, 390, 768, 1280 and 1600 px: at the top of the viewport after a
-// scroll, compact (logo and ☰ only), opaque and at least 24 px slimmer there and clear at the top of the page, no sideways scroll, ☰ opens under its
+// scroll, opaque and at least 24 px slimmer there with every item still shown and 36 px controls and clear at the top of the page, no sideways scroll, ☰ opens under its
 // button while scrolled, and a jump to a heading lands below the header.
 // Needs Puppeteer and Chrome: PUPPETEER=<path to puppeteer> CHROME=/usr/bin/google-chrome
 //   node scripts/check-header-browser.mjs [built site dir ...]
@@ -141,6 +141,7 @@ const stickyCase = async () => {
   const alpha = () => getComputedStyle(h).getPropertyValue("--hdr-a").trim();
   scrollTo(0, 0); await frames();
   const h0 = h.getBoundingClientRect().height;
+  const shownAtTop = [...h.children].filter((c) => c.getClientRects().length && c.getBoundingClientRect().width > 0 && !c.matches("[popover], template, script, .lan-tip")).length;
   if (CSS.supports("animation-timeline", "scroll()") && alpha() !== "0%") out.push(`the header's background is ${alpha()} at the top`);
   if (document.documentElement.scrollHeight < innerHeight + 400) return [...out, "the page is too short to test"];
   scrollTo(0, 400); await frames(); await frames(); // the size settles a frame after the scroll
@@ -151,12 +152,10 @@ const stickyCase = async () => {
   if (alpha() !== "100%") out.push(`the header's background is ${alpha()} after scrolling`);
   if (CSS.supports("animation-timeline", "scroll()") && h0 - r.height < 24) out.push(`the header shrinks only ${Math.round(h0 - r.height)} px when scrolled`);
   if (document.documentElement.scrollWidth > document.documentElement.clientWidth) out.push("the page scrolls sideways");
-  const extra = [...h.children].filter((c) => c.getClientRects().length && c.getBoundingClientRect().width > 0 && !c.matches(".brand, .nav-narrow, [popover], template, script, .lan-tip"));
-  if (extra.length) out.push(`compact, the header still shows ${extra.map((c) => c.className || c.tagName).join(", ")}`);
-  if (!h.querySelector(".nav-toggle")?.getClientRects().length) out.push("compact, ☰ is not shown");
-  else { const hc = h.getBoundingClientRect(), tb = h.querySelector(".nav-toggle").getBoundingClientRect();
-    if (hc.right - parseFloat(getComputedStyle(h).paddingRight) - tb.right > 2) out.push(`compact, ☰ is ${Math.round(hc.right - parseFloat(getComputedStyle(h).paddingRight) - tb.right)} px from the right edge`); }
-  if (document.elementFromPoint(innerWidth / 2, r.bottom - 2)?.closest(".site-header") !== h) out.push("something covers the header");
+  const shown0 = shownAtTop, shown1 = [...h.children].filter((c) => c.getClientRects().length && c.getBoundingClientRect().width > 0 && !c.matches("[popover], template, script, .lan-tip")).length;
+  if (shown1 !== shown0) out.push(`scrolled, the header shows ${shown1} items, at the top ${shown0}`);
+  for (const c of h.querySelectorAll(".nav-toggle, .lan-toggle, .theme-toggle, .cvd-toggle, .search-open")) if (c.getClientRects().length && c.getBoundingClientRect().height > 37) out.push(`scrolled, ${c.className} is ${Math.round(c.getBoundingClientRect().height)} px tall`);
+  { const hb = h.getBoundingClientRect(); for (const c of h.children) { if (!c.getClientRects().length || c.matches("[popover], template, script, .lan-tip")) continue; const b = c.getBoundingClientRect(); if (b.top < hb.top - 0.5 || b.bottom > hb.bottom + 0.5) out.push(`scrolled, ${c.className || c.tagName} sticks out of the header`); } }
   const t = document.querySelector(".nav-toggle");
   if (t && t.getClientRects().length) {
     t.click(); await frames();
