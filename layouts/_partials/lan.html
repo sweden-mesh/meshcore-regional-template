@@ -65,14 +65,28 @@
              (data/county_sites.toml, B-312), so the national site and the regional selectors agree. */ -}}
       {{- $own := $f.site | default "" -}}
       {{- if not (isset $f "site") }}{{ range hugo.Data.county_sites.lan }}{{ if eq .scb $scb }}{{ $own = .site | default "" }}{{ end }}{{ end }}{{ end -}}
-      {{- $out = $out | append (merge $f (dict
+      {{- /* B-364: the county's own texts in the page's language where the file has them
+             (text_en, purpose_en, note_en, format_en), else as written. */ -}}
+      {{- $loc := dict -}}
+      {{- range $list, $keys := dict "channels" (slice "purpose" "note") "wanted" (slice "note") "regions_extra" (slice "note") -}}
+        {{- $items := slice -}}
+        {{- range index $f $list | default slice -}}
+          {{- $c := . -}}
+          {{- range $k := $keys }}{{ with index $c (printf "%s_%s" $k site.Language.Lang) }}{{ $c = merge $c (dict $k .) }}{{ end }}{{ end -}}
+          {{- $items = $items | append $c -}}
+        {{- end -}}
+        {{- $loc = merge $loc (dict $list $items) -}}
+      {{- end -}}
+      {{- with index $f (printf "text_%s" site.Language.Lang) }}{{ $loc = merge $loc (dict "text" .) }}{{ end -}}
+      {{- with $f.naming }}{{ with index . (printf "format_%s" site.Language.Lang) }}{{ $loc = merge $loc (dict "naming" (merge $f.naming (dict "format" .))) }}{{ end }}{{ end -}}
+      {{- $out = $out | append (merge $f $loc (dict
           "scb" $scb "name" $row.name "scope" $row.scope "decision" $row.decision
           "short" ($f.short | default $row.name) "slug" $slug
           "site" $own "url" (cond (eq $own "") (printf "/%s/" $slug) "")
           "iata" ($f.iata | default (index $iatas $scb) | default "")
           "bbox" $box "center" $center "zoom" $zoom
           "neighbours" $neighbours "test" (printf "#test-%s" $row.scope) "prefix" $prefix
-          "channels" ($f.channels | default slice) "groups" ($f.groups | default slice) "wanted" ($f.wanted | default slice))) -}}
+          "channels" $loc.channels "groups" ($f.groups | default slice) "wanted" $loc.wanted)) -}}
     {{- else -}}
       {{- warnf "data/lan: no county with SCB code %q in the region list" $scb -}}
     {{- end -}}
