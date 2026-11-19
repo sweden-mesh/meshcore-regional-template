@@ -4,7 +4,7 @@
 # margin), rounded UP to the next 100 mAh; capacity columns = highest tree line whose rounded value
 # fits (trees: central, pessimistic: high, official: official central); -1 = not even without trees.
 # Snow allowance not included here (the guide states it). place/lat/lon/irradiation/dec_of_june/
-# source/note unchanged from the first delivery (sha256 66f16a36…0391). Never scaled across counties.
+# source/note unchanged from the first delivery; note_en (B-364) is its English text, read on English pages (sha256 66f16a36…0391). Never scaled across counties.
 
 [JKG]
 place = "Jönköping"
@@ -115,6 +115,7 @@ irradiation = [0.72, 1.76, 3.24, 3.58, 3.23, 3.35, 3.23, 3.07, 2.69, 2.08, 0.88,
 dec_of_june = 14
 source = "PVGIS-SARAH3"
 note = """Vintrarna här kan bli kallare än −20 °C, som beräkningen utgår från. Räkna med cirka 8 procent större batteri än tabellerna (köldfaktor 0,85). Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+note_en = """Winters here can be colder than the −20 °C the calculation assumes. Plan for a battery about 8 percent larger than the tables (cold factor 0.85). Mount the panel at least 1.5–2 metres above the deepest snow cover."""
 snow_sheltered = 5
 snow_exposed = 8
 
@@ -722,6 +723,7 @@ irradiation = [0.18, 1.58, 3.73, 4.21, 3.78, 3.44, 3.11, 2.97, 2.57, 1.80, 0.42,
 dec_of_june = 0
 source = "PVGIS-ERA5"
 note = """**Solcell är i praktiken inte ett alternativ här**, utom möjligen på en öppen och hög plats, och även där med knapp marginal. Siffrorna bygger på en annan datakälla (PVGIS-ERA5, eftersom platsen ligger utanför satellitdatan), som överskattar molnigt vinterljus: de är 11–29 procent för optimistiska. Med kylan inräknad (köldfaktor 0,75) behövs cirka 23 procent större batteri än tabellerna. Middagssolen står under horisonten från ungefär 13 december till 1 januari. Batteriet ligger under 0 °C i flera månader, och rimfrost på utsatta höjder är inte med i beräkningen."""
+note_en = """**In practice, solar is not an option here**, except perhaps on an open, high site, and even there the margin is thin. The figures come from a different data source (PVGIS-ERA5, because the site lies outside the satellite data), which overestimates cloudy winter light: they are 11–29 percent too optimistic. With the cold included (cold factor 0.75), the battery needs to be about 23 percent larger than the tables. The midday sun is below the horizon from about 13 December to 1 January. The battery stays below 0 °C for several months, and rime ice on exposed heights is not part of the calculation."""
 snow_sheltered = 5
 snow_exposed = 8
 
@@ -1228,6 +1230,7 @@ irradiation = [0.33, 1.21, 2.64, 3.08, 3.28, 3.43, 3.39, 3.07, 2.44, 1.57, 0.61,
 dec_of_june = 5
 source = "PVGIS-SARAH3"
 note = """Norr om ungefär 63° N bär batteriet större delen av vintern. Inlandet kan ha −35 till −40 °C en sämre vinter, och vanliga celler är inte specificerade under −20 °C: räkna med cirka 8 procent större batteri än tabellerna (köldfaktor 0,85). Batteriet ligger under 0 °C från ungefär november till mars eller april, och på utsatta höjder och fjäll kan rimfrost täcka panelen, vilket inte är med i beräkningen. Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+note_en = """North of about 63° N the battery carries most of the winter. Inland it can reach −35 to −40 °C in a bad winter, and ordinary cells are not specified below −20 °C: plan for a battery about 8 percent larger than the tables (cold factor 0.85). The battery stays below 0 °C from about November to March or April, and on exposed heights and mountains rime ice can cover the panel, which is not part of the calculation. Mount the panel at least 1.5–2 metres above the deepest snow cover."""
 snow_sheltered = 5
 snow_exposed = 8
 
@@ -1431,6 +1434,7 @@ irradiation = [0.44, 1.71, 3.17, 3.43, 3.40, 3.51, 3.36, 3.18, 2.75, 1.96, 0.65,
 dec_of_june = 5
 source = "PVGIS-SARAH3"
 note = """Norr om ungefär 63° N bär batteriet större delen av vintern. Vintrarna här kan bli kallare än −20 °C, som beräkningen utgår från: räkna med cirka 8 procent större batteri än tabellerna (köldfaktor 0,85). Batteriet ligger under 0 °C från ungefär november till mars eller april, och på utsatta höjder kan rimfrost täcka panelen, vilket inte är med i beräkningen. Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+note_en = """North of about 63° N the battery carries most of the winter. Winters here can be colder than the −20 °C the calculation assumes: plan for a battery about 8 percent larger than the tables (cold factor 0.85). The battery stays below 0 °C from about November to March or April, and on exposed heights rime ice can cover the panel, which is not part of the calculation. Mount the panel at least 1.5–2 metres above the deepest snow cover."""
 snow_sheltered = 5
 snow_exposed = 8
 
@@ -1634,6 +1638,7 @@ irradiation = [0.27, 1.41, 3.30, 3.43, 3.33, 3.39, 3.33, 3.09, 2.51, 1.61, 0.45,
 dec_of_june = 2
 source = "PVGIS-SARAH3"
 note = """Norr om ungefär 63° N bär batteriet större delen av vintern, och redan utan träd behövs ett stort batteri eftersom terrängen skymmer vintersolen. Inlandet kan ha −35 till −40 °C en sämre vinter: räkna med 8–23 procent större batteri än tabellerna (köldfaktor 0,75–0,85). Platsen ligger vid kanten av satellitdatans täckning, och inlandet norr om cirka 65° N ligger utanför den. Rimfrost på utsatta höjder är inte med i beräkningen. Montera panelen minst 1,5–2 meter över det djupaste snötäcket."""
+note_en = """North of about 63° N the battery carries most of the winter, and even without trees a large battery is needed because the terrain hides the winter sun. Inland it can reach −35 to −40 °C in a bad winter: plan for a battery 8–23 percent larger than the tables (cold factor 0.75–0.85). The site lies at the edge of the satellite data's coverage, and the inland north of about 65° N lies outside it. Rime ice on exposed heights is not part of the calculation. Mount the panel at least 1.5–2 metres above the deepest snow cover."""
 snow_sheltered = 5
 snow_exposed = 8
 

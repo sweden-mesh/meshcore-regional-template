@@ -18,7 +18,7 @@
 > uses the figures for your own county.
   {{- else if $own -}}
 *The figures on this page are worked out for a point in {{ $d.place }} ({{ lang.FormatNumberCustom 1 $d.lat $fmt "|" }}° N){{ with $d.source }}{{ if ne . "PVGIS-SARAH3" }}, with a different data source than the other counties ({{ . }}){{ end }}{{ end }}. Coast and inland, forest and mountains can differ a lot within the same county.*
-{{ with $d.note }}
+{{ with $d.note_en | default $d.note }}
 > [!WARNING] Farther north
 > {{ . }}
 {{ end }}

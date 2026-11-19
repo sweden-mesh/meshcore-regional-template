@@ -3,12 +3,14 @@
 # the method page names (B.2): `ma` is the sourced figure, `grid` the load it is rounded UP to
 # (reference_solar_need.LOAD_GRID_MA), so a board never gets a smaller battery than its source
 # supports. No entry for a firmware = no figure found, and that choice is greyed out for the board.
+# `name_en` (B-364): the name on English pages; without it the name is used as is.
 # `low = true`: no PPK2 average exists, the figure is the upper end of a multimeter range or a
 # `powersaving on` reading (lower confidence). Images: assets/solar/boards/<img>.svg.
 
 [[board]]
   key = "xiao-nrf52840"
   name = "Seeed XIAO nRF52840 med Wio-SX1262"
+  name_en = "Seeed XIAO nRF52840 with Wio-SX1262"
   family = "nRF52"
   img = "xiao-nrf52840"
   esm = { ma = 4.5, grid = "4.5", src = "S1" }
@@ -37,6 +39,7 @@
 [[board]]
   key = "heltec-v4"
   name = "Heltec V4 (FEM på)"
+  name_en = "Heltec V4 (FEM on)"
   family = "ESP32"
   img = "heltec-v4"
   esm = { ma = 13.4, grid = "13.4", src = "S2", low = true }
@@ -44,18 +47,21 @@
 [[board]]
   key = "heltec-v4-3"
   name = "Heltec V4.3 (FEM av)"
+  name_en = "Heltec V4.3 (FEM off)"
   family = "ESP32"
   img = "heltec-v4-3"
   esm = { ma = 13.0, grid = "13", src = "S3", low = true }
 [[board]]
   key = "xiao-esp32s3"
   name = "Seeed XIAO ESP32-S3 med Wio-SX1262"
+  name_en = "Seeed XIAO ESP32-S3 with Wio-SX1262"
   family = "ESP32"
   img = "xiao-esp32s3"
   esm = { ma = 7.0, grid = "7.1", src = "S3", low = true }
 [[board]]
   key = "pi-zero-2w"
   name = "Raspberry Pi Zero 2 W med LoRa-HAT"
+  name_en = "Raspberry Pi Zero 2 W with LoRa HAT"
   family = "Raspberry Pi"
   img = "pi-zero-2w"
   any = { ma = 190.0, grid = "190", src = "S6" }
@@ -65,6 +71,7 @@
 [[board]]
   key = "generic-nrf52"
   name = "Annat nRF52-kort"
+  name_en = "Other nRF52 board"
   family = "nRF52"
   img = "generic-nrf52"
   esm = { ma = 6.0, grid = "6", src = "RAK4631", low = true }
@@ -72,6 +79,7 @@
 [[board]]
   key = "generic-esp32"
   name = "Annat ESP32-kort"
+  name_en = "Other ESP32 board"
   family = "ESP32"
   img = "generic-esp32"
   esm = { ma = 13.4, grid = "13.4", src = "Heltec V4", low = true }
@@ -79,6 +87,7 @@
 [[board]]
   key = "generic-pi"
   name = "Annan Raspberry Pi"
+  name_en = "Other Raspberry Pi"
   family = "Raspberry Pi"
   img = "generic-pi"
   any = { ma = 190.0, grid = "190", src = "Pi Zero 2 W", low = true }

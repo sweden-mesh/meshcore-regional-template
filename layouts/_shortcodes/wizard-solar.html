@@ -5,14 +5,16 @@
   from data/solar_boards.toml; county notes from data/solar.toml. */ -}}
 {{- $r := partialCached "region.html" .Page "region" -}}
 {{- $notes := dict -}}
-{{- range $code, $d := hugo.Data.solar -}}{{- $notes = merge $notes (dict $code (dict "place" $d.place "lat" $d.lat "source" ($d.source | default "") "note" (cond (ne $d.note nil) ($d.note | markdownify | string) ""))) -}}{{- end -}}
+{{- /* B-364: a field's text in the page's language (note_en, name_en), else the field as is. */ -}}
+{{- $l := site.Language.Lang -}}
+{{- range $code, $d := hugo.Data.solar -}}{{- $note := index $d (printf "note_%s" $l) | default $d.note -}}{{- $notes = merge $notes (dict $code (dict "place" $d.place "lat" $d.lat "source" ($d.source | default "") "note" (cond (ne $note nil) ($note | markdownify | string) ""))) -}}{{- end -}}
 {{- $own := index ($r.iatas | default slice) 0 | default "JKG" -}}
 {{- $calc := dict -}}
 {{- range resources.Match "data/solar/*.json" }}{{ $calc = merge $calc (dict (path.BaseName .Name) (. | minify | fingerprint).RelPermalink) }}{{ end -}}
 {{- $boards := slice -}}
 {{- range hugo.Data.solar_boards.board -}}
   {{- $img := "" }}{{ with resources.Get (printf "solar/boards/%s.svg" .img) }}{{ $img = (. | minify | fingerprint).RelPermalink }}{{ end -}}
-  {{- $boards = $boards | append (dict "key" .key "name" .name "family" .family "img" $img "esm" .esm "official" .official "any" .any "hint" (T (printf "sol_hint_%s" .key) | default "")) -}}
+  {{- $boards = $boards | append (dict "key" .key "name" (index . (printf "name_%s" $l) | default .name) "family" .family "img" $img "esm" .esm "official" .official "any" .any "hint" (T (printf "sol_hint_%s" .key) | default "")) -}}
 {{- end -}}
 {{- $guide := "" }}{{ with site.GetPage "/guider/solnoder" }}{{ $guide = .RelPermalink }}{{ end -}}
 {{- $method := "" }}{{ with site.GetPage "/solcell-metod" }}{{ $method = .RelPermalink }}{{ end -}}
