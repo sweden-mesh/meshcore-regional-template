@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.71.0 — 2026-11-19
+
+- Compact sticky header (operator 2026-11-19): scrolled past 48 px (off again under 32), only the logo
+  and ☰ stay (menu.js `.is-compact`); search, county and the toggles come back at the top. The header
+  browser check asserts it.
+- Removed (operator 2026-11-19): "Största orterna" on the county front pages (CONTENT-SV-27; the
+  `lan-towns.html` partial and its strings), and the county list under "Nätet i Sverige" on the national
+  front page (SEO-SV-9; /lan/ lists them). The town data stays for the new-repeaters page.
+
 ## v0.70.2 — 2026-11-19
 
 - `--header-h` follows the slim scrolled header (menu.js observes the border box; scrolled, only the

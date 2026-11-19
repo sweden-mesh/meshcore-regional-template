@@ -306,7 +306,6 @@ div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
   .toc a { display: block; padding: .3rem 0 .3rem .75rem; margin-left: -1px; border-left: 2px solid transparent; color: var(--muted); }
   .toc a:is(:target-current, .target-current) { border-left-color: var(--accent); color: var(--fg); }
 }
-.lan-county-list { columns: 2 9rem; column-gap: 1.5rem; padding-left: 1.1rem; }
 .map-live-status { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .map-live-status.map-live-down { color: var(--fg); font-weight: 600; }
 /* {{< flow >}} (UX-SV-11): a chain of boxes, top to bottom at every width (six across were too
@@ -403,6 +402,12 @@ td, th { vertical-align: top; }
 :root { --header-h: calc(2.5rem + 44px); scroll-padding-top: calc(var(--header-h) + .75rem); }
 .site-header { position: sticky; top: 0; z-index: 50;
   border-image: linear-gradient(to top, color-mix(in srgb, var(--line) var(--hdr-a), transparent) 1px, color-mix(in srgb, var(--bg-a) var(--hdr-a), transparent) 1px) fill 0 / 0 / 0 100vmax; }
+/* Compact (operator 2026-11-19, "make a compact version"): scrolled past 48 px (menu.js sets .is-compact),
+   only the logo and ☰ stay; the name stays for screen readers. Scroll back up for search, county and the toggles. */
+.site-header.is-compact > :not(.brand, .nav-narrow, .lan-tip, [popover], template, script) { display: none; }
+.site-header.is-compact .nav-narrow { display: block; }
+.site-header.is-compact .brand { margin-right: auto; }
+.site-header.is-compact .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @supports (animation-timeline: scroll()) {
   .site-header { animation: header-stuck linear both; animation-timeline: scroll(root); animation-range: 0 48px; }
   /* Scrolled, the header is slimmer (operator 2026-11-19: "takes up too much space"): 84 -> 56 px, its

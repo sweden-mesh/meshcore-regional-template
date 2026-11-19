@@ -2,7 +2,7 @@
 """SCB's statistical urban areas (tätorter) 2023 as a small offline file: one row per tätort with its
 name, county (SCB code), municipality, population, the centroid of its area and the radius of a circle
 of the same area (km), so that a point within it reads as "in" the town. Feeds the nearest town
-on the new-repeaters page (B-362) and the county pages' largest towns (CONTENT-SV-27).
+on the new-repeaters page (B-362) (the county pages' largest towns, CONTENT-SV-27, removed 2026-11-19).
 
 Source: SCB open geodata, WFS layer stat:Tatorter_2023, requested in WGS 84. Run again when SCB
 publishes a new edition (change LAYER). Usage: scripts/tatorter.py [saved WFS answer] > assets/data/tatorter.json
