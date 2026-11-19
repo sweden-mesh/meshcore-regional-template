@@ -4,6 +4,23 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.69.0 — 2026-11-19
+
+- **The rest of the English version** (B-364): the solar method page in English
+  (`/en/wizard/solcell/method/`); text fields in data carry their English beside them as `<field>_en`,
+  read on English pages with the Swedish field as fallback (`data/solar.toml` `note_en`,
+  `data/solar_boards.toml` `name_en`, and a national site's `data/lan` `text_en`, channels'
+  `purpose_en`/`note_en`, `wanted` and `regions_extra` `note_en`, `naming.format_en`); the wizards write
+  numbers with the page's decimal sign and digit grouping (`decimal()` in js/wizard/commands.js).
+- **Translation status**: `scripts/translation-status.mjs [root] [--strict]` lists each Swedish page's
+  translation as current, outdated (its Swedish `lastmod` is later) or missing; `check.sh` prints it,
+  `--strict` runs before a release. README: Languages.
+- **MECP** in "MeshCore när el och mobilnät går ner" and its English page (CONTENT-SV-32).
+- Tables: a table's region name takes up to six column headings (two tables on the method page shared
+  the first three: axe landmark-unique).
+- CI: `COMPARE_BASE` moved to v0.69.0 (regional output changes on purpose: the crisis guide, table names,
+  wizard scripts).
+
 ## v0.68.1 — 2026-11-18
 
 - Anti-AI-design review 22: /nytt/ lists its posts without running numbers (`numbered: false` on a
