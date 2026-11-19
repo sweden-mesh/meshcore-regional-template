@@ -6,7 +6,7 @@ url: /en/guides/when-the-grid-goes-down/
 weight: 30
 group: start
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-19
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -61,6 +61,32 @@ can see where they are on the [map](/#karta) while the internet works.
   brochure *If Crisis or War Comes* (*Om krisen eller kriget kommer*) on what households should do
   [^mcf] [^reg].
 
+## Emergency messages with MECP {#nödmeddelanden-med-mecp}
+
+[MECP](https://mecp.radio/) (Mesh Emergency Communication Protocol) writes an emergency message as
+short codes, so the receiver can read it in their own language [^mecp]. An example:
+
+```
+MECP/0/M01 M02 T01 P05 3pax 57.78,14.16 @1430
+```
+
+It means: life-threatening (0), injury (M01), unconscious person (M02), road blocked (T01), at GPS
+coordinates (P05), 3 people, the position, and the time 14:30 in the sender's local time.
+
+There are 109 codes in 12 categories, from medical and weather to supplies, and language packs in 21
+languages, Swedish included [^mecp]. The message is plain text, so it can be sent on any MeshCore
+channel today. The MeshCore app shows it as written. The codes are translated by
+[MECP's web tool](https://mecp-org.github.io/mecp-app/), by Wadamesh, a MeshCore app that runs on the
+radio itself, and by Colorado Mesh's mesh-client (for the computer) and meshcore-tak-bridge (to ATAK
+on Android) [^mecp].
+
+MECP is new. It started in February 2026, and version 1.4.0 in November changed what some fields
+mean, for example that the time is now the sender's local time instead of UTC [^mecplog]. The texts
+changed in 1.4.0 await review by a native speaker, in all 21 language packs [^mecplog]. If you know
+the Swedish terms for medical care and rescue, you can help by reviewing
+[the Swedish pack](https://github.com/mecp-org/MECP/blob/main/languages/sv.json). Practise a few codes
+while things are calm, rather than using them for the first time when something has happened.
+
 ## Make the mesh more resilient {#gör-nätet-tåligare}
 
 Every repeater on solar or battery makes the mesh stronger when the power goes. Read
@@ -78,3 +104,5 @@ Building your own radio network is seen as a way to prepare, as TV4 has reported
 [^mcf]: MCF, [press release about the brochure](https://mcf.mynewsdesk.com/pressreleases/snart-landar-broschyren-om-krisen-eller-kriget-kommer-hos-drygt-fem-miljoner-hushaall-i-sverige-3354652).
 [^reg]: Government Offices of Sweden (Regeringen), [En broschyr för allvarstid](https://regeringen.se/pressmeddelanden/2024/10/en-broschyr-for-allvarstid--ny-upplaga-av-om-krisen-eller-kriget-kommer/) (a brochure for serious times).
 [^tv4]: TV4, [report on building your own radio network](https://www.tv4.se/artikel/5Frw4pRToGwrcn8m6vdOaU/bygger-eget-radionaet-naesta-steg-i-den-digitala-preppingen).
+[^mecp]: MECP, [the protocol, the codes and the language packs](https://github.com/mecp-org/MECP) (README and languages/).
+[^mecplog]: MECP, [CHANGELOG](https://github.com/mecp-org/MECP/blob/main/CHANGELOG.md), versions 1.0.0 (2026-02-25) and 1.4.0 (2026-11-17).

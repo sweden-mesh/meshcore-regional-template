@@ -5,7 +5,7 @@ description: "Vad som fungerar i MeshCore när elen och mobilnätet går ner, va
 weight: 30
 group: start
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-19
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -59,6 +59,32 @@ Var de står ser du på [kartan](/#karta) medan internet fungerar.
   regeringen ger ut broschyren *Om krisen eller kriget kommer* med vad hushållen ska göra
   [^mcf] [^reg].
 
+## Nödmeddelanden med MECP
+
+[MECP](https://mecp.radio/) (Mesh Emergency Communication Protocol) skriver ett nödmeddelande som
+korta koder, så att mottagaren kan läsa det på sitt eget språk [^mecp]. Ett exempel:
+
+```
+MECP/0/M01 M02 T01 P05 3pax 57.78,14.16 @1430
+```
+
+Det betyder: livshotande läge (0), skada (M01), medvetslös person (M02), väg blockerad (T01), vid
+GPS-koordinater (P05), 3 personer, positionen och klockslaget 14.30 i avsändarens lokala tid.
+
+Det finns 109 koder i 12 kategorier, från sjukvård och väder till förnödenheter, och språkpaket på
+21 språk, svenska inräknat [^mecp]. Meddelandet är vanlig text och går därför att skicka i vilken
+MeshCore-kanal som helst redan i dag. MeshCore-appen visar det som det är skrivet. Koderna översätts
+av [MECP:s webbverktyg](https://mecp-org.github.io/mecp-app/), av Wadamesh, en MeshCore-app som körs
+på själva radion, och av Colorado Meshs program mesh-client (för datorn) och meshcore-tak-bridge
+(till ATAK på Android) [^mecp].
+
+MECP är nytt. Det startade i februari 2026, och version 1.4.0 i november ändrade vad några fält
+betyder, till exempel att klockslaget nu är avsändarens lokala tid i stället för UTC [^mecplog].
+Texterna som ändrades i 1.4.0 väntar på granskning av någon med språket som modersmål, i alla 21
+språkpaket [^mecplog]. Kan du svenska termer för sjukvård och räddning kan du hjälpa till genom att
+granska [det svenska paketet](https://github.com/mecp-org/MECP/blob/main/languages/sv.json). Öva
+gärna med några koder i lugnt läge, i stället för att använda dem första gången när något har hänt.
+
 ## Gör nätet tåligare
 
 Varje repeater på sol eller batteri gör nätet starkare när elen går. Läs [Solnoder](../solnoder/)
@@ -76,3 +102,5 @@ Att bygga eget radionät ses som ett sätt att förbereda sig, som TV4 har berä
 [^mcf]: MCF, [pressmeddelande om broschyren](https://mcf.mynewsdesk.com/pressreleases/snart-landar-broschyren-om-krisen-eller-kriget-kommer-hos-drygt-fem-miljoner-hushaall-i-sverige-3354652).
 [^reg]: Regeringen, [En broschyr för allvarstid](https://regeringen.se/pressmeddelanden/2024/10/en-broschyr-for-allvarstid--ny-upplaga-av-om-krisen-eller-kriget-kommer/).
 [^tv4]: TV4, [reportage om ett eget radionät](https://www.tv4.se/artikel/5Frw4pRToGwrcn8m6vdOaU/bygger-eget-radionaet-naesta-steg-i-den-digitala-preppingen).
+[^mecp]: MECP, [protokollet, koderna och språkpaketen](https://github.com/mecp-org/MECP) (README och languages/).
+[^mecplog]: MECP, [CHANGELOG](https://github.com/mecp-org/MECP/blob/main/CHANGELOG.md), versionerna 1.0.0 (2026-02-25) och 1.4.0 (2026-11-17).
