@@ -1,8 +1,8 @@
 {{- /* Markdown tables: a wrapper that scrolls a wide table sideways on a phone. It is a named
        region in the tab order, so a keyboard can scroll it too; the name is "Tabell" and the first
-       column headings. The table inside is the one Hugo would render. */ -}}
+       column headings (up to six, so two tables that share their first columns keep apart: axe landmark-unique, B-364). The table inside is the one Hugo would render. */ -}}
 {{- $heads := slice }}{{ with .THead }}{{ range index . 0 }}{{ with .Text | plainify | htmlUnescape | strings.TrimSpace }}{{ $heads = $heads | append . }}{{ end }}{{ end }}{{ end -}}
-<div class="table-wrap" tabindex="0" role="region" aria-label="{{ T "table" }}{{ with $heads }}: {{ delimit (first 3 .) ", " }}{{ end }}">
+<div class="table-wrap" tabindex="0" role="region" aria-label="{{ T "table" }}{{ with $heads }}: {{ delimit (first 6 .) ", " }}{{ end }}">
 <table{{ range $k, $v := .Attributes }} {{ $k }}="{{ $v }}"{{ end }}>
   {{- with .THead }}
   <thead>
