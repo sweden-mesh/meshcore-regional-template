@@ -193,9 +193,14 @@ export function repeaterCommands(s) {
 // A readable summary of what repeaterCommands will set, for review before sending
 // (operator 2026-11-12). Same inputs, so it can never disagree with the commands.
 // Missing values are "" so the page can show a dash; the password is masked.
-export function repeaterReview(s) {
+// The decimal sign follows the page's language (B-364): a comma in Swedish, a point in English.
+export function decimal(x, lang = globalThis.document?.documentElement.lang || "sv") {
+  return lang.startsWith("sv") ? String(x).replace(".", ",") : String(x);
+}
+
+export function repeaterReview(s, lang) {
   const r = s.radio || {};
-  const sv = (x) => String(x).replace(".", ",");
+  const sv = (x) => decimal(x, lang);
   const hasPos = s.lat != null && s.lon != null;
   return [
     { key: "name", value: (s.name || "").trim() },
@@ -212,9 +217,9 @@ export function repeaterReview(s) {
 
 // Companions are set up in the MeshCore app (their USB link speaks the app's
 // binary protocol, not this CLI), so the companion wizard gets values to enter.
-export function companionSettings(s) {
+export function companionSettings(s, lang) {
   const r = s.radio || {};
-  const sv = (x) => String(x).replace(".", ",");
+  const sv = (x) => decimal(x, lang);
   return [
     { key: "preset", value: r.preset || "" },
     { key: "radio", value: `${sv(r.freq)} MHz · BW ${sv(r.bw)} kHz · SF${r.sf} · CR${r.cr}` },

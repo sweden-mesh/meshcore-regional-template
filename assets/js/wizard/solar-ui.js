@@ -15,7 +15,10 @@ async function init(form) {
   const t = JSON.parse(document.getElementById("sol-texts").dataset.texts);
   const notes = JSON.parse(form.dataset.notes || "{}");
   const q = (sel) => form.querySelector(sel);
-  const fmt = (n) => Math.round(n).toLocaleString("sv-SE");
+  // The decimal sign and digit grouping follow the page's language (B-364).
+  const comma = (document.documentElement.lang || "sv").startsWith("sv");
+  const dec = (x) => (comma ? String(x).replace(".", ",") : String(x));
+  const fmt = (n) => Math.round(n).toLocaleString(comma ? "sv-SE" : "en-GB");
   // Enter in the one text field would submit the form and reload the page.
   form.addEventListener("submit", (e) => e.preventDefault());
   const urls = JSON.parse(form.dataset.calc);
@@ -48,7 +51,7 @@ async function init(form) {
     load: chosen().load,
     tree: TREES[Number(tree.value)],
     margin: Number(margin.value) / 100,
-    cap: Math.max(100, Number(String(cap.value).replace(/\s/g, "")) || 3000),
+    cap: Math.max(100, Number(String(cap.value).replace(comma ? /\s/g : /[\s,]/g, "")) || 3000),
     exposed: exposed.checked,
   });
 
@@ -64,7 +67,7 @@ async function init(form) {
   const showPlace = () => {
     const n = notes[st.code];
     q('[data-out="where"]').textContent = n
-      ? `${t.where} ${n.place} (${String(n.lat.toFixed(1)).replace(".", ",")}° N)${n.source && n.source !== "PVGIS-SARAH3" ? ` · ${t.era5}` : ""}`
+      ? `${t.where} ${n.place} (${dec(n.lat.toFixed(1))}° N)${n.source && n.source !== "PVGIS-SARAH3" ? ` · ${t.era5}` : ""}`
       : "";
     q('[data-out="note"]').innerHTML = n?.note ? `<div class="alert alert-warning" role="note"><p class="alert-title"><svg class="alert-icon alert-icon-warning" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2.5 1.5 21h21L12 2.5z" fill="currentColor"/><path d="M12 9.5v5M12 17.5v.5" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/></svg>${t.north}</p><p>${n.note}</p></div>` : "";
   };
@@ -83,7 +86,7 @@ async function init(form) {
       lastBig = big;
     }
     q("[data-pi]").hidden = !big;
-    q('[data-out="load"]').textContent = (c.low ? t.loadLow : t.load).replace("{MA}", String(c.ma).replace(".", ","));
+    q('[data-out="load"]').textContent = (c.low ? t.loadLow : t.load).replace("{MA}", dec(c.ma));
     q("[data-tilt]").hidden = !brush.checked;
     q("[data-tilt-off]").hidden = brush.checked;
     if (!brush.checked) form.querySelector('input[name="sol-tilt"][value="vertical"]').checked = true;
@@ -94,11 +97,11 @@ async function init(form) {
     cells.value = r.cells;
     const W = sizes[r.panelIdx];
     q('[data-out="tree"]').textContent = t.trees[Number(tree.value)];
-    q('[data-out="panel"]').textContent = `${String(W).replace(".", ",")} ${t.w}`;
+    q('[data-out="panel"]').textContent = `${dec(W)} ${t.w}`;
     q('[data-out="cells"]').textContent = `${r.cells} ${t.cellsUnit} (${fmt(r.cells * s.cap)} mAh)`;
     q('[data-out="margin"]').textContent = `${margin.value} %`;
     tree.setAttribute("aria-valuetext", t.trees[Number(tree.value)]);
-    panel.setAttribute("aria-valuetext", `${String(W).replace(".", ",")} ${t.w}`);
+    panel.setAttribute("aria-valuetext", `${dec(W)} ${t.w}`);
     cells.setAttribute("aria-valuetext", `${r.cells} ${t.cellsUnit} (${fmt(r.cells * s.cap)} mAh)`);
     margin.setAttribute("aria-valuetext", `${margin.value} %`);
     for (const k of ["panel", "cells"]) q(`[data-lock="${k}"]`).hidden = st.lock !== k;
@@ -111,7 +114,7 @@ async function init(form) {
     else warn("cells", t.cellsNeed.replace("{N}", r.warn.value));
     const exp = expectedAt(d, s, r.panelIdx), need = cellsFor(d, s, r.panelIdx);
     const text = need == null || exp == null ? "" : t.result
-      .replace("{W}", String(W).replace(".", ",")).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
+      .replace("{W}", dec(W)).replace("{N}", need).replace("{MAH}", fmt(need * s.cap))
       .replace("{EXP}", fmt(exp)).replace("{M}", margin.value)
       + ` ${t.snow.replace("{D}", s.exposed ? d.snow_allowance.days.exposed : d.snow_allowance.days.sheltered)}`
       + (Math.ceil(needAt(d, s, r.panelIdx) / s.cap) < MIN_CELLS ? ` ${t.min}` : "")

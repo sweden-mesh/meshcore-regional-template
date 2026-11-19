@@ -13,7 +13,8 @@ function init(form) {
   const val = (name) => form.querySelector(`input[name="hp-${name}"]:checked`)?.value || null;
   const label = (name, v) => (t.q[name].find((o) => o[0] === v) || [])[1] || "";
   const st = { pos: null, repeaters: null, polygons: [] };
-  const dec = (x) => String(x).replace(".", ",");
+  const comma = (document.documentElement.lang || "sv").startsWith("sv");
+  const dec = (x) => (comma ? String(x).replace(".", ",") : String(x));
 
   const place = () => (st.pos && st.repeaters ? placeKind(st.pos.lat, st.pos.lon, st.repeaters, st.polygons, km) : null);
 

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { repeaterCommands, validateRepeater, companionSettings } from "../assets/js/wizard/commands.js";
+import { repeaterCommands, validateRepeater, companionSettings, repeaterReview } from "../assets/js/wizard/commands.js";
 
 const radio = { preset: "EU/UK (Narrow)", freq: 869.618, bw: 62.5, sf: 8, cr: 8 };
 const base = { name: "SE-JKP-Braneryd-FD70", lat: 57.76162, lon: "14,13347", password: "hemligt123", tx: 22, radio, scope: "se-jkp" };
@@ -59,6 +59,12 @@ test("companion settings are values for the app", () => {
   assert.deepEqual(companionSettings({ name: " Lou ", radio, scope: "se-jkp" }).map((x) => x.value),
     ["EU/UK (Narrow)", "869,618 MHz · BW 62,5 kHz · SF8 · CR8", "Lou", "se-jkp"]);
 });
+test("the decimal sign follows the page's language (B-364)", () => {
+  assert.equal(companionSettings({ radio }, "en")[1].value, "869.618 MHz · BW 62.5 kHz · SF8 · CR8");
+  assert.equal(repeaterReview({ radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 } }, "en")
+    .find((x) => x.key === "radio").value, "869.618 MHz · BW 62.5 kHz · SF8 · CR8");
+  assert.equal(companionSettings({ radio }, "sv")[1].value, "869,618 MHz · BW 62,5 kHz · SF8 · CR8");
+});
 
 import { regionDef } from "../assets/js/wizard/commands.js";
 test("region def: own scope, and neighbours all under se", () => {
@@ -68,7 +74,6 @@ test("region def: own scope, and neighbours all under se", () => {
   assert.equal(regionDef("se"), "region def eu|* europe|eu se");
 });
 
-import { repeaterReview } from "../assets/js/wizard/commands.js";
 test("review summary matches the commands and masks the password", () => {
   const s = { name: "SE-JKP-Test-ABCD", lat: 57.78123, lon: 14.16, password: "hemligt", scope: "se-jkp",
     extraScopes: ["se-ost"], radio: { freq: 869.618, bw: 62.5, sf: 8, cr: 8 } };
