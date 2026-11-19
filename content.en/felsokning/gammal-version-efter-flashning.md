@@ -6,7 +6,7 @@ url: /en/troubleshooting/old-version-after-flashing/
 category: flasha
 weight: 20
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 ## Likely causes {#troliga-orsaker}

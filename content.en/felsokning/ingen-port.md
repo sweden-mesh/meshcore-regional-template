@@ -5,7 +5,7 @@ url: /en/troubleshooting/no-port/
 category: flasha
 weight: 30
 date: 2026-11-13
-lastmod: 2026-11-13
+lastmod: 2026-11-18
 ---
 
 ## Likely causes {#troliga-orsaker}

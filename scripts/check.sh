@@ -11,6 +11,7 @@ pagefind --site public --quiet
 cd ..
 htmltest --conf .htmltest.yml
 node scripts/check-glossary.mjs
+node scripts/translation-status.mjs .
 scripts/check-overrides.sh
 scripts/check-national.sh
 scripts/guide-titles.sh

@@ -5,7 +5,7 @@ url: /en/troubleshooting/repeater-not-on-map/
 category: repeater
 weight: 10
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-18
 ---
 
 ## Likely causes {#troliga-orsaker}

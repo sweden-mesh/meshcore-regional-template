@@ -244,7 +244,18 @@ What the template then does:
 - Each page names its translations with `hreflang` (and `x-default` → Swedish) in its head and in
   `/sitemap.xml`, which stays one urlset of every language. A link in the header (`EN` / `SV`, the full
   name in the ☰ menu) goes to the same page in the other language. Nothing redirects by itself.
-- Not yet in English: the solar method page and the counties' own texts in a national site's `data/lan`.
+- Data with a text field can carry the English text beside it as `<field>_en`, read on English pages
+  and falling back to the Swedish field: `note_en` in `data/solar.toml`, `name_en` in
+  `data/solar_boards.toml`, and in a national site's `data/lan/*.toml` `text_en`, the channels'
+  `purpose_en` and `note_en`, `wanted` and `regions_extra` `note_en`, and `naming`'s `format_en`.
+- The wizards write numbers with the page's decimal sign (`869,618` in Swedish, `869.618` in English).
+
+**Translating a page.** Copy the Swedish file to the same path under `content.en/`, set `url: /en/…/`,
+translate title, description and text, keep links and heading ids as written, and set `lastmod` to the
+day the translation matches the Swedish text. `node scripts/translation-status.mjs [root]` lists each
+Swedish page's translation as current, outdated (the Swedish `lastmod` is later than the English one) or
+missing; `scripts/check.sh` prints it, and `--strict` exits 1 on an outdated page, which is run before a
+release. A region's own pages are checked the same way with the region's directory as `root`.
 
 A further language: `content.<code>/`, `i18n/<code>.toml`, and the three `content` mounts in this
 template's `hugo.toml` repeated with its code.
@@ -267,7 +278,8 @@ are fixed promptly, since CI builds with `--panicOnWarning`.
 The criteria for 1.0 are in `V1.md`.
 
 Tags `vX.Y.Z` on `main`, described in `CHANGELOG.md`; the version rules are at the top of that
-file. To release: run `node scripts/lastmod.mjs` (the pages' dates, see [Search engines](#search-engines)),
+file. To release: run `node scripts/lastmod.mjs` (the pages' dates, see [Search engines](#search-engines))
+and `node scripts/translation-status.mjs . --strict` (no outdated translation, see [Languages](#languages)),
 update `CHANGELOG.md`, commit, `git tag -a vX.Y.Z -m "…"`, push the tag.
 
 ## Develop the template

@@ -4,7 +4,7 @@ url: /en/faq/repeater-not-on-map/
 category: natet
 weight: 40
 date: 2026-11-13
-lastmod: 2026-11-14
+lastmod: 2026-11-18
 ---
 
 Your repeater does not need to be an observer to show up. It shows when it has a position, has
