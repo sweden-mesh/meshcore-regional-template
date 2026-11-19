@@ -3,4 +3,7 @@
   translation. Call it cached: partialCached "url-paths.html" . "url-paths" */ -}}
 {{- $m := dict -}}
 {{- range (index hugo.Sites 0).Pages }}{{ $p := . }}{{ with .RelPermalink }}{{ $m = merge $m (dict . $p.Path) }}{{ end }}{{ end -}}
+{{- /* The solar method page is kept out of every list (build.list: never), so it is added by path, as
+       in sitemap-urls.html (B-364). */ -}}
+{{- with (index hugo.Sites 0).GetPage "/solcell-metod" }}{{ $m = merge $m (dict .RelPermalink .Path) }}{{ end -}}
 {{- return $m -}}
