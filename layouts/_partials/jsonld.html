@@ -33,12 +33,14 @@
 {{- with .Params.source }}{{ $node = merge $node (dict "isBasedOn" .url) }}{{ end -}}
 {{- end -}}
 {{- /* A page about press coverage (front matter press: [{type, name, url, date, publisher}]) lists each
-       item as a NewsArticle or VideoObject it mentions (SEO-SV-11). */ -}}
+       item as a NewsArticle or CreativeWork it mentions (SEO-SV-11). A video hosted elsewhere (type:
+       VideoObject) is listed as a CreativeWork: Google checks every VideoObject as a video on this page and
+       wants a thumbnail, a description and an embed it does not have (Search Console 2026-11-20). */ -}}
 {{- with .Params.press -}}
   {{- $m := slice -}}
   {{- range . -}}
-    {{- $it := dict "@type" (.type | default "NewsArticle") "url" .url -}}
-    {{- $it = merge $it (cond (eq .type "VideoObject") (dict "name" .name "uploadDate" .date) (dict "headline" .name "datePublished" .date)) -}}
+    {{- $it := dict "@type" (cond (eq .type "VideoObject") "CreativeWork" (.type | default "NewsArticle")) "url" .url -}}
+    {{- $it = merge $it (cond (eq .type "VideoObject") (dict "name" .name "datePublished" .date) (dict "headline" .name "datePublished" .date)) -}}
     {{- with .publisher }}{{ $it = merge $it (dict "publisher" (dict "@type" "Organization" "name" .)) }}{{ end -}}
     {{- $m = $m | append $it -}}
   {{- end -}}

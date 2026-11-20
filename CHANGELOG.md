@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.73.1 — 2026-11-20
+
+- A press item of type `VideoObject` is now listed in the page's JSON-LD `mentions` as a `CreativeWork`
+  (name, url, datePublished). Search Console treated each one as a video on the page and reported it as
+  invalid: no thumbnail, description or embed, and an `uploadDate` without a timezone.
+
 ## v0.73.0 — 2026-11-19
 
 - The sticky header has no border; its background follows the operator's table (2026-11-19): the base
