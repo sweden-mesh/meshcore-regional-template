@@ -13,8 +13,8 @@ cascade:
       kind: page
 outputs: ["html"]   # no RSS feed (SEO-T22)
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-21
 ---
 
 Can't find the answer? See [Troubleshooting](../felsokning/) for problems, and the [Glossary](../guider/ordlista/)
-for terms.
+for terms. Questions about the lou repeater firmware have their own page: [Questions about the lou firmware](lou/).

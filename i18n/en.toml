@@ -529,6 +529,14 @@ other = "Privacy and security"
 other = "Regions"
 [faq_cat_bidra]
 other = "Helping out"
+[faq_cat_lougrunder]
+other = "What lou is"
+[faq_cat_louautosvar]
+other = "Auto-reply"
+[faq_cat_loufjarr]
+other = "Remote control"
+[faq_cat_louinstall]
+other = "Install and update"
 [faq_cat_ovrigt]
 other = "Other"
 [wz_obs]

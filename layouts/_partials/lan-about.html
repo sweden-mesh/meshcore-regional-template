@@ -18,6 +18,8 @@
   {{- range $p := slice "kom-igang" "ingen-svar-pa-test" "fragor" -}}
     {{- with site.GetPage (printf "/%s/%s" $c.slug $p) }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
   {{- end -}}
+  {{- /* The county's cities and areas with a page of their own (front matter `area`, the county's SCB code). */ -}}
+  {{- range sort (where site.RegularPages "Params.area" $c.scb) "Title" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .Title) }}{{ end -}}
   {{- with site.GetPage "/guider/nar-natet-gar-ner" }}{{ $links = $links | append (printf "<li><a href=\"%s\">%s</a></li>" .RelPermalink .LinkTitle) }}{{ end -}}
   {{- with site.GetPage "/kort" }}{{ $links = $links | append (printf "<li><a href=\"%s?lan=%s\">%s</a></li>" .RelPermalink $c.scb (T "kort_print")) }}{{ end -}}
   {{- /* Each list column opens with a sentence, like the columns beside it (B-307). */ -}}

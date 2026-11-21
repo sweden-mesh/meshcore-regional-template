@@ -526,6 +526,14 @@ other = "Integritet och säkerhet"
 other = "Regioner"
 [faq_cat_bidra]
 other = "Hjälpa till"
+[faq_cat_lougrunder]
+other = "Vad lou är"
+[faq_cat_louautosvar]
+other = "Auto-svar"
+[faq_cat_loufjarr]
+other = "Fjärrstyrning"
+[faq_cat_louinstall]
+other = "Installera och uppdatera"
 [faq_cat_ovrigt]
 other = "Övrigt"
 [wz_obs]

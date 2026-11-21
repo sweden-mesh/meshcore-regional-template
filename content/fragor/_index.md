@@ -13,8 +13,8 @@ cascade:
       kind: page
 outputs: ["html"]   # no RSS feed (SEO-T22)
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-21
 ---
 
 Hittar du inte svaret? Se [Felsökning](../felsokning/) för problem, och [Ordlistan](../guider/ordlista/)
-för ord.
+för ord. Frågor om repeaterfirmwaren lou har en egen sida: [Frågor om lou-firmwaren](lou/).

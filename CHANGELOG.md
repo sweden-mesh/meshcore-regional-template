@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.74.0 — 2026-11-21
+
+- A separate question page for the lou firmware, `/fragor/lou/` (`/en/faq/lou/`): 18 questions in four
+  groups (what lou is, auto-reply, remote control, install and update), in Swedish and English. It is a
+  nested section of the FAQ and uses the same layout; the general FAQ, its lou question and the lou guide
+  link to it. Answers describe lou-18 and name lou-20 for what is not released.
+- National mode: a county's front page lists the county's city and area pages (front matter `area`) among
+  its local pages. They were linked from the county index only.
+
 ## v0.73.1 — 2026-11-20
 
 - A press item of type `VideoObject` is now listed in the page's JSON-LD `mentions` as a `CreativeWork`

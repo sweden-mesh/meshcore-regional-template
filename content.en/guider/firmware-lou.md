@@ -6,7 +6,7 @@ url: /en/guides/firmware-lou/
 weight: 45
 group: repeater
 date: 2026-11-12
-lastmod: 2026-11-18
+lastmod: 2026-11-21
 ---
 
 Besides the MeshCore project's own firmware there is lou, modified variants written by Louie:
@@ -82,6 +82,8 @@ lou-21 comes at the earliest one month after lou-20. It removes the older way of
 repeaters, so that only the new one remains. Update to lou-20 first.
 
 ## Good to know {#bra-att-veta}
+
+Short answers to what people usually ask are in [Questions about the lou firmware](../../fragor/lou/).
 
 - **It adds, it does not change.** lou does not change MeshCore's default settings; the features
   are off until you turn them on.

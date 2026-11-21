@@ -5,7 +5,7 @@ description: "Vad sweden-mesh:s lou-firmware är, vilka varianter som finns (aut
 weight: 45
 group: repeater
 date: 2026-11-12
-lastmod: 2026-11-18
+lastmod: 2026-11-21
 ---
 
 Utöver MeshCore-projektets egen firmware finns lou, modifierade varianter som Louie skrivit: repeaterfirmware som byggs av
@@ -78,6 +78,8 @@ lou-21 kommer tidigast en månad efter lou-20. Den tar bort det äldre sättet a
 att bara det nya finns kvar. Uppdatera till lou-20 först.
 
 ## Bra att veta
+
+Korta svar på det folk brukar undra finns i [Frågor om lou-firmwaren](../../fragor/lou/).
 
 - **Det är tillägg, inte ändringar.** lou ändrar inte MeshCores standardinställningar; funktionerna
   är avstängda tills du slår på dem.
