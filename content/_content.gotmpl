@@ -49,7 +49,13 @@
         {{- /* The text in the site's language where there is one (assets/lan/<lang>/, B-337), else Swedish. */ -}}
         {{- $src := resources.Get (printf "lan/%s/%s.md" site.Language.Lang $p.path) | default (resources.Get (printf "lan/%s.md" $p.path)) -}}
         {{- $body := $src | resources.ExecuteAsTemplate (printf "lan/%s/%s/%s.md" site.Language.Lang $c.scb $p.path) $ctx -}}
-        {{- $.AddPage (dict
+        {{- /* In another language the address takes that language's word (B-365): /en/kalmar/get-started/.
+               The page keeps its path, so links by path still find it; the Swedish address redirects. */ -}}
+        {{- $addr := dict -}}
+        {{- with index (dict "en" (dict "kom-igang" "get-started" "ingen-svar-pa-test" "no-reply-to-test" "fragor" "faq")) site.Language.Lang -}}
+          {{- with index . $p.path }}{{ $addr = dict "url" (printf "/%s/%s/%s/" site.Language.Lang $c.slug .) "aliases" (slice (printf "/%s/%s/" $c.slug $p.path)) }}{{ end -}}
+        {{- end -}}
+        {{- $.AddPage (merge $addr (dict
           "path" (printf "%s/%s" $c.slug $p.path)
           "kind" "page"
           "type" "lan"
@@ -58,7 +64,7 @@
           "description" $p.desc
           "params" (dict "lan" $c.scb "description" $p.desc "searchPair" $p.path "noindex" true)
           "dates" (dict "lastmod" (time.AsTime $c.checked))
-          "content" (dict "mediaType" "text/markdown" "value" $body.Content)) -}}
+          "content" (dict "mediaType" "text/markdown" "value" $body.Content))) -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}

@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.75.0 — 2026-11-21
+
+- National mode, English: a county's three local pages have English addresses, `/en/<county>/get-started/`,
+  `/no-reply-to-test/` and `/faq/`. The Swedish-worded addresses under `/en/` answer 301 (as aliases, in
+  `_redirects`). The pages keep their logical paths, so nothing that finds them by path changes.
+
 ## v0.74.0 — 2026-11-21
 
 - A separate question page for the lou firmware, `/fragor/lou/` (`/en/faq/lou/`): 18 questions in four
