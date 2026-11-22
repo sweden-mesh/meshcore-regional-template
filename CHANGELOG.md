@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.77.2 — 2026-11-22
+
+- Map: the packet's own orange ball is scaled as the travelling balls, half size up to zoom 6 and a third closer in.
+
 ## v0.77.1 — 2026-11-22
 
 - Map: the travelling balls are half their earlier size up to zoom 6 and a third of it closer in.

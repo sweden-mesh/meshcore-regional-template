@@ -158,7 +158,8 @@ export class FlowLayer {
     map.addLayer({ id: "flow-trails", type: "line", source: "flow-trails", layout: { "line-cap": "round" },
       paint: { "line-color": "#f97316", "line-width": 2.5, "line-dasharray": [2, 1.5], "line-opacity": ["get", "a"] } });
     map.addLayer({ id: "flow-heads", type: "circle", source: "flow-heads",
-      paint: { "circle-color": "#f97316", "circle-radius": 5, "circle-stroke-color": "#fff", "circle-stroke-width": 1.5,
+      // The packet's own ball, scaled as the bubbles (operator 2026-11-22): half of 5 px up to zoom 6, a third closer in.
+      paint: { "circle-color": "#f97316", "circle-radius": ["step", ["zoom"], 2.5, 6.01, 1.67], "circle-stroke-color": "#fff", "circle-stroke-width": ["step", ["zoom"], 0.75, 6.01, 0.5],
         "circle-opacity": ["get", "a"], "circle-stroke-opacity": ["get", "a"] } });
     // The white centre, on top of everything, the repeater's own marker included (B-349): the marker
     // itself turned white zoomed out, a blurred white centre zoomed in. It shows again as the flash fades.
