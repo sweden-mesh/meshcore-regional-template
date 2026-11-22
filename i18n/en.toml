@@ -891,6 +891,15 @@ other = "Fit all"
 # The map's "SE" toggle (B-370): the whole country's nodes and live traffic from a county's map.
 [mt_se_all]
 other = "Show all of Sweden's mesh"
+# The map's share address: its path segment and the link preview's title and text.
+[share_path]
+other = "map"
+[share_sweden]
+other = "Sweden"
+[share_og_title]
+other = "Live map: MeshCore in {{ .Region }}"
+[share_og_desc]
+other = "See the MeshCore mesh in {{ .Region }} live: repeaters, links and traffic on the map."
 # The map's share button and dialog.
 [mt_share]
 other = "Share the map"

@@ -1,0 +1,41 @@
+{{- /* The map's share address (national mode): /karta/ for Sverige, /<county>/karta/ for a county.
+  The share button's link points here (js/map/share.js). The page is only a carrier for the link
+  preview: its Open Graph picture is the region's map (static/og/karta-<scb|se>.jpg on the site,
+  made by the site's own script; the site's ordinary picture where there is none), and the script
+  sends the visitor on to the real map with the link's settings (the query string) kept.
+  No inline script: the national site allows scripts by hash only. Not indexed, not in the sitemap. */ -}}
+{{- $target := .Params.shareTarget -}}
+{{- $img := site.Params.ogImage | default "images/og.png" -}}{{- $w := 0 -}}{{- $h := 0 -}}
+{{- $own := printf "og/karta-%s.jpg" .Params.shareKey -}}
+{{- if fileExists (printf "static/%s" $own) }}{{ $img = $own }}{{ $w = 1200 }}{{ $h = cond (eq .Params.shareKey "se") 1200 630 }}{{ end -}}
+<!doctype html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .Title }}</title>
+<meta name="description" content="{{ .Description }}">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="{{ $target | absURL }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="{{ T "og_locale" }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ .Description }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $img | absURL }}">
+{{- if $w }}
+<meta property="og:image:width" content="{{ $w }}">
+<meta property="og:image:height" content="{{ $h }}">
+{{- end }}
+<meta property="og:image:alt" content="{{ .Title }}">
+<meta name="twitter:card" content="summary_large_image">
+{{- with resources.Get "js/mapshare.js" | js.Build (dict "minify" true "target" "es2020") | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" data-target="{{ $target }}"{{ with $.Params.shareLan }} data-lan="{{ . }}"{{ end }}></script>
+{{- end }}
+<noscript><meta http-equiv="refresh" content="0; url={{ $target }}#map"></noscript>
+</head>
+<body>
+<p><a href="{{ $target }}#map">{{ .Title }}</a></p>
+</body>
+</html>

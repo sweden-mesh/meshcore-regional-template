@@ -187,13 +187,17 @@ async function start() {
     } finally { seBusy = false; btn?.setAttribute("aria-pressed", state.se ? "true" : "false"); }
   };
   el.setSe = setSe; // for browser tests
+  // For the site's share-picture script: the map itself and the region's box ([[w, s], [e, n]] or null).
+  // strong(): the national overview at full strength, not soft (B-347), for a still picture.
+  el.mapgl = map; el.regionBox = () => unionBbox(state.borders); el.strong = () => applyPick(map, null, false);
   // The link the share button gives: the switches, the view as it is now and whether the map fills the window.
   const isFull = () => el.classList.contains("map-pseudo-full") || (document.fullscreenElement || document.webkitFullscreenElement) === el;
   const region = () => {
     const root = document.documentElement, lan = window.meshcoreLan;
     if (!lan) return {};
-    const page = root.getAttribute("data-lan-page");
-    return page ? { countyUrl: lan.county(page)?.url || location.pathname } : { lan: lan.get() || "se" };
+    const page = root.getAttribute("data-lan-page"), home = root.dataset.home || "/";
+    const url = page ? lan.county(page)?.url : location.pathname === home ? home : null;
+    return url ? { sharePage: `${url}${t("share_path")}/` } : { lan: lan.get() || "se" };
   };
   const share = () => shareLink(shareLoc(location, region()), { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus,
     cov: cov?.on, want: want?.on, se: state.se, full: isFull(), view: { zoom: map.getZoom(), center: map.getCenter().toArray() } });

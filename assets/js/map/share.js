@@ -8,20 +8,22 @@ import { writeState } from "./urlstate.js";
 // The link to the map as it is. Pure, for tests: `loc` is { origin, pathname, search }, `state` the
 // same object writeState takes, with the view always present. Ends in #map, so the visitor lands on it.
 export function shareLink(loc, state) {
-  return loc.origin + loc.pathname + writeState(loc.search, state) + "#map";
+  return loc.origin + loc.pathname + writeState(loc.search, state) + (loc.hash ?? "#map");
 }
 
 // Where the link points, so it also says which region the map shows (operator 2026-11-22). The
 // address bar cannot be trusted for that in national mode: / shows a saved county's page under the
-// address /, and ?lan= is taken out of the address at load. A county's page is linked by its own
-// address; any other page gets ?lan=<the chosen county, or se for Sverige>, which the receiver's
-// page applies. Outside national mode (`lan` null) the address is used as it is. Pure, for tests.
-export function shareLoc(loc, { countyUrl = null, lan = null } = {}) {
+// address /, and ?lan= is taken out of the address at load. `sharePage` is the region's share
+// address (/karta/, /<county>/karta/; layouts/mapshare), which carries the map's own link preview
+// and sends the visitor on to the map. A page without one gets ?lan=<the chosen county, or se for
+// Sverige>, which the receiver's page applies. Outside national mode the address is used as it is.
+// Pure, for tests.
+export function shareLoc(loc, { sharePage = null, lan = null } = {}) {
   const q = new URLSearchParams(loc.search);
   q.delete("lan");
-  if (countyUrl) {
-    const u = new URL(countyUrl, loc.origin);
-    return { origin: loc.origin, pathname: u.pathname, search: q.size ? `?${q}` : "" };
+  if (sharePage) {
+    const u = new URL(sharePage, loc.origin);
+    return { origin: loc.origin, pathname: u.pathname, search: q.size ? `?${q}` : "", hash: "" };
   }
   if (lan) q.set("lan", lan);
   return { origin: loc.origin, pathname: loc.pathname, search: q.size ? `?${q}` : "" };

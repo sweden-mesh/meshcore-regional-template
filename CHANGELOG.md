@@ -4,6 +4,15 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.79.0 — 2026-11-22
+
+- National mode: the map's share addresses, `/karta/` for Sverige and `/<county>/karta/` for each county with a page
+  (`/en/map/`, `/en/<county>/map/`). The share button's link now points there. The page carries the link preview,
+  with the region's map as its Open Graph picture when the site has `static/og/karta-<scb|se>.jpg` (the site's
+  ordinary picture otherwise), and its script (`js/mapshare.js`, no inline script) sends the visitor on to the map
+  with the link's settings kept. Not indexed and not in the sitemap.
+- Map: `#map` exposes `mapgl`, `regionBox()` and `strong()` for a site's script that takes those pictures.
+
 ## v0.78.0 — 2026-11-22
 
 - Map: a share button, last in the column of map buttons. It opens a dialog with a link to the map as it is (the

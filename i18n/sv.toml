@@ -888,6 +888,15 @@ other = "Visa allt"
 # The map's "SE" toggle (B-370): the whole country's nodes and live traffic from a county's map.
 [mt_se_all]
 other = "Visa hela Sveriges nät"
+# The map's share address: its path segment and the link preview's title and text.
+[share_path]
+other = "karta"
+[share_sweden]
+other = "Sverige"
+[share_og_title]
+other = "Live-karta: MeshCore i {{ .Region }}"
+[share_og_desc]
+other = "Se MeshCore-nätet i {{ .Region }} live: repeatrar, länkar och trafik på kartan."
 # The map's share button and dialog.
 [mt_share]
 other = "Dela kartan"

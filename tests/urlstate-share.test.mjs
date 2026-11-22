@@ -15,10 +15,11 @@ test("a link without full leaves the map in the page", () => {
 });
 
 import { shareLoc } from "../assets/js/map/share.js";
-test("the share link says which region: a county's own address, else ?lan=", () => {
+test("the share link says which region: the region's share address, else ?lan=", () => {
   const loc = { origin: "https://example.se", pathname: "/", search: "?z=5&ll=1,2" };
-  assert.deepEqual(shareLoc(loc, { countyUrl: "/sk%C3%A5ne/" }), { origin: "https://example.se", pathname: "/sk%C3%A5ne/", search: "?z=5&ll=1%2C2" });
-  assert.deepEqual(shareLoc(loc, { countyUrl: "https://example.se/kalmar/" }).pathname, "/kalmar/");
+  const county = shareLoc(loc, { sharePage: "/sk%C3%A5ne/karta/" });
+  assert.deepEqual(county, { origin: "https://example.se", pathname: "/sk%C3%A5ne/karta/", search: "?z=5&ll=1%2C2", hash: "" });
+  assert.equal(shareLink(county, { live: false }), "https://example.se/sk%C3%A5ne/karta/?z=5&ll=1%2C2&live=0");
   assert.equal(shareLoc(loc, { lan: "se" }).search, "?z=5&ll=1%2C2&lan=se");
   assert.equal(shareLoc({ ...loc, pathname: "/guider/x/", search: "?lan=06" }, { lan: "12" }).search, "?lan=12");
   assert.deepEqual(shareLoc({ ...loc, search: "" }), { origin: "https://example.se", pathname: "/", search: "" });

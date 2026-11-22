@@ -15,8 +15,21 @@
          county button and the crawl path to every county page (§6.2.2). */ -}}
   {{- $.AddPage (dict "path" "lan" "kind" "page" "type" "lan" "layout" "list" "title" (T "lan_list_title") "description" (T "lan_list_desc")
         "params" (dict "description" (T "lan_list_desc")) "content" (dict "mediaType" "text/markdown" "value" "")) -}}
+  {{- /* The map's share addresses (layouts/mapshare/single.html): /karta/ for Sverige and
+         /<county>/karta/ for each county with a page here; "map" in English. */ -}}
+  {{- $seg := T "share_path" -}}
+  {{- $.AddPage (dict "path" "karta" "url" (printf "/%s/" $seg | relLangURL) "kind" "page" "type" "mapshare" "layout" "single"
+        "title" (T "share_og_title" (dict "Region" (T "share_sweden"))) "description" (T "share_og_desc" (dict "Region" (T "share_sweden")))
+        "params" (dict "description" (T "share_og_desc" (dict "Region" (T "share_sweden"))) "noindex" true
+                  "shareTarget" ("/" | relLangURL) "shareLan" "se" "shareKey" "se")
+        "content" (dict "mediaType" "text/markdown" "value" "")) -}}
   {{- range $all -}}
     {{- if not .site -}}
+      {{- $.AddPage (dict "path" (printf "%s/karta" .slug) "url" (printf "/%s/%s/" .slug $seg | relLangURL) "kind" "page" "type" "mapshare" "layout" "single"
+        "title" (T "share_og_title" (dict "Region" .name)) "description" (T "share_og_desc" (dict "Region" .name))
+        "params" (dict "description" (T "share_og_desc" (dict "Region" .name)) "noindex" true
+                  "shareTarget" (printf "/%s/" .slug | relLangURL) "shareKey" .scb)
+        "content" (dict "mediaType" "text/markdown" "value" "")) -}}
       {{- $.AddPage (dict
         "path" .slug
         "kind" "page"
