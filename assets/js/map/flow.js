@@ -152,8 +152,9 @@ export class FlowLayer {
         "circle-radius": z(NODE_MARKER_R, ["+", 11, ["*", 37, ["get", "r"]]], ["+", 10, ["*", 30, ["get", "r"]]]),
         "circle-stroke-opacity": z(0, ["*", 0.45, ["get", "ra"]]) } });
     map.addLayer({ id: "flow-bubbles", type: "circle", source: "flow-bubbles",
-      paint: { "circle-color": "#fde047", "circle-radius": 4, "circle-opacity": ["get", "a"],
-        "circle-stroke-color": "#ffffff", "circle-stroke-width": 1, "circle-stroke-opacity": ["get", "a"] } });
+      // Operator 2026-11-22: half the earlier size (4 px, 1 px edge) up to zoom 6, a third of it closer in.
+      paint: { "circle-color": "#fde047", "circle-radius": ["step", ["zoom"], 2, 6.01, 1.33], "circle-opacity": ["get", "a"],
+        "circle-stroke-color": "#ffffff", "circle-stroke-width": ["step", ["zoom"], 0.5, 6.01, 0.33], "circle-stroke-opacity": ["get", "a"] } });
     map.addLayer({ id: "flow-trails", type: "line", source: "flow-trails", layout: { "line-cap": "round" },
       paint: { "line-color": "#f97316", "line-width": 2.5, "line-dasharray": [2, 1.5], "line-opacity": ["get", "a"] } });
     map.addLayer({ id: "flow-heads", type: "circle", source: "flow-heads",
