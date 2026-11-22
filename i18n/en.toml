@@ -891,6 +891,23 @@ other = "Fit all"
 # The map's "SE" toggle (B-370): the whole country's nodes and live traffic from a county's map.
 [mt_se_all]
 other = "Show all of Sweden's mesh"
+# The map's share button and dialog.
+[mt_share]
+other = "Share the map"
+[mt_share_title]
+other = "Share the map"
+[mt_share_text]
+other = "The link opens the map as it looks now: the same choices, zoom and position."
+[mt_share_url]
+other = "Link to the map"
+[mt_share_copy]
+other = "Copy the link"
+[mt_share_copied]
+other = "Copied"
+[mt_share_copy_failed]
+other = "Select the link and copy it"
+[mt_share_close]
+other = "Close"
 [mt_fs_enter]
 other = "Full screen"
 [mt_fs_exit]

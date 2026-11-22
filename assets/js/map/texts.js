@@ -43,6 +43,8 @@ const SV = {
   want_popup: "Här vill regionen gärna ha en ny repeater.",
   fit_all: "Visa allt",
   fs_enter: "Helskärm", fs_exit: "Lämna helskärm",
+  share: "Dela kartan", share_title: "Dela kartan", share_text: "Länken öppnar kartan som den ser ut nu: samma val, zoom och plats.",
+  share_url: "Länk till kartan", share_copy: "Kopiera länken", share_copied: "Kopierad", share_copy_failed: "Markera länken och kopiera den", share_close: "Stäng",
   se_all: "Visa hela Sveriges nät",
   site_antenna: "Antenn", site_height: "Höjd över marken", site_power: "Ström",
   site_power_mains: "elnät", site_power_solar: "sol", site_power_battery: "batteri", site_power_poe: "PoE",

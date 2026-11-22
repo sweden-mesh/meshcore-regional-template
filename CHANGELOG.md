@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.78.0 — 2026-11-22
+
+- Map: a share button, last in the column of map buttons. It opens a dialog with a link to the map as it is (the
+  four switches, zoom and position, the region, and whether it fills the window) and a button that copies it. A
+  county's map is linked by the county's own address; any other page gets `?lan=<county|se>`.
+- Map: `full=1` in the address opens the map filling the window (the pinned mode; a page cannot enter the
+  browser's fullscreen without a click). Esc or the fullscreen button leaves it, and the address follows.
+
 ## v0.77.2 — 2026-11-22
 
 - Map: the packet's own orange ball is scaled as the travelling balls, half size up to zoom 6 and a third closer in.

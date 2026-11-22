@@ -14,12 +14,17 @@ export function fullscreenMode(doc, el) {
 const ENTER = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 3.5h5v5M16.5 3.5l-5 5M8.5 16.5h-5v-5M3.5 16.5l5-5"/></svg>';
 const EXIT = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 8.5h-5v-5M11.5 8.5l5-5M3.5 11.5h5v5M8.5 11.5l-5 5"/></svg>';
 
-export function fullscreenButton(map, el) {
+// `start`: open filling the window (the full=1 link; a page cannot enter the browser's fullscreen
+// without a click, so this is the pinned mode in every browser). `onChange(on)` is told when the
+// map enters or leaves either kind of fullscreen.
+export function fullscreenButton(map, el, { start = false, onChange = () => {} } = {}) {
   const mode = fullscreenMode(document, el);
   const b = document.createElement("button");
   b.type = "button";
-  const isOn = () => mode === "api" ? document.fullscreenElement === el
-    : mode === "webkit" ? document.webkitFullscreenElement === el : el.classList.contains("map-pseudo-full");
+  const pinned = () => el.classList.contains("map-pseudo-full");
+  const isOn = () => pinned() || (mode === "api" ? document.fullscreenElement === el
+    : mode === "webkit" ? document.webkitFullscreenElement === el : false);
+  let was = false;
   const show = () => {
     const on = isOn();
     const label = t(on ? "fs_exit" : "fs_enter");
@@ -28,6 +33,7 @@ export function fullscreenButton(map, el) {
     b.setAttribute("aria-pressed", on ? "true" : "false");
     b.innerHTML = on ? EXIT : ENTER;
     map.resize();
+    if (on !== was) { was = on; onChange(on); }
   };
   const pseudo = (on) => {
     el.classList.toggle("map-pseudo-full", on);
@@ -36,6 +42,7 @@ export function fullscreenButton(map, el) {
   };
   b.addEventListener("click", () => {
     const on = isOn();
+    if (pinned()) { pseudo(false); return; }
     if (mode === "api") { (on ? document.exitFullscreen() : el.requestFullscreen()).catch(() => pseudo(!on)); return; }
     if (mode === "webkit") { if (on) document.webkitExitFullscreen(); else el.webkitRequestFullscreen(); return; }
     pseudo(!on);
@@ -43,6 +50,6 @@ export function fullscreenButton(map, el) {
   document.addEventListener("fullscreenchange", show);
   document.addEventListener("webkitfullscreenchange", show);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && el.classList.contains("map-pseudo-full")) pseudo(false); });
-  show();
+  if (start) pseudo(true); else show();
   return b;
 }

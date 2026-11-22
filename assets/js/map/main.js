@@ -12,6 +12,7 @@ import { visibleOnly, observerPoint, neighbourPoints, hiddenBy } from "./visible
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer, packetObservations, involved, channelName, applyPick } from "./packetpath.js";
 import { allLinks, addLinkLayer, linkCountLoader, linksFile, linkEnds } from "./neighbours.js";
 import { fullscreenButton } from "./fullscreen.js";
+import { shareButton, shareLink, shareLoc } from "./share.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
 import { MapPanel } from "./panel.js";
 import { parseState, writeState } from "./urlstate.js";
@@ -186,7 +187,18 @@ async function start() {
     } finally { seBusy = false; btn?.setAttribute("aria-pressed", state.se ? "true" : "false"); }
   };
   el.setSe = setSe; // for browser tests
-  map.addControl(fitControl(shown, seIatas.length ? (b) => seButton(t("se_all"), state.se, (on) => setSe(on, b())) : null), "top-right");
+  // The link the share button gives: the switches, the view as it is now and whether the map fills the window.
+  const isFull = () => el.classList.contains("map-pseudo-full") || (document.fullscreenElement || document.webkitFullscreenElement) === el;
+  const region = () => {
+    const root = document.documentElement, lan = window.meshcoreLan;
+    if (!lan) return {};
+    const page = root.getAttribute("data-lan-page");
+    return page ? { countyUrl: lan.county(page)?.url || location.pathname } : { lan: lan.get() || "se" };
+  };
+  const share = () => shareLink(shareLoc(location, region()), { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus,
+    cov: cov?.on, want: want?.on, se: state.se, full: isFull(), view: { zoom: map.getZoom(), center: map.getCenter().toArray() } });
+  map.addControl(fitControl(shown, seIatas.length ? (b) => seButton(t("se_all"), state.se, (on) => setSe(on, b())) : null,
+    { full: !!url.full, onFull: (on) => saveUrl({ full: on }), share }), "top-right");
   const draw = () => {
     addNodeLayers(map, nodesToGeoJSON(state.nodes, state.relays));
     addBorderLayers(map, state.borders);
@@ -245,7 +257,7 @@ async function start() {
 // The fit button (B-286): a control group of its own, right under MapLibre's zoom buttons and
 // styled like them. A click frames what `items()` returns; nothing shown, nothing happens. The
 // fullscreen button (B-346, fullscreen.js) shares the group.
-function fitControl(items, extra = null) {
+function fitControl(items, extra = null, { full = false, onFull, share } = {}) {
   let box;
   return {
     onAdd(map) {
@@ -258,9 +270,11 @@ function fitControl(items, extra = null) {
       // A square drawn as its four corners only (B-346): "the frame around everything".
       b.innerHTML = '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5v-4h4M12.5 3.5h4v4M16.5 12.5v4h-4M7.5 16.5h-4v-4"/></svg>';
       b.addEventListener("click", () => fitTo(map, items()));
-      box.append(b, fullscreenButton(map, map.getContainer()));
+      box.append(b, fullscreenButton(map, map.getContainer(), { start: full, onChange: onFull }));
       // "SE" (B-370), below the two, only where the map has a county to leave.
       if (extra) { let se = null; se = extra(() => se); box.append(se); }
+      // The share button, last in the column (operator 2026-11-22).
+      if (share) box.append(shareButton(map.getContainer(), share));
       return box;
     },
     onRemove() { box.remove(); },

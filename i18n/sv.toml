@@ -888,6 +888,23 @@ other = "Visa allt"
 # The map's "SE" toggle (B-370): the whole country's nodes and live traffic from a county's map.
 [mt_se_all]
 other = "Visa hela Sveriges nät"
+# The map's share button and dialog.
+[mt_share]
+other = "Dela kartan"
+[mt_share_title]
+other = "Dela kartan"
+[mt_share_text]
+other = "Länken öppnar kartan som den ser ut nu: samma val, zoom och plats."
+[mt_share_url]
+other = "Länk till kartan"
+[mt_share_copy]
+other = "Kopiera länken"
+[mt_share_copied]
+other = "Kopierad"
+[mt_share_copy_failed]
+other = "Markera länken och kopiera den"
+[mt_share_close]
+other = "Stäng"
 [mt_fs_enter]
 other = "Helskärm"
 [mt_fs_exit]
