@@ -11,7 +11,7 @@ source:
   license: "CC BY 4.0"
   changes: "Rewritten and shortened; flashing moved to a guide of its own; the region's settings from the page parameters; privacy advice on position added."
 date: 2026-11-12
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -58,6 +58,20 @@ In {{< region "name" >}} the settings are:
 Choose the preset in the app's radio settings and save. Pick the transmit power based on your
 radio, antenna and what is allowed; many use 22 dBm, but check what your radio can handle.
 The values and the rules behind them: [MeshCore settings in Sweden](../radioinstallningar/).
+
+### Path hash: 3 bytes {#väg-id-3-byte}
+
+The path hash is the bytes of each repeater's key that are written into your message's path. Your
+companion decides the size for what you send [^faq]. The app's default is 1 byte, and then many
+repeaters share the same id and are mistaken for each other. **Set 3 bytes.** 2 bytes is the least
+you should use, and you should not leave it at 1 byte.
+
+1. Open the app's settings (the gear icon).
+2. Choose **Experimental Settings**.
+3. Set the path hash size to 3 bytes.
+
+This needs companion firmware 1.14 or later and app version 1.41.0 or later [^faq]. Repeaters with
+firmware older than 1.14 do not pass on messages with 2 or 3 bytes [^faq].
 
 ## 4. Give the radio a name {#4-ge-radion-ett-namn}
 
@@ -126,4 +140,4 @@ More answers in Troubleshooting: [The app can't connect to the radio](../../fels
 
 ## Sources {#källor}
 
-[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md), on the apps and in-app purchases.
+[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md), on the apps, in-app purchases and the path hash.

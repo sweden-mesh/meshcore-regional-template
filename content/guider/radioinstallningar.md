@@ -5,7 +5,7 @@ description: "Frekvens och radioinställningar för MeshCore i Sverige, vad PTS 
 weight: 104
 group: radio
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -82,6 +82,10 @@ Firmwarens egna standardvärden är inte nätets [^cli]:
   radio med CR 5 hör de andra sämre. Sätt hela raden med `set radio` ovan.
 - **Duty cycle** är 50 procent i firmwaren. På en repeater sätter du `set dutycycle 10`, se
   [Sätt upp en repeater](../repeater/#duty-cycle).
+- **Väg-id (path hash)** är 1 byte i firmwaren och i appen. Det räcker inte: många repeatrar delar
+  då samma id. Ställ in 3 byte; 2 är det minsta. På en repeater: `set path.hash.mode 2`, se
+  [Sätt upp en repeater](../repeater/#väg-id). På en companion: **Experimental Settings** i appen,
+  se [Kom igång med en companion](../companion/#väg-id-3-byte).
 
 ## Gamla inställningar
 

@@ -5,7 +5,7 @@ description: "Ett kort på USB-ström i ett högt fönster: repeater-firmware, l
 weight: 3
 group: snabbstart
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -39,7 +39,7 @@ Läs mer: [Flasha firmware](../flasha-firmware/).
 ## 3. Ställ in den med guiden
 
 [Snabbkonfiguration av repeater](/wizard/repeater-snabb/) skickar alla inställningar till radion
-via USB, från samma webbläsare: radiovärdena, länets regioner, namn, position, nytt
+via USB, från samma webbläsare: radiovärdena, väg-id på 3 byte, länets regioner, namn, position, nytt
 administratörslösenord och duty cycle. Du väljer plats och namn. Ge repeatern ett namn efter
 länets mönster:
 

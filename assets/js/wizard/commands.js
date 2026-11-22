@@ -176,6 +176,8 @@ export function repeaterCommands(s) {
   c.push("region save");
   // Flood adverts every 47 h, the firmware's default: the odd number spreads them over the day.
   c.push("set flood.advert.interval 47");
+  // 3-byte path hashes in the repeater's own adverts, as the rest of Sweden (operator 2026-11-22).
+  c.push("set path.hash.mode 2");
   // Off-grid repeaters save power; otherwise the repeater's own setting is left alone.
   if (s.offgrid) c.push("powersaving on");
   c.push(`set dutycycle ${s.dutycycle ?? 10}`);
@@ -207,6 +209,7 @@ export function repeaterReview(s, lang) {
     { key: "position", value: hasPos ? `${num(s.lat).toFixed(4)}, ${num(s.lon).toFixed(4)}` : "" },
     { key: "radio", value: r.freq ? `${sv(r.freq)} MHz · BW ${sv(r.bw)} kHz · SF${r.sf} · CR${r.cr}` : "" },
     { key: "regions", value: ["eu", "europe", "se", ...[s.scope, ...(s.offgrid ? ["offgrid"] : []), ...(s.extraScopes || [])].filter((x) => x && x !== "se")].join(", ") },
+    { key: "pathhash", value: (lang || globalThis.document?.documentElement.lang || "sv").startsWith("sv") ? "3 byte" : "3 bytes" },
     { key: "dutycycle", value: `${s.dutycycle ?? 10} %` },
     { key: "password", value: s.password ? "•".repeat(s.password.length) : "" },
     ...(s.observer ? [{ key: "observer", value: `${s.observer.iata} · wifi ${s.observer.ssid}` }] : []),

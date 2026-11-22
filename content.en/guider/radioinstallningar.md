@@ -6,7 +6,7 @@ url: /en/guides/radio-settings/
 weight: 104
 group: radio
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -85,6 +85,10 @@ The firmware's own defaults are not the mesh's [^cli]:
   with CR 5 hears the others less well. Set the whole line with `set radio` above.
 - **Duty cycle** is 50 percent in the firmware. On a repeater, set `set dutycycle 10`, see
   [Set up a repeater](../repeater/#duty-cycle).
+- **The path hash** is 1 byte in the firmware and in the app. That is not enough: many repeaters
+  then share the same id. Set 3 bytes; 2 is the minimum. On a repeater: `set path.hash.mode 2`, see
+  [Set up a repeater](../repeater/#väg-id). On a companion: **Experimental Settings** in the app,
+  see [Get started with a companion](../companion/#väg-id-3-byte).
 
 ## Old settings {#gamla-inställningar}
 

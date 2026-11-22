@@ -6,7 +6,7 @@ url: /en/guides/glossary/
 weight: 110
 group: start
 date: 2026-11-13
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 # The words a guide links to this list on first use (layouts/_partials/glossary.html): the anchor,
 # the word forms as a regular expression (case-insensitive; (?-i:...) for acronyms), and where a
 # common word only means the term in one phrase, the words that must come before or after it.
@@ -151,7 +151,7 @@ A node, or a computer attached to a radio, that reports what it hears to a serve
 
 ## Path hash {#path-hash}
 
-The 1, 2 or 3 bytes of a repeater's key that are written into a packet's path. Longer ids are mixed up less often, but the path allows fewer hops: 64, 32 or 21. See [Fine-tune](../repeater/#4-finjustera).
+The 1, 2 or 3 bytes of a repeater's key that are written into a packet's path. Set 3 bytes; 2 is the minimum, and with 1 byte repeaters are mistaken for each other. Longer ids allow fewer hops in the path: 64, 32 or 21. See [Set up a repeater](../repeater/#väg-id) and [Get started with a companion](../companion/#väg-id-3-byte).
 
 ## Private channel {#privat-kanal}
 

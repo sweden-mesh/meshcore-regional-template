@@ -5,7 +5,7 @@ description: "Den kortaste vägen till en egen MeshCore-radio: en färdig enhet 
 weight: 1
 group: snabbstart
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -56,6 +56,9 @@ Alla som ska höra varandra behöver samma värden. Välj förinställningen i a
 radioinställningar och spara:
 
 {{< settings >}}
+
+Sätt också **väg-id (path hash) till 3 byte** under **Experimental Settings** i appens
+inställningar. 2 byte är det minsta du bör använda; med 1 byte förväxlas repeatrar med varandra.
 
 Ge radion ett namn du vill att andra ska se. Position är frivillig: en companion följer med dig
 hem, så dela den bara om du vill.

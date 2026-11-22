@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.76.0 — 2026-11-22
+
+- Path hash (väg-id): 3 bytes is now stated wherever a repeater or a companion is set up; 2 is given as the
+  minimum and 1 byte as not to be used. The settings box has a path hash row. Both repeater wizards send
+  `set path.hash.mode 2`, and the quick wizard's review lists it. The repeater guide has it in step 3 and the
+  checklist (it was an optional block under fine-tuning); the companion guide, both quick starts, the companion
+  wizard, the radio settings page, the glossary and the hops question say where to set it.
+
 ## v0.75.0 — 2026-11-21
 
 - National mode, English: a county's three local pages have English addresses, `/en/<county>/get-started/`,

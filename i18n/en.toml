@@ -124,6 +124,14 @@ other = "Bandwidth"
 other = "Spreading factor"
 [set_cr]
 other = "Coding rate"
+[set_pathhash]
+other = "Path hash"
+[set_pathhash_value]
+other = "3 bytes (at least 2, never 1)"
+[wz_rv_pathhash]
+other = "Path hash"
+[wzg_pathhash_why]
+other = "The path hash is the bytes of the repeater's key that are written into a packet's path. The firmware default is 1 byte, and then many repeaters share the same id and are mistaken for each other. 2 bytes is the least you should use, and 3 bytes is recommended:"
 [set_scope]
 other = "Region (scope)"
 [set_iata]
@@ -323,7 +331,7 @@ other = "Connect the app to the radio over Bluetooth, or USB for a USB companion
 [wzc_2]
 other = "Radio settings"
 [wzc_2_text]
-other = "Choose the preset, or fill in the values by hand:"
+other = "Choose the preset, or fill in the values by hand. Change the path hash under Experimental Settings in the app's settings: 3 bytes is recommended, 2 is the minimum, and you should not use 1 byte."
 [wzc_3_text]
 other = "Short, recognisable and without giving away more than you want. Up to 23 bytes leaves room for the position in the same advert."
 [wzc_4_text]

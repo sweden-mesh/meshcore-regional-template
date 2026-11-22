@@ -5,7 +5,7 @@ description: "Ordlista för MeshCore på svenska: advert, flood, region, duty cy
 weight: 110
 group: start
 date: 2026-11-13
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 # The words a guide links to this list on first use (layouts/_partials/glossary.html): the anchor,
 # the word forms as a regular expression (case-insensitive; (?-i:...) for acronyms), and where a
 # common word only means the term in one phrase, the words that must come before or after it.
@@ -149,7 +149,7 @@ En nod, eller en dator vid en radio, som rapporterar vad den hör till en server
 
 ## Path hash (väg-id) {#path-hash}
 
-De 1, 2 eller 3 byte av en repeaters nyckel som skrivs in i ett pakets väg. Längre id förväxlas mer sällan, men vägen får färre hopp: 64, 32 eller 21. Se [Finjustera](../repeater/#4-finjustera).
+De 1, 2 eller 3 byte av en repeaters nyckel som skrivs in i ett pakets väg. Ställ in 3 byte; 2 är det minsta, och med 1 byte förväxlas repeatrar med varandra. Längre id ger färre hopp i vägen: 64, 32 eller 21. Se [Sätt upp en repeater](../repeater/#väg-id) och [Kom igång med en companion](../companion/#väg-id-3-byte).
 
 ## Privat kanal {#privat-kanal}
 

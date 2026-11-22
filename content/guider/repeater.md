@@ -10,7 +10,7 @@ source:
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad; radio och region från sidans inställningar; grundvärdena och tabellen över sändfördröjningar återgivna med källa; test och checklista omskrivna."
 date: 2026-11-12
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -128,6 +128,21 @@ högre.
 set dutycycle 10
 ```
 
+### Väg-id
+
+Väg-id (path hash) är de byte av repeaterns nyckel som skrivs in i ett pakets väg. Firmwarens
+standard är 1 byte, och det räcker inte: med så korta id delar många repeatrar samma id och
+förväxlas med varandra [^faq]. **Använd 3 byte.** 2 byte är det minsta du bör ställa in, och 1 byte
+ska du inte lämna kvar.
+
+```text {title="Väg-id: 3 byte"}
+set path.hash.mode 2
+```
+
+`path.hash.mode` gäller repeaterns egna adverts: 0 ger 1 byte, 1 ger 2 byte och 2 ger 3 byte
+[^cli]. Längre id ger färre hopp i en väg, 64, 32 respektive 21, och i praktiken når ingen den
+gränsen [^faq]. Repeatrar med firmware 1.14 eller senare skickar vidare alla storlekar.
+
 ### Lösenord
 
 Administratörslösenordet är `password` från början [^cli]. Byt det, annars kan vem som helst
@@ -164,16 +179,6 @@ Det här är frivilligt, men gör nytta där det finns många repeatrar.
 > ```text {title="Exempel: 5–9 grannar"}
 > set txdelay 1.0
 > set direct.txdelay 0.5
-> ```
-
-> [!NOTE]- Väg-id: path.hash.mode
-> Bestämmer hur många byte av repeaterns nyckel som används i vägen för dess egna adverts: 0 ger
-> 1 byte, 1 ger 2 byte och 2 ger 3 byte [^cli]. Längre id förväxlas mer sällan, men vägen får
-> färre hopp: 64, 32 respektive 21 [^faq]. Repeatrar med firmware 1.14 eller senare skickar vidare
-> alla storlekar.
->
-> ```text {title="3 byte"}
-> set path.hash.mode 2
 > ```
 
 > [!NOTE]- Grundvärden: agc.reset.interval, multi.acks och rxdelay
@@ -221,6 +226,7 @@ Gör det här med repeatern på bordet, eller där du lätt når den.
 - Antennen sitter i, innan ström
 - Radioinställningarna med `set radio`
 - Namn och position
+- `set path.hash.mode 2`: väg-id på 3 byte
 - `set dutycycle 10`
 - Nytt administratörslösenord
 - Regionerna, sparade med `region save`

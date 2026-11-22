@@ -6,7 +6,7 @@ url: /en/guides/quickstart-companion/
 weight: 1
 group: snabbstart
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -57,6 +57,9 @@ Everyone who needs to hear each other needs the same values. Choose the preset i
 settings and save:
 
 {{< settings >}}
+
+Also set the **path hash to 3 bytes** under **Experimental Settings** in the app's settings.
+2 bytes is the least you should use; with 1 byte, repeaters are mistaken for each other.
 
 Give the radio a name you want others to see. Position is optional: a companion goes home with you,
 so share it only if you want to.

@@ -11,7 +11,7 @@ source:
   license: "CC BY 4.0"
   changes: "Rewritten and shortened; radio and region from the site's settings; the base values and the table of transmit delays reproduced with source; test and checklist rewritten."
 date: 2026-11-12
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -130,6 +130,21 @@ not a target: never set it higher.
 set dutycycle 10
 ```
 
+### Path hash {#väg-id}
+
+The path hash is the bytes of the repeater's key that are written into a packet's path. The
+firmware default is 1 byte, and that is not enough: with ids that short, many repeaters share the
+same id and are mistaken for each other [^faq]. **Use 3 bytes.** 2 bytes is the least you should
+set, and you should not leave it at 1 byte.
+
+```text {title="Path hash: 3 bytes"}
+set path.hash.mode 2
+```
+
+`path.hash.mode` applies to the repeater's own adverts: 0 gives 1 byte, 1 gives 2 bytes and 2 gives
+3 bytes [^cli]. Longer ids allow fewer hops in a path, 64, 32 and 21 respectively, and in practice
+nobody reaches that limit [^faq]. Repeaters with firmware 1.14 or later pass on all sizes.
+
 ### Password {#lösenord}
 
 The admin password is `password` out of the box [^cli]. Change it, or anyone near the radio can
@@ -166,16 +181,6 @@ This is optional, but it helps where there are many repeaters.
 > ```text {title="Example: 5–9 neighbors"}
 > set txdelay 1.0
 > set direct.txdelay 0.5
-> ```
-
-> [!NOTE]- Path hash: path.hash.mode
-> Sets how many bytes of the repeater's key are used in the path for its own adverts: 0 gives
-> 1 byte, 1 gives 2 bytes and 2 gives 3 bytes [^cli]. Longer ids are mixed up less often, but the
-> path allows fewer hops: 64, 32 and 21 respectively [^faq]. Repeaters with firmware 1.14 or later
-> pass on all sizes.
->
-> ```text {title="3 bytes"}
-> set path.hash.mode 2
 > ```
 
 > [!NOTE]- Base values: agc.reset.interval, multi.acks and rxdelay
@@ -223,6 +228,7 @@ Do this with the repeater on the table, or wherever you can easily reach it.
 - Antenna attached, before power
 - Radio settings with `set radio`
 - Name and position
+- `set path.hash.mode 2`: 3-byte path hash
 - `set dutycycle 10`
 - New admin password
 - The regions, saved with `region save`

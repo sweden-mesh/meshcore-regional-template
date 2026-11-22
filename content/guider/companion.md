@@ -10,7 +10,7 @@ source:
   license: "CC BY 4.0"
   changes: "Omskriven och förkortad; flashningen i en egen guide; regionens inställningar från sidans parametrar; integritetsråd om position tillagt."
 date: 2026-11-12
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -57,6 +57,20 @@ Alla som ska höra varandra måste ha samma frekvens, bandbredd och spreading fa
 Välj förinställningen i appens radioinställningar och spara. Sändeffekten väljer du efter radio,
 antenn och vad som är tillåtet; många använder 22 dBm, men kontrollera vad din radio klarar.
 Värdena och reglerna bakom dem: [MeshCore-inställningar i Sverige](../radioinstallningar/).
+
+### Väg-id: 3 byte
+
+Väg-id (path hash) är de byte av varje repeaters nyckel som skrivs in i ditt meddelandes väg. Det
+är din companion som bestämmer storleken för det du skickar [^faq]. Appens standard är 1 byte, och
+då delar många repeatrar samma id och förväxlas med varandra. **Ställ in 3 byte.** 2 byte är det
+minsta du bör använda, och 1 byte ska du inte lämna kvar.
+
+1. Öppna appens inställningar (kugghjulet).
+2. Välj **Experimental Settings**.
+3. Sätt storleken på path hash till 3 byte.
+
+Det kräver companion-firmware 1.14 eller senare och appen 1.41.0 eller senare [^faq]. Repeatrar
+med äldre firmware än 1.14 för inte vidare meddelanden med 2 eller 3 byte [^faq].
 
 ## 4. Ge radion ett namn
 
@@ -125,4 +139,4 @@ Fler svar i Felsökning: [Appen kan inte ansluta till radion](../../felsokning/a
 
 ## Källor
 
-[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md), om apparna och köp i appen.
+[^faq]: MeshCore, [FAQ](https://github.com/meshcore-dev/MeshCore/blob/main/docs/faq.md), om apparna, köp i appen och väg-id (path hash).

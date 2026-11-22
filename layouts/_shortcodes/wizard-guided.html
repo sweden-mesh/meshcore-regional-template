@@ -20,6 +20,8 @@
     <legend><span class="wz-num">2</span> {{ T "wzg_radio" }}</legend>
     <p>{{ T "wzg_radio_why" }}</p>
     {{ partial "settings.html" . }}
+    <p>{{ T "wzg_pathhash_why" }}</p>
+    <pre class="wz-inline">set path.hash.mode 2</pre>
     <label for="wzg-tx">{{ T "wzg_tx" }}</label>
     <input id="wzg-tx" type="text" inputmode="numeric" autocomplete="off" placeholder="22" aria-describedby="wzg-tx-help">
     <p class="muted" id="wzg-tx-help">{{ T "wzg_tx_why" }}</p>

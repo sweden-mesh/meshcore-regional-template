@@ -13,7 +13,7 @@ test("a full repeater setup in order, reboot last", () => {
     "set radio 869.618,62.5,8,8", "set tx 22", "set name SE-JKP-Braneryd-FD70",
     "set lat 57.7616", "set lon 14.1335", "set flood.max.unscoped 16", "region allowf *",
     "region def eu|* europe|eu se se-jkp", "region home se-jkp", "region default se", "region save",
-    "set flood.advert.interval 47",
+    "set flood.advert.interval 47", "set path.hash.mode 2",
     "set dutycycle 10", "password hemligt123", "advert", "reboot"]);
 });
 
@@ -83,6 +83,7 @@ test("review summary matches the commands and masks the password", () => {
   assert.equal(r.radio, "869,618 MHz · BW 62,5 kHz · SF8 · CR8");
   assert.equal(r.regions, "eu, europe, se, se-jkp, se-ost");
   assert.equal(r.dutycycle, "10 %");
+  assert.equal(r.pathhash, "3 byte");
   assert.equal(r.password, "•••••••");
   assert.ok(!JSON.stringify(r).includes("hemligt"));
   const cmds = repeaterCommands(s).commands.join("\n");

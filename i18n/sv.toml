@@ -121,6 +121,14 @@ other = "Bandbredd"
 other = "Spreading factor"
 [set_cr]
 other = "Coding rate"
+[set_pathhash]
+other = "Väg-id (path hash)"
+[set_pathhash_value]
+other = "3 byte (minst 2, aldrig 1)"
+[wz_rv_pathhash]
+other = "Väg-id (path hash)"
+[wzg_pathhash_why]
+other = "Väg-id (path hash) är de byte av repeaterns nyckel som skrivs in i ett pakets väg. Firmwarens standard är 1 byte, och då delar många repeatrar samma id och förväxlas med varandra. 2 byte är det minsta du bör använda, och 3 byte rekommenderas:"
 [set_scope]
 other = "Region (scope)"
 [set_iata]
@@ -320,7 +328,7 @@ other = "Anslut appen till radion via Bluetooth, eller USB för en USB-companion
 [wzc_2]
 other = "Radioinställningar"
 [wzc_2_text]
-other = "Välj förinställningen, eller fyll i värdena för hand:"
+other = "Välj förinställningen, eller fyll i värdena för hand. Väg-id (path hash) ändrar du under Experimental Settings i appens inställningar: 3 byte rekommenderas, 2 är det minsta, och 1 byte bör du inte använda."
 [wzc_3_text]
 other = "Kort, igenkännbart och utan att avslöja mer än du vill. Inom 23 byte får positionen plats i samma advert."
 [wzc_4_text]

@@ -6,7 +6,7 @@ url: /en/guides/quickstart-repeater/
 weight: 3
 group: snabbstart
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-22
 checkedFirmware: "1.18"
 checkedOn: 2026-11-18
 ---
@@ -41,7 +41,7 @@ Read more: [Flash firmware](../flasha-firmware/).
 ## 3. Set it up with the wizard {#3-ställ-in-den-med-guiden}
 
 [Quick repeater setup](/wizard/repeater-snabb/) sends all the settings to the radio over USB, from
-the same browser: the radio values, your county's regions, name, position, a new admin password and
+the same browser: the radio values, a 3-byte path hash, your county's regions, name, position, a new admin password and
 duty cycle. You choose the location and the name. Name the repeater following your county's
 pattern:
 
