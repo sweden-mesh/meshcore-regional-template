@@ -83,8 +83,9 @@ export function flashAt(t) {
 // B-349: the white centre must stay above the node layers, which are added again after a theme
 // switch and on every redraw. True when it exists but is not the top layer. Pure, for tests.
 export const FLASH_TOP = "flow-flash-white";
-// Operator 2026-11-19: the transmitter's flash is 80 % transparent at its peak, so it does not cover the map.
-export const FLASH_OPACITY = 0.2;
+// The transmitter's flash at its peak. Operator 2026-11-22: full strength again; the 80 % transparent
+// flash of 2026-11-19 (0.2) read as muted.
+export const FLASH_OPACITY = 1;
 export function needsRaise(order) {
   const i = (order || []).indexOf(FLASH_TOP);
   return i >= 0 && i !== order.length - 1;

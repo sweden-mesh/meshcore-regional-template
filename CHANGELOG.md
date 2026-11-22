@@ -4,6 +4,10 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.76.1 — 2026-11-22
+
+- Map: the transmit flash is at full strength again (it was 80 % transparent since v0.69.1).
+
 ## v0.76.0 — 2026-11-22
 
 - Path hash (väg-id): 3 bytes is now stated wherever a repeater or a companion is set up; 2 is given as the
