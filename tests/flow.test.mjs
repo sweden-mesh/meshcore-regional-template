@@ -123,7 +123,10 @@ test("a link flashes in its own colour brightened toward white, else white (B-35
   assert.equal(plain.properties.c, "#ffffff");
 });
 
-test("the transmitter's flash is at full strength at its peak (operator 2026-11-22)", async () => {
-  const { FLASH_OPACITY } = await import("../assets/js/map/flow.js");
-  assert.equal(FLASH_OPACITY, 1);
+test("an active repeater's aura is never more than twice the marker (operator 2026-11-22)", async () => {
+  const { NODE_MARKER_R, FLASH_AURA_R, FLASH_AURA_OPACITY } = await import("../assets/js/map/flow.js");
+  assert.ok(FLASH_AURA_R <= 2 * NODE_MARKER_R);
+  assert.ok(FLASH_AURA_OPACITY <= 0.5);
+  const { FLASH_FAR_ZOOM, FLASH_NEAR_ZOOM } = await import("../assets/js/map/flow.js");
+  assert.ok(FLASH_FAR_ZOOM < FLASH_NEAR_ZOOM);
 });

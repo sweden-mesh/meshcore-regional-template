@@ -50,8 +50,8 @@ check index.html 'data-wanted-label="Önskade platser"' "wanted: the home map's 
 if grep -q 'data-wanted' "$P/wizard/repeater-snabb/index.html"; then echo "FAIL wanted: the quick wizard's picker draws the places"; fail=1; else echo "ok   wanted: only the host wizard's picker draws the places"; fi
 # The fit button (B-286) and the header's motion button (B-288).
 check index.html 'fit_all":"Visa allt"' "map: the fit button gets its label"
-if sed -n '/<header/,/<\/header>/p' "$P/index.html" | grep -q '<button type=button class=motion-toggle hidden aria-pressed=false aria-label="Stoppa bakgrundsrörelse"'; then echo "ok   header: the motion button is a toggle in the header"; else echo "FAIL header: no motion toggle in the header"; fail=1; fi
-if sed -n '/<footer/,/<\/footer>/p' "$P/index.html" | grep -q '<li class=motion-foot hidden><button type=button class=motion-link>Stoppa bakgrundsrörelse'; then echo "ok   footer: the phone-only motion link stands in"; else echo "FAIL footer: no stand-in motion link"; fail=1; fi
+if sed -n '/<header/,/<\/header>/p' "$P/index.html" | grep -q '<button type=button class=motion-toggle hidden aria-pressed=false aria-label="Stoppa rörelse på sidan"'; then echo "ok   header: the motion button is a toggle in the header"; else echo "FAIL header: no motion toggle in the header"; fail=1; fi
+if sed -n '/<footer/,/<\/footer>/p' "$P/index.html" | grep -q '<li class=motion-foot hidden><button type=button class=motion-link>Stoppa rörelse på sidan'; then echo "ok   footer: the phone-only motion link stands in"; else echo "FAIL footer: no stand-in motion link"; fail=1; fi
 # B-290: no dead-zone toggle, key or legend on the map.
 if grep -qE 'data-dead-label|lg_cov_dead|cov_dead_heading' "$P/index.html"; then echo "FAIL map: the dead-zone toggle is back"; fail=1; else echo "ok   map: no dead-zone toggle"; fi
 check index.html 'data-coverage-label=.\{0,1\}Täckning' "map: the coverage toggle is still there"

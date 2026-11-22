@@ -8,9 +8,9 @@
 {{- if not $console }}
 <script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;document.querySelector('meta[name="color-scheme"]').content=t}}catch(e){}</script>
 {{- end }}
-{{- /* The visitor's "stop background motion" choice (header button, motion-toggle.js) and colour-blind
+{{- /* The visitor's motion state: their choice on the "stop motion" (header button, motion-toggle.js) and colour-blind
   mode (header button, cvd-toggle.js), before paint. One script for both, in every style. */}}
-<script>try{var s=localStorage,r=document.documentElement;if(s.getItem("motion")==="off")r.dataset.motion="off";if(s.getItem("cvd")==="1")r.dataset.cvd="1"}catch(e){}</script>
+<script>try{var s=localStorage,r=document.documentElement;var m=s.getItem("motion");r.dataset.motion=m==="on"||m==="off"?m:matchMedia("(prefers-reduced-motion: reduce)").matches?"off":"on";if(s.getItem("cvd")==="1")r.dataset.cvd="1"}catch(e){}</script>
 {{- if site.Params.national }}
 {{ partial "lan-prepaint.html" . }}
 {{- $own := slice }}{{ range partialCached "lan.html" . "lan" }}{{ if .site }}{{ $own = $own | append (printf `html[data-lan="%s"] .lan-own[data-own="%s"]` .scb .scb) }}{{ end }}{{ end }}

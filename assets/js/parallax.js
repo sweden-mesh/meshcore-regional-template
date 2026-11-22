@@ -5,8 +5,9 @@ export const extraHeight = (scrollHeight, viewport) => Math.max(0, scrollHeight 
 
 if (typeof document !== "undefined") {
   const layer = document.querySelector(".bg-blobs");
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
-  if (layer && !reduce.matches) {
+  // Always set up: main.css stops the layer under html[data-motion="off"], and the visitor can
+  // start motion again on the header button without a reload.
+  if (layer) {
     const root = document.documentElement;
     let queued = false;
     const update = () => {

@@ -56,7 +56,7 @@
   {{- /* Colour-blind mode: an eye, its iris yellow and blue (the two colours the scheme keeps apart). */}}
   <button type="button" class="cvd-toggle" hidden aria-pressed="false" aria-label="{{ T "cvd_toggle" }}" title="{{ T "cvd_toggle" }}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 7.6a4.4 4.4 0 0 0 0 8.8z" fill="#f0c419"/><path d="M12 7.6a4.4 4.4 0 0 1 0 8.8z" fill="#0072b2"/><circle cx="12" cy="12" r="1.6" fill="#0b141b"/></svg></button>
   {{- /* Background motion (WCAG 2.2.2): a wave; pressed = stopped: half the wave and a pause sign.
-         The name stays "stop background motion" with aria-pressed; the tooltip says what a press does. */}}
+         The name stays "stop motion on the page" with aria-pressed; the tooltip says what a press does. */}}
   <button type="button" class="motion-toggle" hidden aria-pressed="false" aria-label="{{ T "motion_stop" }}" title="{{ T "motion_stop" }}" data-stop="{{ T "motion_stop" }}" data-start="{{ T "motion_start" }}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path class="wave" d="M2.5 12c1.6-3.4 3.2-3.4 4.75 0s3.15 3.4 4.75 0 3.2-3.4 4.75 0 3.15 3.4 4.75 0"/><path class="pause" d="M2.5 12c1.6-3.4 3.2-3.4 4.75 0s3.15 3.4 4.75 0M16 7.5v9M20.5 7.5v9"/></svg></button>
   {{- with resources.Get "js/motion-toggle.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>

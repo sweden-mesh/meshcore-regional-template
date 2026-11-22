@@ -23,7 +23,7 @@ if (typeof document !== 'undefined') {
     const a = e.target.closest?.('a[data-ease][href^="#"]');
     if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const target = document.getElementById(decodeURIComponent(a.hash.slice(1)));
-    if (!target || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!target || document.documentElement.dataset.motion === 'off') return;
     e.preventDefault();
     history.pushState(null, '', a.hash);
     await scrollTo(target);

@@ -88,7 +88,7 @@ function fitPad(map, padding) {
   const c = map.getContainer();
   return Math.min(padding, c.clientWidth / 4, c.clientHeight / 4);
 }
-const calm = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const calm = () => typeof document !== "undefined" && document.documentElement.dataset.motion === "off";
 
 // Which map toggles widen the view when switched on (B-304): only "Önskade platser". "Utanför
 // regionen" shows or hides nodes and leaves the camera alone; the fit button frames what is shown.

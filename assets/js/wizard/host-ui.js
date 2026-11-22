@@ -57,7 +57,7 @@ function init(form) {
   form.addEventListener("click", (e) => {
     const b = e.target.closest("button[data-want-lat]");
     if (!b || !picker) return;
-    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const calm = document.documentElement.dataset.motion === "off";
     picker.map.easeTo({ center: [Number(b.dataset.wantLon), Number(b.dataset.wantLat)], zoom: Math.max(picker.map.getZoom(), 12), duration: calm ? 0 : 600 });
   });
   createPicker(q(".map-pick"), {

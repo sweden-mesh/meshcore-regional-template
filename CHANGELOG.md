@@ -4,6 +4,16 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.77.0 — 2026-11-22
+
+- Motion: one state for the whole page, `<html data-motion="on|off">`. It starts from the system's reduced-motion
+  setting, the header button shows that state, and a press overrides it either way: the background, the parallax,
+  the map's traffic animation and camera moves and the eased scroll all follow it. The button's name is now
+  "Stoppa rörelse på sidan" / "Stop motion on the page".
+- Map: the transmit flash scales back zoomed out (zoom 6 and further): the repeater turns white inside a muted
+  aura no larger than twice the marker, with no core and no ring. From zoom 8 the halo, core and ring remain,
+  with feathered edges and lower opacity.
+
 ## v0.76.1 — 2026-11-22
 
 - Map: the transmit flash is at full strength again (it was 80 % transparent since v0.69.1).

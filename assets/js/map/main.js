@@ -342,7 +342,8 @@ function startLive(map, ds, client, state, draw) {
   list?.addEventListener("mouseleave", renderRecent);
   // Movement only on screen, and not for visitors who ask for reduced motion: then the
   // observer glow (a fade in place) stays, the travelling flows and bubbles do not.
-  const calm = matchMedia("(prefers-reduced-motion: reduce)");
+  // The page's motion state: the visitor's choice on the header button, else the system's setting.
+  const calm = { get matches() { return document.documentElement.dataset.motion === "off"; } };
   let onScreen = true;
   if ("IntersectionObserver" in window) new IntersectionObserver((es) => { onScreen = es[es.length - 1].isIntersecting; }).observe(el);
   // A click on a packet (B-328): the map fits the nodes it touched and dims the rest, drawn at once

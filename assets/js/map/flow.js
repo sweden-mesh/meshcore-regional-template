@@ -83,9 +83,14 @@ export function flashAt(t) {
 // B-349: the white centre must stay above the node layers, which are added again after a theme
 // switch and on every redraw. True when it exists but is not the top layer. Pure, for tests.
 export const FLASH_TOP = "flow-flash-white";
-// The transmitter's flash at its peak. Operator 2026-11-22: full strength again; the 80 % transparent
-// flash of 2026-11-19 (0.2) read as muted.
-export const FLASH_OPACITY = 1;
+// Operator 2026-11-22: an active repeater turns white, inside a muted aura that never exceeds twice
+// the repeater's size. The marker in traffic focus is 3.5 px plus a 1.5 px edge (main.js, nodes.js).
+export const NODE_MARKER_R = 5;
+export const FLASH_AURA_R = 2 * NODE_MARKER_R;
+export const FLASH_AURA_OPACITY = 0.45;
+// The small flash at this zoom and further out; the full one from where a county fills the map.
+export const FLASH_FAR_ZOOM = 6;
+export const FLASH_NEAR_ZOOM = 8;
 export function needsRaise(order) {
   const i = (order || []).indexOf(FLASH_TOP);
   return i >= 0 && i !== order.length - 1;
@@ -127,22 +132,25 @@ export class FlowLayer {
       paint: { "line-color": ["get", "c"], "line-width": 3.5, "line-blur": 1.5, "line-opacity": ["*", 0.85, ["get", "a"]] } }, before);
     map.addLayer({ id: "flow-glow", type: "circle", source: "flow-glow",
       paint: { "circle-color": "#f97316", "circle-radius": 14, "circle-blur": 0.6, "circle-opacity": ["get", "a"] } }, before);
-    // The transmitter's flash (B-347, stronger in B-349): a yellow halo, a yellow core with a white
-    // edge and an amber ring that spreads out, all larger zoomed out, where the repeaters' blurred
-    // glow would swallow them. Yellow and amber hold on the light map as well as the dark one.
-    const byZoom = (far, near) => ["interpolate", ["linear"], ["zoom"], 5, far, 11, near];
+    // The transmitter's flash. Zoomed in (a county fills the map, FLASH_NEAR_ZOOM and closer): a yellow
+    // halo, a yellow core and an amber ring that spreads out (B-347, B-349), with feathered edges and
+    // lowered opacity (operator 2026-11-22: the hard-edged, full-strength version was too strong).
+    // Zoomed out (FLASH_FAR_ZOOM and further), where that covered the map (operator 2026-11-22): the
+    // repeater turns white inside a muted aura never larger than twice the marker; no core, no ring.
+    const far = FLASH_FAR_ZOOM, near = FLASH_NEAR_ZOOM;
+    const z = (atFar, atNear, atClose = atNear) => ["interpolate", ["linear"], ["zoom"], far, atFar, near, atNear, 11, atClose];
     map.addLayer({ id: "flow-flash-halo", type: "circle", source: "flow-flash",
-      paint: { "circle-color": "#facc15", "circle-blur": 1,
-        "circle-radius": byZoom(["+", 24, ["*", 18, ["get", "t"]]], ["+", 16, ["*", 12, ["get", "t"]]]),
-        "circle-opacity": ["*", 0.95 * FLASH_OPACITY, ["get", "a"]] } });
+      paint: { "circle-color": "#facc15", "circle-blur": z(0.6, 1),
+        "circle-radius": z(FLASH_AURA_R, ["+", 20, ["*", 15, ["get", "t"]]], ["+", 16, ["*", 12, ["get", "t"]]]),
+        "circle-opacity": z(["*", FLASH_AURA_OPACITY, ["get", "a"]], ["*", 0.65, ["get", "a"]]) } });
     map.addLayer({ id: "flow-flash", type: "circle", source: "flow-flash",
-      paint: { "circle-color": "#facc15", "circle-blur": 0.1,
-        "circle-radius": byZoom(["+", 11, ["*", 8, ["get", "t"]]], ["+", 9, ["*", 7, ["get", "t"]]]),
-        "circle-opacity": ["*", FLASH_OPACITY, ["get", "a"]], "circle-stroke-color": "#ffffff", "circle-stroke-width": 3, "circle-stroke-opacity": ["*", FLASH_OPACITY, ["get", "a"]] } });
+      paint: { "circle-color": "#facc15", "circle-blur": 0.6,
+        "circle-radius": z(NODE_MARKER_R, ["+", 10, ["*", 7.5, ["get", "t"]]], ["+", 9, ["*", 7, ["get", "t"]]]),
+        "circle-opacity": z(0, ["*", 0.7, ["get", "a"]]) } });
     map.addLayer({ id: "flow-flash-ring", type: "circle", source: "flow-flash",
-      paint: { "circle-opacity": 0, "circle-stroke-color": "#f59e0b", "circle-stroke-width": 4,
-        "circle-radius": byZoom(["+", 12, ["*", 44, ["get", "r"]]], ["+", 10, ["*", 30, ["get", "r"]]]),
-        "circle-stroke-opacity": ["*", FLASH_OPACITY, ["get", "ra"]] } });
+      paint: { "circle-opacity": 0, "circle-stroke-color": "#f59e0b", "circle-stroke-width": 3,
+        "circle-radius": z(NODE_MARKER_R, ["+", 11, ["*", 37, ["get", "r"]]], ["+", 10, ["*", 30, ["get", "r"]]]),
+        "circle-stroke-opacity": z(0, ["*", 0.45, ["get", "ra"]]) } });
     map.addLayer({ id: "flow-bubbles", type: "circle", source: "flow-bubbles",
       paint: { "circle-color": "#fde047", "circle-radius": 4, "circle-opacity": ["get", "a"],
         "circle-stroke-color": "#ffffff", "circle-stroke-width": 1, "circle-stroke-opacity": ["get", "a"] } });
@@ -151,12 +159,12 @@ export class FlowLayer {
     map.addLayer({ id: "flow-heads", type: "circle", source: "flow-heads",
       paint: { "circle-color": "#f97316", "circle-radius": 5, "circle-stroke-color": "#fff", "circle-stroke-width": 1.5,
         "circle-opacity": ["get", "a"], "circle-stroke-opacity": ["get", "a"] } });
-    // B-349: a white blurred centre on top of everything, the repeater's own marker included, so
-    // the marker is covered at the flash's peak and shows again as the flash fades.
+    // The white centre, on top of everything, the repeater's own marker included (B-349): the marker
+    // itself turned white zoomed out, a blurred white centre zoomed in. It shows again as the flash fades.
     map.addLayer({ id: FLASH_TOP, type: "circle", source: "flow-flash",
-      paint: { "circle-color": "#ffffff", "circle-blur": 0.7,
-        "circle-radius": byZoom(["+", 12, ["*", 4, ["get", "t"]]], ["+", 10, ["*", 4, ["get", "t"]]]),
-        "circle-opacity": ["*", 0.95 * FLASH_OPACITY, ["get", "a"]] } });
+      paint: { "circle-color": "#ffffff", "circle-blur": z(0.15, 0.9),
+        "circle-radius": z(NODE_MARKER_R, ["+", 11, ["*", 4, ["get", "t"]]], ["+", 10, ["*", 4, ["get", "t"]]]),
+        "circle-opacity": z(["get", "a"], ["*", 0.7, ["get", "a"]]) } });
   }
 
   // Light up a node (the observer that heard something), even without a path.

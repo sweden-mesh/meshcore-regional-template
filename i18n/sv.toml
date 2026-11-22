@@ -98,9 +98,9 @@ other = "Kartdata: Beacon-API"
 [footer_license]
 other = "Kod BSD-2, text CC BY 4.0"
 [motion_stop]
-other = "Stoppa bakgrundsrörelse"
+other = "Stoppa rörelse på sidan"
 [motion_start]
-other = "Starta bakgrundsrörelse"
+other = "Starta rörelse på sidan"
 [nf_title]
 other = "Paketet kom aldrig fram"
 [nf_lead]

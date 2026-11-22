@@ -73,7 +73,7 @@ const reveal = (map, popup) => {
   const box = map.getContainer();
   const blockers = [...box.querySelectorAll(".maplibregl-ctrl-top-left > *, .maplibregl-ctrl-top-right > *")].map((c) => c.getBoundingClientRect());
   const dy = revealShift(el.getBoundingClientRect(), blockers, box.getBoundingClientRect());
-  const calm = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const calm = typeof document !== "undefined" && document.documentElement.dataset.motion === "off";
   if (dy > 0) map.panBy([0, -dy], { duration: calm ? 0 : 200 });
 };
 
