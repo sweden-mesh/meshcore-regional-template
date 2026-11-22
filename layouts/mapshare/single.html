@@ -8,6 +8,10 @@
 {{- $img := site.Params.ogImage | default "images/og.png" -}}{{- $w := 0 -}}{{- $h := 0 -}}
 {{- $own := printf "og/karta-%s.jpg" .Params.shareKey -}}
 {{- if fileExists (printf "static/%s" $own) }}{{ $img = $own }}{{ $w = 1200 }}{{ $h = cond (eq .Params.shareKey "se") 1200 630 }}{{ end -}}
+{{- /* Most services crop a preview picture to about 1.9:1, so a wide version wins where the site has one
+       (karta-<key>-wide.jpg, 1200 x 630); the site may hand the other one to a service that shows it whole. */ -}}
+{{- $wide := printf "og/karta-%s-wide.jpg" .Params.shareKey -}}
+{{- if fileExists (printf "static/%s" $wide) }}{{ $img = $wide }}{{ $w = 1200 }}{{ $h = 630 }}{{ end -}}
 <!doctype html>
 <html lang="{{ site.Language.Lang }}">
 <head>
