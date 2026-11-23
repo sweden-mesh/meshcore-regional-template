@@ -54,9 +54,13 @@
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
 {{- $img := .Params.image | default site.Params.ogImage | default "images/og.png" }}
+{{- /* A page's own preview picture, where the site has made one: static/og/s/<key>.jpg (1200 x 630), <key>
+       the first 12 hex digits of the md5 of the page's address path. A page's `image` param still wins. */}}
+{{- $card := printf "og/s/%s.jpg" (substr (md5 .RelPermalink) 0 12) }}{{ $own := false }}
+{{- if and (not .Params.image) (fileExists (printf "static/%s" $card)) }}{{ $img = $card }}{{ $own = true }}{{ end }}
 <meta property="og:image" content="{{ $img | absURL }}">
-{{- /* The size is known only for the template's own image (SEO-T17). */}}
-{{- if eq $img "images/og.png" }}
+{{- /* The size is known only for the template's own image (SEO-T17) and a page's own picture. */}}
+{{- if or $own (eq $img "images/og.png") }}
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 {{- end }}

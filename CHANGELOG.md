@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.81.0 — 2026-11-23
+
+- A page's own link-preview picture: `og:image` is `static/og/s/<key>.jpg` (1200 x 630) where the site has that
+  file, `<key>` being the first 12 hex digits of the md5 of the page's `RelPermalink`. A page's `image` param still
+  wins, and without the file nothing changes. The site makes the pictures (the national site: `scripts/og-pages.mjs`).
+
 ## v0.80.0 — 2026-11-23
 
 - National mode: a county file may list more community sites in `[[communities]]` (`name`, `url`). The Sverige
