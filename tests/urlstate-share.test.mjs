@@ -24,3 +24,19 @@ test("the share link says which region: the region's share address, else ?lan=",
   assert.equal(shareLoc({ ...loc, pathname: "/guider/x/", search: "?lan=06" }, { lan: "12" }).search, "?lan=12");
   assert.deepEqual(shareLoc({ ...loc, search: "" }), { origin: "https://example.se", pathname: "/", search: "" });
 });
+
+// B-382: a region's own map starts with the wanted places shown, so its address says want=0 when
+// they are switched off and nothing when they are on; the Sverige map keeps want=1 for on.
+import { writeState } from "../assets/js/map/urlstate.js";
+test("a switch that starts the other way on this page is written only when it differs from that start", () => {
+  const county = { want: true };
+  assert.equal(writeState("", { want: true }, county), "");
+  assert.equal(writeState("", { want: false }, county), "?want=0");
+  assert.equal(writeState("?want=0", { want: true }, county), "");
+  assert.equal(writeState("", { want: true }), "?want=1");
+  assert.equal(writeState("?want=1", { want: false }), "");
+  assert.equal(writeState("", { live: false, links: true, want: false, cov: true }, county), "?live=0&cov=1&want=0");
+  assert.equal(writeState("?x=1", { want: undefined }, county), "?x=1", "a switch the page does not have is left alone");
+  assert.deepEqual(parseState("?want=0"), { want: false });
+  assert.equal(shareLink({ origin: "https://example.se", pathname: "/j/karta/", search: "", hash: "" }, { want: false, live: true }, county), "https://example.se/j/karta/?want=0");
+});

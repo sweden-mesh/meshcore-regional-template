@@ -19,6 +19,9 @@ import { parseState, writeState } from "./urlstate.js";
 import { setTexts, t } from "./texts.js";
 import { coverageControl, coverageLegend } from "./coverage.js";
 import { wantedControl, wantedLegend, wantedBounds } from "./wanted.js";
+
+// The Sverige map shows the wanted places from this zoom and closer.
+export const WANTED_SE_ZOOM = 7;
 import { seIatasOf, scopeIatas, switchFeed, seButton } from "./sescope.js";
 
 const el = document.getElementById("map");
@@ -39,11 +42,16 @@ async function start() {
   const covToggles = cov ? [{ key: "cov", label: ds.coverageLabel || "Täckning", on: cov.on }] : [];
   const covLegend = cov ? coverageLegend() : [];
   const covToggle = (key, on) => { if (key === "cov") cov.set(on); };
-  // Places wanted for new repeaters (data-wanted, params.wanted): off by default, with or
-  // without Beacon. No places, no toggle.
+  // Places wanted for new repeaters (data-wanted, params.wanted), with or without Beacon. No places,
+  // no toggle. On a region's own map they show from the start; on the Sverige map (data-wanted-se)
+  // the switch starts off and they show only from WANTED_SE_ZOOM and closer (operator 2026-11-23,
+  // B-382). A county's map switched to the whole country ("SE") follows the same zoom rule.
   let places = [];
   try { places = JSON.parse(ds.wanted || "[]"); } catch { /* none */ }
-  const want = places.length ? wantedControl(map, maplibregl, places, { on: url.want ?? false }) : null;
+  const wantSe = ds.wantedSe === "true";
+  const wantStart = !wantSe;
+  const defaults = { want: wantStart };
+  const want = places.length ? wantedControl(map, maplibregl, places, { on: url.want ?? wantStart, minZoom: wantSe || url.se ? WANTED_SE_ZOOM : 0 }) : null;
   el.wanted = want; // for browser tests
   const extraToggles = [...covToggles, ...(want ? [{ key: "want", label: ds.wantedLabel || "Önskade platser", on: want.on }] : [])];
   const extraLegend = [...covLegend, ...(want ? wantedLegend() : [])];
@@ -62,7 +70,7 @@ async function start() {
     if (extraToggles.length) map.addControl(new MapPanel({ toggles: extraToggles, legend: extraLegend, onToggle: (key, on) => {
       extraToggle(key, on);
       if (key === "want" && on) widenToFit(map, wantBox);
-      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov?.on, want: want?.on }) + location.hash);
+      history.replaceState(null, "", location.pathname + writeState(location.search, { cov: cov?.on, want: want?.on }, defaults) + location.hash);
     } }), "top-left");
     return;
   }
@@ -81,7 +89,7 @@ async function start() {
   el.seMode = state.se; // lan/map-county.js leaves the nodes unmarked while on
   let live = true; // false once Beacon is unreachable and the map shows the snapshot
   const saveUrl = (extra = {}) => {
-    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, want: want?.on, se: state.se, ...extra });
+    const q = writeState(location.search, { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus, cov: cov?.on, want: want?.on, se: state.se, ...extra }, defaults);
     history.replaceState(null, "", location.pathname + q + location.hash);
   };
   if (url.view) { map.jumpTo(url.view); map.__userMoved = true; }
@@ -175,6 +183,7 @@ async function start() {
         loadBorders(client, list),
       ]);
       state.se = on; el.seMode = on; state.iatas = list;
+      want?.setMinZoom(on || wantSe ? WANTED_SE_ZOOM : 0);
       state.nodes = publicNodes(withSeeded(nodes, on ? [] : state.seeded || [], borders), opts);
       state.borders = borders; state.relays = new Map(); state.selected = null;
       linkCounts = el.linkCounts = loaderFor(list);
@@ -200,7 +209,7 @@ async function start() {
     return url ? { sharePage: `${url}${t("share_path")}/` } : { lan: lan.get() || "se" };
   };
   const share = () => shareLink(shareLoc(location, region()), { live: state.live, links: state.showLinks, foreign: state.showForeign, focus: state.focus,
-    cov: cov?.on, want: want?.on, se: state.se, full: isFull(), view: { zoom: map.getZoom(), center: map.getCenter().toArray() } });
+    cov: cov?.on, want: want?.on, se: state.se, full: isFull(), view: { zoom: map.getZoom(), center: map.getCenter().toArray() } }, defaults);
   map.addControl(fitControl(shown, seIatas.length ? (b) => seButton(t("se_all"), state.se, (on) => setSe(on, b())) : null,
     { full: !!url.full, onFull: (on) => saveUrl({ full: on }), share }), "top-right");
   const draw = () => {

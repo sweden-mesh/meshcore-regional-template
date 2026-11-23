@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.82.0 — 2026-11-23
+
+- Map: the places wanted for new repeaters ("Önskade platser") show from the start on a region's own map; the
+  switch turns them off, and the address then carries `want=0`. On the national Sverige map the switch starts
+  off and the places show only from zoom 7 and closer; a county's map switched to the whole country ("SE")
+  follows the same zoom rule. **A regional site with `[[params.wanted]]` now shows them without a click.**
+- A wanted place's `note_en` is used on English pages.
+
 ## v0.81.1 — 2026-11-23
 
 - Content (sv, en): the lou firmware guide and the remote-control question link to mccontrol's demo

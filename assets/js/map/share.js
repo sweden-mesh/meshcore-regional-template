@@ -7,8 +7,8 @@ import { writeState } from "./urlstate.js";
 
 // The link to the map as it is. Pure, for tests: `loc` is { origin, pathname, search }, `state` the
 // same object writeState takes, with the view always present. Ends in #map, so the visitor lands on it.
-export function shareLink(loc, state) {
-  return loc.origin + loc.pathname + writeState(loc.search, state) + (loc.hash ?? "#map");
+export function shareLink(loc, state, defaults = {}) {
+  return loc.origin + loc.pathname + writeState(loc.search, state, defaults) + (loc.hash ?? "#map");
 }
 
 // Where the link points, so it also says which region the map shows (operator 2026-11-22). The

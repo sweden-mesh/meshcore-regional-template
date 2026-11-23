@@ -9,12 +9,14 @@
 {{- if site.Params.national -}}
   {{- with partial "lan-page.html" . -}}{{- $src = .wanted -}}{{- else -}}
     {{- $src = slice -}}
-    {{- range partialCached "lan.html" . "lan" }}{{ $c := . }}{{ range .wanted }}{{ $src = $src | append (merge . (dict "note" (cond (ne (.note | default "") "") (printf "%s: %s" $c.short .note) $c.short))) }}{{ end }}{{ end -}}
+    {{- range partialCached "lan.html" . "lan" }}{{ $c := . }}{{ range .wanted }}{{ $n := .note | default "" }}{{ if and (eq site.Language.Lang "en") .note_en }}{{ $n = .note_en }}{{ end }}{{ $src = $src | append (merge . (dict "note_en" "" "note" (cond (ne $n "") (printf "%s: %s" $c.short $n) $c.short))) }}{{ end }}{{ end -}}
   {{- end -}}
 {{- end -}}
 {{- range $src -}}
   {{- if and .name (isset . "lat") (isset . "lon") -}}
     {{- $note := .note | default "" -}}
+    {{- /* A note in the page's language where the place has one (note_en; B-382). */ -}}
+    {{- if and (eq site.Language.Lang "en") .note_en }}{{ $note = .note_en }}{{ end -}}
     {{- $list = $list | append (dict "name" .name "lat" (float .lat) "lon" (float .lon) "note" ($note | markdownify)) -}}
     {{- $plain = $plain | append (dict "name" .name "lat" (float .lat) "lon" (float .lon) "note" ($note | markdownify | plainify | htmlUnescape)) -}}
   {{- end -}}

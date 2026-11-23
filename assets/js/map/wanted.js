@@ -107,7 +107,7 @@ export function starImage(px = STAR_PX, ratio = 1, { fill, edge } = STAR) {
 const ABOVE = ["links", "links-selected", "packet-path", "flow-glow", "node-points", "pick-nodes"];
 export const LAYERS = ["wanted-area", "wanted-line", "wanted-star"];
 
-export function addWantedLayers(map, gj, { visible = false, theme = effectiveTheme() } = {}) {
+export function addWantedLayers(map, gj, { visible = false, theme = effectiveTheme(), minZoom = 0 } = {}) {
   const c = COLORS[theme] || COLORS.light;
   const ratio = Math.max(1, Math.round(globalThis.devicePixelRatio || 1));
   if (!map.hasImage("wanted-star")) map.addImage("wanted-star", starImage(STAR_PX, ratio), { pixelRatio: ratio });
@@ -126,20 +126,27 @@ export function addWantedLayers(map, gj, { visible = false, theme = effectiveThe
     map.addLayer({ id: "wanted-star", type: "symbol", source: "wanted-centre",
       layout: { "icon-image": "wanted-star", "icon-allow-overlap": true, "icon-ignore-placement": true } }, before);
   }
-  for (const id of LAYERS) map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
+  for (const id of LAYERS) {
+    map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
+    map.setLayerZoomRange(id, minZoom, 24);
+  }
 }
 
 // Draws the places, keeps them through a style switch (dark mode drops every layer and image)
 // and, with popups, opens one naming the place on a click, unless a node is under the pointer.
 const NODE_LAYERS = ["node-points", "node-pills"];
 
-export function wantedControl(map, maplibregl, list, { on = false, popups = true, onChange = () => {} } = {}) {
+// `minZoom`: the places show only from this zoom and closer (the Sverige map, B-382: a circle of
+// about 1 km says nothing further out); setMinZoom changes it, as when a county's map switches to
+// the whole country and back.
+export function wantedControl(map, maplibregl, list, { on = false, popups = true, onChange = () => {}, minZoom = 0 } = {}) {
   const gj = wantedGeoJSON(list);
-  const ctl = { on, count: gj.centres.features.length };
+  const ctl = { on, count: gj.centres.features.length, minZoom };
   const draw = () => {
-    try { if (map.getStyle()) addWantedLayers(map, gj, { visible: ctl.on }); } catch { map.once("idle", draw); }
+    try { if (map.getStyle()) addWantedLayers(map, gj, { visible: ctl.on, minZoom: ctl.minZoom }); } catch { map.once("idle", draw); }
   };
   ctl.set = (value) => { ctl.on = value; onChange(ctl); draw(); };
+  ctl.setMinZoom = (z) => { ctl.minZoom = z; draw(); };
   if (popups) {
     let popup = null;
     map.on("click", (e) => {
