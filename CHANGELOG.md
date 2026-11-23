@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.82.2 — 2026-11-23
+
+- Fix: hovering a switched-on map switch in dark mode left black text on the dark map. A hovered switch is now
+  an outline with white text in dark mode and dark text in light mode.
+
 ## v0.82.1 — 2026-11-23
 
 - Fix: the map's share addresses (v0.79.0) are no longer a page's "next" or "previous" in the pager. In
