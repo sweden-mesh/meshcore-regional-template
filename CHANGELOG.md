@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.80.0 — 2026-11-23
+
+- National mode: a county file may list more community sites in `[[communities]]` (`name`, `url`). The Sverige
+  view's community column shows them beside the county's `community`. Nothing changes without the key.
+
 ## v0.79.1 — 2026-11-22
 
 - The map's share addresses use `static/og/karta-<key>-wide.jpg` (1200 x 630) as the preview picture where the site
