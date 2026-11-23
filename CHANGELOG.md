@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.81.1 — 2026-11-23
+
+- Content (sv, en): the lou firmware guide and the remote-control question link to mccontrol's demo
+  (invented nodes, no key needed).
+
 ## v0.81.0 — 2026-11-23
 
 - A page's own link-preview picture: `og:image` is `static/og/s/<key>.jpg` (1200 x 630) where the site has that

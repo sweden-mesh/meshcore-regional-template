@@ -40,6 +40,9 @@ Fjärrstyrning (`rc`)
 | Observer + fjärrstyrning | fjärrstyrning, rapporter till kartan, OTA |
 | Observer + båda | auto-svar och fjärrstyrning, rapporter till kartan, OTA |
 
+Vill du se hur fjärrstyrningen ser ut innan du flashar något? [Prova mccontrol med påhittade
+noder](https://mccontrol.meshcoresverige.se/?demo=1). Du behöver ingen nyckel, och inget skickas.
+
 ## Välj och installera
 
 Gå till [firmwareväljaren]({{< param "firmware.picker" >}}) och välj typ av nod, funktioner och

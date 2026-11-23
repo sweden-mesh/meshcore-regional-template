@@ -43,6 +43,9 @@ Remote control (`rc`)
 | Observer + remote control | remote control, reports to the map, OTA |
 | Observer + both | auto-reply and remote control, reports to the map, OTA |
 
+Want to see what remote control looks like before you flash anything? [Try mccontrol with invented
+nodes](https://mccontrol.meshcoresverige.se/?demo=1). You need no key, and nothing is sent.
+
 ## Choose and install {#välj-och-installera}
 
 Go to the [firmware picker]({{< param "firmware.picker" >}}) and choose the type of node, the

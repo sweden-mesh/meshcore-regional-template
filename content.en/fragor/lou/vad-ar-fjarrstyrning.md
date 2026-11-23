@@ -12,5 +12,8 @@ send commands with the tool mccontrol, [in the browser](https://mccontrol.meshco
 a [program](https://github.com/sweden-mesh/mccontrol-cli). They travel over the internet to the
 repeater's Wi-Fi.
 
+You can [try mccontrol with invented nodes](https://mccontrol.meshcoresverige.se/?demo=1) with no key
+and no repeater of your own. Nothing is sent.
+
 It is built so that a setting can be changed on a repeater that sits in a mast. How to turn it on
 is in [Special firmware lou](../../guider/firmware-lou/).
