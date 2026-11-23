@@ -37,6 +37,7 @@ check kalmar/index.html '<ul class=hero-groups aria-label="Grupper i Kalmar län
 check kalmar/index.html 'Exempelklubben</a></li><li><a class="button button-secondary" href=#grupper>Fler grupper</a></li></ul>' "county page: more than 4 groups, the first 3 and Fler grupper"
 check kalmar/index.html '<h2 id=grupper>Gemenskap</h2>' "county page: Fler grupper leads to the groups column"
 if grep -q 'hero-groups' "$P/skåne/index.html"; then echo "FAIL county page: a group list without groups"; fail=1; else echo "ok   county page: no community, no button"; fi
+if grep -rlE 'class=pager-(next|prev) href=[^ >]*/karta/' "$P" --include=index.html | grep -q .; then echo "FAIL pager: a page's next or previous is a map share address"; fail=1; else echo "ok   pager: no map share address in a pager"; fi
 check index.html "<h2>Nätet i Sverige</h2>" "Sverige: the network column (B-318)"
 # B-362: the new-repeaters page from data/new_repeaters.json: a section per county, the nearest town, a
 # coastal node outside the simplified outline placed by its nearest town, the foreign one left out.

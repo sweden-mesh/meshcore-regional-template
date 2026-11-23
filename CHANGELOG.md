@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.82.1 — 2026-11-23
+
+- Fix: the map's share addresses (v0.79.0) are no longer a page's "next" or "previous" in the pager. In
+  national mode the last root page linked on to a county's share address, so a county's name stayed on that
+  page whatever county was chosen (found by `scripts/check-national-browser.mjs`, failing since v0.79.0).
+
 ## v0.82.0 — 2026-11-23
 
 - Map: the places wanted for new repeaters ("Önskade platser") show from the start on a region's own map; the

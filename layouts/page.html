@@ -23,6 +23,8 @@
     {{- with .Params.category }}{{ $pages = where $pages "Params.category" . }}{{ end -}}
     {{- /* National mode: the county pages are not part of the root pages' pager. */ -}}
     {{- if site.Params.national }}{{ $pages = where $pages "Params.lan" "eq" nil }}{{ end -}}
+    {{- /* Nor the map's share addresses (layouts/mapshare), which only send the visitor on to the map. */ -}}
+    {{- $pages = where $pages "Type" "ne" "mapshare" -}}
     {{- /* Nor the area pages (B-360), which have no pager of their own. */ -}}
     {{- $pages = where $pages "Params.area" "eq" nil }}{{ if .Params.area }}{{ $pages = slice }}{{ end -}}
     {{- if and (ne .CurrentSection .) (gt (len $pages) 1) -}}
