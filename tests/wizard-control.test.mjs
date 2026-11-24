@@ -10,16 +10,16 @@ const shared = { host: SHARED, preset: SHARED, slot: 3 };
 const own = { host: "mqtt.meshcore-vgr.se", preset: SHARED, slot: 3 };
 
 test("the shared broker: the bare line, the preset picks the slot", () => {
-  assert.deepEqual(controlCommands(shared), ["set mqtt.cmd on"]);
-  assert.deepEqual(controlCommands({ ...shared, key: KEY }), [`set mqtt.cmd.pubkey ${KEY}`, "set mqtt.cmd on"]);
+  assert.deepEqual(controlCommands(shared), ["set cmd on"]);
+  assert.deepEqual(controlCommands({ ...shared, key: KEY }), [`set cmd.pubkey ${KEY}`, "set cmd on"]);
 });
 
 test("a region's own broker: a custom slot with server, audience and packets, then the plane", () => {
   assert.deepEqual(controlCommands({ ...own, key: KEY.toUpperCase() }), [
-    `set mqtt.cmd.pubkey ${KEY}`,
+    `set cmd.pubkey ${KEY}`,
     "set mqtt3.preset custom", "set mqtt3.server mqtts://mqtt.meshcore-vgr.se:8883",
-    "set mqtt3.audience mqtt.meshcore-vgr.se", "set mqtt3.filter all", "set mqtt.cmd.slot 3",
-    "set mqtt.cmd on"]);
+    "set mqtt3.audience mqtt.meshcore-vgr.se", "set mqtt3.filter all", "set cmd.slot 3",
+    "set cmd on"]);
   assert.equal(controlCommands({ ...own, slot: 5 })[0], "set mqtt5.preset custom");
 });
 
@@ -45,9 +45,9 @@ test("in a repeater setup the plane comes after the Observer and the regional sl
   const mqtt = { slot: 6, server: "wss://mqtt.example.se", port: 443, audience: "mqtt.example.se", iata: "JKG" };
   const c = repeaterCommands({ ...base, mqtt, control: own }).commands;
   assert.ok(c.indexOf("set mqtt6.preset custom") < c.indexOf("set mqtt3.preset custom"));
-  assert.deepEqual(c.slice(-3), ["set mqtt.cmd on", "advert", "reboot"]);
-  assert.deepEqual(repeaterCommands({ ...base, control: shared }).commands.slice(-3), ["set mqtt.cmd on", "advert", "reboot"]);
-  assert.ok(!repeaterCommands(base).commands.some((x) => x.includes("mqtt.cmd")));
+  assert.deepEqual(c.slice(-3), ["set cmd on", "advert", "reboot"]);
+  assert.deepEqual(repeaterCommands({ ...base, control: shared }).commands.slice(-3), ["set cmd on", "advert", "reboot"]);
+  assert.ok(!repeaterCommands(base).commands.some((x) => x.includes("set cmd")));
   assert.deepEqual(repeaterReview({ ...base, control: own }).at(-1), { key: "control", value: "mqtt.meshcore-vgr.se" });
 });
 

@@ -91,8 +91,8 @@ export function mqttCommands(m) {
 
 // Remote control (lou `rc` builds): the repeater takes commands signed by the owner's key
 // over MQTT, from the region's command broker (params.backend.host, RB-3). Commands from
-// the Observer fork (MqttControl.cpp, MqttCommandHooks.cpp): `set mqtt.cmd.pubkey` (64 hex,
-// the PUBLIC key; serial only), `set mqtt.cmd on`. With no slot set, `set mqtt.cmd on` picks a
+// the Observer fork (MqttControl.cpp, MqttCommandHooks.cpp): `set cmd.pubkey` (64 hex,
+// the PUBLIC key; serial only), `set cmd on`. With no slot set, `set cmd on` picks a
 // free one itself and gives it the compiled `mccontrol` preset (host `preset`, lou-17 on), with
 // every packet type on, so for that host the bare line is all. Any other host is a custom slot
 // set by hand: server, audience (JWT signed by the node's key), packets on, then the plane's slot.
@@ -113,13 +113,13 @@ export function validateControl(c) {
 }
 
 export function controlCommands(c) {
-  const out = c.key ? [`set mqtt.cmd.pubkey ${c.key.toLowerCase()}`] : [];
+  const out = c.key ? [`set cmd.pubkey ${c.key.toLowerCase()}`] : [];
   if (c.host !== c.preset) {
     const n = Number(c.slot);
     out.push(`set mqtt${n}.preset custom`, `set mqtt${n}.server mqtts://${c.host}:${CONTROL_PORT}`,
-      `set mqtt${n}.audience ${c.host}`, `set mqtt${n}.filter all`, `set mqtt.cmd.slot ${n}`);
+      `set mqtt${n}.audience ${c.host}`, `set mqtt${n}.filter all`, `set cmd.slot ${n}`);
   }
-  out.push("set mqtt.cmd on");
+  out.push("set cmd on");
   return out;
 }
 

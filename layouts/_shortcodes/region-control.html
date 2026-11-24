@@ -1,13 +1,13 @@
 {{- /* {{< region-control >}}: the lines that turn remote control on through the region's command
   broker (params.backend, RB-3), as a code block. The same lines as controlCommands in
-  assets/js/wizard/commands.js: the bare `set mqtt.cmd on` when the host is the one lou
+  assets/js/wizard/commands.js: the bare `set cmd on` when the host is the one lou
   firmware's `mccontrol` preset names, else a custom slot set by hand. */ -}}
 {{- with site.Params.backend -}}{{- if .host -}}
-{{- $cmds := slice (printf "set mqtt.cmd.pubkey %s" (T "rc_key")) -}}
+{{- $cmds := slice (printf "set cmd.pubkey %s" (T "rc_key")) -}}
 {{- if ne .host .preset -}}
   {{- $n := .slot | default 3 -}}
-  {{- $cmds = $cmds | append (printf "set mqtt%v.preset custom" $n) (printf "set mqtt%v.server mqtts://%s:8883" $n .host) (printf "set mqtt%v.audience %s" $n .host) (printf "set mqtt%v.filter all" $n) (printf "set mqtt.cmd.slot %v" $n) -}}
+  {{- $cmds = $cmds | append (printf "set mqtt%v.preset custom" $n) (printf "set mqtt%v.server mqtts://%s:8883" $n .host) (printf "set mqtt%v.audience %s" $n .host) (printf "set mqtt%v.filter all" $n) (printf "set cmd.slot %v" $n) -}}
 {{- end -}}
-{{- $cmds = $cmds | append "set mqtt.cmd on" "reboot" -}}
+{{- $cmds = $cmds | append "set cmd on" "reboot" -}}
 {{ $.Page.RenderString (printf "```text {title=\"%s\"}\n%s\n```\n" (T "rc_cmds") (delimit $cmds "\n")) }}
 {{- end -}}{{- end -}}
