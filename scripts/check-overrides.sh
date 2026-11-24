@@ -58,8 +58,8 @@ check index.html 'data-coverage-label=.\{0,1\}Täckning' "map: the coverage togg
 # RB-3: the command broker follows params.backend; the template's default is the shared broker's bare line.
 check wizard/repeater-snabb/index.html 'data-mqtt=.*"slot":6' "observer.mqtt: the regional slot defaults to 6, clear of the command slot"
 check wizard/repeater-snabb/index.html 'data-control=.{"host":"mqtt-meshcore\.louie\.se"' "backend: the quick wizard offers remote control through the shared broker"
-check guider/firmware-lou/index.html 'set mqtt.cmd on' "backend: the firmware guide shows the command lines"
-if grep -q 'mqtt.cmd.slot' "$P/guider/firmware-lou/index.html"; then echo "FAIL backend: the shared broker got the custom-slot lines"; fail=1; else echo "ok   backend: the shared broker gets the bare line"; fi
+check guider/firmware-lou/index.html 'set cmd on' "backend: the firmware guide shows the command lines"
+if grep -q 'set cmd.slot' "$P/guider/firmware-lou/index.html"; then echo "FAIL backend: the shared broker got the custom-slot lines"; fail=1; else echo "ok   backend: the shared broker gets the bare line"; fi
 # SEO (v0.37.0): the per-page noindex switch, real dates only, the search page out of the sitemap.
 check guider/etikett/index.html 'name=robots content="noindex, follow"' "noindex: a page marked by the site's cascade gets noindex, follow"
 if grep -q 'name=robots' "$P/guider/regioner/index.html"; then echo "FAIL noindex: an unmarked page got a robots tag"; fail=1; else echo "ok   noindex: an unmarked page stays indexable"; fi
