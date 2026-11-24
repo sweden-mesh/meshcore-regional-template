@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.82.3 — 2026-11-24
+
+- The remote control lines in the setup wizard and on the control page use the names of firmware lou-20:
+  `set cmd.pubkey`, `set cmd.slot`, `set cmd on`. lou-18 and older know only `set mqtt.cmd…`; a node on lou-20
+  answers the old names as unknown.
+
 ## v0.82.2 — 2026-11-23
 
 - Fix: hovering a switched-on map switch in dark mode left black text on the dark map. A hovered switch is now
