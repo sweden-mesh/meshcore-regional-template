@@ -1,8 +1,9 @@
 {{- /* The Observer section of both repeater wizards (operator 2026-11-14): a box, unticked; ticked,
   it shows the wifi fields and the map code. The code is filled from the county the picked
   position lies in (params.observer.iatas; the region's own iatas for its own county); the
-  owner can change it. The optional regional-broker slot (wizard-mqtt.html) and remote control
-  (wizard-control.html) sit inside, since only an Observer can use them. Call with (dict "page" .Page "id" "<prefix for element ids>"). */ -}}
+  owner can change it. The optional regional-broker slot (wizard-mqtt.html) sits inside, since
+  only an Observer can use it; remote control (wizard-control.html) comes after, since from lou-20 a
+  repeater without the Observer takes it over the mesh. Call with (dict "page" .Page "id" "<prefix for element ids>"). */ -}}
 {{- $page := .page -}}{{- $id := .id -}}
 {{- $r := partialCached "region.html" $page "region" -}}
 {{- $codes := site.Params.observer.iatas | default dict -}}
@@ -31,6 +32,6 @@
     <input id="{{ $id }}-iata" data-obs-iata type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" autocorrect="off" maxlength="7" value="{{ $ownCode }}" aria-describedby="{{ $id }}-iata-why">
     <p class="wz-status" id="{{ $id }}-iata-why" data-obs-iata-why aria-live="polite">{{ T "wz_obs_iata_none" }}</p>
     {{ partial "wizard-mqtt.html" $page }}
-    {{ partial "wizard-control.html" (dict "id" $id) }}
   </div>
 </div>
+{{ partial "wizard-control.html" (dict "id" $id) }}

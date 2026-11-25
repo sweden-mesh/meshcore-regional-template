@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { boards, variants, pick, imageUrl, familyOf } from "../assets/js/flasher/main.js";
+import { boards, variants, pick, imageUrl, familyOf, meshOnly } from "../assets/js/flasher/main.js";
 
 // A slice of the hosted index (fw/hosted.json, lou-18).
 const index = {
@@ -24,6 +24,27 @@ test("boards: ESP32 first, then nRF52, each once", () => {
 test("variants: auto-reply alone first, then the Observer builds", () => {
   assert.deepEqual(variants(index, "heltec_v4").map((v) => v.key), ["core-ar", "observer-ar", "observer-arrc", "observer-rc"]);
   assert.deepEqual(variants(index, "RAK_4631").map((v) => v.key), ["core-ar"]);
+});
+
+test("variants: remote control on stock MeshCore (lou-20) sits between auto-reply and the Observer builds", () => {
+  const more = { ...index, images: [...index.images,
+    ...["rc", "arrc"].map((f) => ({ hw: "RAK_4631", base: "core", features: f, mcu: "nrf52840", form: "zip", file: `RAK_4631_repeater-${f}.zip`, sha256: "z" })),
+    ...["rc", "arrc"].map((f) => ({ hw: "heltec_v4", base: "core", features: f, mcu: "esp32s3", form: "bin", file: `heltec_v4_repeater-${f}.bin`, sha256: "y" }))] };
+  assert.deepEqual(variants(more, "RAK_4631").map((v) => v.key), ["core-ar", "core-arrc", "core-rc"]);
+  assert.deepEqual(variants(more, "heltec_v4").map((v) => v.key), ["core-ar", "core-arrc", "core-rc", "observer-ar", "observer-arrc", "observer-rc"]);
+  assert.equal(pick(more, "RAK_4631", "core-arrc", false).file, "RAK_4631_repeater-arrc.zip");
+  assert.deepEqual(["core-ar", "core-arrc", "core-rc", "observer-ar", "observer-arrc", "observer-rc"].filter(meshOnly), ["core-arrc", "core-rc"]);
+});
+
+test("every variant the page can offer has its label and description, in both languages", () => {
+  const partial = readFileSync(new URL("../layouts/_partials/flasher.html", import.meta.url), "utf8");
+  for (const lang of ["sv", "en"]) {
+    const toml = readFileSync(new URL(`../i18n/${lang}.toml`, import.meta.url), "utf8");
+    for (const k of ["core-arrc", "core-rc"]) for (const key of [`fl_v_${k}`, `fl_v_${k}_d`]) {
+      assert.ok(toml.includes(`[${key}]\n`), `${lang}: ${key}`);
+      assert.ok(partial.includes(`"${key}"`), `flasher.html passes ${key}`);
+    }
+  }
 });
 
 test("pick: update writes the app image, a new install the merged one, nRF52 the DFU package", () => {
