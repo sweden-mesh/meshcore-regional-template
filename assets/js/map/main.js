@@ -169,7 +169,9 @@ async function start() {
   }), "top-left");
   // The objects shown: the nodes (foreign ones while on) and the wanted places while on, never the
   // region's border (B-289). The fit button frames them; the "want" toggle's widening takes them in.
-  const shown = () => fitItems(state.nodes, state.showForeign, want?.on ? wantBox : null);
+  // linkNodes(), not state.nodes: on a national county page the nodes outside the county are
+  // foreign too, and hidden with the same switch (B-384).
+  const shown = () => fitItems(linkNodes(), state.showForeign, want?.on ? wantBox : null);
   // "SE" (B-370): every map area's nodes, borders, links and live traffic, as on the Sverige map; the
   // camera stays where it is, both ways. A fetch that fails leaves the map as it was.
   let seBusy = false;
