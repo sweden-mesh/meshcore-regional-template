@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.83.3 — 2026-11-25
+
+- News: a post on lou-20, and "lou" as a group on the news page.
+- The lou guide credits sweden-mesh only; the auto-reply example has an invented sender; the own-broker guide
+  says mccontrol talks to one broker at a time with lou-20.
+
 ## v0.83.2 — 2026-11-25
 
 - A county's front page: the bar between the site's buttons and the groups' has a button gap on each side.

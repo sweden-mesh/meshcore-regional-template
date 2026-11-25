@@ -9,9 +9,8 @@ date: 2026-11-12
 lastmod: 2026-11-25
 ---
 
-Besides the MeshCore project's own firmware there is lou, modified variants written by Louie:
-repeater firmware built by [sweden-mesh](https://github.com/sweden-mesh/MeshCore-lou) for the
-Swedish meshes. They are based on MeshCore and add features that help the mesh measure itself.
+Besides the MeshCore project's own firmware there is lou: repeater firmware built by [sweden-mesh](https://github.com/sweden-mesh/MeshCore-lou) for the
+Swedish meshes. It is based on MeshCore and adds features that help the mesh measure itself.
 Everything else works as in ordinary MeshCore, and nodes with and without lou talk to each other as
 usual.
 

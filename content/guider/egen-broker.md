@@ -30,6 +30,10 @@ repeatern kontrollerar signaturen själv.
 Repeatrar kan flytta mellan den gemensamma brokern och en egen utan att flashas om: det är några
 `set`-kommandon, och sidans wizards skriver dem när regionen har angett sin egen server.
 
+Med lou-20 pratar [mccontrol](https://mccontrol.meshcoresverige.se) med en broker i taget, och utan
+ändring är det den gemensamma. Repeatrar på en egen broker når du först när du har ställt in den som
+verktygets broker.
+
 ## Vad det kostar
 
 - **En liten server.** En liten VPS räcker, med ett domännamn och ett TLS-certifikat (gratis

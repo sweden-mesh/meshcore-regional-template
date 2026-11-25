@@ -1,0 +1,58 @@
+---
+title: "lou-20"
+description: "lou-20 (24 November 2026): remote control on boards without Wi-Fi, auto-reply on #test-se and new names for the commands."
+url: /en/news/lou-20/
+group: lou
+date: 2026-11-24
+lastmod: 2026-11-25
+checkedOn: 2026-11-25
+---
+
+lou-20 was released on 24 November 2026 [^rel]. lou is repeater firmware from sweden-mesh that adds
+auto-reply and remote control to MeshCore 1.18; see [The lou firmware](../../guider/firmware-lou/).
+Pick your file in [the firmware picker]({{< param "firmware.picker" >}}). For ESP32 boards it flashes
+straight from the browser.
+
+## If you already use remote control: the commands have new names
+
+The settings are no longer called `mqtt.cmd`. The old names are gone: a node on lou-20 answers that
+it does not know them.
+
+| lou-18 | lou-20 |
+|---|---|
+| `set mqtt.cmd on`, `set mqtt.cmd off`, `get mqtt.cmd` | `set cmd on`, `set cmd off`, `get cmd` |
+| `set mqtt.cmd.pubkey <key>` | `set cmd.pubkey <key>` |
+| `mqtt.cmd ping` | `cmd ping` |
+
+Your settings carry over in the update: the command key, the counter and the server slot. A node
+set with `set mqtt.cmd on <server>` needs `set cmd on <server>` once more afterwards.
+[mccontrol](https://mccontrol.meshcoresverige.se) handles both lou-18 and lou-20 and picks by itself.
+
+## New
+
+- **Remote control on boards without Wi-Fi.** Ordinary repeater boards (nRF52, RP2040, STM32 and
+  ESP32 without the Observer) take signed commands over the mesh, from your companion or through
+  one of your own Observer repeaters. See
+  [Remote control without Wi-Fi](../../guider/firmware-lou/#fjärrstyrning-utan-wifi).
+- **No region needed for remote control.** The repeater is reached on its own key. Commands and
+  answers are encrypted between the repeater and its owner, and the server cannot read them.
+- **The repeater reports to its owner.** An Observer repeater sends an encrypted sign of life about
+  every 15 minutes. That is how mccontrol finds your repeaters without a search.
+- **Auto-reply on `#test-se`.** Repeaters now answer `test` on the national test channel too.
+  Replies there cost airtime in the whole country: send one `test`, wait two minutes and do not
+  repeat it. Prefer your county's own channel.
+- **Changing the command key from afar** with `rekey`, signed by the current key.
+
+## Good to know
+
+- The update over Wi-Fi from lou-18 has been tried: `ota update` on the console, and the settings
+  stay.
+- A node answers over radio on an airtime budget of its own. When it is used up there is no answer
+  at all. Wait a few minutes and send again.
+- lou-20 still accepts the older way of control, so an older tool reaches the node. lou-21 removes
+  it, no earlier than a month after lou-20.
+- Boards without Wi-Fi are updated by USB or Bluetooth.
+
+## Sources
+
+[^rel]: sweden-mesh, [v1.18.0-lou-20 on GitHub](https://github.com/sweden-mesh/MeshCore-lou/releases/tag/v1.18.0-lou-20), 24 November 2026.

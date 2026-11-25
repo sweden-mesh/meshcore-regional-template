@@ -31,6 +31,10 @@ repeater checks the signature itself.
 Repeaters can move between the shared broker and a region's own without being reflashed: it takes a
 few `set` commands, and the site's wizards write them once the region has entered its own server.
 
+With lou-20, [mccontrol](https://mccontrol.meshcoresverige.se) talks to one broker at a time, the
+shared one unless you change it. Repeaters on a broker of your own are reached only after you set
+it as the tool's broker.
+
 ## What it costs {#vad-det-kostar}
 
 - **A small server.** A small VPS is enough, with a domain name and a TLS certificate (free
