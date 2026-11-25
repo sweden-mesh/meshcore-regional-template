@@ -142,7 +142,7 @@ other = "Används till"
 [ch_no_scope]
 other = "ingen"
 [ch_requires_ar]
-other = "Svar kräver repeatrar med auto-reply-firmware"
+other = "Svar kräver repeatrar med auto-svar"
 [firmware_link]
 other = "Välj din firmware här"
 [nc_label]
@@ -471,7 +471,7 @@ other = "MQTT"
 [wz_ctl_label]
 other = "Fjärrstyrning: ta emot signerade kommandon (bara lou-firmware med fjärrstyrning)"
 [wz_ctl_help]
-other = "Repeatern tar då emot inställningskommandon via regionens kommandoserver `{{ .Host }}`, men bara de som är signerade med ägarens nyckel. Den skickar också det den hör dit. Kräver lou-20 eller senare."
+other = "Repeatern tar då emot inställningskommandon via kommandoservern `{{ .Host }}`, men bara de som är signerade med ägarens nyckel. Den skickar också det den hör dit. Kräver lou-20 eller senare."
 [wz_ctl_help_mesh]
 other = "Utan observatör tar repeatern emot kommandona över meshen, men bara de som är signerade med ägarens nyckel. De kommer genom en av dina egna Observer-repeatrar med samma nyckel, eller från en companion. Inget wifi och ingen server behövs. Lägg till repeatern i [mccontrol](https://mccontrol.meshcoresverige.se) med dess publika nyckel. Kräver lou-20 eller senare."
 [wz_ctl_key]

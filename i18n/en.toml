@@ -474,7 +474,7 @@ other = "MQTT"
 [wz_ctl_label]
 other = "Remote control: accept signed commands (lou firmware with remote control only)"
 [wz_ctl_help]
-other = "The repeater then takes settings commands through the region's command broker `{{ .Host }}`, but only those signed with the owner's key. It also sends what it hears there. Needs lou-20 or later."
+other = "The repeater then takes settings commands through the command broker `{{ .Host }}`, but only those signed with the owner's key. It also sends what it hears there. Needs lou-20 or later."
 [wz_ctl_help_mesh]
 other = "Without an Observer the repeater takes the commands over the mesh, but only those signed with the owner's key. They come through one of your own Observer repeaters with the same key, or from a companion radio. No Wi-Fi and no broker are needed. Add the repeater in [mccontrol](https://mccontrol.meshcoresverige.se) by its public key. Needs lou-20 or later."
 [wz_ctl_key]

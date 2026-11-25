@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.83.0 — 2026-11-25
+
+- The flash page and the two repeater wizards offer remote control without the Observer (lou-20): the `rc` and
+  `arrc` files for boards without Wi-Fi, set up with `set cmd.pubkey` and `set cmd on` and reached over the mesh.
+  The wizard's remote-control box is now outside the Observer fields.
+- Text: updates by USB or Bluetooth, what needs the USB console, the mesh road when a broker is down, no older
+  test channel on a repeater without the Observer.
+
 ## v0.82.4 — 2026-11-25
 
 - The lou guide and the questions about lou describe lou-20 as released: remote control on boards without Wi-Fi
