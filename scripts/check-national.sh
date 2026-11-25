@@ -65,7 +65,7 @@ check index.html "<h2>Gemenskap</h2><p>Här finns de som använder MeshCore i he
 check index.html "i nätet.</p><p>Hosta er egna lokala sida med <a href=https://github.com/sweden-mesh/meshcore-regional-template" "Sverige: the template paragraph between the community text and its links (B-345)"
 check index.html "Rikschatten</a> <small>Nationell</small>" "Sverige: the national chats tagged Nationell (B-345)"
 check index.html "<dt><code>#test-se</code></dt>" "Sverige: the channels card shows #test-se (B-316)"
-check index.html "svarar inte automatiskt här än" "Sverige: #test-se is not promised auto-replies (B-316)"
+check index.html "Repeatrar med lou-20 svarar på" "Sverige: #test-se answers test from lou-20, one test and no repeats"
 if grep -q 'class=ch-ar' "$P/index.html"; then echo "FAIL Sverige: an auto-reply footnote on #test-se"; fail=1; else echo "ok   Sverige: no auto-reply footnote (B-316)"; fi
 check skåne/index.html "Rikschatten" "county page: no groups, the national chats stand in"
 check sitemap.xml "/sk%C3%A5ne/</loc>" "county page: in the sitemap, address with åäö"

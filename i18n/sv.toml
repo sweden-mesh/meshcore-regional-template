@@ -471,7 +471,7 @@ other = "MQTT"
 [wz_ctl_label]
 other = "Fjärrstyrning: ta emot signerade kommandon (bara lou-firmware med fjärrstyrning)"
 [wz_ctl_help]
-other = "Repeatern tar då emot inställningskommandon via regionens kommandoserver `{{ .Host }}`, men bara de som är signerade med ägarens nyckel. Den skickar också det den hör dit. Kräver lou-17 eller senare."
+other = "Repeatern tar då emot inställningskommandon via regionens kommandoserver `{{ .Host }}`, men bara de som är signerade med ägarens nyckel. Den skickar också det den hör dit. Kräver lou-20 eller senare."
 [wz_ctl_key]
 other = "Ägarens publika nyckel (64 hextecken, valfri)"
 [wz_ctl_key_help]
@@ -1211,11 +1211,11 @@ other = "Varje län har en MeshCore-sida: sin egen där det finns en, annars lä
 [lan_se_test_purpose]
 other = "Testkanal för hela landet, med regionen (scope) `se`."
 [lan_se_test_note]
-other = "Repeatrarna svarar inte automatiskt här än: du ser andras tester och svar från människor. Vill du ha ett automatiskt svar, skriv `test` i ditt läns `#test-<region>` om länet har repeatrar med auto-svar, annars i den vanliga `#test`."
+other = "Repeatrar med lou-20 svarar på `test` här. Skicka ett `test`, vänta två minuter och upprepa det inte. Svaren kostar sändningstid i hela landet, så testa helst i ditt läns `#test-<region>` om länet har repeatrar med auto-svar."
 [lan_se_channels]
 other = "Chattkanalerna skiljer sig mellan länen. [Välj ditt län]({{ .URL }}) så visas länets kanaler och testkanal här."
 [lan_se_net_text]
-other = "I hela landet används regionen (scope) `se`, och varje län har dessutom sin egen region. Testkanalen för hela landet är `#test-se`; repeatrarna svarar inte automatiskt där än. Kartan nedan visar repeatrarna och observatörerna som hörs i hela landet. [Välj ditt län]({{ .URL }}) för länets region och kanaler."
+other = "I hela landet används regionen (scope) `se`, och varje län har dessutom sin egen region. Testkanalen för hela landet är `#test-se`; repeatrar med lou-20 svarar på `test` där. Skicka ett `test`, vänta två minuter och upprepa det inte. Kartan nedan visar repeatrarna och observatörerna som hörs i hela landet. [Välj ditt län]({{ .URL }}) för länets region och kanaler."
 [lan_se_local_intro]
 other = "Sidorna här gäller hela landet: hur regionerna hänger ihop, vilka kanaler som finns och hur du skickar ditt första meddelande."
 [lan_se_national_tag]

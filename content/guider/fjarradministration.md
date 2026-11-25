@@ -5,7 +5,7 @@ description: "Logga in som administratör på din MeshCore-repeater från appen,
 weight: 61
 group: repeater
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-25
 ---
 
 När repeatern sitter i masten når du den inte med en USB-kabel. Du kan i stället logga in på den
@@ -48,8 +48,8 @@ längre nätet, och då når du den bara med kabel igen.
 
 ## Fjärrstyrning via internet
 
-En repeater med [Specialfirmware lou](../firmware-lou/) kan också styras via internet, utan att
-du behöver vara inom radioräckhåll. Det är ett tillägg; inloggningen ovan fungerar med vanlig
+En repeater med [Specialfirmware lou](../firmware-lou/) kan också styras med signerade
+kommandon, via internet eller över meshen, utan att du behöver vara inom radioräckhåll. Det är ett tillägg; inloggningen ovan fungerar med vanlig
 MeshCore.
 
 ## Källor

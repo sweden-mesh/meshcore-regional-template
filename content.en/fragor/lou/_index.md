@@ -7,10 +7,10 @@ url: /en/faq/lou/
 lead: false
 outputs: ["html"]
 date: 2026-11-21
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 lou is repeater firmware for the Swedish meshes: ordinary MeshCore with auto-reply, remote control
-and signed updates. The answers describe the released version, `v1.18.0-lou-18`, unless they say
+and signed updates. The answers describe the released version, `v1.18.0-lou-20`, unless they say
 otherwise. General questions about MeshCore are under [Frequently asked questions](../), and the
 overview is in [Special firmware lou](../../guider/firmware-lou/).

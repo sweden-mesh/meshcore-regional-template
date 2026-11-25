@@ -474,7 +474,7 @@ other = "MQTT"
 [wz_ctl_label]
 other = "Remote control: accept signed commands (lou firmware with remote control only)"
 [wz_ctl_help]
-other = "The repeater then takes settings commands through the region's command broker `{{ .Host }}`, but only those signed with the owner's key. It also sends what it hears there. Needs lou-17 or later."
+other = "The repeater then takes settings commands through the region's command broker `{{ .Host }}`, but only those signed with the owner's key. It also sends what it hears there. Needs lou-20 or later."
 [wz_ctl_key]
 other = "The owner's public key (64 hex characters, optional)"
 [wz_ctl_key_help]
@@ -1214,11 +1214,11 @@ other = "Every county has a MeshCore page: its own site where there is one, othe
 [lan_se_test_purpose]
 other = "Test channel for the whole country, with the region (scope) `se`."
 [lan_se_test_note]
-other = "Repeaters do not answer here automatically yet: you see other people's tests and replies from people. For an automatic answer, write `test` in your county's `#test-<region>` if the county has repeaters with auto-reply, otherwise in the standard `#test`."
+other = "Repeaters on lou-20 answer `test` here. Send one, wait two minutes, do not repeat it. The replies cost the whole country airtime, so prefer your county's `#test-<region>` if the county has repeaters with auto-reply."
 [lan_se_channels]
 other = "The chat channels differ between counties. [Choose your county]({{ .URL }}) to see its channels and test channel here."
 [lan_se_net_text]
-other = "The whole country uses the region (scope) `se`, and every county also has a region of its own. The test channel for the whole country is `#test-se`; repeaters do not answer there automatically yet. The map below shows the repeaters and observers heard across the country. [Choose your county]({{ .URL }}) for its region and channels."
+other = "The whole country uses the region (scope) `se`, and every county also has a region of its own. The test channel for the whole country is `#test-se`; repeaters on lou-20 answer `test` there. Send one, wait two minutes, do not repeat it. The map below shows the repeaters and observers heard across the country. [Choose your county]({{ .URL }}) for its region and channels."
 [lan_se_local_intro]
 other = "These pages apply to the whole country: how the regions fit together, which channels there are and how to send your first message."
 [lan_se_national_tag]

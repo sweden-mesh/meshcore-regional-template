@@ -6,7 +6,7 @@ url: /en/guides/firmware-lou/
 weight: 45
 group: repeater
 date: 2026-11-12
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 Besides the MeshCore project's own firmware there is lou, modified variants written by Louie:
@@ -15,7 +15,7 @@ Swedish meshes. They are based on MeshCore and add features that help the mesh m
 Everything else works as in ordinary MeshCore, and nodes with and without lou talk to each other as
 usual.
 
-The latest released version is `v1.18.0-lou-18`, built on MeshCore 1.18.0.
+The latest released version is `v1.18.0-lou-20`, built on MeshCore 1.18.0.
 
 ## The variants {#varianterna}
 
@@ -32,13 +32,15 @@ Observer
 
 Remote control (`rc`)
 : The owner can change settings on their repeater without going there, through the command server
-  `{{< param "backend.host" >}}`. The commands are signed with the owner's own key, and the repeater
+  `{{< param "backend.host" >}}`, or over the mesh for boards without Wi-Fi. The commands are signed with the owner's own key, and the repeater
   checks the signature before it does anything. Some commands, such as keys and erasing, can never
   be sent remotely.
 
 | Variant | Contents |
 |---|---|
 | Plain repeater + auto-reply | MeshCore 1.18.0 with auto-reply, for almost all repeater boards |
+| Plain repeater + remote control | remote control over the mesh, for boards without Wi-Fi |
+| Plain repeater + both | auto-reply and remote control over the mesh |
 | Observer + auto-reply | auto-reply, reports to the map, OTA |
 | Observer + remote control | remote control, reports to the map, OTA |
 | Observer + both | auto-reply and remote control, reports to the map, OTA |
@@ -61,16 +63,41 @@ set autoreply on
 
 Auto-reply uses the node's region, so set that first (see [Regions](../regioner/)).
 
-Remote control is turned on from the USB console, because the key can only be set there. The lines
-below apply to lou-17 and later. The repeater guides under [Step by step](../../wizard/) can send
-them for you.
+Set the first key from the USB console, or as a logged-in admin from the app. Replace it with
+`rekey`, signed by the current key. Clearing it needs USB.
+
+The lines below apply to lou-20. On lou-18 and older they are called `set mqtt.cmd.pubkey` and
+`set mqtt.cmd on`. The repeater guides under [Step by step](../../wizard/) can send them for you.
 
 {{< region-control >}}
 
-## Upcoming versions {#nästa-versioner}
+## Remote control without Wi-Fi {#fjärrstyrning-utan-wifi}
 
-lou-20 is built but not released yet; it will be released once it has passed testing. It makes
-remote control simpler and more private:
+From lou-20 the `rc` and `arrc` files for ordinary repeater boards (nRF52, RP2040, STM32, and ESP32
+without Observer) take signed commands over the mesh.
+
+Something has to pass the commands on over radio. It can be one of your own Observer repeaters with
+remote control and the same command key, within radio reach in the same mesh. It passes your
+commands on and is called the relay. It can also be your own companion radio.
+
+```text {title="Turn on remote control over the mesh"}
+set cmd.pubkey <your public key>
+set cmd on
+```
+
+`get cmd` then answers `mesh only`.
+
+In [mccontrol](https://mccontrol.meshcoresverige.se) such a node does not appear by itself. Add it
+with its public key.
+
+The relay passes on one command at a time, and the node answers on an airtime budget of its own. So
+a command may get no answer. Wait a few minutes and send it again.
+
+Boards without Wi-Fi are updated by USB or Bluetooth, not over the mesh.
+
+## New in lou-20 {#nytt-i-lou-20}
+
+lou-20 makes remote control simpler and more private:
 
 - **No region needed.** The repeater is reached by its own key, regardless of region and map.
 - **Encrypted to the owner.** Each command is encrypted to that specific repeater, and the reply
@@ -80,6 +107,15 @@ remote control simpler and more private:
   interval is changed with `set alive.interval`.
 - **Encrypted over the mesh too.** A command sent through another node's radio cannot be read by
   the node that passes it on.
+- **Remote control on boards without Wi-Fi.** Ordinary repeater boards take signed commands over
+  the mesh, see [Remote control without Wi-Fi](#fjärrstyrning-utan-wifi).
+- **The relay.** An Observer repeater with remote control passes its owner's commands on over radio
+  to the owner's other repeaters and returns their answers unread.
+- **Auto-reply in `#test-se` too.** The repeater answers `test` in the test channel for the whole
+  country. Replies there cost the whole country airtime: send one `test`, wait two minutes, do not
+  repeat it.
+- **New command names.** `set cmd on` instead of `set mqtt.cmd on`, and `set cmd.pubkey` instead of
+  `set mqtt.cmd.pubkey`. The old names are gone. Your settings carry over.
 
 lou-21 comes at the earliest one month after lou-20. It removes the older way of controlling
 repeaters, so that only the new one remains. Update to lou-20 first.

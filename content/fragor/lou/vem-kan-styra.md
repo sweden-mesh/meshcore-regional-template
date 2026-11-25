@@ -3,7 +3,7 @@ title: "Vem kan styra min repeater?"
 category: loufjarr
 weight: 220
 date: 2026-11-21
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 Bara den som har din privata kommandonyckel. Nyckeln skapar du själv och den lämnar aldrig din
@@ -16,6 +16,6 @@ Repeatern kontrollerar varje kommando innan den gör något:
 2. Kommandot är nytt: ett kopierat kommando går inte att skicka igen.
 3. Det har inte gått ut i tid.
 4. Det är inte ett av de spärrade kommandona.
-5. Taket är inte nått: tio kommandon i timmen, också med rätt nyckel.
+5. Taket är inte nått: 50 kommandon i timmen, också med rätt nyckel.
 
 Servern som för kommandona vidare litar repeatern inte på alls.

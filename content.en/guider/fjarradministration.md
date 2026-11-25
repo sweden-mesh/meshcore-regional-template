@@ -6,7 +6,7 @@ url: /en/guides/remote-admin/
 weight: 61
 group: repeater
 date: 2026-11-18
-lastmod: 2026-11-18
+lastmod: 2026-11-25
 ---
 
 Once the repeater is up the mast, you can't reach it with a USB cable. Instead you can log in to it
@@ -49,8 +49,8 @@ hears the mesh, and then you can only reach it with a cable again.
 
 ## Remote control over the internet {#fjärrstyrning-via-internet}
 
-A repeater with [lou special firmware](../firmware-lou/) can also be controlled over the internet, without
-you having to be within radio range. It is an add-on; the login above works with standard
+A repeater with [lou special firmware](../firmware-lou/) can also be controlled with signed
+commands, over the internet or over the mesh, without you having to be within radio range. It is an add-on; the login above works with standard
 MeshCore.
 
 ## Sources {#källor}

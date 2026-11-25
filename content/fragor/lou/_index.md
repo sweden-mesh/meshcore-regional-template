@@ -6,10 +6,10 @@ description: "Vad lou-firmwaren gör och vad som skiljer den från vanlig MeshCo
 lead: false
 outputs: ["html"]
 date: 2026-11-21
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 lou är repeaterfirmware för de svenska näten: vanlig MeshCore med auto-svar, fjärrstyrning och
-signerade uppdateringar. Svaren gäller den släppta versionen, `v1.18.0-lou-18`, om inget annat
+signerade uppdateringar. Svaren gäller den släppta versionen, `v1.18.0-lou-20`, om inget annat
 står. Allmänna frågor om MeshCore finns under [Vanliga frågor](../), och översikten i
 [Specialfirmware lou](../../guider/firmware-lou/).

@@ -4,13 +4,14 @@ url: /en/faq/lou/blocked-commands/
 category: loufjarr
 weight: 230
 date: 2026-11-21
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 Some commands are blocked in remote control, whatever they contain:
 
 - replacing or reading the repeater's private key
-- replacing the command key or turning remote control off
+- clearing the command key or turning remote control off (the key is replaced with `rekey`, signed
+  by the current one)
 - erasing the repeater (`erase`)
 - changing radio settings, position or role
 - passwords
