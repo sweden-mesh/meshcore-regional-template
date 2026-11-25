@@ -107,6 +107,23 @@ export function allLinks(nodes, counts = new Map(), { selected = null, focus = f
   return { type: "FeatureCollection", features };
 }
 
+// How many nodes the map knows a link to for node `id` (B-386): its own neighborIds, every node
+// that lists it, and the fetched counts. The node's own list alone says 0 for a repeater that
+// reports none while others hear it, and the map then draws lines beside "0".
+export function linkedCount(nodes, counts = new Map(), id) {
+  const others = new Set();
+  for (const n of nodes || []) {
+    if (n.id === id) for (const o of n.neighborIds || []) others.add(o);
+    else if ((n.neighborIds || []).includes(id)) others.add(n.id);
+  }
+  for (const k of counts.keys()) {
+    const [a, b] = k.split("|");
+    if (a === id) others.add(b); else if (b === id) others.add(a);
+  }
+  others.delete(id);
+  return others.size;
+}
+
 // A links file's pairs (Beacon's /static/neighbors.json: { generatedAt, pairs: [{ nodeId,
 // neighborId, iata, observationCount, lastSeen }] }, directed, as /nodes/{id}/neighbors returns
 // them) -> one { count, lastSeen } per link, merged as mergeLinkCounts does: both directions and

@@ -42,7 +42,9 @@ export function siteHtml(site) {
   return rows.length ? `<div class="np-site">${rows.join("")}<p class="np-credit">${escapeHtml(t("site_credit"))}</p></div>` : "";
 }
 
-export function popupHtml(n, now = Date.now(), site = null) {
+// `linked`: how many nodes the map knows a link to for this node (neighbours.js linkedCount); the
+// larger of it and the node's own count is shown, so the number never contradicts the lines.
+export function popupHtml(n, now = Date.now(), site = null, linked = null) {
   const rows = [];
   const type = (n.nodeType >= 1 && n.nodeType <= 4 ? t(`type_${n.nodeType}`) : "") || n.nodeTypeName || t("type_node");
   rows.push(`<p class="np-type">${escapeHtml(type)}${n.isObserver ? ` · ${escapeHtml(t("observer"))}` : ""}${n.stale ? ` · ${escapeHtml(t("stale"))}` : ""}${n.possiblyForeign ? ` · ${escapeHtml(t("foreign"))}` : ""}</p>`);
@@ -50,7 +52,8 @@ export function popupHtml(n, now = Date.now(), site = null) {
   rows.push(`<p>${escapeHtml(t("heard"))}: ${heard.length ? heard.join(", ") : escapeHtml(ago(n.lastSeen, now))}</p>`);
   const radio = formatRadio(n.radio);
   if (radio) rows.push(`<p>${escapeHtml(t("radio"))}: ${escapeHtml(radio)}</p>`);
-  if (Number.isFinite(n.knownNeighborCount)) rows.push(`<p>${escapeHtml(t("neighbours"))}: ${n.knownNeighborCount}</p>`);
+  const known = Math.max(Number.isFinite(n.knownNeighborCount) ? n.knownNeighborCount : -1, Number.isFinite(linked) ? linked : -1);
+  if (known >= 0) rows.push(`<p>${escapeHtml(t("neighbours"))}: ${known}</p>`);
   rows.push(siteHtml(site));
   if (n.publicKey) rows.push(`<p class="np-key"><code>${escapeHtml(n.publicKey.slice(0, 8).toUpperCase())}</code></p>`);
   return `<div class="node-popup"><h3>${escapeHtml(n.name || t("unnamed"))}</h3>${rows.join("")}</div>`;
@@ -78,7 +81,7 @@ const reveal = (map, popup) => {
 };
 
 // sites: an async function giving the site-details map (or {}), called on the first popup.
-export function attachPopups(map, maplibregl, client, sites = async () => ({})) {
+export function attachPopups(map, maplibregl, client, sites = async () => ({}), linked = null) {
   const popup = new maplibregl.Popup({ maxWidth: "18rem", closeButton: true });
   const open = async (e) => {
     const f = e.features[0];
@@ -91,7 +94,7 @@ export function attachPopups(map, maplibregl, client, sites = async () => ({})) 
     }
     try {
       const [n, s] = await Promise.all([client.get(`/nodes/${encodeURIComponent(f.properties.id)}`), sites().catch(() => ({}))]);
-      if (popup.isOpen()) { popup.setHTML(popupHtml(n, Date.now(), (s || {})[String(n.publicKey || "").toUpperCase()])); reveal(map, popup); }
+      if (popup.isOpen()) { popup.setHTML(popupHtml(n, Date.now(), (s || {})[String(n.publicKey || "").toUpperCase()], linked ? linked(f.properties.id) : null)); reveal(map, popup); }
     } catch {
       if (popup.isOpen()) popup.setHTML(`<div class="node-popup"><h3>${escapeHtml(f.properties.name)}</h3><p>${escapeHtml(t("load_failed"))}</p></div>`);
     }

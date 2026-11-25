@@ -10,7 +10,7 @@ import { LiveFeed } from "../beacon/live.js";
 import { FlowLayer, chainFromObservation, HOP_MS } from "./flow.js";
 import { visibleOnly, observerPoint, neighbourPoints, hiddenBy } from "./visible.js";
 import { packetRoutes, routesToGeoJSON, RecentPackets, recentListHtml, routesListHtml, addPathLayer, packetObservations, involved, channelName, applyPick } from "./packetpath.js";
-import { allLinks, addLinkLayer, linkCountLoader, linksFile, linkEnds } from "./neighbours.js";
+import { allLinks, addLinkLayer, linkCountLoader, linksFile, linkEnds, linkedCount } from "./neighbours.js";
 import { fullscreenButton } from "./fullscreen.js";
 import { shareButton, shareLink, shareLoc } from "./share.js";
 import { loadBorders, addBorderLayers, frameBorders, setForeignVisible, unionBbox } from "./region.js";
@@ -97,7 +97,7 @@ async function start() {
   // MeshMapper site details (data-sites): one small file, fetched on the first popup.
   let sitesP = null;
   const sites = () => (sitesP ??= ds.sites ? fetch(ds.sites).then((r) => (r.ok ? r.json() : {})).catch(() => ({})) : Promise.resolve({}));
-  const popup = attachPopups(map, maplibregl, client, sites);
+  const popup = attachPopups(map, maplibregl, client, sites, (id) => linkedCount(state.nodes, linkCounts.counts(), id));
   const empty = { type: "FeatureCollection", features: [] };
   // Every link coloured by how often it is heard (toggle); with a node clicked (its popup open)
   // the other links turn faint grey. The counts come from the links file (data-links) in one
@@ -159,7 +159,7 @@ async function start() {
     ],
     onToggle: (key, on) => {
       if (key === "links") { state.showLinks = on; drawLinks(); sweepLinks(); }
-      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); drawLinks(); sweepLinks(); }
+      if (key === "foreign") { state.showForeign = on; setForeignVisible(map, on); drawLinks(); sweepLinks(); if (!on) state.clearFlows?.(); }
       if (key === "live") { state.live = on; state.onLive?.(on); drawLinks(); }
       if (key === "focus") { state.focus = on; applyFocus(map, state); drawLinks(); }
       extraToggle(key, on);
@@ -351,6 +351,7 @@ function startLive(map, ds, client, state, draw) {
   setInterval(showStatus, 5000);
   // Fewer simultaneous flows on small screens: less to draw on a phone.
   const flows = new FlowLayer(map, { maxFlows: window.innerWidth < 640 ? 40 : 120 });
+  state.clearFlows = () => flows.clear(); // flashes in flight over nodes just hidden (B-385)
   let redraw = 0;
   let recount = 0; // pills re-ranked by traffic at most every 10 s
   const recent = new RecentPackets(10);

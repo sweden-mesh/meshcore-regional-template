@@ -4,6 +4,14 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.84.0 — 2026-11-25
+
+- Map: when the base map cannot be fetched (a content blocker stopping the tile host shows the nodes on an empty
+  background), one line on the map says so and names the host to allow. New string `mt_basemap_failed`.
+- Fix: a node's panel counted only the node's own neighbour list, so it could say "0" beside several lines. It
+  now counts every link the map knows for the node.
+- Fix: switching "Utanför regionen" off also drops the traffic flashes already in flight over the nodes it hides.
+
 ## v0.83.3 — 2026-11-25
 
 - News: a post on lou-20, and "lou" as a group on the news page.

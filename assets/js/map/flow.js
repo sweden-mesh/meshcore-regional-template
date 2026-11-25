@@ -190,6 +190,9 @@ export class FlowLayer {
     this.kick();
   }
 
+  // Drop everything in flight, as when the nodes it runs between are hidden (B-385).
+  clear() { this.flows = []; this.glows.clear(); this.transmits = []; this.render(); }
+
   setEnabled(on) {
     this.enabled = on;
     if (!on) { this.flows = []; this.glows.clear(); this.transmits = []; this.render(); }

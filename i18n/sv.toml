@@ -426,6 +426,8 @@ other = "Hämtar…"
 other = "Känd från en annan Beacon; regionens egen har inte hört den än."
 [mt_load_failed]
 other = "Kunde inte hämta detaljer."
+[mt_basemap_failed]
+other = "Kartbilden kunde inte hämtas. En annonsblockerare kan stoppa den: tillåt {host}."
 [mt_unknown]
 other = "okänt"
 [mt_just_now]

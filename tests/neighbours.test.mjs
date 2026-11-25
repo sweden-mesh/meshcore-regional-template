@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { allLinks, mergeLinkCounts, mergePairCounts, linkRole, rampColour, linkStyle, linkCountLoader, linkKey, linksFile } from "../assets/js/map/neighbours.js";
+import { allLinks, mergeLinkCounts, mergePairCounts, linkRole, rampColour, linkStyle, linkCountLoader, linkKey, linksFile, linkedCount } from "../assets/js/map/neighbours.js";
 import { palette } from "../assets/js/map/palette.js";
 
 const rows = JSON.parse(readFileSync(new URL("./data/neighbors.json", import.meta.url)));
@@ -218,4 +218,13 @@ test("linkEnds: every drawn link of a node, the far end with the link's colour (
   assert.deepEqual(linkEnds(fc, "a").map((e) => [e.id, e.lng, e.lat]).sort(), [["b", 14.1, 57.1], ["c", 14.2, 57.2]]);
   assert.deepEqual(linkEnds(fc, "zz"), []);
   assert.deepEqual(linkEnds(undefined, "a"), []);
+});
+
+test("linkedCount: a node's links are its own list, the nodes that list it, and the counts (B-386)", () => {
+  const nodes = [{ id: "m", neighborIds: [] }, { id: "a", neighborIds: ["m", "b"] }, { id: "b", neighborIds: ["a"] }, { id: "c", neighborIds: ["m"] }];
+  assert.equal(linkedCount(nodes, new Map(), "m"), 2);                      // a and c list it; its own list is empty
+  assert.equal(linkedCount(nodes, new Map([[linkKey("m", "z"), { count: 3 }], [linkKey("a", "m"), { count: 1 }]]), "m"), 3);
+  assert.equal(linkedCount(nodes, new Map(), "a"), 2);                      // its own m and b; b listing it adds nothing
+  assert.equal(linkedCount(nodes, new Map(), "x"), 0);
+  assert.equal(linkedCount([{ id: "m", neighborIds: ["m"] }], new Map(), "m"), 0);
 });

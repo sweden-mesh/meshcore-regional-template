@@ -84,6 +84,8 @@ a { color: var(--accent); }
 @media (forced-colors: active) { .map-loading { forced-color-adjust: none; background: conic-gradient(CanvasText 0 158deg, Canvas 0); } }
 @media (scripting: none) { .map-loading { display: none; } }
 .map-note { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }
+/* The base map could not be fetched (B-389): one line on the map, above the attribution. */
+.map-basemap-note { position: absolute; left: .5rem; right: .5rem; bottom: 2.25rem; z-index: 2; margin: 0 auto; max-width: 34rem; padding: .5rem .75rem; border: 1px solid var(--field-border); border-radius: var(--radius-sm); background: var(--bg); color: var(--fg); font: .9rem/1.4 var(--font-body); }
 .site-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .9rem; margin-top: 3rem; padding-top: 2rem; padding-bottom: 2.5rem; }
 
 /* Second design pass (2026-11-13): a left-aligned hero instead of the centred headline every

@@ -429,6 +429,8 @@ other = "Loading…"
 other = "Known from another Beacon; the region's own has not heard it yet."
 [mt_load_failed]
 other = "Could not load the details."
+[mt_basemap_failed]
+other = "The base map could not be fetched. A content blocker may be stopping it: allow {host}."
 [mt_unknown]
 other = "unknown"
 [mt_just_now]

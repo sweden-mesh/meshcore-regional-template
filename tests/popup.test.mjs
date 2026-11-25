@@ -52,3 +52,10 @@ test("revealShift: a popup under the corner controls moves down, one beside them
   // never past the bottom of the map
   assert.equal(revealShift({ top: 100, bottom: 680, left: 46, right: 316 }, [legend], map), 12);
 });
+
+test("the neighbour count is the larger of the node's own and the map's links (B-386)", () => {
+  assert.match(popupHtml({ name: "n", knownNeighborCount: 0 }, 0, null, 4), /: 4<\/p>/);
+  assert.match(popupHtml({ name: "n", knownNeighborCount: 7 }, 0, null, 4), /: 7<\/p>/);
+  assert.match(popupHtml({ name: "n", knownNeighborCount: 2 }), /: 2<\/p>/);
+  assert.match(popupHtml({ name: "n" }, 0, null, 3), /: 3<\/p>/);
+});
