@@ -37,6 +37,15 @@ test("host, slot and key are checked", () => {
   assert.deepEqual(codes({ ...own, key: "zz".repeat(32) }), ["key"]);
 });
 
+// lou-20: a build without the Observer has no MQTT; the key and the switch are all.
+test("mesh only: the key and the switch, no broker slot, whatever the host", () => {
+  const codes = (c) => validateControl(c).map((e) => e.code);
+  assert.deepEqual(controlCommands({ ...own, meshOnly: true, key: KEY.toUpperCase() }), [`set cmd.pubkey ${KEY}`, "set cmd on"]);
+  assert.deepEqual(controlCommands({ ...own, meshOnly: true }), ["set cmd on"]);
+  assert.deepEqual(codes({ host: "", slot: 9, meshOnly: true }), []);     // host and slot are not used
+  assert.deepEqual(codes({ ...own, meshOnly: true, key: "zz".repeat(32) }), ["key"]);
+});
+
 const radio = { freq: 869.618, bw: 62.5, sf: 8, cr: 8 };
 const base = { name: "SE-JKP-Taberg", password: "hemligt123", radio, scope: "se-jkp",
   observer: { ssid: "nät", pwd: "", iata: "JKG", preset: "meshat.se" } };
@@ -49,6 +58,19 @@ test("in a repeater setup the plane comes after the Observer and the regional sl
   assert.deepEqual(repeaterCommands({ ...base, control: shared }).commands.slice(-3), ["set cmd on", "advert", "reboot"]);
   assert.ok(!repeaterCommands(base).commands.some((x) => x.includes("set cmd")));
   assert.deepEqual(repeaterReview({ ...base, control: own }).at(-1), { key: "control", value: "mqtt.meshcore-vgr.se" });
+});
+
+test("mesh only in a repeater setup: no Observer, no mqtt or slot lines", () => {
+  const { observer, ...plain } = base;
+  const s = { ...plain, control: { ...own, meshOnly: true, key: KEY } };
+  const c = repeaterCommands(s).commands;
+  assert.deepEqual(c.slice(-4), [`set cmd.pubkey ${KEY}`, "set cmd on", "advert", "reboot"]);
+  assert.ok(!c.some((x) => /^set (mqtt|wifi|cmd\.slot)/.test(x)));
+  assert.deepEqual(repeaterReview(s, "sv").at(-1), { key: "control", value: "över meshen" });
+  assert.deepEqual(repeaterReview(s, "en").at(-1), { key: "control", value: "over the mesh" });
+  // The slot clash with a regional slot is an own broker's matter only.
+  const mqtt = { slot: 3, server: "wss://mqtt.example.se", port: 443, audience: "mqtt.example.se", iata: "JKG" };
+  assert.deepEqual(repeaterCommands({ ...base, mqtt, control: { ...own, meshOnly: true } }).errors, []);
 });
 
 test("an own broker's command slot may not be the regional slot", () => {

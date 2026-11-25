@@ -22,8 +22,9 @@ export function boards(index) {
 }
 
 // The variants a board has: [{ key: "core-ar" | "observer-ar" | ..., base, features }], auto-reply
-// alone first (the default), then with the Observer, then remote control.
-const ORDER = ["core-ar", "observer-ar", "observer-arrc", "observer-rc"];
+// alone first (the default), then stock MeshCore with remote control over the mesh (lou-20), then
+// the Observer builds.
+const ORDER = ["core-ar", "core-arrc", "core-rc", "observer-ar", "observer-arrc", "observer-rc"];
 export function variants(index, hw) {
   const keys = new Set((index.images || []).filter((i) => i.hw === hw).map((i) => `${i.base}-${i.features}`));
   return ORDER.filter((k) => keys.has(k)).map((k) => { const [base, features] = k.split("-"); return { key: k, base, features }; });
@@ -37,6 +38,9 @@ export function pick(index, hw, key, fresh) {
   const form = family === "nrf52" ? "zip" : fresh ? "merged" : "bin";
   return rows.find((i) => i.form === form) || null;
 }
+
+// Remote control without the Observer: the mesh is the node's only road, set up with two lines.
+export const meshOnly = (key) => key === "core-rc" || key === "core-arrc";
 
 export const imageUrl = (flashIndex, index, img) => new URL(index.base + img.file, flashIndex).href;
 
@@ -104,11 +108,11 @@ function start(root) {
   }).catch((e) => { status.textContent = e.message; });
 
   go.addEventListener("click", async () => {
-    const { img, fresh } = current();
+    const { img, fresh, key } = current();
     if (!img) return;
     if (fresh && !confirm(t("fl_new_confirm"))) return;
     go.disabled = true; log.textContent = ""; bar.value = 0; bar.hidden = false;
-    q("[data-done]").hidden = true;
+    q("[data-done]").hidden = true; q("[data-done-mesh]").hidden = true;
     try {
       const url = imageUrl(flashIndex, index, img);
       if (familyOf(img.mcu) === "esp32") {
@@ -141,6 +145,7 @@ function start(root) {
       bar.value = 1;
       step(t("fl_done"));
       q("[data-done]").hidden = false;
+      q("[data-done-mesh]").hidden = !meshOnly(key);
     } catch (e) {
       const k = String(e?.message || "").replace(/-/g, "_");
       step(e?.name === "NotFoundError" ? t("fl_noport") : T[k] ? t(k) : String(e?.message || e));

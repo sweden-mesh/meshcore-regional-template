@@ -4,7 +4,7 @@
 {{- $f := site.Params.firmware -}}
 {{- $keys := slice "fl_fetch" "fl_fetch_fail" "fl_check" "fl_sha" "fl_connect" "fl_noanswer" "fl_chip" "fl_size" "fl_table" "fl_erasewrite" "fl_write" "fl_restart" "fl_notable" "fl_noapp" "fl_toobig"
      "fl_index_fail" "fl_board_pick" "fl_release" "fl_download" "fl_new_confirm" "fl_touch" "fl_pick_boot" "fl_done" "fl_noport"
-     "fl_v_core-ar" "fl_v_core-ar_d" "fl_v_observer-ar" "fl_v_observer-ar_d" "fl_v_observer-arrc" "fl_v_observer-arrc_d" "fl_v_observer-rc" "fl_v_observer-rc_d"
+     "fl_v_core-ar" "fl_v_core-ar_d" "fl_v_core-arrc" "fl_v_core-arrc_d" "fl_v_core-rc" "fl_v_core-rc_d" "fl_v_observer-ar" "fl_v_observer-ar_d" "fl_v_observer-arrc" "fl_v_observer-arrc_d" "fl_v_observer-rc" "fl_v_observer-rc_d"
      "dfu_timeout" "dfu_closed" "dfu_crc" "dfu_not_app" "dfu_incomplete" -}}
 {{- $t := dict }}{{ range $keys }}{{ $t = merge $t (dict . (T .)) }}{{ end -}}
 {{- $esptool := resources.Get "lib/esptool-js-0.7.0/bundle.js" | fingerprint -}}
@@ -40,6 +40,7 @@
   <progress max="1" value="0" hidden></progress>
   <p class="wz-status" data-status aria-live="polite"></p>
   <p data-done hidden>{{ T "fl_after" (dict "Wizard" $wizard) | markdownify }}</p>
+  <p data-done-mesh hidden>{{ T "fl_after_mesh" | markdownify }}</p>
   <details><summary>{{ T "fl_log" }}</summary><pre data-log></pre></details>
 </form>
 {{- with resources.Get "js/flasher/main.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}

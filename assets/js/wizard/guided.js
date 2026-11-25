@@ -73,7 +73,7 @@ function init(form) {
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, q("#wzg-place").value, state.publicKey, q("#wzg-key").checked), lat: state.pos?.lat, lon: state.pos?.lon,
-      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, guest: q("#wzg-guest").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()), control: obs.get() && control() };
+      tx: q("#wzg-tx").value.trim(), password: q("#wzg-pass").value, guest: q("#wzg-guest").value, offgrid: q("#wzg-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()), control: control() };
   };
 
   const update = () => {

@@ -35,7 +35,7 @@ function init(form) {
   const settings = () => {
     const extra = nb.scopes();
     return { name: buildName(ds.pattern, $("wz-place").value, state.publicKey, $("wz-key").checked), lat: state.pos?.lat, lon: state.pos?.lon,
-      password: $("wz-pass").value, offgrid: $("wz-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()), control: obs.get() && control() };
+      password: $("wz-pass").value, offgrid: $("wz-offgrid").checked, radio, scope: ds.scope, extraScopes: extra, observer: obs.get(), mqtt: regional(obs.get()), control: control() };
   };
 
   const update = () => {

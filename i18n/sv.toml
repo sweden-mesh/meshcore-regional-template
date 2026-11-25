@@ -472,6 +472,8 @@ other = "MQTT"
 other = "Fjärrstyrning: ta emot signerade kommandon (bara lou-firmware med fjärrstyrning)"
 [wz_ctl_help]
 other = "Repeatern tar då emot inställningskommandon via regionens kommandoserver `{{ .Host }}`, men bara de som är signerade med ägarens nyckel. Den skickar också det den hör dit. Kräver lou-20 eller senare."
+[wz_ctl_help_mesh]
+other = "Utan observatör tar repeatern emot kommandona över meshen, men bara de som är signerade med ägarens nyckel. De kommer genom en av dina egna Observer-repeatrar med samma nyckel, eller från en companion. Inget wifi och ingen server behövs. Lägg till repeatern i [mccontrol](https://mccontrol.meshcoresverige.se) med dess publika nyckel. Kräver lou-20 eller senare."
 [wz_ctl_key]
 other = "Ägarens publika nyckel (64 hextecken, valfri)"
 [wz_ctl_key_help]
@@ -1094,10 +1096,18 @@ other = "Firmware"
 other = "Repeater med autosvar"
 [fl_v_core-ar_d]
 other = "Svarar på test i länets testkanal. Behöver inget wifi."
+[fl_v_core-arrc]
+other = "Repeater med autosvar och fjärrstyrning"
+[fl_v_core-arrc_d]
+other = "Dessutom fjärrstyrning över meshen, utan wifi: signerade kommandon från ägaren."
+[fl_v_core-rc]
+other = "Repeater med fjärrstyrning"
+[fl_v_core-rc_d]
+other = "Fjärrstyrning över meshen, utan wifi och utan autosvar."
 [fl_v_observer-ar]
 other = "Observer med autosvar"
 [fl_v_observer-ar_d]
-other = "Som ovan, och rapporterar det den hör till kartan över wifi och MQTT."
+other = "Autosvar, och rapporterar det den hör till kartan över wifi och MQTT."
 [fl_v_observer-arrc]
 other = "Observer med autosvar och fjärrstyrning"
 [fl_v_observer-arrc_d]
@@ -1140,6 +1150,8 @@ other = "Tryck på Välj porten igen och välj kortets nya port."
 other = "Klart. Kortet startar om med den nya firmwaren."
 [fl_after]
 other = "Ställ in noden nu: [guidade inställningar]({{ .Wizard }}) över samma kabel."
+[fl_after_mesh]
+other = "Fjärrstyrningen behöver två rader i konsolen: `set cmd.pubkey <din publika nyckel>` och `set cmd on`. Guiden skickar dem om du kryssar i Fjärrstyrning. Lägg sedan till noden i [mccontrol](https://mccontrol.meshcoresverige.se) med nodens publika nyckel."
 [fl_noport]
 other = "Ingen port valdes."
 [fl_index_fail]

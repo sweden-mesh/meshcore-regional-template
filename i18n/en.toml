@@ -475,6 +475,8 @@ other = "MQTT"
 other = "Remote control: accept signed commands (lou firmware with remote control only)"
 [wz_ctl_help]
 other = "The repeater then takes settings commands through the region's command broker `{{ .Host }}`, but only those signed with the owner's key. It also sends what it hears there. Needs lou-20 or later."
+[wz_ctl_help_mesh]
+other = "Without an Observer the repeater takes the commands over the mesh, but only those signed with the owner's key. They come through one of your own Observer repeaters with the same key, or from a companion radio. No Wi-Fi and no broker are needed. Add the repeater in [mccontrol](https://mccontrol.meshcoresverige.se) by its public key. Needs lou-20 or later."
 [wz_ctl_key]
 other = "The owner's public key (64 hex characters, optional)"
 [wz_ctl_key_help]
@@ -1097,10 +1099,18 @@ other = "Firmware"
 other = "Repeater with auto-reply"
 [fl_v_core-ar_d]
 other = "Replies to test on the county's test channel. Needs no Wi-Fi."
+[fl_v_core-arrc]
+other = "Repeater with auto-reply and remote control"
+[fl_v_core-arrc_d]
+other = "Also remote control over the mesh, without Wi-Fi: signed commands from the owner."
+[fl_v_core-rc]
+other = "Repeater with remote control"
+[fl_v_core-rc_d]
+other = "Remote control over the mesh, without Wi-Fi and without auto-reply."
 [fl_v_observer-ar]
 other = "Observer with auto-reply"
 [fl_v_observer-ar_d]
-other = "As above, and reports what it hears to the map over Wi-Fi and MQTT."
+other = "Auto-reply, and reports what it hears to the map over Wi-Fi and MQTT."
 [fl_v_observer-arrc]
 other = "Observer with auto-reply and remote control"
 [fl_v_observer-arrc_d]
@@ -1143,6 +1153,8 @@ other = "Press Choose the port again and pick the board's new port."
 other = "Done. The board restarts with the new firmware."
 [fl_after]
 other = "Set the node up now: [guided settings]({{ .Wizard }}) over the same cable."
+[fl_after_mesh]
+other = "Remote control needs two lines on the console: `set cmd.pubkey <your public key>` and `set cmd on`. The wizard sends them if you tick Remote control. Then add the node in [mccontrol](https://mccontrol.meshcoresverige.se) by its public key."
 [fl_noport]
 other = "No port was chosen."
 [fl_index_fail]
