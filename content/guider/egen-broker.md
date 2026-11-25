@@ -5,7 +5,7 @@ description: "Du behöver ingen egen broker: den gemensamma fungerar för alla r
 weight: 108
 group: regioner
 date: 2026-11-16
-lastmod: 2026-11-18
+lastmod: 2026-11-25
 ---
 
 **Du behöver ingen egen: den gemensamma brokern fungerar.** Brokern
@@ -35,7 +35,7 @@ Repeatrar kan flytta mellan den gemensamma brokern och en egen utan att flashas 
 - **En liten server.** En liten VPS räcker, med ett domännamn och ett TLS-certifikat (gratis
   från Let's Encrypt).
 - **Skötsel.** Någon måste uppdatera servern, förnya certifikat, ta backup och svara när den
-  krånglar. Ligger brokern nere kan regionens repeatrar inte fjärrstyras, och regionens eget
+  krånglar. Ligger brokern nere kan regionens repeatrar bara fjärrstyras över meshen, och regionens eget
   paketflöde stannar.
 - **Ett namn att behålla.** Brokerns namn finns i varje repeaters inloggning. Välj ett namn som
   regionen kan ha kvar, så slipper alla repeatrar ställas om senare.

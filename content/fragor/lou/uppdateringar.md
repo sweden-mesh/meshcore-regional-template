@@ -3,7 +3,7 @@ title: "Hur uppdateras lou, och vad händer om en uppdatering är trasig?"
 category: louinstall
 weight: 320
 date: 2026-11-21
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 En Observer-repeater hämtar sin firmware själv över wifi: `ota check` visar vad som finns och
@@ -17,4 +17,4 @@ uppdaterar aldrig mellan 00 och 06.
   version kostar en omstart, inte ett besök.
 
 Från lou-20 måste radion också ha skickat eller tagit emot ett paket innan den nya versionen
-behålls. Kort utan wifi uppdateras med kabel.
+behålls. Kort utan wifi uppdateras med USB eller Bluetooth.

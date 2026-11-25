@@ -16,5 +16,6 @@ Some commands are blocked in remote control, whatever they contain:
 - changing radio settings, position or role
 - passwords
 
-They work from the USB console only. A leaked command key is therefore not enough to take over a
+The private key, erasing and clearing the command key work from the USB console only. The rest
+also works as a logged-in admin in the app. A leaked command key is therefore not enough to take over a
 repeater or move it to another frequency.

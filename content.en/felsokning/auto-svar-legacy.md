@@ -6,11 +6,12 @@ url: /en/troubleshooting/auto-reply-legacy-channel/
 category: regioner
 weight: 40
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-25
 ---
 
 This applies to repeaters with auto-reply (the *lou* firmware). The auto-reply takes the county from
 `region home` and answers in `#test-<county>`. If no county is set, it answers {{< legacy-test >}}.
+A repeater without Observer has no older channel and then does not answer at all.
 
 ## Likely causes {#troliga-orsaker}
 

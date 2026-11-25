@@ -5,11 +5,12 @@ description: "Svarar auto-svaret i en äldre testkanal i stället för länets? 
 category: regioner
 weight: 40
 date: 2026-11-13
-lastmod: 2026-11-16
+lastmod: 2026-11-25
 ---
 
 Gäller repeatrar med auto-svar (firmwaren *lou*). Auto-svaret tar länet från `region home` och
 svarar i `#test-<län>`. Saknas länet svarar det {{< legacy-test >}}.
+En repeater utan Observer har ingen äldre kanal och svarar då inte alls.
 
 ## Troliga orsaker
 

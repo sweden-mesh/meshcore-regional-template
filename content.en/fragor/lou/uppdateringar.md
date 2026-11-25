@@ -4,7 +4,7 @@ url: /en/faq/lou/updates/
 category: louinstall
 weight: 320
 date: 2026-11-21
-lastmod: 2026-11-21
+lastmod: 2026-11-25
 ---
 
 An Observer repeater fetches its firmware itself over Wi-Fi: `ota check` shows what is on offer
@@ -18,4 +18,4 @@ between 00:00 and 06:00.
   costs one restart, not a visit.
 
 From lou-20 the radio must also have sent or received a packet before the new version is kept.
-Boards without Wi-Fi are updated by cable.
+Boards without Wi-Fi are updated by USB or Bluetooth.

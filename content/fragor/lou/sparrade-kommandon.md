@@ -15,5 +15,6 @@ En del kommandon är spärrade i fjärrstyrningen, vad som än står i dem:
 - ändra radioinställningar, position eller roll
 - lösenord
 
-De går bara från USB-konsolen. En läckt kommandonyckel räcker därför inte för att ta över en
+Den privata nyckeln, raderingen och att ta bort kommandonyckeln går bara från USB-konsolen. Det
+övriga går också som inloggad administratör i appen. En läckt kommandonyckel räcker därför inte för att ta över en
 repeater eller flytta den till en annan frekvens.

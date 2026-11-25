@@ -6,7 +6,7 @@ url: /en/guides/own-broker/
 weight: 108
 group: regioner
 date: 2026-11-16
-lastmod: 2026-11-18
+lastmod: 2026-11-25
 ---
 
 **You don't need your own: the shared broker works.** The broker
@@ -36,7 +36,7 @@ few `set` commands, and the site's wizards write them once the region has entere
 - **A small server.** A small VPS is enough, with a domain name and a TLS certificate (free
   from Let's Encrypt).
 - **Upkeep.** Someone has to update the server, renew certificates, take backups and respond when
-  it acts up. If the broker is down, the region's repeaters cannot be remote controlled, and the
+  it acts up. If the broker is down, the region's repeaters can only be remote controlled over the mesh, and the
   region's own packet feed stops.
 - **A name to keep.** The broker's name is in every repeater's login. Pick a name the region can
   keep, so that no repeater has to be reconfigured later.
