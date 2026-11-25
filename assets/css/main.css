@@ -172,7 +172,10 @@ a { color: var(--accent); }
    the gap; when the list starts a line, the bar falls outside the row and is clipped. */
 div.hero-actions { overflow: clip; overflow-clip-margin: 4px; }
 .hero-groups { position: relative; display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; margin: 0; padding: 0; }
-.hero-groups::before { content: ""; position: absolute; left: calc(-.375rem - 1px); top: 22%; bottom: 22%; width: 1px; background: var(--muted); }
+/* The bar has a button gap on each side (operator 2026-11-25): the button before the list gives
+   the extra room, so a list that starts a line still pushes its bar out of the row. */
+.hero-actions > a:has(+ .hero-groups) { margin-right: calc(.75rem + 1px); }
+.hero-groups::before { content: ""; position: absolute; left: calc(-.75rem - 1px); top: 22%; bottom: 22%; width: 1px; background: var(--muted); }
 .hero-groups li { display: flex; }
 /* Three ways in at the top of "Kom igång" (NEWCOMER-3, B-311): a softly tinted inset without a
    border, three stacked entries (the question small and bold, the link under it), then a hairline

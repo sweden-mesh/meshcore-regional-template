@@ -4,6 +4,12 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.83.2 — 2026-11-25
+
+- A county's front page: the bar between the site's buttons and the groups' has a button gap on each side.
+  A group may have a `short` name for its button (`[[groups]]` in the county file); the full name is the
+  button's tooltip and stays in the list.
+
 ## v0.83.1 — 2026-11-25
 
 - Fix: on a national county page the map's fit button framed the nodes outside the county even with "Utanför

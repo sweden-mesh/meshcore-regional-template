@@ -37,6 +37,7 @@ naming  = { format = "SE-{kommun}-{plats}", example = "SE-KAM-Exempelberget", so
 # Five groups in all: the county page shows the first three as buttons and "Fler grupper" (operator 2026-11-18).
 [[groups]]
   name = "Exempelklubben"
+  short = "Klubben"              # the button's text on the county's front page; the full name stays in the list
   url  = "https://example.org/klubb"
 
 [[groups]]

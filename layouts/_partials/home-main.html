@@ -20,7 +20,8 @@
            `community` added if it is not among them; more than 4: the first 3 and "Fler grupper" to
            the list further down. One bar between the site's buttons and the groups, drawn by CSS at
            the start of the group list, so it travels with it and is clipped when the list starts a
-           line; screen readers get a list with a name, no bar. */ -}}
+           line; screen readers get a list with a name, no bar. A group's `short`, when it has one, is
+           the button's text (its full name is the tooltip and stays in the list further down). */ -}}
     {{- $c := . -}}
     {{- $gs := slice }}{{ $urls := slice -}}
     {{- range $c.groups }}{{ if and .url (not (in $urls .url)) }}{{ $gs = $gs | append . }}{{ $urls = $urls | append .url }}{{ end }}{{ end -}}
@@ -31,7 +32,7 @@
       {{- with $gs }}
       <ul class="hero-groups" aria-label="{{ T "lan_groups_label" (dict "Name" $c.name) }}">
         {{- range first (cond (gt (len .) 4) 3 4) . }}
-        <li><a class="button button-secondary ext" href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a></li>
+        <li><a class="button button-secondary ext" href="{{ .url }}" target="_blank" rel="noopener"{{ if .short }} title="{{ .name }}"{{ end }}>{{ .short | default .name }}</a></li>
         {{- end }}
         {{- if gt (len .) 4 }}
         <li><a class="button button-secondary" href="#grupper">{{ T "lan_more_groups" }}</a></li>

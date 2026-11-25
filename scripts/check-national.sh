@@ -34,7 +34,7 @@ check kalmar/index.html "<h2>I Kalmar</h2><p>Sidorna här gäller" "county page:
 check kalmar/index.html "<h2 id=grupper>Gemenskap</h2><p>Här finns de som använder MeshCore i Kalmar" "county page: the groups' column opens with a sentence (B-307)"
 check kalmar/index.html "<span data-r=name>Kalmar län</span>" "county page: the footer names the county"
 check kalmar/index.html '<ul class=hero-groups aria-label="Grupper i Kalmar län"><li><a class="button button-secondary ext" href=https://example.org/grupp target=_blank rel=noopener>Exempelgruppen</a></li><li><a class="button button-secondary ext" href=https://example.org/chat' "county page: the groups as buttons after Se kartan, in the file's order, community folded in"
-check kalmar/index.html 'Exempelklubben</a></li><li><a class="button button-secondary" href=#grupper>Fler grupper</a></li></ul>' "county page: more than 4 groups, the first 3 and Fler grupper"
+check kalmar/index.html 'title=Exempelklubben>Klubben</a></li><li><a class="button button-secondary" href=#grupper>Fler grupper</a></li></ul>' "county page: more than 4 groups, the first 3 (the third by its short name) and Fler grupper"
 check kalmar/index.html '<h2 id=grupper>Gemenskap</h2>' "county page: Fler grupper leads to the groups column"
 if grep -q 'hero-groups' "$P/skåne/index.html"; then echo "FAIL county page: a group list without groups"; fail=1; else echo "ok   county page: no community, no button"; fi
 if grep -rlE 'class=pager-(next|prev) href=[^ >]*/karta/' "$P" --include=index.html | grep -q .; then echo "FAIL pager: a page's next or previous is a map share address"; fail=1; else echo "ok   pager: no map share address in a pager"; fi
