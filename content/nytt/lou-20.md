@@ -1,16 +1,42 @@
 ---
 title: "lou-20"
-description: "lou-20 (24 november 2026) på svenska: fjärrstyrning på kort utan wifi, auto-svar i #test-se och nya namn på kommandona."
+description: "lou-20 (24 november 2026) på svenska: fjärrstyrning av repeatrar utan wifi och utan region, auto-svar i #test-se och nya namn på kommandona."
 group: lou
 date: 2026-11-24
-lastmod: 2026-11-25
-checkedOn: 2026-11-25
+lastmod: 2026-11-26
+checkedOn: 2026-11-26
 ---
 
 lou-20 kom den 24 november 2026 [^rel]. lou är repeaterfirmware från sweden-mesh som lägger till
 auto-svar och fjärrstyrning i MeshCore 1.18; se [Specialfirmware lou](../../guider/firmware-lou/).
-Välj din fil i [firmwareväljaren]({{< param "firmware.picker" >}}). För ESP32-kort flashar den direkt
-från webbläsaren.
+Den största ändringen är fjärrstyrningen, som nu når repeatrar utan wifi.
+
+## Fjärrstyrningen når fler repeatrar
+
+Med fjärrstyrning skickar du konsolkommandon till din egen repeater utan att åka dit: läsa
+inställningar, se vilka grannar den hör, uppdatera den över wifi eller starta om den. Varje kommando är signerat med
+din nyckel, och repeatern kör bara det som din nyckel har skrivit under.
+
+Till och med lou-18 krävde det en Observer-repeater med wifi och en region. Med lou-20 gäller det här:
+
+- **Kort utan wifi går att styra.** nRF52, RP2040, STM32 och ESP32 utan Observer tar kommandon över
+  meshen, från din companion eller genom en av dina egna Observer-repeatrar.
+- **Ingen region behövs.** Repeatern nås på sin egen nyckel.
+- **Servern kan inte läsa något.** Kommandon och svar är krypterade mellan repeatern och ägaren.
+- **Dina repeatrar dyker upp själva.** En Observer-repeater skickar ett krypterat livstecken ungefär
+  var 15:e minut, och bara din nyckel kan öppna det.
+
+Så kommer du igång:
+
+1. Hämta lou-20 i [firmwareväljaren]({{< param "firmware.picker" >}}). ESP32-kort flashar den direkt
+   från webbläsaren.
+2. Öppna [mccontrol](https://mccontrol.meshcoresverige.se) i webbläsaren och skapa din nyckel. Den
+   stannar i din webbläsare.
+3. Ge repeatern nyckeln i dess konsol med `set cmd.pubkey <nyckel>` och slå på med `set cmd on`.
+
+Hela beskrivningen finns i firmwarens dokumentation på GitHub (på engelska):
+[översikten](https://github.com/sweden-mesh/MeshCore-lou#readme) och
+[fjärrstyrningen i detalj](https://github.com/sweden-mesh/MeshCore-lou/blob/fork/observer/docs/mqtt-control.md).
 
 ## Har du redan fjärrstyrning: kommandona har nya namn
 
@@ -27,15 +53,10 @@ Dina inställningar följer med vid uppdateringen: kommandonyckeln, räknaren oc
 som ställts in med `set mqtt.cmd on <server>` behöver `set cmd on <server>` en gång till efteråt.
 [mccontrol](https://mccontrol.meshcoresverige.se) klarar både lou-18 och lou-20 och väljer själv.
 
-## Nytt
+## Allt som är nytt
 
-- **Fjärrstyrning på kort utan wifi.** Vanliga repeaterkort (nRF52, RP2040, STM32 och ESP32 utan
-  Observer) tar signerade kommandon över meshen, från din companion eller genom en av dina egna
-  Observer-repeatrar. Se [Fjärrstyrning utan wifi](../../guider/firmware-lou/#fjärrstyrning-utan-wifi).
-- **Ingen region behövs för fjärrstyrning.** Repeatern nås på sin egen nyckel. Kommandon och svar
-  är krypterade mellan repeatern och ägaren, och servern kan inte läsa dem.
-- **Repeatern hör av sig till ägaren.** En Observer-repeater skickar ett krypterat livstecken
-  ungefär var 15:e minut. Så hittar mccontrol dina repeatrar utan att du letar.
+- **Fjärrstyrning utan wifi och utan region**, se ovan och
+  [Fjärrstyrning utan wifi](../../guider/firmware-lou/#fjärrstyrning-utan-wifi).
 - **Auto-svar i `#test-se`.** Repeatrar svarar nu på `test` också i hela landets testkanal. Svaren
   kostar sändningstid i hela landet: skicka ett `test`, vänta två minuter och upprepa det inte.
   Testa helst i länets egen kanal.

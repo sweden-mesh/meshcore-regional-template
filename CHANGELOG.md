@@ -4,6 +4,11 @@ Semantic versioning: a region pins a tag in its `go.mod`. **Major** = a region h
 something (a param renamed or removed, a layout path moved). **Minor** = new features and
 params with safe defaults. **Patch** = fixes and text.
 
+## v0.84.1 — 2026-11-26
+
+- News: the lou-20 post opens with what remote control is and what lou-20 adds to it, three steps to start,
+  and links to the firmware's documentation on GitHub.
+
 ## v0.84.0 — 2026-11-25
 
 - Map: when the base map cannot be fetched (a content blocker stopping the tile host shows the nodes on an empty
